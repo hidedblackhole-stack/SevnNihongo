@@ -1,0 +1,596 @@
+[
+  {
+    "id": "w6d1g1",
+    "map_id": "map_bunpou_w6",
+    "stage_id": "stage_bunpou_w6d1",
+    "title": "もし試験を受けていたら（もし＋Vたら／Aかったら／naだったら／Nだったら）",
+    "formula": "もし ＋ Vたら／Aかったら／naだったら／Nだったら",
+    "meaning_en": "If (counterfactual hypothesis or conditional).",
+    "meaning_id": "Jika / seandainya (hipotesis pengandaian).",
+    "explanation_note": "",
+    "examples": [
+      {
+        "jp": "もし、留学しなかったら、今頃は何をしているだろう。",
+        "en": "If I had not gone to study abroad, what would I be doing now?",
+        "id": "Seandainya tidak kuliah di luar negeri, kira-kira sekarang aku sedang apa ya?"
+      }
+    ],
+    "question_ids": [
+      "w6d1g1_q1",
+      "w6d1g1_q2",
+      "w6d1g1_q3",
+      "w6d1g1_q4",
+      "w6d1g1_q5",
+      "w6d1g1_q6",
+      "w6d1g1_q7"
+    ],
+    "questions_status": "authored"
+  },
+  {
+    "id": "w6d1g2",
+    "map_id": "map_bunpou_w6",
+    "stage_id": "stage_bunpou_w6d1",
+    "title": "もし休みが取れたとしても（もし＋V/A/na/Nとしても／としたって）",
+    "formula": "もし ＋ V・A・na・N（N／naだ） ＋ としても／としたって",
+    "meaning_en": "Even if (granting a hypothetical condition).",
+    "meaning_id": "Meskipun seandainya (pengandaian konsesif).",
+    "explanation_note": "",
+    "examples": [
+      {
+        "jp": "もし、休みが取れたとしても、旅行には行かないつもりです。",
+        "en": "Even if I can take time off, I do not intend to travel.",
+        "id": "Meskipun bisa ambil libur, aku tidak berniat jalan-jalan."
+      }
+    ],
+    "question_ids": [
+      "w6d1g2_q1",
+      "w6d1g2_q2",
+      "w6d1g2_q3",
+      "w6d1g2_q4",
+      "w6d1g2_q5",
+      "w6d1g2_q6",
+      "w6d1g2_q7"
+    ],
+    "questions_status": "authored"
+  },
+  {
+    "id": "w6d1g3",
+    "map_id": "map_bunpou_w6",
+    "stage_id": "stage_bunpou_w6d1",
+    "title": "もしもの時（もしも＋Vたら／Aかったら／na・Nなら；もしも＋でも；もしものN）",
+    "formula": "もしも ＋ Vたら／Aかったら／na・Nなら；もしものN",
+    "meaning_en": "In case of / if (more hypothetical/formal than もし).",
+    "meaning_id": "Seandainya / jika terjadi (lebih hipotesis/formal dari もし).",
+    "explanation_note": "",
+    "examples": [
+      {
+        "jp": "もしも、生まれ変われるなら、男になりたいですか、女になりたいですか。",
+        "en": "If you are reborn, do you want to be a man or a woman?",
+        "id": "Seandainya terlahir kembali, kamu ingin jadi laki-laki atau perempuan?"
+      }
+    ],
+    "question_ids": [
+      "w6d1g3_q1",
+      "w6d1g3_q2",
+      "w6d1g3_q3",
+      "w6d1g3_q4",
+      "w6d1g3_q5",
+      "w6d1g3_q6",
+      "w6d1g3_q7"
+    ],
+    "questions_status": "authored"
+  },
+  {
+    "id": "w6d2g1",
+    "map_id": "map_bunpou_w6",
+    "stage_id": "stage_bunpou_w6d2",
+    "title": "お金持ちになることになる（Vる／Vない＋ことになる）",
+    "formula": "Vる／Vない ＋ ことになる",
+    "meaning_en": "It is decided that / it results in.",
+    "meaning_id": "Telah diputuskan bahwa / hasilnya menjadi.",
+    "explanation_note": "",
+    "examples": [
+      {
+        "jp": "来月、出張することになりました。",
+        "en": "It has been decided that I will go on a business trip next month.",
+        "id": "Sudah diputuskan bahwa bulan depan aku akan dinas luar."
+      }
+    ],
+    "question_ids": [
+      "w6d2g1_q1",
+      "w6d2g1_q2",
+      "w6d2g1_q3",
+      "w6d2g1_q4",
+      "w6d2g1_q5",
+      "w6d2g1_q6",
+      "w6d2g1_q7"
+    ],
+    "questions_status": "authored"
+  },
+  {
+    "id": "w6d2g2",
+    "map_id": "map_bunpou_w6",
+    "stage_id": "stage_bunpou_w6d2",
+    "title": "毎日運動することにしている（Vる／Vない＋ことにしている）",
+    "formula": "Vる／Vない ＋ ことにしている",
+    "meaning_en": "To make it a rule to / make a personal habit to.",
+    "meaning_id": "Membiasakan diri untuk / menjadikan kebiasaan.",
+    "explanation_note": "",
+    "examples": [
+      {
+        "jp": "健康のために、毎日野菜を食べることにしています。",
+        "en": "I make it a rule to eat vegetables every day for my health.",
+        "id": "Demi kesehatan, aku membiasakan makan sayur setiap hari."
+      }
+    ],
+    "question_ids": [
+      "w6d2g2_q1",
+      "w6d2g2_q2",
+      "w6d2g2_q3",
+      "w6d2g2_q4",
+      "w6d2g2_q5",
+      "w6d2g2_q6",
+      "w6d2g2_q7"
+    ],
+    "questions_status": "authored"
+  },
+  {
+    "id": "w6d2g3",
+    "map_id": "map_bunpou_w6",
+    "stage_id": "stage_bunpou_w6d2",
+    "title": "ピアノが弾けることは弾けるが（VることはVる／AいことはAい／naなことはnaだ＋が／けれど）",
+    "formula": "VることはVる／AいことはAい／naなことはnaだ ＋ が／けれど",
+    "meaning_en": "It is true that..., but...",
+    "meaning_id": "Memang benar bahwa..., tapi...",
+    "explanation_note": "",
+    "examples": [
+      {
+        "jp": "ピアノは弾けることは弾けますが、上手ではありません。",
+        "en": "I can play the piano, but I'm not good at it.",
+        "id": "Bisa main piano sih bisa, tapi tidak jago."
+      }
+    ],
+    "question_ids": [
+      "w6d2g3_q1",
+      "w6d2g3_q2",
+      "w6d2g3_q3",
+      "w6d2g3_q4",
+      "w6d2g3_q5",
+      "w6d2g3_q6",
+      "w6d2g3_q7"
+    ],
+    "questions_status": "authored"
+  },
+  {
+    "id": "w6d2g4",
+    "map_id": "map_bunpou_w6",
+    "stage_id": "stage_bunpou_w6d2",
+    "title": "行かないこともない（Aくない／naじゃない／Vない／Vられない＋こともない）",
+    "formula": "Aくない／naじゃない／Vない／Vられない ＋ こともない",
+    "meaning_en": "It's not that I can't / it's possible that.",
+    "meaning_id": "Bukannya tidak bisa / bukannya tidak mungkin.",
+    "explanation_note": "",
+    "examples": [
+      {
+        "jp": "鶏肉は、食べないこともないですが、あまり好きではありません。",
+        "en": "It's not that I don't eat chicken, but I don't like it very much.",
+        "id": "Bukannya tidak mau makan ayam, tapi aku kurang suka."
+      }
+    ],
+    "question_ids": [
+      "w6d2g4_q1",
+      "w6d2g4_q2",
+      "w6d2g4_q3",
+      "w6d2g4_q4",
+      "w6d2g4_q5",
+      "w6d2g4_q6",
+      "w6d2g4_q7"
+    ],
+    "questions_status": "authored"
+  },
+  {
+    "id": "w6d3g1",
+    "map_id": "map_bunpou_w6",
+    "stage_id": "stage_bunpou_w6d3",
+    "title": "話したところ（Vた＋ところ）",
+    "formula": "Vた ＋ ところ",
+    "meaning_en": "When I did something, as a result (neutral discovery).",
+    "meaning_id": "Ketika melakukan sesuatu, hasilnya ternyata...",
+    "explanation_note": "",
+    "examples": [
+      {
+        "jp": "先生に相談したところ、いいアドバイスをもらった。",
+        "en": "When I consulted the teacher, I received good advice.",
+        "id": "Saat berkonsultasi dengan guru, aku dapat saran yang bagus."
+      }
+    ],
+    "question_ids": [
+      "w6d3g1_q1",
+      "w6d3g1_q2",
+      "w6d3g1_q3",
+      "w6d3g1_q4",
+      "w6d3g1_q5",
+      "w6d3g1_q6",
+      "w6d3g1_q7"
+    ],
+    "questions_status": "authored"
+  },
+  {
+    "id": "w6d3g2",
+    "map_id": "map_bunpou_w6",
+    "stage_id": "stage_bunpou_w6d3",
+    "title": "落ちるところだった（Vる＋ところだった）",
+    "formula": "Vる ＋ ところだった",
+    "meaning_en": "Was about to / almost happened (narrowly avoided).",
+    "meaning_id": "Nyaris / hampir saja terjadi.",
+    "explanation_note": "",
+    "examples": [
+      {
+        "jp": "もう少しで階段から落ちるところだった。",
+        "en": "I was about to fall down the stairs.",
+        "id": "Hampir saja aku jatuh dari tangga."
+      }
+    ],
+    "question_ids": [
+      "w6d3g2_q1",
+      "w6d3g2_q2",
+      "w6d3g2_q3",
+      "w6d3g2_q4",
+      "w6d3g2_q5",
+      "w6d3g2_q6",
+      "w6d3g2_q7"
+    ],
+    "questions_status": "authored"
+  },
+  {
+    "id": "w6d3g3",
+    "map_id": "map_bunpou_w6",
+    "stage_id": "stage_bunpou_w6d3",
+    "title": "食べているところ（Vている／Vた／Vる＋ところ）",
+    "formula": "Vている／Vた／Vる ＋ ところ（だ／へ／に／を）",
+    "meaning_en": "In the process of / right at the moment of.",
+    "meaning_id": "Sedang di tengah-tengah / tepat pada saat.",
+    "explanation_note": "",
+    "examples": [
+      {
+        "jp": "今、ちょうどご飯を食べているところです。",
+        "en": "I am eating a meal right now.",
+        "id": "Sekarang aku pas lagi makan."
+      }
+    ],
+    "question_ids": [
+      "w6d3g3_q1",
+      "w6d3g3_q2",
+      "w6d3g3_q3",
+      "w6d3g3_q4",
+      "w6d3g3_q5",
+      "w6d3g3_q6",
+      "w6d3g3_q7"
+    ],
+    "questions_status": "authored"
+  },
+  {
+    "id": "w6d3g4",
+    "map_id": "map_bunpou_w6",
+    "stage_id": "stage_bunpou_w6d3",
+    "title": "電話したところで（Vた＋ところで…ない）",
+    "formula": "Vた ＋ ところで…ない",
+    "meaning_en": "Even if (doing so is useless / has no effect).",
+    "meaning_id": "Meskipun (sudah dilakukan pun percuma).",
+    "explanation_note": "",
+    "examples": [
+      {
+        "jp": "今さら走ったところで、間に合わない。",
+        "en": "Even if I run now, I won't make it in time.",
+        "id": "Sekalipun lari sekarang, sudah tidak akan keburu."
+      }
+    ],
+    "question_ids": [
+      "w6d3g4_q1",
+      "w6d3g4_q2",
+      "w6d3g4_q3",
+      "w6d3g4_q4",
+      "w6d3g4_q5",
+      "w6d3g4_q6",
+      "w6d3g4_q7"
+    ],
+    "questions_status": "authored"
+  },
+  {
+    "id": "w6d4g1",
+    "map_id": "map_bunpou_w6",
+    "stage_id": "stage_bunpou_w6d4",
+    "title": "行かないわけにはいかない（Vない＋わけにはいかない；Vるわけにはいかない）",
+    "formula": "Vない＋わけにはいかない；Vる＋わけにはいかない",
+    "meaning_en": "Cannot help but do / must do due to social obligation; or cannot do due to reasons.",
+    "meaning_id": "Mau tidak mau harus / tidak bisa tidak.",
+    "explanation_note": "",
+    "examples": [
+      {
+        "jp": "大事な会議だから、休むわけにはいかない。",
+        "en": "Because it is an important meeting, I cannot skip it.",
+        "id": "Karena rapat penting, aku tidak mungkin bolos."
+      }
+    ],
+    "question_ids": [
+      "w6d4g1_q1",
+      "w6d4g1_q2",
+      "w6d4g1_q3",
+      "w6d4g1_q4",
+      "w6d4g1_q5",
+      "w6d4g1_q6",
+      "w6d4g1_q7"
+    ],
+    "questions_status": "authored"
+  },
+  {
+    "id": "w6d4g2",
+    "map_id": "map_bunpou_w6",
+    "stage_id": "stage_bunpou_w6d4",
+    "title": "熱があるわけだ（V/A/na/N＋わけだ）",
+    "formula": "V・A・na・N ＋ わけだ",
+    "meaning_en": "Naturally / no wonder that (logical consequence).",
+    "meaning_id": "Pantas saja / wajar saja kalau begitu.",
+    "explanation_note": "",
+    "examples": [
+      {
+        "jp": "暑いわけだ。35度もある。",
+        "en": "No wonder it's so hot. It's 35 degrees!",
+        "id": "Pantas saja panas. Ternyata 35 derajat!"
+      }
+    ],
+    "question_ids": [
+      "w6d4g2_q1",
+      "w6d4g2_q2",
+      "w6d4g2_q3",
+      "w6d4g2_q4",
+      "w6d4g2_q5",
+      "w6d4g2_q6",
+      "w6d4g2_q7"
+    ],
+    "questions_status": "authored"
+  },
+  {
+    "id": "w6d4g3",
+    "map_id": "map_bunpou_w6",
+    "stage_id": "stage_bunpou_w6d4",
+    "title": "嫌いなわけではない（V/A/na/N＋わけではない／わけじゃない）",
+    "formula": "V・A・na・N ＋ わけではない／わけじゃない",
+    "meaning_en": "It doesn't mean that / not necessarily.",
+    "meaning_id": "Bukan berarti bahwa / tidak selalu begitu.",
+    "explanation_note": "",
+    "examples": [
+      {
+        "jp": "嫌いなわけではないが、あまり食べたくない。",
+        "en": "It's not that I hate it, but I don't really want to eat it.",
+        "id": "Bukan berarti aku benci, tapi sedang tidak ingin makan."
+      }
+    ],
+    "question_ids": [
+      "w6d4g3_q1",
+      "w6d4g3_q2",
+      "w6d4g3_q3",
+      "w6d4g3_q4",
+      "w6d4g3_q5",
+      "w6d4g3_q6",
+      "w6d4g3_q7"
+    ],
+    "questions_status": "authored"
+  },
+  {
+    "id": "w6d4g4",
+    "map_id": "map_bunpou_w6",
+    "stage_id": "stage_bunpou_w6d4",
+    "title": "勝てるわけがない（V/A/na/N＋わけがない／わけはない）",
+    "formula": "V・A・na・N ＋ わけがない／わけはない",
+    "meaning_en": "There is no way that / impossible.",
+    "meaning_id": "Mustahil / tidak mungkin sekali.",
+    "explanation_note": "",
+    "examples": [
+      {
+        "jp": "彼が勝てるわけがない。",
+        "en": "There is no way he can win.",
+        "id": "Mana mungkin dia bisa menang."
+      }
+    ],
+    "question_ids": [
+      "w6d4g4_q1",
+      "w6d4g4_q2",
+      "w6d4g4_q3",
+      "w6d4g4_q4",
+      "w6d4g4_q5",
+      "w6d4g4_q6",
+      "w6d4g4_q7"
+    ],
+    "questions_status": "authored"
+  },
+  {
+    "id": "w6d5g1",
+    "map_id": "map_bunpou_w6",
+    "stage_id": "stage_bunpou_w6d5",
+    "title": "お越しください（お／ご＋Vます＋ください；ご案内します；お持ちします）",
+    "formula": "お／ご ＋ Vます ＋ ください／いたします／申し上げる",
+    "meaning_en": "Honorific and humble expressions (Sonkeigo & Kenjougo).",
+    "meaning_id": "Ungkapan hormat dan rendah hati (Sonkeigo & Kenjougo).",
+    "explanation_note": "",
+    "examples": [
+      {
+        "jp": "どうぞお入りください。",
+        "en": "Please come in.",
+        "id": "Silakan masuk."
+      }
+    ],
+    "question_ids": [
+      "w6d5g1_q1",
+      "w6d5g1_q2",
+      "w6d5g1_q3",
+      "w6d5g1_q4",
+      "w6d5g1_q5",
+      "w6d5g1_q6",
+      "w6d5g1_q7"
+    ],
+    "questions_status": "authored"
+  },
+  {
+    "id": "w6d5g2",
+    "map_id": "map_bunpou_w6",
+    "stage_id": "stage_bunpou_w6d5",
+    "title": "ご覧になる・拝見する（特別な敬語 / Special Honorifics & Humble forms）",
+    "formula": "敬語・謙譲語の特別形",
+    "meaning_en": "Special irregular honorific and humble verbs (e.g. いらっしゃる, おっしゃる, 参る, 存じる).",
+    "meaning_id": "Bentuk khusus kata kerja hormat dan rendah hati.",
+    "explanation_note": "",
+    "examples": [
+      {
+        "jp": "先生がこちらの本をご覧になりました。",
+        "en": "The teacher looked at this book.",
+        "id": "Guru telah membaca buku ini."
+      }
+    ],
+    "question_ids": [
+      "w6d5g2_q1",
+      "w6d5g2_q2",
+      "w6d5g2_q3",
+      "w6d5g2_q4",
+      "w6d5g2_q5",
+      "w6d5g2_q6",
+      "w6d5g2_q7"
+    ],
+    "questions_status": "authored"
+  },
+  {
+    "id": "w6d5g3",
+    "map_id": "map_bunpou_w6",
+    "stage_id": "stage_bunpou_w6d5",
+    "title": "ご案内申し上げます（ご案内申し上げます／ご案内差し上げます）",
+    "formula": "ご／お ＋ Vます ＋ 申し上げる／差し上げる",
+    "meaning_en": "Formal humble expression for polite service.",
+    "meaning_id": "Ungkapan sangat sopan/rendah hati untuk melayani orang lain.",
+    "explanation_note": "",
+    "examples": [
+      {
+        "jp": "心よりお祝い申し上げます。",
+        "en": "I offer you my heartfelt congratulations.",
+        "id": "Saya mengucapkan selamat dari lubuk hati yang terdalam."
+      }
+    ],
+    "question_ids": [
+      "w6d5g3_q1",
+      "w6d5g3_q2",
+      "w6d5g3_q3",
+      "w6d5g3_q4",
+      "w6d5g3_q5",
+      "w6d5g3_q6",
+      "w6d5g3_q7"
+    ],
+    "questions_status": "authored"
+  },
+  {
+    "id": "w6d5g4",
+    "map_id": "map_bunpou_w6",
+    "stage_id": "stage_bunpou_w6d5",
+    "title": "お越しいただき（お／ご＋Vます＋いただく／願う）",
+    "formula": "お／ご ＋ Vます ＋ いただく／願う",
+    "meaning_en": "Humbly receiving an action / politely asking.",
+    "meaning_id": "Menerima tindakan secara hormat / memohon secara santun.",
+    "explanation_note": "",
+    "examples": [
+      {
+        "jp": "本日はご来店いただき、誠にありがとうございます。",
+        "en": "Thank you very much for visiting our store today.",
+        "id": "Terima kasih banyak telah berkunjung ke toko kami hari ini."
+      }
+    ],
+    "question_ids": [
+      "w6d5g4_q1",
+      "w6d5g4_q2",
+      "w6d5g4_q3",
+      "w6d5g4_q4",
+      "w6d5g4_q5",
+      "w6d5g4_q6",
+      "w6d5g4_q7"
+    ],
+    "questions_status": "authored"
+  },
+  {
+    "id": "w6d6g1",
+    "map_id": "map_bunpou_w6",
+    "stage_id": "stage_bunpou_w6d6",
+    "title": "よろしいでしょうか（丁寧な尋ね方 / Polite Inquiries）",
+    "formula": "〜よろしいでしょうか／〜ていただけますでしょうか",
+    "meaning_en": "Very polite inquiry/request.",
+    "meaning_id": "Cara bertanya/meminta yang sangat sopan.",
+    "explanation_note": "",
+    "examples": [
+      {
+        "jp": "こちらでよろしいでしょうか。",
+        "en": "Is this alright with you?",
+        "id": "Apakah ini sudah sesuai?"
+      }
+    ],
+    "question_ids": [
+      "w6d6g1_q1",
+      "w6d6g1_q2",
+      "w6d6g1_q3",
+      "w6d6g1_q4",
+      "w6d6g1_q5",
+      "w6d6g1_q6",
+      "w6d6g1_q7"
+    ],
+    "questions_status": "authored"
+  },
+  {
+    "id": "w6d6g2",
+    "map_id": "map_bunpou_w6",
+    "stage_id": "stage_bunpou_w6d6",
+    "title": "お伝えください（伝言・依頼 / Conveying Messages）",
+    "formula": "お／ご ＋ Vます ＋ くださいますよう／お伝え願えますか",
+    "meaning_en": "Politely asking someone to convey a message.",
+    "meaning_id": "Menyampaikan pesan secara santun.",
+    "explanation_note": "",
+    "examples": [
+      {
+        "jp": "田中様によろしくお伝えください。",
+        "en": "Please give my regards to Tanaka-sama.",
+        "id": "Tolong sampaikan salam saya kepada Tanaka-sama."
+      }
+    ],
+    "question_ids": [
+      "w6d6g2_q1",
+      "w6d6g2_q2",
+      "w6d6g2_q3",
+      "w6d6g2_q4",
+      "w6d6g2_q5",
+      "w6d6g2_q6",
+      "w6d6g2_q7"
+    ],
+    "questions_status": "authored"
+  },
+  {
+    "id": "w6d6g3",
+    "map_id": "map_bunpou_w6",
+    "stage_id": "stage_bunpou_w6d6",
+    "title": "総まとめ総合復習（General Review & Nuance Master）",
+    "formula": "N3文法総合マスター",
+    "meaning_en": "Comprehensive N3 grammar integration.",
+    "meaning_id": "Integrasi pemahaman menyeluruh tata bahasa N3.",
+    "explanation_note": "",
+    "examples": [
+      {
+        "jp": "最後まであきらめずにがんばりましょう！",
+        "en": "Let's do our best without giving up until the end!",
+        "id": "Ayo berjuang sampai akhir tanpa menyerah!"
+      }
+    ],
+    "question_ids": [
+      "w6d6g3_q1",
+      "w6d6g3_q2",
+      "w6d6g3_q3",
+      "w6d6g3_q4",
+      "w6d6g3_q5",
+      "w6d6g3_q6",
+      "w6d6g3_q7"
+    ],
+    "questions_status": "authored"
+  }
+]

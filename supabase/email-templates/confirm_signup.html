@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Konfirmasi Email — Nihongo Quest</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #F1E7D8; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; color: #3D281D;">
+
+  <!-- Outer Canvas Table -->
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" style="background-color: #F1E7D8; padding: 32px 16px;">
+    <tr>
+      <td align="center">
+
+        <!-- Main Card Container (Parchment & Stitched Leather Feel) -->
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" style="max-width: 560px; background-color: #FAF4E9; border: 2px solid #D4BC9B; border-radius: 18px; box-shadow: 0 10px 25px rgba(68, 45, 34, 0.12); overflow: hidden;">
+          
+          <!-- Header Banner (Deep Antique Leather) -->
+          <tr>
+            <td align="center" style="background: linear-gradient(180deg, #3D2314 0%, #2A170C 100%); background-color: #3D2314; padding: 28px 24px; border-bottom: 3px solid #A97824;">
+              
+              <!-- Emblem / Icon Badge -->
+              <table border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td align="center" style="background-color: #5E351F; border: 2px solid #A97824; width: 48px; height: 48px; border-radius: 12px; font-size: 24px; line-height: 48px; color: #E9CF9A;">
+                    ⚔️
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Logo & App Title -->
+              <h1 style="margin: 12px 0 2px 0; color: #FDF6EA; font-size: 22px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase;">
+                Nihongo Quest
+              </h1>
+              <p style="margin: 0; color: #C99532; font-size: 12px; font-weight: 600; letter-spacing: 1.5px;">
+                日本語クエスト • GERBANG PETUALANG
+              </p>
+            </td>
+          </tr>
+
+          <!-- Inner Content (Parchment Body) -->
+          <tr>
+            <td style="padding: 32px 28px; background-color: #FAF4E9;">
+
+              <!-- Stitched Decorative Box Outline -->
+              <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border: 2px dashed #D4BC9B; border-radius: 12px; background-color: #FFFDF8; padding: 24px;">
+                <tr>
+                  <td>
+                    <!-- Greeting -->
+                    <h2 style="margin: 0 0 12px 0; color: #3D281D; font-size: 18px; font-weight: 700;">
+                      Halo, Petualang Baru! (冒険者様)
+                    </h2>
+
+                    <p style="margin: 0 0 16px 0; color: #69503E; font-size: 14px; line-height: 1.6;">
+                      Selamat datang di dunia <strong>Nihongo Quest</strong>! Akun petualanganmu hampir siap digunakan.
+                    </p>
+
+                    <p style="margin: 0 0 24px 0; color: #69503E; font-size: 14px; line-height: 1.6;">
+                      Untuk mengamankan catatan progres belajarmu di Cloud, membuka akses leaderboard, dan sinkronisasi stage antar perangkat, silakan konfirmasi alamat emailmu dengan menekan tombol di bawah ini:
+                    </p>
+
+                    <!-- CTA Button (Skeuomorphic Golden RPG Button) -->
+                    <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin: 20px 0;">
+                      <tr>
+                        <td align="center">
+                          <a href="{{ .ConfirmationURL }}" target="_blank" style="display: inline-block; background-color: #8A5432; background: linear-gradient(180deg, #A2653E 0%, #7A4525 100%); color: #FFF9F0; font-size: 15px; font-weight: 700; text-decoration: none; padding: 14px 32px; border-radius: 12px; border-bottom: 4px solid #4D2814; border-top: 1px solid #D49B6A; letter-spacing: 0.5px; box-shadow: 0 6px 14px rgba(68, 45, 34, 0.25);">
+                            ⚔️ Konfirmasi Email &amp; Masuk Game
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Fallback Link -->
+                    <p style="margin: 24px 0 6px 0; color: #927B63; font-size: 12px; line-height: 1.5;">
+                      Jika tombol di atas tidak berfungsi, salin dan buka tautan berikut di browser kamu:
+                    </p>
+                    <p style="margin: 0 0 16px 0; word-break: break-all; font-size: 12px; line-height: 1.4;">
+                      <a href="{{ .ConfirmationURL }}" target="_blank" style="color: #A97824; text-decoration: underline;">
+                        {{ .ConfirmationURL }}
+                      </a>
+                    </p>
+
+                    <!-- Expiration Notice -->
+                    <div style="background-color: #F4EAD8; border-left: 3px solid #C99532; padding: 10px 14px; border-radius: 6px; margin-top: 20px;">
+                      <p style="margin: 0; color: #765F50; font-size: 12px; line-height: 1.5;">
+                        ⏳ <em>Tautan konfirmasi ini berlaku selama 24 jam. Jika kamu tidak merasa mendaftar di Nihongo Quest, silakan abaikan pesan ini.</em>
+                      </p>
+                    </div>
+
+                  </td>
+                </tr>
+              </table>
+
+            </td>
+          </tr>
+
+          <!-- Footer (Guild Trademark) -->
+          <tr>
+            <td align="center" style="background-color: #EFE4D2; border-top: 1px solid #E2D2BC; padding: 20px 24px;">
+              <p style="margin: 0 0 6px 0; color: #765F50; font-size: 12px; font-weight: 700;">
+                Nihongo Quest (日本語クエスト)
+              </p>
+              <p style="margin: 0; color: #927B63; font-size: 11px; line-height: 1.5;">
+                RPG Gamified Japanese Learning System • Kana, Kanji, Kotoba, Bunpou &amp; Dungeon Boss Trials
+              </p>
+            </td>
+          </tr>
+
+        </table>
+        <!-- End Main Card -->
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

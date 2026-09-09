@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/supabase-proxy/(.*)",
+      "destination": "https://iokhdhqnpslpwsxspvaj.supabase.co/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

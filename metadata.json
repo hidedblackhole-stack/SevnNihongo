@@ -1,0 +1,6 @@
+{
+  "name": "Nihongo Quest RPG",
+  "description": "Gamified Japanese learning RPG with character tier evolution, interactive maps, grammar theory and drills, vocabulary flashcards, kanji stroke writing, reading dokkai, and audio choukai listening.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
