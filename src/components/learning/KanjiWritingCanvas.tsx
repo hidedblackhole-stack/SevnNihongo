@@ -84,7 +84,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
   onFinish,
   soundEnabled = true,
   autoAdvance = false,
-  leniency = 0.7,
+  leniency = 1.3, // Forgiving stroke matching for smooth touchscreen/mouse writing
 }) => {
   const gridCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const writerContainerRef = useRef<HTMLDivElement | null>(null);
