@@ -104,7 +104,7 @@ export const MissionsView: React.FC<MissionsViewProps> = ({
                     {mission.title}
                   </h3>
                   {mission.claimed && (
-                    <span className="text-[10px] px-2 py-0.5 rounded-md bg-surface-inset text-emerald-500 border border-emerald-500/30 font-mono">
+                    <span className="text-[10px] px-2 py-0.5 rounded-md bg-surface-inset text-gold border border-gold/30 font-mono">
                       Selesai
                     </span>
                   )}
@@ -118,7 +118,7 @@ export const MissionsView: React.FC<MissionsViewProps> = ({
                 <div className="space-y-1 pt-0.5">
                   <div className="flex justify-between text-[11px] font-mono text-text-muted">
                     <span>Progress: {mission.progress} / {mission.target}</span>
-                    <span className={isComplete ? 'text-emerald-500 font-bold' : ''}>{percent}%</span>
+                    <span className={isComplete ? 'text-gold font-bold' : ''}>{percent}%</span>
                   </div>
                   <div className="skeuo-progress-track">
                     <motion.div

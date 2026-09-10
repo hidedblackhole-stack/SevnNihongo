@@ -376,7 +376,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
 
                 <div className="flex items-center justify-between text-xs font-mono pt-1">
                   {isGateCleared ? (
-                    <span className="text-emerald-500 dark:text-emerald-400 font-bold flex items-center gap-1 text-xs">
+                    <span className="text-gold font-bold flex items-center gap-1 text-xs">
                       <CheckCircle2 className="w-3.5 h-3.5" /> Gate Selesai
                     </span>
                   ) : (

@@ -99,9 +99,7 @@ export const StageDetailSheet: React.FC<StageDetailSheetProps> = ({
             <span
               className={`text-xs font-mono font-black px-2.5 py-0.5 rounded-lg border font-heading flex items-center gap-1 ${
                 isBoss
-                  ? 'bg-rose-500/15 border-rose-500/40 text-rose-600 dark:text-rose-400'
-                  : isCompleted
-                  ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-700 dark:text-emerald-400'
+                  ? 'bg-surface-inset border-border-primary text-gold'
                   : 'bg-gold/15 border-gold/40 text-gold'
               }`}
             >
@@ -110,7 +108,7 @@ export const StageDetailSheet: React.FC<StageDetailSheetProps> = ({
             </span>
 
             {isCompleted && (
-              <span className="text-[11px] font-mono font-bold px-2 py-0.5 rounded-lg bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/40">
+              <span className="text-[11px] font-mono font-bold px-2 py-0.5 rounded-lg bg-surface-inset text-gold border border-border-subtle">
                 Selesai
               </span>
             )}
@@ -186,25 +184,25 @@ export const StageDetailSheet: React.FC<StageDetailSheetProps> = ({
                 )}
                 {kotobaCount > 0 && (
                   <span className="text-xs px-2.5 py-1 rounded-lg bg-surface-inset border border-border-subtle flex items-center gap-1.5 font-medium text-text-primary">
-                    <Layers className="w-3.5 h-3.5 text-emerald-500" />
+                    <Layers className="w-3.5 h-3.5 text-gold" />
                     <span>{kotobaCount} Kosakata</span>
                   </span>
                 )}
                 {kanjiCount > 0 && (
                   <span className="text-xs px-2.5 py-1 rounded-lg bg-surface-inset border border-border-subtle flex items-center gap-1.5 font-medium text-text-primary">
-                    <Feather className="w-3.5 h-3.5 text-rose-500" />
+                    <Feather className="w-3.5 h-3.5 text-gold" />
                     <span>{kanjiCount} Kanji</span>
                   </span>
                 )}
                 {dokkaiCount > 0 && (
                   <span className="text-xs px-2.5 py-1 rounded-lg bg-surface-inset border border-border-subtle flex items-center gap-1.5 font-medium text-text-primary">
-                    <BookMarked className="w-3.5 h-3.5 text-teal-500" />
+                    <BookMarked className="w-3.5 h-3.5 text-gold" />
                     <span>{dokkaiCount} Dokkai</span>
                   </span>
                 )}
                 {choukaiCount > 0 && (
                   <span className="text-xs px-2.5 py-1 rounded-lg bg-surface-inset border border-border-subtle flex items-center gap-1.5 font-medium text-text-primary">
-                    <Headphones className="w-3.5 h-3.5 text-purple-500" />
+                    <Headphones className="w-3.5 h-3.5 text-gold" />
                     <span>{choukaiCount} Choukai</span>
                   </span>
                 )}

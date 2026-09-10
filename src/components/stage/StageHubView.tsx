@@ -575,7 +575,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
 
                 <div className="flex items-center gap-2">
                   {mod.isCompleted ? (
-                    <span className="btn btn-pill py-1 px-2.5 text-xs text-emerald-400 gap-1 font-mono">
+                    <span className="btn btn-pill py-1 px-2.5 text-xs text-gold gap-1 font-mono">
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       Selesai
                     </span>

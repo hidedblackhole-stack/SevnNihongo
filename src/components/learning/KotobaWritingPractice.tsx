@@ -85,7 +85,7 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
             <div key={i} className="flex flex-col items-center gap-2">
               <div 
                 className={`w-12 h-12 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center border-2 transition-all relative
-                  ${isDone ? 'bg-emerald-500/15 border-emerald-500/50 shadow-md' : 
+                  ${isDone ? 'bg-gold/15 border-gold/50 shadow-md' : 
                     isActive ? 'bg-surface-elevated border-gold ring-2 ring-gold/20 shadow-md' : 
                     'bg-surface-inset border-border-subtle'}
                 `}
@@ -97,7 +97,7 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
                       initial={{ opacity: 0, y: 30, scale: 0.5 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                      className="absolute inset-0 flex items-center justify-center text-2xl sm:text-3xl font-black text-emerald-600 dark:text-emerald-400 font-jp"
+                      className="absolute inset-0 flex items-center justify-center text-2xl sm:text-3xl font-black text-gold font-jp"
                     >
                       {char}
                     </motion.span>
@@ -142,19 +142,19 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ type: "spring", delay: 0.3 }}
-          className="w-full p-6 sm:p-8 rounded-3xl panel bg-surface-card border-2 border-emerald-500/40 text-center space-y-4 shadow-xl"
+          className="w-full p-6 sm:p-8 rounded-3xl panel bg-surface-card border-2 border-gold/40 text-center space-y-4 shadow-xl"
         >
-          <div className="w-16 h-16 rounded-full bg-emerald-500 text-surface-base flex items-center justify-center mx-auto mb-2 shadow-lg">
+          <div className="w-16 h-16 rounded-full bg-gold text-surface-base flex items-center justify-center mx-auto mb-2 shadow-lg">
             <Check className="w-8 h-8 stroke-[3]" />
           </div>
           
           <div className="space-y-1">
-            <h4 className="text-xl font-bold text-emerald-600 dark:text-emerald-400 font-heading">Kerja Bagus!</h4>
+            <h4 className="text-xl font-bold text-gold font-heading">Kerja Bagus!</h4>
             <p className="text-sm text-text-secondary">Kosakata berhasil diingat & ditulis.</p>
           </div>
           
           <div className="py-2">
-            <p className="text-lg font-mono text-emerald-600 dark:text-emerald-400 mb-1">{kotoba.reading}</p>
+            <p className="text-lg font-mono text-gold mb-1">{kotoba.reading}</p>
             <p className="text-3xl font-black text-text-primary font-jp tracking-wider drop-shadow-sm">{kotoba.word}</p>
           </div>
           

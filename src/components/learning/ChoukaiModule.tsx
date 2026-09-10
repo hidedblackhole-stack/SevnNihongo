@@ -147,7 +147,7 @@ export const ChoukaiModule: React.FC<ChoukaiModuleProps> = ({
             <div
               key={i}
               className={`w-1 rounded-full transition-all duration-200 ${
-                isPlaying ? 'bg-text-primary animate-pulse' : 'bg-border-subtle h-3'
+                isPlaying ? 'bg-gold animate-pulse' : 'bg-border-subtle h-3'
               }`}
               style={{
                 height: isPlaying ? `${Math.max(6, (Math.sin(i * 0.7) + 1.2) * 20)}px` : '6px',
@@ -169,7 +169,7 @@ export const ChoukaiModule: React.FC<ChoukaiModuleProps> = ({
 
           <button
             onClick={handleTogglePlayAudio}
-            className="p-5 rounded-full bg-surface-card dark:bg-surface-elevated text-text-primary font-black shadow-xl border border-border-primary active:scale-95 transition-all"
+            className="p-5 rounded-full bg-gold text-surface-base font-black shadow-xl active:scale-95 transition-all"
           >
             {isPlaying ? (
               <Pause className="w-8 h-8 fill-current" />
@@ -188,7 +188,7 @@ export const ChoukaiModule: React.FC<ChoukaiModuleProps> = ({
                 }}
                 className={`px-2.5 py-1 rounded-xl text-[11px] font-bold transition-all ${
                   speechRate === rate
-                    ? 'bg-surface-card dark:bg-surface-elevated text-text-primary shadow-md border border-border-subtle font-extrabold'
+                    ? 'bg-gold text-surface-base shadow-md font-bold'
                     : 'text-text-muted hover:text-text-primary'
                 }`}
               >

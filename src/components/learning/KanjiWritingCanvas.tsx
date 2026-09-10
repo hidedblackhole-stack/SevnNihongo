@@ -450,7 +450,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                   isCurrent
                     ? 'bg-gold text-surface-base shadow-md ring-2 ring-gold/40'
                     : isCompleted
-                      ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/40'
+                      ? 'bg-gold/15 text-gold border border-gold/40'
                       : 'bg-surface-inset text-text-muted hover:bg-surface-elevated'
                 }`}
               >
@@ -465,7 +465,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
       <div className="flex items-center justify-between w-full max-w-[320px] px-1 text-xs">
         <div>
           {mistakesCount > 0 && !isQuizComplete ? (
-            <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-rose-500/20 text-rose-500 border border-rose-500/40 backdrop-blur-md flex items-center gap-1 animate-pulse">
+            <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-surface-inset text-gold border border-gold/40 flex items-center gap-1 font-mono">
               Salah Gores: {mistakesCount}
             </span>
           ) : (
@@ -569,16 +569,14 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
             disabled={(!isQuizComplete && hasStrokeData) && !completedSheets.includes(currentSheet)}
             className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-md ${
               isQuizComplete || completedSheets.includes(currentSheet)
-                ? currentSheet >= totalSheets && completedSheets.includes(currentSheet)
-                  ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-500/25 active:scale-95'
-                  : 'bg-gold hover:opacity-90 text-surface-base font-black shadow-md active:scale-95'
+                ? 'bg-gold hover:opacity-90 text-surface-base font-black shadow-md active:scale-95'
                 : 'bg-surface-inset text-text-muted cursor-not-allowed border border-border-subtle'
             }`}
           >
             {completedSheets.includes(currentSheet) ? (
               currentSheet >= totalSheets ? (
                 <>
-                  <Check className="w-4 h-4 text-white stroke-[3]" />
+                  <Check className="w-4 h-4 text-surface-base stroke-[3]" />
                   <span>Selesai</span>
                 </>
               ) : (

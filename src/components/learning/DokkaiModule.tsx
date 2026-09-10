@@ -51,7 +51,7 @@ export const DokkaiModule: React.FC<DokkaiModuleProps> = ({
       <div className="w-full space-y-4">
         {/* Sticky reading preview card during quiz */}
         <div className="p-4 sm:p-5 rounded-2xl bg-surface-inset border border-border-subtle text-xs text-text-secondary max-h-48 overflow-y-auto mb-2 shadow-md">
-          <span className="font-bold text-teal-600 dark:text-teal-400 block mb-1 font-heading">
+          <span className="font-bold text-gold block mb-1 font-heading">
             📖 Teks Bacaan: {currentReading?.title || 'Wacana'}
           </span>
           <p className="whitespace-pre-line leading-relaxed font-jp text-text-primary">
@@ -123,12 +123,12 @@ export const DokkaiModule: React.FC<DokkaiModuleProps> = ({
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-border-subtle">
         <div className="flex items-center gap-2.5">
-          <span className="p-2 rounded-xl bg-surface-inset border border-teal-500/30 text-teal-600 dark:text-teal-400">
+          <span className="p-2 rounded-xl bg-gold/15 border border-gold/40 text-gold shadow-md">
             <BookMarked className="w-5 h-5" />
           </span>
           <div>
             <h2 className="text-base sm:text-lg font-bold text-text-primary font-heading flex items-center gap-2">
-              <span className="text-teal-600 dark:text-teal-400">読</span> DOKKAI (Membaca Teks Terpadu)
+              <span className="text-gold">読</span> DOKKAI (Membaca Teks Terpadu)
             </h2>
             <p className="text-xs text-text-secondary">
               Integrasi tata bahasa, kosakata, dan kanji dalam teks utuh
@@ -149,7 +149,7 @@ export const DokkaiModule: React.FC<DokkaiModuleProps> = ({
                 }}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all font-heading ${
                   isSelected
-                    ? 'bg-teal-600 text-white shadow-md font-bold'
+                    ? 'bg-gold text-surface-base shadow-md font-bold'
                     : 'text-text-muted hover:text-text-primary'
                 }`}
               >
@@ -164,7 +164,7 @@ export const DokkaiModule: React.FC<DokkaiModuleProps> = ({
       <div className="panel p-6 sm:p-7 rounded-3xl space-y-5 shadow-xl border border-border-subtle">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-border-subtle">
           <div>
-            <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-surface-inset text-teal-600 dark:text-teal-300 border border-teal-500/30 font-bold">
+            <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-surface-inset text-gold border border-border-subtle font-bold">
               {currentReading.level} • {currentReading.category}
             </span>
             <h3 className="text-lg sm:text-xl font-bold text-text-primary mt-1.5 font-heading">
@@ -193,15 +193,15 @@ export const DokkaiModule: React.FC<DokkaiModuleProps> = ({
         {currentReading.relationships && (
           <div className="p-3 rounded-2xl bg-surface-inset border border-border-subtle flex flex-wrap items-center justify-between gap-2 text-xs">
             <div className="flex items-center gap-1.5 text-text-secondary text-[11px]">
-              <Layers className="w-3.5 h-3.5 text-teal-500" />
+              <Layers className="w-3.5 h-3.5 text-gold" />
               <span>Komposisi Materi Integrasi:</span>
             </div>
             <div className="flex items-center gap-2 text-[11px] font-mono">
-              <span className="text-emerald-500 font-bold">70% Materi Stage Ini</span>
+              <span className="text-gold font-bold">70% Materi Stage Ini</span>
               <span className="text-border-primary">•</span>
-              <span className="text-indigo font-bold">20% Stage Lalu</span>
+              <span className="text-text-secondary font-bold">20% Stage Lalu</span>
               <span className="text-border-primary">•</span>
-              <span className="text-gold font-bold">10% Preview Berikutnya</span>
+              <span className="text-gold-soft font-bold">10% Preview Berikutnya</span>
             </div>
           </div>
         )}
@@ -210,13 +210,13 @@ export const DokkaiModule: React.FC<DokkaiModuleProps> = ({
         {currentReading?.vocabularyList && currentReading.vocabularyList.length > 0 && (
           <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-2">
             <h4 className="text-xs font-bold uppercase tracking-wider text-text-secondary flex items-center gap-1.5 font-heading">
-              <FileText className="w-3.5 h-3.5 text-teal-500" />
+              <FileText className="w-3.5 h-3.5 text-gold" />
               Kosakata Kunci Dalam Teks
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {(currentReading.vocabularyList || []).map((vocab, i) => (
                 <div key={i} className="text-xs p-2 rounded-xl bg-surface-card border border-border-subtle flex justify-between items-center">
-                  <span className="text-teal-600 dark:text-teal-300 font-bold">
+                  <span className="text-gold font-bold">
                     {vocab.reading && furiganaEnabled ? (
                       <RubyText
                         japanese={vocab.word.replace(/\s*\([^)]*\)/g, '')}

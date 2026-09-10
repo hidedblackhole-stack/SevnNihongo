@@ -72,7 +72,7 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
   if (!recallQueue || recallQueue.length === 0) {
     return (
       <div className="w-full max-w-lg mx-auto p-6 sm:p-8 rounded-3xl panel border border-border-subtle text-center space-y-5 shadow-xl">
-        <div className="p-4 inline-flex rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-500">
+        <div className="p-4 inline-flex rounded-full bg-gold/15 border border-gold/40 text-gold shadow-md">
           <CheckCircle2 className="w-10 h-10" />
         </div>
         <div>
@@ -235,7 +235,7 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
           </div>
           <div>
             <span className="text-[11px] text-text-muted">Peningkatan True Mastery</span>
-            <p className="text-lg font-bold text-emerald-500 font-mono">+{Math.round(accuracy * 0.15)}%</p>
+            <p className="text-lg font-bold text-gold font-mono">+{Math.round(accuracy * 0.15)}%</p>
           </div>
         </div>
 
@@ -257,14 +257,14 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
 
   return (
     <div className="w-full max-w-2xl mx-auto space-y-4 pb-6">
-      {/* Priority Filter Tabs */}
+      {/* Priority Filter Tabs — Unified 2-Color Skeuomorphic Design */}
       <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
         <button
           onClick={() => { setActiveFilter('ALL'); setCurrentIndex(0); }}
           className={`px-3 py-1.5 rounded-xl font-bold transition-all shrink-0 ${
             activeFilter === 'ALL'
-              ? 'bg-gold text-surface-base font-mono shadow-sm'
-              : 'bg-surface-inset text-text-secondary hover:text-text-primary border border-border-subtle'
+              ? 'bg-gold text-surface-base font-mono shadow-md'
+              : 'bg-surface-inset text-text-secondary hover:text-text-primary border border-border-subtle hover:border-gold/40'
           }`}
         >
           Semua ({recallQueue.length})
@@ -274,11 +274,11 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
             onClick={() => { setActiveFilter('CRITICAL'); setCurrentIndex(0); }}
             className={`px-3 py-1.5 rounded-xl font-bold transition-all shrink-0 flex items-center gap-1 ${
               activeFilter === 'CRITICAL'
-                ? 'bg-wine text-white shadow-md'
-                : 'bg-surface-inset text-wine-accent hover:text-white border border-wine/30'
+                ? 'bg-gold text-surface-base font-mono shadow-md'
+                : 'bg-surface-inset text-text-secondary hover:text-text-primary border border-border-subtle hover:border-gold/40'
             }`}
           >
-            <span>🔴 Kritis</span>
+            <span>Kritis</span>
             <span className="font-mono">({countCritical})</span>
           </button>
         )}
@@ -287,11 +287,11 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
             onClick={() => { setActiveFilter('WEAK'); setCurrentIndex(0); }}
             className={`px-3 py-1.5 rounded-xl font-bold transition-all shrink-0 flex items-center gap-1 ${
               activeFilter === 'WEAK'
-                ? 'bg-gold text-surface-base shadow-sm'
-                : 'bg-surface-inset text-gold hover:text-gold-soft border border-gold/30'
+                ? 'bg-gold text-surface-base font-mono shadow-md'
+                : 'bg-surface-inset text-text-secondary hover:text-text-primary border border-border-subtle hover:border-gold/40'
             }`}
           >
-            <span>🟠 Lemah</span>
+            <span>Lemah</span>
             <span className="font-mono">({countWeak})</span>
           </button>
         )}
@@ -300,11 +300,11 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
             onClick={() => { setActiveFilter('REVIEW'); setCurrentIndex(0); }}
             className={`px-3 py-1.5 rounded-xl font-bold transition-all shrink-0 flex items-center gap-1 ${
               activeFilter === 'REVIEW'
-                ? 'bg-indigo text-white shadow-sm'
-                : 'bg-surface-inset text-indigo hover:text-text-primary border border-indigo/30'
+                ? 'bg-gold text-surface-base font-mono shadow-md'
+                : 'bg-surface-inset text-text-secondary hover:text-text-primary border border-border-subtle hover:border-gold/40'
             }`}
           >
-            <span>🟡 Jadwal SRS</span>
+            <span>Jadwal SRS</span>
             <span className="font-mono">({countReview})</span>
           </button>
         )}
@@ -313,11 +313,11 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
             onClick={() => { setActiveFilter('MAINTAIN'); setCurrentIndex(0); }}
             className={`px-3 py-1.5 rounded-xl font-bold transition-all shrink-0 flex items-center gap-1 ${
               activeFilter === 'MAINTAIN'
-                ? 'bg-emerald-600 text-white shadow-sm'
-                : 'bg-surface-inset text-emerald-500 hover:text-emerald-400 border border-emerald-500/30'
+                ? 'bg-gold text-surface-base font-mono shadow-md'
+                : 'bg-surface-inset text-text-secondary hover:text-text-primary border border-border-subtle hover:border-gold/40'
             }`}
           >
-            <span>🟢 Penguatan</span>
+            <span>Penguatan</span>
             <span className="font-mono">({countMaintain})</span>
           </button>
         )}
@@ -327,10 +327,8 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
       <div className="panel p-4 sm:p-5 rounded-3xl border border-border-subtle shadow-xl space-y-3">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <span className={`p-1.5 rounded-lg ${
-              currentItem.priorityTier === 'CRITICAL' ? 'bg-wine/20 text-wine-accent' : 'bg-gold/20 text-gold'
-            }`}>
-              <Flame className="w-4 h-4 animate-pulse" />
+            <span className="p-1.5 rounded-lg bg-gold/15 text-gold border border-gold/30">
+              <Flame className="w-4 h-4" />
             </span>
             <span className="text-xs font-bold text-text-primary font-heading">
               RECALL ADAPTIF • {currentIndex + 1} / {totalItems}
@@ -366,15 +364,7 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
           </div>
 
           <div className="flex items-center gap-1.5 shrink-0">
-            <span className={`text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase ${
-              currentItem.priorityTier === 'CRITICAL'
-                ? 'bg-wine/20 text-wine-accent border border-wine/40'
-                : currentItem.priorityTier === 'WEAK'
-                ? 'bg-gold/20 text-gold border border-gold/40'
-                : currentItem.priorityTier === 'REVIEW'
-                ? 'bg-indigo/20 text-indigo border border-indigo/40'
-                : 'bg-emerald-500/20 text-emerald-500 border border-emerald-500/40'
-            }`}>
+            <span className="text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase bg-surface-card border border-border-subtle text-gold font-mono">
               {currentItem.priorityTier}
             </span>
             <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-surface-card border border-border-subtle text-text-secondary uppercase font-mono">
@@ -452,7 +442,7 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
                     animate={{ scale: 1, opacity: 1 }}
                     onClick={() => handleRemoveWord(word, idx)}
                     disabled={isAnswered}
-                    className="px-3 py-1.5 rounded-xl bg-gold/15 hover:bg-rose-500/15 text-gold hover:text-rose-400 border border-gold/40 hover:border-rose-500/40 text-xs sm:text-sm font-bold flex items-center gap-1 transition-all"
+                    className="px-3 py-1.5 rounded-xl bg-gold/15 hover:bg-surface-elevated text-gold hover:text-text-primary border border-gold/40 text-xs sm:text-sm font-bold flex items-center gap-1 transition-all"
                   >
                     <span>{word}</span>
                     <span className="text-[10px] opacity-60">×</span>
@@ -470,7 +460,7 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
                   whileTap={{ scale: 0.95 }}
                   onClick={() => handleWordClick(item)}
                   disabled={isAnswered}
-                  className="px-3.5 py-2 rounded-xl bg-surface-inset hover:bg-surface-elevated text-text-primary border border-border-subtle text-xs sm:text-sm font-bold shadow-sm transition-all"
+                  className="px-3.5 py-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-primary border border-border-subtle hover:border-gold/50 text-xs sm:text-sm font-bold shadow-sm transition-all"
                 >
                   {item.word}
                 </motion.button>
@@ -508,14 +498,14 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
               const isSelected = selectedOption === idx;
               const isCorrect = idx === currentQ.correctIndex;
 
-              let optionStyle = 'bg-surface-inset border-border-subtle hover:border-border-primary hover:bg-surface-elevated text-text-primary';
+              let optionStyle = 'bg-surface-card border-border-subtle hover:border-gold/60 hover:bg-surface-elevated text-text-primary shadow-sm';
               if (isAnswered) {
                 if (isCorrect) {
-                  optionStyle = 'bg-emerald-500/15 border-emerald-500/50 text-emerald-600 dark:text-emerald-400 font-bold';
+                  optionStyle = 'bg-gold/15 border-gold text-gold font-bold shadow-md';
                 } else if (isSelected) {
-                  optionStyle = 'bg-rose-500/15 border-rose-500/50 text-rose-600 dark:text-rose-400 font-bold';
+                  optionStyle = 'bg-surface-inset border-border-primary text-text-muted font-medium opacity-70';
                 } else {
-                  optionStyle = 'bg-surface-inset/50 border-border-subtle/50 text-text-muted opacity-50';
+                  optionStyle = 'bg-surface-inset/40 border-border-subtle/40 text-text-muted opacity-40';
                 }
               }
 
@@ -524,11 +514,11 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
                   key={idx}
                   onClick={() => handleSelectOption(idx)}
                   disabled={isAnswered}
-                  className={`p-3.5 sm:p-4 rounded-2xl border text-left text-xs sm:text-sm font-medium transition-all flex items-center justify-between gap-3 shadow-sm ${optionStyle}`}
+                  className={`p-3.5 sm:p-4 rounded-2xl border text-left text-xs sm:text-sm font-medium transition-all flex items-center justify-between gap-3 ${optionStyle}`}
                 >
                   <span className="font-jp">{opt}</span>
-                  {isAnswered && isCorrect && <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />}
-                  {isAnswered && isSelected && !isCorrect && <XCircle className="w-4 h-4 text-rose-500 flex-shrink-0" />}
+                  {isAnswered && isCorrect && <CheckCircle2 className="w-4 h-4 text-gold flex-shrink-0" />}
+                  {isAnswered && isSelected && !isCorrect && <XCircle className="w-4 h-4 text-text-muted flex-shrink-0" />}
                 </button>
               );
             })}
