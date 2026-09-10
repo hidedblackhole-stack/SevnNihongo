@@ -108,6 +108,77 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
     </button>
   );
 
+  // Memoize boss battle questions so options do not reshuffle on render and correctIndex is properly synced
+  const memoizedBossQuestions = React.useMemo(() => {
+    if (activeModule !== 'boss') return [];
+
+    const compiled: (import('../../types/content').Question & { category: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' })[] = [];
+
+    // Bunpou questions (25%)
+    if (stage.bunpouIds && stage.bunpouIds.length > 0) {
+      stage.bunpouIds.forEach(id => {
+        const bp = BUNPOU_DATABASE[id];
+        if (bp && bp.questions) {
+          bp.questions.slice(0, 3).forEach(q => compiled.push({ ...q, category: 'bunpou' }));
+        }
+      });
+    }
+
+    // Kotoba questions (20%)
+    if (stage.kotobaIds && stage.kotobaIds.length > 0) {
+      stage.kotobaIds.slice(0, 2).forEach(id => {
+        const kt = KOTOBA_DATABASE[id];
+        if (kt) {
+          const rawOpts = [kt.meaningId, 'Menunda pertemuan penting', 'Membuat hidangan tradisional', 'Membeli perbekalan'];
+          const shuffledOpts = [...rawOpts].sort(() => 0.5 - Math.random());
+          const correctIdx = shuffledOpts.indexOf(kt.meaningId);
+          compiled.push({
+            id: `boss_kt_${kt.id}`,
+            category: 'kotoba',
+            prompt: `Pilih arti yang tepat untuk kosakata: 「${kt.word}」 (${kt.reading})`,
+            options: shuffledOpts,
+            correctIndex: correctIdx,
+            explanation: `Kosakata 「${kt.word}」 (${kt.reading}) = ${kt.meaningId}`
+          });
+        }
+      });
+    }
+
+    // Kanji questions (20%)
+    if (stage.kanjiIds && stage.kanjiIds.length > 0) {
+      stage.kanjiIds.slice(0, 2).forEach(id => {
+        const kj = KANJI_DATABASE[id];
+        if (kj && kj.questions) {
+          kj.questions.slice(0, 2).forEach(q => compiled.push({ ...q, category: 'kanji' }));
+        }
+      });
+    }
+
+    // Dokkai questions (20%)
+    if (stage.dokkaiIds && stage.dokkaiIds.length > 0) {
+      stage.dokkaiIds.slice(0, 1).forEach(id => {
+        const dk = DOKKAI_DATABASE[id];
+        if (dk && dk.questions) {
+          dk.questions.slice(0, 2).forEach(q => compiled.push({ ...q, category: 'dokkai' }));
+        }
+      });
+    }
+
+    // Choukai questions (15%)
+    if (stage.choukaiIds && stage.choukaiIds.length > 0) {
+      stage.choukaiIds.slice(0, 1).forEach(id => {
+        const ck = CHOUKAI_DATABASE[id];
+        if (ck && ck.questions) {
+          ck.questions.slice(0, 1).forEach(q => compiled.push({ ...q, category: 'choukai' }));
+        }
+      });
+    }
+
+    return compiled.length > 0
+      ? compiled
+      : Object.values(BUNPOU_DATABASE).flatMap(b => (b.questions || []).map(q => ({ ...q, category: 'bunpou' as const }))).slice(0, 10);
+  }, [activeModule, stage.id]);
+
   if (activeModule === 'bunpou') {
     return (
       <div className="space-y-4">
@@ -198,77 +269,6 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
       </div>
     );
   }
-
-  // Memoize boss battle questions so options do not reshuffle on render and correctIndex is properly synced
-  const memoizedBossQuestions = React.useMemo(() => {
-    if (activeModule !== 'boss') return [];
-
-    const compiled: (import('../../types/content').Question & { category: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' })[] = [];
-
-    // Bunpou questions (25%)
-    if (stage.bunpouIds && stage.bunpouIds.length > 0) {
-      stage.bunpouIds.forEach(id => {
-        const bp = BUNPOU_DATABASE[id];
-        if (bp && bp.questions) {
-          bp.questions.slice(0, 3).forEach(q => compiled.push({ ...q, category: 'bunpou' }));
-        }
-      });
-    }
-
-    // Kotoba questions (20%)
-    if (stage.kotobaIds && stage.kotobaIds.length > 0) {
-      stage.kotobaIds.slice(0, 2).forEach(id => {
-        const kt = KOTOBA_DATABASE[id];
-        if (kt) {
-          const rawOpts = [kt.meaningId, 'Menunda pertemuan penting', 'Membuat hidangan tradisional', 'Membeli perbekalan'];
-          const shuffledOpts = [...rawOpts].sort(() => 0.5 - Math.random());
-          const correctIdx = shuffledOpts.indexOf(kt.meaningId);
-          compiled.push({
-            id: `boss_kt_${kt.id}`,
-            category: 'kotoba',
-            prompt: `Pilih arti yang tepat untuk kosakata: 「${kt.word}」 (${kt.reading})`,
-            options: shuffledOpts,
-            correctIndex: correctIdx,
-            explanation: `Kosakata 「${kt.word}」 (${kt.reading}) = ${kt.meaningId}`
-          });
-        }
-      });
-    }
-
-    // Kanji questions (20%)
-    if (stage.kanjiIds && stage.kanjiIds.length > 0) {
-      stage.kanjiIds.slice(0, 2).forEach(id => {
-        const kj = KANJI_DATABASE[id];
-        if (kj && kj.questions) {
-          kj.questions.slice(0, 2).forEach(q => compiled.push({ ...q, category: 'kanji' }));
-        }
-      });
-    }
-
-    // Dokkai questions (20%)
-    if (stage.dokkaiIds && stage.dokkaiIds.length > 0) {
-      stage.dokkaiIds.slice(0, 1).forEach(id => {
-        const dk = DOKKAI_DATABASE[id];
-        if (dk && dk.questions) {
-          dk.questions.slice(0, 2).forEach(q => compiled.push({ ...q, category: 'dokkai' }));
-        }
-      });
-    }
-
-    // Choukai questions (15%)
-    if (stage.choukaiIds && stage.choukaiIds.length > 0) {
-      stage.choukaiIds.slice(0, 1).forEach(id => {
-        const ck = CHOUKAI_DATABASE[id];
-        if (ck && ck.questions) {
-          ck.questions.slice(0, 1).forEach(q => compiled.push({ ...q, category: 'choukai' }));
-        }
-      });
-    }
-
-    return compiled.length > 0
-      ? compiled
-      : Object.values(BUNPOU_DATABASE).flatMap(b => (b.questions || []).map(q => ({ ...q, category: 'bunpou' as const }))).slice(0, 10);
-  }, [activeModule, stage.id]);
 
   if (activeModule === 'boss') {
     return (

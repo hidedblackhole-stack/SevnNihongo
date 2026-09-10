@@ -27,23 +27,23 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
     setIsWritingMode(false);
   }, [item?.id]);
 
-  if (!isOpen || !item) return null;
-
   // Dynamically compute related words based on shared Kanji components
   const dynamicRelatedWords = useMemo(() => {
-    if (!item.kanjiComponents || item.kanjiComponents.length === 0) return [];
+    if (!item || !item.kanjiComponents || item.kanjiComponents.length === 0) return [];
     
     // Find up to 5 other words that share at least one kanji
     const allItems = Object.values(KOTOBA_DATABASE);
     const related = allItems.filter(other => 
       other.id !== item.id && 
       other.kanjiComponents &&
-      other.kanjiComponents.some(kanji => item.kanjiComponents.includes(kanji))
+      other.kanjiComponents.some(kanji => item.kanjiComponents!.includes(kanji))
     );
     
     // Shuffle and pick 5
     return related.sort(() => 0.5 - Math.random()).slice(0, 5);
   }, [item]);
+
+  if (!isOpen || !item) return null;
 
   const relatedWords = item.relatedWords || dynamicRelatedWords.map(rw => rw.word);
   const collocations = item.collocations || [];
