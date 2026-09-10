@@ -51,36 +51,36 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
       }}
     >
       <div
-        className="w-full max-w-lg rounded-t-3xl bg-stone-900 border-t border-x border-amber-600/40 shadow-2xl animate-slide-up overflow-hidden max-h-[85vh] flex flex-col"
+        className="w-full max-w-lg rounded-t-3xl panel bg-surface-card border-t border-x border-border-primary shadow-2xl animate-slide-up overflow-hidden max-h-[85vh] flex flex-col"
         style={{
           animation: 'slideUp 0.25s ease-out',
         }}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 pb-3 border-b border-stone-800 shrink-0">
+        <div className="flex items-center justify-between p-4 pb-3 border-b border-border-subtle shrink-0">
           <div className="space-y-0.5 flex-1 pr-2">
             {pattern ? (
               <>
-                <h3 className="text-lg font-bold text-stone-100 font-jp flex items-center gap-2">
-                  <span className="text-amber-400 font-mono text-base">{pattern.symbol}</span>
-                  <span className="text-stone-500">—</span>
+                <h3 className="text-lg font-bold text-text-primary font-jp flex items-center gap-2">
+                  <span className="text-gold font-mono text-base">{pattern.symbol}</span>
+                  <span className="text-text-muted">—</span>
                   <span>{pattern.nameJa}</span>
                 </h3>
-                <p className="text-xs text-amber-300/80">
+                <p className="text-xs text-gold/80">
                   {pattern.nameId} / {pattern.nameEn}
                 </p>
               </>
             ) : connectorInfo ? (
               <>
                 <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 text-xs font-mono font-bold">
+                  <span className="px-2 py-0.5 rounded-lg bg-gold/15 border border-gold/30 text-gold text-xs font-mono font-bold">
                     Sub-Rumus
                   </span>
-                  <h3 className="text-lg font-bold text-stone-100 font-jp">
+                  <h3 className="text-lg font-bold text-text-primary font-jp">
                     {connectorInfo.token}
                   </h3>
                 </div>
-                <p className="text-xs text-stone-300 line-clamp-1">
+                <p className="text-xs text-text-secondary line-clamp-1">
                   {connectorInfo.nameId}
                 </p>
               </>
@@ -88,7 +88,7 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-400 hover:text-stone-200 transition-colors border border-stone-700 shrink-0"
+            className="p-2 rounded-xl bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-colors border border-border-subtle shrink-0"
           >
             <X className="w-4 h-4" />
           </button>
@@ -96,8 +96,8 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
 
         {/* Sibling Sub-branches Quick Switcher */}
         {siblingBranches.length > 1 && (
-          <div className="px-4 py-2.5 bg-stone-950/80 border-b border-stone-800 shrink-0 space-y-1.5">
-            <div className="flex items-center gap-1.5 text-[11px] font-bold text-amber-400 font-medieval">
+          <div className="px-4 py-2.5 bg-surface-inset border-b border-border-subtle shrink-0 space-y-1.5">
+            <div className="flex items-center gap-1.5 text-[11px] font-bold text-gold font-heading">
               <GitBranch className="w-3.5 h-3.5" />
               <span>Cabang Rumus Terkait:</span>
             </div>
@@ -110,8 +110,8 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
                     onClick={() => setActiveId(b.id)}
                     className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border font-jp flex items-center gap-1 ${
                       isActive
-                        ? 'bg-amber-500/20 border-amber-500 text-amber-300 shadow-sm'
-                        : 'bg-stone-900 border-stone-800 text-stone-400 hover:text-stone-200 hover:border-stone-700'
+                        ? 'bg-gold/15 border-gold text-gold shadow-sm'
+                        : 'bg-surface-card border-border-subtle text-text-secondary hover:text-text-primary hover:bg-surface-elevated'
                     }`}
                   >
                     <span>{b.token}</span>
@@ -128,29 +128,29 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
           {subBranch ? (
             <div className="space-y-4">
               {/* Description & Meaning */}
-              <div className="p-3.5 rounded-2xl bg-stone-950 border border-stone-800 space-y-1">
-                <h4 className="text-[11px] font-bold uppercase tracking-wider text-stone-400 font-medieval">
+              <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle space-y-1">
+                <h4 className="text-[11px] font-bold uppercase tracking-wider text-text-secondary font-heading">
                   📖 Fungsi & Nuansa
                 </h4>
-                <p className="text-xs sm:text-sm text-stone-200 leading-relaxed">
+                <p className="text-xs sm:text-sm text-text-primary leading-relaxed">
                   {subBranch.meaning}
                 </p>
               </div>
 
               {/* Lokasi Penggunaan */}
-              <div className="p-3.5 rounded-2xl bg-stone-950 border border-amber-600/30 space-y-1.5">
-                <div className="flex items-center gap-1.5 text-xs font-bold text-amber-300 font-medieval">
-                  <MapPin className="w-4 h-4 text-amber-400" />
+              <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle space-y-1.5">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-gold font-heading">
+                  <MapPin className="w-4 h-4 text-gold" />
                   <span>Lokasi & Posisi Penggunaan:</span>
                 </div>
-                <p className="text-xs sm:text-sm text-stone-200 leading-relaxed pl-5 font-medium">
+                <p className="text-xs sm:text-sm text-text-primary leading-relaxed pl-5 font-medium">
                   {subBranch.usageLocation}
                 </p>
               </div>
 
               {/* Kondisi Sambungan (Connection Rules) */}
               <div className="space-y-2">
-                <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-amber-300 font-medieval">
+                <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-gold font-heading">
                   <Settings2 className="w-4 h-4" />
                   <span>Kondisi & Aturan Sambungan (接続)</span>
                 </div>
@@ -158,19 +158,19 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
                   {subBranch.connectionConditions.map((cond, idx) => (
                     <div
                       key={idx}
-                      className="p-3 rounded-2xl bg-stone-950 border border-stone-800 space-y-1"
+                      className="p-3 rounded-2xl bg-surface-inset border border-border-subtle space-y-1"
                     >
                       <div className="flex items-center gap-2">
-                        <span className="px-2 py-0.5 rounded-lg bg-stone-900 border border-stone-700 text-stone-300 text-[10px] font-bold">
+                        <span className="px-2 py-0.5 rounded-lg bg-surface-card border border-border-subtle text-text-secondary text-[10px] font-bold">
                           {cond.partOfSpeech}
                         </span>
-                        <span className="text-xs font-mono font-bold text-amber-300">
+                        <span className="text-xs font-mono font-bold text-gold">
                           {cond.rule}
                         </span>
                       </div>
                       {cond.example && (
-                        <p className="text-[11px] text-stone-400 pl-1">
-                          Contoh: <span className="text-stone-300 font-jp">{cond.example}</span>
+                        <p className="text-[11px] text-text-secondary pl-1">
+                          Contoh: <span className="text-text-primary font-jp">{cond.example}</span>
                         </p>
                       )}
                     </div>
@@ -181,29 +181,29 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
               {/* Contoh Kalimat Khusus Sub Ini */}
               {subBranch.examples && subBranch.examples.length > 0 && (
                 <div className="space-y-2">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-stone-400 font-medieval">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-text-secondary font-heading">
                     💬 Contoh Kalimat untuk Sub Ini (例文)
                   </h4>
                   <div className="space-y-2">
                     {subBranch.examples.map((ex, idx) => (
                       <div
                         key={idx}
-                        className="p-3 rounded-2xl bg-stone-950 border border-stone-800 flex items-start justify-between gap-2.5"
+                        className="p-3 rounded-2xl bg-surface-inset border border-border-subtle flex items-start justify-between gap-2.5"
                       >
                         <div className="space-y-1 flex-1">
-                          <p className="text-xs text-amber-400/80 font-jp">
+                          <p className="text-xs text-gold/80 font-jp">
                             {ex.reading}
                           </p>
-                          <p className="text-xs sm:text-sm font-bold text-stone-100 font-jp">
+                          <p className="text-xs sm:text-sm font-bold text-text-primary font-jp">
                             {ex.japanese}
                           </p>
-                          <p className="text-xs text-stone-300">
+                          <p className="text-xs text-text-secondary">
                             {ex.meaningId}
                           </p>
                         </div>
                         <button
                           onClick={() => speakJapanese(ex.japanese)}
-                          className="p-2 rounded-xl bg-stone-900 hover:bg-stone-800 text-amber-400 border border-stone-700 transition-colors shrink-0"
+                          className="p-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-gold border border-border-subtle transition-colors shrink-0"
                           title="Dengarkan Suara"
                         >
                           <Volume2 className="w-3.5 h-3.5" />
@@ -216,8 +216,8 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
             </div>
           ) : connectorInfo ? (
             /* Regular connector without sub-branch */
-            <div className="p-3.5 rounded-2xl bg-stone-950 border border-stone-800">
-              <p className="text-xs sm:text-sm text-stone-300 leading-relaxed">
+            <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle">
+              <p className="text-xs sm:text-sm text-text-secondary leading-relaxed">
                 {connectorInfo.description}
               </p>
             </div>
@@ -226,52 +226,52 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
           {/* Conjugation Table (only for conjugation patterns) */}
           {pattern && (
             <div className="space-y-4">
-              <div className="p-3 rounded-2xl bg-stone-950 border border-stone-800">
-                <p className="text-xs sm:text-sm text-stone-300 leading-relaxed">
+              <div className="p-3 rounded-2xl bg-surface-inset border border-border-subtle">
+                <p className="text-xs sm:text-sm text-text-secondary leading-relaxed">
                   {pattern.shortDescription}
                 </p>
               </div>
 
               <div className="space-y-2">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-amber-300 font-medieval">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-gold font-heading">
                   📐 Cara Pembentukan (Konjugasi)
                 </h4>
 
                 {/* Group I */}
-                <div className="p-3 rounded-2xl bg-stone-950 border border-stone-800 space-y-1">
+                <div className="p-3 rounded-2xl bg-surface-inset border border-border-subtle space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="px-2 py-0.5 rounded-lg bg-blue-900/50 text-blue-300 text-[10px] font-bold border border-blue-700/30">
+                    <span className="px-2 py-0.5 rounded-lg bg-surface-card text-text-primary text-[10px] font-bold border border-border-subtle">
                       Grup I
                     </span>
-                    <span className="text-[10px] text-stone-500">五段動詞 / Godan</span>
+                    <span className="text-[10px] text-text-muted">五段動詞 / Godan</span>
                   </div>
-                  <p className="text-xs text-stone-300 font-jp whitespace-pre-line leading-relaxed">
+                  <p className="text-xs text-text-primary font-jp whitespace-pre-line leading-relaxed">
                     {pattern.formation.groupI}
                   </p>
                 </div>
 
                 {/* Group II */}
-                <div className="p-3 rounded-2xl bg-stone-950 border border-stone-800 space-y-1">
+                <div className="p-3 rounded-2xl bg-surface-inset border border-border-subtle space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="px-2 py-0.5 rounded-lg bg-emerald-900/50 text-emerald-300 text-[10px] font-bold border border-emerald-700/30">
+                    <span className="px-2 py-0.5 rounded-lg bg-surface-card text-text-primary text-[10px] font-bold border border-border-subtle">
                       Grup II
                     </span>
-                    <span className="text-[10px] text-stone-500">一段動詞 / Ichidan</span>
+                    <span className="text-[10px] text-text-muted">一段動詞 / Ichidan</span>
                   </div>
-                  <p className="text-xs text-stone-300 font-jp whitespace-pre-line leading-relaxed">
+                  <p className="text-xs text-text-primary font-jp whitespace-pre-line leading-relaxed">
                     {pattern.formation.groupII}
                   </p>
                 </div>
 
                 {/* Group III */}
-                <div className="p-3 rounded-2xl bg-stone-950 border border-stone-800 space-y-1">
+                <div className="p-3 rounded-2xl bg-surface-inset border border-border-subtle space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="px-2 py-0.5 rounded-lg bg-purple-900/50 text-purple-300 text-[10px] font-bold border border-purple-700/30">
+                    <span className="px-2 py-0.5 rounded-lg bg-surface-card text-text-primary text-[10px] font-bold border border-border-subtle">
                       Grup III
                     </span>
-                    <span className="text-[10px] text-stone-500">不規則動詞 / Irregular</span>
+                    <span className="text-[10px] text-text-muted">不規則動詞 / Irregular</span>
                   </div>
-                  <p className="text-xs text-stone-300 font-jp whitespace-pre-line leading-relaxed">
+                  <p className="text-xs text-text-primary font-jp whitespace-pre-line leading-relaxed">
                     {pattern.formation.groupIII}
                   </p>
                 </div>
@@ -281,8 +281,8 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
         </div>
 
         {/* Bottom safe area + close hint */}
-        <div className="p-3 pt-2 border-t border-stone-800 text-center shrink-0">
-          <p className="text-[10px] text-stone-500">Ketuk di luar atau tombol ✕ untuk menutup</p>
+        <div className="p-3 pt-2 border-t border-border-subtle text-center shrink-0">
+          <p className="text-[10px] text-text-muted">Ketuk di luar atau tombol ✕ untuk menutup</p>
         </div>
       </div>
 

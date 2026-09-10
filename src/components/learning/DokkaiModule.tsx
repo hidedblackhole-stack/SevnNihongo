@@ -50,11 +50,11 @@ export const DokkaiModule: React.FC<DokkaiModuleProps> = ({
     return (
       <div className="w-full space-y-4">
         {/* Sticky reading preview card during quiz */}
-        <div className="p-4 sm:p-5 rounded-2xl bg-stone-900 border border-stone-800 text-xs text-stone-300 max-h-48 overflow-y-auto mb-2 shadow-md">
-          <span className="font-bold text-amber-400 block mb-1 font-medieval">
+        <div className="p-4 sm:p-5 rounded-2xl bg-surface-inset border border-border-subtle text-xs text-text-secondary max-h-48 overflow-y-auto mb-2 shadow-md">
+          <span className="font-bold text-teal-600 dark:text-teal-400 block mb-1 font-heading">
             📖 Teks Bacaan: {currentReading?.title || 'Wacana'}
           </span>
-          <p className="whitespace-pre-line leading-relaxed font-jp text-stone-200">
+          <p className="whitespace-pre-line leading-relaxed font-jp text-text-primary">
             {(currentReading as any).reading && furiganaEnabled ? (
               <RubyText
                 japanese={currentReading.text}
@@ -89,23 +89,23 @@ export const DokkaiModule: React.FC<DokkaiModuleProps> = ({
 
         {/* Diagnostic Analysis Card if mistakes occurred */}
         {diagnosticResult && (
-          <div className="p-4 sm:p-5 rounded-2xl bg-stone-950 border border-amber-600/50 space-y-2.5 text-xs text-stone-300 shadow-xl">
-            <div className="flex items-center gap-2 text-amber-300 font-bold font-medieval">
-              <AlertTriangle className="w-4 h-4 text-amber-400" />
+          <div className="p-4 sm:p-5 rounded-2xl bg-surface-inset border border-border-primary space-y-2.5 text-xs text-text-secondary shadow-xl">
+            <div className="flex items-center gap-2 text-gold font-bold font-heading">
+              <AlertTriangle className="w-4 h-4 text-gold" />
               <span>Analisis Diagnostik Pemahaman Dokkai</span>
             </div>
-            <p className="leading-relaxed text-stone-200">
+            <p className="leading-relaxed text-text-primary">
               {diagnosticResult.diagnosticMessage}
             </p>
 
             {diagnosticResult.weakGrammars.length > 0 && (
-              <div className="pt-2 border-t border-stone-800">
-                <span className="text-[11px] font-bold text-stone-400 block mb-1">
+              <div className="pt-2 border-t border-border-subtle">
+                <span className="text-[11px] font-bold text-text-muted block mb-1">
                   Pola Tata Bahasa Terkait (Otomatis ditambahkan ke antrean Recall):
                 </span>
                 <div className="flex flex-wrap gap-1.5">
                   {diagnosticResult.weakGrammars.map(g => (
-                    <span key={g.id} className="px-2 py-0.5 rounded-lg bg-stone-900 border border-amber-600/40 text-amber-300 text-[11px] font-medieval">
+                    <span key={g.id} className="px-2 py-0.5 rounded-lg bg-surface-card border border-border-subtle text-text-primary text-[11px] font-heading">
                       {g.title} ({g.meaning})
                     </span>
                   ))}

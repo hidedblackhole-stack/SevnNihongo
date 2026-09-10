@@ -428,8 +428,8 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     <div className="flex flex-col items-center w-full max-w-md mx-auto space-y-4">
       {/* 7-Sheet Indicator Tabs */}
       <div className="w-full">
-        <div className="flex items-center justify-between text-xs text-stone-400 mb-2">
-          <span className="font-bold text-amber-300">
+        <div className="flex items-center justify-between text-xs text-text-secondary mb-2">
+          <span className="font-bold text-gold font-heading">
             Lembar Latihan Menulis (Sheet {currentSheet}/{totalSheets})
           </span>
           <span>{completedSheets.length} / {totalSheets} Selesai</span>
@@ -448,10 +448,10 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                 }}
                 className={`py-1.5 rounded-lg text-xs font-bold transition-all ${
                   isCurrent
-                    ? 'bg-amber-500 text-stone-950 shadow-md shadow-amber-500/30 ring-2 ring-amber-300'
+                    ? 'bg-gold text-surface-base shadow-md ring-2 ring-gold/40'
                     : isCompleted
-                      ? 'bg-emerald-600/30 text-emerald-300 border border-emerald-500/40'
-                      : 'bg-stone-800 text-stone-400 hover:bg-stone-700'
+                      ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/40'
+                      : 'bg-surface-inset text-text-muted hover:bg-surface-elevated'
                 }`}
               >
                 #{sheetNum}
@@ -465,11 +465,11 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
       <div className="flex items-center justify-between w-full max-w-[320px] px-1 text-xs">
         <div>
           {mistakesCount > 0 && !isQuizComplete ? (
-            <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-red-500/20 text-red-400 border border-red-500/40 backdrop-blur-md flex items-center gap-1 animate-pulse">
+            <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-rose-500/20 text-rose-500 border border-rose-500/40 backdrop-blur-md flex items-center gap-1 animate-pulse">
               Salah Gores: {mistakesCount}
             </span>
           ) : (
-            <span className="text-[11px] text-text-muted font-medieval">
+            <span className="text-[11px] text-text-muted font-heading">
               Area Menulis
             </span>
           )}
@@ -480,7 +480,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
           onClick={() => setShowGuide(!showGuide)}
           className={`px-2.5 py-1 rounded-full text-[10px] font-bold transition-all flex items-center gap-1.5 shadow-sm ${
             showGuide
-              ? 'bg-amber-500/20 text-gold-base border border-amber-400/40 hover:bg-amber-500/30'
+              ? 'bg-gold/20 text-gold border border-gold/40 hover:bg-gold/30'
               : 'bg-surface-inset text-text-muted border border-border-subtle hover:bg-surface-elevated'
           }`}
           title="Tampilkan / Sembunyikan garis panduan karakter"
@@ -491,7 +491,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
       </div>
 
       {/* Interactive Writing Canvas with Japanese Grid */}
-      <div className="relative w-full aspect-square max-w-[320px] rounded-3xl overflow-hidden border-2 border-amber-500/30 shadow-2xl bg-stone-900 canvas-practice-card touch-none">
+      <div className="relative w-full aspect-square max-w-[320px] rounded-3xl overflow-hidden border border-border-subtle shadow-2xl bg-surface-card touch-none">
         {/* Background Grid Canvas */}
         <canvas
           ref={gridCanvasRef}
@@ -510,7 +510,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
         {!hasStrokeData && (
           <div className="absolute inset-0 z-10">
             {showGuide && (
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none text-stone-100/20 text-9xl font-jp font-bold">
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none text-text-primary/20 text-9xl font-jp font-bold">
                 {kanjiChar}
               </div>
             )}
@@ -532,9 +532,9 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
 
         {/* Loading Indicator */}
         {isLoading && (
-          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-stone-900/50 backdrop-blur-sm rounded-3xl">
-            <Loader2 className="w-8 h-8 text-amber-500 animate-spin mb-2" />
-            <span className="text-xs font-bold text-amber-300 font-medieval tracking-widest animate-pulse">Menyiapkan Kanji...</span>
+          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-surface-card/80 backdrop-blur-sm rounded-3xl">
+            <Loader2 className="w-8 h-8 text-gold animate-spin mb-2" />
+            <span className="text-xs font-bold text-gold font-heading tracking-widest animate-pulse">Menyiapkan Kanji...</span>
           </div>
         )}
       </div>
@@ -546,7 +546,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
             type="button"
             onClick={animateOrder}
             disabled={isAnimating || !hasStrokeData}
-            className="flex-1 py-2.5 px-3 rounded-xl bg-amber-900/40 hover:bg-amber-500/60 text-amber-300 text-xs font-bold flex items-center justify-center gap-1.5 transition-colors border border-amber-500/30 disabled:opacity-50"
+            className="flex-1 py-2.5 px-3 rounded-xl bg-gold/15 hover:bg-gold/25 text-gold text-xs font-bold flex items-center justify-center gap-1.5 transition-colors border border-gold/30 disabled:opacity-50"
           >
             <PlayCircle className="w-4 h-4" />
             Animasi
@@ -555,7 +555,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
           <button
             type="button"
             onClick={clearCanvas}
-            className="flex-1 py-2.5 px-3 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-300 text-xs font-bold flex items-center justify-center gap-1.5 transition-colors border border-stone-700"
+            className="flex-1 py-2.5 px-3 rounded-xl bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-text-primary text-xs font-bold flex items-center justify-center gap-1.5 transition-colors border border-border-subtle"
           >
             <RotateCcw className="w-4 h-4" />
             Ulangi
@@ -571,8 +571,8 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
               isQuizComplete || completedSheets.includes(currentSheet)
                 ? currentSheet >= totalSheets && completedSheets.includes(currentSheet)
                   ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-500/25 active:scale-95'
-                  : 'bg-amber-600 hover:bg-amber-500 text-stone-950 font-black shadow-amber-500/20 active:scale-95'
-                : 'bg-stone-800 text-stone-500 cursor-not-allowed border border-stone-700/50'
+                  : 'bg-gold hover:opacity-90 text-surface-base font-black shadow-md active:scale-95'
+                : 'bg-surface-inset text-text-muted cursor-not-allowed border border-border-subtle'
             }`}
           >
             {completedSheets.includes(currentSheet) ? (
@@ -583,7 +583,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                 </>
               ) : (
                 <>
-                  <Check className="w-4 h-4 text-stone-950 stroke-[3]" />
+                  <Check className="w-4 h-4 text-surface-base stroke-[3]" />
                   <span>Lanjut ke #{currentSheet + 1}</span>
                 </>
               )

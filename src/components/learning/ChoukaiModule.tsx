@@ -63,7 +63,7 @@ export const ChoukaiModule: React.FC<ChoukaiModuleProps> = ({
           <div className="flex items-center gap-2">
             <button
               onClick={handleTogglePlayAudio}
-              className="p-3 rounded-full bg-surface-card dark:bg-surface-elevated text-[#3c2a1a] dark:text-white transition-all shadow-md active:scale-95 border border-border-primary"
+              className="p-3 rounded-full bg-surface-card dark:bg-surface-elevated text-text-primary transition-all shadow-md active:scale-95 border border-border-primary"
             >
               {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current ml-0.5" />}
             </button>
@@ -116,7 +116,7 @@ export const ChoukaiModule: React.FC<ChoukaiModuleProps> = ({
       {/* Header */}
       <div className="flex items-center justify-between pb-3 border-b border-border-subtle">
         <div className="flex items-center gap-2">
-          <span className="p-2 rounded-xl bg-surface-inset border border-border-subtle text-[#3c2a1a] dark:text-white">
+          <span className="p-2 rounded-xl bg-surface-inset border border-border-subtle text-text-primary">
             <Headphones className="w-5 h-5" />
           </span>
           <div>
@@ -133,7 +133,7 @@ export const ChoukaiModule: React.FC<ChoukaiModuleProps> = ({
       {/* Audio Player Station Card */}
       <div className="panel p-6 rounded-3xl space-y-6 text-center shadow-xl border border-border-subtle">
         <div className="space-y-1">
-          <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-surface-inset text-[#3c2a1a] dark:text-white border border-border-subtle font-bold">
+          <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-surface-inset text-text-primary border border-border-subtle font-bold">
             {currentChoukai.level} • {currentChoukai.dialogueSpeaker}
           </span>
           <h3 className="text-xl font-bold text-text-primary font-heading mt-2">
@@ -147,7 +147,7 @@ export const ChoukaiModule: React.FC<ChoukaiModuleProps> = ({
             <div
               key={i}
               className={`w-1 rounded-full transition-all duration-200 ${
-                isPlaying ? 'bg-[#3c2a1a] dark:bg-white animate-pulse' : 'bg-border-subtle h-3'
+                isPlaying ? 'bg-text-primary animate-pulse' : 'bg-border-subtle h-3'
               }`}
               style={{
                 height: isPlaying ? `${Math.max(6, (Math.sin(i * 0.7) + 1.2) * 20)}px` : '6px',
@@ -169,7 +169,7 @@ export const ChoukaiModule: React.FC<ChoukaiModuleProps> = ({
 
           <button
             onClick={handleTogglePlayAudio}
-            className="p-5 rounded-full bg-surface-card dark:bg-surface-elevated text-[#3c2a1a] dark:text-white font-black shadow-xl border border-border-primary active:scale-95 transition-all"
+            className="p-5 rounded-full bg-surface-card dark:bg-surface-elevated text-text-primary font-black shadow-xl border border-border-primary active:scale-95 transition-all"
           >
             {isPlaying ? (
               <Pause className="w-8 h-8 fill-current" />
@@ -188,7 +188,7 @@ export const ChoukaiModule: React.FC<ChoukaiModuleProps> = ({
                 }}
                 className={`px-2.5 py-1 rounded-xl text-[11px] font-bold transition-all ${
                   speechRate === rate
-                    ? 'bg-surface-card dark:bg-surface-elevated text-[#3c2a1a] dark:text-white shadow-md border border-border-subtle font-extrabold'
+                    ? 'bg-surface-card dark:bg-surface-elevated text-text-primary shadow-md border border-border-subtle font-extrabold'
                     : 'text-text-muted hover:text-text-primary'
                 }`}
               >
@@ -205,7 +205,7 @@ export const ChoukaiModule: React.FC<ChoukaiModuleProps> = ({
               setShowTranscript(!showTranscript);
               playSound('click', soundEnabled);
             }}
-            className="text-xs text-text-secondary hover:text-[#3c2a1a] dark:hover:text-white flex items-center justify-center gap-1.5 mx-auto transition-colors"
+            className="text-xs text-text-secondary hover:text-text-primary flex items-center justify-center gap-1.5 mx-auto transition-colors"
           >
             <FileText className="w-3.5 h-3.5" />
             <span>{showTranscript ? 'Tutup Transkrip Audio' : 'Buka Transkrip Audio (Teks)'}</span>

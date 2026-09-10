@@ -95,7 +95,7 @@ export const TierAvatar: React.FC<TierAvatarProps> = ({
             isSquire ? 'bg-blue-500/20 blur-2xl' :
             isApprentice ? 'bg-cyan-600/20 blur-xl' :
             isNovice ? 'bg-emerald-600/20 blur-xl' :
-            'bg-stone-600/20 blur-xl'
+            'bg-surface-elevated/20 blur-xl'
           } pointer-events-none`}
         />
 
@@ -119,10 +119,10 @@ export const TierAvatar: React.FC<TierAvatarProps> = ({
       {/* Optional Rank Badge & Title Below */}
       {showRankBadge && (
         <div className="mt-3 text-center">
-          <div className="text-sm sm:text-base font-bold bg-clip-text text-transparent flex items-center justify-center gap-1.5">
+          <div className="text-sm sm:text-base font-bold text-text-primary font-heading flex items-center justify-center gap-1.5">
             <span>{currentTier.name}</span>
           </div>
-          <p className="text-[11px] text-stone-400 max-w-[220px] truncate">
+          <p className="text-[11px] text-text-secondary max-w-[220px] truncate">
             {currentTier.titleName}
           </p>
         </div>

@@ -35,7 +35,7 @@ export const FormulaDisplay: React.FC<FormulaDisplayProps> = ({ formula }) => {
 
   return (
     <div className="space-y-3">
-      <div className="flex flex-wrap items-center gap-1 p-3 rounded-xl bg-stone-900 border border-stone-800 min-h-[40px]">
+      <div className="flex flex-wrap items-center gap-1 p-3 rounded-xl bg-surface-inset border border-border-subtle min-h-[40px]">
         {tokens.map((token, i) => {
           const isClickable = !!token.linkedPatternId;
 
@@ -43,7 +43,7 @@ export const FormulaDisplay: React.FC<FormulaDisplayProps> = ({ formula }) => {
             return (
               <span
                 key={i}
-                className="text-xs sm:text-sm font-mono text-stone-500 px-0.5 select-none"
+                className="text-xs sm:text-sm font-mono text-text-muted px-0.5 select-none"
               >
                 {token.text}
               </span>
@@ -57,10 +57,10 @@ export const FormulaDisplay: React.FC<FormulaDisplayProps> = ({ formula }) => {
                 onClick={() => handleTokenClick(token)}
                 className="
                   text-xs sm:text-sm font-mono font-semibold
-                  text-amber-300 hover:text-amber-200
-                  border-b border-dashed border-amber-500/50 hover:border-amber-400
+                  text-gold hover:opacity-80
+                  border-b border-dashed border-gold/50 hover:border-gold
                   cursor-pointer transition-all duration-150
-                  hover:bg-amber-500/10 rounded-sm px-1 py-0.5
+                  hover:bg-gold/10 rounded-sm px-1 py-0.5
                   active:scale-95
                 "
                 title="Klik untuk lihat cara konjugasi"
@@ -74,7 +74,7 @@ export const FormulaDisplay: React.FC<FormulaDisplayProps> = ({ formula }) => {
           return (
             <span
               key={i}
-              className="text-xs sm:text-sm font-mono text-amber-200/80 px-0.5"
+              className="text-xs sm:text-sm font-mono text-text-primary px-0.5"
             >
               {token.text}
             </span>
@@ -83,8 +83,8 @@ export const FormulaDisplay: React.FC<FormulaDisplayProps> = ({ formula }) => {
       </div>
       
       {explanation && (
-        <div className="flex items-start gap-2 text-stone-400 p-2.5 rounded-xl bg-stone-900/50 border border-stone-800/50">
-          <Info className="w-4 h-4 mt-0.5 flex-shrink-0 text-amber-500/70" />
+        <div className="flex items-start gap-2 text-text-secondary p-2.5 rounded-xl bg-surface-inset border border-border-subtle">
+          <Info className="w-4 h-4 mt-0.5 flex-shrink-0 text-gold" />
           <p className="text-xs sm:text-sm leading-relaxed">
             {explanation}
           </p>

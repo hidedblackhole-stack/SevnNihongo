@@ -1195,7 +1195,7 @@ export default function App() {
         )}
         
         {isDoingPlacementTest && selectedPlacementLevel && (
-          <Suspense fallback={<div className="fixed inset-0 z-[200] bg-stone-950 flex items-center justify-center text-stone-400">Loading Ujian Penempatan...</div>}>
+          <Suspense fallback={<div className="fixed inset-0 z-[200] bg-surface-base flex items-center justify-center text-text-muted font-heading">Loading Ujian Penempatan...</div>}>
             <PlacementTestView
               targetLevel={selectedPlacementLevel}
               soundEnabled={stats.soundEnabled}

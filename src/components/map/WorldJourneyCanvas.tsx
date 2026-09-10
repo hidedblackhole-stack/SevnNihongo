@@ -333,8 +333,8 @@ export const WorldJourneyCanvas: React.FC<WorldJourneyCanvasProps> = ({
                       key={s}
                       className={`w-3.5 h-3.5 transition-all ${
                         s < item.stars
-                          ? 'fill-[#B88912] dark:fill-[#D4AF37] text-[#B88912] dark:text-[#D4AF37] scale-110 drop-shadow-sm'
-                          : 'text-[#D9C5AB] dark:text-stone-600 stroke-[1.5]'
+                          ? 'fill-gold text-gold scale-110 drop-shadow-sm'
+                          : 'text-border-primary stroke-[1.5]'
                       }`}
                     />
                   ))}

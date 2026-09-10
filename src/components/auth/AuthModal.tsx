@@ -89,12 +89,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/80 backdrop-blur-sm">
-      <div className="w-full max-w-md bg-stone-900 border border-stone-800 rounded-3xl overflow-hidden shadow-2xl relative animate-in fade-in zoom-in duration-200 stitched-border">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+      <div className="w-full max-w-md panel bg-surface-card border border-border-primary rounded-3xl overflow-hidden shadow-2xl relative animate-in fade-in zoom-in duration-200">
         
         {/* Header */}
-        <div className="flex justify-between items-center p-4 border-b border-stone-800 bg-stone-900/50">
-          <h2 className="font-bold text-amber-50 text-lg">
+        <div className="flex justify-between items-center p-4 border-b border-border-subtle bg-surface-card">
+          <h2 className="font-bold text-text-primary text-lg font-heading">
             {isLogin ? 'Welcome Back' : 'Create Account'}
           </h2>
           {!isMandatory && (
@@ -103,7 +103,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
                 playSound('click', soundEnabled);
                 onClose();
               }}
-              className="p-2 rounded-full hover:bg-stone-800 text-stone-400 transition-colors"
+              className="p-2 rounded-full hover:bg-surface-elevated text-text-muted hover:text-text-primary transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -113,29 +113,29 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
         {/* Form */}
         <div className="p-6">
           {error && (
-            <div className="flex items-start gap-2 p-3 mb-6 bg-red-950/50 border border-red-500/50 rounded-xl text-red-200 text-sm">
-              <AlertCircle className="w-5 h-5 shrink-0 text-red-400" />
+            <div className="flex items-start gap-2 p-3 mb-6 bg-rose-500/15 border border-rose-500/50 rounded-xl text-rose-500 text-sm">
+              <AlertCircle className="w-5 h-5 shrink-0 text-rose-500" />
               <p>{error}</p>
             </div>
           )}
 
           {successMessage && (
-            <div className="flex items-start gap-2 p-3 mb-6 bg-emerald-950/50 border border-emerald-500/50 rounded-xl text-emerald-200 text-sm">
-              <div className="w-2 h-2 rounded-full bg-emerald-400 mt-1.5 shrink-0" />
+            <div className="flex items-start gap-2 p-3 mb-6 bg-emerald-500/15 border border-emerald-500/50 rounded-xl text-emerald-600 dark:text-emerald-300 text-sm">
+              <div className="w-2 h-2 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
               <p>{successMessage}</p>
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-1">
-              <label className="text-xs font-bold text-stone-400 ml-1">Email</label>
+              <label className="text-xs font-bold text-text-secondary ml-1 font-heading">Email</label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-500" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-stone-950 border border-stone-800 rounded-xl py-3 pl-10 pr-4 text-stone-200 placeholder:text-stone-600 focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all"
+                  className="w-full bg-surface-inset border border-border-subtle rounded-xl py-3 pl-10 pr-4 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-border-primary focus:ring-1 focus:ring-border-primary transition-all"
                   placeholder="scholar@n3quest.com"
                   required
                 />
@@ -143,14 +143,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs font-bold text-stone-400 ml-1">Password</label>
+              <label className="text-xs font-bold text-text-secondary ml-1 font-heading">Password</label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-500" />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-stone-950 border border-stone-800 rounded-xl py-3 pl-10 pr-4 text-stone-200 placeholder:text-stone-600 focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all"
+                  className="w-full bg-surface-inset border border-border-subtle rounded-xl py-3 pl-10 pr-4 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-border-primary focus:ring-1 focus:ring-border-primary transition-all"
                   placeholder="••••••••"
                   required
                   minLength={6}
@@ -161,14 +161,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3.5 bg-amber-600 hover:bg-amber-500 text-stone-950 font-bold rounded-xl mt-6 transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-amber-900/20 active:scale-[0.98] stitched-border"
+              className="rpg-btn rpg-btn-primary w-full py-3.5 text-sm font-heading mt-6 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : isLogin ? 'Login' : 'Sign Up'}
             </button>
           </form>
 
           {/* Toggle */}
-          <div className="mt-6 text-center text-sm text-stone-400">
+          <div className="mt-6 text-center text-sm text-text-secondary">
             {isLogin ? "Don't have an account? " : "Already have an account? "}
             <button
               type="button"
@@ -177,14 +177,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
                 setError(null);
                 playSound('click', soundEnabled);
               }}
-              className="text-amber-400 font-bold hover:underline"
+              className="text-gold font-bold hover:underline"
             >
               {isLogin ? 'Sign Up' : 'Login'}
             </button>
           </div>
           
           {!isLogin && (
-            <p className="text-[10px] text-stone-500 text-center mt-4 px-4">
+            <p className="text-[10px] text-text-muted text-center mt-4 px-4">
               Creating an account will securely link your local progress to the cloud Leaderboard.
             </p>
           )}

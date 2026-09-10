@@ -541,8 +541,8 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
   if (!section || !currentQ) {
     return (
       <div className="text-center p-8">
-        <p className="text-stone-400">Tidak ada soal pada sesi ini.</p>
-        <button onClick={() => setCurrentStep('results')} className="mt-4 px-6 py-2 bg-amber-600 rounded-xl text-white font-bold">
+        <p className="text-text-muted">Tidak ada soal pada sesi ini.</p>
+        <button onClick={() => setCurrentStep('results')} className="rpg-btn rpg-btn-primary mt-4 px-6 py-2 text-sm font-heading">
           Lihat Hasil
         </button>
       </div>

@@ -184,7 +184,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
             onClick={handleBackToWorldHub}
             className="btn btn-pill text-xs gap-1.5"
           >
-            <ArrowLeft className="w-3.5 h-3.5 text-[#3c2a1a] dark:text-white" />
+            <ArrowLeft className="w-3.5 h-3.5 text-text-primary" />
             <span>Kembali ke Gerbang World</span>
           </button>
 
@@ -224,7 +224,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
           <div className="space-y-1.5 relative z-10">
             <div className="flex justify-between text-xs font-mono">
               <span className="text-text-secondary">Progres Level:</span>
-              <span className="font-bold text-[#3c2a1a] dark:text-white">
+              <span className="font-bold text-text-primary">
                 {clearedStages} / {totalStages} Stage ({clearPercent}%)
               </span>
             </div>
@@ -247,7 +247,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
             className="panel p-4 sm:p-6 rounded-2xl sm:rounded-3xl hover:border-gold/50 transition-all cursor-pointer shadow-xl flex flex-col justify-between min-h-[135px] sm:min-h-[160px] group relative overflow-hidden"
           >
             <div className="flex items-center justify-between">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-center text-[#3c2a1a] dark:text-white group-hover:scale-105 transition-transform">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-center text-text-primary group-hover:scale-105 transition-transform">
                 <MapIcon className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
               <span className="text-xs font-mono px-2.5 py-1 rounded-xl bg-surface-inset text-text-secondary border border-border-subtle">
@@ -256,12 +256,12 @@ export const WorldView: React.FC<WorldViewProps> = ({
             </div>
 
             <div className="my-2">
-              <h3 className="text-base sm:text-lg font-bold text-text-primary font-heading group-hover:text-[#3c2a1a] dark:group-hover:text-white transition-colors">
+              <h3 className="text-base sm:text-lg font-bold text-text-primary font-heading transition-colors">
                 Peta Wilayah Pembelajaran
               </h3>
             </div>
 
-            <div className="pt-2.5 border-t border-border-subtle flex items-center justify-between text-xs font-bold text-[#3c2a1a] dark:text-white">
+            <div className="pt-2.5 border-t border-border-subtle flex items-center justify-between text-xs font-bold text-text-primary">
               <span>Buka Peta Wilayah</span>
               <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </div>
@@ -308,7 +308,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
       <div className="panel py-3.5 sm:py-4 flex items-center justify-between shadow-sm">
         <div>
           <h2 className="text-base sm:text-lg font-bold font-heading tracking-wide flex items-center gap-2 text-text-primary">
-            <DoorOpen className="w-5 h-5 text-[#3c2a1a] dark:text-white" />
+            <DoorOpen className="w-5 h-5 text-text-primary" />
             <span>Gerbang Dunia (World Gates)</span>
           </h2>
         </div>
@@ -339,7 +339,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
                     <span className="text-[9px] tracking-widest text-text-muted font-sans font-bold">
                       {world.jlptLevel === 'KANA' ? 'DOJO' : 'JLPT'}
                     </span>
-                    <span className={`leading-none text-[#3c2a1a] dark:text-white font-extrabold ${world.jlptLevel === 'KANA' ? 'text-sm font-bold tracking-tight' : 'text-2xl'}`}>
+                    <span className={`leading-none text-text-primary font-extrabold ${world.jlptLevel === 'KANA' ? 'text-sm font-bold tracking-tight' : 'text-2xl'}`}>
                       {world.jlptLevel}
                     </span>
                   </div>
@@ -347,7 +347,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
                     <div className="text-xs text-text-secondary font-jp">
                       {world.japaneseName}
                     </div>
-                    <h3 className="text-lg sm:text-xl font-bold text-text-primary font-heading group-hover:text-[#3c2a1a] dark:group-hover:text-white transition-colors">
+                    <h3 className="text-lg sm:text-xl font-bold text-text-primary font-heading transition-colors">
                       {cleanWorldName}
                     </h3>
                   </div>
@@ -362,7 +362,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
               <div className="space-y-1.5 pt-4 border-t border-border-subtle z-10 relative">
                 <div className="flex justify-between text-xs font-mono">
                   <span className="text-text-secondary">Progres:</span>
-                  <span className="font-bold text-[#3c2a1a] dark:text-white">
+                  <span className="font-bold text-text-primary">
                     {clearedStages} / {totalStages} ({progressPct}%)
                   </span>
                 </div>
@@ -383,7 +383,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
                     <div />
                   )}
 
-                  <span className="text-[#3c2a1a] dark:text-white font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform text-xs">
+                  <span className="text-text-primary font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform text-xs">
                     Masuk Gerbang <ChevronRight className="w-4 h-4" />
                   </span>
                 </div>

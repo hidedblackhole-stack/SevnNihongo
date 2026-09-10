@@ -48,7 +48,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({ currentUserId,
     if (index === 0) return <Crown className="w-5 h-5 text-yellow-400 drop-shadow-[0_0_8px_rgba(250,204,21,0.6)]" fill="currentColor" />;
     if (index === 1) return <Medal className="w-5 h-5 text-gray-300" fill="currentColor" />;
     if (index === 2) return <Medal className="w-5 h-5 text-amber-700" fill="currentColor" />;
-    return <span className="text-sm font-bold text-stone-500 w-5 text-center">{index + 1}</span>;
+    return <span className="text-sm font-bold text-text-muted w-5 text-center">{index + 1}</span>;
   };
 
   const getRankStyle = (index: number) => {
@@ -119,15 +119,15 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({ currentUserId,
         
         <div className="relative z-10 h-full p-2 sm:p-4">
           {isLoading ? (
-            <div className="py-20 flex flex-col items-center justify-center text-[#765F50] dark:text-stone-400 gap-3">
-              <Loader2 className="w-8 h-8 animate-spin text-[#B88912] dark:text-amber-500/50" />
-              <span className="text-sm font-bold">Mencari juara...</span>
+            <div className="py-20 flex flex-col items-center justify-center text-text-secondary gap-3">
+              <Loader2 className="w-8 h-8 animate-spin text-gold" />
+              <span className="text-sm font-bold font-heading">Mencari juara...</span>
             </div>
           ) : currentEntries.length === 0 ? (
-            <div className="py-20 flex flex-col items-center justify-center text-[#765F50] dark:text-stone-500 text-sm">
-              {activeTab === 'all-time' ? <Trophy className="w-12 h-12 mb-3 opacity-30" /> : <Flame className="w-12 h-12 mb-3 opacity-30" />}
-              <p className="font-bold">Belum ada yang menaklukkan arena ini.</p>
-              <p className="text-xs mt-1">Jadilah yang pertama untuk meraih kemenangan!</p>
+            <div className="py-20 flex flex-col items-center justify-center text-text-secondary text-sm">
+              {activeTab === 'all-time' ? <Trophy className="w-12 h-12 mb-3 opacity-30 text-gold" /> : <Flame className="w-12 h-12 mb-3 opacity-30 text-gold" />}
+              <p className="font-bold font-heading">Belum ada yang menaklukkan arena ini.</p>
+              <p className="text-xs mt-1 text-text-muted">Jadilah yang pertama untuk meraih kemenangan!</p>
             </div>
           ) : (
             <div className="space-y-2">
@@ -160,18 +160,18 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({ currentUserId,
                     </div>
 
                     {/* Avatar / Class Icon placeholder */}
-                    <div className="w-10 h-10 rounded-xl bg-stone-950 flex flex-col items-center justify-center shrink-0 border border-stone-800 overflow-hidden shadow-inner relative">
+                    <div className="w-10 h-10 rounded-xl bg-surface-inset flex flex-col items-center justify-center shrink-0 border border-border-subtle overflow-hidden shadow-inner relative">
                       {entry.avatar_url ? (
                         <span className="text-xl leading-none" style={{ filter: 'drop-shadow(0 2px 2px rgba(0,0,0,0.5))' }}>
                           {entry.avatar_url}
                         </span>
                       ) : tier ? (
-                        <span className="font-bold text-stone-400 opacity-80">{tier.name.charAt(0)}</span>
+                        <span className="font-bold text-text-muted opacity-80">{tier.name.charAt(0)}</span>
                       ) : (
-                        <div className="w-6 h-6 bg-stone-800 rounded-full" />
+                        <div className="w-6 h-6 bg-surface-elevated rounded-full" />
                       )}
                       {levelToDisplay && (
-                        <span className="absolute bottom-0 text-[9px] font-bold text-amber-400">Lv.{levelToDisplay}</span>
+                        <span className="absolute bottom-0 text-[9px] font-bold text-gold">Lv.{levelToDisplay}</span>
                       )}
                     </div>
 
@@ -214,51 +214,50 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({ currentUserId,
       </div>
 
         {/* Player Profile Flex Modal */}
-        {/* Player Profile Flex Modal */}
         {selectedPlayer && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedPlayer(null)}>
             <div 
-              className="bg-stone-900 border border-stone-700 p-6 rounded-3xl w-full max-w-sm shadow-2xl space-y-6 relative overflow-hidden text-center"
+              className="panel bg-surface-card border border-border-primary p-6 rounded-3xl w-full max-w-sm shadow-2xl space-y-6 relative overflow-hidden text-center"
               onClick={e => e.stopPropagation()}
             >
               {/* Close Button */}
               <button 
                 onClick={() => setSelectedPlayer(null)}
-                className="absolute top-4 right-4 text-stone-500 hover:text-stone-300"
+                className="absolute top-4 right-4 text-text-muted hover:text-text-primary text-xl"
               >
                 &times;
               </button>
 
               <div className="space-y-2">
-                <div className="w-20 h-20 mx-auto rounded-2xl bg-stone-950 border-2 border-amber-500/30 flex items-center justify-center text-4xl shadow-inner">
+                <div className="w-20 h-20 mx-auto rounded-2xl bg-surface-inset border-2 border-gold/40 flex items-center justify-center text-4xl shadow-inner">
                   {selectedPlayer.avatar_url || '👤'}
                 </div>
-                <h3 className="text-xl font-bold font-medieval text-stone-100">{selectedPlayer.player_name}</h3>
-                <p className="text-sm font-bold text-amber-400">Level {selectedPlayer.level}</p>
-                <p className="text-xs text-stone-400">{RPG_TIERS[Math.min(selectedPlayer.tier_index, RPG_TIERS.length - 1)]?.name || 'Novice'}</p>
+                <h3 className="text-xl font-bold font-heading text-text-primary">{selectedPlayer.player_name}</h3>
+                <p className="text-sm font-bold text-gold">Level {selectedPlayer.level}</p>
+                <p className="text-xs text-text-secondary">{RPG_TIERS[Math.min(selectedPlayer.tier_index, RPG_TIERS.length - 1)]?.name || 'Novice'}</p>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
-                <div className="bg-stone-950 p-3 rounded-xl border border-stone-800">
-                  <div className="text-[10px] text-stone-500 font-bold uppercase">Ujian</div>
-                  <div className="font-mono text-lg text-emerald-400 font-bold">{selectedPlayer.stat_tryout || 0}</div>
+                <div className="bg-surface-inset p-3 rounded-xl border border-border-subtle">
+                  <div className="text-[10px] text-text-muted font-bold uppercase">Ujian</div>
+                  <div className="font-mono text-lg text-emerald-500 font-bold">{selectedPlayer.stat_tryout || 0}</div>
                 </div>
-                <div className="bg-stone-950 p-3 rounded-xl border border-stone-800">
-                  <div className="text-[10px] text-stone-500 font-bold uppercase">Flashcard</div>
-                  <div className="font-mono text-lg text-blue-400 font-bold">{selectedPlayer.stat_flashcard || 0}</div>
+                <div className="bg-surface-inset p-3 rounded-xl border border-border-subtle">
+                  <div className="text-[10px] text-text-muted font-bold uppercase">Flashcard</div>
+                  <div className="font-mono text-lg text-indigo font-bold">{selectedPlayer.stat_flashcard || 0}</div>
                 </div>
-                <div className="bg-stone-950 p-3 rounded-xl border border-stone-800">
-                  <div className="text-[10px] text-stone-500 font-bold uppercase">Kanji</div>
-                  <div className="font-mono text-lg text-amber-400 font-bold">{selectedPlayer.stat_kanji || 0}</div>
+                <div className="bg-surface-inset p-3 rounded-xl border border-border-subtle">
+                  <div className="text-[10px] text-text-muted font-bold uppercase">Kanji</div>
+                  <div className="font-mono text-lg text-gold font-bold">{selectedPlayer.stat_kanji || 0}</div>
                 </div>
-                <div className="bg-stone-950 p-3 rounded-xl border border-stone-800">
-                  <div className="text-[10px] text-stone-500 font-bold uppercase">Boss Mati</div>
-                  <div className="font-mono text-lg text-rose-400 font-bold">{selectedPlayer.stat_boss || 0}</div>
+                <div className="bg-surface-inset p-3 rounded-xl border border-border-subtle">
+                  <div className="text-[10px] text-text-muted font-bold uppercase">Boss Mati</div>
+                  <div className="font-mono text-lg text-rose-500 font-bold">{selectedPlayer.stat_boss || 0}</div>
                 </div>
               </div>
 
-              <div className="text-xs text-stone-500">
-                TOTAL EXP: <span className="font-bold text-stone-300">{selectedPlayer.total_exp.toLocaleString()}</span>
+              <div className="text-xs text-text-muted">
+                TOTAL EXP: <span className="font-bold text-text-primary">{selectedPlayer.total_exp.toLocaleString()}</span>
               </div>
             </div>
           </div>

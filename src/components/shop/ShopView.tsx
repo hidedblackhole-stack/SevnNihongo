@@ -32,8 +32,8 @@ export const ShopView: React.FC<ShopViewProps> = ({
       case 'scroll_exp_lg': return <BookOpen className="w-6 h-6 text-amber-400" />;
       case 'skin_sakura': return <Shirt className="w-6 h-6 text-pink-400" />;
       case 'skin_cyber': return <Zap className="w-6 h-6 text-purple-400" />;
-      case 'equip_wooden_sword': return <Swords className="w-6 h-6 text-stone-300" />;
-      default: return <ShoppingBag className="w-6 h-6 text-stone-400" />;
+      case 'equip_wooden_sword': return <Swords className="w-6 h-6 text-text-primary" />;
+      default: return <ShoppingBag className="w-6 h-6 text-text-secondary" />;
     }
   };
 

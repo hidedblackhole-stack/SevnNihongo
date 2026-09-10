@@ -68,41 +68,41 @@ export const PlacementTestView: React.FC<PlacementTestViewProps> = ({
 
   if (questions.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center h-full p-8 text-stone-400">
+      <div className="flex flex-col items-center justify-center h-full p-8 text-text-muted">
         Database ujian untuk {targetLevel} belum tersedia.
-        <button onClick={onCancel} className="mt-4 px-4 py-2 bg-stone-800 rounded-lg">Kembali</button>
+        <button onClick={onCancel} className="mt-4 px-4 py-2 rpg-btn rpg-btn-secondary rounded-lg">Kembali</button>
       </div>
     );
   }
 
   if (isFinished) {
     return (
-      <div className="min-h-screen bg-stone-950 flex flex-col items-center justify-center p-4 relative z-[200]">
-        <div className={`p-8 rounded-3xl max-w-sm w-full text-center border-2 shadow-2xl ${
-          isPassed ? 'bg-amber-950/90 border-amber-500/50' : 'bg-rose-950/90 border-rose-500/50'
+      <div className="min-h-screen bg-surface-base flex flex-col items-center justify-center p-4 relative z-[200]">
+        <div className={`p-8 rounded-3xl max-w-sm w-full text-center border-2 shadow-2xl panel bg-surface-card ${
+          isPassed ? 'border-gold/50' : 'border-rose-500/50'
         }`}>
-          <div className="w-20 h-20 mx-auto rounded-full bg-stone-900 border border-stone-800 flex items-center justify-center mb-6">
+          <div className="w-20 h-20 mx-auto rounded-full bg-surface-inset border border-border-subtle flex items-center justify-center mb-6">
             {isPassed ? (
-              <Crown className="w-10 h-10 text-amber-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.8)]" />
+              <Crown className="w-10 h-10 text-gold" />
             ) : (
-              <XCircle className="w-10 h-10 text-rose-400" />
+              <XCircle className="w-10 h-10 text-rose-500" />
             )}
           </div>
-          <h2 className={`text-2xl font-bold font-medieval mb-2 ${isPassed ? 'text-amber-400' : 'text-rose-400'}`}>
+          <h2 className={`text-2xl font-bold font-heading mb-2 ${isPassed ? 'text-gold' : 'text-rose-500'}`}>
             {isPassed ? 'Ujian LULUS!' : 'Ujian GAGAL'}
           </h2>
-          <p className="text-stone-300 mb-6 text-sm">
-            Skor Anda: <strong className="text-xl">{score}</strong> / {questions.length}
+          <p className="text-text-secondary mb-6 text-sm">
+            Skor Anda: <strong className="text-xl text-text-primary">{score}</strong> / {questions.length}
             <br />
-            <span className="text-xs text-stone-500">Minimal Lulus: {passThreshold} benar (75%)</span>
+            <span className="text-xs text-text-muted">Minimal Lulus: {passThreshold} benar (75%)</span>
           </p>
 
           <button
             onClick={() => onComplete(isPassed)}
-            className={`w-full py-3 rounded-xl font-bold transition-transform active:scale-95 ${
+            className={`w-full py-3 rounded-xl font-bold transition-transform active:scale-95 font-heading ${
               isPassed 
-                ? 'bg-amber-500 text-stone-950 hover:bg-amber-400' 
-                : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
+                ? 'rpg-btn rpg-btn-primary' 
+                : 'rpg-btn rpg-btn-secondary'
             }`}
           >
             {isPassed ? 'Klaim Hadiah & Mulai' : 'Mulai dari Nol'}
@@ -119,25 +119,25 @@ export const PlacementTestView: React.FC<PlacementTestViewProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-[200] bg-stone-950 flex flex-col items-center p-2 sm:p-4 overflow-y-auto">
+    <div className="fixed inset-0 z-[200] bg-surface-base flex flex-col items-center p-2 sm:p-4 overflow-y-auto">
       {/* Header Overlay */}
-      <div className="w-full max-w-3xl mb-4 bg-stone-900 rounded-2xl p-4 border border-stone-800 flex items-center justify-between shadow-lg sticky top-2 z-10 shrink-0">
+      <div className="w-full max-w-3xl mb-4 bg-surface-card rounded-2xl p-4 border border-border-subtle flex items-center justify-between shadow-lg sticky top-2 z-10 shrink-0">
         <div>
-          <h1 className="text-sm font-bold text-amber-400 flex items-center gap-2">
+          <h1 className="text-sm font-bold text-gold flex items-center gap-2 font-heading">
             <ShieldAlert className="w-4 h-4" />
             Ujian Penempatan {targetLevel}
           </h1>
-          <p className="text-[10px] text-stone-500 hidden sm:block">Peringatan: Keluar dari halaman ini akan membatalkan ujian.</p>
+          <p className="text-[10px] text-text-muted hidden sm:block">Peringatan: Keluar dari halaman ini akan membatalkan ujian.</p>
         </div>
         <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border font-mono font-bold ${
-          timeLeft < 60 ? 'bg-rose-950/50 border-rose-500/50 text-rose-400 animate-pulse' : 'bg-stone-950 border-stone-800 text-stone-300'
+          timeLeft < 60 ? 'bg-rose-500/15 border-rose-500/50 text-rose-500 animate-pulse' : 'bg-surface-inset border-border-subtle text-text-primary'
         }`}>
           <Timer className="w-4 h-4" />
           {formatTime(timeLeft)}
         </div>
       </div>
 
-      <div className="w-full max-w-3xl bg-stone-900/50 rounded-2xl border border-stone-800 overflow-hidden relative min-h-[600px] mb-8">
+      <div className="w-full max-w-3xl bg-surface-card rounded-2xl border border-border-subtle overflow-hidden relative min-h-[600px] mb-8 shadow-xl">
         <QuizEngine
           title={`Soal Ujian Penempatan`}
           questions={questions}
