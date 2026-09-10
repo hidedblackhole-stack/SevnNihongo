@@ -56,9 +56,9 @@ export const TierAvatar: React.FC<TierAvatarProps> = ({
             animate={{ rotate: 360, scale: [1, 1.1, 1] }}
             transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
             className={`absolute inset-[-15%] rounded-full ${
-              isMythic ? 'from-amber-400/30 via-purple-500/30 to-rose-400/30' :
-              isChampion ? 'from-fuchsia-500/25 via-cyan-400/25 to-amber-400/25' :
-              'from-sky-400/25 to-amber-500/25'
+              isMythic ? 'bg-amber-400/20' :
+              isChampion ? 'bg-fuchsia-500/20' :
+              'bg-sky-400/20'
             } blur-xl pointer-events-none`}
           />
         )}
@@ -86,16 +86,16 @@ export const TierAvatar: React.FC<TierAvatarProps> = ({
         {/* Ambient Glow / Splash Background */}
         <div
           className={`absolute inset-0 rounded-3xl ${
-            isMythic ? 'from-amber-400/40 via-rose-500/20 to-amber-700/0 blur-2xl' :
-            isChampion ? 'from-fuchsia-500/40 via-purple-600/20 to-amber-900/0 blur-2xl' :
-            isHero ? 'from-sky-400/40 via-blue-600/20 to-stone-900/0 blur-2xl' :
-            isPaladin ? 'from-amber-400/40 via-amber-600/20 to-stone-900/0 blur-2xl' :
-            isEliteKnight ? 'from-rose-500/40 via-purple-700/20 to-stone-900/0 blur-2xl' :
-            isKnight ? 'from-violet-500/40 to-stone-800/0 blur-2xl' :
-            isSquire ? 'from-blue-500/40 to-stone-800/0 blur-2xl' :
-            isApprentice ? 'from-cyan-600/40 to-stone-800/0 blur-xl' :
-            isNovice ? 'from-emerald-600/40 to-stone-800/0 blur-xl' :
-            'from-stone-600/40 to-stone-800/0 blur-xl'
+            isMythic ? 'bg-amber-400/20 blur-2xl' :
+            isChampion ? 'bg-fuchsia-500/20 blur-2xl' :
+            isHero ? 'bg-sky-400/20 blur-2xl' :
+            isPaladin ? 'bg-amber-400/20 blur-2xl' :
+            isEliteKnight ? 'bg-rose-500/20 blur-2xl' :
+            isKnight ? 'bg-violet-500/20 blur-2xl' :
+            isSquire ? 'bg-blue-500/20 blur-2xl' :
+            isApprentice ? 'bg-cyan-600/20 blur-xl' :
+            isNovice ? 'bg-emerald-600/20 blur-xl' :
+            'bg-stone-600/20 blur-xl'
           } pointer-events-none`}
         />
 

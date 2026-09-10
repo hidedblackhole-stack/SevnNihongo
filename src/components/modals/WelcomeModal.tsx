@@ -23,7 +23,7 @@ export const WelcomeModal: React.FC<WelcomeModalProps> = ({ isOpen, onSelectPath
           className="w-full max-w-sm bg-stone-900 border-2 border-amber-500/50 rounded-2xl overflow-hidden shadow-2xl relative"
         >
           {/* Header */}
-          <div className="bg-gradient-to-b from-amber-900/40 to-stone-900 p-5 text-center relative border-b border-amber-900/30">
+          <div className="bg-stone-900 p-5 text-center relative border-b border-amber-900/30">
             <div
               className="absolute top-3 right-3 p-1.5 rounded-full text-stone-600"
             >

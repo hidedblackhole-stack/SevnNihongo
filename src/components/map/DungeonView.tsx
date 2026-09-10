@@ -107,7 +107,7 @@ export const DungeonView: React.FC<DungeonViewProps> = ({
 
       {/* Hero Banner: Ancient Volcanic Hall */}
       <div 
-        className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#3D140F] via-[#2A0E0B] to-[#170806] border-2 border-red-900/60 text-[#FFF7EC] shadow-2xl relative overflow-hidden space-y-3"
+        className="p-6 sm:p-8 rounded-3xl bg-[#2A0E0B] border-2 border-red-900/60 text-[#FFF7EC] shadow-2xl relative overflow-hidden space-y-3"
         style={{
           boxShadow: '0 12px 36px -8px rgba(220, 38, 38, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15)'
         }}

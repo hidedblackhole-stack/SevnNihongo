@@ -170,7 +170,6 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({ currentUserId,
                       ) : (
                         <div className="w-6 h-6 bg-stone-800 rounded-full" />
                       )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 to-transparent" />
                       {levelToDisplay && (
                         <span className="absolute bottom-0 text-[9px] font-bold text-amber-400">Lv.{levelToDisplay}</span>
                       )}
