@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import { PlayerStats } from '../types/rpg';
+import { UserMasteryEntity, UserActivityEntity } from '../types/identity';
 
 const directUrl = (import.meta as any).env?.VITE_SUPABASE_URL || 'https://iokhdhqnpslpwsxspvaj.supabase.co';
 const supabaseKey = (import.meta as any).env?.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlva2hkaHFucHNscHdzeHNwdmFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg0MjQyMDUsImV4cCI6MjEwNDAwMDIwNX0.8o2UFh4VXRUObjvBq_rVRxIar7yZSU7vrCgaHutYyPE';
@@ -155,6 +156,16 @@ export async function sendScoreEvent(eventType: 'quiz_answer' | 'kanji_write', r
     if (error) {
       console.error('Error submitting score event:', error);
     }
+
+    // Also stream event to the new relational user_activity table
+    logUserActivityEvent({
+      userId,
+      activityType: eventType,
+      entityId: refId,
+      result: isCorrect ? 'correct' : 'wrong',
+      score: isCorrect ? 10 : 0,
+      createdAt: new Date().toISOString()
+    }).catch(() => {});
   } catch (err) {
     console.error('Failed to submit score event:', err);
   }
@@ -280,6 +291,32 @@ export async function saveGameToCloud(saveData: CloudSavePayload): Promise<boole
       } as PlayerStats);
     }
 
+    // 3. Also sync relational user_mastery table in background
+    if (saveData.stats?.itemMastery) {
+      const masteryRecords: UserMasteryEntity[] = Object.values(saveData.stats.itemMastery).map(item => ({
+        userId: targetUser.id,
+        entityType: (item.category as any) || 'grammar',
+        entityId: item.itemId,
+        masteryState: item.status || 'LEARNING',
+        knowledgeScore: 0,
+        recognitionScore: 0,
+        applicationScore: 0,
+        retentionScore: 0,
+        trueMasteryPercentage: item.masteryPercentage || 0,
+        masteryLevel: item.masteryLevel || 1,
+        attemptsCount: item.attemptsCount || 0,
+        correctCount: item.consecutivePerfects || 0,
+        wrongCount: item.mistakeCount || 0,
+        streak: item.consecutivePerfects || 0,
+        consecutivePerfects: item.consecutivePerfects || 0,
+        lastReviewedAt: item.lastReviewedAt || new Date().toISOString(),
+        nextReviewDue: item.nextReviewDue,
+        weaknessFlags: item.weaknessFlags,
+        errorPatterns: item.errorPatterns
+      }));
+      syncUserMasteryRelational(masteryRecords).catch(() => {});
+    }
+
     return true;
   } catch (err) {
     console.warn('Failed to save game to cloud:', err);
@@ -339,6 +376,141 @@ export async function loadGameFromCloud(): Promise<CloudSavePayload | null> {
   } catch (err) {
     console.warn('Failed to load game from cloud:', err);
     return null;
+  }
+}
+
+// ==========================================
+// RELATIONAL IDENTITY ARCHITECTURE HELPERS
+// ==========================================
+
+/**
+ * Sync relational user mastery items directly to user_mastery table.
+ */
+export async function syncUserMasteryRelational(masteryRecords: UserMasteryEntity[]): Promise<boolean> {
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+    const targetUser = user || (await getSession())?.user;
+    if (!targetUser || !masteryRecords.length) return false;
+
+    const rows = masteryRecords.map(rec => ({
+      user_id: targetUser.id,
+      entity_type: rec.entityType,
+      entity_id: rec.entityId,
+      mastery_state: rec.masteryState || 'LEARNING',
+      knowledge_score: rec.knowledgeScore || 0,
+      recognition_score: rec.recognitionScore || 0,
+      application_score: rec.applicationScore || 0,
+      retention_score: rec.retentionScore || 0,
+      true_mastery_percentage: rec.trueMasteryPercentage || 0,
+      mastery_level: rec.masteryLevel || 1,
+      attempts_count: rec.attemptsCount || 0,
+      correct_count: rec.correctCount || 0,
+      wrong_count: rec.wrongCount || 0,
+      streak: rec.streak || 0,
+      consecutive_perfects: rec.consecutivePerfects || 0,
+      last_reviewed_at: rec.lastReviewedAt || new Date().toISOString(),
+      next_review_due: rec.nextReviewDue || null,
+      weakness_flags: rec.weaknessFlags || [],
+      error_patterns: rec.errorPatterns || [],
+      updated_at: new Date().toISOString()
+    }));
+
+    const { error } = await supabase
+      .from('user_mastery')
+      .upsert(rows, { onConflict: 'user_id,entity_type,entity_id' });
+
+    if (error) {
+      console.warn('Note: user_mastery table sync error (database migration pending in Supabase):', error.message);
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.warn('Failed to sync relational user mastery:', err);
+    return false;
+  }
+}
+
+/**
+ * Log discrete user activity to user_activity event stream table.
+ */
+export async function logUserActivityEvent(activity: Omit<UserActivityEntity, 'id'>): Promise<boolean> {
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+    const targetUser = user || (await getSession())?.user;
+    if (!targetUser) return false;
+
+    const { error } = await supabase
+      .from('user_activity')
+      .insert({
+        user_id: targetUser.id,
+        activity_type: activity.activityType,
+        entity_type: activity.entityType || null,
+        entity_id: activity.entityId || null,
+        result: activity.result,
+        score: activity.score || 0,
+        xp_gained: activity.xpGained || 0,
+        duration_seconds: activity.durationSeconds || 0,
+        metadata: activity.metadata || {},
+        created_at: activity.createdAt || new Date().toISOString()
+      });
+
+    if (error) {
+      console.warn('Note: user_activity table insert error (database migration pending in Supabase):', error.message);
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.warn('Failed to log user activity event:', err);
+    return false;
+  }
+}
+
+/**
+ * Load relational user mastery records for current user.
+ */
+export async function loadUserMasteryRelational(): Promise<UserMasteryEntity[]> {
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+    const targetUser = user || (await getSession())?.user;
+    if (!targetUser) return [];
+
+    const { data, error } = await supabase
+      .from('user_mastery')
+      .select('*')
+      .eq('user_id', targetUser.id);
+
+    if (error) {
+      console.warn('Note: user_mastery table fetch error:', error.message);
+      return [];
+    }
+
+    return (data || []).map((row: any) => ({
+      id: row.id,
+      userId: row.user_id,
+      entityType: row.entity_type,
+      entityId: row.entity_id,
+      masteryState: row.mastery_state,
+      knowledgeScore: Number(row.knowledge_score) || 0,
+      recognitionScore: Number(row.recognition_score) || 0,
+      applicationScore: Number(row.application_score) || 0,
+      retentionScore: Number(row.retention_score) || 0,
+      trueMasteryPercentage: Number(row.true_mastery_percentage) || 0,
+      masteryLevel: row.mastery_level || 1,
+      attemptsCount: row.attempts_count || 0,
+      correctCount: row.correct_count || 0,
+      wrongCount: row.wrong_count || 0,
+      streak: row.streak || 0,
+      consecutivePerfects: row.consecutive_perfects || 0,
+      firstSeen: row.first_seen,
+      lastReviewedAt: row.last_reviewed_at,
+      nextReviewDue: row.next_review_due,
+      weaknessFlags: row.weakness_flags || [],
+      errorPatterns: row.error_patterns || [],
+      updatedAt: row.updated_at
+    }));
+  } catch (err) {
+    console.warn('Failed to load relational user mastery:', err);
+    return [];
   }
 }
 

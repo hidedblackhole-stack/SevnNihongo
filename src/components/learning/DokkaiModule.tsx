@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookMarked, Sparkles, CheckCircle2, ChevronRight, HelpCircle, FileText, AlertTriangle, Layers, BookOpen } from 'lucide-react';
+import { BookMarked, CheckCircle2, ChevronRight, HelpCircle, FileText, AlertTriangle, Layers, BookOpen } from 'lucide-react';
 import { DokkaiItem } from '../../types/content';
 import { DOKKAI_DATABASE } from '../../data/dokkai';
 import { QuizEngine } from './QuizEngine';
@@ -123,12 +123,12 @@ export const DokkaiModule: React.FC<DokkaiModuleProps> = ({
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-border-subtle">
         <div className="flex items-center gap-2.5">
-          <span className="p-2 rounded-xl bg-gold/15 border border-gold/40 text-gold shadow-md">
+          <span className="p-2 rounded-xl bg-teal-500/15 border border-teal-500/40 text-teal-400 shadow-md">
             <BookMarked className="w-5 h-5" />
           </span>
           <div>
             <h2 className="text-base sm:text-lg font-bold text-text-primary font-heading flex items-center gap-2">
-              <span className="text-gold">読</span> DOKKAI (Membaca Teks Terpadu)
+              <span className="text-teal-400">読</span> DOKKAI (Membaca Teks Terpadu)
             </h2>
             <p className="text-xs text-text-secondary">
               Integrasi tata bahasa, kosakata, dan kanji dalam teks utuh
@@ -242,7 +242,6 @@ export const DokkaiModule: React.FC<DokkaiModuleProps> = ({
           }}
           className="w-full py-3.5 rounded-2xl btn-cta font-bold text-sm shadow-md active:scale-95 transition-all flex items-center justify-center gap-2 font-heading"
         >
-          <Sparkles className="w-4 h-4" />
           <span>Jawab {currentReading.questions.length} Soal Pemahaman Dokkai</span>
         </button>
       </div>

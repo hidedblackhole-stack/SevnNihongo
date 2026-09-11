@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { motion } from 'motion/react';
-import { Heart, Zap, Play, Flame, ChevronRight, Sparkles, Target, Coins } from 'lucide-react';
+import { Heart, Zap, Play, Flame, ChevronRight, Target, Coins } from 'lucide-react';
 import { ScrollIcon, QuillIcon, ShieldIcon } from '../ui/EngravingIcons';
 import { PlayerStats, Mission, StageClearData } from '../../types/rpg';
 import { getTierForExp, getLevelInfo } from '../../data/tiers';
@@ -69,7 +69,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
           }}
           className="btn btn-pill flex items-center gap-1.5 shadow-md hover:scale-105 transition-transform"
         >
-          <Sparkles className="w-3.5 h-3.5 text-gold animate-pulse shrink-0" />
           <span className="font-mono text-xs text-gold-soft font-bold tracking-wider">
             LEVEL {levelInfo.level} · {currentTier.name}
           </span>

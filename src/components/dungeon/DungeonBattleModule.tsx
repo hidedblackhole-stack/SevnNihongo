@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Skull, Clock, ChevronLeft, ChevronRight, Flag, CheckCircle2, 
-  Volume2, Trophy, Award, Calendar, BookOpen, Layers, Sparkles, Filter 
+  Volume2, Trophy, Award, Calendar, BookOpen, Layers, Filter 
 } from 'lucide-react';
 import { TryOutData } from '../../types/content';
 import { playSound } from '../../utils/audio';
@@ -325,14 +325,13 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
                     : 'hover:border-crimson/50'
                 }`}
               >
-                {/* Level badge + Year */}
+                {/* Level badge + Package Code */}
                 <div className="flex items-center justify-between mb-3">
                   <span className={`px-2.5 py-0.5 rounded-md text-xs font-mono font-black ${color.badge}`}>
                     {pack.level}
                   </span>
                   <div className="flex items-center gap-1 text-[11px] text-text-muted font-mono">
-                    <Calendar className="w-3.5 h-3.5 text-text-muted" />
-                    <span>{pack.year} {pack.month ? `· ${pack.month}月` : ''}</span>
+                    <span>Paket {pack.code}</span>
                   </div>
                 </div>
 
@@ -356,7 +355,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
                   </span>
                   {isChosen && (
                     <span className="ml-auto text-[10px] font-bold text-crimson flex items-center gap-1">
-                      <Sparkles className="w-3 h-3" />
+                      <CheckCircle2 className="w-3 h-3" />
                       Aktif
                     </span>
                   )}
@@ -381,8 +380,8 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
             </h1>
             
             <p className="text-text-secondary text-sm leading-relaxed">
-              Kamu akan mengerjakan soal resmi JLPT {activeMeta.level} yang terdiri dari sesi 文字・語彙 dan 文法・読解.
-              Timer akan otomatis berjalan untuk tiap sesi. Nilai akan dikonversi ke skala resmi JLPT (180 / 120 poin).
+              Kamu akan mengerjakan simulasi komprehensif {activeMeta.level} yang terdiri dari sesi 文字・語彙 dan 文法・読解.
+              Timer akan otomatis berjalan untuk tiap sesi. Nilai akan dikonversi ke skala kelulusan (180 / 120 poin).
             </p>
           </div>
 

@@ -1,0 +1,403 @@
+================================================================================
+NIHONGO QUEST: DOKUMENTASI LENGKAP SYSTEM LOGIC & SPESIFIKASI UI
+KOTOBA (KOSAKATA), KANJI (AKSARA), DAN BUNPOU (POLA KALIMAT)
+================================================================================
+Tanggal Penyusunan : 11 September 2026
+Versi Dokumen      : 1.0 (Identity & Relational Architecture)
+Target Platform    : Web / Mobile Responsive (Vite + React + TypeScript + Supabase)
+Lokasi File        : system_specs/SYSTEM_LOGIC_KOTOBA_KANJI_BUNPOU.txt
+================================================================================
+
+DAFTAR ISI:
+1. ARSITEKTUR UMUM & ALUR DATA KNOWLEDGE ENGINE
+2. MODUL 1: KOTOBA (VOCABULARY / KOSAKATA)
+   - 2.1. System Logic & Siklus State (Lifecycle)
+   - 2.2. Elemen UI yang Ditampilkan (Display Components)
+   - 2.3. Struktur Data & Field Specification
+   - 2.4. Logika Perhitungan Reward & Mastery
+3. MODUL 2: KANJI (AKSARA & KALIGRAFI)
+   - 3.1. System Logic & Siklus State (Lifecycle)
+   - 3.2. Elemen UI yang Ditampilkan (Display Components)
+   - 3.3. Struktur Data & Field Specification
+   - 3.4. Logika Engine Menulis (HanziWriter & Stroke Recognition)
+4. MODUL 3: BUNPOU (POLA KALIMAT & TATA BAHASA)
+   - 4.1. System Logic & Siklus State (Lifecycle)
+   - 4.2. Elemen UI yang Ditampilkan (Display Components)
+   - 4.3. Struktur Data & Field Specification (Sub-Formulas & Nuances)
+   - 4.4. Logika Kuis, Hint Skill (MP), & 4D True Mastery
+5. INTEGRASI DENGAN DATABASE SUPABASE & OFFLINE CACHE
+
+================================================================================
+1. ARSITEKTUR UMUM & ALUR DATA KNOWLEDGE ENGINE
+================================================================================
+Nihongo Quest memisahkan konten pembelajaran ke dalam 3 entitas Core Knowledge:
+1. Kotoba (Vocabulary) : Mengukur kelancaran leksikal dan kemampuan membaca kata.
+2. Kanji (Character)   : Mengukur pengenalan bentuk visual, radikal, onyomi/kunyomi,
+                         serta memori kinetik (goresan tulisan kuas).
+3. Bunpou (Grammar)    : Mengukur sintaksis kalimat, rumus sambungan part of speech,
+                         nuansa kontekstual, dan pembentukan kalimat aktif/pasif.
+
+Prinsip Hubungan Data:
+- Stage HANYA menyimpan relasi ID (contoh: kotobaIds: ["kotoba_0001"], kanjiIds: [...]).
+- Materi tidak tahu ia berada di stage mana (independen kurikulum).
+- User progress (Mastery 4D, XP, SRS, Streak) disimpan terpisah di user state / Supabase.
+- Setiap aktivitas otomatis mengirim event ke 'user_activity' di database Supabase.
+
+================================================================================
+2. MODUL 1: KOTOBA (VOCABULARY / KOSAKATA)
+================================================================================
+
+2.1. SYSTEM LOGIC & SIKLUS STATE
+---------------------------------
+Alur kerja modul Kotoba (KotobaModule.tsx):
+1. Resolusi ID Stage:
+   - Komponen menerima props 'kotobaIds: string[]' dari stage yang aktif.
+   - Mengambil data penuh dari KOTOBA_DATABASE (kotoba.json).
+   - Jika stage tidak mendefinisikan ID khusus, modul menggunakan fallback 15 kata acak.
+2. Tiga Mode Pembelajaran Utama:
+   a. Mode Library (Daftar Lengkap):
+      - Menampilkan seluruh kosakata dalam stage dalam bentuk grid kartu.
+      - Klik kartu akan membuka 'KotobaDetailModal' yang menampilkan detail kamus.
+   b. Mode Flashcard:
+      - Mengambil pool 15 kata secara acak (shuffled).
+      - Menampilkan kartu dua sisi (flip card). Sisi depan: Kanji/Kana + Audio.
+        Sisi belakang: Romaji, Arti Indonesia, Arti Inggris, Definisi Jepang,
+        Collocation (kolokasi umum), dan Contoh Kalimat.
+      - Menyediakan navigasi Previous / Next dengan animasi slide.
+   c. Mode Quiz & Exam:
+      - Mengambil 25 soal acak untuk 'Practice Quiz' atau seluruh soal untuk 'Mastery Exam'.
+      - Setiap soal digenerate secara dinamis:
+        * Tipe 1: Arti Indonesia ditampilkan -> pilih kata Jepang yang tepat.
+        * Tipe 2: Kata Jepang ditampilkan -> pilih arti Indonesia yang tepat.
+        * Opsi distraktor diambil secara acak dari database kosakata selevel.
+3. Fitur Handwriting (KotobaWritingPractice.tsx):
+   - Jika user memilih latihan menulis kata, kata diurai menjadi array karakter tunggal:
+     Array.from(kotoba.word) -> ['勉', '強'].
+   - Setiap karakter dimuat ke kanji writing canvas satu per satu secara berurutan.
+   - Setelah semua karakter selesai ditulis benar, efek fanfare berbunyi dan audio
+     pelafalan kata otomatis diputar.
+
+2.2. ELEMEN UI YANG DITAMPILKAN
+---------------------------------
+[Header Tab Navigasi]:
+- Tombol Tab 'Daftar Kosakata' (Library) dengan ikon buku.
+- Tombol Tab 'Flashcard' dengan ikon kartu berputar.
+- Tombol Tab 'Kuis Latihan' (25 Soal) & 'Ujian Bab' (Exam).
+
+[Kartu Flashcard (Depan)]:
+- Badge Part of Speech (e.g. "Kata Benda / Noun", "Kata Kerja Suru").
+- Badge Level JLPT (e.g. "N5", "N4").
+- Teks Kosakata Utama (Font ekstra besar, min-height 120px).
+  Jika mengandung kanji, furigana otomatis ditampilkan di atasnya (RubyText).
+- Tombol Audio Pelafalan (Ikon Speaker) dengan efek gelombang suara saat diklik.
+- Teks Petunjuk Bawah: "Klik kartu untuk membalik arti".
+
+[Kartu Flashcard (Belakang)]:
+- Cara Baca Lengkap: Hiragana / Katakana + Romaji.
+- Arti Utama Bahasa Indonesia (Teks tebal warna emas/aksen).
+- Arti Bahasa Inggris (Teks sekunder).
+- Definisi Bahasa Jepang (meaningJa) untuk konteks penutur asli.
+- Komponen Kanji pembentuk kata (e.g. 毎 + 朝).
+- Blok Kolokasi Populer (Collocations):
+  Contoh: 毎朝散歩する (jalan-jalan setiap pagi), 毎朝６時に起きる (bangun jam 6).
+- Contoh Kalimat (Example Sentence):
+  Teks bahasa Jepang lengkap dengan furigana + terjemahan langsung bahasa Indonesia.
+- Tombol Latihan Menulis (Ikon Pena) -> meluncurkan KotobaWritingPractice.
+
+[Kotoba Detail Modal]:
+- Tampilan modal dialog penuh saat item pada mode Library di-klik.
+- Memuat riwayat pencarian kamus, tag kategori, dan tombol pelafalan berulang.
+
+2.3. STRUKTUR DATA & FIELD SPECIFICATION
+------------------------------------------
+Tipe Data: KotobaItem (src/types/content.ts & src/types/identity.ts)
+
+Field                | Tipe Data | Keterangan & Contoh
+--------------------+-----------+------------------------------------------------
+id                  | string    | ID unik permanen (contoh: "kotoba_0001")
+word                | string    | Kata asli dalam aksara Jepang (contoh: "毎朝")
+reading             | string    | Cara baca hiragana/katakana ("まいあさ")
+meaningId           | string    | Terjemahan utama Indonesia ("Setiap pagi")
+meaningEn           | string    | Terjemahan utama Inggris ("every morning")
+meaningJa           | string    | Definisi kamus Jepang ("朝ごとに。すべての朝。")
+jlpt                | string    | Tingkat kemahiran ("N5", "N4", "N3", "N2", "N1")
+wordType            | string    | 'noun' | 'verb' | 'adjective-i' | 'adjective-na'
+kanjiComponents     | string[]  | Array huruf kanji penyusun (contoh: ["毎", "朝"])
+collocations        | string[]  | Pasangan frasa alami yang sering dipakai
+exampleSentence     | object    | { japanese: string, reading: string, meaningId: string }
+normalizedWord      | string?   | Bentuk kanonis untuk pencarian (opsional)
+pitchAccent         | string?   | Pola intonasi nada (opsional)
+transitivity        | string?   | 'intransitive' (jidoushi) / 'transitive' (tadoushi)
+
+2.4. LOGIKA PERHITUNGAN REWARD & MASTERY
+------------------------------------------
+- Base EXP per flashcard flip : 5 EXP (maksimal 1x per kata per sesi).
+- Base EXP per kuis benar      : 15 EXP.
+- Bonus Atribut INT (PlayerStats.int):
+  expGained = baseExp * (1 + (playerInt * 0.02))  [Bonus +2% EXP per poin INT].
+- Gold didapat                 : 10 Gold per jawaban benar kuis.
+- Perekaman Aktivitas          : sendScoreEvent('quiz_answer', kotoba.id, isCorrect)
+  yang otomatis menulis ke tabel Supabase 'user_activity'.
+- Mastery State                : LEARNING -> COMPLETED -> MASTERED (jika 3x berturut-turut benar).
+
+================================================================================
+3. MODUL 2: KANJI (AKSARA & KALIGRAFI)
+================================================================================
+
+3.1. SYSTEM LOGIC & SIKLUS STATE
+---------------------------------
+Alur kerja modul Kanji (KanjiModule.tsx & KanjiWritingCanvas.tsx):
+1. Pengelompokan Data:
+   - Modul menerima 'kanjiIds: string[]' dari stage aktif.
+   - Mengambil entitas kanji dari KANJI_DATABASE dan daftar soal dari bank
+     kuis mandiri (kanji_questions.json).
+2. Dua Tab Operasi:
+   a. Tab Daftar Kanji (List):
+      - Menampilkan grid kartu kanji dengan karakter besar, arti singkat, dan radikal.
+      - Klik kartu membuka tampilan Kanji Detail & Writing Studio.
+   b. Tab Kuis Kanji:
+      - Menjalankan kuis multiple choice 7 soal per set.
+      - Soal mencakup: bacaan onyomi/kunyomi dalam kalimat, hitungan coretan (stroke count),
+        serta identifikasi radikal utama.
+3. Engine Kaligrafi & Menulis (HanziWriter Integration):
+   - Sistem tidak menyimpan SVG raksasa di database utama, melainkan memanggil:
+     * Cache internal memori (strokeDataCache).
+     * Kamus embedded Kana untuk karakter Hiragana/Katakana (kanaStrokeDict.ts).
+     * CDN resmi Hanzi-Writer Japan (hanzi-writer-data-jp) dengan format SVG koordinat.
+   - Validasi Goresan Real-Time:
+     * Pointer down/move/up di-capture pada canvas.
+     * Mengukur arah goresan (angle), titik awal (start point), dan panjang coretan.
+     * Toleransi akurasi disetel ke 0.80 (80% kemiripan).
+     * Jika benar: coretan terisi warna hitam pekat (tinta kaligrafi sumi-e) dan
+       muncul efek partikel tinta emas.
+     * Jika salah: goresan berkedip merah dan bertambah pada 'mistakeCount'.
+
+3.2. ELEMEN UI YANG DITAMPILKAN
+---------------------------------
+[Tampilan Grid Kanji]:
+- Kotak Kartu Kanji berbingkai skeuomorphic.
+- Karakter Kanji utama ukuran 3rem (48px).
+- Badge Jumlah Goresan (e.g. "14 Goresan").
+- Badge Radikal (e.g. "Radikal: 門 (mon)").
+- Arti Indonesia singkat di bawah karakter.
+
+[Tampilan Detail Kanji Modal]:
+- Tombol Navigasi Sub-Tab: 'Detail & Penjelasan' vs 'Latihan Menulis (Kuas)'.
+- Blok Karakter Raksasa (Ukuran 80px) dengan tombol dengar bacaan (Speaker).
+- Kode Unicode (e.g. "U+5B66") dan JLPT Badge ("N4").
+- Tabel Pembacaan:
+  * Onyomi (音読み): Teks Katakana + Romaji, tombol audio per bacaan.
+  * Kunyomi (訓読み): Teks Hiragana + pemisah okurigana (titik), tombol audio.
+- Kolom Radikal: Karakter radikal, nama radikal Jepang, arti filosofis radikal.
+- Daftar Kata Terkait (Related Words):
+  Menampilkan kosakata turunan yang memakai kanji ini.
+  Teks yomikata yang cocok di-highlight dengan warna emas (getHighlightedYomikata).
+
+[Kanji Writing Studio Canvas]:
+- Kotak Canvas Grid Kaligrafi 300x300px dengan garis bantu silang (tian zi ge).
+- Tombol 'Animasi Coretan' (Play): Memutar demonstrasi urutan coretan otomatis.
+- Tombol 'Toggle Outline' (Eye / EyeOff): Menampilkan/menyembunyikan bayangan abu-abu.
+- Tombol 'Ulangi' (RotateCcw): Menghapus canvas dan mengulang dari stroke 1.
+- Stroke Counter Indicator: Menampilkan progres "Goresan 3 dari 8".
+- Notifikasi Kesalahan Real-time jika goresan berlawanan arah.
+- Modal Hasil / Skor Akurasi: Skor 0 - 100% berdasarkan rumus (100 - (mistakes * 10)).
+
+3.3. STRUKTUR DATA & FIELD SPECIFICATION
+------------------------------------------
+Tipe Data: KanjiItem & KanjiEntity (src/types/identity.ts)
+
+Field                | Tipe Data | Keterangan & Contoh
+--------------------+-----------+------------------------------------------------
+id                  | string    | ID unik permanen (contoh: "kanji_001")
+character           | string    | Karakter tunggal kanji ("関")
+unicode             | string    | Titik kode heksadesimal ("U+95A2")
+meaningId           | string    | Terjemahan Indonesia ("Hubungan / Terkait")
+meaningEn           | string    | Terjemahan Inggris ("connection, barrier")
+onyomi              | string[]  | Daftar bacaan cina (contoh: ["カン (KAN)"])
+kunyomi             | string[]  | Daftar bacaan jepang (["せき", "かか.わる"])
+jlpt                | string    | Level JLPT ("N3", "N4", "N5", dst)
+strokeCount         | number    | Total coretan baku (contoh: 14)
+radical             | string    | Karakter radikal ("門 (mon)")
+radicalName         | string    | Nama pelafalan radikal ("Mon (もん)")
+relatedWords        | array     | Array of { word, reading, meaningId }
+questions           | Question[]| Referensi soal kuis kanji dari bank kuis
+
+3.4. LOGIKA ENGINE MENULIS (STROKE MEMORY & CALIBRATED PRECISION)
+-----------------------------------------------------------------
+- Kalibrasi Toleransi Presisi : leniency = 0.95 (menolak goresan yang terlalu pendek
+  atau keluar jalur; mewajibkan proporsi garis panjang vs pendek ditarik utuh).
+- Validasi Arah Wajib         : acceptBackwardsStrokes = false (arah coretan harus
+  sesuai kaidah baku, misal kiri-ke-kanan, atas-ke-bawah).
+- Progressive Stroke Memory   :
+  * Sistem melacak nomor coretan yang sedang aktif (currentStrokeIndex).
+  * Coretan yang sudah berhasil (misal goresan 1〜3) tetap tersimpan di canvas.
+  * Tombol 'Animasi' otomatis mendeteksi progres dan menganimasikan HANYA goresan
+    yang belum selesai (misal goresan 4〜7).
+  * Setelah animasi selesai, kuis langsung dilanjutkan pada goresan ke-4
+    (quizStartStrokeNum: 3) tanpa mereset atau memaksa user mengulang dari goresan 1.
+  * Tombol 'Ulangi' (RotateCcw) adalah satu-satunya aksi yang mereset canvas kembali ke goresan 1.
+- Indikator Visual Progres    : Menampilkan badge "Goresan X/Y" secara real-time.
+- Kecepatan Animasi Stroke    : 1.2x speed default.
+- Warna Tinta                 : Solid Charcoal Brown / Dark (#57382A / #d4af37).
+- Kalkulasi EXP Menulis       :
+  Exp = Math.max(10, 100 - (totalMistakes * 10))
+  Jika 0 salah -> Nilai 100% -> Sempurna (Perfect Stroke) -> Bonus Gold +50.
+- Perekaman Event             : sendScoreEvent('kanji_write', kanji.id, totalMistakes === 0).
+
+================================================================================
+4. MODUL 3: BUNPOU (POLA KALIMAT & TATA BAHASA)
+================================================================================
+
+4.1. SYSTEM LOGIC & SIKLUS STATE
+---------------------------------
+Alur kerja modul Tata Bahasa (BunpouModule.tsx):
+1. Resolusi Materi Stage:
+   - Mengambil daftar pola tata bahasa untuk stage aktif dari 'bunpouIds: string[]'.
+   - Mengambil data dari BUNPOU_DATABASE (bunpou.json) yang sudah decoupled.
+   - Mengambil pohon cabang sub-rumus dari 'bunpouSubKnowledge.ts' dan metadata
+     perbandingan fungsi dari 'bunpouMetadata.ts'.
+2. Tampilan Dua Mode:
+   a. Mode Materi Mandiri (Materi Tab):
+      - Navigasi antar poin tata bahasa yang ada di stage (contoh: Pola 1, 2, 3).
+      - Menampilkan formula interaktif, sub-rumus per kategori kelas kata,
+        nuansa pemakaian, dan perbandingan dengan tata bahasa mirip.
+   b. Mode Mixed Grammar Challenge:
+      - Menarik 7 soal acak dari seluruh tata bahasa dalam minggu/bab tersebut.
+      - Berfungsi sebagai mini-boss checkpoint sebelum membuka stage boss.
+3. Kuis Penguasaan Pola Kalimat (QuizEngine):
+   - 7 soal per tata bahasa dengan opsi distraktor terklasifikasi (errorTypeMap):
+     * Distraktor konjugasi kata kerja (te-form, nai-form, passive vs causative).
+     * Distraktor partikel (ni vs de vs wo).
+     * Distraktor nuansa (keinginan langsung vs perkiraan orang lain).
+4. Star Sentence Quiz (StarSentenceQuiz.tsx):
+   - Kuis susun kalimat khas JLPT (Soal Tanda Bintang ★).
+   - User menyusun 4 kata acak ke dalam 4 slot kalimat.
+   - Jawaban dinilai berdasarkan kata yang jatuh tepat di posisi bintang (slot ke-3).
+
+4.2. ELEMEN UI YANG DITAMPILKAN
+---------------------------------
+[Header Pola Kalimat]:
+- Judul Pola Resmi (e.g. "書かれている（受身形 / passive form）").
+- Badge Tingkat JLPT (e.g. "N4 / N3 Bunpou").
+- Tag Kategori Tata Bahasa (e.g. "受身 (Pasif)", "事実描写 (Fakta Objektif)").
+- Formula Blok Visual (FormulaDisplay.tsx):
+  Blok visual bertema partikel dan predikat (e.g. "[ V れる ] (Bentuk Pasif)").
+
+[Tab Navigasi Sub-Rumus (Sub-Branches)]:
+- Tab tombol dinamis per variasi pola (contoh: "〜みたいだ (Predikat Akhir)",
+  "〜みたいな＋N (Modifikasi Benda)", "〜みたいに＋V (Keterangan Cara)").
+- Penjelasan lokasi penggunaan (usageLocation & usageLocationType).
+
+[Tabel Aturan Sambungan Kata (Connection Conditions)]:
+- Baris tabel terpisah untuk tiap kelas kata:
+  * Kata Kerja (V)      : Rumus sambungan (e.g. "V普 ＋ みたいだ") + Contoh kata.
+  * Kata Benda (N)      : Rumus sambungan (e.g. "N ＋ みたいだ [tanpa だ]") + Contoh.
+  * Kata Sifat-i (A-i)  : Rumus sambungan (e.g. "A普 ＋ みたいだ") + Contoh kata.
+  * Kata Sifat-na (A-na): Rumus sambungan (e.g. "na ＋ みたいだ [tanpa だ]") + Contoh.
+
+[Kotak Nuansa & Catatan Pembeda (Nuance & Comparison Notes)]:
+- Teks penjelasan konteks: Kapan pola ini dipakai dan kapan tidak boleh dipakai.
+- Kartu Komparasi (Grammar Comparison):
+  * Target Pola Pembanding (e.g. "Dibanding 〜ようだ").
+  * Perbedaan Spesifik (e.g. "みたいだ bernuansa santai lisan, sedangkan ようだ formal").
+
+[Blok Contoh Kalimat Interaktif (Examples List)]:
+- Teks kalimat bahasa Jepang dengan furigana.
+- Bagian kalimat yang mengandung pola tata bahasa di-highlight warna aksen.
+- Terjemahan bahasa Indonesia & terjemahan bahasa Inggris.
+- Tombol Speaker Audio: Memutar suara penutur bahasa Jepang (speakJapanese).
+
+[Panel Kuis Latihan & Tombol MP Hint]:
+- Tombol 'Mulai Ujian 7 Soal Pola Ini' dengan ikon pedang.
+- Tombol 'Skill 50/50 Hint (Gunakan 15 MP)': Membuang 2 pilihan jawaban salah.
+
+4.3. STRUKTUR DATA & FIELD SPECIFICATION
+------------------------------------------
+Tipe Data: BunpouItem & GrammarEntity (src/types/identity.ts)
+
+Field                | Tipe Data | Keterangan & Contoh
+--------------------+-----------+------------------------------------------------
+id                  | string    | ID unik permanen (contoh: "w1d1g1" atau "bp_001")
+title               | string    | Judul lengkap ("書かれている（受身形）")
+pattern             | string    | Pola inti ("〜ている", "〜みたいだ")
+formula             | string    | Rumus umum ("Vれる（受身形）")
+meaningId           | string    | Terjemahan Indonesia ("Bentuk pasif untuk fakta umum")
+meaningEn           | string    | Terjemahan Inggris ("Passive voice used to state facts")
+explanationNote     | string?   | Catatan kaki tambahan
+level               | string    | Level JLPT ("N5", "N4", "N3", dst)
+subFormulas         | array     | Cabang variasi pemakaian (SubFormulaBranch[])
+functions           | string[]  | Daftar fungsi semantik (["受身", "事実描写"])
+nuance              | string?   | Penjelasan nuansa rasa bahasa
+comparisonNotes     | array     | Perbandingan dengan tata bahasa lain
+examples            | array     | Array of { japanese, reading, meaningId, meaningEn }
+questions           | Question[]| 7 Soal kuis penguasaan pola ini
+
+4.4. LOGIKA KUIS, HINT SKILL (MP), & 4D TRUE MASTERY
+------------------------------------------------------
+1. Logika MP 50/50 Hint:
+   - Memeriksa MP pemain: PlayerStats.mp >= 15.
+   - Jika cukup: potong 15 MP, sembunyikan 2 indeks jawaban salah, putar efek 'coin'.
+   - Jika tidak cukup: tampilkan dialog peringatan "MP tidak mencukupi!".
+2. Sistem Penilaian 4D True Mastery (TrueMasteryBreakdown):
+   - Knowledge   (20%): Pemahaman teori, membaca sub-rumus & tabel koneksi kata.
+   - Recognition (25%): Akurasi memilih pola yang benar pada kuis multiple-choice.
+   - Application (35%): Kemampuan mengenali pola ini dalam teks Dokkai / Boss Battle.
+   - Retention   (20%): Daya ingat jangka panjang yang diuji melalui interval SRS.
+   -> True Mastery Score = (Knowledge*0.2) + (Recognition*0.25) + (App*0.35) + (Ret*0.20).
+3. Status Label Otomatis:
+   - True Mastery < 40%  : "Baru Dipelajari"
+   - Recognition tinggi tapi Application rendah : "Tahu Rumus, Belum Terbiasa di Dokkai"
+   - True Mastery >= 85% : "Dikuasai Penuh (Mastered)"
+   - True Mastery 100%   : "Sempurna (Perfected)"
+
+================================================================================
+5. INTEGRASI DENGAN DATABASE SUPABASE & OFFLINE CACHE
+================================================================================
+Aplikasi dirancang dengan arsitektur Offline-First (Hybrid Resilience):
+1. Runtime Cache:
+   - Data materi statis (kotoba, kanji, bunpou, sentences) dibaca instan dari
+     memori lokal (0 ms network delay, hemat kuota user).
+2. Cloud Sync (Supabase):
+   - Saat user menyelesaikan soal di QuizEngine atau menulis kanji:
+     * Event langsung distream ke tabel PostgreSQL 'user_activity'.
+     * Poin mastery per item diakumulasikan ke tabel 'user_mastery'.
+   - Saat tombol 'Save to Cloud' diklik atau auto-save aktif:
+     * Seluruh progres disinkronkan ke Supabase user metadata dan leaderboard.
+3. Keamanan:
+   - Seluruh tabel user dilindungi Row Level Security (RLS). User hanya dapat
+     membaca dan menulis data progres milik akun UID mereka sendiri.
+
+================================================================================
+6. ARSITEKTUR PERPUSTAKAAN & GRIMOIRE (4 JILID PUSTAKA & BANK SOAL JLPT)
+================================================================================
+Menu Pustaka (Library / Grimoire) kini resmi disusun ke dalam 4 Jilid Terpadu:
+
+1. Jilid I: Kosakata (語 - KotobaLibraryView)
+   - Akses penuh ke 8.367 entitas kosakata ter-indeks.
+   - Filter level JLPT (N5〜N1), filter kelas kata (kata kerja, benda, sifat).
+   - Pencarian dwibahasa, modal kamus detail, kolokasi, dan latihan tulis kata.
+
+2. Jilid II: Kanji (字 - KanjiLibraryView)
+   - Akses penuh ke 2.301 karakter kanji.
+   - Filter level JLPT (N5〜N1), pencarian karakter, onyomi, kunyomi, arti, radikal.
+   - KanjiDetailModal: tabel onyomi/kunyomi dengan audio speaker, kata terkait
+     dengan highlight yomikata, serta Writing Studio Canvas (HanziWriter).
+
+3. Jilid III: Tata Bahasa (文 - BunpouLibraryView)
+   - Akses penuh ke 915 pola kalimat tata bahasa.
+   - Filter level JLPT, filter kategori fungsi semantik (dugaan, syarat, pasif, dll).
+   - BunpouDetailModal: rumus formula, tabel aturan sambungan per part of speech,
+     catatan nuansa & komparasi pembeda, serta contoh kalimat ber-audio.
+
+4. Jilid IV: Bank Soal JLPT (問 - QuestionLibraryView)
+   - Terbagi ke dalam 4 Bagian Standar Ujian Resmi JLPT:
+     * 文字・語彙 (Moji & Goi) : Cara baca kanji, kosakata, padanan kata.
+     * 文法 (Bunpou)           : Tata bahasa kalimat, susunan kalimat tanda bintang ★.
+     * 読解 (Dokkai)           : Wacana bacaan pendek/menengah dengan kotak teks.
+     * 聴解 (Choukai)          : Dialog percakapan dengan pemutar audio penutur asli.
+   - Uji Mandiri Interaktif: pemain dapat memilih opsi A/B/C/D dengan feedback
+     instan benar (hijau) / salah (merah), efek suara, dan akordion pembahasan kunci.
+
+================================================================================
+SELESAI DOKUMENTASI SYSTEM LOGIC
+================================================================================

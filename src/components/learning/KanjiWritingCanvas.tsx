@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { RotateCcw, Check, Sparkles, PlayCircle, Eye, EyeOff, Loader2 } from 'lucide-react';
+import { RotateCcw, Check, PlayCircle, Eye, EyeOff, Loader2, Clock } from 'lucide-react';
 import HanziWriter from 'hanzi-writer';
 import { playSound } from '../../utils/audio';
 import { sendScoreEvent } from '../../lib/supabase';
@@ -32,7 +32,7 @@ export const preloadStrokeData = (word: string) => {
         if (!res.ok) throw new Error('Local Kana Not Found');
         return res.json();
       })
-      .catch(() => fetch(`https://cdn.jsdelivr.net/npm/hanzi-writer-data-jp@0.0.2/${encoded}.json`)
+      .catch(() => fetch(`https://cdn.jsdelivr.net/npm/hanzi-writer-data-jp@0/${encoded}.json`)
         .then(res => {
           if (!res.ok) throw new Error('JP Not Found');
           return res.json();
@@ -75,6 +75,12 @@ interface KanjiWritingCanvasProps {
   soundEnabled?: boolean;
   autoAdvance?: boolean;
   leniency?: number;
+  averageDistanceThreshold?: number;
+  strokeCount?: number;
+  meaning?: string;
+  kunyomi?: string;
+  onyomi?: string;
+  showStopwatch?: boolean; // Stopwatch on writing canvas (default: true)
 }
 
 export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
@@ -84,8 +90,17 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
   onFinish,
   soundEnabled = true,
   autoAdvance = false,
-  leniency = 1.3, // Forgiving stroke matching for smooth touchscreen/mouse writing
+  leniency,
+  averageDistanceThreshold,
+  strokeCount,
+  showStopwatch = true,
 }) => {
+  const isKana = kanjiChar.length > 0 && kanjiChar.charCodeAt(0) >= 0x3040 && kanjiChar.charCodeAt(0) <= 0x30ff;
+  // Dynamic calibration: Kana has sweeping curves (e.g. stroke 2 of か & カ) requiring ~400 threshold and 1.05 leniency
+  // to avoid false rejections, while Kanji uses 360 threshold and 1.0 leniency.
+  const effectiveLeniency = leniency ?? (isKana ? 1.05 : 1.0);
+  const effectiveDistanceThreshold = averageDistanceThreshold ?? (isKana ? 400 : 360);
+
   const gridCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const writerContainerRef = useRef<HTMLDivElement | null>(null);
   const writerRef = useRef<HanziWriter | null>(null);
@@ -98,6 +113,46 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
   const [isAnimating, setIsAnimating] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [canvasSize, setCanvasSize] = useState(320);
+
+  // Progressive Stroke Memory State
+  const [currentStrokeIndex, setCurrentStrokeIndex] = useState(0);
+  const [totalCharStrokes, setTotalCharStrokes] = useState(strokeCount || 0);
+
+  // Stopwatch State per Kanji Character
+  const [elapsedSeconds, setElapsedSeconds] = useState(0);
+  const [isTimerRunning, setIsTimerRunning] = useState(true);
+
+  // Reset timer whenever the character changes
+  useEffect(() => {
+    setElapsedSeconds(0);
+    setIsTimerRunning(true);
+  }, [kanjiChar]);
+
+  // Timer interval
+  useEffect(() => {
+    let interval: any = null;
+    if (isTimerRunning) {
+      interval = setInterval(() => {
+        setElapsedSeconds(prev => prev + 1);
+      }, 1000);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isTimerRunning]);
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  // Reset stroke memory when character or sheet changes
+  useEffect(() => {
+    setCurrentStrokeIndex(0);
+    setMistakesCount(0);
+    setIsQuizComplete(false);
+  }, [kanjiChar, currentSheet]);
 
   // Light Mode Detection for genuine Hosho paper & chocolate ink styling
   const [isLightMode, setIsLightMode] = useState(() =>
@@ -159,13 +214,13 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     canvas.height = canvasSize * dpr;
     ctx.scale(dpr, dpr);
 
-    // Background: Dark (#1f1612) vs Light Hosho Warm Paper (#FFF9F0)
+    // Background: Dark Washi Indigo (#191d26) vs Light Washi Sand (#f1efe8)
     ctx.clearRect(0, 0, canvasSize, canvasSize);
-    ctx.fillStyle = isLightMode ? '#FFF9F0' : '#1f1612';
+    ctx.fillStyle = isLightMode ? '#f1efe8' : '#191d26';
     ctx.fillRect(0, 0, canvasSize, canvasSize);
 
-    // Grid lines: Dark (#36261e) vs Light Subtle Paper Grid (#DDCEBA)
-    ctx.strokeStyle = isLightMode ? '#DDCEBA' : '#36261e';
+    // Grid lines: Dark Sashiko (rgba(111, 147, 207, 0.20)) vs Light Sashiko (rgba(37, 62, 99, 0.18))
+    ctx.strokeStyle = isLightMode ? 'rgba(37, 62, 99, 0.18)' : 'rgba(111, 147, 207, 0.20)';
     ctx.lineWidth = 1;
     ctx.setLineDash([4, 4]);
 
@@ -204,13 +259,14 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
         showOutline: showGuide,
         strokeAnimationSpeed: 1.2,
         delayBetweenStrokes: 100,
-        strokeColor: isLightMode ? '#57382A' : '#d4af37',
-        highlightColor: isLightMode ? '#C64F45' : '#ef4444',
-        drawingColor: isLightMode ? '#57382A' : '#d4af37',
-        outlineColor: isLightMode ? '#D8C5A7' : 'rgba(148, 163, 184, 0.2)',
+        strokeColor: isLightMode ? '#262420' : '#f8fafc',
+        highlightColor: '#e2555b',
+        drawingColor: isLightMode ? '#262420' : '#f8fafc',
+        outlineColor: isLightMode ? 'rgba(37, 62, 99, 0.20)' : 'rgba(151, 181, 224, 0.25)',
         showHintAfterMisses: 2,
         drawingWidth: 12,
-        leniency: leniency,
+        leniency: effectiveLeniency,
+        averageDistanceThreshold: effectiveDistanceThreshold,
         charDataLoader: (char, onComplete, onError) => {
           if (KANA_STROKE_DICT[char]) {
             strokeDataCache.set(char, KANA_STROKE_DICT[char]);
@@ -245,7 +301,15 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
       });
 
       writerRef.current = writer;
-      startQuiz();
+
+      // Extract total strokes count from character data
+      writer.getCharacterData().then(charData => {
+        if (charData && Array.isArray(charData.strokes)) {
+          setTotalCharStrokes(charData.strokes.length);
+        }
+      }).catch(() => {});
+
+      startQuiz(0);
     } catch {
       setIsLoading(false);
       setHasStrokeData(false);
@@ -264,7 +328,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
         writerContainerRef.current.innerHTML = '';
       }
     };
-  }, [kanjiChar, currentSheet, canvasSize, isLightMode, leniency]);
+  }, [kanjiChar, currentSheet, canvasSize, isLightMode, effectiveLeniency, effectiveDistanceThreshold]);
 
   // Sync watermark outline visibility
   useEffect(() => {
@@ -281,22 +345,27 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     }
   }, [showGuide, hasStrokeData]);
 
-  const startQuiz = () => {
+  const startQuiz = (startStroke = currentStrokeIndex) => {
     if (!writerRef.current) return;
     setIsQuizComplete(false);
-    setMistakesCount(0);
 
     try {
       writerRef.current.quiz({
-        leniency: leniency,
+        leniency: effectiveLeniency,
+        averageDistanceThreshold: effectiveDistanceThreshold,
+        quizStartStrokeNum: startStroke,
+        acceptBackwardsStrokes: false,
+        showHintAfterMisses: 2,
         onMistake: () => {
           setMistakesCount(prev => prev + 1);
         },
-        onCorrectStroke: () => {
-          // Visual stroke confirmation handled by HanziWriter
+        onCorrectStroke: (strokeData: any) => {
+          const nextStroke = (strokeData.strokeNum ?? 0) + 1;
+          setCurrentStrokeIndex(nextStroke);
         },
         onComplete: () => {
           setIsQuizComplete(true);
+          setCurrentStrokeIndex(totalCharStrokes || strokeCount || 0);
           playSound('fanfare', soundEnabled);
         }
       });
@@ -305,35 +374,71 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     }
   };
 
+  // Progressive Stroke Memory: Animate only the remaining uncompleted strokes!
   const animateOrder = () => {
     if (!writerRef.current || isAnimating) return;
     try {
       setIsAnimating(true);
       writerRef.current.cancelQuiz();
 
-      writerRef.current.animateCharacter({
-        onComplete: () => {
-          setIsAnimating(false);
-          if (!isQuizComplete) {
-            startQuiz();
+      const fromStroke = currentStrokeIndex;
+      const total = totalCharStrokes || strokeCount || 8;
+
+      if (fromStroke === 0) {
+        // Full character animation from stroke 0
+        writerRef.current.animateCharacter({
+          onComplete: () => {
+            setIsAnimating(false);
+            if (!isQuizComplete) {
+              startQuiz(0);
+            }
           }
-        }
-      });
+        });
+      } else {
+        // Animate ONLY remaining strokes from currentStrokeIndex to end!
+        let currentS = fromStroke;
+        const playNext = () => {
+          if (currentS >= total || !writerRef.current) {
+            setIsAnimating(false);
+            if (!isQuizComplete) {
+              // Seamlessly resume quiz right where user left off
+              startQuiz(fromStroke);
+            }
+            return;
+          }
+          writerRef.current.animateStroke(currentS, {
+            onComplete: () => {
+              currentS++;
+              playNext();
+            }
+          });
+        };
+        playNext();
+      }
     } catch {
       setIsAnimating(false);
-      startQuiz();
+      startQuiz(currentStrokeIndex);
     }
   };
 
   const clearCanvas = () => {
     playSound('click', soundEnabled);
+    setCurrentStrokeIndex(0);
+    setMistakesCount(0);
+    setIsQuizComplete(false);
+    setElapsedSeconds(0); // Reset stopwatch whenever Kanji is repeated
+    setIsTimerRunning(true);
+
     if (!hasStrokeData && fallbackCanvasRef.current) {
       const ctx = fallbackCanvasRef.current.getContext('2d');
       if (ctx) ctx.clearRect(0, 0, fallbackCanvasRef.current.width, fallbackCanvasRef.current.height);
-      setIsQuizComplete(false);
       return;
     }
-    startQuiz();
+
+    if (writerRef.current) {
+      writerRef.current.cancelQuiz();
+      startQuiz(0);
+    }
   };
 
   const completeCurrentSheet = () => {
@@ -342,6 +447,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     // If already scored and on the final sheet, clicking "Selesai" finishes
     if (completedSheets.includes(currentSheet) && currentSheet >= totalSheets) {
       playSound('fanfare', soundEnabled);
+      setIsTimerRunning(false);
       onFinish?.();
       return;
     }
@@ -383,6 +489,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     } else if (autoAdvance) {
       // Automatically trigger onFinish if autoAdvance is enabled (since the Selesai button is hidden)
       playSound('fanfare', soundEnabled);
+      setIsTimerRunning(false);
       onFinish?.();
     }
   };
@@ -412,7 +519,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     ctx.lineWidth = 12;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
-    ctx.strokeStyle = isLightMode ? '#57382A' : '#d4af37';
+    ctx.strokeStyle = isLightMode ? '#262420' : '#f8fafc';
     ctx.lineTo(clientX - rect.left, clientY - rect.top);
     ctx.stroke();
     if (!isQuizComplete) {
@@ -427,12 +534,12 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
   return (
     <div className="flex flex-col items-center w-full max-w-md mx-auto space-y-4">
       {/* 7-Sheet Indicator Tabs */}
-      <div className="w-full">
+      <div className="w-full max-w-[340px] sm:max-w-[360px]">
         <div className="flex items-center justify-between text-xs text-text-secondary mb-2">
-          <span className="font-bold text-gold font-heading">
+          <span className="font-bold text-text-primary font-heading">
             Lembar Latihan Menulis (Sheet {currentSheet}/{totalSheets})
           </span>
-          <span>{completedSheets.length} / {totalSheets} Selesai</span>
+          <span className="font-mono">{completedSheets.length} / {totalSheets} Selesai</span>
         </div>
         <div className="grid grid-cols-7 gap-1.5">
           {Array.from({ length: totalSheets }, (_, i) => i + 1).map((sheetNum) => {
@@ -448,9 +555,9 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                 }}
                 className={`py-1.5 rounded-lg text-xs font-bold transition-all ${
                   isCurrent
-                    ? 'bg-gold text-surface-base shadow-md ring-2 ring-gold/40'
+                    ? 'bg-wine-accent text-white shadow-md ring-2 ring-wine-accent/50 font-black scale-105'
                     : isCompleted
-                      ? 'bg-gold/15 text-gold border border-gold/40'
+                      ? 'bg-wine-accent/20 text-wine-accent border border-wine-accent/40 font-bold'
                       : 'bg-surface-inset text-text-muted hover:bg-surface-elevated'
                 }`}
               >
@@ -461,26 +568,37 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
         </div>
       </div>
 
-      {/* Canvas Top Bar / Mistakes & Watermark Guide Toggle (Outside Writing Area) */}
-      <div className="flex items-center justify-between w-full max-w-[320px] px-1 text-xs">
-        <div>
-          {mistakesCount > 0 && !isQuizComplete ? (
-            <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-surface-inset text-gold border border-gold/40 flex items-center gap-1 font-mono">
-              Salah Gores: {mistakesCount}
+      {/* Canvas Top Bar / Stopwatch, Mistakes & Watermark Guide Toggle */}
+      <div className="flex items-center justify-between w-full max-w-[340px] sm:max-w-[360px] px-1 text-xs">
+        <div className="flex items-center gap-1.5 flex-wrap">
+          {showStopwatch && (
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-surface-inset border border-border-subtle text-text-primary flex items-center gap-1 shadow-sm" title="Stopwatch Waktu Menulis">
+              <Clock className="w-3 h-3 text-gold" />
+              <span>{formatTime(elapsedSeconds)}</span>
             </span>
-          ) : (
+          )}
+          {totalCharStrokes > 0 && !isQuizComplete && (
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-surface-inset border border-border-subtle text-text-primary">
+              Goresan {Math.min(currentStrokeIndex + 1, totalCharStrokes)}/{totalCharStrokes}
+            </span>
+          )}
+          {mistakesCount > 0 && !isQuizComplete ? (
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-surface-inset text-rose-400 border border-rose-500/30 flex items-center gap-1 font-mono">
+              Salah: {mistakesCount}
+            </span>
+          ) : !totalCharStrokes ? (
             <span className="text-[11px] text-text-muted font-heading">
               Area Menulis
             </span>
-          )}
+          ) : null}
         </div>
 
         <button
           type="button"
           onClick={() => setShowGuide(!showGuide)}
-          className={`px-2.5 py-1 rounded-full text-[10px] font-bold transition-all flex items-center gap-1.5 shadow-sm ${
+          className={`px-2.5 py-1 rounded-full text-[10px] font-bold transition-all flex items-center gap-1.5 shadow-sm select-none ${
             showGuide
-              ? 'bg-gold/20 text-gold border border-gold/40 hover:bg-gold/30'
+              ? 'bg-wine-accent/20 text-wine-accent border border-wine-accent/40 hover:bg-wine-accent/30'
               : 'bg-surface-inset text-text-muted border border-border-subtle hover:bg-surface-elevated'
           }`}
           title="Tampilkan / Sembunyikan garis panduan karakter"
@@ -491,7 +609,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
       </div>
 
       {/* Interactive Writing Canvas with Japanese Grid */}
-      <div className="relative w-full aspect-square max-w-[320px] rounded-3xl overflow-hidden border border-border-subtle shadow-2xl bg-surface-card touch-none">
+      <div className="relative w-full aspect-square max-w-[340px] sm:max-w-[360px] rounded-3xl overflow-hidden border border-border-subtle shadow-2xl bg-surface-inset touch-none">
         {/* Background Grid Canvas */}
         <canvas
           ref={gridCanvasRef}
@@ -533,43 +651,54 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
         {/* Loading Indicator */}
         {isLoading && (
           <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-surface-card/80 backdrop-blur-sm rounded-3xl">
-            <Loader2 className="w-8 h-8 text-gold animate-spin mb-2" />
-            <span className="text-xs font-bold text-gold font-heading tracking-widest animate-pulse">Menyiapkan Kanji...</span>
+            <Loader2 className="w-8 h-8 text-wine-accent animate-spin mb-2" />
+            <span className="text-xs font-bold text-wine-accent font-heading tracking-widest animate-pulse">Menyiapkan Kanji...</span>
           </div>
         )}
       </div>
 
-      {/* Action Controls */}
-      <div className="flex flex-col sm:flex-row items-center justify-between w-full max-w-[320px] gap-3">
-        <div className="flex w-full gap-2">
+      {/* Action Controls: 2 Balanced Rows (Never wraps text on any device) */}
+      <div className="flex flex-col w-full max-w-[340px] sm:max-w-[360px] gap-2.5">
+        {/* Row 1: Animasi & Ulangi in 2 equal, comfortable columns */}
+        <div className="grid grid-cols-2 gap-2.5 w-full">
           <button
             type="button"
             onClick={animateOrder}
             disabled={isAnimating || !hasStrokeData}
-            className="flex-1 py-2.5 px-3 rounded-xl bg-gold/15 hover:bg-gold/25 text-gold text-xs font-bold flex items-center justify-center gap-1.5 transition-colors border border-gold/30 disabled:opacity-50"
+            className="w-full py-2.5 px-3 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-primary text-xs font-bold flex items-center justify-center gap-1.5 transition-colors border border-border-subtle hover:border-wine-accent/40 disabled:opacity-50 whitespace-nowrap shadow-sm select-none active:scale-95"
+            title={
+              currentStrokeIndex > 0
+                ? `Tampilkan animasi mulai dari goresan #${currentStrokeIndex + 1} sampai akhir`
+                : 'Tampilkan animasi goresan lengkap'
+            }
           >
-            <PlayCircle className="w-4 h-4" />
-            Animasi
+            <PlayCircle className="w-4 h-4 text-wine-accent shrink-0" />
+            <span className="whitespace-nowrap">
+              {currentStrokeIndex > 0 && currentStrokeIndex < (totalCharStrokes || 8)
+                ? `Animasi #${currentStrokeIndex + 1}〜`
+                : 'Animasi'}
+            </span>
           </button>
 
           <button
             type="button"
             onClick={clearCanvas}
-            className="flex-1 py-2.5 px-3 rounded-xl bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-text-primary text-xs font-bold flex items-center justify-center gap-1.5 transition-colors border border-border-subtle"
+            className="w-full py-2.5 px-3 rounded-xl bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-text-primary text-xs font-bold flex items-center justify-center gap-1.5 transition-colors border border-border-subtle whitespace-nowrap shadow-sm select-none active:scale-95"
           >
-            <RotateCcw className="w-4 h-4" />
-            Ulangi
+            <RotateCcw className="w-4 h-4 shrink-0" />
+            <span className="whitespace-nowrap">Ulangi</span>
           </button>
         </div>
 
+        {/* Row 2: Simpan Sheet / Next / Selesai Primary CTA */}
         {(!autoAdvance || !hasStrokeData) && (
           <button
             type="button"
             onClick={completeCurrentSheet}
             disabled={(!isQuizComplete && hasStrokeData) && !completedSheets.includes(currentSheet)}
-            className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-md ${
+            className={`w-full py-3 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-md active:scale-95 select-none ${
               isQuizComplete || completedSheets.includes(currentSheet)
-                ? 'bg-gold hover:opacity-90 text-surface-base font-black shadow-md active:scale-95'
+                ? 'bg-wine-accent hover:opacity-95 text-white font-black shadow-lg shadow-wine-accent/25'
                 : 'bg-surface-inset text-text-muted cursor-not-allowed border border-border-subtle'
             }`}
           >
@@ -577,17 +706,17 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
               currentSheet >= totalSheets ? (
                 <>
                   <Check className="w-4 h-4 text-surface-base stroke-[3]" />
-                  <span>Selesai</span>
+                  <span>Selesai (7/7)</span>
                 </>
               ) : (
                 <>
                   <Check className="w-4 h-4 text-surface-base stroke-[3]" />
-                  <span>Lanjut ke #{currentSheet + 1}</span>
+                  <span>Lanjut ke Sheet #{currentSheet + 1}</span>
                 </>
               )
             ) : (
               <>
-                <Sparkles className="w-4 h-4" />
+                <Check className="w-4 h-4" />
                 <span>Simpan Sheet #{currentSheet}</span>
               </>
             )}

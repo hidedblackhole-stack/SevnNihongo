@@ -9,7 +9,6 @@ import {
   Award,
   BookOpen,
   Target,
-  Edit2,
   Calendar,
   Layers,
   Trophy,
@@ -40,11 +39,7 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
   onClose,
   stats,
   stageProgress = {},
-  onUpdateName,
 }) => {
-  const [isEditingName, setIsEditingName] = useState(false);
-  const [editNameValue, setEditNameValue] = useState(stats.playerName);
-
   if (!isOpen) return null;
 
   const { currentTier, potentialTierIndex, isGated, gateResult } = getTierForExp(
@@ -104,49 +99,9 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
               <TierAvatar tierIndex={stats.tierIndex} size="lg" />
               <div>
                 <div className="flex items-center justify-center gap-2">
-                  {isEditingName ? (
-                    <div className="flex items-center gap-2">
-                      <input 
-                        type="text" 
-                        value={editNameValue} 
-                        onChange={e => setEditNameValue(e.target.value)}
-                        onKeyDown={e => {
-                          if (e.key === 'Enter') {
-                            if (onUpdateName) onUpdateName(editNameValue);
-                            setIsEditingName(false);
-                          }
-                        }}
-                        className="bg-surface-card border border-border-subtle text-text-primary px-3 py-1 rounded-lg text-lg sm:text-xl font-bold font-heading outline-none focus:border-indigo w-48 text-center"
-                        autoFocus
-                      />
-                      <button 
-                        onClick={() => {
-                          if (onUpdateName) onUpdateName(editNameValue);
-                          setIsEditingName(false);
-                          playSound('click', stats.soundEnabled);
-                        }}
-                        className="p-1.5 bg-state-success/20 text-state-success rounded hover:bg-state-success/30"
-                      >
-                        <Check className="w-4 h-4" />
-                      </button>
-                    </div>
-                  ) : (
-                    <>
-                      <h3 className="text-xl sm:text-2xl font-bold text-text-primary font-heading">
-                        {stats.playerName || 'Pemilik WebApp'}
-                      </h3>
-                      <button 
-                        onClick={() => {
-                          setEditNameValue(stats.playerName || 'Pemilik WebApp');
-                          setIsEditingName(true);
-                          playSound('click', stats.soundEnabled);
-                        }}
-                        className="text-text-muted hover:text-indigo transition-colors"
-                      >
-                        <Edit2 className="w-3.5 h-3.5" />
-                      </button>
-                    </>
-                  )}
+                  <h3 className="text-xl sm:text-2xl font-bold text-text-primary font-heading">
+                    {stats.playerName || 'Pemilik WebApp'}
+                  </h3>
                 </div>
                 <div className="flex items-center justify-center gap-2 mt-1 flex-wrap">
                   <span className="px-2 py-0.5 rounded bg-surface-card text-gold font-bold font-mono text-xs border border-border-subtle">

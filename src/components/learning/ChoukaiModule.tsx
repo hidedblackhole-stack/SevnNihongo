@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Headphones, Play, Pause, RotateCcw, Volume2, FileText, Sparkles, Sliders } from 'lucide-react';
+import { Headphones, Play, Pause, RotateCcw, Volume2, FileText, Sliders } from 'lucide-react';
 import { ChoukaiItem } from '../../types/content';
 import { CHOUKAI_DATABASE } from '../../data/choukai';
 import { QuizEngine } from './QuizEngine';
@@ -234,7 +234,6 @@ export const ChoukaiModule: React.FC<ChoukaiModuleProps> = ({
           }}
           className="w-full py-3.5 rounded-2xl btn-cta font-bold text-sm shadow-md active:scale-95 transition-all flex items-center justify-center gap-2 font-heading"
         >
-          <Sparkles className="w-4 h-4" />
           <span>Mulai Jawab 3 Soal Choukai</span>
         </button>
       </div>

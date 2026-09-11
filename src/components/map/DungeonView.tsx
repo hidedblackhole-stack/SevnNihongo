@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Swords, Skull, ChevronLeft, Ghost, DoorOpen, Flame, Clock, Trophy, Sparkles, ShieldAlert, Coins } from 'lucide-react';
+import { Swords, Skull, ChevronLeft, Ghost, DoorOpen, Flame, Clock, Trophy, ShieldAlert, Coins } from 'lucide-react';
 import { playSound } from '../../utils/audio';
 
 interface DungeonViewProps {
@@ -171,7 +171,6 @@ export const DungeonView: React.FC<DungeonViewProps> = ({
                 <span>{dungeon.duration}</span>
               </span>
               <span className="text-xs px-2.5 py-1 rounded-lg bg-gold/15 border border-gold/30 text-gold font-mono font-bold flex items-center gap-1">
-                <Sparkles className="w-3.5 h-3.5" />
                 <span>+{dungeon.expReward} EXP</span>
               </span>
             </div>

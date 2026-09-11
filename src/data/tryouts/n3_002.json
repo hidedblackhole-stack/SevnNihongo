@@ -1,8 +1,6 @@
-import { TryOutData } from '../../types/content';
-
-export const N3_2022_12_TRYOUT: TryOutData = {
-  "id": "n3_2022_12",
-  "title": "JLPT N3 Desember 2022",
+{
+  "id": "n3_002",
+  "title": "Simulasi N3 — Paket 002",
   "sections": {
     "mojiGoi": {
       "title": "文字・語彙 (Kosakata dan Kanji)",
@@ -893,7 +891,7 @@ export const N3_2022_12_TRYOUT: TryOutData = {
     "choukai": {
       "title": "聴解 (Mendengarkan)",
       "timeLimitMinutes": 40,
-      "audioUrl": "/audio/n3_2022_12.mp3",
+      "audioUrl": "/audio/n3_002.mp3",
       "questions": [
         {
           "id": "choukai_1",
@@ -1233,5 +1231,6 @@ export const N3_2022_12_TRYOUT: TryOutData = {
         }
       ]
     }
-  }
-};
+  },
+  "code": "002"
+}

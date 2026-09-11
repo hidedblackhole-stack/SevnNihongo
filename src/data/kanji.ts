@@ -1,4 +1,5 @@
 import kanjiDb from './db/kanji.json';
+import kanjiQuestionsDb from './db/kanji_questions.json';
 import { KanjiItem } from '../types/content';
 
 const STATIC_KANJI: Record<string, KanjiItem> = {
@@ -171,14 +172,37 @@ const rawKanjiList: KanjiItem[] = Array.isArray(kanjiDb)
     ? Object.values(kanjiDb as Record<string, any>)
     : Object.values(STATIC_KANJI);
 
+// Map centralized questions by kanji ID
+const kanjiQuestionsMap = new Map<string, any[]>();
+if (Array.isArray(kanjiQuestionsDb)) {
+  for (const q of kanjiQuestionsDb) {
+    const kanjiId = q.knowledge_refs?.[0] || q.kanji_refs?.[0];
+    if (kanjiId) {
+      if (!kanjiQuestionsMap.has(kanjiId)) kanjiQuestionsMap.set(kanjiId, []);
+      kanjiQuestionsMap.get(kanjiId)!.push({
+        id: q.id,
+        prompt: q.prompt,
+        ruby: q.ruby,
+        options: q.options,
+        correctIndex: q.correct_index,
+        explanation: q.explanation
+      });
+    }
+  }
+}
+
 // Index by both k.id and k.character for seamless lookup resilience
 const indexedDb: Record<string, KanjiItem> = {};
 for (const k of rawKanjiList) {
   if (k && k.id) {
-    indexedDb[k.id] = k;
-  }
-  if (k && k.character && !indexedDb[k.character]) {
-    indexedDb[k.character] = k;
+    const itemCopy = {
+      ...k,
+      questions: kanjiQuestionsMap.get(k.id) || k.questions || []
+    };
+    indexedDb[k.id] = itemCopy;
+    if (k.character && !indexedDb[k.character]) {
+      indexedDb[k.character] = itemCopy;
+    }
   }
 }
 
@@ -188,6 +212,7 @@ for (const [id, k] of Object.entries(STATIC_KANJI)) {
 }
 
 export const KANJI_DATABASE: Record<string, KanjiItem> = indexedDb;
+export const KANJI_QUESTIONS_POOL = kanjiQuestionsDb;
 
 export const STAGE_1_KANJI_QUIZ = [
   {

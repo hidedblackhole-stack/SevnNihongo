@@ -1,5 +1,5 @@
-import React from 'react';
-import { Volume2, VolumeX, RotateCcw, ShieldAlert, Settings, BookOpen, User, LogOut, Coffee, MessageCircle, Sun, Moon, RefreshCw, Cloud } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Volume2, VolumeX, RotateCcw, ShieldAlert, Settings, BookOpen, User, LogOut, Coffee, MessageCircle, Sun, Moon, RefreshCw, Cloud, Check } from 'lucide-react';
 import { PlayerStats } from '../../types/rpg';
 import { speakJapanese, playSound } from '../../utils/audio';
 import { signOut } from '../../lib/supabase';
@@ -13,6 +13,7 @@ interface SettingsViewProps {
   onSaveBeforeLogout?: () => Promise<void>;
   syncStatus?: 'idle' | 'syncing' | 'synced' | 'error';
   lastSyncedAt?: string | null;
+  onUpdateName?: (newName: string) => void;
 }
 
 export const SettingsView: React.FC<SettingsViewProps> = ({
@@ -24,7 +25,30 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   onSaveBeforeLogout,
   syncStatus = 'idle',
   lastSyncedAt,
+  onUpdateName,
 }) => {
+  const [playerNameInput, setPlayerNameInput] = useState(stats.playerName || '');
+  const [isNameSaved, setIsNameSaved] = useState(false);
+
+  useEffect(() => {
+    if (stats.playerName) {
+      setPlayerNameInput(stats.playerName);
+    }
+  }, [stats.playerName]);
+
+  const handleSaveName = () => {
+    const trimmed = playerNameInput.trim();
+    if (!trimmed) return;
+    if (onUpdateName) {
+      onUpdateName(trimmed);
+    } else {
+      onUpdateSettings({ playerName: trimmed });
+    }
+    playSound('correct', stats.soundEnabled);
+    setIsNameSaved(true);
+    setTimeout(() => setIsNameSaved(false), 2500);
+  };
+
   const handleTestJapaneseVoice = () => {
     speakJapanese('こんにちは！日本語クエストRPGへようこそ。今日も一緒に日本語を勉強しましょう！');
   };
@@ -129,12 +153,55 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       </div>
 
       {/* Profile & Avatar Section */}
-      <div className="panel p-4 sm:p-5 space-y-4 shadow-md">
+      <div className="panel p-4 sm:p-5 space-y-5 shadow-md">
         <h3 className="text-xs font-bold uppercase tracking-wider text-text-secondary flex items-center gap-1.5 font-heading">
-          <User className="w-4 h-4 text-indigo" /> Edit Profil
+          <User className="w-4 h-4 text-indigo" /> Profil Pemain
         </h3>
         
-        <div className="space-y-3">
+        {/* 1. Nama Pemain / Panggilan */}
+        <div className="space-y-2">
+          <label className="text-xs sm:text-sm font-bold text-text-primary font-heading flex items-center justify-between">
+            <span>Nama Petualang</span>
+            <span className="text-[10px] text-text-muted font-mono font-normal">
+              {playerNameInput.length}/20 Karakter
+            </span>
+          </label>
+          <div className="flex items-center gap-2">
+            <div className="relative flex-1">
+              <input
+                type="text"
+                value={playerNameInput}
+                onChange={(e) => setPlayerNameInput(e.target.value.slice(0, 20))}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') handleSaveName();
+                }}
+                placeholder="Masukkan nama petualang..."
+                className="w-full bg-surface-inset border border-border-subtle focus:border-wine-accent rounded-xl px-3.5 py-2.5 text-sm font-bold font-heading text-text-primary outline-none transition-colors shadow-inner"
+              />
+            </div>
+            <button
+              type="button"
+              onClick={handleSaveName}
+              disabled={!playerNameInput.trim() || playerNameInput.trim() === stats.playerName}
+              className={`px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm select-none active:scale-95 shrink-0 ${
+                isNameSaved
+                  ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
+                  : playerNameInput.trim() && playerNameInput.trim() !== stats.playerName
+                  ? 'bg-wine-accent hover:opacity-95 text-white font-black shadow-md'
+                  : 'bg-surface-inset text-text-muted border border-border-subtle cursor-not-allowed opacity-60'
+              }`}
+            >
+              <Check className="w-3.5 h-3.5" />
+              <span>{isNameSaved ? 'Tersimpan' : 'Simpan'}</span>
+            </button>
+          </div>
+          <p className="text-[10px] text-text-secondary">
+            *Nama ini akan tampil di Kartu Status Profil dan Peringkat Leaderboard.
+          </p>
+        </div>
+
+        {/* 2. Avatar Picker */}
+        <div className="border-t border-border-subtle pt-4 space-y-3">
           <label className="text-xs sm:text-sm font-bold text-text-primary font-heading block">
             Pilih Avatar (Tampil di Leaderboard)
           </label>
@@ -156,7 +223,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               </button>
             ))}
           </div>
-          <p className="text-[10px] text-text-secondary mt-2">
+          <p className="text-[10px] text-text-secondary">
             *Avatar akan tersinkronisasi saat progress tersimpan ke cloud (saat EXP bertambah).
           </p>
         </div>
@@ -172,7 +239,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         <div className="flex items-center justify-between">
           <div>
             <h4 className="text-xs sm:text-sm font-bold text-text-primary font-heading">Efek Suara Game (SFX)</h4>
-            <p className="text-xs text-text-secondary">Suara klik tombol, serangan tebasan RPG, koin & fanfare level up</p>
+            <p className="text-xs text-text-secondary">Suara ketuk kayu, tebasan bambu, genta zen, tetesan air & lonceng angin</p>
           </div>
           <button
             onClick={() => {
@@ -189,6 +256,59 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             {stats.soundEnabled ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
           </button>
         </div>
+
+        {/* SFX Tester Pills */}
+        {stats.soundEnabled && (
+          <div className="pt-2 border-t border-border-subtle">
+            <span className="text-[11px] font-bold text-text-secondary uppercase tracking-wider block mb-2 font-mono">
+              Pratinjau Efek Suara Organik:
+            </span>
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => playSound('click', true)}
+                className="btn btn-pill text-[11px] py-1 px-2.5 hover:border-indigo/50"
+              >
+                🪵 Ketuk Kayu
+              </button>
+              <button
+                type="button"
+                onClick={() => playSound('correct', true)}
+                className="btn btn-pill text-[11px] py-1 px-2.5 hover:border-emerald-500/50 text-emerald-600 dark:text-emerald-400"
+              >
+                🔔 Genta Zen (Benar)
+              </button>
+              <button
+                type="button"
+                onClick={() => playSound('wrong', true)}
+                className="btn btn-pill text-[11px] py-1 px-2.5 hover:border-rose-500/50 text-rose-600 dark:text-rose-400"
+              >
+                🥁 Ketuk Lembut (Salah)
+              </button>
+              <button
+                type="button"
+                onClick={() => playSound('coin', true)}
+                className="btn btn-pill text-[11px] py-1 px-2.5 hover:border-gold/50 text-gold"
+              >
+                💧 Suikinkutsu (Koin)
+              </button>
+              <button
+                type="button"
+                onClick={() => playSound('attack', true)}
+                className="btn btn-pill text-[11px] py-1 px-2.5 hover:border-wine-accent/50 text-wine-accent"
+              >
+                🎋 Tebasan Bambu
+              </button>
+              <button
+                type="button"
+                onClick={() => playSound('levelup', true)}
+                className="btn btn-pill text-[11px] py-1 px-2.5 hover:border-indigo/50 text-indigo"
+              >
+                🎐 Fūrin (Level Up)
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Japanese TTS Voice Tester */}
         <div className="pt-3 border-t border-border-subtle flex flex-col sm:flex-row sm:items-center justify-between gap-3">

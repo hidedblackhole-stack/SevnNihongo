@@ -1,103 +1,95 @@
 import { TryOutData } from '../../types/content';
-import n1_2023_07 from './n1_2023_07.json';
-import n2_2023_07 from './n2_2023_07.json';
-import n2_2022_07 from './n2_2022_07.json';
-import n2_2021_12 from './n2_2021_12.json';
-import n3_2022_12 from './n3_2022_12.json';
-import n3_2021_12 from './n3_2021_12.json';
-import n4_2023_07 from './n4_2023_07.json';
-import n4_2018 from './n4_2018.json';
-import n5_2018 from './n5_2018.json';
+import n1_001 from './n1_001.json';
+import n2_001 from './n2_001.json';
+import n2_002 from './n2_002.json';
+import n2_003 from './n2_003.json';
+import n3_001 from './n3_001.json';
+import n3_002 from './n3_002.json';
+import n4_001 from './n4_001.json';
+import n4_002 from './n4_002.json';
+import n5_001 from './n5_001.json';
 
 export interface TryOutMeta {
   id: string;
   level: 'N1' | 'N2' | 'N3' | 'N4' | 'N5';
   title: string;
-  year: number;
-  month?: number;
+  code: string; // '001', '002', etc. (future packages continue: 003, 004, ...)
   totalQuestions: number;
   data: TryOutData;
 }
 
 export const ALL_TRYOUTS: TryOutMeta[] = [
   {
-    id: 'n5_2018',
+    id: 'n5_001',
     level: 'N5',
-    title: 'JLPT N5 — 2018',
-    year: 2018,
-    totalQuestions: n5_2018.sections.mojiGoi.questions.length + n5_2018.sections.bunpouDokkai.questions.length,
-    data: n5_2018 as unknown as TryOutData
+    title: 'Simulasi N5 — Paket 001',
+    code: '001',
+    totalQuestions: n5_001.sections.mojiGoi.questions.length + n5_001.sections.bunpouDokkai.questions.length,
+    data: n5_001 as unknown as TryOutData
   },
   {
-    id: 'n4_2018',
+    id: 'n4_001',
     level: 'N4',
-    title: 'JLPT N4 — 2018',
-    year: 2018,
-    totalQuestions: n4_2018.sections.mojiGoi.questions.length + n4_2018.sections.bunpouDokkai.questions.length,
-    data: n4_2018 as unknown as TryOutData
+    title: 'Simulasi N4 — Paket 001',
+    code: '001',
+    totalQuestions: n4_001.sections.mojiGoi.questions.length + n4_001.sections.bunpouDokkai.questions.length,
+    data: n4_001 as unknown as TryOutData
   },
   {
-    id: 'n4_2023_07',
+    id: 'n4_002',
     level: 'N4',
-    title: 'JLPT N4 — Juli 2023',
-    year: 2023,
-    month: 7,
-    totalQuestions: n4_2023_07.sections.mojiGoi.questions.length + n4_2023_07.sections.bunpouDokkai.questions.length,
-    data: n4_2023_07 as unknown as TryOutData
+    title: 'Simulasi N4 — Paket 002',
+    code: '002',
+    totalQuestions: n4_002.sections.mojiGoi.questions.length + n4_002.sections.bunpouDokkai.questions.length,
+    data: n4_002 as unknown as TryOutData
   },
   {
-    id: 'n3_2021_12',
+    id: 'n3_001',
     level: 'N3',
-    title: 'JLPT N3 — Desember 2021',
-    year: 2021,
-    month: 12,
-    totalQuestions: n3_2021_12.sections.mojiGoi.questions.length + n3_2021_12.sections.bunpouDokkai.questions.length,
-    data: n3_2021_12 as unknown as TryOutData
+    title: 'Simulasi N3 — Paket 001',
+    code: '001',
+    totalQuestions: n3_001.sections.mojiGoi.questions.length + n3_001.sections.bunpouDokkai.questions.length,
+    data: n3_001 as unknown as TryOutData
   },
   {
-    id: 'n3_2022_12',
+    id: 'n3_002',
     level: 'N3',
-    title: 'JLPT N3 — Desember 2022',
-    year: 2022,
-    month: 12,
-    totalQuestions: n3_2022_12.sections.mojiGoi.questions.length + n3_2022_12.sections.bunpouDokkai.questions.length,
-    data: n3_2022_12 as unknown as TryOutData
+    title: 'Simulasi N3 — Paket 002',
+    code: '002',
+    totalQuestions: n3_002.sections.mojiGoi.questions.length + n3_002.sections.bunpouDokkai.questions.length,
+    data: n3_002 as unknown as TryOutData
   },
   {
-    id: 'n2_2021_12',
+    id: 'n2_001',
     level: 'N2',
-    title: 'JLPT N2 — Desember 2021',
-    year: 2021,
-    month: 12,
-    totalQuestions: n2_2021_12.sections.mojiGoi.questions.length + n2_2021_12.sections.bunpouDokkai.questions.length,
-    data: n2_2021_12 as unknown as TryOutData
+    title: 'Simulasi N2 — Paket 001',
+    code: '001',
+    totalQuestions: n2_001.sections.mojiGoi.questions.length + n2_001.sections.bunpouDokkai.questions.length,
+    data: n2_001 as unknown as TryOutData
   },
   {
-    id: 'n2_2022_07',
+    id: 'n2_002',
     level: 'N2',
-    title: 'JLPT N2 — Juli 2022',
-    year: 2022,
-    month: 7,
-    totalQuestions: n2_2022_07.sections.mojiGoi.questions.length + n2_2022_07.sections.bunpouDokkai.questions.length,
-    data: n2_2022_07 as unknown as TryOutData
+    title: 'Simulasi N2 — Paket 002',
+    code: '002',
+    totalQuestions: n2_002.sections.mojiGoi.questions.length + n2_002.sections.bunpouDokkai.questions.length,
+    data: n2_002 as unknown as TryOutData
   },
   {
-    id: 'n2_2023_07',
+    id: 'n2_003',
     level: 'N2',
-    title: 'JLPT N2 — Juli 2023',
-    year: 2023,
-    month: 7,
-    totalQuestions: n2_2023_07.sections.mojiGoi.questions.length + n2_2023_07.sections.bunpouDokkai.questions.length,
-    data: n2_2023_07 as unknown as TryOutData
+    title: 'Simulasi N2 — Paket 003',
+    code: '003',
+    totalQuestions: n2_003.sections.mojiGoi.questions.length + n2_003.sections.bunpouDokkai.questions.length,
+    data: n2_003 as unknown as TryOutData
   },
   {
-    id: 'n1_2023_07',
+    id: 'n1_001',
     level: 'N1',
-    title: 'JLPT N1 — Juli 2023',
-    year: 2023,
-    month: 7,
-    totalQuestions: n1_2023_07.sections.mojiGoi.questions.length + n1_2023_07.sections.bunpouDokkai.questions.length,
-    data: n1_2023_07 as unknown as TryOutData
+    title: 'Simulasi N1 — Paket 001',
+    code: '001',
+    totalQuestions: n1_001.sections.mojiGoi.questions.length + n1_001.sections.bunpouDokkai.questions.length,
+    data: n1_001 as unknown as TryOutData
   }
 ];
 
@@ -110,4 +102,4 @@ export function getTryoutById(id: string): TryOutData | undefined {
   return match?.data;
 }
 
-export const DEFAULT_TRYOUT = ALL_TRYOUTS.find(t => t.id === 'n3_2022_12')!.data;
+export const DEFAULT_TRYOUT = (ALL_TRYOUTS.find(t => t.id === 'n3_002') || ALL_TRYOUTS[0]).data;

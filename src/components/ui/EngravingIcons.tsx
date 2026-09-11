@@ -1,5 +1,5 @@
 import React from 'react';
-import { Castle, Compass, Scroll, Sword, BookText, ShoppingBag, Map, Heart, Zap, Play, Flame, Shield, Key, PenTool } from 'lucide-react';
+import { Castle, Compass, Scroll, Sword, BookText, ShoppingBag, Map, Heart, Zap, Play, Flame, Shield, Key, PenTool, BookMarked } from 'lucide-react';
 
 const VintageFilter = () => (
   <svg style={{ width: 0, height: 0, position: 'absolute' }} aria-hidden="true">
@@ -50,3 +50,4 @@ export const MapIcon = withVintageEngraving(Map);
 export const HeartIcon = withVintageEngraving(Heart);
 export const FlameIcon = withVintageEngraving(Flame);
 export const ZapIcon = withVintageEngraving(Zap);
+export const BookmarkIcon = withVintageEngraving(BookMarked);

@@ -24,6 +24,9 @@ import { CharacterStatusModal } from './components/modals/CharacterStatusModal';
 import { RecallModule } from './components/learning/RecallModule';
 const DungeonBattleModule = lazy(() => import('./components/dungeon/DungeonBattleModule').then(m => ({ default: m.DungeonBattleModule })));
 import { LibraryView } from './components/library/LibraryView';
+import { BukuSakuView } from './components/deck/BukuSakuView';
+import { ensureUserDecks, createDefaultBookmarkDeck, toggleBookmarkItem } from './utils/decks';
+import { DeckItemCategory } from './types/rpg';
 import { playSound } from './utils/audio';
 import { recordItemAttempt, buildSmartRecallQueue } from './utils/mastery';
 import { recordStudyActivity } from './utils/activity';
@@ -33,7 +36,7 @@ import { LeaderboardView } from './components/leaderboard/LeaderboardView';
 import { AuthModal } from './components/auth/AuthModal';
 import { WelcomeModal } from './components/modals/WelcomeModal';
 const PlacementTestView = lazy(() => import('./components/onboarding/PlacementTestView').then(m => ({ default: m.PlacementTestView })));
-import { supabase, getSession, saveGameToCloud, loadGameFromCloud } from './lib/supabase';
+import { supabase, getSession, saveGameToCloud, loadGameFromCloud, upsertLeaderboard } from './lib/supabase';
 import { ErrorBoundary } from './components/ErrorBoundary';
 
 const STORAGE_KEY_STATS = 'nihongo_quest_player_stats_v2';
@@ -74,7 +77,8 @@ const DEFAULT_STATS: PlayerStats = {
   equippedSkin: 'skin_default',
   inventory: ['pot_hp_small', 'scroll_exp_sm'],
   itemMastery: INITIAL_ITEM_MASTERY,
-  recallQueue: buildSmartRecallQueue(INITIAL_ITEM_MASTERY)
+  recallQueue: buildSmartRecallQueue(INITIAL_ITEM_MASTERY),
+  userDecks: [createDefaultBookmarkDeck()],
 };
 
 export default function App() {
@@ -122,11 +126,12 @@ export default function App() {
           todayStudySeconds: loadedTodaySeconds,
           totalStudySeconds: parsed.totalStudySeconds || 0,
           lastStudyDate: todayStr,
+          userDecks: ensureUserDecks(parsed.userDecks),
         };
       }
-      return { ...DEFAULT_STATS, userId: uuidv4(), lastStudyDate: getTodayLocalDate() };
+      return { ...DEFAULT_STATS, userId: uuidv4(), lastStudyDate: getTodayLocalDate(), userDecks: [createDefaultBookmarkDeck()] };
     } catch {
-      return { ...DEFAULT_STATS, userId: uuidv4(), lastStudyDate: getTodayLocalDate() };
+      return { ...DEFAULT_STATS, userId: uuidv4(), lastStudyDate: getTodayLocalDate(), userDecks: [createDefaultBookmarkDeck()] };
     }
   });
 
@@ -945,7 +950,7 @@ export default function App() {
         const levelInfo = getLevelInfo(newTotalExp);
         const newLevel = levelInfo.level;
         
-        return {
+        const updated = {
           ...prev,
           playerName: 'SevnSoul',
           totalExp: newTotalExp,
@@ -973,11 +978,39 @@ export default function App() {
             bossBattles: prev.studyStats?.bossBattles || { total: 0, uniqueIds: [] },
           }
         };
+        if (isAuthenticated && updated.userId) {
+          upsertLeaderboard(updated);
+        }
+        return updated;
       });
     } else {
-      setStats(prev => ({ ...prev, playerName: newName.trim() }));
+      const trimmed = newName.trim();
+      setStats(prev => {
+        const updated = { ...prev, playerName: trimmed };
+        if (isAuthenticated && updated.userId) {
+          upsertLeaderboard(updated);
+        }
+        return updated;
+      });
     }
   };
+
+  const handleToggleBookmark = useCallback((id: string, category: DeckItemCategory, notes?: string) => {
+    setStats(prev => {
+      const { userDecks: updatedDecks } = toggleBookmarkItem(prev.userDecks, id, category, notes);
+      const updated = { ...prev, userDecks: updatedDecks };
+      if (isAuthenticated && updated.userId) {
+        saveGameToCloud({
+          stats: updated,
+          stageProgress: stageProgressRef.current,
+          dailyMissions: dailyMissionsRef.current,
+          weeklyMissions: weeklyMissionsRef.current,
+          updatedAt: new Date().toISOString()
+        });
+      }
+      return updated;
+    });
+  }, [isAuthenticated]);
 
   return (
     <div className="min-h-screen flex flex-col font-sans antialiased bg-surface-base text-text-primary selection:bg-gold selection:text-surface-base pb-20 md:pb-0 md:pl-24">
@@ -1062,7 +1095,7 @@ export default function App() {
             <DungeonBattleModule
               onComplete={(score, total, exp, gold, tryoutId) => {
                 handleRewardPlayer(exp, gold);
-                setStats(prev => recordStudyActivity(prev, 'bossBattles', tryoutId || 'tryout_n3_2022_12'));
+                setStats(prev => recordStudyActivity(prev, 'bossBattles', tryoutId || 'tryout_n3_002'));
                 setIsBossBattleActive(false);
               }}
               onBack={() => setIsBossBattleActive(false)}
@@ -1164,6 +1197,33 @@ export default function App() {
               {activeTab === 'library' && (
                 <LibraryView
                   soundEnabled={stats.soundEnabled}
+                  onRewardPlayer={handleRewardPlayer}
+                  onRecordStudy={(cat, id, count) => setStats(prev => recordStudyActivity(prev, cat, id, count))}
+                  userDecks={stats.userDecks}
+                  onToggleBookmark={handleToggleBookmark}
+                />
+              )}
+
+              {activeTab === 'deck' && (
+                <BukuSakuView
+                  userDecks={stats.userDecks}
+                  onUpdateDecks={(updatedDecks) => {
+                    setStats(prev => {
+                      const updated = { ...prev, userDecks: updatedDecks };
+                      if (isAuthenticated && updated.userId) {
+                        saveGameToCloud({
+                          stats: updated,
+                          stageProgress: stageProgressRef.current,
+                          dailyMissions: dailyMissionsRef.current,
+                          weeklyMissions: weeklyMissionsRef.current,
+                          updatedAt: new Date().toISOString()
+                        });
+                      }
+                      return updated;
+                    });
+                  }}
+                  onRewardPlayer={handleRewardPlayer}
+                  soundEnabled={stats.soundEnabled}
                 />
               )}
 
@@ -1188,6 +1248,7 @@ export default function App() {
                   }}
                   syncStatus={cloudSyncStatus}
                   lastSyncedAt={lastSyncedAt}
+                  onUpdateName={handleUpdateName}
                 />
               )}
             </motion.div>

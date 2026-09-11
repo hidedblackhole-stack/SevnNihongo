@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Calendar, CheckCircle2, Sparkles, Trophy, Clock, Coins } from 'lucide-react';
+import { Calendar, CheckCircle2, Trophy, Clock, Coins } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { ScrollIcon } from '../ui/EngravingIcons';
 import { Mission } from '../../types/rpg';
@@ -131,7 +131,6 @@ export const MissionsView: React.FC<MissionsViewProps> = ({
                 {/* Rewards Badge */}
                 <div className="flex items-center gap-3 pt-0.5 text-xs font-mono">
                   <span className="text-gold font-bold flex items-center gap-1">
-                    <Sparkles className="w-3.5 h-3.5" />
                     +{mission.rewardExp} EXP
                   </span>
                 </div>

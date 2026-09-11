@@ -1,11 +1,13 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Filter, GitBranch, Sparkles, ChevronDown } from 'lucide-react';
+import { Search, Filter, GitBranch, ChevronDown, Bookmark } from 'lucide-react';
 import { ScrollIcon } from '../ui/EngravingIcons';
 import { BUNPOU_DATABASE } from '../../data/bunpou';
 import { ALL_GRAMMAR_FUNCTION_CATEGORIES } from '../../data/bunpouMetadata';
 import { BunpouItem } from '../../types/content';
 import { BunpouDetailModal } from './BunpouDetailModal';
 import { playSound } from '../../utils/audio';
+import { UserDeck } from '../../types/rpg';
+import { isItemBookmarked } from '../../utils/decks';
 
 const LEVEL_OPTIONS = [
   { value: 'all', label: 'Semua Level' },
@@ -18,9 +20,15 @@ const LEVEL_OPTIONS = [
 
 interface BunpouLibraryViewProps {
   soundEnabled?: boolean;
+  userDecks?: UserDeck[];
+  onToggleBookmark?: (id: string, category: 'bunpou', notes?: string) => void;
 }
 
-export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({ soundEnabled = true }) => {
+export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
+  soundEnabled = true,
+  userDecks,
+  onToggleBookmark,
+}) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [visibleCount, setVisibleCount] = useState(40);
   const [levelFilter, setLevelFilter] = useState<string>('all');
@@ -101,7 +109,6 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({ soundEnabl
         </div>
 
         <div className="hidden md:flex items-center gap-2 pr-3 text-xs font-mono text-text-secondary bg-surface-inset px-3 py-1.5 rounded-xl border border-border-subtle">
-          <Sparkles className="w-3.5 h-3.5 text-text-muted" />
           <span>{allBunpou.length.toLocaleString()} Pola</span>
         </div>
       </div>
@@ -176,7 +183,6 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({ soundEnabl
                 })}
 
                 <div className="pt-2 px-2 pb-1 border-t border-border-subtle text-[10px] text-text-muted font-mono text-center flex items-center justify-center gap-1.5">
-                  <Sparkles className="w-3 h-3 text-text-muted" />
                   <span>{allBunpou.length} pola tata bahasa</span>
                 </div>
               </div>
@@ -231,17 +237,38 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({ soundEnabl
             }}
             className="panel flex flex-col justify-between p-4 sm:p-5 group shadow-sm hover:shadow-md transition-all cursor-pointer rounded-2xl border border-border-subtle hover:border-border-primary space-y-3"
           >
-            {/* Top row: Level + Function Tags */}
+            {/* Top row: Level + Function Tags + Bookmark */}
             <div className="space-y-2">
-              <div className="flex flex-wrap items-center gap-1.5">
-                <span className="px-2 py-0.5 rounded-lg bg-surface-inset text-text-primary text-[10px] font-mono font-bold border border-border-subtle">
-                  {item.baseLevel ? `Fondasi ${item.baseLevel}` : `Level ${item.level}`}
-                </span>
-                {item.functions?.slice(0, 2).map((fn, idx) => (
-                  <span key={idx} className="px-2 py-0.5 rounded-lg bg-surface-inset text-text-secondary text-[10px] font-jp border border-border-subtle">
-                    {fn}
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span className="px-2 py-0.5 rounded-lg bg-surface-inset text-text-primary text-[10px] font-mono font-bold border border-border-subtle">
+                    {item.baseLevel ? `Fondasi ${item.baseLevel}` : `Level ${item.level}`}
                   </span>
-                ))}
+                  {item.functions?.slice(0, 2).map((fn, idx) => (
+                    <span key={idx} className="px-2 py-0.5 rounded-lg bg-surface-inset text-text-secondary text-[10px] font-jp border border-border-subtle">
+                      {fn}
+                    </span>
+                  ))}
+                </div>
+
+                {onToggleBookmark && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onToggleBookmark(item.id, 'bunpou');
+                      playSound('click', soundEnabled);
+                    }}
+                    className={`p-1.5 rounded-lg border transition-all shrink-0 ${
+                      isItemBookmarked(userDecks, item.id, 'bunpou')
+                        ? 'bg-surface-elevated text-gold border-gold/40 ring-1 ring-gold/30'
+                        : 'bg-surface-inset text-text-muted hover:text-gold border-border-subtle'
+                    }`}
+                    title={isItemBookmarked(userDecks, item.id, 'bunpou') ? 'Tersimpan di Buku Saku' : 'Simpan ke Buku Saku'}
+                  >
+                    <Bookmark className={`w-3.5 h-3.5 ${isItemBookmarked(userDecks, item.id, 'bunpou') ? 'fill-gold text-gold' : ''}`} />
+                  </button>
+                )}
               </div>
 
               {/* Title & Meaning */}
@@ -261,8 +288,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({ soundEnabl
 
               {/* Nuance or Description */}
               {item.nuance && (
-                <div className="flex items-start gap-1.5 text-xs text-text-secondary line-clamp-2 pt-0.5">
-                  <Sparkles className="w-3.5 h-3.5 text-text-muted shrink-0 mt-0.5" />
+                <div className="text-xs text-text-secondary line-clamp-2 pt-0.5">
                   <span className="text-[11px] leading-relaxed text-text-muted">
                     {item.nuance}
                   </span>
@@ -316,6 +342,8 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({ soundEnabl
           item={selectedItem}
           onClose={() => setSelectedItem(null)}
           soundEnabled={soundEnabled}
+          isBookmarked={Boolean(isItemBookmarked(userDecks, selectedItem.id, 'bunpou'))}
+          onToggleBookmark={onToggleBookmark ? () => onToggleBookmark(selectedItem.id, 'bunpou') : undefined}
         />
       )}
     </div>

@@ -13,8 +13,8 @@ interface RawExample {
 
 interface RawBunpou {
   id: string;
-  map_id: string;
-  stage_id: string;
+  map_id?: string;
+  stage_id?: string;
   title: string;
   formula: string;
   meaning_en: string;

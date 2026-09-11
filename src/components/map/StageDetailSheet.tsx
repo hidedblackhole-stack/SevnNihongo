@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   X, 
   Star, 
-  Sparkles, 
+  Award, 
   Coins, 
   Swords, 
   BookOpen, 
@@ -151,7 +151,7 @@ export const StageDetailSheet: React.FC<StageDetailSheetProps> = ({
             <div className="grid grid-cols-2 gap-3">
               <div className="p-3 rounded-xl bg-surface-inset border border-border-subtle flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-lg bg-gold/15 flex items-center justify-center text-gold shrink-0">
-                  <Sparkles className="w-4 h-4" />
+                  <Award className="w-4 h-4" />
                 </div>
                 <div>
                   <div className="text-[10px] font-mono text-text-secondary uppercase font-bold">Reward EXP</div>

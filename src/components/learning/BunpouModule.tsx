@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookOpen, Swords, Volume2, Sparkles, HelpCircle, GitBranch, MapPin, Settings2 } from 'lucide-react';
+import { BookOpen, Swords, Volume2, HelpCircle, GitBranch, MapPin, Settings2 } from 'lucide-react';
 import { BunpouItem, BunpouMixedSet, Question } from '../../types/content';
 import { BUNPOU_DATABASE, BUNPOU_MIXED_DATABASE } from '../../data/bunpou';
 import { getSubBranchesForBunpou } from '../../data/bunpouSubKnowledge';
@@ -221,7 +221,6 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
               onClick={() => startSingleQuiz(currentBunpou)}
               className="btn-cta px-4 py-1.5 rounded-xl text-xs font-bold shadow-sm transition-all flex items-center gap-1.5 font-heading"
             >
-              <Sparkles className="w-3.5 h-3.5" />
               <span>Latihan 7 Soal</span>
             </button>
           </div>
@@ -271,8 +270,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
               <div className="p-4 rounded-2xl bg-surface-inset border border-gold/30 space-y-3">
                 {currentBunpou.nuance && (
                   <div className="space-y-1">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-gold font-heading flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-gold" />
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-gold font-heading">
                       Nuansa Pemakaian (ニュアンス)
                     </span>
                     <p className="text-xs sm:text-sm text-text-primary leading-relaxed">
@@ -531,7 +529,6 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
               onClick={() => startSingleQuiz(currentBunpou)}
               className="w-full py-3.5 rounded-2xl btn-cta font-bold text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 active:scale-95 transition-all font-heading"
             >
-              <Sparkles className="w-4 h-4" />
               <span>Mulai Ujian 7 Soal ({currentBunpou.title})</span>
             </button>
           </div>

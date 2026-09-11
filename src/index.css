@@ -38,11 +38,11 @@ html.dark {
   --stitch: var(--thread);
 
   /* Kinako Gold (Reserved for Rewards, Currency & Milestones) */
-  --gold: #d9a54a;
-  --gold-soft: #e9cf9a;
-  --color-gold-base: #d9a54a;
-  --color-gold-highlight: #e9cf9a;
-  --color-gold-shadow: #7a5808;
+  --gold: #f0be52;
+  --gold-soft: #fde8a8;
+  --color-gold-base: #f0be52;
+  --color-gold-highlight: #fde8a8;
+  --color-gold-shadow: #8c6810;
 
   /* Typography Colors */
   --text-primary: #edf0f6;
@@ -118,14 +118,14 @@ html.theme-light,
   --color-leather-primary: var(--indigo);
   --color-leather-shadow: var(--indigo-deep);
 
-  /* Sashiko Thread */
-  --thread: rgba(37, 62, 99, 0.22);
+  /* Sashiko Thread (Warm Earthy Washi Stitch) */
+  --thread: rgba(94, 86, 64, 0.22);
   --stitch: var(--thread);
 
-  /* Ochre Amber Gold (Deepened for high contrast readability) */
-  --gold-base: #8c6019;
-  --gold-highlight: #a97a2f;
-  --gold-shadow: #5c3e07;
+  /* Ochre Amber Gold (Refined for crisp contrast without muddy brown) */
+  --gold-base: #a6731e;
+  --gold-highlight: #c48e35;
+  --gold-shadow: #6b4708;
   --gold: var(--gold-base);
   --gold-soft: var(--gold-highlight);
 
@@ -163,9 +163,9 @@ html.theme-light,
   --neu-d: rgba(94, 86, 64, 0.28);
   --neu-l: rgba(255, 255, 255, 0.85);
 
-  /* Borders & Vignette */
-  --color-border-subtle: rgba(47, 77, 120, 0.12);
-  --color-border-primary: rgba(47, 77, 120, 0.3);
+  /* Borders & Vignette (Warm Earthen Washi Fiber) */
+  --color-border-subtle: rgba(94, 86, 64, 0.15);
+  --color-border-primary: rgba(94, 86, 64, 0.28);
   --color-vignette: rgba(94, 86, 64, 0.12);
 
   /* Shadow Compatibility Bindings */
@@ -190,16 +190,16 @@ html.theme-light,
   --color-stone-200: var(--color-text-primary);
   --color-stone-100: var(--color-text-primary);
 
-  --color-amber-100: #4a3418;
-  --color-amber-200: #5d421d;
-  --color-amber-300: #7a5808;
-  --color-amber-400: #a97a2f;
-  --color-amber-500: #a97a2f;
-  --color-amber-600: #8a6220;
-  --color-amber-700: #6b4c16;
-  --color-amber-800: #c99532;
-  --color-amber-900: #f1e8d6;
-  --color-amber-950: #f7f2e8;
+  --color-amber-100: #fef3c7;
+  --color-amber-200: #fde68a;
+  --color-amber-300: #fcd34d;
+  --color-amber-400: #fbbf24;
+  --color-amber-500: #f59e0b;
+  --color-amber-600: #d97706;
+  --color-amber-700: #b45309;
+  --color-amber-800: #92400e;
+  --color-amber-900: #78350f;
+  --color-amber-950: #451a03;
 
   --color-emerald-950: #e2f1e9;
   --color-emerald-900: #cbe5d7;
@@ -446,7 +446,7 @@ html.theme-light,
   html.theme-light .btn-pill,
   .theme-light .btn-pill {
     background: var(--color-surface-inset);
-    color: #3c2a1a;
+    color: var(--text-primary);
     border: 1px solid var(--color-border-subtle);
     box-shadow:
       inset 1.5px 1.5px 3.5px var(--neu-d),
@@ -456,7 +456,7 @@ html.theme-light,
   html.theme-light .btn:not(.btn-cta):not(.btn-pill):not(.btn-danger),
   .theme-light .btn:not(.btn-cta):not(.btn-pill):not(.btn-danger) {
     background: var(--color-surface-card);
-    color: #3c2a1a;
+    color: var(--text-primary);
     border: 1px solid var(--color-border-primary);
     box-shadow:
       3px 3px 8px var(--neu-d),
@@ -487,7 +487,7 @@ html.theme-light,
     color: #ffffff;
   }
 
-  /* Light mode: NO outline, cream washi color matching background, subtle soft shadow, dark brown typography */
+  /* Light mode: NO outline, cream washi color matching background, subtle soft shadow, Sumi typography */
   html.theme-light .world-gate-emblem,
   .theme-light .world-gate-emblem {
     background: var(--color-surface-card);
@@ -495,7 +495,7 @@ html.theme-light,
     box-shadow:
       3px 3px 8px var(--neu-d),
       -3px -3px 8px var(--neu-l);
-    color: #3c2a1a;
+    color: var(--text-primary);
   }
 
   /* World Gate Stage Pill (Tactile Skeuomorphic Pill Badge) */
@@ -524,7 +524,7 @@ html.theme-light,
   html.theme-light .world-gate-pill,
   .theme-light .world-gate-pill {
     background: var(--color-surface-inset);
-    color: #3c2a1a;
+    color: var(--text-primary);
     border: 1px solid rgba(94, 86, 64, 0.16);
     box-shadow:
       inset 1.5px 1.5px 3.5px var(--neu-d),
@@ -542,6 +542,26 @@ html.theme-light,
     box-shadow:
       5px 5px 14px var(--neu-d),
       -5px -5px 14px var(--neu-l);
+  }
+
+  /* Light Mode Hanko Crimson Seal CTA */
+  html.theme-light .btn-cta,
+  .theme-light .btn-cta {
+    background: linear-gradient(135deg, #a82025 0%, #871418 100%);
+    color: #fdfbf7;
+    border: 1px solid #731216;
+    box-shadow:
+      0 4px 14px rgba(168, 32, 37, 0.32),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    font-weight: 800;
+  }
+
+  html.theme-light .btn-cta:hover,
+  .theme-light .btn-cta:hover {
+    background: linear-gradient(135deg, #b8252a 0%, #94171c 100%);
+    box-shadow:
+      0 6px 18px rgba(168, 32, 37, 0.42),
+      inset 0 1px 0 rgba(255, 255, 255, 0.35);
   }
 
   /* 4.3 Breadcrumb / Stage Label */
@@ -629,6 +649,26 @@ html.theme-light,
     filter: brightness(1.08);
   }
 
+  /* Light Mode Hanko Crimson Primary Button */
+  html.theme-light .rpg-btn-primary,
+  .theme-light .rpg-btn-primary {
+    background: linear-gradient(135deg, #a82025 0%, #871418 100%);
+    color: #fdfbf7;
+    border: 1px solid #731216;
+    box-shadow:
+      0 4px 12px rgba(168, 32, 37, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    font-weight: 700;
+  }
+
+  html.theme-light .rpg-btn-primary:hover,
+  .theme-light .rpg-btn-primary:hover {
+    background: linear-gradient(135deg, #b8252a 0%, #94171c 100%);
+    box-shadow:
+      0 6px 16px rgba(168, 32, 37, 0.38),
+      inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  }
+
   .rpg-btn-secondary {
     background: var(--color-surface-card);
     color: var(--color-text-secondary);
@@ -664,7 +704,7 @@ html.theme-light,
     padding: 3px 8px;
     border-width: 1px;
     border-style: solid;
-    background: rgba(202, 162, 91, 0.15);
+    background: rgba(240, 190, 82, 0.15);
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
   }
 
@@ -1182,7 +1222,7 @@ ruby rt { font-size: 0.55em; color: var(--color-gold-base); opacity: 0.9; font-w
 html.theme-light .skeuo-tier-pill.active,
 .theme-light .skeuo-tier-pill.active {
   background: var(--color-surface-card);
-  color: #3c2a1a;
+  color: var(--text-primary);
   border-color: var(--color-border-primary);
   font-weight: 800;
   box-shadow:
@@ -1208,7 +1248,7 @@ html.dark .journey-canvas-card {
 html.theme-light .journey-canvas-card,
 .theme-light .journey-canvas-card {
   background: #eae7de;
-  border-color: rgba(47, 77, 120, 0.15);
+  border-color: rgba(94, 86, 64, 0.18);
 }
 
 /* SVG Carved Groove Path Colors */

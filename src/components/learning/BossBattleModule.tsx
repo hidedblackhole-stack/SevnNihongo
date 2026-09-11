@@ -5,7 +5,6 @@ import {
   Trophy,
   Shield,
   Zap,
-  Sparkles,
   Volume2,
   Flame,
   Star,
@@ -444,7 +443,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
             className="btn btn-pill px-2.5 py-1 text-indigo border-indigo/40 text-[11px] font-bold disabled:opacity-40"
             title="Hilangkan 2 opsi salah (15 MP)"
           >
-            <Sparkles className="inline w-3 h-3 mr-1 mb-0.5" /> Hint 50/50
+            Hint 50/50
           </button>
 
           <button

@@ -1,4 +1,5 @@
 // Learning & Content Types (Normalized relational structure)
+export * from './identity';
 
 export type ErrorType =
   | 'PASSIVE_CONFUSION'
@@ -351,6 +352,7 @@ export interface TryOutData {
   id: string;
   title: string;
   level?: 'N1' | 'N2' | 'N3' | 'N4' | 'N5';
+  code?: string;
   year?: number;
   month?: number;
   sections: {

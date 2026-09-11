@@ -1,8 +1,9 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Check, Edit3 } from 'lucide-react';
+import { Check, Edit3, RotateCcw, ArrowLeft, Volume2, Layers, BookOpen, Clock } from 'lucide-react';
 import { KotobaItem } from '../../types/content';
 import { KanjiWritingCanvas, preloadStrokeData } from './KanjiWritingCanvas';
+import { RubyText } from './RubyText';
 import { playSound, speakJapanese } from '../../utils/audio';
 
 interface KotobaWritingPracticeProps {
@@ -23,17 +24,52 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
   const [completedChars, setCompletedChars] = useState<number[]>([]);
   const [totalMistakes, setTotalMistakes] = useState(0);
 
-  // Reset state when kotoba changes
+  // Master Kotoba Stopwatch: persists across all syllables/characters
+  const [elapsedSeconds, setElapsedSeconds] = useState(0);
+  const [isTimerRunning, setIsTimerRunning] = useState(true);
+
+  const isWordFinished = completedChars.length === characters.length;
+
+  // Reset state and stopwatch when kotoba changes
   useEffect(() => {
     setCurrentCharIndex(0);
     setCompletedChars([]);
     setTotalMistakes(0);
+    setElapsedSeconds(0);
+    setIsTimerRunning(true);
     // Preload all stroke data in the background!
     preloadStrokeData(kotoba.word);
   }, [kotoba.word]);
 
+  // Timer interval running across the entire Kotoba practice session
+  useEffect(() => {
+    let interval: any = null;
+    if (isTimerRunning && !isWordFinished) {
+      interval = setInterval(() => {
+        setElapsedSeconds(prev => prev + 1);
+      }, 1000);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isTimerRunning, isWordFinished]);
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
+
   const currentChar = characters[currentCharIndex];
-  const isWordFinished = completedChars.length === characters.length;
+
+  const handleReset = () => {
+    setCurrentCharIndex(0);
+    setCompletedChars([]);
+    setTotalMistakes(0);
+    setElapsedSeconds(0); // Reset stopwatch from the beginning of the syllables
+    setIsTimerRunning(true);
+    playSound('click', soundEnabled);
+  };
 
   const handleFinishChar = () => {
     setCompletedChars(prev => [...prev, currentCharIndex]);
@@ -44,129 +80,263 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
       }, 600); // Small delay before next char
     } else {
       // Final character completed
+      setIsTimerRunning(false); // Stop stopwatch on word completion
       playSound('fanfare', soundEnabled);
       speakJapanese(kotoba.word);
       setTimeout(() => {
         onFinishWord(Math.max(0, 100 - (totalMistakes * 10))); // Calculate final exp
-      }, 800); // Wait for the "naik ke atas" animation
+      }, 800);
     }
   };
 
   return (
-    <div className="w-full max-w-lg mx-auto flex flex-col items-center space-y-6 animate-fade-in panel p-4 sm:p-6 rounded-3xl border border-border-subtle bg-surface-card">
-      
-      {/* Top Header: Active Recall Clue */}
-      <div className="text-center space-y-3 w-full">
-        <div className="flex justify-between items-center w-full">
-          <span className="px-3 py-1 rounded-full bg-gold/15 text-gold border border-gold/30 text-xs font-bold flex items-center gap-1.5 shadow-sm font-heading">
-            <Edit3 className="w-3.5 h-3.5 text-gold" /> Active Recall
-          </span>
-          {onCancel && (
-            <button onClick={onCancel} className="text-xs text-text-muted hover:text-text-primary underline underline-offset-2 font-bold">
-              Batal
-            </button>
-          )}
-        </div>
-        
-        <div className="bg-surface-inset p-4 rounded-2xl border border-border-subtle shadow-inner">
-          <h3 className="text-xl sm:text-2xl font-black text-text-primary leading-snug font-heading">
-            {kotoba.meaningId}
-          </h3>
-        </div>
-      </div>
+    <div className="w-full max-w-lg mx-auto flex flex-col items-center space-y-5 animate-fade-in panel p-4 sm:p-6 rounded-3xl border border-border-subtle bg-surface-card">
+      {!isWordFinished ? (
+        <>
+          {/* Active Recall Clue Header */}
+          <div className="text-center space-y-3 w-full">
+            <div className="flex justify-between items-center w-full">
+              <div className="flex items-center gap-2">
+                <span className="px-3 py-1 rounded-full bg-indigo/15 text-indigo border border-indigo/30 text-xs font-bold flex items-center gap-1.5 shadow-sm font-heading">
+                  <Edit3 className="w-3.5 h-3.5 text-indigo" /> Active Recall
+                </span>
+                <span className="px-2.5 py-1 rounded-full bg-surface-inset border border-border-subtle text-text-primary text-xs font-bold font-mono flex items-center gap-1.5 shadow-sm" title="Stopwatch Waktu Menulis Kotoba">
+                  <Clock className="w-3.5 h-3.5 text-gold" />
+                  <span>{formatTime(elapsedSeconds)}</span>
+                </span>
+              </div>
+              {onCancel && (
+                <button
+                  onClick={onCancel}
+                  className="text-xs text-text-muted hover:text-text-primary underline underline-offset-2 font-bold"
+                >
+                  Batal
+                </button>
+              )}
+            </div>
+            
+            <div className="bg-surface-inset p-4 rounded-2xl border border-border-subtle shadow-inner">
+              <h3 className="text-xl sm:text-2xl font-black text-text-primary leading-snug font-heading">
+                {kotoba.meaningId}
+              </h3>
+            </div>
+          </div>
 
-      {/* Target Slots */}
-      <div className="flex items-end justify-center gap-2 sm:gap-3 py-4 min-h-[80px]">
-        {characters.map((char, i) => {
-          const isDone = completedChars.includes(i);
-          const isActive = i === currentCharIndex;
-          
-          return (
-            <div key={i} className="flex flex-col items-center gap-2">
-              <div 
-                className={`w-12 h-12 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center border-2 transition-all relative
-                  ${isDone ? 'bg-gold/15 border-gold/50 shadow-md' : 
-                    isActive ? 'bg-surface-elevated border-gold ring-2 ring-gold/20 shadow-md' : 
-                    'bg-surface-inset border-border-subtle'}
-                `}
-              >
-                <AnimatePresence>
-                  {isDone && (
-                    <motion.span
-                      key={`span-${i}`}
-                      initial={{ opacity: 0, y: 30, scale: 0.5 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                      className="absolute inset-0 flex items-center justify-center text-2xl sm:text-3xl font-black text-gold font-jp"
-                    >
-                      {char}
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-                {isActive && !isDone && (
-                  <motion.div
-                    animate={{ opacity: [0.3, 0.7, 0.3] }}
-                    transition={{ repeat: Infinity, duration: 1.5 }}
-                    className="w-2 h-2 rounded-full bg-gold"
-                  />
-                )}
+          {/* Target Slots */}
+          <div className="flex items-end justify-center gap-2 sm:gap-3 py-2 min-h-[70px]">
+            {characters.map((char, i) => {
+              const isDone = completedChars.includes(i);
+              const isActive = i === currentCharIndex;
+              
+              return (
+                <div key={i} className="flex flex-col items-center gap-2">
+                  <div 
+                    className={`w-12 h-12 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center border-2 transition-all relative
+                      ${isDone ? 'bg-indigo/15 border-indigo/50 shadow-md' : 
+                        isActive ? 'bg-surface-elevated border-indigo ring-2 ring-indigo/25 shadow-md' : 
+                        'bg-surface-inset border-border-subtle'}
+                    `}
+                  >
+                    <AnimatePresence>
+                      {isDone && (
+                        <motion.span
+                          key={`span-${i}`}
+                          initial={{ opacity: 0, y: 30, scale: 0.5 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                          className="absolute inset-0 flex items-center justify-center text-2xl sm:text-3xl font-black text-indigo font-jp"
+                        >
+                          {char}
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
+                    {isActive && !isDone && (
+                      <motion.div
+                        animate={{ opacity: [0.3, 0.7, 0.3] }}
+                        transition={{ repeat: Infinity, duration: 1.5 }}
+                        className="w-2 h-2 rounded-full bg-indigo"
+                      />
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Writing Canvas for the Current Character */}
+          <div className="w-full flex flex-col items-center gap-3">
+            <div className="text-xs font-bold text-text-secondary font-mono">
+              Tulis karakter ke-{currentCharIndex + 1} ({currentChar})
+            </div>
+            <div className="w-full flex justify-center" key={`canvas-${currentCharIndex}-${currentChar}`}>
+              <KanjiWritingCanvas
+                kanjiChar={currentChar}
+                totalSheets={1} // 1 sheet per character for rapid recall
+                soundEnabled={soundEnabled}
+                autoAdvance={true}
+                showStopwatch={false} // Use Kotoba's master word-level stopwatch
+                onCompleteSheet={(sheet, sheetScore) => {
+                  if (sheetScore < 100) {
+                    setTotalMistakes(prev => prev + 1);
+                  }
+                }}
+                onFinish={handleFinishChar}
+              />
+            </div>
+          </div>
+        </>
+      ) : (
+        /* Completion State: Full Kotoba Detail + Ulangi & Kembali Buttons */
+        <motion.div 
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ type: "spring", stiffness: 300, damping: 25 }}
+          className="w-full space-y-5 text-left"
+        >
+          {/* JLPT & Word Type Meta + Total Time */}
+          <div className="flex items-center justify-center gap-2 flex-wrap pb-1 border-b border-border-subtle text-xs font-mono">
+            <span className="px-2.5 py-0.5 rounded-lg bg-surface-inset text-text-primary font-bold border border-border-subtle shadow-sm">
+              JLPT {kotoba.jlpt}
+            </span>
+            <span className="px-2.5 py-0.5 rounded-lg bg-surface-inset text-text-muted border border-border-subtle uppercase font-semibold shadow-sm">
+              {kotoba.wordType}
+            </span>
+            <span className="px-2.5 py-0.5 rounded-lg bg-surface-inset text-gold font-bold border border-border-subtle flex items-center gap-1.5 shadow-sm" title="Total Waktu Menulis Kotoba">
+              <Clock className="w-3.5 h-3.5 text-gold" />
+              <span>{formatTime(elapsedSeconds)}</span>
+            </span>
+          </div>
+
+          {/* Giant Word & Reading Box */}
+          <div className="text-center space-y-2 py-2">
+            <h1 className="text-4xl sm:text-5xl font-black text-text-primary font-jp tracking-wider drop-shadow-sm">
+              <RubyText japanese={kotoba.word} reading={kotoba.reading} showFurigana={true} />
+            </h1>
+            <button
+              onClick={() => speakJapanese(kotoba.word)}
+              className="mx-auto flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-colors text-xs font-bold border border-border-subtle shadow-sm"
+              title="Dengarkan pelafalan"
+            >
+              <Volume2 className="w-3.5 h-3.5 text-wine-accent" />
+              <span>Dengarkan Pelafalan</span>
+            </button>
+          </div>
+
+          {/* Meaning Description Box */}
+          <div className="space-y-1 bg-surface-inset p-4 rounded-2xl border border-border-subtle shadow-inner text-center sm:text-left">
+            <h3 className="text-lg sm:text-xl font-black text-text-primary font-heading leading-snug">
+              {kotoba.meaningId}
+            </h3>
+            {kotoba.meaningJa && (
+              <p className="text-xs text-text-muted italic pt-0.5">
+                Makna JP: {kotoba.meaningJa}
+              </p>
+            )}
+            {kotoba.meaningEn && (
+              <p className="text-[11px] text-text-secondary">
+                English: {kotoba.meaningEn}
+              </p>
+            )}
+          </div>
+
+          {/* Kanji Components (if any) */}
+          {kotoba.kanjiComponents && kotoba.kanjiComponents.length > 0 && (
+            <div className="space-y-2">
+              <h4 className="text-xs font-bold text-text-muted uppercase tracking-wider flex items-center gap-1.5">
+                <Layers className="w-3.5 h-3.5" /> Komponen Kanji
+              </h4>
+              <div className="flex flex-wrap gap-2">
+                {kotoba.kanjiComponents.map((k, i) => (
+                  <span
+                    key={i}
+                    className="px-3 py-1.5 rounded-xl bg-surface-inset text-text-primary border border-border-subtle text-sm font-jp font-bold shadow-sm"
+                  >
+                    {k}
+                  </span>
+                ))}
               </div>
             </div>
-          );
-        })}
-      </div>
+          )}
 
-      {/* Writing Canvas for the Current Character */}
-      {!isWordFinished ? (
-        <div className="w-full flex flex-col items-center gap-3">
-          <div className="text-xs font-bold text-text-secondary font-mono">
-            Tulis karakter ke-{currentCharIndex + 1}
-          </div>
-          <div className="w-full flex justify-center" key={`canvas-${currentCharIndex}-${currentChar}`}>
-            <KanjiWritingCanvas
-              kanjiChar={currentChar}
-              totalSheets={1} // Reduced to 1 sheet for active recall flow speed
-              soundEnabled={soundEnabled}
-              autoAdvance={true}
-              onCompleteSheet={(sheet, sheetScore) => {
-                if (sheetScore < 100) {
-                   setTotalMistakes(prev => prev + 1);
-                }
-              }}
-              onFinish={handleFinishChar}
-            />
-          </div>
-        </div>
-      ) : (
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ type: "spring", delay: 0.3 }}
-          className="w-full p-6 sm:p-8 rounded-3xl panel bg-surface-card border-2 border-gold/40 text-center space-y-4 shadow-xl"
-        >
-          <div className="w-16 h-16 rounded-full bg-gold text-surface-base flex items-center justify-center mx-auto mb-2 shadow-lg">
-            <Check className="w-8 h-8 stroke-[3]" />
-          </div>
-          
-          <div className="space-y-1">
-            <h4 className="text-xl font-bold text-gold font-heading">Kerja Bagus!</h4>
-            <p className="text-sm text-text-secondary">Kosakata berhasil diingat & ditulis.</p>
-          </div>
-          
-          <div className="py-2">
-            <p className="text-lg font-mono text-gold mb-1">{kotoba.reading}</p>
-            <p className="text-3xl font-black text-text-primary font-jp tracking-wider drop-shadow-sm">{kotoba.word}</p>
-          </div>
-          
-          <div className="pt-2">
+          {/* Example Sentence (if any) */}
+          {kotoba.exampleSentence && (
+            <div className="space-y-2">
+              <h4 className="text-xs font-bold text-text-muted uppercase tracking-wider flex items-center gap-1.5">
+                <BookOpen className="w-3.5 h-3.5" /> Contoh Kalimat
+              </h4>
+              <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle space-y-2">
+                <p className="text-sm font-jp text-text-primary leading-relaxed font-bold">
+                  <RubyText 
+                    japanese={kotoba.exampleSentence.japanese} 
+                    reading={kotoba.exampleSentence.reading} 
+                    showFurigana={true} 
+                  />
+                </p>
+                <p className="text-xs text-text-secondary font-medium">
+                  {kotoba.exampleSentence.meaningId}
+                </p>
+                <button
+                  onClick={() => speakJapanese(kotoba.exampleSentence!.japanese)}
+                  className="flex items-center gap-1.5 text-[11px] text-gold hover:underline font-bold uppercase tracking-wider mt-1"
+                >
+                  <Volume2 className="w-3 h-3" /> Putar Audio Kalimat
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Related Words / Collocations Preview (if any) */}
+          {((kotoba.relatedWords && kotoba.relatedWords.length > 0) || (kotoba.collocations && kotoba.collocations.length > 0)) && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              {kotoba.relatedWords && kotoba.relatedWords.length > 0 && (
+                <div className="space-y-1.5">
+                  <span className="font-bold text-text-muted uppercase tracking-wider text-[11px]">
+                    Kata Terkait
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {kotoba.relatedWords.slice(0, 3).map((rw, i) => (
+                      <span key={i} className="px-2.5 py-1 rounded-lg bg-surface-inset border border-border-subtle font-jp text-text-primary">
+                        {rw}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {kotoba.collocations && kotoba.collocations.length > 0 && (
+                <div className="space-y-1.5">
+                  <span className="font-bold text-text-muted uppercase tracking-wider text-[11px]">
+                    Kolokasi (Frasa)
+                  </span>
+                  <div className="space-y-1">
+                    {kotoba.collocations.slice(0, 2).map((c, i) => (
+                      <p key={i} className="px-2.5 py-1 rounded-lg bg-surface-inset border border-border-subtle font-jp text-text-secondary truncate">
+                        {c}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* 2 Action Buttons: Ulangi & Kembali */}
+          <div className="grid grid-cols-2 gap-3 pt-2 w-full">
+            <button
+              onClick={handleReset}
+              className="btn py-3 px-4 rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98]"
+            >
+              <RotateCcw className="w-4 h-4 text-wine-accent" />
+              <span>Ulangi Menulis</span>
+            </button>
             <button
               onClick={() => {
                 onCancel && onCancel();
                 playSound('click', soundEnabled);
               }}
-              className="rpg-btn rpg-btn-primary w-full py-3 text-sm font-heading"
+              className="btn btn-cta py-3 px-4 rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98]"
             >
-              Selesai & Kembali
+              <ArrowLeft className="w-4 h-4" />
+              <span>Kembali ke Detail</span>
             </button>
           </div>
         </motion.div>

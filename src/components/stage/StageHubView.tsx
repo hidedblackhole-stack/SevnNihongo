@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { BookOpen, Layers, Feather, BookMarked, Headphones, Swords, ArrowLeft, Sparkles, CheckCircle2, Star, AlertCircle, ShieldCheck, ChevronDown, ChevronUp, Crown, Coins } from 'lucide-react';
+import { BookOpen, Layers, Feather, BookMarked, Headphones, Swords, ArrowLeft, CheckCircle2, Star, AlertCircle, ShieldCheck, ChevronDown, ChevronUp, Crown, Coins } from 'lucide-react';
 import { Stage, ItemMasteryRecord } from '../../types/content';
 import { StageClearData } from '../../types/rpg';
 import { BunpouModule } from '../learning/BunpouModule';
@@ -370,7 +370,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
       case 'COMPLETED':
         return <span className="rpg-badge bg-indigo/20 text-indigo border-indigo">COMPLETED</span>;
       case 'LEARNING':
-        return <span className="rpg-badge bg-gold/15 text-gold border-gold/40">LEARNING</span>;
+        return <span className="rpg-badge bg-sky-500/15 text-sky-400 border-sky-500/30">LEARNING</span>;
       default:
         return <span className="rpg-badge bg-surface-inset text-text-muted border-border-subtle">AVAILABLE</span>;
     }
@@ -455,7 +455,6 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
         <div className="flex flex-wrap items-center justify-between gap-2.5 pt-1 text-xs">
           <div className="flex items-center gap-2">
             <div className="btn btn-pill py-1 px-3 text-xs gap-1.5 shadow-sm text-gold">
-              <Sparkles className="w-3.5 h-3.5 text-gold" />
               EXP: +{stage.rewardExp}
             </div>
           </div>

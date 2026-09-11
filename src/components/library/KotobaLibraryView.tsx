@@ -1,12 +1,14 @@
 import React, { useState, useMemo } from 'react';
 import { AnimatePresence } from 'motion/react';
-import { Search, Volume2, Filter, ChevronDown, Sparkles, Star } from 'lucide-react';
+import { Search, Volume2, Filter, ChevronDown, Star, Bookmark } from 'lucide-react';
 import { BookIcon } from '../ui/EngravingIcons';
 import { KOTOBA_DATABASE } from '../../data/kotoba';
 import { playSound, speakJapanese } from '../../utils/audio';
 import { RubyText } from '../learning/RubyText';
 import { KotobaItem } from '../../types/content';
 import { KotobaDetailModal } from './KotobaDetailModal';
+import { UserDeck } from '../../types/rpg';
+import { isItemBookmarked } from '../../utils/decks';
 
 const LEVEL_OPTIONS = [
   { value: 'all', label: 'Semua Level' },
@@ -58,9 +60,15 @@ export function getKotobaPriority(item: KotobaItem): { tier: 'essential' | 'impo
 
 interface KotobaLibraryViewProps {
   soundEnabled?: boolean;
+  userDecks?: UserDeck[];
+  onToggleBookmark?: (id: string, category: 'kotoba', notes?: string) => void;
 }
 
-export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({ soundEnabled = true }) => {
+export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
+  soundEnabled = true,
+  userDecks,
+  onToggleBookmark,
+}) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [visibleCount, setVisibleCount] = useState(50);
   const [levelFilter, setLevelFilter] = useState<string>('all');
@@ -120,7 +128,6 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({ soundEnabl
         </div>
 
         <div className="hidden md:flex items-center gap-2 pr-3 text-xs font-mono text-text-secondary bg-surface-inset px-3 py-1.5 rounded-xl border border-border-subtle">
-          <Sparkles className="w-3.5 h-3.5 text-text-muted" />
           <span>{allKotoba.length.toLocaleString()} Entri</span>
         </div>
       </div>
@@ -195,7 +202,6 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({ soundEnabl
                 })}
 
                 <div className="pt-2 px-2 pb-1 border-t border-border-subtle text-[10px] text-text-muted font-mono text-center flex items-center justify-center gap-1.5">
-                  <Sparkles className="w-3 h-3 text-text-muted" />
                   <span>8.367 entri kosakata</span>
                 </div>
               </div>
@@ -272,16 +278,35 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({ soundEnabl
                       {item.meaningId}
                     </p>
                   </div>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      speakJapanese(item.word);
-                    }}
-                    className="p-2.5 rounded-xl bg-surface-inset text-text-secondary hover:bg-surface-elevated hover:text-text-primary transition-colors shrink-0 border border-border-subtle"
-                    title="Dengarkan Pengucapan"
-                  >
-                    <Volume2 className="w-4 h-4" />
-                  </button>
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    {onToggleBookmark && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onToggleBookmark(item.id, 'kotoba');
+                          playSound('click', soundEnabled);
+                        }}
+                        className={`p-2.5 rounded-xl border transition-all ${
+                          isItemBookmarked(userDecks, item.id, 'kotoba')
+                            ? 'bg-surface-elevated text-gold border-gold/40 ring-1 ring-gold/30'
+                            : 'bg-surface-inset text-text-muted hover:text-gold border-border-subtle'
+                        }`}
+                        title={isItemBookmarked(userDecks, item.id, 'kotoba') ? 'Tersimpan di Buku Saku' : 'Simpan ke Buku Saku'}
+                      >
+                        <Bookmark className={`w-4 h-4 ${isItemBookmarked(userDecks, item.id, 'kotoba') ? 'fill-gold text-gold' : ''}`} />
+                      </button>
+                    )}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        speakJapanese(item.word);
+                      }}
+                      className="p-2.5 rounded-xl bg-surface-inset text-text-secondary hover:bg-surface-elevated hover:text-text-primary transition-colors border border-border-subtle"
+                      title="Dengarkan Pengucapan"
+                    >
+                      <Volume2 className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -315,6 +340,8 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({ soundEnabl
             onClose={() => setSelectedItem(null)}
             item={selectedItem}
             soundEnabled={soundEnabled}
+            isBookmarked={Boolean(isItemBookmarked(userDecks, selectedItem.id, 'kotoba'))}
+            onToggleBookmark={onToggleBookmark ? () => onToggleBookmark(selectedItem.id, 'kotoba') : undefined}
           />
         )}
       </AnimatePresence>

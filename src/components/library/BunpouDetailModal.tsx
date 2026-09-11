@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Volume2, Sparkles, HelpCircle, GitBranch, MapPin, Settings2, Swords } from 'lucide-react';
+import { X, Volume2, HelpCircle, GitBranch, MapPin, Settings2, Swords, Bookmark } from 'lucide-react';
 import { BunpouItem } from '../../types/content';
 import { FormulaDisplay } from '../learning/FormulaDisplay';
 import { RubyText } from '../learning/RubyText';
@@ -9,12 +9,16 @@ interface BunpouDetailModalProps {
   item: BunpouItem;
   onClose: () => void;
   soundEnabled?: boolean;
+  isBookmarked?: boolean;
+  onToggleBookmark?: () => void;
 }
 
 export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
   item,
   onClose,
   soundEnabled = true,
+  isBookmarked = false,
+  onToggleBookmark,
 }) => {
   const [activeSubIndex, setActiveSubIndex] = useState<number>(0);
   const subBranches = item.subFormulas || [];
@@ -51,12 +55,31 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
             </p>
           </div>
 
-          <button
-            onClick={onClose}
-            className="p-2 rounded-2xl bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-colors border border-border-subtle shrink-0"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-1.5 shrink-0">
+            {onToggleBookmark && (
+              <button
+                type="button"
+                onClick={() => {
+                  onToggleBookmark();
+                  playSound('click', soundEnabled);
+                }}
+                className={`p-2 rounded-2xl border transition-all ${
+                  isBookmarked
+                    ? 'bg-surface-elevated text-gold border-gold/40 ring-1 ring-gold/30'
+                    : 'bg-surface-card border-border-subtle text-text-muted hover:text-gold'
+                }`}
+                title={isBookmarked ? 'Tersimpan di Buku Saku' : 'Simpan ke Buku Saku'}
+              >
+                <Bookmark className={`w-5 h-5 ${isBookmarked ? 'fill-gold text-gold' : ''}`} />
+              </button>
+            )}
+            <button
+              onClick={onClose}
+              className="p-2 rounded-2xl bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-colors border border-border-subtle"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         {/* Scrollable Content */}
@@ -77,8 +100,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
             <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-2.5">
               {item.nuance && (
                 <div className="space-y-1">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-gold font-heading flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-gold" />
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-gold font-heading">
                     Nuansa Pemakaian (ニュアンス)
                   </span>
                   <p className="text-xs sm:text-sm text-text-primary leading-relaxed pl-1">

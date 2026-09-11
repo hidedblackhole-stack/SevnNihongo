@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { CheckCircle2, XCircle, Volume2, Sparkles, ArrowRight, RotateCcw, HelpCircle, Coins } from 'lucide-react';
+import { CheckCircle2, XCircle, Volume2, ArrowRight, RotateCcw, HelpCircle, Coins } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { Question } from '../../types/content';
 import { playSound, speakJapanese } from '../../utils/audio';
@@ -156,7 +156,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
     return (
       <div className="w-full max-w-xl mx-auto p-6 panel text-center space-y-5 shadow-2xl">
         <div className="p-4 inline-flex rounded-full bg-surface-inset border border-gold/40 text-gold">
-          <Sparkles className="w-9 h-9" />
+          {isSuccess ? <CheckCircle2 className="w-9 h-9" /> : <RotateCcw className="w-9 h-9" />}
         </div>
 
         <h3 className="text-xl sm:text-2xl font-bold text-text-primary font-heading">
@@ -172,7 +172,6 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
           <div className="text-center">
             <span className="text-[11px] text-text-muted">Perolehan EXP</span>
             <div className="text-base sm:text-lg font-bold text-gold flex items-center justify-center gap-1 font-mono">
-              <Sparkles className="w-4 h-4" />
               +{expGained} EXP
             </div>
             {bonusExp > 0 && (

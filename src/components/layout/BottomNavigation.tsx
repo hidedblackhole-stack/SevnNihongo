@@ -1,10 +1,10 @@
 import React from 'react';
 import { Settings } from 'lucide-react';
 import { Trophy } from 'lucide-react';
-import { CastleIcon, CompassIcon, ScrollIcon, SwordIcon, BookIcon, TreasureIcon } from '../ui/EngravingIcons';
+import { CastleIcon, CompassIcon, ScrollIcon, SwordIcon, BookIcon, TreasureIcon, BookmarkIcon } from '../ui/EngravingIcons';
 import { playSound } from '../../utils/audio';
 
-export type TabType = 'home' | 'maps' | 'daily' | 'weekly' | 'leaderboard' | 'library' | 'shop' | 'settings';
+export type TabType = 'home' | 'maps' | 'daily' | 'weekly' | 'leaderboard' | 'library' | 'deck' | 'shop' | 'settings';
 
 interface BottomNavigationProps {
   activeTab: TabType;
@@ -22,8 +22,8 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
     { id: 'maps', label: 'World', icon: CompassIcon },
     { id: 'daily', label: 'Misi', icon: ScrollIcon },
     { id: 'leaderboard', label: 'Rank', icon: Trophy },
-    { id: 'library', label: 'Buku', icon: BookIcon },
-
+    { id: 'library', label: 'Library', icon: BookIcon },
+    { id: 'deck', label: 'Buku Saku', icon: BookmarkIcon },
     { id: 'settings', label: 'Menu', icon: Settings },
   ];
 

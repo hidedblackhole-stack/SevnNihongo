@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Volume2, Layers, Link as LinkIcon, Network, Edit3 } from 'lucide-react';
+import { X, Volume2, Layers, Link as LinkIcon, Network, Edit3, Bookmark } from 'lucide-react';
 import { BookIcon } from '../ui/EngravingIcons';
 import { KotobaItem } from '../../types/content';
 import { playSound, speakJapanese } from '../../utils/audio';
@@ -13,6 +13,8 @@ interface KotobaDetailModalProps {
   onClose: () => void;
   item: KotobaItem | null;
   soundEnabled?: boolean;
+  isBookmarked?: boolean;
+  onToggleBookmark?: () => void;
 }
 
 export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
@@ -20,6 +22,8 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
   onClose,
   item,
   soundEnabled = true,
+  isBookmarked = false,
+  onToggleBookmark,
 }) => {
   const [isWritingMode, setIsWritingMode] = useState(false);
 
@@ -75,15 +79,34 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
               <BookIcon className="w-4 h-4 text-gold" />
               Detail Kosakata
             </h3>
-            <button
-              onClick={() => {
-                onClose();
-                playSound('click', soundEnabled);
-              }}
-              className="p-1.5 rounded-xl bg-surface-card border border-border-subtle hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
+            <div className="flex items-center gap-1.5">
+              {onToggleBookmark && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    onToggleBookmark();
+                    playSound('click', soundEnabled);
+                  }}
+                  className={`p-1.5 rounded-xl border transition-all ${
+                    isBookmarked
+                      ? 'bg-surface-elevated text-gold border-gold/40 ring-1 ring-gold/30'
+                      : 'bg-surface-card border-border-subtle text-text-muted hover:text-gold'
+                  }`}
+                  title={isBookmarked ? 'Tersimpan di Buku Saku' : 'Simpan ke Buku Saku'}
+                >
+                  <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-gold text-gold' : ''}`} />
+                </button>
+              )}
+              <button
+                onClick={() => {
+                  onClose();
+                  playSound('click', soundEnabled);
+                }}
+                className="p-1.5 rounded-xl bg-surface-card border border-border-subtle hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
           </div>
 
           {/* Scrollable Content */}

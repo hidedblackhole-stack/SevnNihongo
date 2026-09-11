@@ -62,18 +62,18 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
             {pattern ? (
               <>
                 <h3 className="text-lg font-bold text-text-primary font-jp flex items-center gap-2">
-                  <span className="text-gold font-mono text-base">{pattern.symbol}</span>
+                  <span className="text-indigo font-mono text-base">{pattern.symbol}</span>
                   <span className="text-text-muted">—</span>
                   <span>{pattern.nameJa}</span>
                 </h3>
-                <p className="text-xs text-gold/80">
+                <p className="text-xs text-indigo/80">
                   {pattern.nameId} / {pattern.nameEn}
                 </p>
               </>
             ) : connectorInfo ? (
               <>
                 <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 rounded-lg bg-gold/15 border border-gold/30 text-gold text-xs font-mono font-bold">
+                  <span className="px-2 py-0.5 rounded-lg bg-indigo/15 border border-indigo/30 text-indigo text-xs font-mono font-bold">
                     Sub-Rumus
                   </span>
                   <h3 className="text-lg font-bold text-text-primary font-jp">
@@ -97,7 +97,7 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
         {/* Sibling Sub-branches Quick Switcher */}
         {siblingBranches.length > 1 && (
           <div className="px-4 py-2.5 bg-surface-inset border-b border-border-subtle shrink-0 space-y-1.5">
-            <div className="flex items-center gap-1.5 text-[11px] font-bold text-gold font-heading">
+            <div className="flex items-center gap-1.5 text-[11px] font-bold text-indigo font-heading">
               <GitBranch className="w-3.5 h-3.5" />
               <span>Cabang Rumus Terkait:</span>
             </div>
@@ -110,7 +110,7 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
                     onClick={() => setActiveId(b.id)}
                     className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border font-jp flex items-center gap-1 ${
                       isActive
-                        ? 'bg-gold/15 border-gold text-gold shadow-sm'
+                        ? 'bg-indigo/15 border-indigo text-indigo shadow-sm'
                         : 'bg-surface-card border-border-subtle text-text-secondary hover:text-text-primary hover:bg-surface-elevated'
                     }`}
                   >
@@ -139,8 +139,8 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
 
               {/* Lokasi Penggunaan */}
               <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle space-y-1.5">
-                <div className="flex items-center gap-1.5 text-xs font-bold text-gold font-heading">
-                  <MapPin className="w-4 h-4 text-gold" />
+                <div className="flex items-center gap-1.5 text-xs font-bold text-indigo font-heading">
+                  <MapPin className="w-4 h-4 text-indigo" />
                   <span>Lokasi & Posisi Penggunaan:</span>
                 </div>
                 <p className="text-xs sm:text-sm text-text-primary leading-relaxed pl-5 font-medium">
@@ -150,7 +150,7 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
 
               {/* Kondisi Sambungan (Connection Rules) */}
               <div className="space-y-2">
-                <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-gold font-heading">
+                <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-indigo font-heading">
                   <Settings2 className="w-4 h-4" />
                   <span>Kondisi & Aturan Sambungan (接続)</span>
                 </div>
@@ -164,7 +164,7 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
                         <span className="px-2 py-0.5 rounded-lg bg-surface-card border border-border-subtle text-text-secondary text-[10px] font-bold">
                           {cond.partOfSpeech}
                         </span>
-                        <span className="text-xs font-mono font-bold text-gold">
+                        <span className="text-xs font-mono font-bold text-indigo">
                           {cond.rule}
                         </span>
                       </div>
@@ -191,7 +191,7 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
                         className="p-3 rounded-2xl bg-surface-inset border border-border-subtle flex items-start justify-between gap-2.5"
                       >
                         <div className="space-y-1 flex-1">
-                          <p className="text-xs text-gold/80 font-jp">
+                          <p className="text-xs text-indigo/80 font-jp">
                             {ex.reading}
                           </p>
                           <p className="text-xs sm:text-sm font-bold text-text-primary font-jp">
@@ -203,7 +203,7 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
                         </div>
                         <button
                           onClick={() => speakJapanese(ex.japanese)}
-                          className="p-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-gold border border-border-subtle transition-colors shrink-0"
+                          className="p-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-indigo border border-border-subtle transition-colors shrink-0"
                           title="Dengarkan Suara"
                         >
                           <Volume2 className="w-3.5 h-3.5" />
@@ -233,7 +233,7 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
               </div>
 
               <div className="space-y-2">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-gold font-heading">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-indigo font-heading">
                   📐 Cara Pembentukan (Konjugasi)
                 </h4>
 

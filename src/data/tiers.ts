@@ -8,7 +8,7 @@ export const RPG_TIERS: TierInfo[] = [
     description: 'Pakaian biasa warga desa pemula, memegang tongkat kayu sederhana di Dunia Permulaan N5.',
     visualAssetDesc: 'Simple linen tunic, wooden walking stick, humble starting adventurer.',
     baseColor: 'to-stone-600',
-    glowColor: 'shadow-amber-900/40',
+    glowColor: 'shadow-slate-800/40',
     requiredExpTotal: 0,
     perks: 'Fondasi dasar bahasa Jepang. Regenerasi stamina standar.',
     iconName: 'User'
@@ -44,7 +44,7 @@ export const RPG_TIERS: TierInfo[] = [
     description: 'Armor rantai (chainmail), pedang baja yang mulai bersinar menembus ujian N4.',
     visualAssetDesc: 'Polished steel chainmail, steel broadsword with faint glow, heraldic crest.',
     baseColor: 'to-blue-800',
-    glowColor: 'shadow-amber-500/40',
+    glowColor: 'shadow-blue-500/40',
     requiredExpTotal: 1500,
     perks: '+10 Max MP. Kontrol kecepatan audio Choukai terbuka.',
     iconName: 'Zap'
@@ -79,7 +79,7 @@ export const RPG_TIERS: TierInfo[] = [
     titleName: 'Grand Paladin Master (N2)',
     description: 'Armor emas perak mewah, tameng suci penjaga ilmu wacana tinggi Ranah N2.',
     visualAssetDesc: 'Gilded gold-and-silver heavy armor, radiant holy shield, sun-etched claymore.',
-    baseColor: 'to-amber-700',
+    baseColor: 'to-amber-600',
     glowColor: 'shadow-amber-400/50',
     requiredExpTotal: 6000,
     perks: '+20% Critical Study EXP boost. Gratis 1 MP Potion setiap login harian.',
@@ -91,7 +91,7 @@ export const RPG_TIERS: TierInfo[] = [
     titleName: 'Legendary Hero (N2)',
     description: 'Aura kosmik berputar di tubuh, menggenggam pusaka legendaris penguasa N2.',
     visualAssetDesc: 'Cosmic glowing energy aura, floating celestial relic, legendary glowing excalibur.',
-    baseColor: 'to-amber-700',
+    baseColor: 'to-indigo-900',
     glowColor: 'shadow-sky-400/60',
     requiredExpTotal: 8500,
     perks: 'Lembar latihan kanji tanpa batas dengan evaluasi otomatis. +30% seluruh EXP.',
@@ -107,7 +107,7 @@ export const RPG_TIERS: TierInfo[] = [
     glowColor: 'shadow-fuchsia-500/60',
     requiredExpTotal: 12000,
     perks: 'Kemampuan Super Boss Slayer: Kerusakan 2x lipat terhadap semua Stage Boss.',
-    iconName: 'Sparkles'
+    iconName: 'Swords'
   },
   {
     tier: 10,

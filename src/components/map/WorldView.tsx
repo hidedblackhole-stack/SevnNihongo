@@ -9,8 +9,7 @@ import {
   ArrowLeft,
   Compass,
   Swords,
-  DoorOpen,
-  Sparkles
+  DoorOpen
 } from 'lucide-react';
 import { StageClearData } from '../../types/rpg';
 import { Stage } from '../../types/content';
@@ -45,10 +44,10 @@ const PRO_WORLD_ACCENTS: Record<string, {
 }> = {
   world_training: {
     watermark: '道',
-    glow: 'bg-gold/5',
-    accentBorder: 'border-gold/40 hover:border-gold',
-    barColor: 'bg-gold',
-    levelBox: 'bg-gold/15 border-gold/40 text-gold'
+    glow: 'bg-emerald-500/5',
+    accentBorder: 'border-emerald-500/40 hover:border-emerald-500',
+    barColor: 'bg-emerald-500',
+    levelBox: 'bg-emerald-500/15 border-emerald-500/40 text-emerald-400'
   },
   world_n5: {
     watermark: '初',

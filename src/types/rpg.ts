@@ -95,6 +95,31 @@ export interface PlayerStats {
   speechRate?: number; // 0.8 to 1.2
   furiganaEnabled?: boolean;
   targetJlpt?: 'N5' | 'N4' | 'N3' | 'N2' | 'N1';
+
+  // User Pocket Decks (Buku Saku)
+  userDecks?: UserDeck[];
+}
+
+export type DeckType = 'mixed' | 'flashcard' | 'writing' | 'kotoba' | 'kanji' | 'bunpou';
+export type DeckItemCategory = 'kotoba' | 'kanji' | 'bunpou';
+
+export interface DeckItemRef {
+  id: string; // Kotoba ID, Kanji character/ID, or Bunpou ID
+  category: DeckItemCategory;
+  addedAt: string;
+  notes?: string;
+}
+
+export interface UserDeck {
+  id: string;
+  title: string;
+  description?: string;
+  type: DeckType;
+  isDefault?: boolean; // True for default "Buku Saku Bookmark"
+  coverIcon?: string;  // e.g. '🔖', '⚡', '✍️', '📖', '🎯', '🌸'
+  createdAt: string;
+  updatedAt: string;
+  items: DeckItemRef[];
 }
 
 export interface StageClearData {

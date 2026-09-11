@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Layers, Volume2, Sparkles, CheckCircle2, RotateCcw, ArrowRight, ArrowLeft, BookCheck } from 'lucide-react';
+import { Layers, Volume2, CheckCircle2, RotateCcw, ArrowRight, ArrowLeft, BookCheck } from 'lucide-react';
 import { BookIcon } from '../ui/EngravingIcons';
 import { KotobaItem, Question } from '../../types/content';
 import { KOTOBA_DATABASE } from '../../data/kotoba';
@@ -345,7 +345,6 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
             onClick={handleStartQuiz}
             className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-surface-elevated text-gold border border-gold/40 hover:brightness-105 transition-all flex items-center gap-1.5"
           >
-            <Sparkles className="w-3.5 h-3.5" />
             🎯 Latihan (25)
           </button>
           <button
@@ -427,7 +426,7 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
                 exit={{ opacity: 0, y: -60 }}
                 className="absolute top-4 right-4 sm:top-8 sm:right-8 z-50 text-state-success font-black text-xl drop-shadow-md pointer-events-none flex items-center gap-1"
               >
-                <Sparkles className="w-4 h-4" />+0.01 EXP
+                +0.01 EXP
               </motion.div>
             )}
           </AnimatePresence>

@@ -57,10 +57,10 @@ export const FormulaDisplay: React.FC<FormulaDisplayProps> = ({ formula }) => {
                 onClick={() => handleTokenClick(token)}
                 className="
                   text-xs sm:text-sm font-mono font-semibold
-                  text-gold hover:opacity-80
-                  border-b border-dashed border-gold/50 hover:border-gold
+                  text-indigo hover:opacity-80
+                  border-b border-dashed border-indigo/50 hover:border-indigo
                   cursor-pointer transition-all duration-150
-                  hover:bg-gold/10 rounded-sm px-1 py-0.5
+                  hover:bg-indigo/10 rounded-sm px-1 py-0.5
                   active:scale-95
                 "
                 title="Klik untuk lihat cara konjugasi"
