@@ -126,12 +126,14 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
   const [currentStrokeIndex, setCurrentStrokeIndex] = useState(0);
   const [totalCharStrokes, setTotalCharStrokes] = useState(strokeCount || 0);
 
-  // Stopwatch State per Kanji Character
+  // Stopwatch State per Canvas Sheet (1 canvas = 1 sheet)
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(true);
 
-  // Reset timer whenever the character changes
+  // Reset timer & sheet state whenever the character changes
   useEffect(() => {
+    setCurrentSheet(1);
+    setCompletedSheets([]);
     setElapsedSeconds(0);
     setIsTimerRunning(true);
     setWatermarkEverUsed(false);
@@ -158,11 +160,14 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
-  // Reset stroke memory when character or sheet changes
+  // Reset stroke memory & canvas stopwatch when character or sheet changes
   useEffect(() => {
     setCurrentStrokeIndex(0);
     setMistakesCount(0);
-    setIsQuizComplete(false);
+    const alreadyDone = completedSheets.includes(currentSheet);
+    setIsQuizComplete(alreadyDone);
+    setElapsedSeconds(0);
+    setIsTimerRunning(!alreadyDone);
   }, [kanjiChar, currentSheet]);
 
   // Light Mode Detection for genuine Hosho paper & chocolate ink styling
@@ -376,6 +381,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
         },
         onComplete: () => {
           setIsQuizComplete(true);
+          setIsTimerRunning(false); // Stop stopwatch for this canvas immediately
           setCurrentStrokeIndex(totalCharStrokes || strokeCount || 0);
           playSound('fanfare', soundEnabled);
         }
@@ -472,6 +478,8 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
       playSound('click', soundEnabled);
       setCurrentSheet(prev => prev + 1);
       setIsQuizComplete(false);
+      setElapsedSeconds(0);
+      setIsTimerRunning(true);
       setWatermarkEverUsed(false);
       setAnimationCount(0);
       if (!hasStrokeData && fallbackCanvasRef.current) {
@@ -516,6 +524,8 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     if (currentSheet < totalSheets) {
       setCurrentSheet(prev => prev + 1);
       setIsQuizComplete(false);
+      setElapsedSeconds(0);
+      setIsTimerRunning(true);
       setMistakesCount(0);
       setWatermarkEverUsed(false);
       setAnimationCount(0);
@@ -561,6 +571,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     ctx.stroke();
     if (!isQuizComplete) {
       setIsQuizComplete(true);
+      setIsTimerRunning(false);
     }
   };
 
@@ -587,8 +598,17 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                 key={sheetNum}
                 type="button"
                 onClick={() => {
-                  setCurrentSheet(sheetNum);
-                  playSound('click', soundEnabled);
+                  if (currentSheet !== sheetNum) {
+                    setCurrentSheet(sheetNum);
+                    const alreadyDone = completedSheets.includes(sheetNum);
+                    setIsQuizComplete(alreadyDone);
+                    setElapsedSeconds(0);
+                    setIsTimerRunning(!alreadyDone);
+                    setMistakesCount(0);
+                    setWatermarkEverUsed(false);
+                    setAnimationCount(0);
+                    playSound('click', soundEnabled);
+                  }
                 }}
                 className={`py-1.5 rounded-lg text-xs font-bold transition-all ${
                   isCurrent
@@ -609,9 +629,13 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
       <div className="flex items-center justify-between w-full max-w-[340px] sm:max-w-[360px] px-1 text-xs">
         <div className="flex items-center gap-1.5 flex-wrap">
           {showStopwatch && (
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-surface-inset border border-border-subtle text-text-primary flex items-center gap-1 shadow-sm" title="Stopwatch Waktu Menulis">
+            <span
+              className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-surface-inset border border-border-subtle text-text-primary flex items-center gap-1 shadow-sm"
+              title={`Stopwatch Lembar #${currentSheet} (${isTimerRunning ? 'Berjalan' : 'Selesai'})`}
+            >
               <Clock className="w-3 h-3 text-gold" />
               <span>{formatTime(elapsedSeconds)}</span>
+              <span className="text-[9px] text-text-muted font-normal">/kanvas #{currentSheet}</span>
             </span>
           )}
           {totalCharStrokes > 0 && !isQuizComplete && (

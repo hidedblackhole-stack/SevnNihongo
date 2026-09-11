@@ -220,6 +220,11 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
                 <KotobaWritingPractice
                   kotoba={currentItem.kotoba}
                   soundEnabled={soundEnabled}
+                  nextButtonLabel={
+                    currentIndex + 1 === writableItems.length
+                      ? 'Selesaikan Latihan'
+                      : 'Lanjut ke Kata Berikutnya'
+                  }
                   onFinishWord={(score, reward) => {
                     handleNextItem(reward?.expGained, reward?.goldGained);
                   }}

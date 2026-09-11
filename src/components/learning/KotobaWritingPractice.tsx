@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Check, Edit3, RotateCcw, ArrowLeft, Volume2, Layers, BookOpen, Clock } from 'lucide-react';
+import { Check, Edit3, RotateCcw, ArrowLeft, ArrowRight, Volume2, Layers, BookOpen, Clock } from 'lucide-react';
 import { KotobaItem } from '../../types/content';
 import { KanjiWritingCanvas, preloadStrokeData } from './KanjiWritingCanvas';
 import { RubyText } from './RubyText';
@@ -12,6 +12,7 @@ interface KotobaWritingPracticeProps {
   onFinishWord: (score: number, reward?: WritingRewardResult) => void;
   onCancel?: () => void;
   soundEnabled?: boolean;
+  nextButtonLabel?: string;
 }
 
 export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
@@ -19,6 +20,7 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
   onFinishWord,
   onCancel,
   soundEnabled = true,
+  nextButtonLabel,
 }) => {
   const characters = useMemo(() => Array.from(kotoba.word), [kotoba.word]);
   const [currentCharIndex, setCurrentCharIndex] = useState(0);
@@ -98,9 +100,7 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
         mistakes: totalMistakes,
       });
       setLastReward(reward);
-      setTimeout(() => {
-        onFinishWord(Math.max(0, 100 - (totalMistakes * 10)), reward);
-      }, 800);
+      // Removed automatic setTimeout: User reads the explanation card and advances manually via button
     }
   };
 
@@ -368,26 +368,42 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
             </div>
           )}
 
-          {/* 2 Action Buttons: Ulangi & Kembali */}
-          <div className="grid grid-cols-2 gap-3 pt-2 w-full">
+          {/* Action Buttons: Ulangi Menulis & Lanjut Manual */}
+          <div className="flex flex-col sm:flex-row gap-3 pt-3 w-full">
             <button
+              type="button"
               onClick={handleReset}
-              className="btn py-3 px-4 rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98]"
+              className="flex-1 py-3 px-4 rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 bg-surface-inset hover:bg-surface-elevated text-text-primary border border-border-subtle transition-all active:scale-95 shadow-sm"
             >
               <RotateCcw className="w-4 h-4 text-wine-accent" />
               <span>Ulangi Menulis</span>
             </button>
             <button
+              type="button"
               onClick={() => {
-                onCancel && onCancel();
                 playSound('click', soundEnabled);
+                const score = Math.max(0, 100 - (totalMistakes * 10));
+                onFinishWord(score, lastReward || undefined);
               }}
-              className="btn btn-cta py-3 px-4 rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98]"
+              className="flex-1 btn btn-cta py-3 px-4 rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-md active:scale-95"
             >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Kembali ke Detail</span>
+              <span>{nextButtonLabel || 'Lanjut ke Kata Berikutnya'}</span>
+              <ArrowRight className="w-4 h-4" />
             </button>
           </div>
+
+          {onCancel && (
+            <button
+              type="button"
+              onClick={() => {
+                playSound('click', soundEnabled);
+                onCancel();
+              }}
+              className="text-xs text-text-muted hover:text-text-primary underline underline-offset-2 font-bold transition-colors pt-1"
+            >
+              Kembali ke Detail
+            </button>
+          )}
         </motion.div>
       )}
     </div>
