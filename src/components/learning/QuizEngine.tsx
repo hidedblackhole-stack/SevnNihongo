@@ -7,6 +7,7 @@ import { playSound, speakJapanese } from '../../utils/audio';
 import { calculateExpBonus } from '../../data/tiers';
 import { RubyText } from './RubyText';
 import { StarSentenceQuiz } from './StarSentenceQuiz';
+import { calculateQuizReward, getQuizBaseExpPerQuestion } from '../../utils/rewards';
 
 import { sendScoreEvent } from '../../lib/supabase';
 
@@ -108,10 +109,10 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
       setHiddenOptions([]);
     } else {
       setIsFinished(true);
-      const baseExpEarned = correctCount * baseExpPerQuestion;
-      const { totalExpGained } = calculateExpBonus(baseExpEarned, playerInt);
-      const expGained = totalExpGained;
-      const goldGained = correctCount * baseGoldPerQuestion;
+      const sampleLevel = (currentQ as any)?.level || (questions[0] as any)?.level || undefined;
+      const quizReward = calculateQuizReward(sampleLevel, correctCount, totalQ, playerInt);
+      const expGained = quizReward.totalExpGained;
+      const goldGained = quizReward.goldGained;
 
       if (correctCount >= Math.ceil(totalQ * 0.7)) {
         playSound('fanfare', soundEnabled);

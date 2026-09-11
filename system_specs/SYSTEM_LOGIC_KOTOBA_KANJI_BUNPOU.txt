@@ -399,5 +399,59 @@ Menu Pustaka (Library / Grimoire) kini resmi disusun ke dalam 4 Jilid Terpadu:
      instan benar (hijau) / salah (merah), efek suara, dan akordion pembahasan kunci.
 
 ================================================================================
+BAGIAN 7: SISTEM BASE EXP & EVENT MULTIPLIER (DINAMIKA REWARD & RPG PROGRESSION)
+================================================================================
+
+1. Filosofi Pembagian:
+   - "Statistik Profil": Menyimpan frekuensi murni aktivitas belajar pemain
+     (berapa kali menulis kanji/kata, berapa kali membuka flashcard, berapa kali quiz).
+   - "EXP & Level Karakter": Poin dinamis yang dihitung dari Base EXP entitas
+     dikalikan Multiplier kualitas latihan, bertugas menaikkan Level pemain,
+     membuka status RPG, dan menghasilkan koin emas (Gold).
+
+2. Rumus Base EXP Entitas:
+   a. Kanji / Aksara (getKanjiBaseExp):
+      - Bobot Tingkat: Kana/Suuji = 10, N5 = 15, N4 = 25, N3 = 35, N2 = 50, N1 = 70.
+      - Bobot Goresan: + (strokeCount * 2).
+      - Contoh: Kanji N1 "鬱" (29 goresan) = 70 + (29*2) = 128 Base EXP.
+                Kanji N3 "関" (14 goresan) = 35 + (14*2) = 63 Base EXP.
+
+   b. Kosakata (Kotoba) (getKotobaBaseExp):
+      - Bobot Tingkat: N5 = 12, N4 = 18, N3 = 28, N2 = 40, N1 = 55.
+      - Bobot Panjang Karakter: + (word.length * 2).
+      - Bobot Komponen Kanji: + (kanjiCount * 5).
+      - Contoh: "関係" (N3, 2 huruf, 2 kanji) = 28 + (2*2) + (2*5) = 42 Base EXP.
+
+   c. Tata Bahasa (Bunpou) (getBunpouBaseExp):
+      - Bobot Tingkat: N5 = 20, N4 = 30, N3 = 45, N2 = 65, N1 = 90.
+      - Bobot Kompleksitas Rumus: + (subFormulas.length * 5).
+
+3. Rumus Multiplier Event Belajar:
+   a. Event Menulis (Kanji & Kotoba Writing Practice):
+      - Multiplier Dasar: 1.20x.
+      - Bonus Kualitas Menulis:
+        * Blind Recall (Tanpa Watermark Panduan) : +0.35x
+        * No Hint (Tanpa Animasi Goresan)       : +0.25x
+        * Perfect Strokes (0 Kesalahan Goresan)  : +0.25x
+        * Fast & Fluent (Waktu 2-8 detik/karakter): +0.10x
+      - Penalti:
+        * Petunjuk Animasi >2x                  : -0.15x
+        * Salah Goresan >3x                     : -0.20x
+        * Waktu Menulis >45 detik               : -0.10x
+      - Batas Clamp Multiplier: 0.5x s/d 2.5x.
+
+   b. Event Flashcard (Buku Saku & Kotoba):
+      - Multiplier Dasar Ringan: 0.35x jika Mastered (Paham Langsung),
+        0.175x jika Diulang (Perlu Penguatan).
+
+   c. Event Kuis & Ujian (QuizEngine & Daily Drill):
+      - Base EXP per soal: N5=15, N4=20, N3=28, N2=38, N1=50.
+      - Multiplier Akurasi Ujian:
+        * 100% Akurasi (Sempurna) : 1.30x
+        * >= 80% Akurasi          : 1.15x
+        * < 50% Akurasi           : 0.85x
+      - Bonus Stat INT Karakter: + (Base * INT * 4%).
+
+================================================================================
 SELESAI DOKUMENTASI SYSTEM LOGIC
 ================================================================================

@@ -13,6 +13,7 @@ import { CHOUKAI_DATABASE } from '../../data/choukai';
 import { DOKKAI_DATABASE } from '../../data/dokkai';
 import { playSound, speakJapanese } from '../../utils/audio';
 import { RubyText } from '../learning/RubyText';
+import { calculateQuizReward } from '../../utils/rewards';
 
 const DungeonBattleModule = lazy(() => import('../dungeon/DungeonBattleModule').then(m => ({ default: m.DungeonBattleModule })));
 
@@ -356,8 +357,10 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
         }
       });
 
-      const expGain = correctScore * 10;
-      const goldGain = correctScore * 5;
+      const levelSample = levelFilter === 'all' ? (drillQuestions[0]?.level || 'N3') : levelFilter;
+      const quizReward = calculateQuizReward(levelSample, correctScore, drillQuestions.length);
+      const expGain = quizReward.totalExpGained;
+      const goldGain = quizReward.goldGained;
       if (onRewardPlayer && expGain > 0) {
         onRewardPlayer(expGain, goldGain);
       }

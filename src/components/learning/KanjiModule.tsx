@@ -191,9 +191,11 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
             playSound('click', soundEnabled);
           }}
           backButtonLabel="Kembali ke Daftar Kanji"
-          onCompleteSheet={(sheet, score) => {
-            // Writing practice gives small EXP
-            onReward(5, 3, 'kanji_practice');
+          onCompleteSheet={(sheet, score, reward) => {
+            // Writing practice gives dynamic EXP & gold based on level, stroke count, speed, watermark, and hints
+            const exp = reward?.expGained ?? 15;
+            const gold = reward?.goldGained ?? 5;
+            onReward(exp, gold, 'kanji', activeKanji.id || activeKanji.character, 1, 1);
           }}
           onFinish={() => {
             // Return user directly to the stage hub room

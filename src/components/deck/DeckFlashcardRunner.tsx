@@ -3,8 +3,10 @@ import { motion, AnimatePresence } from 'motion/react';
 import { X, Volume2, RotateCcw, CheckCircle2, XCircle, ArrowRight, Trophy, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { UserDeck } from '../../types/rpg';
-import { resolveDeckItem, ResolvedDeckItem } from '../../utils/decks';
-import { playSound, speakJapanese } from '../../utils/audio';
+import { ResolvedDeckItem, resolveDeckItem } from '../../utils/decks';
+import { playSound } from '../../utils/audio';
+import { RubyText } from '../learning/RubyText';
+import { getKanjiBaseExp, getKotobaBaseExp, getBunpouBaseExp, calculateFlashcardReward } from '../../utils/rewards';
 
 interface DeckFlashcardRunnerProps {
   deck: UserDeck;
@@ -32,12 +34,30 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
   const [masteredCount, setMasteredCount] = useState(0);
   const [reviewCount, setReviewCount] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
+  const [accumulatedExp, setAccumulatedExp] = useState(0);
+  const [accumulatedGold, setAccumulatedGold] = useState(0);
+  const [finalRewards, setFinalRewards] = useState<{ exp: number; gold: number } | null>(null);
 
   const currentItem = queue[currentIndex];
 
   const handleNext = (mastered: boolean) => {
     playSound('click', soundEnabled);
     setIsFlipped(false);
+
+    // Calculate dynamic flashcard reward for current item based on its Base EXP
+    let baseExp = 15;
+    if (currentItem?.category === 'kanji' && currentItem.kanji) {
+      baseExp = getKanjiBaseExp(currentItem.kanji);
+    } else if (currentItem?.category === 'kotoba' && currentItem.kotoba) {
+      baseExp = getKotobaBaseExp(currentItem.kotoba);
+    } else if (currentItem?.category === 'bunpou' && currentItem.bunpou) {
+      baseExp = getBunpouBaseExp(currentItem.bunpou);
+    }
+    const reward = calculateFlashcardReward(baseExp, mastered);
+    const newExp = accumulatedExp + reward.expGained;
+    const newGold = accumulatedGold + reward.goldGained;
+    setAccumulatedExp(newExp);
+    setAccumulatedGold(newGold);
 
     if (mastered) {
       setMasteredCount(prev => prev + 1);
@@ -61,9 +81,10 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
         });
       } catch {}
 
-      // Reward EXP and Gold based on total items
-      const earnedExp = Math.max(20, resolvedItems.length * 10);
-      const earnedGold = Math.max(10, resolvedItems.length * 5);
+      // Reward dynamic EXP and Gold
+      const earnedExp = Math.max(15, newExp);
+      const earnedGold = Math.max(5, newGold);
+      setFinalRewards({ exp: earnedExp, gold: earnedGold });
       if (onReward) {
         onReward(earnedExp, earnedGold);
       }
@@ -79,6 +100,9 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
     setIsFlipped(false);
     setMasteredCount(0);
     setReviewCount(0);
+    setAccumulatedExp(0);
+    setAccumulatedGold(0);
+    setFinalRewards(null);
     setIsCompleted(false);
   };
 
@@ -164,6 +188,21 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
                 <p className="text-lg font-bold font-mono text-text-secondary">{reviewCount}</p>
               </div>
             </div>
+
+            {/* Dynamic EXP & Gold Reward Banner */}
+            {finalRewards && (
+              <div className="flex items-center justify-center gap-3 py-2 px-4 rounded-2xl bg-surface-inset border border-gold/30">
+                <span className="font-bold text-wine-accent font-mono text-sm">
+                  +{finalRewards.exp} EXP
+                </span>
+                <span className="text-xs text-gold font-mono font-bold">
+                  +{finalRewards.gold} Gold
+                </span>
+                <span className="text-[11px] text-text-muted font-mono">
+                  (Multiplier Flashcard)
+                </span>
+              </div>
+            )}
 
             <div className="flex items-center justify-center gap-3 pt-2">
               <button

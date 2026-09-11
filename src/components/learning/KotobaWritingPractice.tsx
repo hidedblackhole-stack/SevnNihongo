@@ -5,10 +5,11 @@ import { KotobaItem } from '../../types/content';
 import { KanjiWritingCanvas, preloadStrokeData } from './KanjiWritingCanvas';
 import { RubyText } from './RubyText';
 import { playSound, speakJapanese } from '../../utils/audio';
+import { getKotobaBaseExp, calculateWritingReward, WritingRewardResult } from '../../utils/rewards';
 
 interface KotobaWritingPracticeProps {
   kotoba: KotobaItem;
-  onFinishWord: (score: number) => void;
+  onFinishWord: (score: number, reward?: WritingRewardResult) => void;
   onCancel?: () => void;
   soundEnabled?: boolean;
 }
@@ -23,6 +24,9 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
   const [currentCharIndex, setCurrentCharIndex] = useState(0);
   const [completedChars, setCompletedChars] = useState<number[]>([]);
   const [totalMistakes, setTotalMistakes] = useState(0);
+  const [watermarkEverUsed, setWatermarkEverUsed] = useState(false);
+  const [animationCount, setAnimationCount] = useState(0);
+  const [lastReward, setLastReward] = useState<WritingRewardResult | null>(null);
 
   // Master Kotoba Stopwatch: persists across all syllables/characters
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
@@ -35,6 +39,9 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
     setCurrentCharIndex(0);
     setCompletedChars([]);
     setTotalMistakes(0);
+    setWatermarkEverUsed(false);
+    setAnimationCount(0);
+    setLastReward(null);
     setElapsedSeconds(0);
     setIsTimerRunning(true);
     // Preload all stroke data in the background!
@@ -83,8 +90,16 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
       setIsTimerRunning(false); // Stop stopwatch on word completion
       playSound('fanfare', soundEnabled);
       speakJapanese(kotoba.word);
+      const baseExp = getKotobaBaseExp(kotoba);
+      const reward = calculateWritingReward(baseExp, {
+        elapsedSeconds,
+        watermarkUsed: watermarkEverUsed,
+        animationCount,
+        mistakes: totalMistakes,
+      });
+      setLastReward(reward);
       setTimeout(() => {
-        onFinishWord(Math.max(0, 100 - (totalMistakes * 10))); // Calculate final exp
+        onFinishWord(Math.max(0, 100 - (totalMistakes * 10)), reward);
       }, 800);
     }
   };
@@ -175,9 +190,16 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
                 soundEnabled={soundEnabled}
                 autoAdvance={true}
                 showStopwatch={false} // Use Kotoba's master word-level stopwatch
-                onCompleteSheet={(sheet, sheetScore) => {
+                level={kotoba.jlpt}
+                onCompleteSheet={(sheet, sheetScore, reward) => {
                   if (sheetScore < 100) {
                     setTotalMistakes(prev => prev + 1);
+                  }
+                  if (reward?.breakdown?.watermarkUsed) {
+                    setWatermarkEverUsed(true);
+                  }
+                  if (reward?.breakdown?.hintsUsed) {
+                    setAnimationCount(prev => prev + (reward.breakdown.hintsUsed || 0));
                   }
                 }}
                 onFinish={handleFinishChar}
@@ -206,6 +228,33 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
               <span>{formatTime(elapsedSeconds)}</span>
             </span>
           </div>
+
+          {/* Dynamic EXP & Reward Badge */}
+          {lastReward && (
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="flex items-center justify-center gap-2 flex-wrap py-2 px-3.5 rounded-2xl bg-surface-inset border border-wine-accent/30 shadow-sm text-center"
+            >
+              <span className="font-bold text-wine-accent font-mono text-sm">
+                +{lastReward.expGained} EXP
+              </span>
+              <span className="text-xs text-gold font-mono font-bold">
+                +{lastReward.goldGained} Gold
+              </span>
+              <span className="text-[11px] text-text-muted font-mono">
+                ({lastReward.multiplier}x Multiplier)
+              </span>
+              {lastReward.bonusReasons.map((reason, idx) => (
+                <span
+                  key={idx}
+                  className="px-2 py-0.5 rounded-full bg-state-success/15 border border-state-success/30 text-state-success text-[10px] font-bold"
+                >
+                  {reason}
+                </span>
+              ))}
+            </motion.div>
+          )}
 
           {/* Giant Word & Reading Box */}
           <div className="text-center space-y-2 py-2">

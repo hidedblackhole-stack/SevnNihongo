@@ -5,6 +5,7 @@ import { KanjiWritingCanvas } from './KanjiWritingCanvas';
 import { RubyText } from './RubyText';
 import { ErrorBoundary } from '../ErrorBoundary';
 import { speakJapanese, playSound } from '../../utils/audio';
+import { WritingRewardResult } from '../../utils/rewards';
 
 export const getHighlightedYomikata = (word: string, reading: string, kanji: KanjiItem) => {
   if (!reading) return <span className="text-wine-accent font-bold">{word}</span>;
@@ -49,8 +50,8 @@ export interface KanjiDetailCardProps {
   soundEnabled?: boolean;
   furiganaEnabled?: boolean;
   initialTab?: 'detail' | 'writing';
-  onCompleteSheet?: (sheetNumber: number, score: number) => void;
-  onFinish?: () => void;
+  onCompleteSheet?: (sheetNumber: number, score: number, reward?: WritingRewardResult) => void;
+  onFinish?: (reward?: WritingRewardResult) => void;
   onBack?: () => void;
   backButtonLabel?: string;
   showQuestions?: boolean;
@@ -459,6 +460,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
               kunyomi={item.kunyomi?.[0] || ''}
               onyomi={item.onyomi?.[0] || ''}
               soundEnabled={soundEnabled}
+              level={item.jlpt}
               onCompleteSheet={onCompleteSheet}
               onFinish={onFinish}
             />

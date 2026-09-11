@@ -1,9 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { RotateCcw, Check, PlayCircle, Eye, EyeOff, Loader2, Clock } from 'lucide-react';
+import { RotateCcw, Check, PlayCircle, Eye, EyeOff, Loader2, Clock, Sparkles } from 'lucide-react';
 import HanziWriter from 'hanzi-writer';
 import { playSound } from '../../utils/audio';
 import { sendScoreEvent } from '../../lib/supabase';
 import { KANA_STROKE_DICT } from '../../data/kanaStrokeDict';
+import { getKanjiBaseExp, calculateWritingReward, WritingRewardResult } from '../../utils/rewards';
 
 const strokeDataCache = new Map<string, any>();
 const activeFetches = new Map<string, Promise<any>>();
@@ -67,11 +68,12 @@ export const preloadStrokeData = (word: string) => {
   });
 };
 
-interface KanjiWritingCanvasProps {
+export interface KanjiWritingCanvasProps {
   kanjiChar: string;
+  level?: string;
   totalSheets?: number; // 7 Sheets as required by specs
-  onCompleteSheet?: (sheetNumber: number, score: number) => void;
-  onFinish?: () => void; // Callback when 7th sheet is completed and user finishes
+  onCompleteSheet?: (sheetNumber: number, score: number, reward?: WritingRewardResult) => void;
+  onFinish?: (reward?: WritingRewardResult) => void; // Callback when 7th sheet is completed and user finishes
   soundEnabled?: boolean;
   autoAdvance?: boolean;
   leniency?: number;
@@ -85,6 +87,7 @@ interface KanjiWritingCanvasProps {
 
 export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
   kanjiChar,
+  level,
   totalSheets = 7,
   onCompleteSheet,
   onFinish,
@@ -114,6 +117,11 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
   const [isLoading, setIsLoading] = useState(true);
   const [canvasSize, setCanvasSize] = useState(320);
 
+  // Performance factors for dynamic EXP
+  const [watermarkEverUsed, setWatermarkEverUsed] = useState(false);
+  const [animationCount, setAnimationCount] = useState(0);
+  const [lastReward, setLastReward] = useState<WritingRewardResult | null>(null);
+
   // Progressive Stroke Memory State
   const [currentStrokeIndex, setCurrentStrokeIndex] = useState(0);
   const [totalCharStrokes, setTotalCharStrokes] = useState(strokeCount || 0);
@@ -126,6 +134,9 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
   useEffect(() => {
     setElapsedSeconds(0);
     setIsTimerRunning(true);
+    setWatermarkEverUsed(false);
+    setAnimationCount(0);
+    setLastReward(null);
   }, [kanjiChar]);
 
   // Timer interval
@@ -377,6 +388,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
   // Progressive Stroke Memory: Animate only the remaining uncompleted strokes!
   const animateOrder = () => {
     if (!writerRef.current || isAnimating) return;
+    setAnimationCount(prev => prev + 1);
     try {
       setIsAnimating(true);
       writerRef.current.cancelQuiz();
@@ -428,6 +440,9 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     setIsQuizComplete(false);
     setElapsedSeconds(0); // Reset stopwatch whenever Kanji is repeated
     setIsTimerRunning(true);
+    setWatermarkEverUsed(false);
+    setAnimationCount(0);
+    setLastReward(null);
 
     if (!hasStrokeData && fallbackCanvasRef.current) {
       const ctx = fallbackCanvasRef.current.getContext('2d');
@@ -448,7 +463,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     if (completedSheets.includes(currentSheet) && currentSheet >= totalSheets) {
       playSound('fanfare', soundEnabled);
       setIsTimerRunning(false);
-      onFinish?.();
+      onFinish?.(lastReward || undefined);
       return;
     }
 
@@ -457,6 +472,8 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
       playSound('click', soundEnabled);
       setCurrentSheet(prev => prev + 1);
       setIsQuizComplete(false);
+      setWatermarkEverUsed(false);
+      setAnimationCount(0);
       if (!hasStrokeData && fallbackCanvasRef.current) {
         const ctx = fallbackCanvasRef.current.getContext('2d');
         if (ctx) ctx.clearRect(0, 0, fallbackCanvasRef.current.width, fallbackCanvasRef.current.height);
@@ -472,7 +489,24 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     const updated = [...completedSheets, currentSheet];
     setCompletedSheets(updated);
     const score = Math.max(0, 100 - (mistakesCount * 15));
-    onCompleteSheet?.(currentSheet, score);
+
+    // Dynamic EXP Calculation
+    const baseExp = getKanjiBaseExp({
+      character: kanjiChar,
+      strokeCount: totalCharStrokes || strokeCount,
+      jlpt: level,
+    });
+
+    const reward = calculateWritingReward({
+      baseExp,
+      mistakesCount,
+      watermarkUsed: watermarkEverUsed || showGuide,
+      animationCount,
+      elapsedSeconds,
+      strokeCount: totalCharStrokes || strokeCount,
+    });
+    setLastReward(reward);
+    onCompleteSheet?.(currentSheet, score, reward);
 
     if (score >= 60) {
       sendScoreEvent('kanji_write', `${kanjiChar}_sheet_${currentSheet}`, true);
@@ -482,6 +516,9 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     if (currentSheet < totalSheets) {
       setCurrentSheet(prev => prev + 1);
       setIsQuizComplete(false);
+      setMistakesCount(0);
+      setWatermarkEverUsed(false);
+      setAnimationCount(0);
       if (!hasStrokeData && fallbackCanvasRef.current) {
         const ctx = fallbackCanvasRef.current.getContext('2d');
         if (ctx) ctx.clearRect(0, 0, fallbackCanvasRef.current.width, fallbackCanvasRef.current.height);
@@ -490,7 +527,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
       // Automatically trigger onFinish if autoAdvance is enabled (since the Selesai button is hidden)
       playSound('fanfare', soundEnabled);
       setIsTimerRunning(false);
-      onFinish?.();
+      onFinish?.(reward);
     }
   };
 

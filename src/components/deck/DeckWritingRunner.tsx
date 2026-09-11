@@ -7,6 +7,7 @@ import { resolveDeckItem, ResolvedDeckItem } from '../../utils/decks';
 import { KanjiWritingCanvas } from '../learning/KanjiWritingCanvas';
 import { KotobaWritingPractice } from '../learning/KotobaWritingPractice';
 import { playSound } from '../../utils/audio';
+import { WritingRewardResult } from '../../utils/rewards';
 
 interface DeckWritingRunnerProps {
   deck: UserDeck;
@@ -21,9 +22,9 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
   onReward,
   soundEnabled = true,
 }) => {
-  // Only Kanji and Kotoba can be written
+  // Resolve writable items (only kanji or kotoba)
   const writableItems = useMemo(() => {
-    return deck.items
+    return (deck.items || [])
       .map(ref => resolveDeckItem(ref))
       .filter((it): it is ResolvedDeckItem => it !== null && (it.category === 'kanji' || it.category === 'kotoba'));
   }, [deck.items]);
@@ -31,14 +32,22 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [completedItems, setCompletedItems] = useState<number[]>([]);
   const [isFinishedAll, setIsFinishedAll] = useState(false);
+  const [accumulatedExp, setAccumulatedExp] = useState(0);
+  const [accumulatedGold, setAccumulatedGold] = useState(0);
+  const [finalRewards, setFinalRewards] = useState<{ exp: number; gold: number } | null>(null);
 
   const currentItem = writableItems[currentIndex];
 
-  const handleNextItem = () => {
+  const handleNextItem = (itemExp?: number, itemGold?: number) => {
     playSound('click', soundEnabled);
     if (!completedItems.includes(currentIndex)) {
       setCompletedItems(prev => [...prev, currentIndex]);
     }
+
+    const nextExp = accumulatedExp + (itemExp ?? 15);
+    const nextGold = accumulatedGold + (itemGold ?? 5);
+    setAccumulatedExp(nextExp);
+    setAccumulatedGold(nextGold);
 
     if (currentIndex + 1 >= writableItems.length) {
       setIsFinishedAll(true);
@@ -51,8 +60,9 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
         });
       } catch {}
 
-      const earnedExp = Math.max(30, writableItems.length * 15);
-      const earnedGold = Math.max(15, writableItems.length * 8);
+      const earnedExp = Math.max(30, nextExp);
+      const earnedGold = Math.max(15, nextGold);
+      setFinalRewards({ exp: earnedExp, gold: earnedGold });
       if (onReward) {
         onReward(earnedExp, earnedGold);
       }
@@ -144,11 +154,29 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
               </p>
             </div>
 
+            {/* Dynamic EXP & Gold Reward Banner */}
+            {finalRewards && (
+              <div className="flex items-center justify-center gap-3 py-2 px-4 rounded-2xl bg-surface-inset border border-wine-accent/30">
+                <span className="font-bold text-wine-accent font-mono text-sm">
+                  +{finalRewards.exp} EXP
+                </span>
+                <span className="text-xs text-gold font-mono font-bold">
+                  +{finalRewards.gold} Gold
+                </span>
+                <span className="text-[11px] text-text-muted font-mono">
+                  (Multiplier Menulis)
+                </span>
+              </div>
+            )}
+
             <div className="flex items-center justify-center gap-3 pt-2">
               <button
                 onClick={() => {
                   setCurrentIndex(0);
                   setCompletedItems([]);
+                  setAccumulatedExp(0);
+                  setAccumulatedGold(0);
+                  setFinalRewards(null);
                   setIsFinishedAll(false);
                   playSound('click', soundEnabled);
                 }}
@@ -177,10 +205,11 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
                   onyomi={(currentItem.kanji.onyomi || []).join('、')}
                   kunyomi={(currentItem.kanji.kunyomi || []).join('、')}
                   strokeCount={currentItem.kanji.strokeCount}
+                  level={currentItem.kanji.jlpt}
                   soundEnabled={soundEnabled}
                   showStopwatch={true}
-                  onFinish={() => {
-                    handleNextItem();
+                  onFinish={(reward) => {
+                    handleNextItem(reward?.expGained, reward?.goldGained);
                   }}
                 />
               </div>
@@ -191,8 +220,8 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
                 <KotobaWritingPractice
                   kotoba={currentItem.kotoba}
                   soundEnabled={soundEnabled}
-                  onFinishWord={() => {
-                    handleNextItem();
+                  onFinishWord={(score, reward) => {
+                    handleNextItem(reward?.expGained, reward?.goldGained);
                   }}
                   onCancel={() => {
                     playSound('click', soundEnabled);
