@@ -57,10 +57,12 @@ export type SoundType =
   | 'correct'
   | 'wrong'
   | 'levelup'
+  | 'levelUp'
   | 'click'
   | 'coin'
   | 'attack'
   | 'fanfare'
+  | 'victory'
   | 'open_modal';
 
 export function playSound(type: SoundType, soundEnabled: boolean = true) {
@@ -69,10 +71,13 @@ export function playSound(type: SoundType, soundEnabled: boolean = true) {
     const ctx = getAudioContext();
     if (!ctx) return;
 
+    // Normalize sound alias
+    const normalizedType = type === 'victory' ? 'fanfare' : type === 'levelUp' ? 'levelup' : type;
+
     const now = ctx.currentTime;
     const master = getMasterOutput(ctx);
 
-    if (type === 'click') {
+    if (normalizedType === 'click') {
       // Gentle wooden haptic tap (Mokugyo / pebble tap) - zero harsh highs
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();

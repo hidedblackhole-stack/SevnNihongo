@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Star, RotateCcw, CheckCircle2, XCircle, Volume2, ArrowRight } from 'lucide-react';
 import { Question } from '../../types/content';
 import { playSound, speakJapanese } from '../../utils/audio';
+import { RubyText } from './RubyText';
 
 interface StarSentenceQuizProps {
   question: Question;
@@ -174,8 +175,8 @@ export const StarSentenceQuiz: React.FC<StarSentenceQuizProps> = ({
         {/* Sentence Frame with 4 Interactive Slots */}
         <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 py-2 px-1 text-sm sm:text-base font-bold text-text-primary">
           {prefix && (
-            <span className="text-text-primary font-jp px-1 py-1 text-base sm:text-lg">
-              {prefix}
+            <span className="text-text-primary font-jp px-1 py-1 text-base sm:text-lg leading-loose">
+              <RubyText japanese={prefix} showFurigana={true} />
             </span>
           )}
 
@@ -208,7 +209,9 @@ export const StarSentenceQuiz: React.FC<StarSentenceQuizProps> = ({
                     }`}
                   >
                     {isFilled ? (
-                      <span className="truncate max-w-[120px]">{slot.text}</span>
+                      <span className="truncate max-w-[120px]">
+                        <RubyText japanese={slot.text} showFurigana={true} />
+                      </span>
                     ) : (
                       <span className="flex items-center gap-1 text-[11px] font-mono">
                         {isStarSlot ? <Star className="w-3.5 h-3.5 fill-gold text-gold" /> : `[ ${idx + 1} ]`}
@@ -228,8 +231,8 @@ export const StarSentenceQuiz: React.FC<StarSentenceQuizProps> = ({
           </div>
 
           {suffix && (
-            <span className="text-text-primary font-jp px-1 py-1 text-base sm:text-lg">
-              {suffix}
+            <span className="text-text-primary font-jp px-1 py-1 text-base sm:text-lg leading-loose">
+              <RubyText japanese={suffix} showFurigana={true} />
             </span>
           )}
         </div>

@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { CheckCircle2, XCircle, Volume2, ArrowRight, RotateCcw, HelpCircle, Coins } from 'lucide-react';
+import { CheckCircle2, XCircle, Volume2, ArrowRight, RotateCcw, HelpCircle, BookOpen, Eye, EyeOff } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { Question } from '../../types/content';
 import { playSound, speakJapanese } from '../../utils/audio';
-import { calculateExpBonus } from '../../data/tiers';
 import { RubyText } from './RubyText';
 import { StarSentenceQuiz } from './StarSentenceQuiz';
-import { calculateQuizReward, getQuizBaseExpPerQuestion } from '../../utils/rewards';
-
+import { calculateQuizReward } from '../../utils/rewards';
+import { normalizeQuestion } from '../../utils/questionUtils';
 import { sendScoreEvent } from '../../lib/supabase';
 
 interface QuizEngineProps {
@@ -40,9 +39,13 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
   soundEnabled = true,
   furiganaEnabled = true,
 }) => {
-  // Lock questions in state for the entire quiz session so external re-renders cannot alter options or questions
+  // Lock questions in state for the entire quiz session
   const [sessionQuestions, setSessionQuestions] = useState<Question[]>(propQuestions);
   const activeTitleRef = React.useRef(title);
+
+  // Furigana and Translation toggles
+  const [localFurigana, setLocalFurigana] = useState<boolean>(furiganaEnabled);
+  const [showTranslation, setShowTranslation] = useState<boolean>(false);
 
   // If a brand new quiz is mounted or title changes, update the session questions
   React.useEffect(() => {
@@ -52,6 +55,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
       setCurrentIndex(0);
       setSelectedOption(null);
       setIsAnswered(false);
+      setShowTranslation(false);
       setCorrectCount(0);
       setHiddenOptions([]);
       setIsFinished(false);
@@ -66,7 +70,8 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
   const [hiddenOptions, setHiddenOptions] = useState<number[]>([]);
   const [isFinished, setIsFinished] = useState(false);
 
-  const currentQ = questions[currentIndex] || questions[0];
+  const rawCurrentQ = questions[currentIndex] || questions[0];
+  const currentQ = normalizeQuestion(rawCurrentQ);
   const totalQ = questions.length;
 
   const handleSelectOption = (idx: number) => {
@@ -83,7 +88,6 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
       if (onWrongAnswer) onWrongAnswer();
     }
 
-    // Send server-authoritative score event
     sendScoreEvent('quiz_answer', currentQ.id || `q_${currentIndex}`, isCorrect);
   };
 
@@ -106,6 +110,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
       setCurrentIndex(prev => prev + 1);
       setSelectedOption(null);
       setIsAnswered(false);
+      setShowTranslation(false);
       setHiddenOptions([]);
     } else {
       setIsFinished(true);
@@ -149,10 +154,9 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
 
   if (isFinished) {
     const isSuccess = correctCount >= Math.ceil(totalQ * 0.6);
-    const baseExpEarned = correctCount * baseExpPerQuestion;
-    const { totalExpGained, bonusExp, bonusPercentage } = calculateExpBonus(baseExpEarned, playerInt);
-    const expGained = totalExpGained;
-    const goldGained = correctCount * baseGoldPerQuestion;
+    const sampleLevel = (currentQ as any)?.level || (questions[0] as any)?.level || undefined;
+    const quizReward = calculateQuizReward(sampleLevel, correctCount, totalQ, playerInt);
+    const expGained = quizReward.totalExpGained;
 
     return (
       <div className="w-full max-w-xl mx-auto p-6 panel text-center space-y-5 shadow-2xl">
@@ -171,15 +175,10 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
         {/* Rewards Earned Box */}
         <div className="flex flex-col items-center gap-3 max-w-sm mx-auto p-4 rounded-2xl bg-surface-inset border border-border-subtle">
           <div className="text-center">
-            <span className="text-[11px] text-text-muted">Perolehan EXP</span>
+            <span className="text-[11px] text-text-muted">Total Base EXP</span>
             <div className="text-base sm:text-lg font-bold text-gold flex items-center justify-center gap-1 font-mono">
               +{expGained} EXP
             </div>
-            {bonusExp > 0 && (
-              <span className="text-[10px] text-gold/80 font-medium block">
-                (+{bonusExp} INT bonus +{bonusPercentage}%)
-              </span>
-            )}
           </div>
         </div>
 
@@ -189,6 +188,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
               setCurrentIndex(0);
               setSelectedOption(null);
               setIsAnswered(false);
+              setShowTranslation(false);
               setCorrectCount(0);
               setHiddenOptions([]);
               setIsFinished(false);
@@ -215,11 +215,11 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
   }
 
   return (
-    <div className="w-full max-w-xl mx-auto p-4 sm:p-6 panel text-text-primary shadow-xl space-y-4">
+    <div className="w-full max-w-xl mx-auto p-3.5 sm:p-6 panel text-text-primary shadow-xl space-y-4">
       {/* Top Header & Progress */}
-      <div className="flex items-center justify-between">
-        <div>
-          <span className="text-[11px] font-bold uppercase tracking-wider text-indigo font-heading">
+      <div className="flex items-center justify-between gap-2">
+        <div className="min-w-0">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-indigo font-heading truncate block">
             {title}
           </span>
           <div className="text-xs text-text-secondary">
@@ -231,7 +231,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
         <button
           onClick={handleUse5050Hint}
           disabled={hiddenOptions.length > 0 || isAnswered || playerMp < 15}
-          className={`btn btn-pill text-xs flex items-center gap-1.5 ${
+          className={`btn btn-pill text-xs flex items-center gap-1.5 shrink-0 ${
             hiddenOptions.length > 0
               ? 'opacity-40 cursor-not-allowed'
               : playerMp >= 15
@@ -263,40 +263,95 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
         />
       ) : (
         <>
-          {/* Question Prompt Card */}
-          <div className="p-4 sm:p-5 rounded-2xl bg-surface-inset border border-border-subtle space-y-2">
-            <div className="flex items-start justify-between gap-3">
-              <div className="space-y-1 flex-1">
-                {currentQ.ruby && furiganaEnabled ? (
-                  <h3 className="text-base sm:text-lg font-bold text-text-primary leading-relaxed">
-                    <RubyText
-                      japanese={currentQ.prompt}
-                      reading={currentQ.ruby}
-                      showFurigana={furiganaEnabled}
-                    />
-                  </h3>
-                ) : (
-                  <>
-                    {currentQ.ruby && (
-                      <p className="text-xs text-indigo font-jp font-medium">
-                        {currentQ.ruby}
-                      </p>
-                    )}
-                    <h3 className="text-base sm:text-lg font-bold text-text-primary leading-relaxed font-jp">
-                      {currentQ.prompt}
-                    </h3>
-                  </>
-                )}
-              </div>
-
-              <button
-                onClick={() => handlePlayAudio(currentQ.audioPrompt || currentQ.prompt)}
-                className="p-2 rounded-xl bg-surface-card hover:bg-surface-elevated border border-border-subtle text-indigo transition-colors shrink-0"
-                title="Dengarkan Pengucapan"
-              >
-                <Volume2 className="w-4 h-4" />
-              </button>
+          {/* Layer 1: Separate Instruction Bar (Kalimat Perintah) */}
+          <div className="p-3 sm:p-3.5 rounded-xl bg-surface-card border border-border-subtle flex items-start gap-2.5 shadow-sm">
+            <div className="w-6 h-6 rounded-lg bg-indigo/10 border border-indigo/20 text-indigo flex items-center justify-center shrink-0 mt-0.5">
+              <BookOpen className="w-3.5 h-3.5" />
             </div>
+            <div className="space-y-0.5 flex-1 min-w-0">
+              <div className="text-xs sm:text-sm font-bold text-text-primary font-jp leading-snug">
+                {currentQ.instruction}
+              </div>
+              {currentQ.instructionId && (
+                <div className="text-[11px] sm:text-xs text-text-secondary leading-relaxed">
+                  {currentQ.instructionId}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Layer 2: Pure Japanese Question Card (Full Bahasa Jepang) */}
+          <div className="p-4 sm:p-6 rounded-2xl bg-surface-inset border border-border-subtle shadow-md space-y-3">
+            {/* Toolbar: Tag + Furigana Toggle + Native Audio */}
+            <div className="flex items-center justify-between gap-2 pb-2 border-b border-border-subtle/50">
+              <span className="text-[10px] sm:text-[11px] font-bold tracking-wider uppercase text-indigo font-heading flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-indigo animate-pulse" />
+                SOAL BAHASA JEPANG
+              </span>
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => setLocalFurigana(prev => !prev)}
+                  className={`px-2.5 py-1 rounded-lg text-[11px] font-bold font-jp border transition-all ${
+                    localFurigana
+                      ? 'bg-indigo/15 text-indigo border-indigo/30 shadow-sm'
+                      : 'bg-surface-card text-text-muted border-border-subtle hover:text-text-primary'
+                  }`}
+                  title="Aktifkan / Nonaktifkan Furigana Hiragana"
+                >
+                  ふりがな {localFurigana ? 'ON' : 'OFF'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handlePlayAudio(currentQ.audioPrompt || currentQ.prompt)}
+                  className="p-1.5 rounded-lg bg-surface-card hover:bg-surface-elevated border border-border-subtle text-indigo transition-colors"
+                  title="Dengarkan Pengucapan Asli"
+                >
+                  <Volume2 className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* The Pure Japanese Prompt Text with Ruby */}
+            <div className="py-2.5 sm:py-3.5 text-center sm:text-left">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-text-primary leading-[2.2] tracking-wide font-jp">
+                <RubyText
+                  japanese={currentQ.prompt}
+                  reading={currentQ.ruby}
+                  showFurigana={localFurigana}
+                />
+              </h3>
+            </div>
+
+            {/* Layer 3: Independent Translation Toggle (Separate from prompt, collapsed by default) */}
+            {currentQ.translation && !isAnswered && (
+              <div className="pt-1 border-t border-border-subtle/40">
+                <button
+                  type="button"
+                  onClick={() => setShowTranslation(prev => !prev)}
+                  className="text-[11px] sm:text-xs text-text-secondary hover:text-indigo font-medium flex items-center gap-1.5 transition-colors group"
+                >
+                  {showTranslation ? (
+                    <EyeOff className="w-3.5 h-3.5 text-text-muted group-hover:text-indigo" />
+                  ) : (
+                    <Eye className="w-3.5 h-3.5 text-indigo" />
+                  )}
+                  <span>{showTranslation ? 'Sembunyikan Terjemahan' : 'Bantuan: Tampilkan Arti Kalimat'}</span>
+                </button>
+                <AnimatePresence>
+                  {showTranslation && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="mt-2 p-2.5 rounded-xl bg-surface-card/90 border border-border-subtle text-xs text-text-secondary italic"
+                    >
+                      Arti: &ldquo;{currentQ.translation}&rdquo;
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            )}
           </div>
 
           {/* Options List */}
@@ -332,20 +387,26 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
                   whileTap={!isAnswered ? { scale: 0.99 } : {}}
                   onClick={() => handleSelectOption(idx)}
                   disabled={isAnswered}
-                  className={`w-full p-3.5 rounded-xl border text-left text-xs sm:text-sm font-medium flex items-center justify-between gap-3 transition-all ${btnStyle}`}
+                  className={`w-full min-h-[48px] p-3.5 rounded-xl border text-left text-xs sm:text-sm font-medium flex items-center justify-between gap-3 transition-all ${btnStyle}`}
                 >
                   <div className="flex items-center gap-3">
-                    <span className="w-6 h-6 rounded-lg bg-surface-inset border border-border-subtle text-xs flex items-center justify-center font-mono font-bold text-indigo">
+                    <span className="w-6 h-6 rounded-lg bg-surface-inset border border-border-subtle text-xs flex items-center justify-center font-mono font-bold text-indigo shrink-0">
                       {String.fromCharCode(65 + idx)}
                     </span>
-                    <span className="font-jp">{option}</span>
+                    <span className="font-jp text-sm sm:text-base leading-snug">
+                      <RubyText
+                        japanese={option}
+                        reading={currentQ.optionsRuby?.[idx]}
+                        showFurigana={localFurigana}
+                      />
+                    </span>
                   </div>
 
                   {isAnswered && idx === currentQ.correctIndex && (
-                    <CheckCircle2 className="w-4 h-4 text-state-success shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-state-success shrink-0" />
                   )}
                   {isAnswered && idx === selectedOption && idx !== currentQ.correctIndex && (
-                    <XCircle className="w-4 h-4 text-wine-accent shrink-0" />
+                    <XCircle className="w-5 h-5 text-wine-accent shrink-0" />
                   )}
                 </motion.button>
               );
@@ -358,7 +419,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
               <motion.div
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={`p-4 rounded-xl border text-xs space-y-2 ${
+                className={`p-4 rounded-xl border text-xs space-y-3 ${
                   selectedOption === currentQ.correctIndex
                     ? 'bg-state-success/10 border-state-success/30 text-text-primary'
                     : 'bg-wine-accent/10 border-wine-accent/30 text-text-primary'
@@ -368,7 +429,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
                   {selectedOption === currentQ.correctIndex ? (
                     <>
                       <CheckCircle2 className="w-4 h-4 text-state-success" />
-                      <span className="text-state-success">Jawaban Benar! (+{Math.round(baseExpPerQuestion * (1 + playerInt * 0.04))} EXP)</span>
+                      <span className="text-state-success">Jawaban Benar! (+{baseExpPerQuestion} EXP)</span>
                     </>
                   ) : (
                     <>
@@ -377,9 +438,27 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
                     </>
                   )}
                 </div>
-                <p className="text-text-secondary leading-relaxed">
-                  {currentQ.explanation}
-                </p>
+
+                {/* Full Sentence Translation in review */}
+                {currentQ.translation && (
+                  <div className="p-2.5 rounded-lg bg-surface-card/80 border border-border-subtle space-y-0.5">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-indigo font-heading block">
+                      Arti Kalimat:
+                    </span>
+                    <p className="text-xs sm:text-sm text-text-primary font-medium">
+                      &ldquo;{currentQ.translation}&rdquo;
+                    </p>
+                  </div>
+                )}
+
+                <div className="space-y-1">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-text-muted font-heading block">
+                    Penjelasan & Kaidah:
+                  </span>
+                  <p className="text-text-secondary leading-relaxed whitespace-pre-line">
+                    {currentQ.explanation}
+                  </p>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>
@@ -392,7 +471,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           onClick={handleNext}
-          className="w-full py-3 rounded-xl btn-cta font-bold text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 active:scale-95 transition-all font-heading"
+          className="w-full py-3.5 rounded-xl btn-cta font-bold text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 active:scale-95 transition-all font-heading"
         >
           <span>{currentIndex < totalQ - 1 ? 'Lanjut ke Soal Berikutnya' : 'Lihat Hasil Akhir'}</span>
           <ArrowRight className="w-4 h-4" />

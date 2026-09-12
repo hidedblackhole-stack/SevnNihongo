@@ -7,6 +7,7 @@ import { QuizEngine } from './QuizEngine';
 import { FormulaDisplay } from './FormulaDisplay';
 import { RubyText } from './RubyText';
 import { speakJapanese, playSound } from '../../utils/audio';
+import { splitSentenceForHighlight } from '../../utils/grammarHighlight';
 
 interface BunpouModuleProps {
   bunpouIds: string[];
@@ -51,7 +52,10 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
 
   const startSingleQuiz = (item: BunpouItem) => {
     playSound('click', soundEnabled);
-    setActiveQuestions(generateFillInTheBlanks(item));
+    const questionsToUse = item.questions && item.questions.length > 0
+      ? item.questions
+      : generateFillInTheBlanks(item);
+    setActiveQuestions(questionsToUse);
     setActiveQuizSet(item);
   };
 
@@ -78,11 +82,13 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
       const ex = examples[i % examples.length];
       if (!ex) break;
 
-      let prompt = `Lengkapi kalimat berikut: \n\n${ex.japanese.replace(new RegExp(cleanedPattern, 'gi'), '＿＿＿')}\n\nArti: ${ex.meaningId}`;
+      let prompt = ex.japanese.replace(new RegExp(cleanedPattern, 'gi'), '（　）');
+      let ruby = ex.reading ? ex.reading.replace(new RegExp(cleanedPattern, 'gi'), '（　）') : undefined;
       let correct = cleanedPattern;
       
       if (!ex.japanese.toLowerCase().includes(cleanedPattern.toLowerCase())) {
-        prompt = `Pilih pola tata bahasa yang paling tepat: \n\n${ex.japanese}\n\nArti: ${ex.meaningId}`;
+        prompt = ex.japanese;
+        ruby = ex.reading;
         correct = item.title;
       }
 
@@ -98,7 +104,11 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
 
       questions.push({
         id: `${item.id}_fib_${i}`,
+        instruction: '次の文の（　）に入れるのに最もよいものを、1・2・3・4から一つ選びなさい。',
+        instructionId: 'Pilihlah pola tata bahasa yang paling tepat untuk melengkapi kalimat.',
         prompt,
+        ruby,
+        translation: ex.meaningId,
         options: shuffledOptions,
         correctIndex,
         explanation: `${ex.japanese}\n\n=> ${item.title}: ${item.meaningId}`
@@ -298,7 +308,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
               <h4 className="text-xs font-bold uppercase tracking-wider text-gold font-heading">
                 📐 Rumus Pembentukan (Formula)
               </h4>
-              <FormulaDisplay formula={currentBunpou.formula} />
+              <FormulaDisplay formula={currentBunpou.formula} item={currentBunpou} />
             </div>
 
             {/* Cabang Rumus & Kondisi Penggunaan (Sub-Rumus) */}
@@ -489,24 +499,31 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
                     className="p-4 rounded-2xl panel border border-border-subtle flex items-start justify-between gap-3 hover:border-gold/40 transition-colors"
                   >
                     <div className="space-y-1 flex-1">
-                      {furiganaEnabled ? (
-                        <p className="text-sm sm:text-base font-bold text-text-primary">
-                          <RubyText
-                            japanese={example.japanese}
-                            reading={example.reading}
-                            showFurigana={furiganaEnabled}
-                          />
-                        </p>
-                      ) : (
-                        <>
-                          <p className="text-xs text-gold font-jp">
-                            {example.reading}
-                          </p>
-                          <p className="text-sm sm:text-base font-bold text-text-primary font-jp">
-                            {example.japanese}
-                          </p>
-                        </>
-                      )}
+                      <p className="text-sm sm:text-base font-bold text-text-primary flex flex-wrap items-baseline gap-0.5">
+                        {splitSentenceForHighlight(example.japanese, currentBunpou).map((seg, segIdx) => {
+                          if (seg.isHighlight) {
+                            return (
+                              <span
+                                key={segIdx}
+                                className="formula-highlight text-red-700 dark:text-amber-300 font-extrabold"
+                                title="Pola Rumus Tata Bahasa"
+                              >
+                                <RubyText
+                                  japanese={seg.text}
+                                  showFurigana={furiganaEnabled}
+                                />
+                              </span>
+                            );
+                          }
+                          return (
+                            <RubyText
+                              key={segIdx}
+                              japanese={seg.text}
+                              showFurigana={furiganaEnabled}
+                            />
+                          );
+                        })}
+                      </p>
                       <p className="text-xs text-text-secondary">
                         {example.meaningId}
                       </p>

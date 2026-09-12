@@ -55,13 +55,26 @@ const KANA_CATEGORIES = [
 interface KanjiLibraryViewProps {
   soundEnabled?: boolean;
   userDecks?: UserDeck[];
-  onToggleBookmark?: (id: string, category: 'kanji', notes?: string) => void;
+  onToggleBookmark?: (id: string, category: 'kanji', notes?: string, targetDeckId?: string) => void;
+  onRewardPlayer?: (exp: number, gold: number) => void;
+  onRecordStudy?: (category: 'kanjiWriting', id: string, count?: number) => void;
+  onCompleteStudyItem?: (
+    moduleId: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss' | 'questions' | 'tryOuts',
+    expGained: number,
+    goldGained: number,
+    itemId?: string,
+    score?: number,
+    total?: number
+  ) => void;
 }
 
 export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
   soundEnabled = true,
   userDecks,
   onToggleBookmark,
+  onRewardPlayer,
+  onRecordStudy,
+  onCompleteStudyItem,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [visibleCount, setVisibleCount] = useState(48);
@@ -170,6 +183,31 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
   }, [allKanji, levelFilter, kanaCategory, searchQuery, suujiSet]);
 
   const displayedKanji = filteredKanji.slice(0, visibleCount);
+
+  const selectedIndex = useMemo(() => {
+    if (!selectedKanji) return -1;
+    return filteredKanji.findIndex(
+      k => (k.id || k.character) === (selectedKanji.id || selectedKanji.character)
+    );
+  }, [selectedKanji, filteredKanji]);
+
+  const hasNext = selectedIndex >= 0 && selectedIndex < filteredKanji.length - 1;
+  const hasPrev = selectedIndex > 0;
+
+  const handleNextKanji = () => {
+    if (hasNext) {
+      if (selectedIndex + 1 >= visibleCount) {
+        setVisibleCount(prev => Math.min(prev + 48, filteredKanji.length));
+      }
+      setSelectedKanji(filteredKanji[selectedIndex + 1]);
+    }
+  };
+
+  const handlePrevKanji = () => {
+    if (hasPrev) {
+      setSelectedKanji(filteredKanji[selectedIndex - 1]);
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -424,6 +462,24 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
         soundEnabled={soundEnabled}
         isBookmarked={Boolean(selectedKanji && isItemBookmarked(userDecks, selectedKanji.id || selectedKanji.character, 'kanji'))}
         onToggleBookmark={onToggleBookmark && selectedKanji ? () => onToggleBookmark(selectedKanji.id || selectedKanji.character, 'kanji') : undefined}
+        userDecks={userDecks}
+        onToggleDeckItem={onToggleBookmark && selectedKanji ? (deckId) => onToggleBookmark(selectedKanji.id || selectedKanji.character, 'kanji', undefined, deckId) : undefined}
+        onCompleteSheet={(sheet, score, reward) => {
+          if (!selectedKanji) return;
+          const exp = reward?.expGained ?? 15;
+          const gold = reward?.goldGained ?? 5;
+          const kanjiId = selectedKanji.id || selectedKanji.character;
+          if (onCompleteStudyItem) {
+            onCompleteStudyItem('kanji', exp, gold, kanjiId, score >= 60 ? 1 : 0, 1);
+          } else {
+            onRewardPlayer?.(exp, gold);
+            onRecordStudy?.('kanjiWriting', kanjiId, 1);
+          }
+        }}
+        onNext={handleNextKanji}
+        onPrev={handlePrevKanji}
+        hasNext={hasNext}
+        hasPrev={hasPrev}
       />
     </div>
   );

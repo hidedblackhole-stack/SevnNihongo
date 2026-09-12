@@ -12,10 +12,11 @@ import {
   Calendar,
   Layers,
   Trophy,
-  Check
+  Check,
+  Edit2
 } from 'lucide-react';
 import { PlayerStats } from '../../types/rpg';
-import { getTierForExp, getLevelInfo } from '../../data/tiers';
+import { getTierForExp } from '../../data/tiers';
 import { TierAvatar } from '../avatar/TierAvatar';
 import { playSound } from '../../utils/audio';
 import { calculateLanguageProfile, calculateCoverage } from '../../utils/mastery';
@@ -42,12 +43,11 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
 }) => {
   if (!isOpen) return null;
 
-  const { currentTier, potentialTierIndex, isGated, gateResult } = getTierForExp(
+  const { tierIndex: effectiveTierIndex } = getTierForExp(
     stats.totalExp,
     stageProgress,
     WORLD_STAGES_MAP
   );
-  const levelInfo = getLevelInfo(stats.totalExp);
   
   const languageProfile = calculateLanguageProfile(stats.itemMastery || {});
   const coverage = calculateCoverage(stats);
@@ -94,66 +94,22 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
           {/* Scrollable Body Content */}
           <div className="flex-1 overflow-y-auto pr-2 space-y-6 custom-scrollbar">
             
-            {/* 1. IDENTITY & LEVEL */}
+            {/* 1. IDENTITY & TOTAL STUDY EXP */}
             <div className="flex flex-col items-center text-center space-y-3 p-4 rounded-3xl bg-surface-inset border border-border-subtle shadow-inner">
-              <TierAvatar tierIndex={stats.tierIndex} size="lg" />
+              <TierAvatar tierIndex={effectiveTierIndex ?? stats.tierIndex} size="lg" />
               <div>
                 <div className="flex items-center justify-center gap-2">
                   <h3 className="text-xl sm:text-2xl font-bold text-text-primary font-heading">
-                    {stats.playerName || 'Pemilik WebApp'}
+                    {stats.playerName || 'Pelajar Bahasa'}
                   </h3>
                 </div>
-                <div className="flex items-center justify-center gap-2 mt-1 flex-wrap">
-                  <span className="px-2 py-0.5 rounded bg-surface-card text-gold font-bold font-mono text-xs border border-border-subtle">
-                    Lv. {levelInfo.level}
-                  </span>
-                  <span className="text-sm font-medium text-indigo font-jp">
-                    {currentTier.titleName}
+                <div className="flex items-center justify-center gap-2 mt-2">
+                  <span className="px-3 py-1 rounded-xl bg-surface-card text-gold font-bold font-mono text-xs border border-border-subtle flex items-center gap-1.5 shadow-sm">
+                    <Star className="w-3.5 h-3.5 fill-gold text-gold" />
+                    {stats.totalExp.toLocaleString()} Akumulasi EXP Belajar
                   </span>
                 </div>
               </div>
-
-              {/* XP Bar */}
-              <div className="w-full max-w-sm space-y-1">
-                <div className="flex justify-between text-[11px] font-mono text-text-secondary">
-                  <span className="flex items-center gap-1 text-gold">
-                    <Star className="w-3 h-3 fill-gold text-gold" />
-                    {stats.totalExp} Total XP
-                  </span>
-                  <span>{levelInfo.currentLevelExp} / {levelInfo.expNeededForNextLevel}</span>
-                </div>
-                <div className="h-2 w-full rpg-progress-track rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-gold rounded-full shadow-sm"
-                    style={{ width: `${levelInfo.progressPercent}%` }}
-                  />
-                </div>
-              </div>
-
-              {/* Gated Tier Warning / Info */}
-              {isGated && gateResult && (
-                <div className="w-full max-w-sm p-3 rounded-2xl bg-surface-card border border-gold/40 text-left space-y-1.5 shadow-sm">
-                  <div className="flex items-center gap-1.5 text-xs font-bold text-gold font-heading">
-                    <Award className="w-4 h-4 text-gold shrink-0" />
-                    <span>Syarat Ujian Promosi Tier</span>
-                  </div>
-                  <p className="text-[11px] text-text-secondary leading-relaxed">
-                    {gateResult.gatedReason}
-                  </p>
-                  <div className="space-y-1 pt-1">
-                    <div className="flex justify-between text-[10px] font-mono text-text-muted">
-                      <span>Progres Ujian:</span>
-                      <span className="font-bold text-gold">{gateResult.currentPercentage}% / 77%</span>
-                    </div>
-                    <div className="h-1.5 w-full rpg-progress-track rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-gold rounded-full transition-all"
-                        style={{ width: `${Math.min(100, ((gateResult.currentPercentage || 0) / 77) * 100)}%` }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
 
             {/* 2. STUDY STATISTICS (TOTAL VS UNIQUE) */}

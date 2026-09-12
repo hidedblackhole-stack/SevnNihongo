@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Search, Plus, Check, Filter } from 'lucide-react';
+import { X, Search, Plus, Check, CheckSquare, Square, Sparkles } from 'lucide-react';
 import { UserDeck, DeckItemCategory } from '../../types/rpg';
 import { KOTOBA_DATABASE } from '../../data/kotoba';
 import { KANJI_DATABASE } from '../../data/kanji';
@@ -21,6 +21,7 @@ interface DeckAddItemModalProps {
   onClose: () => void;
   targetDeck: UserDeck;
   onAddItem: (item: { id: string; category: DeckItemCategory }) => void;
+  onAddMultipleItems?: (items: { id: string; category: DeckItemCategory }[]) => void;
   soundEnabled?: boolean;
 }
 
@@ -29,12 +30,14 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
   onClose,
   targetDeck,
   onAddItem,
+  onAddMultipleItems,
   soundEnabled = true,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState<'all' | 'kotoba' | 'kanji' | 'bunpou'>('all');
   const [levelFilter, setLevelFilter] = useState<string>('all');
   const [visibleCount, setVisibleCount] = useState(30);
+  const [selectedKeys, setSelectedKeys] = useState<Set<string>>(new Set());
 
   // Set of existing item keys: "category:id"
   const existingItemKeys = useMemo(() => {
@@ -113,7 +116,56 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
     return filteredItems.slice(0, visibleCount);
   }, [filteredItems, visibleCount]);
 
+  // Non-existing displayed items that can be selected
+  const selectableDisplayed = useMemo(() => {
+    return displayedItems.filter(it => !existingItemKeys.has(`${it.category}:${it.id}`));
+  }, [displayedItems, existingItemKeys]);
+
   if (!isOpen) return null;
+
+  const handleToggleSelectKey = (key: string) => {
+    playSound('click', soundEnabled);
+    setSelectedKeys(prev => {
+      const next = new Set(prev);
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
+      return next;
+    });
+  };
+
+  const handleSelectAllVisible = () => {
+    playSound('click', soundEnabled);
+    setSelectedKeys(prev => {
+      const next = new Set(prev);
+      const allSelected = selectableDisplayed.every(it => next.has(`${it.category}:${it.id}`));
+      if (allSelected) {
+        // Deselect visible
+        selectableDisplayed.forEach(it => next.delete(`${it.category}:${it.id}`));
+      } else {
+        // Select all visible
+        selectableDisplayed.forEach(it => next.add(`${it.category}:${it.id}`));
+      }
+      return next;
+    });
+  };
+
+  const handleAddBatch = () => {
+    if (selectedKeys.size === 0) return;
+    playSound('correct', soundEnabled);
+
+    const itemsToAdd = Array.from(selectedKeys).map(k => {
+      const [category, id] = k.split(':');
+      return { id, category: category as DeckItemCategory };
+    });
+
+    if (onAddMultipleItems) {
+      onAddMultipleItems(itemsToAdd);
+    } else {
+      itemsToAdd.forEach(it => onAddItem(it));
+    }
+
+    setSelectedKeys(new Set());
+  };
 
   return (
     <AnimatePresence>
@@ -122,7 +174,7 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
           initial={{ scale: 0.95, opacity: 0, y: 15 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.95, opacity: 0, y: 15 }}
-          className="panel w-full max-w-2xl border border-border-subtle rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+          className="panel w-full max-w-2xl border border-border-subtle rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] relative"
         >
           {/* Header */}
           <div className="p-4 sm:p-5 border-b border-border-subtle flex items-center justify-between bg-surface-inset">
@@ -132,7 +184,7 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
                 <span>Tambah Materi ke &quot;{targetDeck.title}&quot;</span>
               </h3>
               <p className="text-xs text-text-secondary">
-                Cari dari ribuan kosakata, kanji, dan tata bahasa
+                Cari dan tambahkan materi satuan atau gunakan centang multi-pilih
               </p>
             </div>
 
@@ -158,7 +210,7 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
                   setSearchQuery(e.target.value);
                   setVisibleCount(30);
                 }}
-                placeholder="Cari kanji, kata, pola kalimat, atau arti bahasa Indonesia..."
+                placeholder="Cari kanji, kata, pola kalimat, atau arti..."
                 className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-surface-inset border border-border-subtle focus:border-border-primary focus:outline-none text-xs sm:text-sm text-text-primary font-medium"
               />
               {searchQuery && (
@@ -223,10 +275,38 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
                 );
               })}
             </div>
+
+            {/* Multi-Select Toolbar */}
+            {selectableDisplayed.length > 0 && (
+              <div className="flex items-center justify-between pt-1 border-t border-border-subtle/50 text-xs">
+                <button
+                  type="button"
+                  onClick={handleSelectAllVisible}
+                  className="text-text-secondary hover:text-text-primary font-bold flex items-center gap-1.5 transition-colors"
+                >
+                  <CheckSquare className="w-3.5 h-3.5 text-gold" />
+                  <span>
+                    {selectableDisplayed.every(it => selectedKeys.has(`${it.category}:${it.id}`))
+                      ? 'Batal Pilih Semua'
+                      : `Pilih Semua Ditampilkan (${selectableDisplayed.length})`}
+                  </span>
+                </button>
+
+                {selectedKeys.size > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setSelectedKeys(new Set())}
+                    className="text-wine-accent hover:underline text-[11px]"
+                  >
+                    Bersihkan Pilihan ({selectedKeys.size})
+                  </button>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Results List */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-2.5">
+          <div className="flex-1 overflow-y-auto p-4 space-y-2.5 pb-20">
             {displayedItems.length === 0 ? (
               <div className="text-center py-12 text-text-muted text-xs">
                 Tidak ada materi yang cocok dengan pencarian &quot;{searchQuery}&quot;
@@ -241,44 +321,81 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
                   {displayedItems.map((item) => {
                     const key = `${item.category}:${item.id}`;
                     const isAlreadyInDeck = existingItemKeys.has(key);
+                    const isSelected = selectedKeys.has(key);
 
                     return (
                       <div
                         key={key}
-                        className="panel p-3 sm:p-3.5 rounded-2xl border border-border-subtle flex items-center justify-between gap-3 hover:border-border-primary transition-all"
+                        onClick={() => {
+                          if (!isAlreadyInDeck) {
+                            handleToggleSelectKey(key);
+                          }
+                        }}
+                        className={`panel p-3 sm:p-3.5 rounded-2xl border flex items-center justify-between gap-3 transition-all ${
+                          isAlreadyInDeck
+                            ? 'border-border-subtle opacity-65 cursor-default'
+                            : isSelected
+                            ? 'bg-surface-elevated border-border-primary ring-1 ring-gold/40 cursor-pointer'
+                            : 'border-border-subtle hover:border-border-primary cursor-pointer'
+                        }`}
                       >
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-center gap-2 mb-1 flex-wrap">
-                            <span className="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold uppercase border border-border-subtle bg-surface-inset text-text-secondary">
-                              {item.category}
-                            </span>
-                            <span className="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold border border-border-subtle bg-surface-inset text-text-primary">
-                              {item.level}
-                            </span>
-                            {item.reading && (
-                              <span className="text-[11px] font-mono text-text-secondary truncate max-w-[200px]">
-                                {item.reading}
+                        <div className="flex items-center gap-3 min-w-0 flex-1">
+                          {!isAlreadyInDeck ? (
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleToggleSelectKey(key);
+                              }}
+                              className="text-gold shrink-0"
+                            >
+                              {isSelected ? (
+                                <CheckSquare className="w-5 h-5 text-gold" />
+                              ) : (
+                                <Square className="w-5 h-5 text-text-muted hover:text-text-secondary" />
+                              )}
+                            </button>
+                          ) : (
+                            <div className="w-5 h-5 rounded flex items-center justify-center bg-surface-inset border border-border-subtle shrink-0">
+                              <Check className="w-3.5 h-3.5 text-text-muted" />
+                            </div>
+                          )}
+
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-center gap-2 mb-1 flex-wrap">
+                              <span className="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold uppercase border border-border-subtle bg-surface-inset text-text-secondary">
+                                {item.category}
                               </span>
-                            )}
+                              <span className="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold border border-border-subtle bg-surface-inset text-text-primary">
+                                {item.level}
+                              </span>
+                              {item.reading && (
+                                <span className="text-[11px] font-mono text-text-secondary truncate max-w-[200px]">
+                                  {item.reading}
+                                </span>
+                              )}
+                            </div>
+                            <h4 className="font-bold text-sm sm:text-base font-jp text-text-primary">
+                              {item.title}
+                            </h4>
+                            <p className="text-xs text-text-secondary truncate">
+                              {item.meaning}
+                            </p>
                           </div>
-                          <h4 className="font-bold text-sm sm:text-base font-jp text-text-primary">
-                            {item.title}
-                          </h4>
-                          <p className="text-xs text-text-secondary truncate">
-                            {item.meaning}
-                          </p>
                         </div>
 
+                        {/* Fast Single Add Button */}
                         <button
                           disabled={isAlreadyInDeck}
-                          onClick={() => {
+                          onClick={(e) => {
+                            e.stopPropagation();
                             playSound('click', soundEnabled);
                             onAddItem({ id: item.id, category: item.category });
                           }}
                           className={`px-3 py-1.5 rounded-xl text-xs font-bold font-heading flex items-center gap-1.5 transition-all shrink-0 ${
                             isAlreadyInDeck
                               ? 'bg-surface-inset text-text-muted border border-border-subtle cursor-default'
-                              : 'bg-surface-elevated text-text-primary border border-border-primary hover:scale-105 shadow-sm'
+                              : 'bg-surface-inset hover:bg-surface-elevated text-text-primary border border-border-subtle hover:border-border-primary shadow-sm'
                           }`}
                         >
                           {isAlreadyInDeck ? (
@@ -289,7 +406,7 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
                           ) : (
                             <>
                               <Plus className="w-3.5 h-3.5" />
-                              <span>Tambah</span>
+                              <span>+ Tambah</span>
                             </>
                           )}
                         </button>
@@ -311,6 +428,41 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
               </>
             )}
           </div>
+
+          {/* Floating Bottom Batch Action Bar */}
+          {selectedKeys.size > 0 && (
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 20, opacity: 0 }}
+              className="absolute bottom-3 left-4 right-4 p-3 rounded-2xl bg-surface-elevated border border-border-primary shadow-2xl flex items-center justify-between gap-3 z-10 backdrop-blur-md"
+            >
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-gold" />
+                <span className="text-xs font-heading font-bold text-text-primary">
+                  {selectedKeys.size} materi siap ditambahkan
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setSelectedKeys(new Set())}
+                  className="px-3 py-1.5 rounded-xl text-xs font-bold text-text-secondary hover:bg-surface-inset"
+                >
+                  Batal
+                </button>
+                <button
+                  type="button"
+                  onClick={handleAddBatch}
+                  className="px-4 py-1.5 rounded-xl text-xs font-heading font-bold bg-surface-card hover:bg-surface-inset text-gold border border-gold/40 shadow-sm flex items-center gap-1.5"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Tambahkan Semua ({selectedKeys.size})</span>
+                </button>
+              </div>
+            </motion.div>
+          )}
         </motion.div>
       </div>
     </AnimatePresence>

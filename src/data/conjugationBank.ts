@@ -15,6 +15,34 @@ export interface ConjugationPattern {
   shortDescription: string;
 }
 
+export interface AuxiliaryInflectionRow {
+  formName: string;
+  japanese: string;
+  reading: string;
+  example: string;
+  nuance: string;
+}
+
+export interface AuxiliaryEnding {
+  id: string;
+  token: string;
+  nameJa: string;
+  nameId: string;
+  nameEn: string;
+  description: string;
+  inflections: AuxiliaryInflectionRow[];
+}
+
+export interface VerbGroupInfo {
+  groupName: string;
+  japaneseName: string;
+  romajiName: string;
+  definition: string;
+  rule: string;
+  examples: string[];
+  exceptions?: string[];
+}
+
 export interface GrammarConnector {
   id: string;
   token: string;
@@ -505,3 +533,510 @@ export function getConnectorOrSubBranch(id: string): {
   }
   return undefined;
 }
+
+// ─── Auxiliary Verb Inflections (Kata Kerja Bantu / Akhiran Kalimat) ────────
+
+export const AUXILIARY_ENDINGS: Record<string, AuxiliaryEnding> = {
+  aux_iru: {
+    id: 'aux_iru',
+    token: 'いる',
+    nameJa: '補助動詞「いる」',
+    nameId: 'Kata Kerja Bantu "Iru" (Sedang Berlangsung / Kondisi Tetap)',
+    nameEn: 'Auxiliary Verb "Iru" (Progressive / State)',
+    description: 'Mengikuti bentuk Vて untuk menyatakan tindakan yang sedang berlangsung (〜ている) atau keadaan yang masih bertahan dari suatu tindakan.',
+    inflections: [
+      {
+        formName: 'Kamus (Biasa)',
+        japanese: '〜ている',
+        reading: '〜te iru',
+        example: '待っている (matte iru)',
+        nuance: 'Sedang menunggu (santai / informal)',
+      },
+      {
+        formName: 'Sopan (Masu)',
+        japanese: '〜ています',
+        reading: '〜te imasu',
+        example: '待っています (matte imasu)',
+        nuance: 'Sedang menunggu (sopan / formal)',
+      },
+      {
+        formName: 'Lampau (Ta)',
+        japanese: '〜ていた',
+        reading: '〜te ita',
+        example: '待っていた (matte ita)',
+        nuance: 'Tadi sedang menunggu (lampau santai)',
+      },
+      {
+        formName: 'Sopan Lampau (Mashita)',
+        japanese: '〜ていました',
+        reading: '〜te imashita',
+        example: '待っていました (matte imashita)',
+        nuance: 'Tadi sedang menunggu (lampau sopan)',
+      },
+      {
+        formName: 'Negatif (Nai)',
+        japanese: '〜ていない',
+        reading: '〜te inai',
+        example: '待っていない (matte inai)',
+        nuance: 'Sedang tidak menunggu (santai)',
+      },
+      {
+        formName: 'Sopan Negatif (Masen)',
+        japanese: '〜ていません',
+        reading: '〜te imasen',
+        example: '待っていません (matte imasen)',
+        nuance: 'Sedang tidak menunggu (sopan)',
+      },
+      {
+        formName: 'Negatif Lampau (Nakatta)',
+        japanese: '〜ていなかった',
+        reading: '〜te inakatta',
+        example: '待っていなかった (matte inakatta)',
+        nuance: 'Tadi tidak sedang menunggu (lampau santai)',
+      },
+      {
+        formName: 'Bentuk Sambung (Te)',
+        japanese: '〜ていて',
+        reading: '〜te ite',
+        example: '待っていてください (matte ite kudasai)',
+        nuance: 'Tolong tetap tunggu (sambung / permohonan)',
+      },
+    ],
+  },
+  aux_aru: {
+    id: 'aux_aru',
+    token: 'ある',
+    nameJa: '補助動詞「ある」',
+    nameId: 'Kata Kerja Bantu "Aru" (Kondisi Sengaja Dibuat / Disiapkan)',
+    nameEn: 'Auxiliary Verb "Aru" (Resultant State)',
+    description: 'Mengikuti bentuk Vて dari kata kerja transitif untuk menyatakan hasil tindakan yang sengaja dilakukan seseorang demi tujuan tertentu.',
+    inflections: [
+      {
+        formName: 'Kamus (Biasa)',
+        japanese: '〜てある',
+        reading: '〜te aru',
+        example: '書いてある (kaite aru)',
+        nuance: 'Sudah tertulis / disiapkan (santai)',
+      },
+      {
+        formName: 'Sopan (Masu)',
+        japanese: '〜てあります',
+        reading: '〜te arimasu',
+        example: '書いてあります (kaite arimasu)',
+        nuance: 'Sudah tertulis / disiapkan (sopan)',
+      },
+      {
+        formName: 'Lampau (Ta)',
+        japanese: '〜てあった',
+        reading: '〜te atta',
+        example: '書いてあった (kaite atta)',
+        nuance: 'Tadi sudah tertulis (lampau santai)',
+      },
+      {
+        formName: 'Sopan Lampau (Mashita)',
+        japanese: '〜てありました',
+        reading: '〜te arimashita',
+        example: '書いてありました (kaite arimashita)',
+        nuance: 'Tadi sudah tertulis (lampau sopan)',
+      },
+    ],
+  },
+  aux_oku: {
+    id: 'aux_oku',
+    token: 'おく',
+    nameJa: '補助動詞「おく」',
+    nameId: 'Kata Kerja Bantu "Oku" / "Toku" (Persiapan Terlebih Dahulu)',
+    nameEn: 'Auxiliary Verb "Oku" (Preparation in Advance)',
+    description: 'Mengikuti Vて untuk melakukan sesuatu sebagai persiapan sebelum hal lain terjadi. Dalam percakapan santai sering disingkat menjadi 〜とく／〜どく.',
+    inflections: [
+      {
+        formName: 'Kamus (Biasa)',
+        japanese: '〜ておく / 〜とく',
+        reading: '〜te oku / 〜toku',
+        example: '買っておく / 買っとく (katte oku / kattoku)',
+        nuance: 'Membeli dulu untuk persiapan (santai)',
+      },
+      {
+        formName: 'Sopan (Masu)',
+        japanese: '〜ておきます',
+        reading: '〜te okimasu',
+        example: '買っておきます (katte okimasu)',
+        nuance: 'Akan beli dulu untuk persiapan (sopan)',
+      },
+      {
+        formName: 'Lampau (Ta)',
+        japanese: '〜ておいた / 〜といた',
+        reading: '〜te oita / 〜toita',
+        example: '買っておいた / 買っといた',
+        nuance: 'Sudah beli dulu untuk persiapan (santai)',
+      },
+      {
+        formName: 'Sopan Lampau (Mashita)',
+        japanese: '〜ておきました',
+        reading: '〜te okimashita',
+        example: '買っておきました (katte okimashita)',
+        nuance: 'Sudah beli dulu untuk persiapan (sopan)',
+      },
+      {
+        formName: 'Maksud / Ajakan (You)',
+        japanese: '〜ておこう / 〜とこう',
+        reading: '〜te okou / 〜tokou',
+        example: '買っておこう / 買っとこう',
+        nuance: 'Ayo beli dulu yuk! / Akan kubeli dulu',
+      },
+      {
+        formName: 'Permohonan (Te)',
+        japanese: '〜ておいて(ください)',
+        reading: '〜te oite (kudasai)',
+        example: '買っておいてください',
+        nuance: 'Tolong beli dulu untuk persiapan',
+      },
+    ],
+  },
+  aux_shimau: {
+    id: 'aux_shimau',
+    token: 'しまう',
+    nameJa: '補助動詞「しまう」',
+    nameId: 'Kata Kerja Bantu "Shimau" / "Chau" (Selesai Tuntas / Penyesalan)',
+    nameEn: 'Auxiliary Verb "Shimau" (Completion / Regret)',
+    description: 'Menyatakan bahwa suatu tindakan telah selesai secara tuntas, atau terjadi secara tidak sengaja dengan nuansa penyesalan. Ragam lisan disingkat menjadi 〜ちゃう／〜じゃう.',
+    inflections: [
+      {
+        formName: 'Kamus (Biasa)',
+        japanese: '〜てしまう / 〜ちゃう',
+        reading: '〜te shimau / 〜chau',
+        example: '食べてしまう / 食べちゃう',
+        nuance: 'Menghabiskan / telanjur makan (santai)',
+      },
+      {
+        formName: 'Sopan (Masu)',
+        japanese: '〜てしまいます',
+        reading: '〜te shimaimasu',
+        example: '食べてしまいます',
+        nuance: 'Akan habis termakan (sopan)',
+      },
+      {
+        formName: 'Lampau (Ta)',
+        japanese: '〜てしまった / 〜ちゃった',
+        reading: '〜te shimatta / 〜chatta',
+        example: '食べてしまった / 食べちゃった',
+        nuance: 'Sudah telanjur dimakan (penyesalan santai)',
+      },
+      {
+        formName: 'Sopan Lampau (Mashita)',
+        japanese: '〜てしまいました',
+        reading: '〜te shimaimashita',
+        example: '食べてしまいました',
+        nuance: 'Sudah telanjur dimakan (penyesalan sopan)',
+      },
+      {
+        formName: 'Maksud / Ajakan (You)',
+        japanese: '〜てしまおう / 〜ちゃおう',
+        reading: '〜te shimaou / 〜chaou',
+        example: '飲んじゃおう！ (nonjaou!)',
+        nuance: 'Ayo kita habiskan minumannya!',
+      },
+    ],
+  },
+  aux_miru: {
+    id: 'aux_miru',
+    token: 'みる',
+    nameJa: '補助動詞「みる」',
+    nameId: 'Kata Kerja Bantu "Miru" (Mencoba Melakukan)',
+    nameEn: 'Auxiliary Verb "Miru" (Try doing)',
+    description: 'Mengikuti Vて untuk menyatakan tindakan mencoba melakukan sesuatu untuk melihat hasilnya.',
+    inflections: [
+      {
+        formName: 'Kamus (Biasa)',
+        japanese: '〜てみる',
+        reading: '〜te miru',
+        example: '食べてみる (tabete miru)',
+        nuance: 'Mencoba makan (santai)',
+      },
+      {
+        formName: 'Sopan (Masu)',
+        japanese: '〜てみます',
+        reading: '〜te mimasu',
+        example: '食べてみます (tabete mimasu)',
+        nuance: 'Akan coba makan (sopan)',
+      },
+      {
+        formName: 'Lampau (Ta)',
+        japanese: '〜てみた',
+        reading: '〜te mita',
+        example: '食べてみた (tabete mita)',
+        nuance: 'Sudah pernah mencoba makan (santai)',
+      },
+      {
+        formName: 'Sopan Lampau (Mashita)',
+        japanese: '〜てみました',
+        reading: '〜te mimashita',
+        example: '食べてみました (tabete mimashita)',
+        nuance: 'Sudah pernah mencoba makan (sopan)',
+      },
+      {
+        formName: 'Permintaan (Te)',
+        japanese: '〜てみて(ください)',
+        reading: '〜te mite (kudasai)',
+        example: '食べてみてください',
+        nuance: 'Silakan dicoba makan ya',
+      },
+    ],
+  },
+  aux_iku: {
+    id: 'aux_iku',
+    token: 'いく',
+    nameJa: '補助動詞「いく」',
+    nameId: 'Kata Kerja Bantu "Iku" (Menjauh / Masa Depan)',
+    nameEn: 'Auxiliary Verb "Iku" (Moving away / Future continuation)',
+    description: 'Menyatakan tindakan/perubahan yang bergerak menjauh dari pembicara atau akan terus berlanjut ke masa depan.',
+    inflections: [
+      {
+        formName: 'Kamus (Biasa)',
+        japanese: '〜ていく',
+        reading: '〜te iku',
+        example: '増えていく (fuete iku)',
+        nuance: 'Akan terus bertambah ke depan',
+      },
+      {
+        formName: 'Sopan (Masu)',
+        japanese: '〜ていきます',
+        reading: '〜te ikimasu',
+        example: '増えていきます (fuete ikimasu)',
+        nuance: 'Akan terus bertambah ke depan (sopan)',
+      },
+      {
+        formName: 'Lampau (Ta)',
+        japanese: '〜ていった',
+        reading: '〜te itta',
+        example: '消えていった (kiete itta)',
+        nuance: 'Berangsur menghilang menjauh (lampau)',
+      },
+    ],
+  },
+  aux_kuru: {
+    id: 'aux_kuru',
+    token: 'くる',
+    nameJa: '補助動詞「くる」',
+    nameId: 'Kata Kerja Bantu "Kuru" (Mendekat / Dari Dulu Hingga Kini)',
+    nameEn: 'Auxiliary Verb "Kuru" (Moving closer / Process up to now)',
+    description: 'Menyatakan tindakan yang bergerak mendekat ke arah pembicara, atau proses perubahan yang terjadi dari masa lampau hingga saat ini.',
+    inflections: [
+      {
+        formName: 'Kamus (Biasa)',
+        japanese: '〜てくる',
+        reading: '〜te kuru',
+        example: '暖かくなってきた (atatakaku natte kita)',
+        nuance: 'Mulai terasa hangat (perubahan berlangsung)',
+      },
+      {
+        formName: 'Sopan (Masu)',
+        japanese: '〜てきます',
+        reading: '〜te kimasu',
+        example: '買ってきます (katte kimasu)',
+        nuance: 'Akan pergi membeli lalu kembali lagi',
+      },
+      {
+        formName: 'Lampau (Ta)',
+        japanese: '〜てきた',
+        reading: '〜te kita',
+        example: '増えてきた (fuete kita)',
+        nuance: 'Sudah mulai meningkat hingga sekarang',
+      },
+      {
+        formName: 'Sopan Lampau (Mashita)',
+        japanese: '〜てきました',
+        reading: '〜te kimashita',
+        example: '暖かくなってきました',
+        nuance: 'Sudah mulai terasa hangat (sopan)',
+      },
+    ],
+  },
+  aux_reru: {
+    id: 'aux_reru',
+    token: 'れる／られる',
+    nameJa: '受身・可能の助動詞',
+    nameId: 'Kata Akhiran Pasif / Potensial (Vれる / Vられる)',
+    nameEn: 'Passive / Potential Auxiliary (-(r)eru / -(r)areru)',
+    description: 'Kata kerja yang diubah ke bentuk pasif atau potensial berkonjugasi seperti kata kerja Golongan II (Ichidan), sehingga dapat berubah ke bentuk sopan, lampau, maupun sambung.',
+    inflections: [
+      {
+        formName: 'Kamus (Biasa)',
+        japanese: '〜れる / 〜られる',
+        reading: '〜reru / 〜rareru',
+        example: '言われる / 食べられる',
+        nuance: 'Dikatakan / bisa dimakan (santai)',
+      },
+      {
+        formName: 'Sopan (Masu)',
+        japanese: '〜れます / 〜られます',
+        reading: '〜remasu / 〜raremasu',
+        example: '言われます / 食べられます',
+        nuance: 'Dikatakan / bisa dimakan (sopan)',
+      },
+      {
+        formName: 'Lampau (Ta)',
+        japanese: '〜れた / 〜られた',
+        reading: '〜reta / 〜rareta',
+        example: '泣かれた / 壊された',
+        nuance: 'Telah ditangisi / dirusak (lampau)',
+      },
+      {
+        formName: 'Sopan Lampau (Mashita)',
+        japanese: '〜れました / 〜られました',
+        reading: '〜remashita / 〜raremashita',
+        example: '言われました / 褒められました',
+        nuance: 'Telah dikatakan / dipuji (sopan lampau)',
+      },
+      {
+        formName: 'Negatif (Nai)',
+        japanese: '〜れない / 〜られない',
+        reading: '〜renai / 〜rarenai',
+        example: '信じられない (shinjirarenai)',
+        nuance: 'Tidak bisa dipercaya / tidak dilakukan',
+      },
+      {
+        formName: 'Bentuk Sambung (Te)',
+        japanese: '〜れて / 〜られて',
+        reading: '〜rete / 〜rarete',
+        example: '言われて / 泣かれてしまった',
+        nuance: 'Dikatakan lalu... / telanjur ditangisi',
+      },
+    ],
+  },
+  aux_seru: {
+    id: 'aux_seru',
+    token: 'せる／させる',
+    nameJa: '使役の助動詞',
+    nameId: 'Kata Akhiran Kausatif (Vせる / Vさせる)',
+    nameEn: 'Causative Auxiliary (-(s)eru / -(s)aseru)',
+    description: 'Bentuk menyuruh atau membiarkan seseorang melakukan sesuatu. Bentuk kausatif berkonjugasi seperti Golongan II, sering digabung dengan てください untuk meminta izin.',
+    inflections: [
+      {
+        formName: 'Kamus (Biasa)',
+        japanese: '〜せる / 〜させる',
+        reading: '〜seru / 〜saseru',
+        example: '帰らせる / 食べさせる',
+        nuance: 'Menyuruh pulang / membiarkan makan',
+      },
+      {
+        formName: 'Sopan (Masu)',
+        japanese: '〜せます / 〜させます',
+        reading: '〜semasu / 〜sasemasu',
+        example: '帰らせます (kairasemasu)',
+        nuance: 'Akan menyuruh pulang (sopan)',
+      },
+      {
+        formName: 'Bentuk Sambung (Te)',
+        japanese: '〜せて / 〜させて',
+        reading: '〜sete / 〜sasete',
+        example: '帰らせて / 食べさせて',
+        nuance: 'Biarkan pulang lalu...',
+      },
+      {
+        formName: 'Minta Izin (Te Kudasai)',
+        japanese: '〜(さ)せてください',
+        reading: '〜(sa)sete kudasai',
+        example: '早く帰らせてください',
+        nuance: 'Tolong izinkan saya pulang lebih awal',
+      },
+      {
+        formName: 'Izin Sangat Sopan',
+        japanese: '〜(さ)せていただけますか',
+        reading: '〜(sa)sete itadakemasu ka',
+        example: '休ませていただけますか',
+        nuance: 'Apakah saya diperkenankan mengambil libur?',
+      },
+    ],
+  },
+};
+
+// ─── Japanese Verb Groups Guide (Panduan Golongan 1, 2, 3) ───────────────────
+
+export const VERB_GROUPS_GUIDE: VerbGroupInfo[] = [
+  {
+    groupName: 'Golongan 1 (Grup I)',
+    japaneseName: '五段動詞',
+    romajiName: 'Godan Doushi',
+    definition: 'Kata kerja yang berakhiran suku kata vokal "u" selain bunyi "-iru" atau "-eru". Kata kerja golongan ini mengalami perubahan bunyi vokal pada 5 baris (a, i, u, e, o).',
+    rule: 'Perubahan dasar mengikuti 5 baris hiragana:\n• Nai (Negatif): u → a + nai (書く → 書かない)\n• Masu (Sopan): u → i + masu (書く → 書きます)\n• Jisho (Kamus): berakhiran u (書く)\n• Ba (Syarat): u → e + ba (書く → 書けば)\n• You (Ajakan): u → ou (書く → 書こう)',
+    examples: [
+      '書く (かく / menulis)',
+      '読む (よむ / membaca)',
+      '話す (はなす / berbicara)',
+      '待つ (まつ / menunggu)',
+      '買う (かう / membeli)',
+      '泳ぐ (およぐ / berenang)',
+      '遊ぶ (あそぶ / bermain)',
+    ],
+    exceptions: [
+      '⚠️ Pengecualian Penting (Berakhiran -iru/-eru tetapi MASUK Golongan 1):',
+      '帰る (かえる / pulang) → 帰ります、帰って',
+      '知る (しる / tahu) → 知ります、知って',
+      '入る (はいる / masuk) → 入ります、入って',
+      '走る (はしる / berlari) → 走ります、走って',
+      '切る (きる / memotong) → 切ります、切って',
+      '喋る (しゃべる / mengobrol) → 喋ります、喋って',
+    ],
+  },
+  {
+    groupName: 'Golongan 2 (Grup II)',
+    japaneseName: '一段動詞',
+    romajiName: 'Ichidan Doushi',
+    definition: 'Kata kerja yang berakhiran suku kata bunyi "-iru" (い段 + る) atau bunyi "-eru" (え段 + る). Pola konjugasinya paling sederhana karena huruf "る" tinggal dihapus.',
+    rule: 'Cukup hilangkan akhiran "る" lalu tambahkan bentuk yang diinginkan:\n• Nai (Negatif): Hapus る + ない (食べる → 食べない)\n• Masu (Sopan): Hapus る + ます (食べる → 食べます)\n• Te (Sambung): Hapus る + て (食べる → 食べて)\n• Ta (Lampau): Hapus る + た (食べる → 食べた)\n• Ba (Syarat): Hapus る + れば (食べる → 食べれば)\n• You (Ajakan): Hapus る + よう (食べる → 食べよう)',
+    examples: [
+      '食べる (たべる / makan) [akhiran -eru]',
+      '見る (みる / melihat) [akhiran -iru]',
+      '起きる (おきる / bangun) [akhiran -iru]',
+      '寝る (ねる / tidur) [akhiran -eru]',
+      '教える (おしえる / mengajar) [akhiran -eru]',
+      '忘れる (わすれる / lupa) [akhiran -eru]',
+    ],
+  },
+  {
+    groupName: 'Golongan 3 (Grup III)',
+    japaneseName: '不規則動詞',
+    romajiName: 'Fukisoku Doushi (Irregular)',
+    definition: 'Kata kerja tidak beraturan. Dalam seluruh bahasa Jepang HANYA ADA 2 KATA KERJA ini. Konjugasinya harus dihafal secara khusus karena bunyi dasarnya berubah.',
+    rule: '1. する (suru / melakukan):\n   • Negatif: しない (shinai)\n   • Sopan: します (shimasu)\n   • Bentuk Te: して (shite)\n   • Lampau: した (shita)\n   • Potensial: できる (dekiru)\n   • Pasif: される (sareru)\n   • Kausatif: させる (saseru)\n\n2. 来る (くる / datang):\n   • Negatif: 来ない (こない / konai)\n   • Sopan: 来ます (きます / kimasu)\n   • Bentuk Te: 来て (きて / kite)\n   • Lampau: 来た (きた / kita)\n   • Potensial/Pasif: 来られる (こられる / korareru)\n   • Kausatif: 来させる (こさせる / kosaseru)',
+    examples: [
+      'する (melakukan)',
+      '勉強する (belajar)',
+      '電話する (menelepon)',
+      '来る (くる / datang)',
+    ],
+  },
+];
+
+/**
+ * Find an auxiliary ending definition by token.
+ */
+export function findAuxiliaryByToken(token: string): string | undefined {
+  const normalized = token.replace(/^[〜~]/, '').replace(/\s+/g, '');
+  for (const [id, aux] of Object.entries(AUXILIARY_ENDINGS)) {
+    if (aux.token === normalized || aux.token.split('／').includes(normalized)) {
+      return id;
+    }
+  }
+  // Substring match for compound tokens like 〜ている -> aux_iru
+  if (normalized.endsWith('いる') || normalized === 'ている') return 'aux_iru';
+  if (normalized.endsWith('ある') || normalized === 'てある') return 'aux_aru';
+  if (normalized.endsWith('おく') || normalized === 'ておく' || normalized === 'とく') return 'aux_oku';
+  if (normalized.endsWith('しまう') || normalized === 'てしまう' || normalized === 'ちゃう' || normalized === 'じゃう') return 'aux_shimau';
+  if (normalized.endsWith('みる') || normalized === 'てみる') return 'aux_miru';
+  if (normalized.endsWith('いく') || normalized === 'ていく') return 'aux_iku';
+  if (normalized.endsWith('くる') || normalized === 'てくる') return 'aux_kuru';
+  if (normalized.includes('ください')) return 'aux_kudasai';
+  if (normalized.includes('れる') || normalized.includes('られる')) return 'aux_reru';
+  if (normalized.includes('せる') || normalized.includes('させる')) return 'aux_seru';
+  return undefined;
+}
+
+/**
+ * Retrieve auxiliary ending info by id.
+ */
+export function getAuxiliaryInfo(id: string): AuxiliaryEnding | undefined {
+  return AUXILIARY_ENDINGS[id];
+}
+

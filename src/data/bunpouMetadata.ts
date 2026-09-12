@@ -248,6 +248,38 @@ export const CURATED_BUNPOU_METADATA: Record<string, BunpouMetadata> = {
     relatedKeywords: ['絶対にない', 'あり得ない', '信じられない'],
     baseLevel: 'N3',
   },
+
+  // ── 一番 (Paling / Ter- / Superlatif N5) ──
+  bp_n5_003: {
+    functions: ['程度・比較 (Tingkat Derajat & Perbandingan)'],
+    nuance: 'Menyatakan tingkat paling tinggi (superlatif / "paling ~") di antara anggota suatu kelompok atau kategori perbandingan.',
+    relatedKeywords: ['一番', '最も', 'の中で', '最高', '比べ'],
+    baseLevel: 'N5',
+    comparisonNotes: [
+      {
+        targetGrammar: '〜より〜のほうが (Komparatif)',
+        difference: '「A より B のほうが〜」 membandingkan 2 hal (B lebih ~ dibanding A). Sedangkan 「一番」 menyatakan satu yang paling unggul di antara seluruh anggota kelompok (3 hal atau lebih).',
+      },
+      {
+        targetGrammar: '最も (Mottomo)',
+        difference: 'Keduanya bermakna "paling/ter-", namun 「最も」 bernuansa formal/tertulis/akademis, sedangkan 「一番」 umum dan natural digunakan dalam percakapan lisan sehari-hari.',
+      },
+    ],
+  },
+
+  // ── 〜の中で〜が一番 (Paling ~ di Dalam Grup N5) ──
+  bp_n5_095: {
+    functions: ['程度・比較 (Tingkat Derajat & Perbandingan)'],
+    nuance: 'Menyebutkan lingkup kelompok/kategori dengan 「〜の中で」 lalu menunjuk objek yang paling unggul dengan 「〜が一番」.',
+    relatedKeywords: ['の中で', '一番', 'グループ', '比較'],
+    baseLevel: 'N5',
+    comparisonNotes: [
+      {
+        targetGrammar: '〜と〜と どちらが〜 (Pilihan 2 Objek)',
+        difference: 'Jika memilih di antara 2 objek, gunakan 「A と B と どちらが〜」. Jika memilih yang nomor satu di antara 3 objek atau lebih, gunakan 「〜の中で〜が一番〜」.',
+      },
+    ],
+  },
 };
 
 /**
@@ -493,21 +525,73 @@ export function getMetadataForBunpou(item: BunpouItem): BunpouMetadata {
     return CURATED_BUNPOU_METADATA[item.id];
   }
 
-  // Derive week-day key from ID (e.g. w1d3g1 -> w1d3)
+  // If item ID matches Week-Day convention (e.g. w1d3g1 -> w1d3)
   const match = item.id.match(/^(w\dd\d)/);
-  const weekDayKey = match ? match[1] : 'w1d1';
-  const fallbackCategory = CATEGORY_MAP[weekDayKey] || {
-    functions: ['文法パターン (Tata Bahasa N3)'],
-    nuance: item.explanation || 'Penggunaan sesuai rumus pola kalimat.',
-    relatedKeywords: [item.title.split(/[(（]/)[0].trim()],
-    baseLevel: 'N3' as const,
-  };
+  if (match && CATEGORY_MAP[match[1]]) {
+    const fallbackCategory = CATEGORY_MAP[match[1]];
+    return {
+      functions: fallbackCategory.functions,
+      nuance: fallbackCategory.nuance,
+      relatedKeywords: fallbackCategory.relatedKeywords,
+      baseLevel: fallbackCategory.baseLevel,
+    };
+  }
+
+  // Semantic metadata derivation for non-weekday items (bp_n5_..., bp_n4_..., etc.)
+  // Never default to w1d1 (受身・許可)
+  const title = item.title || '';
+  const meaning = `${item.meaningId || ''} ${item.meaningEn || ''} ${item.explanation || ''}`.toLowerCase();
+  const level = (item.level as 'N5' | 'N4' | 'N3' | 'N2') || 'N5';
+
+  let derivedFunctions = [`文法パターン (Tata Bahasa ${level})`];
+  let derivedNuance = item.meaningId
+    ? `Pola kalimat untuk menyatakan: ${item.meaningId}.`
+    : 'Penggunaan sesuai rumus dan konteks kalimat.';
+  let derivedKeywords: string[] = [title.replace(/[〜~［］[\]]/g, '').trim()].filter(Boolean);
+
+  if (/一番|最も|より|ほど|くらべ|superlative|compar|paling|ter-|banding/i.test(title + ' ' + meaning)) {
+    derivedFunctions = ['程度・比較 (Tingkat Derajat & Perbandingan)'];
+    derivedNuance = 'Digunakan untuk menyatakan perbandingan atau tingkat derajat (komparatif / superlatif) di antara objek atau dalam kelompok.';
+    derivedKeywords = ['一番', '最も', '比較', '程度'];
+  } else if (/受身|られる|れる|passive|terkena|di-/i.test(title + ' ' + meaning)) {
+    derivedFunctions = ['受身・許可 (Bentuk Pasif & Izin)'];
+    derivedNuance = 'Menyatakan tindakan pasif dari sudut pandang pembicara atau subjek.';
+    derivedKeywords = ['受身', '迷惑', 'られる'];
+  } else if (/使役|させる|causative|menyuruh/i.test(title + ' ' + meaning)) {
+    derivedFunctions = ['使役・使役受身 (Bentuk Kausatif & Paksaan)'];
+    derivedNuance = 'Menunjukkan instruksi, membiarkan, atau menyuruh pihak lain melakukan aksi.';
+    derivedKeywords = ['使役', '指示', 'させる'];
+  } else if (/から|ので|ため|reason|cause|sebab|karena|alasan/i.test(title + ' ' + meaning)) {
+    derivedFunctions = ['原因・理由 (Sebab-Akibat & Alasan)'];
+    derivedNuance = 'Menjelaskan faktor penyebab, alasan logis, atau motif di balik suatu peristiwa.';
+    derivedKeywords = ['理由', '原因', 'わけ'];
+  } else if (/たら|ば|なら|と|condition|if|kalau|jika|pengandaian/i.test(title + ' ' + meaning)) {
+    derivedFunctions = ['仮定・条件 (Pengandaian & Syarat)'];
+    derivedNuance = 'Menyatakan hubungan syarat dan akibat dalam situasi tertentu atau skenario pengandaian.';
+    derivedKeywords = ['条件', '仮定', 'もし'];
+  } else if (/そう|よう|らしい|みたい|dugaan|tampak|sepertinya|kelihatannya|perumpamaan/i.test(title + ' ' + meaning)) {
+    derivedFunctions = ['推測・比喩 (Dugaan & Perumpamaan)'];
+    derivedNuance = 'Menyatakan kesan visual, perkiraan berdasarkan pengamatan, atau perumpamaan sifat.';
+    derivedKeywords = ['推測', '比喩', '様子'];
+  } else if (/べき|なければ|ほうがいい|kewajiban|harus|sebaiknya|anjuran/i.test(title + ' ' + meaning)) {
+    derivedFunctions = ['義務・助言 (Kewajiban & Nasihat)'];
+    derivedNuance = 'Menyatakan anjuran yang bermanfaat atau keharusan moral yang patut dilaksanakan.';
+    derivedKeywords = ['義務', '助言', '提案'];
+  } else if (/とき|あとで|まえに|ながら|waktu|ketika|sebelum|setelah|saat/i.test(title + ' ' + meaning)) {
+    derivedFunctions = ['時間・契機 (Waktu & Momen Aksi)'];
+    derivedNuance = 'Menunjukkan titik waktu, urutan kejadian, atau aksi yang berlangsung simultan.';
+    derivedKeywords = ['時間', '契機', '順序'];
+  } else if (/てはいけない|てもいい|boleh|izin|dilarang/i.test(title + ' ' + meaning)) {
+    derivedFunctions = ['受身・許可 (Bentuk Pasif & Izin)'];
+    derivedNuance = 'Memberikan persetujuan izin melakukan aksi atau menyatakan batasan aturan.';
+    derivedKeywords = ['許可', '禁止', 'ルール'];
+  }
 
   return {
-    functions: fallbackCategory.functions,
-    nuance: fallbackCategory.nuance,
-    relatedKeywords: fallbackCategory.relatedKeywords,
-    baseLevel: fallbackCategory.baseLevel,
+    functions: derivedFunctions,
+    nuance: derivedNuance,
+    relatedKeywords: derivedKeywords,
+    baseLevel: level,
   };
 }
 
@@ -531,6 +615,7 @@ export function enrichBunpouItem(item: BunpouItem): BunpouItem {
  */
 export const ALL_GRAMMAR_FUNCTION_CATEGORIES = [
   'Semua Fungsi',
+  '程度・比較 (Tingkat Derajat & Perbandingan)',
   '推測・比喩 (Dugaan & Perumpamaan)',
   '限定・強調 (Pembatasan & Penekanan)',
   '関連・情報源・手段 (Kaitan Topik & Sarana)',
@@ -538,6 +623,7 @@ export const ALL_GRAMMAR_FUNCTION_CATEGORIES = [
   '原因・理由・代替 (Sebab-Akibat & Pengganti)',
   '逆接・譲歩 (Pertentangan & Walaupun)',
   '時間・契機 (Waktu & Momen Aksi)',
+  '仮定・条件 (Pengandaian & Syarat)',
   '完了・進展 (Tingkat Ketuntasan Aksi)',
   '論理・必然・否定 (Logika Alasan & Penolakan)',
   '義務・助言 (Kewajiban & Nasihat)',

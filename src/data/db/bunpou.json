@@ -3763,18 +3763,18 @@
     "formula": "一番 ＋ い-adjective／な-adjective / Noun［group］＋ の中で ＋ 一番 ＋ い-adjective／な-adjective",
     "meaning_en": "the most ~; the ~est (superlative)",
     "meaning_id": "Paling ~; ter- (tingkat superlatif)",
-    "explanation_note": "一番 (literally 'number one') turns an adjective into a superlative, meaning 'the most ~' or 'the ~est'. Place it right before the adjective: 一番大きい = the biggest. It singles out the top item from a whole group, which is often introduced with の中で or で.",
+    "explanation_note": "Pola 「一番」 (paling / ter-) digunakan sebelum kata sifat untuk menyatakan tingkat superlatif tertinggi dari suatu kelompok atau kategori perbandingan (sering dipadukan dengan 〜の中で atau 〜で). Contoh: 一番おいしい (paling lezat), 一番高い (paling tinggi).",
     "examples": [
       {
         "jp": "この店でこのケーキが一番おいしいです。",
         "en": "In this shop, this cake is the tastiest.",
-        "id": "Contoh penggunaan pola 「一番」.",
+        "id": "Di toko ini, kue inilah yang paling lezat.",
         "reading": "この店みせでこのケーキが一番いちばんおいしいです。"
       },
       {
         "jp": "富士山は日本で一番高い山です。",
         "en": "Mt. Fuji is the tallest mountain in Japan.",
-        "id": "Contoh penggunaan pola 「一番」.",
+        "id": "Gunung Fuji adalah gunung paling tinggi di Jepang.",
         "reading": "富士山ふじさんは日本にっぽんで一番いちばん高たかい山やまです。"
       }
     ],

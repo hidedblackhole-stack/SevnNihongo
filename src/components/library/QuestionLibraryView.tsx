@@ -72,12 +72,21 @@ interface QuestionLibraryViewProps {
   soundEnabled?: boolean;
   onRewardPlayer?: (exp: number, gold: number) => void;
   onRecordStudy?: (category: 'tryOuts' | 'questions' | 'dokkai' | 'choukai' | 'bunpou' | 'bossBattles', id: string, count?: number) => void;
+  onCompleteStudyItem?: (
+    moduleId: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss' | 'questions' | 'tryOuts',
+    expGained: number,
+    goldGained: number,
+    itemId?: string,
+    score?: number,
+    total?: number
+  ) => void;
 }
 
 export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({ 
   soundEnabled = true,
   onRewardPlayer,
   onRecordStudy,
+  onCompleteStudyItem,
 }) => {
   const [activeSection, setActiveSection] = useState<JlptSection>('all');
   const [levelFilter, setLevelFilter] = useState<string>('all');
@@ -361,11 +370,15 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
       const quizReward = calculateQuizReward(levelSample, correctScore, drillQuestions.length);
       const expGain = quizReward.totalExpGained;
       const goldGain = quizReward.goldGained;
-      if (onRewardPlayer && expGain > 0) {
-        onRewardPlayer(expGain, goldGain);
-      }
-      if (onRecordStudy) {
-        onRecordStudy('questions', `drill_${activeSection}_${levelFilter}`, correctScore);
+      if (onCompleteStudyItem) {
+        onCompleteStudyItem('questions', expGain, goldGain, `drill_${activeSection}_${levelFilter}`, correctScore, drillQuestions.length);
+      } else {
+        if (onRewardPlayer && expGain > 0) {
+          onRewardPlayer(expGain, goldGain);
+        }
+        if (onRecordStudy) {
+          onRecordStudy('questions', `drill_${activeSection}_${levelFilter}`, correctScore);
+        }
       }
     }
   };
@@ -396,8 +409,12 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
           <DungeonBattleModule
             tryOutData={activeDungeonTryout}
             onComplete={(score, total, exp, gold, tryoutId) => {
-              onRewardPlayer?.(exp, gold);
-              onRecordStudy?.('tryOuts', tryoutId || 'tryout_exam', total);
+              if (onCompleteStudyItem) {
+                onCompleteStudyItem('tryOuts', exp, gold, tryoutId || 'tryout_exam', score, total);
+              } else {
+                onRewardPlayer?.(exp, gold);
+                onRecordStudy?.('tryOuts', tryoutId || 'tryout_exam', total);
+              }
               setActiveDungeonTryout(null);
             }}
             onBack={() => setActiveDungeonTryout(null)}
@@ -640,9 +657,14 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
 
             {/* Instruction */}
             {currentQ.instruction && (
-              <p className="text-xs text-text-secondary font-medium italic">
-                {currentQ.instruction}
-              </p>
+              <div className="p-3 rounded-xl bg-surface-card border border-border-subtle flex items-start gap-2.5 shadow-sm">
+                <div className="w-5 h-5 rounded-lg bg-indigo/10 border border-indigo/20 text-indigo flex items-center justify-center shrink-0 mt-0.5">
+                  <BookOpen className="w-3 h-3" />
+                </div>
+                <div className="text-xs sm:text-sm font-bold text-text-primary font-jp leading-snug">
+                  {currentQ.instruction}
+                </div>
+              </div>
             )}
 
             {/* Dokkai Passage Box */}

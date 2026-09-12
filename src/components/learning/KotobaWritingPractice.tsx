@@ -93,11 +93,13 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
       playSound('fanfare', soundEnabled);
       speakJapanese(kotoba.word);
       const baseExp = getKotobaBaseExp(kotoba);
-      const reward = calculateWritingReward(baseExp, {
+      const reward = calculateWritingReward({
+        baseExp,
         elapsedSeconds,
         watermarkUsed: watermarkEverUsed,
         animationCount,
-        mistakes: totalMistakes,
+        mistakesCount: totalMistakes,
+        strokeCount: characters.length * 4,
       });
       setLastReward(reward);
       // Removed automatic setTimeout: User reads the explanation card and advances manually via button
@@ -228,33 +230,6 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
               <span>{formatTime(elapsedSeconds)}</span>
             </span>
           </div>
-
-          {/* Dynamic EXP & Reward Badge */}
-          {lastReward && (
-            <motion.div 
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className="flex items-center justify-center gap-2 flex-wrap py-2 px-3.5 rounded-2xl bg-surface-inset border border-wine-accent/30 shadow-sm text-center"
-            >
-              <span className="font-bold text-wine-accent font-mono text-sm">
-                +{lastReward.expGained} EXP
-              </span>
-              <span className="text-xs text-gold font-mono font-bold">
-                +{lastReward.goldGained} Gold
-              </span>
-              <span className="text-[11px] text-text-muted font-mono">
-                ({lastReward.multiplier}x Multiplier)
-              </span>
-              {lastReward.bonusReasons.map((reason, idx) => (
-                <span
-                  key={idx}
-                  className="px-2 py-0.5 rounded-full bg-state-success/15 border border-state-success/30 text-state-success text-[10px] font-bold"
-                >
-                  {reason}
-                </span>
-              ))}
-            </motion.div>
-          )}
 
           {/* Giant Word & Reading Box */}
           <div className="text-center space-y-2 py-2">

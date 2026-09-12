@@ -1,23 +1,21 @@
-import React from 'react';
-import { motion } from 'motion/react';
+import React, { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
-  ChevronRight, 
-  Lock, 
+  Compass, 
+  Layers, 
   CheckCircle2, 
-  Map as MapIcon, 
-  Skull, 
-  ArrowLeft,
-  Compass,
-  Swords,
-  DoorOpen
+  ChevronRight, 
+  ArrowLeft, 
+  Play, 
+  BookOpen, 
+  PenTool, 
+  HelpCircle,
+  Bookmark
 } from 'lucide-react';
-import { StageClearData } from '../../types/rpg';
-import { Stage } from '../../types/content';
-import { WORLDS_LIST, getMapsForWorld, WORLD_STAGES_MAP } from '../../data/maps';
+import { StageClearData, UserDeck } from '../../types/rpg';
+import { Stage, WorldInfo } from '../../types/content';
+import { WORLDS_LIST, getMapsForWorld, getStagesForMap } from '../../data/maps';
 import { playSound } from '../../utils/audio';
-import { MapsView } from './MapsView';
-import { DungeonView } from './DungeonView';
-import { WorldJourneyCanvas } from './WorldJourneyCanvas';
 
 export type WorldNavView = 'world_hub' | 'level_hub' | 'maps' | 'dungeon';
 
@@ -29,368 +27,347 @@ interface WorldViewProps {
   onSelectStage: (stage: Stage) => void;
   onSelectMap?: (mapId: string) => void;
   onSelectWorld?: (worldId: string) => void;
-  onStartBoss: () => void;
+  onStartBoss?: () => void;
   soundEnabled?: boolean;
   navView?: WorldNavView;
   onNavViewChange?: (view: WorldNavView, worldId?: string) => void;
+  userDecks?: UserDeck[];
+  onUpdateDecks?: (decks: UserDeck[]) => void;
+  onNavigateTab?: (tab: 'home' | 'maps' | 'daily' | 'weekly' | 'leaderboard' | 'library' | 'deck' | 'settings') => void;
 }
 
-const PRO_WORLD_ACCENTS: Record<string, {
-  watermark: string;
-  glow: string;
-  accentBorder: string;
-  barColor: string;
-  levelBox: string;
-}> = {
-  world_training: {
-    watermark: '道',
-    glow: 'bg-emerald-500/5',
-    accentBorder: 'border-emerald-500/40 hover:border-emerald-500',
-    barColor: 'bg-emerald-500',
-    levelBox: 'bg-emerald-500/15 border-emerald-500/40 text-emerald-400'
-  },
-  world_n5: {
-    watermark: '初',
-    glow: 'bg-teal/5',
-    accentBorder: 'border-teal/40 hover:border-teal',
-    barColor: 'bg-teal',
-    levelBox: 'bg-teal/15 border-teal/40 text-teal'
-  },
-  world_n4: {
-    watermark: '旅',
-    glow: 'bg-matcha/5',
-    accentBorder: 'border-matcha/40 hover:border-matcha',
-    barColor: 'bg-matcha',
-    levelBox: 'bg-matcha/15 border-matcha/40 text-matcha'
-  },
-  world_n3: {
-    watermark: '志',
-    glow: 'bg-gold/5',
-    accentBorder: 'border-gold/40 hover:border-gold',
-    barColor: 'bg-gold',
-    levelBox: 'bg-gold/15 border-gold/40 text-gold'
-  },
-  world_n2: {
-    watermark: '熟',
-    glow: 'bg-indigo/5',
-    accentBorder: 'border-indigo/40 hover:border-indigo',
-    barColor: 'bg-indigo',
-    levelBox: 'bg-indigo/15 border-indigo/40 text-indigo'
-  },
-  world_n1: {
-    watermark: '極',
-    glow: 'bg-crimson/5',
-    accentBorder: 'border-crimson/40 hover:border-crimson',
-    barColor: 'bg-crimson',
-    levelBox: 'bg-crimson/15 border-crimson/40 text-crimson'
-  }
+const LEVEL_CONFIG: Record<string, { label: string; color: string }> = {
+  KANA: { label: 'KANA · Pemula', color: 'text-emerald-400 border-emerald-500/30 bg-emerald-500/10' },
+  N5: { label: 'JLPT N5 · Dasar', color: 'text-teal border-teal/30 bg-teal/10' },
+  N4: { label: 'JLPT N4 · Pra-Menengah', color: 'text-matcha border-matcha/30 bg-matcha/10' },
+  N3: { label: 'JLPT N3 · Menengah', color: 'text-gold border-gold/30 bg-gold/10' },
+  N2: { label: 'JLPT N2 · Mahir', color: 'text-indigo border-indigo/30 bg-indigo/10' },
+  N1: { label: 'JLPT N1 · Ahli', color: 'text-crimson border-crimson/30 bg-crimson/10' },
 };
 
 export const WorldView: React.FC<WorldViewProps> = ({
-  currentMapId,
-  currentWorldId = 'world_n5',
   stageProgress = {},
-  playerLevel = 1,
   onSelectStage,
-  onSelectMap,
   onSelectWorld,
-  onStartBoss,
   soundEnabled = true,
-  navView = 'world_hub',
-  onNavViewChange,
+  onNavigateTab,
 }) => {
-  const safeWorldId = currentWorldId || 'world_n5';
-  const selectedWorld = WORLDS_LIST.find(w => w.id === safeWorldId) || WORLDS_LIST[0];
-  const proAccent = PRO_WORLD_ACCENTS[safeWorldId] || PRO_WORLD_ACCENTS.world_n3;
-  const progress = stageProgress || {};
+  const [selectedWorldId, setSelectedWorldId] = useState<string | null>(null);
+
+  // Selected world object
+  const selectedWorld = useMemo(() => {
+    if (!selectedWorldId) return null;
+    return WORLDS_LIST.find(w => w.id === selectedWorldId) || null;
+  }, [selectedWorldId]);
+
+  // Stages of the selected world
+  const worldStages = useMemo(() => {
+    if (!selectedWorldId) return [];
+    const maps = getMapsForWorld(selectedWorldId);
+    return maps.flatMap(m => getStagesForMap(m.id));
+  }, [selectedWorldId]);
 
   const handleOpenWorld = (worldId: string) => {
     playSound('click', soundEnabled);
+    setSelectedWorldId(worldId);
     if (onSelectWorld) onSelectWorld(worldId);
-    const worldMaps = getMapsForWorld(worldId);
-    if (worldMaps.length > 0 && onSelectMap) {
-      onSelectMap(worldMaps[0].id);
-    }
-    if (onNavViewChange) onNavViewChange('maps', worldId);
   };
 
-  const handleOpenLevelHub = (worldId: string) => {
-    handleOpenWorld(worldId);
-  };
-
-  const handleOpenMaps = () => {
+  const handleBack = () => {
     playSound('click', soundEnabled);
-    if (onNavViewChange) onNavViewChange('maps', safeWorldId);
+    setSelectedWorldId(null);
   };
 
-  const handleOpenDungeon = () => {
-    playSound('click', soundEnabled);
-    if (onNavViewChange) onNavViewChange('dungeon', safeWorldId);
-  };
-
-  const handleBackToLevelHub = () => {
-    playSound('click', soundEnabled);
-    if (onNavViewChange) onNavViewChange('world_hub', safeWorldId);
-  };
-
-  const handleBackToWorldHub = () => {
-    playSound('click', soundEnabled);
-    if (onNavViewChange) onNavViewChange('world_hub', safeWorldId);
-  };
-
-  // 1. VIEW: MAPS -> WORLD JOURNEY CANVAS (Perjalanan Node-Based Adventure Map)
-  if (navView === 'maps') {
-    return (
-      <WorldJourneyCanvas
-        worldId={safeWorldId}
-        currentMapId={currentMapId}
-        stageProgress={progress}
-        playerLevel={playerLevel}
-        onSelectStage={onSelectStage}
-        onSelectMap={onSelectMap}
-        onBackToHub={handleBackToWorldHub}
-        onStartBoss={handleOpenDungeon}
-        soundEnabled={soundEnabled}
-      />
-    );
-  }
-
-  // 2. VIEW: DUNGEON (Try Out Boss Arena)
-  if (navView === 'dungeon') {
-    return (
-      <DungeonView 
-        onBack={handleOpenMaps} 
-        onStartBoss={onStartBoss}
-        worldId={safeWorldId}
-        soundEnabled={soundEnabled} 
-      />
-    );
-  }
-
-  // 3. VIEW: LEVEL HUB (Pusat Level: Minimalis, Bersih, Nyaman Dilihat)
-  if (navView === 'level_hub') {
-    const worldMaps = getMapsForWorld(safeWorldId);
-    const stageIds = WORLD_STAGES_MAP[safeWorldId] || [];
-    const totalStages = stageIds.length;
-    const clearedStages = stageIds.filter(id => progress[id]?.cleared).length;
-    const clearPercent = totalStages > 0 ? Math.round((clearedStages / totalStages) * 100) : 0;
-
-    return (
-      <div className="w-full max-w-4xl mx-auto space-y-6 pb-12 animate-fade-in">
-        {/* Navigation Bar */}
-        <div className="flex items-center justify-between">
-          <button
-            onClick={handleBackToWorldHub}
-            className="btn btn-pill text-xs gap-1.5"
-          >
-            <ArrowLeft className="w-3.5 h-3.5 text-text-primary" />
-            <span>Kembali ke Gerbang World</span>
-          </button>
-
-          <span className={`text-xs px-3 py-1 rounded-xl font-mono font-bold border ${proAccent.levelBox}`}>
-            JLPT {selectedWorld.jlptLevel}
-          </span>
-        </div>
-
-        {/* Level Header Banner - Pure Visual Portal */}
-        <div className={`panel p-4 sm:p-6 rounded-2xl sm:rounded-3xl ${proAccent.glow} border-2 ${proAccent.accentBorder} shadow-2xl relative overflow-hidden flex flex-col justify-between gap-4 min-h-[130px] sm:min-h-[140px]`}>
-          <div className="absolute right-4 -bottom-6 pointer-events-none select-none text-text-primary/[0.04] font-jp font-black text-9xl leading-none">
-            {proAccent.watermark}
-          </div>
-
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 z-10 relative">
-            <div className="flex items-center gap-3">
-              <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex flex-col items-center justify-center border font-mono font-black shadow-md shrink-0 ${proAccent.levelBox}`}>
-                <span className="text-[9px] tracking-widest text-text-muted font-sans font-bold">JLPT</span>
-                <span className="text-xl sm:text-2xl leading-none font-extrabold">{selectedWorld.jlptLevel}</span>
-              </div>
-              <div className="min-w-0">
-                <div className="text-[11px] text-text-secondary font-jp">
-                  {selectedWorld.japaneseName}
-                </div>
-                <h1 className="text-lg sm:text-2xl font-black text-text-primary font-heading tracking-wide leading-snug">
-                  {selectedWorld.name.split('(')[0].trim()}
-                </h1>
-              </div>
-            </div>
-
-            <span className="text-xs font-mono px-3 py-1 rounded-xl bg-surface-inset text-text-secondary border border-border-subtle self-start sm:self-auto shrink-0">
-              {worldMaps.length} Wilayah • {totalStages} Stage
-            </span>
-          </div>
-
-          {/* Minimal Progress Bar */}
-          <div className="space-y-1.5 relative z-10">
-            <div className="flex justify-between text-xs font-mono">
-              <span className="text-text-secondary">Progres Level:</span>
-              <span className="font-bold text-text-primary">
-                {clearedStages} / {totalStages} Stage ({clearPercent}%)
-              </span>
-            </div>
-            <div className="rpg-progress-track">
-              <div
-                className={`h-full rounded-full transition-all duration-500 ${proAccent.barColor}`}
-                style={{ width: `${clearPercent}%` }}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* 2 Destination Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
-          {/* Card 1: Peta Pembelajaran */}
-          <motion.div
-            whileHover={{ scale: 1.015, y: -2 }}
-            whileTap={{ scale: 0.985 }}
-            onClick={handleOpenMaps}
-            className="panel p-4 sm:p-6 rounded-2xl sm:rounded-3xl hover:border-gold/50 transition-all cursor-pointer shadow-xl flex flex-col justify-between min-h-[135px] sm:min-h-[160px] group relative overflow-hidden"
-          >
-            <div className="flex items-center justify-between">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-center text-text-primary group-hover:scale-105 transition-transform">
-                <MapIcon className="w-5 h-5 sm:w-6 sm:h-6" />
-              </div>
-              <span className="text-xs font-mono px-2.5 py-1 rounded-xl bg-surface-inset text-text-secondary border border-border-subtle">
-                {worldMaps.length} Wilayah
-              </span>
-            </div>
-
-            <div className="my-2">
-              <h3 className="text-base sm:text-lg font-bold text-text-primary font-heading transition-colors">
-                Peta Wilayah Pembelajaran
-              </h3>
-            </div>
-
-            <div className="pt-2.5 border-t border-border-subtle flex items-center justify-between text-xs font-bold text-text-primary">
-              <span>Buka Peta Wilayah</span>
-              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </div>
-          </motion.div>
-
-          {/* Card 2: Dungeon Try Out */}
-          <motion.div
-            whileHover={{ scale: 1.015, y: -2 }}
-            whileTap={{ scale: 0.985 }}
-            onClick={handleOpenDungeon}
-            className="panel p-4 sm:p-6 rounded-2xl sm:rounded-3xl hover:border-crimson/50 transition-all cursor-pointer shadow-xl flex flex-col justify-between min-h-[135px] sm:min-h-[160px] group relative overflow-hidden"
-          >
-            <div className="flex items-center justify-between">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-crimson/10 border border-crimson/30 flex items-center justify-center text-crimson group-hover:scale-105 transition-transform">
-                <Skull className="w-5 h-5 sm:w-6 sm:h-6" />
-              </div>
-              <span className="text-xs font-mono px-2.5 py-1 rounded-xl bg-surface-inset text-crimson border border-crimson/30 font-bold">
-                Boss Trial
-              </span>
-            </div>
-
-            <div className="my-2">
-              <h3 className="text-base sm:text-lg font-bold text-text-primary font-heading group-hover:text-crimson transition-colors">
-                Dungeon Try Out ({selectedWorld.jlptLevel})
-              </h3>
-            </div>
-
-            <div className="pt-3 border-t border-border-subtle flex items-center justify-between text-xs font-bold text-crimson">
-              <span className="flex items-center gap-1.5">
-                <Swords className="w-3.5 h-3.5" /> Masuk Dungeon Boss
-              </span>
-              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </div>
-          </motion.div>
-        </div>
-      </div>
-    );
-  }
-
-  // 4. VIEW: WORLD HUB (Gerbang Murni: BOLD LEVEL, Bersih, Tanpa Teks Penjelasan)
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-5 pb-12 animate-fade-in">
-      {/* Pure Gateway Header */}
-      <div className="panel py-3.5 sm:py-4 flex items-center justify-between shadow-sm">
-        <div>
-          <h2 className="text-base sm:text-lg font-bold font-heading tracking-wide flex items-center gap-2 text-text-primary">
-            <DoorOpen className="w-5 h-5 text-text-primary" />
-            <span>Gerbang Dunia (World Gates)</span>
-          </h2>
+    <div className="w-full max-w-4xl mx-auto space-y-6 pb-20 sm:pb-12 animate-fade-in px-2 sm:px-0">
+      
+      {/* 1. HEADER UTAMA: WORLD */}
+      <div className="panel p-4 sm:p-5 rounded-2xl sm:rounded-3xl shadow-md border border-border-subtle flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-3.5">
+          <div className="w-11 h-11 rounded-2xl bg-gold/15 text-gold border border-gold/30 flex items-center justify-center shrink-0 shadow-sm">
+            <Compass className="w-6 h-6" />
+          </div>
+          <div>
+            <h1 className="text-xl sm:text-2xl font-bold text-text-primary font-heading tracking-wide">
+              Petualangan World
+            </h1>
+            <p className="text-xs sm:text-sm text-text-secondary font-body">
+              Pilih jalur petualangan dan taklukkan stage pembelajaran terstruktur dari Kana hingga N1.
+            </p>
+          </div>
         </div>
+
+        {onNavigateTab && (
+          <button
+            type="button"
+            onClick={() => {
+              playSound('click', soundEnabled);
+              onNavigateTab('deck');
+            }}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold font-heading bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-indigo border border-border-subtle hover:border-indigo/30 transition-all self-stretch sm:self-auto justify-center shadow-xs"
+            title="Buka Buku Saku untuk latihan kartu hafalan dan flashcards"
+          >
+            <Bookmark className="w-4 h-4 text-indigo" />
+            <span>Latihan Deck (Buku Saku)</span>
+            <ChevronRight className="w-3.5 h-3.5" />
+          </button>
+        )}
       </div>
-
-      {/* 6 Levels Grid - Bold, Clean, Pure Gate UI */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
-        {WORLDS_LIST.map((world) => {
-          const worldStages = WORLD_STAGES_MAP[world.id] || [];
-          const totalStages = worldStages.length;
-          const clearedStages = worldStages.filter(id => stageProgress[id]?.cleared).length;
-          const progressPct = totalStages > 0 ? Math.round((clearedStages / totalStages) * 100) : 0;
-          const isGateCleared = progressPct >= 77;
-          const cleanWorldName = world.name.split('(')[0].trim();
-
-          return (
-            <motion.div
-              key={world.id}
-              whileHover={{ scale: 1.015, y: -2 }}
-              whileTap={{ scale: 0.985 }}
-              onClick={() => handleOpenLevelHub(world.id)}
-              className="panel panel-stitched transition-all cursor-pointer shadow-xl flex flex-col justify-between min-h-[165px] group relative overflow-hidden"
-            >
-              {/* Main Gateway Card Header: Bold Level + World Name */}
-              <div className="flex items-center justify-between z-10 relative">
-                <div className="flex items-center gap-3.5">
-                  <div className="world-gate-emblem shrink-0">
-                    <span className="text-[9px] tracking-widest text-text-muted font-sans font-bold">
-                      {world.jlptLevel === 'KANA' ? 'DOJO' : 'JLPT'}
-                    </span>
-                    <span className={`leading-none text-text-primary font-extrabold ${world.jlptLevel === 'KANA' ? 'text-sm font-bold tracking-tight' : 'text-2xl'}`}>
-                      {world.jlptLevel}
-                    </span>
-                  </div>
-                  <div>
-                    <div className="text-xs text-text-secondary font-jp">
-                      {world.japaneseName}
-                    </div>
-                    <h3 className="text-lg sm:text-xl font-bold text-text-primary font-heading transition-colors">
-                      {cleanWorldName}
-                    </h3>
-                  </div>
-                </div>
-
-                <span className="world-gate-pill font-mono">
-                  {totalStages} Stage
+        <>
+          {selectedWorld ? (
+            /* VIEW DETAIL: DAFTAR MODUL DI DALAM WORLD TERTENTU */
+            <div className="space-y-4">
+              {/* Back Button & Top Level Badge */}
+              <div className="flex items-center justify-between">
+                <button
+                  type="button"
+                  onClick={handleBack}
+                  className="btn btn-pill text-xs gap-2"
+                >
+                  <ArrowLeft className="w-4 h-4 text-text-primary" />
+                  <span>Kembali ke Pilihan World</span>
+                </button>
+                <span className={`text-xs font-mono font-bold px-3 py-1 rounded-xl border ${LEVEL_CONFIG[selectedWorld.jlptLevel]?.color || 'text-gold'}`}>
+                  {LEVEL_CONFIG[selectedWorld.jlptLevel]?.label || selectedWorld.jlptLevel}
                 </span>
               </div>
 
-              {/* Minimal Progress & Gate */}
-              <div className="space-y-1.5 pt-4 border-t border-border-subtle z-10 relative">
-                <div className="flex justify-between text-xs font-mono">
-                  <span className="text-text-secondary">Progres:</span>
-                  <span className="font-bold text-text-primary">
-                    {clearedStages} / {totalStages} ({progressPct}%)
+              {/* World Header Info */}
+              <div className="panel p-5 rounded-2xl bg-surface-card border border-border-subtle shadow-md space-y-2">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                  <div>
+                    <h2 className="text-xl font-bold text-text-primary font-heading">
+                      {selectedWorld.name.split('(')[0].trim()}
+                    </h2>
+                  </div>
+                  <span className="text-xs font-mono text-text-secondary">
+                    {worldStages.length} Modul Pembelajaran
                   </span>
                 </div>
+                <p className="text-xs sm:text-sm text-text-secondary leading-relaxed">
+                  {selectedWorld.description}
+                </p>
+              </div>
 
-                <div className="rpg-progress-track">
-                  <div
-                    className="rpg-progress-fill"
-                    style={{ width: `${progressPct}%` }}
-                  />
-                </div>
+              {/* List of Modules */}
+              <div className="space-y-2.5">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-text-secondary font-heading px-1">
+                  Daftar Modul Belajar ({worldStages.length})
+                </h3>
 
-                <div className="flex items-center justify-between text-xs font-mono pt-1">
-                  {isGateCleared ? (
-                    <span className="text-gold font-bold flex items-center gap-1 text-xs">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> Gate Selesai
-                    </span>
-                  ) : (
-                    <div />
-                  )}
+                <div className="grid grid-cols-1 gap-2.5">
+                  {worldStages.map((stage, idx) => {
+                    const isCleared = stageProgress[stage.id]?.cleared;
+                    const kotobaCount = stage.kotobaIds?.length || (stage as any).kotoba?.length || 0;
+                    const kanjiCount = stage.kanjiIds?.length || (stage as any).kanji?.length || 0;
+                    const bunpouCount = stage.bunpouIds?.length || (stage as any).bunpou?.length || 0;
 
-                  <span className="text-text-primary font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform text-xs">
-                    Masuk Gerbang <ChevronRight className="w-4 h-4" />
-                  </span>
+                    return (
+                      <motion.div
+                        key={stage.id}
+                        whileHover={{ scale: 1.005 }}
+                        whileTap={{ scale: 0.995 }}
+                        onClick={() => {
+                          playSound('click', soundEnabled);
+                          onSelectStage(stage);
+                        }}
+                        className={`panel p-3.5 sm:p-4 rounded-2xl border transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
+                          isCleared
+                            ? 'bg-surface-card/60 border-state-success/40'
+                            : 'bg-surface-card border-border-subtle hover:border-gold/50 shadow-sm'
+                        }`}
+                      >
+                        <div className="flex items-start sm:items-center gap-3 min-w-0">
+                          <div className={`w-8 h-8 rounded-xl flex items-center justify-center font-mono font-bold text-xs shrink-0 ${
+                            isCleared
+                              ? 'bg-state-success/15 text-state-success border border-state-success/30'
+                              : 'bg-surface-inset text-gold border border-border-subtle'
+                          }`}>
+                            {idx + 1}
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <div className="text-[11px] text-text-secondary font-jp truncate">
+                              {stage.title_jp}
+                            </div>
+                            <h4 className="text-sm font-bold text-text-primary font-heading truncate">
+                              {stage.title_en}
+                            </h4>
+                            
+                            {/* Content Badges */}
+                            <div className="flex items-center gap-1.5 mt-1 flex-wrap text-[10px] font-mono">
+                              {kotobaCount > 0 && (
+                                <span className="px-2 py-0.5 rounded-md bg-indigo/10 text-indigo border border-indigo/20">
+                                  🃏 Flashcard ({kotobaCount})
+                                </span>
+                              )}
+                              {kanjiCount > 0 && (
+                                <span className="px-2 py-0.5 rounded-md bg-wine-accent/10 text-wine-accent border border-wine-accent/20">
+                                  ✍️ Menulis ({kanjiCount})
+                                </span>
+                              )}
+                              {bunpouCount > 0 && (
+                                <span className="px-2 py-0.5 rounded-md bg-gold/10 text-gold border border-gold/20">
+                                  📖 Tata Bahasa ({bunpouCount})
+                                </span>
+                              )}
+                              <span className="px-2 py-0.5 rounded-md bg-state-success/10 text-state-success border border-state-success/20">
+                                🎯 Kuis
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-border-subtle">
+                          {isCleared && (
+                            <span className="text-xs text-state-success font-bold flex items-center gap-1">
+                              <CheckCircle2 className="w-4 h-4" /> Selesai
+                            </span>
+                          )}
+                          <button
+                            type="button"
+                            className="btn btn-primary py-1.5 px-3.5 text-xs gap-1.5 ml-auto sm:ml-0"
+                          >
+                            <Play className="w-3.5 h-3.5 fill-current" />
+                            <span>Mulai Belajar</span>
+                          </button>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
                 </div>
               </div>
-            </motion.div>
-          );
-        })}
-      </div>
+            </div>
+          ) : (
+            /* VIEW LIST: KARTU-KARTU WORLD */
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {WORLDS_LIST.map((world) => {
+                  const maps = getMapsForWorld(world.id);
+                  const stages = maps.flatMap(m => getStagesForMap(m.id));
+                  const totalStages = stages.length;
+                  const clearedStages = stages.filter(s => stageProgress[s.id]?.cleared).length;
+                  const progressPct = totalStages > 0 ? Math.round((clearedStages / totalStages) * 100) : 0;
+
+                  // Components inside this world
+                  const totalKotoba = stages.reduce((acc, s) => acc + (s.kotobaIds?.length || (s as any).kotoba?.length || 0), 0);
+                  const totalKanji = stages.reduce((acc, s) => acc + (s.kanjiIds?.length || (s as any).kanji?.length || 0), 0);
+                  const totalBunpou = stages.reduce((acc, s) => acc + (s.bunpouIds?.length || (s as any).bunpou?.length || 0), 0);
+
+                  const levelInfo = LEVEL_CONFIG[world.jlptLevel] || {
+                    label: world.jlptLevel,
+                    color: 'text-gold border-gold/30 bg-gold/10'
+                  };
+
+                  return (
+                    <motion.div
+                      key={world.id}
+                      whileHover={{ scale: 1.01, y: -2 }}
+                      whileTap={{ scale: 0.99 }}
+                      onClick={() => handleOpenWorld(world.id)}
+                      className="panel panel-stitched p-5 rounded-3xl transition-all cursor-pointer shadow-md flex flex-col justify-between min-h-[240px] group border border-border-subtle hover:border-gold/50 relative overflow-hidden"
+                    >
+                      {/* Top: Level & Total Stages */}
+                      <div className="space-y-2 relative z-10">
+                        <div className="flex items-center justify-between">
+                          <span className={`text-[11px] font-mono font-bold px-2.5 py-1 rounded-xl border ${levelInfo.color}`}>
+                            {levelInfo.label}
+                          </span>
+                          <span className="text-xs font-mono text-text-secondary">
+                            {totalStages} Modul
+                          </span>
+                        </div>
+
+                        {/* Judul World */}
+                        <div>
+                          <h3 className="text-lg font-bold text-text-primary font-heading leading-snug group-hover:text-gold transition-colors">
+                            {world.name.split('(')[0].trim()}
+                          </h3>
+                        </div>
+
+                        {/* Deskripsi */}
+                        <p className="text-xs text-text-secondary line-clamp-2 leading-relaxed">
+                          {world.subtitle || world.description}
+                        </p>
+
+                        {/* Isinya Apa Aja: Flashcard, Menulis, Tata Bahasa, Kuis */}
+                        <div className="pt-2">
+                          <div className="text-[10px] font-mono text-text-muted uppercase tracking-wider mb-1.5 font-bold">
+                            Materi & Aktivitas:
+                          </div>
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-indigo/10 text-indigo border border-indigo/20 flex items-center gap-1">
+                              🃏 Flashcard ({totalKotoba})
+                            </span>
+                            <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-wine-accent/10 text-wine-accent border border-wine-accent/20 flex items-center gap-1">
+                              ✍️ Menulis ({totalKanji})
+                            </span>
+                            {totalBunpou > 0 && (
+                              <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-gold/10 text-gold border border-gold/20 flex items-center gap-1">
+                                📖 Tata Bahasa ({totalBunpou})
+                              </span>
+                            )}
+                            <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-state-success/10 text-state-success border border-state-success/20 flex items-center gap-1">
+                              🎯 Kuis Drill
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Bottom: Progres & Aksi */}
+                      <div className="pt-3 border-t border-border-subtle space-y-2 relative z-10">
+                        <div className="space-y-1">
+                          <div className="flex justify-between text-[11px] font-mono">
+                            <span className="text-text-secondary">Progres:</span>
+                            <span className="font-bold text-text-primary">{clearedStages} / {totalStages} ({progressPct}%)</span>
+                          </div>
+                          <div className="rpg-progress-track">
+                            <div
+                              className="rpg-progress-fill"
+                              style={{ width: `${progressPct}%` }}
+                            />
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-end text-xs font-bold text-text-primary group-hover:text-gold transition-colors pt-1">
+                          <span className="flex items-center gap-1">
+                            Masuk World <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                          </span>
+                        </div>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+
+              {/* Banner Menuju Buku Saku */}
+              {onNavigateTab && (
+                <div className="panel p-5 rounded-3xl bg-surface-card border border-border-subtle shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mt-2">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2 text-indigo font-bold text-sm font-heading">
+                      <Bookmark className="w-4 h-4" />
+                      <span>Latihan Mandiri & Flashcard di Buku Saku</span>
+                    </div>
+                    <p className="text-xs text-text-secondary max-w-xl leading-relaxed">
+                      Ingin drill hafalan kilat, review materi yang kamu bookmark, atau membuat deck kustom per level JLPT? Kelola dan latih deck-mu di Buku Saku.
+                    </p>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      playSound('click', soundEnabled);
+                      onNavigateTab('deck');
+                    }}
+                    className="btn btn-secondary text-xs gap-2 py-2.5 px-4 shrink-0 shadow-xs"
+                  >
+                    <span>Buka Buku Saku</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+        </>
     </div>
   );
 };

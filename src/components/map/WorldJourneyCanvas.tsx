@@ -93,32 +93,23 @@ export const WorldJourneyCanvas: React.FC<WorldJourneyCanvasProps> = ({
     return REGION_OFFSETS_PRESETS[patternIdx];
   }, [activeRegion]);
 
-  // Process stage items for state and percentage offset
+  // Process stage items for state and percentage offset (Open sandbox mode: all stages accessible)
   const processedStages = useMemo(() => {
-    const halfCount = Math.ceil(regionStages.length / 2);
     let targetIdx = -1;
 
     return regionStages.map((stage, idx) => {
       const clearData = stageProgress[stage.id];
       const isCompleted = clearData?.cleared || false;
-      const prevStage = idx > 0 ? regionStages[idx - 1] : null;
 
-      const isFirstHalf = idx < halfCount;
-      const isUnlocked = (
-        isFirstHalf ||
-        (prevStage && stageProgress[prevStage.id]?.cleared) ||
-        stage.stageNumber <= 1
-      );
-
-      let state: 'done' | 'current' | 'available' | 'locked' | 'dungeon' = 'locked';
+      let state: 'done' | 'current' | 'available' | 'dungeon' = 'available';
       if (stage.isBoss) {
         state = isCompleted ? 'done' : 'dungeon';
       } else if (isCompleted) {
         state = 'done';
-      } else if (isUnlocked && targetIdx === -1) {
+      } else if (targetIdx === -1) {
         state = 'current';
         targetIdx = idx;
-      } else if (isUnlocked) {
+      } else {
         state = 'available';
       }
 
@@ -127,7 +118,7 @@ export const WorldJourneyCanvas: React.FC<WorldJourneyCanvasProps> = ({
       return {
         stage,
         state,
-        isUnlocked,
+        isUnlocked: true,
         isCompleted,
         offset: offsetPercent,
         stars: clearData?.stars || 0

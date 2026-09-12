@@ -80,9 +80,13 @@ export interface AdaptiveRecommendation {
 
 export interface Question {
   id: string;
-  prompt: string;
-  ruby?: string; // Furigana or reading hint
+  instruction?: string; // Formal Japanese command/instruction e.g. 「（　）に入れるのに最もよいものを一つ選びなさい。」
+  instructionId?: string; // Indonesian sub-caption e.g. "Pilih jawaban yang paling tepat untuk melengkapi kalimat."
+  prompt: string; // PURE Japanese question text/sentence/word
+  ruby?: string; // Furigana or reading hint for prompt
+  translation?: string; // Indonesian translation of the question sentence/word (kept separate from prompt)
   options: string[];
+  optionsRuby?: string[]; // Optional readings for choices
   correctIndex: number;
   explanation: string;
   audioPrompt?: string;

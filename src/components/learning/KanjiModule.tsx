@@ -4,7 +4,7 @@ import { Feather } from 'lucide-react';
 import { KanjiItem, Question } from '../../types/content';
 import { KANJI_DATABASE, STAGE_1_KANJI_QUIZ } from '../../data/kanji';
 import { QuizEngine } from './QuizEngine';
-import { playSound } from '../../utils/audio';
+import { playSound, speakJapanese } from '../../utils/audio';
 import { KanjiDetailCard } from './KanjiDetailCard';
 
 
@@ -60,11 +60,14 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
     speakJapanese(text);
   };
 
-  const generateKanjiQuestions = (pool: KanjiItem[]) => {
+  const generateKanjiQuestions = (pool: KanjiItem[]): Question[] => {
     return pool.map((item, idx) => {
       const qType = Math.floor(Math.random() * 3);
       
-      let prompt = '';
+      let instruction = '';
+      let instructionId = '';
+      let prompt = item.character;
+      let translation = item.meaningId;
       let correctAns = '';
       let distractors: string[] = [];
       
@@ -73,15 +76,18 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
         .sort(() => 0.5 - Math.random());
 
       if (qType === 0) {
-        prompt = `Apa arti dari Kanji berikut?\n\n${item.character}`;
+        instruction = '漢字の意味として最も適切なものを一つ選びなさい。';
+        instructionId = 'Pilihlah arti yang paling tepat untuk kanji berikut.';
         correctAns = item.meaningId;
         distractors = Array.from(new Set(otherKanjis.map(k => k.meaningId))).slice(0, 3);
       } else if (qType === 1) {
-        prompt = `Pilih Kanji yang tepat untuk arti:\n\n"${item.meaningId}"`;
+        instruction = '下線部の意味を表す漢字を一つ選びなさい。';
+        instructionId = 'Pilihlah karakter kanji yang tepat untuk arti berikut.';
         correctAns = item.character;
         distractors = Array.from(new Set(otherKanjis.map(k => k.character))).slice(0, 3);
       } else {
-        prompt = `Pilih cara baca (Onyomi/Kunyomi) yang tepat untuk Kanji:\n\n${item.character}`;
+        instruction = '漢字の正しい読み方（音読み・訓読み）を一つ選びなさい。';
+        instructionId = 'Pilihlah cara baca (Onyomi/Kunyomi) yang benar untuk kanji berikut.';
         correctAns = [...(item.onyomi || []), ...(item.kunyomi || [])].join(', ') || item.character;
         distractors = Array.from(new Set(otherKanjis.map(k => [...(k.onyomi || []), ...(k.kunyomi || [])].join(', ') || k.character))).slice(0, 3);
       }
@@ -95,7 +101,11 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
 
       return {
         id: `kanji_q_${item.id}_${qType}`,
+        instruction,
+        instructionId,
         prompt,
+        translation,
+        audioPrompt: item.character,
         options,
         correctIndex,
         explanation: `Kanji 「${item.character}」 artinya "${item.meaningId}". Bacaan: Onyomi [${item.onyomi?.join(', ') || '-'}], Kunyomi [${item.kunyomi?.join(', ') || '-'}]`
@@ -108,8 +118,10 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
 
   const handleStartQuiz = () => {
     playSound('click', soundEnabled);
-    const stageKanjiQuestions = generateKanjiQuestions(kanjiList);
-    setActiveQuestions(stageKanjiQuestions.length > 0 ? stageKanjiQuestions : STAGE_1_KANJI_QUIZ);
+    const questionsFromKanji = activeKanji.questions && activeKanji.questions.length > 0
+      ? activeKanji.questions
+      : generateKanjiQuestions(kanjiList);
+    setActiveQuestions(questionsFromKanji.length > 0 ? questionsFromKanji : STAGE_1_KANJI_QUIZ);
     setIsQuizActive(true);
   };
 

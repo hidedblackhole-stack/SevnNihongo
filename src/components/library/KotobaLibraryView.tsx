@@ -61,13 +61,26 @@ export function getKotobaPriority(item: KotobaItem): { tier: 'essential' | 'impo
 interface KotobaLibraryViewProps {
   soundEnabled?: boolean;
   userDecks?: UserDeck[];
-  onToggleBookmark?: (id: string, category: 'kotoba', notes?: string) => void;
+  onToggleBookmark?: (id: string, category: 'kotoba', notes?: string, targetDeckId?: string) => void;
+  onRewardPlayer?: (exp: number, gold: number) => void;
+  onRecordStudy?: (category: 'flashcards', id: string, count?: number) => void;
+  onCompleteStudyItem?: (
+    moduleId: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss' | 'questions' | 'tryOuts',
+    expGained: number,
+    goldGained: number,
+    itemId?: string,
+    score?: number,
+    total?: number
+  ) => void;
 }
 
 export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
   soundEnabled = true,
   userDecks,
   onToggleBookmark,
+  onRewardPlayer,
+  onRecordStudy,
+  onCompleteStudyItem,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [visibleCount, setVisibleCount] = useState(50);
@@ -107,6 +120,29 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
   const handleLoadMore = () => {
     setVisibleCount(prev => prev + 50);
     playSound('click', soundEnabled);
+  };
+
+  const selectedIndex = useMemo(() => {
+    if (!selectedItem) return -1;
+    return filteredKotoba.findIndex((k) => k.id === selectedItem.id);
+  }, [selectedItem, filteredKotoba]);
+
+  const hasNext = selectedIndex >= 0 && selectedIndex < filteredKotoba.length - 1;
+  const hasPrev = selectedIndex > 0;
+
+  const handleNextItem = () => {
+    if (hasNext) {
+      if (selectedIndex + 1 >= visibleCount) {
+        setVisibleCount((prev) => Math.min(prev + 50, filteredKotoba.length));
+      }
+      setSelectedItem(filteredKotoba[selectedIndex + 1]);
+    }
+  };
+
+  const handlePrevItem = () => {
+    if (hasPrev) {
+      setSelectedItem(filteredKotoba[selectedIndex - 1]);
+    }
   };
 
   return (
@@ -342,6 +378,15 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
             soundEnabled={soundEnabled}
             isBookmarked={Boolean(isItemBookmarked(userDecks, selectedItem.id, 'kotoba'))}
             onToggleBookmark={onToggleBookmark ? () => onToggleBookmark(selectedItem.id, 'kotoba') : undefined}
+            userDecks={userDecks}
+            onToggleDeckItem={onToggleBookmark ? (deckId) => onToggleBookmark(selectedItem.id, 'kotoba', undefined, deckId) : undefined}
+            onRewardPlayer={onRewardPlayer}
+            onRecordStudy={onRecordStudy}
+            onCompleteStudyItem={onCompleteStudyItem}
+            onNext={handleNextItem}
+            onPrev={handlePrevItem}
+            hasNext={hasNext}
+            hasPrev={hasPrev}
           />
         )}
       </AnimatePresence>

@@ -95,19 +95,18 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
         {/* Header */}
         <div className="flex justify-between items-center p-4 border-b border-border-subtle bg-surface-card">
           <h2 className="font-bold text-text-primary text-lg font-heading">
-            {isLogin ? 'Welcome Back' : 'Create Account'}
+            {isLogin ? 'Masuk (Opsional)' : 'Buat Akun (Opsional)'}
           </h2>
-          {!isMandatory && (
-            <button 
-              onClick={() => {
-                playSound('click', soundEnabled);
-                onClose();
-              }}
-              className="p-2 rounded-full hover:bg-surface-elevated text-text-muted hover:text-text-primary transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          )}
+          <button 
+            onClick={() => {
+              playSound('click', soundEnabled);
+              onClose();
+            }}
+            className="p-2 rounded-full hover:bg-surface-elevated text-text-muted hover:text-text-primary transition-colors"
+            title="Tutup / Lanjutkan tanpa login"
+          >
+            <X className="w-5 h-5" />
+          </button>
         </div>
 
         {/* Form */}
@@ -164,6 +163,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
               className="rpg-btn rpg-btn-primary w-full py-3.5 text-sm font-heading mt-6 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : isLogin ? 'Login' : 'Sign Up'}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                playSound('click', soundEnabled);
+                onClose();
+              }}
+              className="w-full py-2.5 text-xs text-text-muted hover:text-text-primary transition-colors text-center mt-2 font-medium"
+            >
+              Lanjut Belajar Tanpa Login (Mode Tamu)
             </button>
           </form>
 

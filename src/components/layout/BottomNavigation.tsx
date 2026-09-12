@@ -1,7 +1,7 @@
 import React from 'react';
 import { Settings } from 'lucide-react';
 import { Trophy } from 'lucide-react';
-import { CastleIcon, CompassIcon, ScrollIcon, SwordIcon, BookIcon, TreasureIcon, BookmarkIcon } from '../ui/EngravingIcons';
+import { CastleIcon, CompassIcon, ScrollIcon, SwordIcon, BookIcon, TreasureIcon, BookmarkIcon, MapIcon } from '../ui/EngravingIcons';
 import { playSound } from '../../utils/audio';
 
 export type TabType = 'home' | 'maps' | 'daily' | 'weekly' | 'leaderboard' | 'library' | 'deck' | 'shop' | 'settings';
@@ -30,21 +30,29 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
   return (
     <nav
       aria-label="Navigasi Utama"
-      className="fixed z-40 skeuo-navbar bottom-0 inset-x-0 md:inset-x-auto md:top-0 md:bottom-0 md:left-0 md:right-auto md:w-24 md:h-screen px-1 py-1.5 sm:px-2 sm:py-2 md:py-8 overflow-y-auto"
+      style={{
+        paddingBottom: 'max(0.375rem, env(safe-area-inset-bottom))',
+        paddingLeft: 'max(0.25rem, env(safe-area-inset-left))',
+        paddingRight: 'max(0.25rem, env(safe-area-inset-right))',
+      }}
+      className="fixed z-40 skeuo-navbar bottom-0 inset-x-0 md:inset-x-auto md:top-0 md:bottom-0 md:left-0 md:right-auto md:w-24 md:h-[100dvh] md:min-h-[100dvh] pt-1.5 pb-1 px-1 sm:px-2 md:py-8 overflow-x-auto md:overflow-y-auto select-none"
     >
-      <div className="max-w-xl md:max-w-none mx-auto w-full md:h-full flex md:flex-col items-center justify-around md:justify-start md:gap-6 relative z-10">
+      <div className="max-w-xl md:max-w-none mx-auto w-full md:h-full flex md:flex-col items-center justify-around md:justify-start md:gap-5 relative z-10">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
 
           return (
             <button
+              type="button"
               key={item.id}
+              aria-current={isActive ? 'page' : undefined}
               onClick={() => {
                 onChangeTab(item.id);
                 playSound('click', soundEnabled);
               }}
-              className={`flex flex-col items-center justify-center py-1 px-1.5 sm:px-3 rounded-2xl transition-all duration-150 min-w-0 ${
+              style={{ touchAction: 'manipulation' }}
+              className={`flex flex-col items-center justify-center min-w-[44px] min-h-[44px] py-1 px-1.5 sm:px-3 rounded-2xl transition-all duration-150 active:scale-95 ${
                 isActive
                   ? 'text-indigo font-bold scale-105'
                   : 'text-text-secondary hover:text-text-primary'
@@ -59,7 +67,7 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
               >
                 <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
-              <span className="text-[9px] sm:text-[10px] mt-1 tracking-wider font-heading font-bold truncate max-w-full">
+              <span className="text-[9px] sm:text-[10px] mt-0.5 tracking-wider font-heading font-bold truncate max-w-full">
                 {item.label}
               </span>
             </button>

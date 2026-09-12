@@ -13,6 +13,14 @@ interface DeckWritingRunnerProps {
   deck: UserDeck;
   onClose: () => void;
   onReward?: (exp: number, gold: number) => void;
+  onCompleteStudyItem?: (
+    moduleId: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss' | 'questions' | 'tryOuts',
+    expGained: number,
+    goldGained: number,
+    itemId?: string,
+    score?: number,
+    total?: number
+  ) => void;
   soundEnabled?: boolean;
 }
 
@@ -20,6 +28,7 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
   deck,
   onClose,
   onReward,
+  onCompleteStudyItem,
   soundEnabled = true,
 }) => {
   // Resolve writable items (only kanji or kotoba)
@@ -42,6 +51,16 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
     playSound('click', soundEnabled);
     if (!completedItems.includes(currentIndex)) {
       setCompletedItems(prev => [...prev, currentIndex]);
+      if (currentItem && onCompleteStudyItem) {
+        onCompleteStudyItem(
+          currentItem.category,
+          itemExp ?? 15,
+          itemGold ?? 5,
+          currentItem.ref.id,
+          1,
+          1
+        );
+      }
     }
 
     const nextExp = accumulatedExp + (itemExp ?? 15);
@@ -63,7 +82,7 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
       const earnedExp = Math.max(30, nextExp);
       const earnedGold = Math.max(15, nextGold);
       setFinalRewards({ exp: earnedExp, gold: earnedGold });
-      if (onReward) {
+      if (onReward && !onCompleteStudyItem) {
         onReward(earnedExp, earnedGold);
       }
     } else {
@@ -208,6 +227,7 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
                   level={currentItem.kanji.jlpt}
                   soundEnabled={soundEnabled}
                   showStopwatch={true}
+                  totalSheets={1}
                   onFinish={(reward) => {
                     handleNextItem(reward?.expGained, reward?.goldGained);
                   }}
@@ -252,7 +272,7 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
               </button>
 
               <button
-                onClick={handleNextItem}
+                onClick={() => handleNextItem()}
                 className="px-5 py-2 rounded-xl text-xs font-heading font-bold bg-surface-elevated text-text-primary border border-border-primary shadow-sm hover:scale-105 flex items-center gap-1.5 transition-all"
               >
                 <span>{currentIndex + 1 === writableItems.length ? 'Selesaikan Drill' : 'Berikutnya'}</span>

@@ -2,22 +2,66 @@
 <html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nihongo Quest - RPG Belajar Bahasa Jepang (N5 - N1)</title>
-    <meta name="description" content="Petualangan RPG menaklukkan 5 alam bahasa Jepang (JLPT N5, N4, N3, N2, N1) dengan sistem stage, kuis, kanji, dan dungeon boss battle." />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content"
+    />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#12151d" id="meta-theme-color" />
+
+    <title>Nihongo Quest - Belajar Bahasa Jepang (N5 - N1)</title>
+    <meta name="description" content="Aplikasi belajar bahasa Jepang (JLPT N5, N4, N3, N2, N1) dengan kanji, kotoba, tata bahasa, flashcard, dan latihan menulis kaligrafi." />
+
+    <!-- Mobile & PWA Optimization for iOS & Android -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- Critical Mobile Inline Style: Anti-FOUC, No Pull-to-Refresh Glitch, Touch Manipulation -->
+    <style>
+      :root { color-scheme: dark; }
+      html.theme-light { color-scheme: light; }
+      html {
+        background-color: #12151d;
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+        overscroll-behavior-y: none;
+      }
+      html.theme-light { background-color: #eae7de; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        min-height: 100dvh;
+        overscroll-behavior-y: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+      #root { isolation: isolate; }
+    </style>
+
     <script>
-      try {
-        var s = localStorage.getItem('nihongo_quest_player_stats_v2') || localStorage.getItem('player_stats_v1');
-        if (s && JSON.parse(s).theme === 'light') {
-          document.documentElement.classList.add('theme-light');
-          document.documentElement.classList.remove('dark');
-          document.documentElement.style.colorScheme = 'light';
-        } else {
-          document.documentElement.classList.add('dark');
-          document.documentElement.classList.remove('theme-light');
-          document.documentElement.style.colorScheme = 'dark';
-        }
-      } catch (e) {}
+      (function () {
+        try {
+          var s = localStorage.getItem('nihongo_quest_player_stats_v2') || localStorage.getItem('player_stats_v1');
+          var isLight = false;
+          if (s) {
+            try { isLight = JSON.parse(s).theme === 'light'; } catch (e) {}
+          }
+          if (isLight) {
+            document.documentElement.classList.add('theme-light');
+            document.documentElement.classList.remove('dark');
+            document.documentElement.style.colorScheme = 'light';
+            var meta = document.getElementById('meta-theme-color');
+            if (meta) meta.setAttribute('content', '#eae7de');
+          } else {
+            document.documentElement.classList.add('dark');
+            document.documentElement.classList.remove('theme-light');
+            document.documentElement.style.colorScheme = 'dark';
+            var meta = document.getElementById('meta-theme-color');
+            if (meta) meta.setAttribute('content', '#12151d');
+          }
+        } catch (e) {}
+      })();
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

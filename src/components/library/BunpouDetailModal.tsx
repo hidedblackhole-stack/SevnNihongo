@@ -4,6 +4,11 @@ import { BunpouItem } from '../../types/content';
 import { FormulaDisplay } from '../learning/FormulaDisplay';
 import { RubyText } from '../learning/RubyText';
 import { speakJapanese, playSound } from '../../utils/audio';
+import { getCanonicalGrammarTitle } from '../../utils/bunpouTitleUtils';
+import { splitSentenceForHighlight } from '../../utils/grammarHighlight';
+
+import { UserDeck } from '../../types/rpg';
+import { DeckBookmarkPicker } from '../deck/DeckBookmarkPicker';
 
 interface BunpouDetailModalProps {
   item: BunpouItem;
@@ -11,6 +16,8 @@ interface BunpouDetailModalProps {
   soundEnabled?: boolean;
   isBookmarked?: boolean;
   onToggleBookmark?: () => void;
+  userDecks?: UserDeck[];
+  onToggleDeckItem?: (deckId: string) => void;
 }
 
 export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
@@ -19,6 +26,8 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
   soundEnabled = true,
   isBookmarked = false,
   onToggleBookmark,
+  userDecks,
+  onToggleDeckItem,
 }) => {
   const [activeSubIndex, setActiveSubIndex] = useState<number>(0);
   const subBranches = item.subFormulas || [];
@@ -48,7 +57,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
               ))}
             </div>
             <h2 className="text-xl sm:text-2xl font-black text-text-primary font-heading tracking-wide">
-              {item.title}
+              {getCanonicalGrammarTitle(item)}
             </h2>
             <p className="text-xs sm:text-sm font-semibold text-text-secondary">
               {item.meaningId}
@@ -56,23 +65,15 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
           </div>
 
           <div className="flex items-center gap-1.5 shrink-0">
-            {onToggleBookmark && (
-              <button
-                type="button"
-                onClick={() => {
-                  onToggleBookmark();
-                  playSound('click', soundEnabled);
-                }}
-                className={`p-2 rounded-2xl border transition-all ${
-                  isBookmarked
-                    ? 'bg-surface-elevated text-gold border-gold/40 ring-1 ring-gold/30'
-                    : 'bg-surface-card border-border-subtle text-text-muted hover:text-gold'
-                }`}
-                title={isBookmarked ? 'Tersimpan di Buku Saku' : 'Simpan ke Buku Saku'}
-              >
-                <Bookmark className={`w-5 h-5 ${isBookmarked ? 'fill-gold text-gold' : ''}`} />
-              </button>
-            )}
+            <DeckBookmarkPicker
+              itemId={item.id}
+              category="bunpou"
+              userDecks={userDecks}
+              onToggleDeckItem={onToggleDeckItem}
+              isDefaultBookmarked={isBookmarked}
+              onToggleDefaultBookmark={onToggleBookmark}
+              soundEnabled={soundEnabled}
+            />
             <button
               onClick={onClose}
               className="p-2 rounded-2xl bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-colors border border-border-subtle"
@@ -128,7 +129,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
             <h4 className="text-xs font-bold uppercase tracking-wider text-gold font-heading">
               📐 Rumus Pembentukan (Formula)
             </h4>
-            <FormulaDisplay formula={item.formula} />
+            <FormulaDisplay formula={item.formula} item={item} />
           </div>
 
           {/* Cabang Rumus & Kondisi Penggunaan */}
@@ -256,32 +257,53 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
               💬 Contoh Kalimat (例文)
             </h4>
             <div className="space-y-2">
-              {item.examples.map((example, i) => (
-                <div
-                  key={i}
-                  className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle flex items-start justify-between gap-3"
-                >
-                  <div className="space-y-1 flex-1">
-                    <p className="text-sm sm:text-base font-bold text-text-primary">
-                      <RubyText
-                        japanese={example.japanese}
-                        reading={example.reading}
-                        showFurigana={true}
-                      />
-                    </p>
-                    <p className="text-xs text-text-secondary">
-                      {example.meaningId}
-                    </p>
-                  </div>
-                  <button
-                    onClick={() => speakJapanese(example.japanese)}
-                    className="p-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-gold border border-border-subtle transition-colors shrink-0"
-                    title="Dengarkan Suara"
+              {item.examples.map((example, i) => {
+                const segments = splitSentenceForHighlight(example.japanese, item);
+                return (
+                  <div
+                    key={i}
+                    className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle flex items-start justify-between gap-3"
                   >
-                    <Volume2 className="w-4 h-4" />
-                  </button>
-                </div>
-              ))}
+                    <div className="space-y-1 flex-1">
+                      <p className="text-sm sm:text-base font-bold text-text-primary flex flex-wrap items-baseline gap-0.5">
+                        {segments.map((seg, segIdx) => {
+                          if (seg.isHighlight) {
+                            return (
+                              <span
+                                key={segIdx}
+                                className="formula-highlight text-red-700 dark:text-amber-300 font-extrabold"
+                                title="Pola Rumus Tata Bahasa"
+                              >
+                                <RubyText
+                                  japanese={seg.text}
+                                  showFurigana={true}
+                                />
+                              </span>
+                            );
+                          }
+                          return (
+                            <RubyText
+                              key={segIdx}
+                              japanese={seg.text}
+                              showFurigana={true}
+                            />
+                          );
+                        })}
+                      </p>
+                      <p className="text-xs text-text-secondary">
+                        {example.meaningId}
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => speakJapanese(example.japanese)}
+                      className="p-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-gold border border-border-subtle transition-colors shrink-0"
+                      title="Dengarkan Suara"
+                    >
+                      <Volume2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

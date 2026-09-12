@@ -43,6 +43,7 @@ html.dark {
   --color-gold-base: #f0be52;
   --color-gold-highlight: #fde8a8;
   --color-gold-shadow: #8c6810;
+  --color-furigana: #f0be52;
 
   /* Typography Colors */
   --text-primary: #edf0f6;
@@ -128,6 +129,10 @@ html.theme-light,
   --gold-shadow: #6b4708;
   --gold: var(--gold-base);
   --gold-soft: var(--gold-highlight);
+  --color-gold-base: #8c6019;
+  --color-gold-highlight: #a6731e;
+  --color-gold-shadow: #5c3e0a;
+  --color-furigana: #3f3a32;
 
   /* Sumi Charcoal Typography (High Contrast WCAG AA) */
   --color-text-primary: #262420;
@@ -725,15 +730,60 @@ html.theme-light,
   .text-caption-meta { @apply text-[11px] leading-none text-text-muted font-semibold; }
 }
 
-/* Custom scrollbars */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--color-border-subtle); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--color-border-primary); }
+/* Scrollbars: Hidden globally for clean tactile feel; scrolling remains fully functional via mouse wheel, trackpad, and touch drag */
+* {
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE / Edge */
+}
+
+*::-webkit-scrollbar,
+::-webkit-scrollbar {
+  display: none !important;
+  width: 0px !important;
+  height: 0px !important;
+  background: transparent !important;
+}
+
+.no-scrollbar,
+.custom-scrollbar,
+.scrollbar-thin {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.no-scrollbar::-webkit-scrollbar,
+.custom-scrollbar::-webkit-scrollbar,
+.scrollbar-thin::-webkit-scrollbar {
+  display: none !important;
+  width: 0px !important;
+  height: 0px !important;
+}
 
 /* Ruby text / Furigana styling */
 ruby { ruby-align: center; }
-ruby rt { font-size: 0.55em; color: var(--color-gold-base); opacity: 0.9; font-weight: 600; font-family: var(--font-jp); }
+ruby rt {
+  font-size: 0.58em;
+  color: var(--color-furigana, #3f3a32);
+  opacity: 0.95;
+  font-weight: 600;
+  font-family: var(--font-jp);
+}
+
+html.dark ruby rt,
+.dark ruby rt {
+  color: var(--color-furigana, #f0be52) !important;
+}
+
+html.theme-light ruby rt,
+.theme-light ruby rt {
+  color: var(--color-furigana, #3f3a32) !important;
+}
+
+.formula-highlight ruby rt {
+  color: inherit !important;
+  opacity: 0.85;
+}
+
 .ruby-text { line-height: 2.2; }
 .ruby-word { ruby-position: over; }
 
@@ -1529,3 +1579,42 @@ html.theme-light .journey-canvas-card,
     -5px -5px 12px var(--neu-l);
   border-color: var(--color-border-primary);
 }
+
+/* ==========================================================================
+   MOBILE, TABLET, iOS & ANDROID RESPONSIVENESS & TOUCH OPTIMIZATIONS
+   ========================================================================== */
+
+html, body {
+  overscroll-behavior-y: none;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Ensure smooth momentum scrolling on iOS */
+.overflow-y-auto, .overflow-x-auto, [data-scrollable] {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent double-tap zoom delay on interactive buttons and inputs */
+button, a, input, select, textarea, [role="button"] {
+  touch-action: manipulation;
+}
+
+/* Safe area utility classes */
+.pt-safe {
+  padding-top: max(0.5rem, env(safe-area-inset-top, 0px));
+}
+
+.pb-safe {
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom, 0px));
+}
+
+.pl-safe {
+  padding-left: max(0.25rem, env(safe-area-inset-left, 0px));
+}
+
+.pr-safe {
+  padding-right: max(0.25rem, env(safe-area-inset-right, 0px));
+}
+

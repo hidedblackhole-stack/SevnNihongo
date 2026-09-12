@@ -9,9 +9,17 @@ import { UserDeck, DeckItemCategory } from '../../types/rpg';
 interface LibraryViewProps {
   soundEnabled?: boolean;
   onRewardPlayer?: (exp: number, gold: number) => void;
-  onRecordStudy?: (category: 'tryOuts' | 'questions' | 'dokkai' | 'choukai' | 'bunpou' | 'bossBattles', id: string, count?: number) => void;
+  onRecordStudy?: (category: 'tryOuts' | 'questions' | 'dokkai' | 'choukai' | 'bunpou' | 'bossBattles' | 'kanjiWriting' | 'flashcards', id: string, count?: number) => void;
+  onCompleteStudyItem?: (
+    moduleId: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss' | 'questions' | 'tryOuts',
+    expGained: number,
+    goldGained: number,
+    itemId?: string,
+    score?: number,
+    total?: number
+  ) => void;
   userDecks?: UserDeck[];
-  onToggleBookmark?: (id: string, category: DeckItemCategory, notes?: string) => void;
+  onToggleBookmark?: (id: string, category: DeckItemCategory, notes?: string, targetDeckId?: string) => void;
 }
 
 export type LibraryTab = 'kotoba' | 'kanji' | 'bunpou' | 'soal';
@@ -20,6 +28,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
   soundEnabled = true,
   onRewardPlayer,
   onRecordStudy,
+  onCompleteStudyItem,
   userDecks,
   onToggleBookmark,
 }) => {
@@ -129,6 +138,9 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
           soundEnabled={soundEnabled}
           userDecks={userDecks}
           onToggleBookmark={onToggleBookmark}
+          onRewardPlayer={onRewardPlayer}
+          onRecordStudy={onRecordStudy as any}
+          onCompleteStudyItem={onCompleteStudyItem}
         />
       )}
       {libraryTab === 'kanji' && (
@@ -136,6 +148,9 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
           soundEnabled={soundEnabled}
           userDecks={userDecks}
           onToggleBookmark={onToggleBookmark}
+          onRewardPlayer={onRewardPlayer}
+          onRecordStudy={onRecordStudy as any}
+          onCompleteStudyItem={onCompleteStudyItem}
         />
       )}
       {libraryTab === 'bunpou' && (
@@ -149,7 +164,8 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
         <QuestionLibraryView
           soundEnabled={soundEnabled}
           onRewardPlayer={onRewardPlayer}
-          onRecordStudy={onRecordStudy}
+          onRecordStudy={onRecordStudy as any}
+          onCompleteStudyItem={onCompleteStudyItem}
         />
       )}
     </div>

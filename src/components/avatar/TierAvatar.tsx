@@ -1,6 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
+import {
+  User,
+  Shield,
+  Sword,
+  Zap,
+  Award,
+  Crown,
+  Sun,
+  Flame,
+  Swords,
+  Sparkles
+} from 'lucide-react';
 import { RPG_TIERS } from '../../data/tiers';
+
+// Directly import avatar assets so Vite bundles and resolves them correctly in all environments
+import tier1Img from '../../assets/avatars/tier-1.png';
+import tier2Img from '../../assets/avatars/tier-2.png';
+import tier3Img from '../../assets/avatars/tier-3.png';
+import tier4Img from '../../assets/avatars/tier-4.png';
+import tier5Img from '../../assets/avatars/tier-5.png';
+import tier6Img from '../../assets/avatars/tier-6.png';
+import tier7Img from '../../assets/avatars/tier-7.png';
+import tier8Img from '../../assets/avatars/tier-8.png';
+import tier9Img from '../../assets/avatars/tier-9.png';
+import tier10Img from '../../assets/avatars/tier-10.png';
+
+const TIER_AVATAR_MAP: Record<number, string> = {
+  1: tier1Img,
+  2: tier2Img,
+  3: tier3Img,
+  4: tier4Img,
+  5: tier5Img,
+  6: tier6Img,
+  7: tier7Img,
+  8: tier8Img,
+  9: tier9Img,
+  10: tier10Img,
+};
 
 interface TierAvatarProps {
   tierIndex: number; // 0 to 9
@@ -17,6 +54,7 @@ export const TierAvatar: React.FC<TierAvatarProps> = ({
   interactive = true,
   showRankBadge = false,
 }) => {
+  const [imgError, setImgError] = useState(false);
   const currentTier = RPG_TIERS[Math.min(9, Math.max(0, tierIndex))];
   const tierNum = currentTier.tier; // 1 to 10
 
@@ -38,6 +76,26 @@ export const TierAvatar: React.FC<TierAvatarProps> = ({
   const isHero = tierNum >= 8;
   const isChampion = tierNum >= 9;
   const isMythic = tierNum >= 10;
+
+  // Resolve image source: bundled asset first, then public path with BASE_URL
+  const avatarSrc = TIER_AVATAR_MAP[tierNum] || `${import.meta.env.BASE_URL}avatars/tier-${tierNum}.png`;
+
+  const renderFallbackIcon = () => {
+    const iconClass = "w-16 h-16 sm:w-20 sm:h-20 text-gold drop-shadow-[0_0_12px_rgba(251,191,36,0.5)]";
+    switch (tierNum) {
+      case 1: return <User className={iconClass} />;
+      case 2: return <Shield className={iconClass} />;
+      case 3: return <Sword className={iconClass} />;
+      case 4: return <Zap className={iconClass} />;
+      case 5: return <Award className={iconClass} />;
+      case 6: return <Crown className={iconClass} />;
+      case 7: return <Sun className={iconClass} />;
+      case 8: return <Flame className={iconClass} />;
+      case 9: return <Swords className={iconClass} />;
+      case 10: return <Sparkles className={iconClass} />;
+      default: return <Award className={iconClass} />;
+    }
+  };
 
   return (
     <motion.div
@@ -106,11 +164,21 @@ export const TierAvatar: React.FC<TierAvatarProps> = ({
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
             className="relative w-full h-full flex items-center justify-center scale-125 sm:scale-110"
           >
-            <img 
-              src={`/avatars/tier-${tierNum}.png`}
-              alt={`Tier ${tierNum} Avatar`}
-              className="w-full h-full object-contain drop-shadow-[0_10px_25px_rgba(0,0,0,0.6)]"
-            />
+            {imgError ? (
+              <div className="flex flex-col items-center justify-center p-4">
+                {renderFallbackIcon()}
+                <span className="text-[11px] font-heading font-bold text-gold mt-2 tracking-wider">
+                  {currentTier.name}
+                </span>
+              </div>
+            ) : (
+              <img 
+                src={avatarSrc}
+                alt={`${currentTier.name} Avatar`}
+                onError={() => setImgError(true)}
+                className="w-full h-full object-contain drop-shadow-[0_10px_25px_rgba(0,0,0,0.6)]"
+              />
+            )}
           </motion.div>
         </div>
 

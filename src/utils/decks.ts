@@ -134,6 +134,250 @@ export function removeItemFromDeck(
   });
 }
 
+export function addMultipleItemsToDeck(
+  userDecks: UserDeck[] | undefined,
+  deckId: string,
+  items: { id: string; category: DeckItemCategory; notes?: string }[]
+): UserDeck[] {
+  const currentDecks = ensureUserDecks(userDecks);
+  const now = new Date().toISOString();
+
+  return currentDecks.map(deck => {
+    if (deck.id === deckId) {
+      const existingKeys = new Set(deck.items.map(it => `${it.category}:${it.id}`));
+      const newItems: DeckItemRef[] = [];
+      for (const item of items) {
+        const key = `${item.category}:${item.id}`;
+        if (!existingKeys.has(key)) {
+          existingKeys.add(key);
+          newItems.push({
+            id: item.id,
+            category: item.category,
+            addedAt: now,
+            notes: item.notes,
+          });
+        }
+      }
+      return {
+        ...deck,
+        updatedAt: now,
+        items: [...newItems, ...deck.items],
+      };
+    }
+    return deck;
+  });
+}
+
+export function importBookmarkItemsToDeck(
+  userDecks: UserDeck[] | undefined,
+  targetDeckId: string
+): { userDecks: UserDeck[]; importedCount: number } {
+  const currentDecks = ensureUserDecks(userDecks);
+  const bookmarkDeck = currentDecks.find(d => d.id === DEFAULT_BOOKMARK_DECK_ID || d.isDefault);
+  if (!bookmarkDeck || bookmarkDeck.items.length === 0) {
+    return { userDecks: currentDecks, importedCount: 0 };
+  }
+
+  let importedCount = 0;
+  const now = new Date().toISOString();
+  const updated = currentDecks.map(deck => {
+    if (deck.id === targetDeckId) {
+      const existingKeys = new Set(deck.items.map(it => `${it.category}:${it.id}`));
+      const toAdd: DeckItemRef[] = [];
+      for (const item of bookmarkDeck.items) {
+        const key = `${item.category}:${item.id}`;
+        if (!existingKeys.has(key)) {
+          existingKeys.add(key);
+          toAdd.push({ ...item, addedAt: now });
+          importedCount++;
+        }
+      }
+      return {
+        ...deck,
+        updatedAt: now,
+        items: [...toAdd, ...deck.items],
+      };
+    }
+    return deck;
+  });
+
+  return { userDecks: updated, importedCount };
+}
+
+export function clearDeckItems(
+  userDecks: UserDeck[] | undefined,
+  deckId: string
+): UserDeck[] {
+  const currentDecks = ensureUserDecks(userDecks);
+  const now = new Date().toISOString();
+  return currentDecks.map(deck => {
+    if (deck.id === deckId) {
+      return {
+        ...deck,
+        updatedAt: now,
+        items: [],
+      };
+    }
+    return deck;
+  });
+}
+
+export function getDecksContainingItem(
+  userDecks: UserDeck[] | undefined,
+  itemId: string,
+  category: DeckItemCategory
+): string[] {
+  const currentDecks = ensureUserDecks(userDecks);
+  return currentDecks
+    .filter(d => d.items.some(it => it.id === itemId && it.category === category))
+    .map(d => d.id);
+}
+
+export function toggleItemInDeck(
+  userDecks: UserDeck[] | undefined,
+  deckId: string,
+  itemId: string,
+  category: DeckItemCategory,
+  notes?: string
+): { userDecks: UserDeck[]; added: boolean } {
+  const currentDecks = ensureUserDecks(userDecks);
+  const now = new Date().toISOString();
+  let added = false;
+
+  const updatedDecks = currentDecks.map(deck => {
+    if (deck.id === deckId) {
+      const exists = deck.items.some(it => it.id === itemId && it.category === category);
+      if (exists) {
+        added = false;
+        return {
+          ...deck,
+          updatedAt: now,
+          items: deck.items.filter(it => !(it.id === itemId && it.category === category)),
+        };
+      } else {
+        added = true;
+        const newItem: DeckItemRef = {
+          id: itemId,
+          category,
+          addedAt: now,
+          notes,
+        };
+        return {
+          ...deck,
+          updatedAt: now,
+          items: [newItem, ...deck.items],
+        };
+      }
+    }
+    return deck;
+  });
+
+  return { userDecks: updatedDecks, added };
+}
+
+export interface GeneratePresetOptions {
+  type: DeckType;
+  level: 'all' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1';
+  count: number;
+}
+
+export function generatePresetDeckItems(options: GeneratePresetOptions): DeckItemRef[] {
+  const { type, level, count } = options;
+  const now = new Date().toISOString();
+
+  // Gather matching Kotoba
+  const matchingKotoba = Object.values(KOTOBA_DATABASE).filter(item => {
+    if (!item) return false;
+    if (level === 'all') return true;
+    return item.jlpt === level;
+  });
+
+  // Gather matching Kanji
+  const seenKanji = new Set<string>();
+  const matchingKanji = Object.values(KANJI_DATABASE).filter(item => {
+    if (!item || !item.character || seenKanji.has(item.character)) return false;
+    seenKanji.add(item.character);
+    if (level === 'all') return true;
+    return item.jlpt === level;
+  });
+
+  // Gather matching Bunpou
+  const matchingBunpou = Object.values(BUNPOU_DATABASE).filter(item => {
+    if (!item) return false;
+    if (level === 'all') return true;
+    return item.level === level;
+  });
+
+  const pickItems = <T>(arr: T[], n: number): T[] => {
+    if (arr.length <= n) return [...arr];
+    const shuffled = [...arr].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, n);
+  };
+
+  const results: DeckItemRef[] = [];
+  const addedSet = new Set<string>();
+
+  const addRef = (id: string, category: DeckItemCategory) => {
+    const key = `${category}:${id}`;
+    if (!addedSet.has(key)) {
+      addedSet.add(key);
+      results.push({ id, category, addedAt: now });
+    }
+  };
+
+  if (type === 'kotoba') {
+    const picked = pickItems(matchingKotoba, count);
+    picked.forEach(it => addRef(it.id, 'kotoba'));
+  } else if (type === 'kanji') {
+    const picked = pickItems(matchingKanji, count);
+    picked.forEach(it => addRef(it.id || it.character, 'kanji'));
+  } else if (type === 'bunpou') {
+    const picked = pickItems(matchingBunpou, count);
+    picked.forEach(it => addRef(it.id, 'bunpou'));
+  } else if (type === 'writing') {
+    const kanjiCount = Math.ceil(count * 0.7);
+    const kotobaCount = count - kanjiCount;
+    const pickedKanji = pickItems(matchingKanji, kanjiCount);
+    const pickedKotoba = pickItems(matchingKotoba, kotobaCount);
+    pickedKanji.forEach(it => addRef(it.id || it.character, 'kanji'));
+    pickedKotoba.forEach(it => addRef(it.id, 'kotoba'));
+  } else if (type === 'flashcard') {
+    const kotobaCount = Math.ceil(count * 0.6);
+    const kanjiCount = count - kotobaCount;
+    const pickedKotoba = pickItems(matchingKotoba, kotobaCount);
+    const pickedKanji = pickItems(matchingKanji, kanjiCount);
+    pickedKotoba.forEach(it => addRef(it.id, 'kotoba'));
+    pickedKanji.forEach(it => addRef(it.id || it.character, 'kanji'));
+  } else {
+    const kotobaCount = Math.ceil(count * 0.5);
+    const kanjiCount = Math.ceil(count * 0.3);
+    const bunpouCount = Math.max(1, count - kotobaCount - kanjiCount);
+
+    const pickedKotoba = pickItems(matchingKotoba, kotobaCount);
+    const pickedKanji = pickItems(matchingKanji, kanjiCount);
+    const pickedBunpou = pickItems(matchingBunpou, bunpouCount);
+
+    pickedKotoba.forEach(it => addRef(it.id, 'kotoba'));
+    pickedKanji.forEach(it => addRef(it.id || it.character, 'kanji'));
+    pickedBunpou.forEach(it => addRef(it.id, 'bunpou'));
+  }
+
+  // Backfill if needed
+  if (results.length < count) {
+    const allPool = [
+      ...matchingKotoba.map(k => ({ id: k.id, cat: 'kotoba' as DeckItemCategory })),
+      ...matchingKanji.map(k => ({ id: k.id || k.character, cat: 'kanji' as DeckItemCategory })),
+      ...matchingBunpou.map(b => ({ id: b.id, cat: 'bunpou' as DeckItemCategory })),
+    ];
+    for (const item of pickItems(allPool, allPool.length)) {
+      if (results.length >= count) break;
+      addRef(item.id, item.cat);
+    }
+  }
+
+  return results;
+}
+
 export function createCustomDeck(
   userDecks: UserDeck[] | undefined,
   data: {
@@ -141,8 +385,9 @@ export function createCustomDeck(
     description?: string;
     type: DeckType;
     coverIcon?: string;
+    initialItems?: DeckItemRef[];
   }
-): UserDeck[] {
+): { userDecks: UserDeck[]; newDeck: UserDeck } {
   const currentDecks = ensureUserDecks(userDecks);
   const now = new Date().toISOString();
   const id = `deck_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
@@ -156,10 +401,13 @@ export function createCustomDeck(
     isDefault: false,
     createdAt: now,
     updatedAt: now,
-    items: [],
+    items: data.initialItems || [],
   };
 
-  return [...currentDecks, newDeck];
+  return {
+    userDecks: [...currentDecks, newDeck],
+    newDeck,
+  };
 }
 
 export function updateCustomDeck(

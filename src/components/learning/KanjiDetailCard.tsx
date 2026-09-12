@@ -7,42 +7,189 @@ import { ErrorBoundary } from '../ErrorBoundary';
 import { speakJapanese, playSound } from '../../utils/audio';
 import { WritingRewardResult } from '../../utils/rewards';
 
-export const getHighlightedYomikata = (word: string, reading: string, kanji: KanjiItem) => {
-  if (!reading) return <span className="text-wine-accent font-bold">{word}</span>;
+const kataToHira = (str: string) => {
+  return str.replace(/[\u30a1-\u30f6]/g, m => String.fromCharCode(m.charCodeAt(0) - 0x60));
+};
 
-  const getCleanReadings = (arr: string[], isOnyomi: boolean) => {
-    return (arr || []).map(r => {
-      let base = r.split(' ')[0];
-      if (base.includes('・')) {
-        base = base.split('・')[0];
+const rendakuMap: Record<string, string> = {
+  'か': 'が', 'き': 'ぎ', 'く': 'ぐ', 'け': 'げ', 'こ': 'ご',
+  'さ': 'ざ', 'し': 'じ', 'す': 'ず', 'せ': 'ぜ', 'そ': 'ぞ',
+  'た': 'だ', 'ち': 'ぢ', 'つ': 'づ', 'て': 'で', 'と': 'ど',
+  'は': 'ば', 'ひ': 'び', 'ふ': 'ぶ', 'へ': 'べ', 'ほ': 'ぼ',
+};
+
+const handakutenMap: Record<string, string> = {
+  'は': 'ぱ', 'ひ': 'ぴ', 'ふ': 'ぷ', 'へ': 'ぺ', 'ほ': 'ぽ',
+};
+
+const getKanjiStems = (kanji: KanjiItem): string[] => {
+  const stems = new Set<string>();
+  const addStem = (s?: string) => {
+    if (!s) return;
+    const h = kataToHira(s);
+    stems.add(h);
+    // Sokuon change: if stem ends with つ, ち, く, き -> could become っ (e.g. けつ -> けっ in 結婚)
+    if (/[つちくき]$/.test(h)) {
+      stems.add(h.slice(0, -1) + 'っ');
+    }
+    // Rendaku change
+    const firstChar = h[0];
+    if (rendakuMap[firstChar]) {
+      const voiced = rendakuMap[firstChar] + h.slice(1);
+      stems.add(voiced);
+      if (/[つちくき]$/.test(voiced)) {
+        stems.add(voiced.slice(0, -1) + 'っ');
       }
-      if (isOnyomi) {
-        base = base.replace(/[\u30a1-\u30f6]/g, function(match) {
-          return String.fromCharCode(match.charCodeAt(0) - 0x60);
-        });
+    }
+    if (handakutenMap[firstChar]) {
+      const pSound = handakutenMap[firstChar] + h.slice(1);
+      stems.add(pSound);
+      if (/[つちくき]$/.test(pSound)) {
+        stems.add(pSound.slice(0, -1) + 'っ');
       }
-      return base;
-    });
+    }
   };
 
-  const onReadings = getCleanReadings(kanji?.onyomi || [], true);
-  const kunReadings = getCleanReadings(kanji?.kunyomi || [], false);
-  const allReadings = [...onReadings, ...kunReadings].filter(Boolean).sort((a, b) => b.length - a.length);
+  (kanji?.onyomi || []).forEach(o => {
+    const base = o.split(' ')[0].split(/[\.・\-\/]/)[0].trim();
+    addStem(base);
+  });
+  (kanji?.kunyomi || []).forEach(k => {
+    const base = k.split(' ')[0].split(/[\.・\-\/]/)[0].trim();
+    addStem(base);
+  });
+  return Array.from(stems).filter(Boolean).sort((a, b) => b.length - a.length);
+};
 
-  for (const r of allReadings) {
-    if (reading.includes(r)) {
-      const idx = reading.indexOf(r);
-      return (
-        <>
-          <span className="text-text-muted">{reading.substring(0, idx)}</span>
-          <span className="text-wine-accent font-bold drop-shadow-sm">{r}</span>
-          <span className="text-text-muted">{reading.substring(idx + r.length)}</span>
-        </>
-      );
+export const findReadingSegments = (word: string, reading: string, kanji: KanjiItem) => {
+  if (!reading) return { prefix: '', target: word || '', suffix: '' };
+  const cleanReading = reading.trim();
+  const char = kanji?.character;
+  const kanjiIdx = word ? word.indexOf(char) : -1;
+
+  // Method 1: Okurigana alignment (if word has kana before/after target kanji)
+  if (kanjiIdx !== -1 && word) {
+    const wordPrefix = word.slice(0, kanjiIdx);
+    const wordSuffix = word.slice(kanjiIdx + 1);
+    const isSuffixAllKana = wordSuffix.length > 0 && /^[\u3040-\u309F]+$/.test(wordSuffix);
+    const isPrefixAllKana = wordPrefix.length > 0 && /^[\u3040-\u309F]+$/.test(wordPrefix);
+
+    if (isSuffixAllKana && cleanReading.endsWith(wordSuffix)) {
+      const rest = cleanReading.slice(0, cleanReading.length - wordSuffix.length);
+      if (isPrefixAllKana && rest.startsWith(wordPrefix)) {
+        return {
+          prefix: wordPrefix,
+          target: rest.slice(wordPrefix.length),
+          suffix: wordSuffix,
+        };
+      } else if (!wordPrefix) {
+        return {
+          prefix: '',
+          target: rest,
+          suffix: wordSuffix,
+        };
+      }
     }
   }
 
-  return <span className="text-wine-accent font-bold drop-shadow-sm">{reading}</span>;
+  // Method 2: Match known stems (onyomi & kunyomi with sokuon and rendaku variations)
+  const stems = getKanjiStems(kanji);
+  for (const stem of stems) {
+    if (cleanReading.includes(stem)) {
+      if (kanjiIdx === 0 && cleanReading.startsWith(stem)) {
+        return {
+          prefix: '',
+          target: stem,
+          suffix: cleanReading.slice(stem.length),
+        };
+      }
+      if (kanjiIdx !== -1 && kanjiIdx === word.length - 1 && cleanReading.endsWith(stem)) {
+        return {
+          prefix: cleanReading.slice(0, cleanReading.length - stem.length),
+          target: stem,
+          suffix: '',
+        };
+      }
+      const idx = cleanReading.indexOf(stem);
+      return {
+        prefix: cleanReading.substring(0, idx),
+        target: stem,
+        suffix: cleanReading.substring(idx + stem.length),
+      };
+    }
+  }
+
+  return { prefix: '', target: cleanReading, suffix: '' };
+};
+
+export const renderWordWithKanjiHighlight = (word: string, targetChar: string) => {
+  if (!word) return null;
+  if (!targetChar || !word.includes(targetChar)) {
+    return <span className="font-jp font-bold text-text-primary">{word}</span>;
+  }
+
+  return (
+    <span className="inline-flex items-center justify-center font-jp font-bold tracking-wide">
+      {Array.from(word).map((ch, idx) => {
+        if (ch === targetChar) {
+          return (
+            <span
+              key={idx}
+              className="inline-flex items-center justify-center px-1.5 py-0.5 mx-0.5 rounded-lg bg-wine-accent/15 dark:bg-wine-accent/30 text-wine-accent dark:text-rose-300 font-black border border-wine-accent/40 shadow-xs ring-1 ring-wine-accent/20"
+            >
+              {ch}
+            </span>
+          );
+        }
+        return (
+          <span key={idx} className="text-text-primary/75 dark:text-text-primary/80 font-semibold px-0.5">
+            {ch}
+          </span>
+        );
+      })}
+    </span>
+  );
+};
+
+export const getHighlightedYomikata = (word: string, reading: string, kanji: KanjiItem) => {
+  if (!reading) return <span className="text-wine-accent font-bold">{word}</span>;
+
+  // Handle slash-separated readings if any (e.g. 'まいつき / まいげつ')
+  const readings = reading.split('/').map(r => r.trim());
+
+  return (
+    <div className="inline-flex flex-wrap items-center justify-center gap-1.5 font-jp text-sm sm:text-base">
+      {readings.map((singleReading, rIdx) => {
+        const seg = findReadingSegments(word, singleReading, kanji);
+        return (
+          <React.Fragment key={rIdx}>
+            {rIdx > 0 && <span className="text-text-muted/50 px-0.5">/</span>}
+            {seg.target && seg.target !== singleReading ? (
+              <span className="inline-flex items-center gap-0.5">
+                {seg.prefix && (
+                  <span className="text-text-secondary/60 dark:text-text-secondary/70 font-medium tracking-normal px-0.5">
+                    {seg.prefix}
+                  </span>
+                )}
+                <span className="px-2 py-0.5 rounded-md bg-wine-accent/15 dark:bg-wine-accent/30 text-wine-accent dark:text-rose-300 font-extrabold border border-wine-accent/35 shadow-xs tracking-wider">
+                  {seg.target}
+                </span>
+                {seg.suffix && (
+                  <span className="text-text-secondary/60 dark:text-text-secondary/70 font-medium tracking-normal px-0.5">
+                    {seg.suffix}
+                  </span>
+                )}
+              </span>
+            ) : (
+              <span className="px-2 py-0.5 rounded-md bg-wine-accent/15 dark:bg-wine-accent/30 text-wine-accent dark:text-rose-300 font-extrabold border border-wine-accent/35 shadow-xs tracking-wider">
+                {singleReading}
+              </span>
+            )}
+          </React.Fragment>
+        );
+      })}
+    </div>
+  );
 };
 
 export interface KanjiDetailCardProps {
@@ -143,7 +290,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
             }`}
           >
             <Edit3 className="w-3 h-3 text-wine-accent" />
-            <span>✍️ Latihan 7 Sheet</span>
+            <span>✍️ Latihan Menulis</span>
           </button>
         </div>
       </div>
@@ -363,33 +510,45 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
             className="w-full py-3.5 rounded-2xl btn-cta font-bold text-sm shadow-md active:scale-95 transition-all flex items-center justify-center gap-2"
           >
             <Edit3 className="w-4 h-4" />
-            <span>Buka Kanvas Latihan Menulis (7 Sheet)</span>
+            <span>Buka Kanvas Latihan Menulis</span>
           </button>
         </div>
       ) : (
-        /* Kanji Writing Practice 7-Sheet Canvas Studio */
+        /* Kanji Writing Practice Canvas */
         <div className="panel p-5 sm:p-6 space-y-4 text-center">
           <div>
             {/* Highlighted Yomikata / Reading Header */}
-            <div className="flex flex-wrap items-center justify-center gap-6 mb-3 min-h-[48px]">
+            <div className="flex flex-wrap items-stretch justify-center gap-3 sm:gap-4 mb-4 min-h-[52px]">
               {item.relatedWords && item.relatedWords.length > 0 ? (
                 item.relatedWords.slice(0, 2).map((rw, i) => (
                   <div
                     key={i}
-                    className="flex flex-col items-center group cursor-pointer"
+                    className="flex flex-col items-center justify-between px-3.5 py-2.5 rounded-2xl bg-surface-card/85 dark:bg-surface-card/50 border border-border-default hover:border-wine-accent/50 hover:shadow-md transition-all shadow-xs group cursor-pointer min-w-[135px] max-w-[220px]"
                     onClick={() => speakJapanese(rw.word)}
-                    title="Klik untuk mendengar"
+                    title="Klik untuk mendengar audio kata ini"
                   >
-                    <div className="text-2xl sm:text-3xl font-bold font-jp tracking-widest drop-shadow-sm mb-1 flex items-center gap-1.5">
-                      {getHighlightedYomikata(rw.word, rw.reading, item)}
-                      <Volume2 className="w-4 h-4 text-text-muted opacity-60 group-hover:text-wine-accent transition-colors" />
+                    {/* Kanji Word with target kanji clearly highlighted */}
+                    <div className="flex items-center justify-center gap-1.5 mb-1.5">
+                      <div className="text-xl sm:text-2xl font-bold font-jp">
+                        {renderWordWithKanjiHighlight(rw.word, item.character)}
+                      </div>
+                      <Volume2 className="w-4 h-4 text-text-muted opacity-60 group-hover:text-wine-accent group-hover:scale-110 transition-all flex-shrink-0" />
                     </div>
-                    <span className="text-[11px] text-text-secondary mt-0.5">{rw.meaningId}</span>
+
+                    {/* Yomikata Reading with high-contrast target badge */}
+                    <div className="mb-1">
+                      {getHighlightedYomikata(rw.word, rw.reading, item)}
+                    </div>
+
+                    {/* Indonesian meaning */}
+                    <span className="text-[11px] text-text-secondary text-center leading-tight line-clamp-2 mt-0.5 font-medium">
+                      {rw.meaningId}
+                    </span>
                   </div>
                 ))
               ) : (
                 <div
-                  className="flex flex-col items-center group cursor-pointer"
+                  className="flex flex-col items-center justify-between px-4 py-2.5 rounded-2xl bg-surface-card/85 dark:bg-surface-card/50 border border-border-default group cursor-pointer"
                   onClick={() =>
                     speakJapanese(
                       item.kunyomi?.[0]?.replace(/[.-]/g, '') || item.onyomi?.[0] || item.character
@@ -398,14 +557,15 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
                   title="Klik untuk mendengar"
                 >
                   <div className="text-2xl sm:text-3xl font-bold font-jp text-wine-accent drop-shadow-sm mb-1 flex items-center gap-1.5">
-                    <span>
-                      {item.kunyomi?.[0]?.replace(/[.-]/g, '') ||
-                        item.onyomi?.[0] ||
-                        item.character}
-                    </span>
+                    <span>{item.character}</span>
                     <Volume2 className="w-4 h-4 text-text-muted opacity-60 group-hover:text-wine-accent transition-colors" />
                   </div>
-                  <span className="text-[11px] text-text-secondary mt-0.5">{item.meaningId}</span>
+                  <span className="text-xs font-jp font-bold text-wine-accent mb-0.5">
+                    {item.kunyomi?.[0]?.replace(/[.-]/g, '') ||
+                      item.onyomi?.[0] ||
+                      ''}
+                  </span>
+                  <span className="text-[11px] text-text-secondary mt-0.5 font-medium">{item.meaningId}</span>
                 </div>
               )}
             </div>
@@ -454,7 +614,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
           <ErrorBoundary>
             <KanjiWritingCanvas
               kanjiChar={item.character}
-              totalSheets={7}
+              totalSheets={1}
               strokeCount={item.strokeCount}
               meaning={item.meaningId}
               kunyomi={item.kunyomi?.[0] || ''}

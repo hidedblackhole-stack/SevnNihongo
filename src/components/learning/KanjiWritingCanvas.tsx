@@ -71,9 +71,9 @@ export const preloadStrokeData = (word: string) => {
 export interface KanjiWritingCanvasProps {
   kanjiChar: string;
   level?: string;
-  totalSheets?: number; // 7 Sheets as required by specs
+  totalSheets?: number; // default: 1 (sandbox mode)
   onCompleteSheet?: (sheetNumber: number, score: number, reward?: WritingRewardResult) => void;
-  onFinish?: (reward?: WritingRewardResult) => void; // Callback when 7th sheet is completed and user finishes
+  onFinish?: (reward?: WritingRewardResult) => void; // Callback when sheet is completed and user finishes
   soundEnabled?: boolean;
   autoAdvance?: boolean;
   leniency?: number;
@@ -88,7 +88,7 @@ export interface KanjiWritingCanvasProps {
 export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
   kanjiChar,
   level,
-  totalSheets = 7,
+  totalSheets = 1,
   onCompleteSheet,
   onFinish,
   soundEnabled = true,
@@ -188,6 +188,12 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
   const [hasStrokeData, setHasStrokeData] = useState(true);
   const fallbackCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const isDrawingFallbackRef = useRef(false);
+  const hasRewardedRef = useRef<Record<number, boolean>>({});
+
+  // Reset rewarded ref when character changes
+  useEffect(() => {
+    hasRewardedRef.current = {};
+  }, [kanjiChar]);
 
   // Auto-advance logic
   useEffect(() => {
@@ -384,6 +390,31 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
           setIsTimerRunning(false); // Stop stopwatch for this canvas immediately
           setCurrentStrokeIndex(totalCharStrokes || strokeCount || 0);
           playSound('fanfare', soundEnabled);
+
+          // Guarantee reward & study stats recording immediately upon completing strokes
+          if (!hasRewardedRef.current[currentSheet]) {
+            hasRewardedRef.current[currentSheet] = true;
+            setCompletedSheets(prev => prev.includes(currentSheet) ? prev : [...prev, currentSheet]);
+            const score = Math.max(0, 100 - (mistakesCount * 15));
+            const baseExp = getKanjiBaseExp({
+              character: kanjiChar,
+              strokeCount: totalCharStrokes || strokeCount,
+              jlpt: level,
+            });
+            const reward = calculateWritingReward({
+              baseExp,
+              mistakesCount,
+              watermarkUsed: watermarkEverUsed || showGuide,
+              animationCount,
+              elapsedSeconds,
+              strokeCount: totalCharStrokes || strokeCount,
+            });
+            setLastReward(reward);
+            onCompleteSheet?.(currentSheet, score, reward);
+            if (score >= 60) {
+              sendScoreEvent('kanji_write', `${kanjiChar}_sheet_${currentSheet}`, true);
+            }
+          }
         }
       });
     } catch {
@@ -441,6 +472,8 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
 
   const clearCanvas = () => {
     playSound('click', soundEnabled);
+    hasRewardedRef.current[currentSheet] = false;
+    setCompletedSheets(prev => prev.filter(s => s !== currentSheet));
     setCurrentStrokeIndex(0);
     setMistakesCount(0);
     setIsQuizComplete(false);
@@ -490,37 +523,39 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     }
 
     // If not completed yet and quiz is not completed, cannot save
-    if (!isQuizComplete) return;
+    if (!isQuizComplete && !hasRewardedRef.current[currentSheet]) return;
 
-    // Save this sheet
-    playSound('correct', soundEnabled);
-    const updated = [...completedSheets, currentSheet];
-    setCompletedSheets(updated);
-    const score = Math.max(0, 100 - (mistakesCount * 15));
+    if (!hasRewardedRef.current[currentSheet]) {
+      hasRewardedRef.current[currentSheet] = true;
+      playSound('correct', soundEnabled);
+      const updated = [...completedSheets, currentSheet];
+      setCompletedSheets(updated);
+      const score = Math.max(0, 100 - (mistakesCount * 15));
 
-    // Dynamic EXP Calculation
-    const baseExp = getKanjiBaseExp({
-      character: kanjiChar,
-      strokeCount: totalCharStrokes || strokeCount,
-      jlpt: level,
-    });
+      // Dynamic EXP Calculation
+      const baseExp = getKanjiBaseExp({
+        character: kanjiChar,
+        strokeCount: totalCharStrokes || strokeCount,
+        jlpt: level,
+      });
 
-    const reward = calculateWritingReward({
-      baseExp,
-      mistakesCount,
-      watermarkUsed: watermarkEverUsed || showGuide,
-      animationCount,
-      elapsedSeconds,
-      strokeCount: totalCharStrokes || strokeCount,
-    });
-    setLastReward(reward);
-    onCompleteSheet?.(currentSheet, score, reward);
+      const reward = calculateWritingReward({
+        baseExp,
+        mistakesCount,
+        watermarkUsed: watermarkEverUsed || showGuide,
+        animationCount,
+        elapsedSeconds,
+        strokeCount: totalCharStrokes || strokeCount,
+      });
+      setLastReward(reward);
+      onCompleteSheet?.(currentSheet, score, reward);
 
-    if (score >= 60) {
-      sendScoreEvent('kanji_write', `${kanjiChar}_sheet_${currentSheet}`, true);
+      if (score >= 60) {
+        sendScoreEvent('kanji_write', `${kanjiChar}_sheet_${currentSheet}`, true);
+      }
     }
 
-    // If on Sheet 1〜6, advance to next sheet
+    // If on Sheet 1〜(totalSheets - 1), advance to next sheet
     if (currentSheet < totalSheets) {
       setCurrentSheet(prev => prev + 1);
       setIsQuizComplete(false);
@@ -533,11 +568,11 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
         const ctx = fallbackCanvasRef.current.getContext('2d');
         if (ctx) ctx.clearRect(0, 0, fallbackCanvasRef.current.width, fallbackCanvasRef.current.height);
       }
-    } else if (autoAdvance) {
-      // Automatically trigger onFinish if autoAdvance is enabled (since the Selesai button is hidden)
+    } else {
+      // Finished all sheets (or single sheet in sandbox mode)
       playSound('fanfare', soundEnabled);
       setIsTimerRunning(false);
-      onFinish?.(reward);
+      onFinish?.(lastReward || undefined);
     }
   };
 
@@ -581,49 +616,54 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
 
   return (
     <div className="flex flex-col items-center w-full max-w-md mx-auto space-y-4">
-      {/* 7-Sheet Indicator Tabs */}
-      <div className="w-full max-w-[340px] sm:max-w-[360px]">
-        <div className="flex items-center justify-between text-xs text-text-secondary mb-2">
-          <span className="font-bold text-text-primary font-heading">
-            Lembar Latihan Menulis (Sheet {currentSheet}/{totalSheets})
-          </span>
-          <span className="font-mono">{completedSheets.length} / {totalSheets} Selesai</span>
+      {/* Multi-Sheet Indicator Tabs (Only shown if totalSheets > 1) */}
+      {totalSheets > 1 && (
+        <div className="w-full max-w-[340px] sm:max-w-[360px]">
+          <div className="flex items-center justify-between text-xs text-text-secondary mb-2">
+            <span className="font-bold text-text-primary font-heading">
+              Lembar Latihan Menulis (Sheet {currentSheet}/{totalSheets})
+            </span>
+            <span className="font-mono">{completedSheets.length} / {totalSheets} Selesai</span>
+          </div>
+          <div
+            className="grid gap-1.5"
+            style={{ gridTemplateColumns: `repeat(${totalSheets}, minmax(0, 1fr))` }}
+          >
+            {Array.from({ length: totalSheets }, (_, i) => i + 1).map((sheetNum) => {
+              const isCompleted = completedSheets.includes(sheetNum);
+              const isCurrent = currentSheet === sheetNum;
+              return (
+                <button
+                  key={sheetNum}
+                  type="button"
+                  onClick={() => {
+                    if (currentSheet !== sheetNum) {
+                      setCurrentSheet(sheetNum);
+                      const alreadyDone = completedSheets.includes(sheetNum);
+                      setIsQuizComplete(alreadyDone);
+                      setElapsedSeconds(0);
+                      setIsTimerRunning(!alreadyDone);
+                      setMistakesCount(0);
+                      setWatermarkEverUsed(false);
+                      setAnimationCount(0);
+                      playSound('click', soundEnabled);
+                    }
+                  }}
+                  className={`py-1.5 rounded-lg text-xs font-bold transition-all ${
+                    isCurrent
+                      ? 'bg-wine-accent text-white shadow-md ring-2 ring-wine-accent/50 font-black scale-105'
+                      : isCompleted
+                        ? 'bg-wine-accent/20 text-wine-accent border border-wine-accent/40 font-bold'
+                        : 'bg-surface-inset text-text-muted hover:bg-surface-elevated'
+                  }`}
+                >
+                  #{sheetNum}
+                </button>
+              );
+            })}
+          </div>
         </div>
-        <div className="grid grid-cols-7 gap-1.5">
-          {Array.from({ length: totalSheets }, (_, i) => i + 1).map((sheetNum) => {
-            const isCompleted = completedSheets.includes(sheetNum);
-            const isCurrent = currentSheet === sheetNum;
-            return (
-              <button
-                key={sheetNum}
-                type="button"
-                onClick={() => {
-                  if (currentSheet !== sheetNum) {
-                    setCurrentSheet(sheetNum);
-                    const alreadyDone = completedSheets.includes(sheetNum);
-                    setIsQuizComplete(alreadyDone);
-                    setElapsedSeconds(0);
-                    setIsTimerRunning(!alreadyDone);
-                    setMistakesCount(0);
-                    setWatermarkEverUsed(false);
-                    setAnimationCount(0);
-                    playSound('click', soundEnabled);
-                  }
-                }}
-                className={`py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  isCurrent
-                    ? 'bg-wine-accent text-white shadow-md ring-2 ring-wine-accent/50 font-black scale-105'
-                    : isCompleted
-                      ? 'bg-wine-accent/20 text-wine-accent border border-wine-accent/40 font-bold'
-                      : 'bg-surface-inset text-text-muted hover:bg-surface-elevated'
-                }`}
-              >
-                #{sheetNum}
-              </button>
-            );
-          })}
-        </div>
-      </div>
+      )}
 
       {/* Canvas Top Bar / Stopwatch, Mistakes & Watermark Guide Toggle */}
       <div className="flex items-center justify-between w-full max-w-[340px] sm:max-w-[360px] px-1 text-xs">
@@ -631,23 +671,30 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
           {showStopwatch && (
             <span
               className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-surface-inset border border-border-subtle text-text-primary flex items-center gap-1 shadow-sm"
-              title={`Stopwatch Lembar #${currentSheet} (${isTimerRunning ? 'Berjalan' : 'Selesai'})`}
+              title={`Stopwatch (${isTimerRunning ? 'Berjalan' : 'Selesai'})`}
             >
               <Clock className="w-3 h-3 text-gold" />
               <span>{formatTime(elapsedSeconds)}</span>
-              <span className="text-[9px] text-text-muted font-normal">/kanvas #{currentSheet}</span>
+              {totalSheets > 1 && (
+                <span className="text-[9px] text-text-muted font-normal">/kanvas #{currentSheet}</span>
+              )}
             </span>
           )}
-          {totalCharStrokes > 0 && !isQuizComplete && (
+          {isQuizComplete && lastReward ? (
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-gold border border-gold/40 flex items-center gap-1 font-mono animate-scale-up shadow-sm">
+              <Sparkles className="w-3 h-3 text-gold" />
+              +{lastReward.expGained} EXP Belajar!
+            </span>
+          ) : totalCharStrokes > 0 && !isQuizComplete ? (
             <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-surface-inset border border-border-subtle text-text-primary">
               Goresan {Math.min(currentStrokeIndex + 1, totalCharStrokes)}/{totalCharStrokes}
             </span>
-          )}
+          ) : null}
           {mistakesCount > 0 && !isQuizComplete ? (
             <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-surface-inset text-rose-400 border border-rose-500/30 flex items-center gap-1 font-mono">
               Salah: {mistakesCount}
             </span>
-          ) : !totalCharStrokes ? (
+          ) : !totalCharStrokes && !isQuizComplete ? (
             <span className="text-[11px] text-text-muted font-heading">
               Area Menulis
             </span>
@@ -727,18 +774,10 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
             onClick={animateOrder}
             disabled={isAnimating || !hasStrokeData}
             className="w-full py-2.5 px-3 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-primary text-xs font-bold flex items-center justify-center gap-1.5 transition-colors border border-border-subtle hover:border-wine-accent/40 disabled:opacity-50 whitespace-nowrap shadow-sm select-none active:scale-95"
-            title={
-              currentStrokeIndex > 0
-                ? `Tampilkan animasi mulai dari goresan #${currentStrokeIndex + 1} sampai akhir`
-                : 'Tampilkan animasi goresan lengkap'
-            }
+            title="Tampilkan animasi goresan"
           >
             <PlayCircle className="w-4 h-4 text-wine-accent shrink-0" />
-            <span className="whitespace-nowrap">
-              {currentStrokeIndex > 0 && currentStrokeIndex < (totalCharStrokes || 8)
-                ? `Animasi #${currentStrokeIndex + 1}〜`
-                : 'Animasi'}
-            </span>
+            <span className="whitespace-nowrap">Animasi</span>
           </button>
 
           <button
@@ -758,7 +797,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
             onClick={completeCurrentSheet}
             disabled={(!isQuizComplete && hasStrokeData) && !completedSheets.includes(currentSheet)}
             className={`w-full py-3 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-md active:scale-95 select-none ${
-              isQuizComplete || completedSheets.includes(currentSheet)
+              isQuizComplete || completedSheets.includes(currentSheet) || !hasStrokeData
                 ? 'bg-wine-accent hover:opacity-95 text-white font-black shadow-lg shadow-wine-accent/25'
                 : 'bg-surface-inset text-text-muted cursor-not-allowed border border-border-subtle'
             }`}
@@ -767,7 +806,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
               currentSheet >= totalSheets ? (
                 <>
                   <Check className="w-4 h-4 text-surface-base stroke-[3]" />
-                  <span>Selesai (7/7)</span>
+                  <span>{totalSheets > 1 ? `Selesai (${totalSheets}/${totalSheets})` : 'Selesai Menulis'}</span>
                 </>
               ) : (
                 <>
@@ -778,7 +817,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
             ) : (
               <>
                 <Check className="w-4 h-4" />
-                <span>Simpan Sheet #{currentSheet}</span>
+                <span>{totalSheets > 1 ? `Simpan Sheet #${currentSheet}` : 'Selesai Menulis'}</span>
               </>
             )}
           </button>

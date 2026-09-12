@@ -7,13 +7,14 @@ import {
   GRAMMAR_CONNECTORS,
   findPatternBySymbol,
   findConnectorByToken,
+  findAuxiliaryByToken,
 } from '../data/conjugationBank';
 
 export interface FormulaToken {
   text: string;
-  type: 'pattern' | 'connector' | 'separator' | 'literal';
+  type: 'pattern' | 'auxiliary' | 'connector' | 'separator' | 'literal';
   linkedPatternId?: string;
-  linkedType?: 'conjugation' | 'connector';
+  linkedType?: 'conjugation' | 'auxiliary' | 'connector';
 }
 
 /**
@@ -37,7 +38,7 @@ const SEPARATORS = ['＋', '／', '→', '；', '・'];
 
 /**
  * Try to identify what kind of token a text fragment is
- * and link it to the conjugation bank.
+ * and link it to the conjugation bank or auxiliary inflection bank.
  */
 function classifyToken(text: string): FormulaToken[] {
   const trimmed = text.trim();
@@ -65,12 +66,24 @@ function classifyToken(text: string): FormulaToken[] {
         linkedType: 'conjugation',
       }];
       
-      const remainder = trimmed.slice(matchedText.length);
+      const remainder = trimmed.slice(matchedText.length).trim();
       if (remainder.length > 0) {
-        tokens.push({ text: remainder, type: 'literal' });
+        // Recursively classify the remainder (e.g. "いる" after "Vて", or "おく" after "Vて")
+        tokens.push(...classifyToken(remainder));
       }
       return tokens;
     }
+  }
+
+  // Check if it's an auxiliary sentence-ending verb (e.g. いる, ある, おく, しまう, みる, ください, れる, せる)
+  const auxId = findAuxiliaryByToken(trimmed);
+  if (auxId) {
+    return [{
+      text: trimmed,
+      type: 'auxiliary',
+      linkedPatternId: auxId,
+      linkedType: 'auxiliary',
+    }];
   }
 
   // Try to match as a grammar connector
@@ -95,9 +108,9 @@ function classifyToken(text: string): FormulaToken[] {
       linkedType: 'conjugation',
     }];
     
-    const remainder = trimmed.slice(matchedText.length);
+    const remainder = trimmed.slice(matchedText.length).trim();
     if (remainder.length > 0) {
-      tokens.push({ text: remainder, type: 'literal' });
+      tokens.push(...classifyToken(remainder));
     }
     return tokens;
   }
@@ -309,4 +322,48 @@ export function generateFormulaExplanation(tokens: FormulaToken[]): string {
   }
 
   return explanation.replace(/\s+/g, ' ');
+}
+
+/**
+ * Splits a composite formula string into distinct variants.
+ * Handles " / " or newlines as variant delimiters, but respects nested
+ * parentheses and brackets so expressions like "(~らしい / ようだ / みたいだ)"
+ * are not incorrectly split.
+ */
+export function splitFormulaVariants(formula: string): string[] {
+  if (!formula) return [];
+  const results: string[] = [];
+  let current = '';
+  let depthParen = 0;
+  let depthBracket = 0;
+
+  for (let i = 0; i < formula.length; i++) {
+    const char = formula[i];
+    if (char === '(' || char === '（') depthParen++;
+    else if (char === ')' || char === '）') depthParen = Math.max(0, depthParen - 1);
+    else if (char === '[' || char === '【') depthBracket++;
+    else if (char === ']' || char === '】') depthBracket = Math.max(0, depthBracket - 1);
+
+    // Check if we hit " / " at root depth
+    if (depthParen === 0 && depthBracket === 0 && formula.slice(i, i + 3) === ' / ') {
+      if (current.trim()) results.push(current.trim());
+      current = '';
+      i += 2; // skip " /"
+      continue;
+    }
+
+    if (char === '\n' && depthParen === 0 && depthBracket === 0) {
+      if (current.trim()) results.push(current.trim());
+      current = '';
+      continue;
+    }
+
+    current += char;
+  }
+
+  if (current.trim()) {
+    results.push(current.trim());
+  }
+
+  return results.length > 0 ? results : [formula];
 }

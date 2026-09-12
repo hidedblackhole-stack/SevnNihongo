@@ -135,7 +135,11 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
           compiled.push({
             id: `boss_kt_${kt.id}`,
             category: 'kotoba',
-            prompt: `Pilih arti yang tepat untuk kosakata: 「${kt.word}」 (${kt.reading})`,
+            instruction: '次の言葉の意味として最も適切なものを一つ選びなさい。',
+            instructionId: 'Pilihlah arti yang paling tepat untuk kosakata berikut.',
+            prompt: kt.word,
+            ruby: kt.reading,
+            translation: kt.meaningId,
             options: shuffledOpts,
             correctIndex: correctIdx,
             explanation: `Kosakata 「${kt.word}」 (${kt.reading}) = ${kt.meaningId}`

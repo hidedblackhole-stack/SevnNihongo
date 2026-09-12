@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Filter, GitBranch, ChevronDown, Bookmark } from 'lucide-react';
+import { Search, Filter, ChevronDown, Bookmark, LayoutGrid, List } from 'lucide-react';
 import { ScrollIcon } from '../ui/EngravingIcons';
 import { BUNPOU_DATABASE } from '../../data/bunpou';
 import { ALL_GRAMMAR_FUNCTION_CATEGORIES } from '../../data/bunpouMetadata';
@@ -8,6 +8,8 @@ import { BunpouDetailModal } from './BunpouDetailModal';
 import { playSound } from '../../utils/audio';
 import { UserDeck } from '../../types/rpg';
 import { isItemBookmarked } from '../../utils/decks';
+import { getCanonicalGrammarTitle } from '../../utils/bunpouTitleUtils';
+import { matchBunpouItem } from '../../utils/bunpouSearchUtils';
 
 const LEVEL_OPTIONS = [
   { value: 'all', label: 'Semua Level' },
@@ -21,7 +23,7 @@ const LEVEL_OPTIONS = [
 interface BunpouLibraryViewProps {
   soundEnabled?: boolean;
   userDecks?: UserDeck[];
-  onToggleBookmark?: (id: string, category: 'bunpou', notes?: string) => void;
+  onToggleBookmark?: (id: string, category: 'bunpou', notes?: string, targetDeckId?: string) => void;
 }
 
 export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
@@ -35,6 +37,23 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [functionFilter, setFunctionFilter] = useState<string>('Semua Fungsi');
   const [selectedItem, setSelectedItem] = useState<BunpouItem | null>(null);
+  const [viewMode, setViewMode] = useState<'cards' | 'compact'>(() => {
+    try {
+      const saved = localStorage.getItem('bunpou_library_view_mode');
+      return saved === 'compact' ? 'compact' : 'cards';
+    } catch {
+      return 'cards';
+    }
+  });
+
+  const handleSetViewMode = (mode: 'cards' | 'compact') => {
+    setViewMode(mode);
+    try {
+      localStorage.setItem('bunpou_library_view_mode', mode);
+    } catch {
+      // ignore
+    }
+  };
 
   const allBunpou = useMemo(() => Object.values(BUNPOU_DATABASE), []);
 
@@ -68,16 +87,9 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
         if (!matchesCategory) return false;
       }
 
-      // 3. Text Search Query
+      // 3. Text Search Query (supports formula, variants, canonical title, romaji, meaning, and function categories)
       if (!searchQuery.trim()) return true;
-      const q = searchQuery.toLowerCase().trim();
-
-      const titleMatch = item.title.toLowerCase().includes(q);
-      const meaningMatch = item.meaningId?.toLowerCase().includes(q);
-      const formulaMatch = item.formula?.toLowerCase().includes(q);
-      const functionMatch = item.functions?.some(fn => fn.toLowerCase().includes(q));
-
-      return titleMatch || meaningMatch || formulaMatch || functionMatch;
+      return matchBunpouItem(item, searchQuery);
     });
   }, [allBunpou, levelFilter, functionFilter, searchQuery]);
 
@@ -119,7 +131,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
           <input
             type="text"
-            placeholder="Cari rumus (みたいだ、わけ、らしい), romaji, arti, atau fungsi..."
+            placeholder="Cari rumus (Vる+ように、Vている、みたいだ), romaji, arti, atau fungsi..."
             value={searchQuery}
             onChange={(e) => {
               setSearchQuery(e.target.value);
@@ -221,99 +233,169 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
         </div>
       </div>
 
-      {/* Results Count */}
-      <div className="text-xs text-text-muted px-1 flex items-center justify-between">
-        <span>Menampilkan <strong className="text-text-primary">{displayedBunpou.length}</strong> dari <strong className="text-text-primary">{filteredBunpou.length}</strong> pola</span>
-      </div>
+      {/* Results Count & View Mode Switcher */}
+      <div className="text-xs text-text-muted px-1 flex items-center justify-between gap-3">
+        <span>
+          Menampilkan <strong className="text-text-primary">{displayedBunpou.length}</strong> dari <strong className="text-text-primary">{filteredBunpou.length}</strong> pola
+        </span>
 
-      {/* Grammar Cards Grid: Antique Washi Karuta Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4">
-        {displayedBunpou.map((item) => (
-          <div
-            key={item.id}
+        {/* Mode Switcher: Cards vs Compact List */}
+        <div className="flex items-center gap-1 bg-surface-card p-1 rounded-xl border border-border-subtle shrink-0">
+          <button
+            type="button"
             onClick={() => {
-              setSelectedItem(item);
+              handleSetViewMode('cards');
               playSound('click', soundEnabled);
             }}
-            className="panel flex flex-col justify-between p-4 sm:p-5 group shadow-sm hover:shadow-md transition-all cursor-pointer rounded-2xl border border-border-subtle hover:border-border-primary space-y-3"
+            title="Tampilan Kartu Lengkap"
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
+              viewMode === 'cards'
+                ? 'bg-surface-elevated text-text-primary shadow-sm border border-border-primary'
+                : 'text-text-secondary hover:text-text-primary border border-transparent'
+            }`}
           >
-            {/* Top row: Level + Function Tags + Bookmark */}
-            <div className="space-y-2">
-              <div className="flex items-center justify-between gap-2">
-                <div className="flex flex-wrap items-center gap-1.5">
-                  <span className="px-2 py-0.5 rounded-lg bg-surface-inset text-text-primary text-[10px] font-mono font-bold border border-border-subtle">
-                    {item.baseLevel ? `Fondasi ${item.baseLevel}` : `Level ${item.level}`}
-                  </span>
-                  {item.functions?.slice(0, 2).map((fn, idx) => (
-                    <span key={idx} className="px-2 py-0.5 rounded-lg bg-surface-inset text-text-secondary text-[10px] font-jp border border-border-subtle">
-                      {fn}
-                    </span>
-                  ))}
-                </div>
-
-                {onToggleBookmark && (
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onToggleBookmark(item.id, 'bunpou');
-                      playSound('click', soundEnabled);
-                    }}
-                    className={`p-1.5 rounded-lg border transition-all shrink-0 ${
-                      isItemBookmarked(userDecks, item.id, 'bunpou')
-                        ? 'bg-surface-elevated text-gold border-gold/40 ring-1 ring-gold/30'
-                        : 'bg-surface-inset text-text-muted hover:text-gold border-border-subtle'
-                    }`}
-                    title={isItemBookmarked(userDecks, item.id, 'bunpou') ? 'Tersimpan di Buku Saku' : 'Simpan ke Buku Saku'}
-                  >
-                    <Bookmark className={`w-3.5 h-3.5 ${isItemBookmarked(userDecks, item.id, 'bunpou') ? 'fill-gold text-gold' : ''}`} />
-                  </button>
-                )}
-              </div>
-
-              {/* Title & Meaning */}
-              <div>
-                <h3 className="text-lg sm:text-xl font-bold text-text-primary font-heading transition-colors leading-snug">
-                  {item.title}
-                </h3>
-                <p className="text-xs sm:text-sm font-semibold text-text-secondary line-clamp-1 pt-0.5">
-                  {item.meaningId}
-                </p>
-              </div>
-
-              {/* Formula Preview */}
-              <div className="p-2.5 rounded-xl bg-surface-inset border border-border-subtle font-mono text-xs text-text-primary line-clamp-1">
-                📐 {item.formula}
-              </div>
-
-              {/* Nuance or Description */}
-              {item.nuance && (
-                <div className="text-xs text-text-secondary line-clamp-2 pt-0.5">
-                  <span className="text-[11px] leading-relaxed text-text-muted">
-                    {item.nuance}
-                  </span>
-                </div>
-              )}
-            </div>
-
-            {/* Bottom Row: Sub-formulas count / preview */}
-            <div className="pt-2 border-t border-border-subtle flex items-center justify-between text-[11px] text-text-muted">
-              {item.subFormulas && item.subFormulas.length > 0 ? (
-                <div className="flex items-center gap-1 text-text-secondary font-medium">
-                  <GitBranch className="w-3 h-3" />
-                  <span>{item.subFormulas.length} Cabang Sub-Rumus</span>
-                </div>
-              ) : (
-                <span>1 Rumus Standar</span>
-              )}
-
-              <span className="text-text-secondary group-hover:text-text-primary font-bold group-hover:translate-x-0.5 transition-all">
-                Lihat Detail & Rumus →
-              </span>
-            </div>
-          </div>
-        ))}
+            <LayoutGrid className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Kartu</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              handleSetViewMode('compact');
+              playSound('click', soundEnabled);
+            }}
+            title="Tampilan Daftar Ringkas"
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
+              viewMode === 'compact'
+                ? 'bg-surface-elevated text-text-primary shadow-sm border border-border-primary'
+                : 'text-text-secondary hover:text-text-primary border border-transparent'
+            }`}
+          >
+            <List className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Ringkas</span>
+          </button>
+        </div>
       </div>
+
+      {viewMode === 'compact' ? (
+        /* Compact List View: Fast scanning dictionary-style */
+        <div className="space-y-2">
+          {displayedBunpou.map((item) => {
+            const patternTitle = getCanonicalGrammarTitle(item);
+            return (
+              <div
+                key={item.id}
+                onClick={() => {
+                  setSelectedItem(item);
+                  playSound('click', soundEnabled);
+                }}
+                className="panel px-3.5 sm:px-4 py-2.5 sm:py-3 group shadow-sm hover:shadow-md transition-all cursor-pointer rounded-2xl border border-border-subtle hover:border-indigo/40 flex items-center justify-between gap-3 sm:gap-4"
+              >
+                {/* Left: Badge + Clean Title + Meaning */}
+                <div className="flex items-center gap-3 min-w-0 flex-1">
+                  <span className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg sm:rounded-xl bg-surface-inset text-indigo text-[11px] sm:text-xs font-mono font-bold border border-indigo/20 shrink-0">
+                    {item.baseLevel ? item.baseLevel : item.level}
+                  </span>
+
+                  <div className="min-w-0 flex-1 flex flex-col sm:flex-row sm:items-baseline sm:gap-3">
+                    <h3 className="text-base sm:text-lg font-bold text-text-primary font-heading group-hover:text-indigo transition-colors shrink-0 font-jp">
+                      {patternTitle}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-text-secondary truncate font-medium">
+                      {item.meaningId}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Right: Bookmark + Arrow */}
+                <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+                  {onToggleBookmark && (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onToggleBookmark(item.id, 'bunpou');
+                        playSound('click', soundEnabled);
+                      }}
+                      className={`p-1.5 rounded-lg border transition-all shrink-0 ${
+                        isItemBookmarked(userDecks, item.id, 'bunpou')
+                          ? 'bg-surface-elevated text-gold border-gold/40 ring-1 ring-gold/30'
+                          : 'bg-surface-inset text-text-muted hover:text-gold border-border-subtle'
+                      }`}
+                      title={isItemBookmarked(userDecks, item.id, 'bunpou') ? 'Tersimpan di Buku Saku' : 'Simpan ke Buku Saku'}
+                    >
+                      <Bookmark className={`w-3.5 h-3.5 ${isItemBookmarked(userDecks, item.id, 'bunpou') ? 'fill-gold text-gold' : ''}`} />
+                    </button>
+                  )}
+                  <span className="text-text-muted group-hover:text-indigo group-hover:translate-x-0.5 transition-all text-sm font-bold pl-0.5">
+                    →
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        /* Clean & Elegant Cards Grid */
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4">
+          {displayedBunpou.map((item) => {
+            const patternTitle = getCanonicalGrammarTitle(item);
+
+            return (
+              <div
+                key={item.id}
+                onClick={() => {
+                  setSelectedItem(item);
+                  playSound('click', soundEnabled);
+                }}
+                className="panel flex flex-col justify-between p-4 sm:p-5 group shadow-sm hover:shadow-md transition-all cursor-pointer rounded-2xl border border-border-subtle hover:border-indigo/40 space-y-3.5"
+              >
+                {/* Top row: Level Badge + Bookmark */}
+                <div className="flex items-center justify-between gap-2">
+                  <span className="px-2.5 py-1 rounded-xl bg-surface-inset text-indigo text-xs font-mono font-bold border border-indigo/20 shadow-sm">
+                    {item.baseLevel ? `Level ${item.baseLevel}` : `Level ${item.level}`}
+                  </span>
+
+                  {onToggleBookmark && (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onToggleBookmark(item.id, 'bunpou');
+                        playSound('click', soundEnabled);
+                      }}
+                      className={`p-1.5 rounded-lg border transition-all shrink-0 ${
+                        isItemBookmarked(userDecks, item.id, 'bunpou')
+                          ? 'bg-surface-elevated text-gold border-gold/40 ring-1 ring-gold/30'
+                          : 'bg-surface-inset text-text-muted hover:text-gold border-border-subtle'
+                      }`}
+                      title={isItemBookmarked(userDecks, item.id, 'bunpou') ? 'Tersimpan di Buku Saku' : 'Simpan ke Buku Saku'}
+                    >
+                      <Bookmark className={`w-3.5 h-3.5 ${isItemBookmarked(userDecks, item.id, 'bunpou') ? 'fill-gold text-gold' : ''}`} />
+                    </button>
+                  )}
+                </div>
+
+                {/* Main: Clean Title & Meaning */}
+                <div className="space-y-1.5 py-0.5">
+                  <h3 className="text-xl sm:text-2xl font-bold text-text-primary font-heading group-hover:text-indigo transition-colors leading-snug font-jp">
+                    {patternTitle}
+                  </h3>
+                  <p className="text-xs sm:text-sm font-medium text-text-secondary line-clamp-2 leading-relaxed">
+                    {item.meaningId}
+                  </p>
+                </div>
+
+                {/* Bottom: Action CTA */}
+                <div className="pt-2.5 border-t border-border-subtle flex items-center justify-end">
+                  <span className="text-xs font-bold text-indigo group-hover:text-indigo/80 group-hover:translate-x-0.5 transition-all flex items-center gap-1 font-heading">
+                    Lihat Detail & Rumus →
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
 
 
       {/* Empty State */}
@@ -344,6 +426,8 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
           soundEnabled={soundEnabled}
           isBookmarked={Boolean(isItemBookmarked(userDecks, selectedItem.id, 'bunpou'))}
           onToggleBookmark={onToggleBookmark ? () => onToggleBookmark(selectedItem.id, 'bunpou') : undefined}
+          userDecks={userDecks}
+          onToggleDeckItem={onToggleBookmark && selectedItem ? (deckId) => onToggleBookmark(selectedItem.id, 'bunpou', undefined, deckId) : undefined}
         />
       )}
     </div>

@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Volume2, RotateCcw, CheckCircle2, XCircle, ArrowRight, ArrowLeft, Trophy, Sparkles } from 'lucide-react';
+import { X, Volume2, RotateCcw, RotateCw, ArrowRight, ArrowLeft, Trophy, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { UserDeck } from '../../types/rpg';
 import { ResolvedDeckItem, resolveDeckItem } from '../../utils/decks';
@@ -12,6 +12,14 @@ interface DeckFlashcardRunnerProps {
   deck: UserDeck;
   onClose: () => void;
   onReward?: (exp: number, gold: number) => void;
+  onCompleteStudyItem?: (
+    moduleId: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss' | 'questions' | 'tryOuts',
+    expGained: number,
+    goldGained: number,
+    itemId?: string,
+    score?: number,
+    total?: number
+  ) => void;
   soundEnabled?: boolean;
 }
 
@@ -19,6 +27,7 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
   deck,
   onClose,
   onReward,
+  onCompleteStudyItem,
   soundEnabled = true,
 }) => {
   // Resolve items
@@ -40,7 +49,7 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
 
   const currentItem = queue[currentIndex];
 
-  const handleNext = (mastered: boolean) => {
+  const handleNext = () => {
     playSound('click', soundEnabled);
     setIsFlipped(false);
 
@@ -53,20 +62,15 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
     } else if (currentItem?.category === 'bunpou' && currentItem.bunpou) {
       baseExp = getBunpouBaseExp(currentItem.bunpou);
     }
-    const reward = calculateFlashcardReward(baseExp, mastered);
+    const reward = calculateFlashcardReward(baseExp, true);
     const newExp = accumulatedExp + reward.expGained;
     const newGold = accumulatedGold + reward.goldGained;
     setAccumulatedExp(newExp);
     setAccumulatedGold(newGold);
 
-    if (mastered) {
-      setMasteredCount(prev => prev + 1);
-    } else {
-      setReviewCount(prev => prev + 1);
-      // Re-queue item at the end of the session for reinforcement
-      if (currentItem) {
-        setQueue(prev => [...prev, currentItem]);
-      }
+    if (currentItem && onCompleteStudyItem) {
+      const mod = currentItem.category === 'kanji' ? 'kanji' : (currentItem.category === 'bunpou' ? 'bunpou' : 'kotoba');
+      onCompleteStudyItem(mod, reward.expGained, reward.goldGained, currentItem.ref.id, 1, 1);
     }
 
     if (currentIndex + 1 >= queue.length) {
@@ -85,7 +89,7 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
       const earnedExp = Math.max(15, newExp);
       const earnedGold = Math.max(5, newGold);
       setFinalRewards({ exp: earnedExp, gold: earnedGold });
-      if (onReward) {
+      if (onReward && !onCompleteStudyItem) {
         onReward(earnedExp, earnedGold);
       }
     } else {
@@ -185,16 +189,10 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
               </p>
             </div>
 
-            {/* Score Stats */}
-            <div className="grid grid-cols-2 gap-3 py-2">
-              <div className="p-3 rounded-2xl bg-surface-inset border border-border-subtle">
-                <span className="text-[10px] font-mono text-text-muted uppercase">Paham Langsung</span>
-                <p className="text-lg font-bold font-mono text-text-primary">{masteredCount}</p>
-              </div>
-              <div className="p-3 rounded-2xl bg-surface-inset border border-border-subtle">
-                <span className="text-[10px] font-mono text-text-muted uppercase">Perlu Diulang</span>
-                <p className="text-lg font-bold font-mono text-text-secondary">{reviewCount}</p>
-              </div>
+            {/* Completion Stats */}
+            <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle text-center">
+              <span className="text-xs font-mono text-text-muted uppercase">Total Kartu Dipelajari</span>
+              <p className="text-2xl font-black font-heading text-text-primary mt-1">{queue.length} Materi</p>
             </div>
 
             {/* Dynamic EXP & Gold Reward Banner */}
@@ -667,66 +665,36 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
             </div>
 
             {/* Bottom Card Controls */}
-            <div className="w-full space-y-3 pt-2">
-              {/* If Flipped: Assessment Buttons (Belum Hafal vs Sudah Paham) */}
-              {isFlipped ? (
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="grid grid-cols-2 gap-3 w-full"
+            <div className="w-full pt-2">
+              <div className="flex items-center justify-between gap-3 w-full">
+                <button
+                  onClick={handlePrev}
+                  disabled={currentIndex === 0}
+                  className="flex-1 py-3 px-3 sm:px-4 rounded-2xl bg-surface-card border border-border-subtle hover:bg-surface-elevated text-text-secondary hover:text-text-primary font-heading font-bold text-xs flex items-center justify-center gap-1.5 sm:gap-2 transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-sm"
                 >
-                  <button
-                    onClick={() => handleNext(false)}
-                    className="py-3 px-4 rounded-2xl bg-surface-card border border-wine-accent/40 hover:bg-surface-elevated text-text-primary flex items-center justify-center gap-2 font-heading font-bold text-xs transition-all shadow-md hover:scale-[1.01]"
-                  >
-                    <XCircle className="w-4 h-4 text-wine-accent" />
-                    <span>Belum Hafal (Ulangi)</span>
-                  </button>
+                  <ArrowLeft className="w-4 h-4" />
+                  <span>Sebelumnya</span>
+                </button>
 
-                  <button
-                    onClick={() => handleNext(true)}
-                    className="py-3 px-4 rounded-2xl btn-cta text-text-primary flex items-center justify-center gap-2 font-heading font-bold text-xs transition-all shadow-md hover:scale-[1.01]"
-                  >
-                    <CheckCircle2 className="w-4 h-4 text-gold" />
-                    <span>Sudah Paham (+EXP)</span>
-                  </button>
-                </motion.div>
-              ) : (
-                <div className="flex items-center justify-between gap-3 w-full">
-                  <button
-                    onClick={handlePrev}
-                    disabled={currentIndex === 0}
-                    className="flex-1 py-3 px-4 rounded-2xl bg-surface-card border border-border-subtle hover:bg-surface-elevated text-text-secondary hover:text-text-primary font-heading font-bold text-xs flex items-center justify-center gap-2 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-                  >
-                    <ArrowLeft className="w-4 h-4" />
-                    <span>Sebelumnya</span>
-                  </button>
+                <button
+                  onClick={() => {
+                    setIsFlipped(prev => !prev);
+                    playSound('click', soundEnabled);
+                  }}
+                  className="flex-1 py-3 px-3 sm:px-4 rounded-2xl bg-surface-inset hover:bg-surface-elevated border border-border-subtle text-text-primary font-heading font-bold text-xs flex items-center justify-center gap-1.5 sm:gap-2 transition-all shadow-sm"
+                >
+                  <RotateCw className="w-3.5 h-3.5 text-gold" />
+                  <span>{isFlipped ? 'Tutup Arti' : 'Balik Kartu'}</span>
+                </button>
 
-                  <button
-                    onClick={() => {
-                      setIsFlipped(true);
-                      playSound('click', soundEnabled);
-                    }}
-                    className="flex-1 py-3 px-4 rounded-2xl btn-cta text-text-primary font-heading font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-md hover:scale-[1.01]"
-                  >
-                    <span>Balik Kartu (Lihat Arti)</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                </div>
-              )}
-
-              {/* Auxiliary Previous link when flipped */}
-              {isFlipped && currentIndex > 0 && (
-                <div className="flex justify-center">
-                  <button
-                    onClick={handlePrev}
-                    className="text-[11px] text-text-muted hover:text-text-primary font-mono flex items-center gap-1 transition-colors"
-                  >
-                    <ArrowLeft className="w-3 h-3" />
-                    <span>Kembali ke kartu sebelumnya</span>
-                  </button>
-                </div>
-              )}
+                <button
+                  onClick={handleNext}
+                  className="flex-1 py-3 px-3 sm:px-4 rounded-2xl btn-cta text-text-primary font-heading font-bold text-xs flex items-center justify-center gap-1.5 sm:gap-2 transition-all shadow-md hover:scale-[1.01]"
+                >
+                  <span>{currentIndex + 1 === queue.length ? 'Selesai' : 'Berikutnya'}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </div>
         )}

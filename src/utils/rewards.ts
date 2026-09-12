@@ -119,6 +119,7 @@ export interface WritingRewardResult {
   expGained: number;
   goldGained: number;
   multiplier: number;
+  bonusReasons: string[];
   breakdown: {
     baseExp: number;
     blindRecallBonus: boolean;
@@ -130,22 +131,39 @@ export interface WritingRewardResult {
   };
 }
 
-export function calculateWritingReward(options: WritingPerformanceOptions): WritingRewardResult {
+export function calculateWritingReward(
+  optionsOrBaseExp: WritingPerformanceOptions | number,
+  maybeOptions?: Partial<WritingPerformanceOptions> & { mistakes?: number }
+): WritingRewardResult {
+  const options: WritingPerformanceOptions =
+    typeof optionsOrBaseExp === 'number'
+      ? {
+          baseExp: optionsOrBaseExp,
+          mistakesCount: maybeOptions?.mistakesCount ?? maybeOptions?.mistakes ?? 0,
+          watermarkUsed: maybeOptions?.watermarkUsed ?? false,
+          animationCount: maybeOptions?.animationCount ?? 0,
+          elapsedSeconds: maybeOptions?.elapsedSeconds ?? 0,
+          strokeCount: maybeOptions?.strokeCount ?? 6,
+        }
+      : optionsOrBaseExp;
+
   const {
-    baseExp,
-    mistakesCount,
-    watermarkUsed,
-    animationCount,
-    elapsedSeconds,
+    baseExp = 10,
+    mistakesCount = 0,
+    watermarkUsed = false,
+    animationCount = 0,
+    elapsedSeconds = 0,
     strokeCount = 6,
   } = options;
 
   let multiplier = 1.2; // Base Writing Multiplier
+  const bonusReasons: string[] = [];
 
   // 1. Watermark Guide Bonus
   const blindRecallBonus = !watermarkUsed;
   if (blindRecallBonus) {
     multiplier += 0.35; // +35% for pure memory writing without tracing
+    bonusReasons.push('Tanpa Panduan (+35%)');
   }
 
   // 2. Animation Hint Bonus / Penalty
@@ -153,6 +171,7 @@ export function calculateWritingReward(options: WritingPerformanceOptions): Writ
   let animationPenalty = 0;
   if (noAnimationBonus) {
     multiplier += 0.25; // +25% for knowing stroke order without checking animation
+    bonusReasons.push('Tanpa Animasi (+25%)');
   } else if (animationCount > 1) {
     animationPenalty = Math.min(0.2, (animationCount - 1) * 0.08);
     multiplier -= animationPenalty;
@@ -163,6 +182,7 @@ export function calculateWritingReward(options: WritingPerformanceOptions): Writ
   let mistakesPenalty = 0;
   if (perfectStrokesBonus) {
     multiplier += 0.25; // +25% for flawless stroke execution
+    bonusReasons.push('Goresan Sempurna (+25%)');
   } else if (mistakesCount >= 3) {
     mistakesPenalty = Math.min(0.3, (mistakesCount - 2) * 0.05);
     multiplier -= mistakesPenalty;
@@ -175,17 +195,19 @@ export function calculateWritingReward(options: WritingPerformanceOptions): Writ
   const focusTimeBonus = elapsedSeconds >= minSensibleTime && elapsedSeconds <= maxSensibleTime;
   if (focusTimeBonus) {
     multiplier += 0.10;
+    bonusReasons.push('Fokus Cepat (+10%)');
   }
 
-  // Clamp multiplier to a reasonable range [0.6x to 2.25x]
-  const finalMultiplier = Math.max(0.6, Math.min(2.25, multiplier));
-  const expGained = Math.max(5, Math.round(baseExp * finalMultiplier));
-  const goldGained = Math.max(3, Math.round(expGained * 0.5));
+  // Sandbox Mode: Pure Base EXP of the component is retained
+  const expGained = baseExp;
+  const goldGained = 0;
+  const finalMultiplier = 1.0;
 
   return {
     expGained,
     goldGained,
-    multiplier: Number(finalMultiplier.toFixed(2)),
+    multiplier: finalMultiplier,
+    bonusReasons,
     breakdown: {
       baseExp,
       blindRecallBonus,
@@ -199,24 +221,17 @@ export function calculateWritingReward(options: WritingPerformanceOptions): Writ
 }
 
 /**
- * Flashcard event reward calculation.
- * Formula: Base EXP * 0.35 * (isMastered ? 1.0 : 0.5)
+ * Flashcard event reward calculation: Pure Base EXP.
  */
-export function calculateFlashcardReward(baseExp: number, isMastered: boolean): {
+export function calculateFlashcardReward(baseExp: number, _isMastered: boolean): {
   expGained: number;
   goldGained: number;
 } {
-  const flashcardBaseMultiplier = 0.35;
-  const masteryMultiplier = isMastered ? 1.0 : 0.5;
-
-  const expGained = Math.max(3, Math.round(baseExp * flashcardBaseMultiplier * masteryMultiplier));
-  const goldGained = Math.max(2, Math.round(expGained * 0.4));
-
-  return { expGained, goldGained };
+  return { expGained: baseExp, goldGained: 0 };
 }
 
 /**
- * Quiz & Question Bank reward calculation based on JLPT level and accuracy.
+ * Quiz & Question Bank reward calculation based on component Base EXP.
  */
 export function calculateQuizReward(options: {
   level?: string;
@@ -234,23 +249,12 @@ export function calculateQuizReward(options: {
   const accuracy = totalQuestions > 0 ? correctCount / totalQuestions : 0;
   const accuracyPercentage = Math.round(accuracy * 100);
 
-  let accuracyBonusMultiplier = 1.0;
-  if (accuracy === 1.0) {
-    accuracyBonusMultiplier = 1.3; // +30% Perfect Score
-  } else if (accuracy >= 0.8) {
-    accuracyBonusMultiplier = 1.1; // +10% High Mastery
-  } else if (accuracy < 0.6) {
-    accuracyBonusMultiplier = 0.8;
-  }
-
-  const baseTotal = correctCount * basePerQuestion;
-  const expGained = Math.max(10, Math.round(baseTotal * accuracyBonusMultiplier));
-  const goldGained = Math.max(5, Math.round(expGained * 0.5));
+  const expGained = correctCount * basePerQuestion;
 
   return {
     expGained,
-    goldGained,
+    goldGained: 0,
     accuracyPercentage,
-    accuracyBonusMultiplier,
+    accuracyBonusMultiplier: 1.0,
   };
 }

@@ -173,15 +173,22 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
       const sortedCandidates = [...poolCandidates].sort((a, b) => getSimilarityScore(b) - getSimilarityScore(a));
       const topCandidates = sortedCandidates.slice(0, 10);
 
-      // Randomize question type (0 = JP->ID, 1 = ID->JP, 2 = ID->Reading/Spelling)
+      // Randomize question type (0 = JP->ID, 1 = Example Context/JP word, 2 = Kanji->Reading)
       const qType = Math.floor(Math.random() * 3);
 
+      let instruction = '';
+      let instructionId = '';
       let prompt = '';
+      let ruby: string | undefined = undefined;
+      let translation = item.meaningId;
       let correctAns = '';
       let distractors: string[] = [];
 
       if (qType === 0) {
-        prompt = `Apa arti dari kata berikut?\n\n${item.word}`;
+        instruction = '次の言葉の意味として最も適切なものを一つ選びなさい。';
+        instructionId = 'Pilihlah arti yang paling tepat untuk kosakata berikut.';
+        prompt = item.word;
+        ruby = item.reading;
         correctAns = item.meaningId;
         
         let candStrings = [];
@@ -190,12 +197,27 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
         else candStrings = topCandidates.map(c => c.meaningId);
         
         distractors = Array.from(new Set(candStrings)).slice(0, 3);
+      } else if (qType === 1 && item.exampleSentence) {
+        instruction = '（　）に入れるのに最も適した言葉を一つ選びなさい。';
+        instructionId = 'Lengkapilah kalimat berikut dengan kosakata yang tepat.';
+        prompt = item.exampleSentence.japanese.replace(item.word, '（　）');
+        ruby = item.exampleSentence.reading ? item.exampleSentence.reading.replace(item.reading || item.word, '（　）') : undefined;
+        translation = item.exampleSentence.meaningId;
+        correctAns = item.word;
+        distractors = Array.from(new Set(topCandidates.map(c => c.word))).slice(0, 3);
       } else if (qType === 1) {
-        prompt = `Bahasa Jepang yang tepat untuk:\n\n"${item.meaningId}"`;
+        instruction = '次の意味を表す日本語として最も適切なものを一つ選びなさい。';
+        instructionId = 'Pilihlah bahasa Jepang yang tepat untuk arti berikut.';
+        prompt = item.word;
+        ruby = item.reading;
         correctAns = item.word;
         distractors = Array.from(new Set(topCandidates.map(c => c.word))).slice(0, 3);
       } else {
-        prompt = `Pilih cara penulisan/bacaan yang tepat untuk kata:\n\n"${item.meaningId}"`;
+        instruction = '___の言葉の正しい読み方（ひらがな）を一つ選びなさい。';
+        instructionId = 'Pilihlah cara baca (hiragana) yang benar untuk kosakata berikut.';
+        prompt = item.word;
+        // In reading quiz, do not give ruby on tested word so learner can test recall
+        ruby = undefined;
         correctAns = item.reading || item.word;
         distractors = Array.from(new Set(topCandidates.map(c => c.reading || c.word))).slice(0, 3);
       }
@@ -204,11 +226,11 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
       const fallbacks = [
         ['Melakukan kegiatan harian', 'Menyatakan keadaan', 'Kondisi saat ini'],
         ['たべる', 'のむ', 'いく'],
-        ['taberu', 'nomu', 'iku']
+        ['たべる', 'のむ', 'いく']
       ][qType];
       
       while (distractors.length < 3) {
-        distractors.push(fallbacks[distractors.length]);
+        distractors.push(fallbacks[distractors.length] || 'たべる');
       }
 
       const options = [correctAns, ...distractors].sort(() => 0.5 - Math.random());
@@ -216,8 +238,12 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
 
       return {
         id: `kotoba_q_${item.id}_${qType}`,
+        instruction,
+        instructionId,
         prompt,
-        audioPrompt: qType === 0 ? item.word : undefined,
+        ruby,
+        translation,
+        audioPrompt: item.word,
         options,
         correctIndex,
         explanation: `Kata 「${item.word}」 (${item.reading || item.word}) memiliki arti "${item.meaningId}".`

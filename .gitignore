@@ -11,3 +11,4 @@ raw_data/
 Ocr JLPT/
 scratch/
 .vscode/
+*.bak

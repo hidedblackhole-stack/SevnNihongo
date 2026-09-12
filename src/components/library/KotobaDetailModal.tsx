@@ -1,12 +1,15 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Volume2, Layers, Link as LinkIcon, Network, Edit3, Bookmark } from 'lucide-react';
+import { X, Volume2, Layers, Link as LinkIcon, Network, Edit3, Bookmark, ChevronLeft, ChevronRight } from 'lucide-react';
 import { BookIcon } from '../ui/EngravingIcons';
 import { KotobaItem } from '../../types/content';
 import { playSound, speakJapanese } from '../../utils/audio';
 import { RubyText } from '../learning/RubyText';
 import { KOTOBA_DATABASE } from '../../data/kotoba';
 import { KotobaWritingPractice } from '../learning/KotobaWritingPractice';
+
+import { UserDeck } from '../../types/rpg';
+import { DeckBookmarkPicker } from '../deck/DeckBookmarkPicker';
 
 interface KotobaDetailModalProps {
   isOpen: boolean;
@@ -15,6 +18,22 @@ interface KotobaDetailModalProps {
   soundEnabled?: boolean;
   isBookmarked?: boolean;
   onToggleBookmark?: () => void;
+  userDecks?: UserDeck[];
+  onToggleDeckItem?: (deckId: string) => void;
+  onNext?: () => void;
+  onPrev?: () => void;
+  hasNext?: boolean;
+  hasPrev?: boolean;
+  onRewardPlayer?: (exp: number, gold: number) => void;
+  onRecordStudy?: (category: 'flashcards', id: string, count?: number) => void;
+  onCompleteStudyItem?: (
+    moduleId: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss' | 'questions' | 'tryOuts',
+    expGained: number,
+    goldGained: number,
+    itemId?: string,
+    score?: number,
+    total?: number
+  ) => void;
 }
 
 export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
@@ -24,12 +43,23 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
   soundEnabled = true,
   isBookmarked = false,
   onToggleBookmark,
+  userDecks,
+  onToggleDeckItem,
+  onNext,
+  onPrev,
+  hasNext = false,
+  hasPrev = false,
+  onRewardPlayer,
+  onRecordStudy,
+  onCompleteStudyItem,
 }) => {
   const [isWritingMode, setIsWritingMode] = useState(false);
 
   useEffect(() => {
-    setIsWritingMode(false);
-  }, [item?.id]);
+    if (!isOpen) {
+      setIsWritingMode(false);
+    }
+  }, [isOpen]);
 
   // Dynamically compute related words based on shared Kanji components
   const dynamicRelatedWords = useMemo(() => {
@@ -80,23 +110,43 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
               Detail Kosakata
             </h3>
             <div className="flex items-center gap-1.5">
-              {onToggleBookmark && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    onToggleBookmark();
-                    playSound('click', soundEnabled);
-                  }}
-                  className={`p-1.5 rounded-xl border transition-all ${
-                    isBookmarked
-                      ? 'bg-surface-elevated text-gold border-gold/40 ring-1 ring-gold/30'
-                      : 'bg-surface-card border-border-subtle text-text-muted hover:text-gold'
-                  }`}
-                  title={isBookmarked ? 'Tersimpan di Buku Saku' : 'Simpan ke Buku Saku'}
-                >
-                  <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-gold text-gold' : ''}`} />
-                </button>
+              {(onPrev || onNext) && (
+                <div className="flex items-center gap-1 mr-1 border-r border-border-subtle pr-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onPrev?.();
+                      playSound('click', soundEnabled);
+                    }}
+                    disabled={!hasPrev}
+                    className="p-1.5 rounded-xl border border-border-subtle bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-text-primary disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                    title="Kata Sebelumnya"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onNext?.();
+                      playSound('click', soundEnabled);
+                    }}
+                    disabled={!hasNext}
+                    className="p-1.5 rounded-xl border border-border-subtle bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-text-primary disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                    title="Kata Berikutnya"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
               )}
+              <DeckBookmarkPicker
+                itemId={item.id}
+                category="kotoba"
+                userDecks={userDecks}
+                onToggleDeckItem={onToggleDeckItem}
+                isDefaultBookmarked={isBookmarked}
+                onToggleDefaultBookmark={onToggleBookmark}
+                soundEnabled={soundEnabled}
+              />
               <button
                 onClick={() => {
                   onClose();
@@ -114,9 +164,25 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
             
             {isWritingMode ? (
               <KotobaWritingPractice
+                key={`writing-${item.id}`}
                 kotoba={item}
                 soundEnabled={soundEnabled}
-                onFinishWord={() => {}}
+                nextButtonLabel={hasNext ? 'Lanjut ke Kata Berikutnya' : 'Selesai Menulis'}
+                onFinishWord={(score, reward) => {
+                  const exp = reward?.expGained ?? 20;
+                  const gold = reward?.goldGained ?? 5;
+                  if (onCompleteStudyItem) {
+                    onCompleteStudyItem('kotoba', exp, gold, item.id, score >= 60 ? 1 : 0, 1);
+                  } else {
+                    onRewardPlayer?.(exp, gold);
+                    onRecordStudy?.('flashcards', item.id, 1);
+                  }
+                  if (onNext && hasNext) {
+                    onNext();
+                  } else {
+                    setIsWritingMode(false);
+                  }
+                }}
                 onCancel={() => setIsWritingMode(false)}
               />
             ) : (

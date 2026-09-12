@@ -3,8 +3,8 @@ import { motion } from 'motion/react';
 import { Heart, Zap, Play, Flame, ChevronRight, Target, Coins } from 'lucide-react';
 import { ScrollIcon, QuillIcon, ShieldIcon } from '../ui/EngravingIcons';
 import { PlayerStats, Mission, StageClearData } from '../../types/rpg';
-import { getTierForExp, getLevelInfo } from '../../data/tiers';
-import { MAP_REGIONS, getStagesForMap } from '../../data/maps';
+import { getTierForExp } from '../../data/tiers';
+import { MAP_REGIONS, getStagesForMap, WORLD_STAGES_MAP } from '../../data/maps';
 import { TierAvatar } from '../avatar/TierAvatar';
 import { playSound } from '../../utils/audio';
 import { calculateOverallMastery, generateAdaptiveRecommendation } from '../../utils/mastery';
@@ -28,8 +28,11 @@ export const HomeView: React.FC<HomeViewProps> = ({
   onNavigateTab,
   onStartRecall,
 }) => {
-  const { currentTier } = getTierForExp(stats.totalExp);
-  const levelInfo = getLevelInfo(stats.totalExp);
+  const { tierIndex: effectiveTierIndex } = getTierForExp(
+    stats.totalExp,
+    stageProgress,
+    WORLD_STAGES_MAP
+  );
 
   // Check if player has completed any stage
   const hasClearedAnyStage = stageProgress ? Object.values(stageProgress).some(s => s?.cleared) : false;
@@ -70,7 +73,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
           className="btn btn-pill flex items-center gap-1.5 shadow-md hover:scale-105 transition-transform"
         >
           <span className="font-mono text-xs text-gold-soft font-bold tracking-wider">
-            LEVEL {levelInfo.level} · {currentTier.name}
+            {stats.playerName || 'Pelajar'} · {stats.totalExp.toLocaleString()} EXP
           </span>
         </button>
 
@@ -103,34 +106,24 @@ export const HomeView: React.FC<HomeViewProps> = ({
             className="relative flex items-center justify-center"
           >
             <TierAvatar
-              tierIndex={stats.tierIndex}
+              tierIndex={effectiveTierIndex ?? stats.tierIndex}
               size="lg"
             />
           </motion.div>
         </div>
 
-        {/* Tier & Title Information */}
+        {/* Player Profile Title */}
         <div className="space-y-0.5 relative z-10">
           <h2 className="text-xl sm:text-2xl font-bold text-text-primary font-heading tracking-wide">
-            {currentTier.titleName}
+            {stats.playerName || 'Pelajar Bahasa'}
           </h2>
         </div>
 
-        {/* EXP Progress Bar */}
+        {/* EXP Badge */}
         <div className="max-w-xs mx-auto space-y-1.5 relative z-10 pt-1">
-          <div className="flex justify-between text-[11px] font-mono">
-            <span className="text-text-secondary font-bold uppercase tracking-wider">Progress EXP</span>
-            <span className="text-gold font-bold">
-              {levelInfo.currentLevelExp} / {levelInfo.expNeededForNextLevel} XP
-            </span>
-          </div>
-          <div className="rpg-progress-track">
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: `${levelInfo.progressPercent}%` }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
-              className="rpg-progress-fill"
-            />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-xl bg-surface-inset/80 border border-border-subtle text-xs font-mono">
+            <span className="text-text-secondary font-bold uppercase tracking-wider">Total Belajar:</span>
+            <span className="text-gold font-bold">{stats.totalExp.toLocaleString()} EXP</span>
           </div>
         </div>
 
@@ -158,10 +151,10 @@ export const HomeView: React.FC<HomeViewProps> = ({
             </div>
             <div className="space-y-0.5 min-w-0 flex-1">
               <span className="breadcrumb-label text-gold-soft block">
-                {isFirstTime ? 'PETUALANGAN BARU' : 'EKSPEDISI BERJALAN'}
+                WORLD
               </span>
               <h3 className="text-base sm:text-lg font-bold text-text-on-btn font-heading truncate">
-                {isFirstTime ? 'Mulai Petualangan' : 'Lanjutkan Ekspedisi'}
+                Lanjutkan Belajar di World
               </h3>
             </div>
           </div>

@@ -1,9 +1,11 @@
 import React, { useMemo } from 'react';
-import { alignKanjiReadings } from '../../utils/furiganaUtils';
+import { getFuriganaSegments } from '../../utils/furiganaUtils';
 
-interface RubyTextProps {
-  japanese: string;
-  reading: string;
+export interface RubyTextProps {
+  japanese?: string;
+  text?: string;
+  reading?: string;
+  ruby?: string;
   showFurigana?: boolean;
   excludeKanji?: string[];
   highlightKanji?: string;
@@ -13,58 +15,63 @@ interface RubyTextProps {
 /**
  * RubyText — Renders Japanese text with inline <ruby><rt> furigana annotations.
  *
- * Aligns kanji in the `japanese` string with their readings from the `reading` string,
- * wrapping kanji in <ruby> tags for native browser furigana rendering.
- *
- * @param japanese     - The Japanese text containing kanji
- * @param reading      - The full reading (hiragana/katakana, no kanji)
- * @param showFurigana - Whether to show furigana (controlled by user settings)
- * @param excludeKanji - Kanji characters to NOT annotate (for quiz/test mode)
- * @param highlightKanji - Kanji character to highlight (for example display)
- * @param className    - Additional CSS classes for the wrapper span
+ * Supports polymorphic prop naming (japanese/text, reading/ruby).
+ * If no reading is provided, automatically looks up kanji compounds in the furigana dictionary.
  */
 export const RubyText: React.FC<RubyTextProps> = ({
   japanese,
+  text,
   reading,
+  ruby,
   showFurigana = true,
   excludeKanji,
   highlightKanji,
   className = '',
 }) => {
+  const actualJapanese = (japanese ?? text ?? '').trim();
+  const actualReading = (reading ?? ruby ?? '').trim();
+
   const segments = useMemo(() => {
-    if (!showFurigana || !japanese || !reading) {
+    if (!showFurigana || !actualJapanese) {
       return null;
     }
     const excludeSet = excludeKanji ? new Set<string>(excludeKanji) : undefined;
-    return alignKanjiReadings(japanese, reading, excludeSet);
-  }, [japanese, reading, showFurigana, excludeKanji]);
+    return getFuriganaSegments(actualJapanese, actualReading || undefined, excludeSet);
+  }, [actualJapanese, actualReading, showFurigana, excludeKanji]);
 
-  const renderSegmentText = (text: string) => {
-    if (!highlightKanji) return text;
-    return text.split('').map((char, i) => (
-      char === highlightKanji ? <span key={i} className="text-amber-400 font-bold drop-shadow-md">{char}</span> : <span key={i}>{char}</span>
+  const renderSegmentText = (str: string) => {
+    if (!highlightKanji) return str;
+    return str.split('').map((char, i) => (
+      char === highlightKanji ? (
+        <span key={i} className="text-red-700 dark:text-amber-400 font-bold">{char}</span>
+      ) : (
+        <span key={i}>{char}</span>
+      )
     ));
   };
 
-  // If furigana is disabled or alignment failed, render plain text
-  if (!showFurigana || !segments) {
-    return <span className={`font-jp ${className}`}>{renderSegmentText(japanese)}</span>;
+  // If furigana is disabled or no segments generated, render plain text
+  if (!showFurigana || !segments || segments.length === 0) {
+    return <span className={`font-jp ${className}`}>{renderSegmentText(actualJapanese)}</span>;
   }
 
-  // Check if any segment actually has ruby — if not, render plain
   const hasRuby = segments.some(s => s.isKanji && s.ruby);
   if (!hasRuby) {
-    return <span className={`font-jp ${className}`}>{renderSegmentText(japanese)}</span>;
+    return <span className={`font-jp ${className}`}>{renderSegmentText(actualJapanese)}</span>;
   }
 
   return (
-    <span className={`ruby-text font-jp ${className}`}>
+    <span className={`ruby-text font-jp leading-relaxed ${className}`}>
       {segments.map((segment, index) => {
         if (segment.isKanji && segment.ruby) {
           return (
-            <ruby key={index} className="ruby-word">
+            <ruby key={index} className="ruby-word px-[0.5px]">
               {renderSegmentText(segment.text)}
-              <rt>{segment.ruby}</rt>
+              <rp>(</rp>
+              <rt className="text-[0.62em] font-semibold leading-none select-none text-[#3f3a32] dark:text-[#f0be52] font-jp tracking-tight">
+                {segment.ruby}
+              </rt>
+              <rp>)</rp>
             </ruby>
           );
         }

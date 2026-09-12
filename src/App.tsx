@@ -25,17 +25,15 @@ import { RecallModule } from './components/learning/RecallModule';
 const DungeonBattleModule = lazy(() => import('./components/dungeon/DungeonBattleModule').then(m => ({ default: m.DungeonBattleModule })));
 import { LibraryView } from './components/library/LibraryView';
 import { BukuSakuView } from './components/deck/BukuSakuView';
-import { ensureUserDecks, createDefaultBookmarkDeck, toggleBookmarkItem } from './utils/decks';
+import { ensureUserDecks, createDefaultBookmarkDeck, toggleBookmarkItem, toggleItemInDeck } from './utils/decks';
 import { DeckItemCategory } from './types/rpg';
 import { playSound } from './utils/audio';
 import { recordItemAttempt, buildSmartRecallQueue } from './utils/mastery';
-import { recordStudyActivity } from './utils/activity';
+import { recordStudyActivity, INITIAL_STUDY_STATS } from './utils/activity';
 import { BUNPOU_DATABASE } from './data/bunpou';
 import { v4 as uuidv4 } from 'uuid';
 import { LeaderboardView } from './components/leaderboard/LeaderboardView';
 import { AuthModal } from './components/auth/AuthModal';
-import { WelcomeModal } from './components/modals/WelcomeModal';
-const PlacementTestView = lazy(() => import('./components/onboarding/PlacementTestView').then(m => ({ default: m.PlacementTestView })));
 import { supabase, getSession, saveGameToCloud, loadGameFromCloud, upsertLeaderboard } from './lib/supabase';
 import { ErrorBoundary } from './components/ErrorBoundary';
 
@@ -43,7 +41,6 @@ const STORAGE_KEY_STATS = 'nihongo_quest_player_stats_v2';
 const STORAGE_KEY_STAGES = 'nihongo_quest_stage_progress_v2';
 const STORAGE_KEY_DAILY = 'nihongo_quest_daily_missions_v2';
 const STORAGE_KEY_WEEKLY = 'nihongo_quest_weekly_missions_v2';
-const STORAGE_KEY_WELCOME = 'n3quest_has_visited';
 
 // Seed initial item mastery for an authentic start
 const INITIAL_ITEM_MASTERY: Record<string, ItemMasteryRecord> = {};
@@ -79,6 +76,7 @@ const DEFAULT_STATS: PlayerStats = {
   itemMastery: INITIAL_ITEM_MASTERY,
   recallQueue: buildSmartRecallQueue(INITIAL_ITEM_MASTERY),
   userDecks: [createDefaultBookmarkDeck()],
+  studyStats: INITIAL_STUDY_STATS,
 };
 
 export default function App() {
@@ -127,6 +125,10 @@ export default function App() {
           totalStudySeconds: parsed.totalStudySeconds || 0,
           lastStudyDate: todayStr,
           userDecks: ensureUserDecks(parsed.userDecks),
+          studyStats: {
+            ...INITIAL_STUDY_STATS,
+            ...(parsed.studyStats || {}),
+          },
         };
       }
       return { ...DEFAULT_STATS, userId: uuidv4(), lastStudyDate: getTodayLocalDate(), userDecks: [createDefaultBookmarkDeck()] };
@@ -171,14 +173,8 @@ export default function App() {
   const [isRecallActive, setIsRecallActive] = useState(false);
   const [isBossBattleActive, setIsBossBattleActive] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [worldNavView, setWorldNavView] = useState<import('./components/map/WorldView').WorldNavView>('world_hub');
-
-  // Placement Test State
-  const [isDoingPlacementTest, setIsDoingPlacementTest] = useState(false);
-  const [selectedPlacementLevel, setSelectedPlacementLevel] = useState<'N4' | 'N3' | 'N2' | 'N1' | null>(null);
-  const [requireMandatoryLogin, setRequireMandatoryLogin] = useState(false);
 
   // Active Study Tracking (Stage Hub / Learning Modules, Recall SRS, Boss Battles, and Library)
   const isStudying = Boolean(selectedStage || isRecallActive || isBossBattleActive || activeTab === 'library');
@@ -345,12 +341,6 @@ export default function App() {
 
   // Authentication Listener & Cloud Sync
   useEffect(() => {
-    const welcomeSeen = localStorage.getItem(STORAGE_KEY_WELCOME);
-    if (!welcomeSeen) {
-      setShowWelcomeModal(true);
-      // Wait to set this until they make a choice, but for now we rely on the state.
-    }
-
     getSession().then((session) => {
       setIsAuthenticated(!!session);
       if (session?.user) {
@@ -498,55 +488,19 @@ export default function App() {
     return () => clearTimeout(timerId);
   }, [weeklyMissions]);
 
-  // Give EXP & Gold reward with Level-up and Tier Check
-  const handleRewardPlayer = (expGained: number, goldGained: number) => {
-    // INT stat gives bonus EXP percentage
-    const intBonusMultiplier = 1 + (stats.int * 0.03);
-    const finalExp = Math.round(expGained * intBonusMultiplier);
-
+  // Give EXP & Gold reward directly (pure base EXP, no RPG multipliers or level gates)
+  const handleRewardPlayer = (expGained: number, goldGained: number = 0) => {
     setStats(prev => {
-      const newTotalExp = Math.max(0, prev.totalExp + finalExp);
-      const { tierIndex: newTierIndex, isGated, gateResult } = getTierForExp(newTotalExp, stageProgress, WORLD_STAGES_MAP);
-      const levelInfo = getLevelInfo(newTotalExp);
-      const calculatedLevel = levelInfo.level;
-      const isLevelUp = calculatedLevel > prev.level;
-      const isTierUp = !isGated && newTierIndex > prev.tierIndex;
-
-      if (isTierUp) {
-        playSound('fanfare', prev.soundEnabled);
-        confetti({
-          particleCount: 150,
-          spread: 80,
-          origin: { y: 0.5 }
-        });
-      } else if (isLevelUp) {
-        playSound('levelup', prev.soundEnabled);
-        confetti({
-          particleCount: 80,
-          spread: 60,
-          origin: { y: 0.6 }
-        });
-      }
-
-      const pointsToAdd = isLevelUp ? (calculatedLevel - prev.level) * 3 : 0;
-      const newMaxHp = calculateMaxHp(calculatedLevel, prev.vit);
-      const newMaxMp = calculateMaxMp(calculatedLevel, prev.int);
+      const newTotalExp = Math.max(0, prev.totalExp + expGained);
+      const { tierIndex: newTierIndex } = getTierForExp(newTotalExp, stageProgress, WORLD_STAGES_MAP);
 
       return {
         ...prev,
         totalExp: newTotalExp,
-        level: calculatedLevel,
-        currentExp: levelInfo.currentLevelExp,
-        maxExp: levelInfo.expNeededForNextLevel,
         tierIndex: Math.max(0, newTierIndex),
-        tierPromotionGated: isGated,
-        gatedReason: gateResult?.gatedReason,
+        tierPromotionGated: false,
+        gatedReason: undefined,
         gold: Math.max(0, prev.gold + goldGained),
-        unallocatedPoints: prev.unallocatedPoints + pointsToAdd,
-        maxHp: newMaxHp,
-        maxMp: newMaxMp,
-        hp: isLevelUp ? newMaxHp : Math.min(newMaxHp, prev.hp + 20),
-        mp: isLevelUp ? newMaxMp : Math.min(newMaxMp, prev.mp + 15),
       };
     });
   };
@@ -610,22 +564,22 @@ export default function App() {
     );
   };
 
-  // Stage Module Completion Handler (Integrates Progress & Mastery System)
-  const handleStageModuleComplete = (
-    moduleId: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss',
+  // Universal Study Activity Completion Handler (Works across Stages, Library, Decks, & Practice)
+  const handleStudyComplete = (
+    moduleId: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss' | 'questions' | 'tryOuts',
     expGained: number,
     goldGained: number,
     itemId?: string,
     score?: number,
     total?: number
   ) => {
-    if (!selectedStage) return;
-
-    handleRewardPlayer(expGained, goldGained);
+    if (expGained > 0 || goldGained > 0) {
+      handleRewardPlayer(expGained, goldGained);
+    }
 
     // Advance mission progress based on completed module
     if (moduleId === 'bunpou') advanceMissions('bunpou', 1);
-    else if (moduleId === 'kotoba') advanceMissions('kotoba', 5);
+    else if (moduleId === 'kotoba') advanceMissions('kotoba', 1);
     else if (moduleId === 'kanji') advanceMissions('kanji', 1);
     else if (moduleId === 'choukai') advanceMissions('choukai', 1);
     else if (moduleId === 'dokkai') {
@@ -640,10 +594,13 @@ export default function App() {
       advanceMissions('quiz', score);
     }
 
-    // Update Item Mastery & Rebuild Recall Queue
-    if (itemId && score !== undefined && total !== undefined) {
-      setStats(prev => {
-        const cat = moduleId === 'boss' ? 'bunpou' : moduleId;
+    // Update Item Mastery, Recall Queue & Study Statistics
+    setStats(prev => {
+      let updatedMastery = prev.itemMastery || {};
+      let updatedRecallQueue = prev.recallQueue || [];
+
+      if (itemId && score !== undefined && total !== undefined) {
+        const cat = moduleId === 'boss' ? 'bunpou' : (moduleId === 'questions' || moduleId === 'tryOuts' ? 'kotoba' : moduleId);
         const currentItem = prev.itemMastery ? prev.itemMastery[itemId] : undefined;
         const isContextual = moduleId === 'dokkai' || moduleId === 'boss';
         const updatedRecord = recordItemAttempt(
@@ -655,32 +612,49 @@ export default function App() {
           undefined,
           isContextual
         );
-        const updatedMastery = {
-          ...(prev.itemMastery || {}),
+        updatedMastery = {
+          ...updatedMastery,
           [itemId]: updatedRecord
         };
-        const updatedRecallQueue = buildSmartRecallQueue(updatedMastery);
-        
-        let newStats: PlayerStats = {
-          ...prev,
-          itemMastery: updatedMastery,
-          recallQueue: updatedRecallQueue,
-        };
+        updatedRecallQueue = buildSmartRecallQueue(updatedMastery);
+      }
 
-        // Record Activity for Stats Profile (the specific module)
-        if (moduleId === 'kotoba') newStats = recordStudyActivity(newStats, 'flashcards', itemId);
-        else if (moduleId === 'kanji') newStats = recordStudyActivity(newStats, 'kanjiWriting', itemId);
-        else if (moduleId === 'boss') newStats = recordStudyActivity(newStats, 'bossBattles', itemId);
-        else newStats = recordStudyActivity(newStats, moduleId as any, itemId);
+      let newStats: PlayerStats = {
+        ...prev,
+        itemMastery: updatedMastery,
+        recallQueue: updatedRecallQueue,
+      };
 
-        // Record total questions answered if it was a quiz
-        if (total && total > 1 && moduleId !== 'kanji') {
-          newStats = recordStudyActivity(newStats, 'questions', itemId, total);
-        }
+      // Record Activity for Stats Profile (the specific module)
+      const effectiveId = itemId || `study_${moduleId}_${Date.now()}`;
+      if (moduleId === 'kotoba') newStats = recordStudyActivity(newStats, 'flashcards', effectiveId);
+      else if (moduleId === 'kanji') newStats = recordStudyActivity(newStats, 'kanjiWriting', effectiveId);
+      else if (moduleId === 'boss') newStats = recordStudyActivity(newStats, 'bossBattles', effectiveId);
+      else if (moduleId === 'questions') newStats = recordStudyActivity(newStats, 'questions', effectiveId, total || 1);
+      else if (moduleId === 'tryOuts') newStats = recordStudyActivity(newStats, 'tryOuts', effectiveId, 1);
+      else newStats = recordStudyActivity(newStats, moduleId as any, effectiveId);
 
-        return newStats;
-      });
-    }
+      // Record total questions answered if it was a quiz
+      if (total && total > 1 && moduleId !== 'kanji' && moduleId !== 'kotoba') {
+        newStats = recordStudyActivity(newStats, 'questions', effectiveId, total);
+      }
+
+      return newStats;
+    });
+  };
+
+  // Stage Module Completion Handler (Integrates Progress & Mastery System)
+  const handleStageModuleComplete = (
+    moduleId: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss',
+    expGained: number,
+    goldGained: number,
+    itemId?: string,
+    score?: number,
+    total?: number
+  ) => {
+    if (!selectedStage) return;
+
+    handleStudyComplete(moduleId, expGained, goldGained, itemId, score, total);
 
     setStageProgress(prev => {
       const current = prev[selectedStage.id] || {
@@ -995,9 +969,16 @@ export default function App() {
     }
   };
 
-  const handleToggleBookmark = useCallback((id: string, category: DeckItemCategory, notes?: string) => {
+  const handleToggleBookmark = useCallback((id: string, category: DeckItemCategory, notes?: string, targetDeckId?: string) => {
     setStats(prev => {
-      const { userDecks: updatedDecks } = toggleBookmarkItem(prev.userDecks, id, category, notes);
+      let updatedDecks: UserDeck[];
+      if (targetDeckId && targetDeckId !== DEFAULT_BOOKMARK_DECK_ID) {
+        const { userDecks } = toggleItemInDeck(prev.userDecks, targetDeckId, id, category, notes);
+        updatedDecks = userDecks;
+      } else {
+        const { userDecks } = toggleBookmarkItem(prev.userDecks, id, category, notes);
+        updatedDecks = userDecks;
+      }
       const updated = { ...prev, userDecks: updatedDecks };
       if (isAuthenticated && updated.userId) {
         saveGameToCloud({
@@ -1013,7 +994,12 @@ export default function App() {
   }, [isAuthenticated]);
 
   return (
-    <div className="min-h-screen flex flex-col font-sans antialiased bg-surface-base text-text-primary selection:bg-gold selection:text-surface-base pb-20 md:pb-0 md:pl-24">
+    <div 
+      className="min-h-[100dvh] flex flex-col font-sans antialiased bg-surface-base text-text-primary selection:bg-gold selection:text-surface-base md:pl-24"
+      style={{
+        paddingBottom: 'max(5rem, calc(4rem + env(safe-area-inset-bottom)))',
+      }}
+    >
       {/* Cloud Sync Floating Toast Notification */}
       <AnimatePresence>
         {cloudSyncMessage && (
@@ -1030,7 +1016,12 @@ export default function App() {
       </AnimatePresence>
 
       {/* Top Main Navigation Header */}
-      <header className="sticky top-0 z-30 bg-surface-card/95 backdrop-blur-md border-b border-border-subtle shadow-md px-4 py-2.5 sm:py-3">
+      <header 
+        className="sticky top-0 z-30 bg-surface-card/95 backdrop-blur-md border-b border-border-subtle shadow-md px-4 py-2.5 sm:py-3"
+        style={{
+          paddingTop: 'max(0.625rem, env(safe-area-inset-top))',
+        }}
+      >
         <div className="max-w-4xl mx-auto w-full flex items-center justify-between relative z-10">
           <div
             onClick={() => {
@@ -1165,6 +1156,19 @@ export default function App() {
                     onSelectWorld={(worldId) => setStats(prev => ({ ...prev, currentWorldId: worldId }))}
                     onStartBoss={() => setIsBossBattleActive(true)}
                     soundEnabled={stats.soundEnabled}
+                    userDecks={stats.userDecks}
+                    onUpdateDecks={(updatedDecks) => {
+                      setStats(prev => {
+                        const next = { ...prev, userDecks: updatedDecks };
+                        try {
+                          localStorage.setItem(STORAGE_KEY_STATS, JSON.stringify(next));
+                        } catch (e) {
+                          console.warn('Failed to persist user decks', e);
+                        }
+                        return next;
+                      });
+                    }}
+                    onNavigateTab={(tab) => setActiveTab(tab)}
                   />
                 </ErrorBoundary>
               )}
@@ -1199,6 +1203,7 @@ export default function App() {
                   soundEnabled={stats.soundEnabled}
                   onRewardPlayer={handleRewardPlayer}
                   onRecordStudy={(cat, id, count) => setStats(prev => recordStudyActivity(prev, cat, id, count))}
+                  onCompleteStudyItem={handleStudyComplete}
                   userDecks={stats.userDecks}
                   onToggleBookmark={handleToggleBookmark}
                 />
@@ -1223,6 +1228,7 @@ export default function App() {
                     });
                   }}
                   onRewardPlayer={handleRewardPlayer}
+                  onCompleteStudyItem={handleStudyComplete}
                   soundEnabled={stats.soundEnabled}
                 />
               )}
@@ -1255,76 +1261,15 @@ export default function App() {
           </AnimatePresence>
         )}
         
-        {isDoingPlacementTest && selectedPlacementLevel && (
-          <Suspense fallback={<div className="fixed inset-0 z-[200] bg-surface-base flex items-center justify-center text-text-muted font-heading">Loading Ujian Penempatan...</div>}>
-            <PlacementTestView
-              targetLevel={selectedPlacementLevel}
-              soundEnabled={stats.soundEnabled}
-              onCancel={() => {
-                setIsDoingPlacementTest(false);
-                setShowWelcomeModal(true);
-              }}
-              onComplete={(success) => {
-                setIsDoingPlacementTest(false);
-                localStorage.setItem(STORAGE_KEY_WELCOME, 'true');
-                
-                if (success) {
-                  // Grant Rewards
-                  setStats(prev => {
-                    let newLevel = prev.level;
-                    let newExp = prev.totalExp;
-                    let newGold = prev.gold;
-                    
-                    if (selectedPlacementLevel === 'N4') { newLevel = Math.max(newLevel, 10); newExp += 1500; newGold += 500; }
-                    else if (selectedPlacementLevel === 'N3') { newLevel = Math.max(newLevel, 20); newExp += 4000; newGold += 1500; }
-                    else if (selectedPlacementLevel === 'N2') { newLevel = Math.max(newLevel, 35); newExp += 8000; newGold += 3000; }
-                    else if (selectedPlacementLevel === 'N1') { newLevel = Math.max(newLevel, 50); newExp += 15000; newGold += 5000; }
-                    
-                    return { ...prev, level: newLevel, totalExp: newExp, gold: newGold };
-                  });
-                }
-                
-                // Force login if guest
-                if (!isAuthenticated) {
-                  setRequireMandatoryLogin(true);
-                  setIsAuthModalOpen(true);
-                }
-              }}
-            />
-          </Suspense>
-        )}
-        
         <AuthModal
           isOpen={isAuthModalOpen}
-          isMandatory={requireMandatoryLogin}
-          onClose={() => {
-            if (!requireMandatoryLogin) {
-              setIsAuthModalOpen(false);
-            }
-          }}
+          isMandatory={false}
+          onClose={() => setIsAuthModalOpen(false)}
           onSuccess={() => {
             setIsAuthModalOpen(false);
-            setRequireMandatoryLogin(false);
             setIsAuthenticated(true);
           }}
           soundEnabled={stats.soundEnabled}
-        />
-
-        <WelcomeModal
-          isOpen={showWelcomeModal}
-          onSelectPath={(path, level) => {
-            setShowWelcomeModal(false);
-            if (path === 'zero') {
-              localStorage.setItem(STORAGE_KEY_WELCOME, 'true');
-              if (!isAuthenticated) {
-                setRequireMandatoryLogin(true);
-                setIsAuthModalOpen(true);
-              }
-            } else if (path === 'placement' && level) {
-              setSelectedPlacementLevel(level);
-              setIsDoingPlacementTest(true);
-            }
-          }}
         />
       </main>
 

@@ -1,9 +1,12 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Bookmark } from 'lucide-react';
+import { X, Bookmark, ChevronLeft, ChevronRight } from 'lucide-react';
 import { KanjiItem } from '../../types/content';
 import { playSound } from '../../utils/audio';
 import { KanjiDetailCard } from '../learning/KanjiDetailCard';
+import { WritingRewardResult } from '../learning/CanvasWritingPractice';
+import { UserDeck } from '../../types/rpg';
+import { DeckBookmarkPicker } from '../deck/DeckBookmarkPicker';
 
 interface KanjiDetailModalProps {
   isOpen: boolean;
@@ -12,6 +15,13 @@ interface KanjiDetailModalProps {
   soundEnabled?: boolean;
   isBookmarked?: boolean;
   onToggleBookmark?: () => void;
+  userDecks?: UserDeck[];
+  onToggleDeckItem?: (deckId: string) => void;
+  onNext?: () => void;
+  onPrev?: () => void;
+  hasNext?: boolean;
+  hasPrev?: boolean;
+  onCompleteSheet?: (sheetNumber: number, score: number, reward?: WritingRewardResult) => void;
 }
 
 export const KanjiDetailModal: React.FC<KanjiDetailModalProps> = ({
@@ -21,6 +31,13 @@ export const KanjiDetailModal: React.FC<KanjiDetailModalProps> = ({
   soundEnabled = true,
   isBookmarked = false,
   onToggleBookmark,
+  userDecks,
+  onToggleDeckItem,
+  onNext,
+  onPrev,
+  hasNext = false,
+  hasPrev = false,
+  onCompleteSheet,
 }) => {
   if (!isOpen || !item) return null;
 
@@ -60,23 +77,43 @@ export const KanjiDetailModal: React.FC<KanjiDetailModalProps> = ({
               </span>
             </div>
             <div className="flex items-center gap-1.5">
-              {onToggleBookmark && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    onToggleBookmark();
-                    playSound('click', soundEnabled);
-                  }}
-                  className={`p-2 rounded-xl border transition-all ${
-                    isBookmarked
-                      ? 'bg-surface-elevated text-gold border-gold/40 ring-1 ring-gold/30'
-                      : 'bg-surface-card border-border-subtle text-text-muted hover:text-gold'
-                  }`}
-                  title={isBookmarked ? 'Tersimpan di Buku Saku' : 'Simpan ke Buku Saku'}
-                >
-                  <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-gold text-gold' : ''}`} />
-                </button>
+              {(onPrev || onNext) && (
+                <div className="flex items-center gap-1 mr-1 border-r border-border-subtle pr-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onPrev?.();
+                      playSound('click', soundEnabled);
+                    }}
+                    disabled={!hasPrev}
+                    className="p-1.5 rounded-xl border border-border-subtle bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-text-primary disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                    title="Aksara/Kanji Sebelumnya"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onNext?.();
+                      playSound('click', soundEnabled);
+                    }}
+                    disabled={!hasNext}
+                    className="p-1.5 rounded-xl border border-border-subtle bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-text-primary disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                    title="Aksara/Kanji Berikutnya"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
               )}
+              <DeckBookmarkPicker
+                itemId={item.id || item.character}
+                category="kanji"
+                userDecks={userDecks}
+                onToggleDeckItem={onToggleDeckItem}
+                isDefaultBookmarked={isBookmarked}
+                onToggleDefaultBookmark={onToggleBookmark}
+                soundEnabled={soundEnabled}
+              />
               <button
                 onClick={() => {
                   onClose();
@@ -98,6 +135,12 @@ export const KanjiDetailModal: React.FC<KanjiDetailModalProps> = ({
             furiganaEnabled={true}
             initialTab="detail"
             showQuestions={true}
+            onCompleteSheet={onCompleteSheet}
+            onFinish={() => {
+              if (onNext && hasNext) {
+                onNext();
+              }
+            }}
           />
         </motion.div>
       </motion.div>
