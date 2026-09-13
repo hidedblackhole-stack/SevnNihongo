@@ -1,12 +1,26 @@
 import React, { useState } from 'react';
-import { X, Volume2, HelpCircle, GitBranch, MapPin, Settings2, Swords, Bookmark } from 'lucide-react';
-import { BunpouItem } from '../../types/content';
+import {
+  X,
+  Volume2,
+  HelpCircle,
+  GitBranch,
+  MapPin,
+  Settings2,
+  Swords,
+  Bookmark,
+  CheckCircle2,
+  XCircle,
+  ArrowRight,
+  RotateCcw,
+  Sparkles
+} from 'lucide-react';
+import { BunpouItem, Question } from '../../types/content';
 import { FormulaDisplay } from '../learning/FormulaDisplay';
 import { RubyText } from '../learning/RubyText';
 import { speakJapanese, playSound } from '../../utils/audio';
 import { getCanonicalGrammarTitle } from '../../utils/bunpouTitleUtils';
 import { splitSentenceForHighlight } from '../../utils/grammarHighlight';
-
+import { BUNPOU_DATABASE } from '../../data/bunpou';
 import { UserDeck } from '../../types/rpg';
 import { DeckBookmarkPicker } from '../deck/DeckBookmarkPicker';
 
@@ -18,6 +32,58 @@ interface BunpouDetailModalProps {
   onToggleBookmark?: () => void;
   userDecks?: UserDeck[];
   onToggleDeckItem?: (deckId: string) => void;
+  onRewardPlayer?: (exp: number, gold: number) => void;
+  onCompleteStudyItem?: (
+    moduleId: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss' | 'questions' | 'tryOuts',
+    expGained: number,
+    goldGained: number,
+    itemId?: string,
+    score?: number,
+    total?: number
+  ) => void;
+}
+
+function getRandomGrammarQuestion(item: BunpouItem): Question {
+  if (item.questions && item.questions.length > 0) {
+    const q = item.questions[Math.floor(Math.random() * item.questions.length)];
+    return { ...q };
+  }
+
+  // Synthesize a fill-in-the-blanks question from examples
+  const patternTitle = item.title.split(/[(（＋／]/)[0].trim();
+  const cleanedPattern = patternTitle.replace(/^[〜~]/, '');
+  const examples = item.examples && item.examples.length > 0
+    ? item.examples
+    : [{ japanese: `これは${cleanedPattern}です。`, reading: '', meaningId: item.meaningId }];
+  const ex = examples[Math.floor(Math.random() * examples.length)];
+
+  let prompt = ex.japanese.includes(cleanedPattern)
+    ? ex.japanese.replace(cleanedPattern, '（　）')
+    : `${ex.japanese} ➔ （　）`;
+
+  // Distractors from other grammar titles
+  const otherTitles = Object.values(BUNPOU_DATABASE)
+    .map(b => b.title.split(/[(（＋／]/)[0].trim().replace(/^[〜~]/, ''))
+    .filter(t => t !== cleanedPattern && t.length > 0);
+  const shuffledOther = otherTitles.sort(() => 0.5 - Math.random()).slice(0, 3);
+  while (shuffledOther.length < 3) {
+    shuffledOther.push(`〜${cleanedPattern}ない`);
+  }
+
+  const allOptions = [cleanedPattern, ...shuffledOther].sort(() => 0.5 - Math.random());
+  const correctIndex = allOptions.indexOf(cleanedPattern);
+
+  return {
+    id: `synth_q_${item.id}_${Date.now()}`,
+    instruction: '文の（　）に入れるのに最もよいものを、一つえらびなさい。',
+    instructionId: `Pilihlah bentuk pola atau kata yang paling tepat untuk melengkapi kalimat berikut:`,
+    prompt,
+    ruby: ex.reading,
+    translation: ex.meaningId,
+    options: allOptions,
+    correctIndex,
+    explanation: `Jawaban yang tepat adalah 「${cleanedPattern}」. Kalimat lengkap: 「${ex.japanese}」 (${ex.meaningId}). Pola ini memiliki makna: ${item.meaningId}.`,
+  };
 }
 
 export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
@@ -28,10 +94,52 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
   onToggleBookmark,
   userDecks,
   onToggleDeckItem,
+  onRewardPlayer,
+  onCompleteStudyItem,
 }) => {
   const [activeSubIndex, setActiveSubIndex] = useState<number>(0);
   const subBranches = item.subFormulas || [];
   const currentSub = subBranches[activeSubIndex] || subBranches[0];
+
+  // Quick Practice Quiz States
+  const [isQuizMode, setIsQuizMode] = useState(false);
+  const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
+  const [selectedAnswerIndex, setSelectedAnswerIndex] = useState<number | null>(null);
+  const [isAnswerChecked, setIsAnswerChecked] = useState(false);
+
+  const handleStartPractice = () => {
+    playSound('click', soundEnabled);
+    const q = getRandomGrammarQuestion(item);
+    setCurrentQuestion(q);
+    setSelectedAnswerIndex(null);
+    setIsAnswerChecked(false);
+    setIsQuizMode(true);
+  };
+
+  const handleNextPracticeQuestion = () => {
+    playSound('click', soundEnabled);
+    const q = getRandomGrammarQuestion(item);
+    setCurrentQuestion(q);
+    setSelectedAnswerIndex(null);
+    setIsAnswerChecked(false);
+  };
+
+  const handleSelectAnswer = (idx: number) => {
+    if (isAnswerChecked || !currentQuestion) return;
+    setSelectedAnswerIndex(idx);
+    setIsAnswerChecked(true);
+
+    const isCorrect = idx === currentQuestion.correctIndex;
+    if (isCorrect) {
+      playSound('correct', soundEnabled);
+      if (onRewardPlayer) onRewardPlayer(15, 10);
+      if (onCompleteStudyItem) {
+        onCompleteStudyItem('bunpou', 15, 10, item.id, 1, 1);
+      }
+    } else {
+      playSound('wrong', soundEnabled);
+    }
+  };
 
   return (
     <div
@@ -41,7 +149,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
       }}
     >
       <div
-        className="panel w-full max-w-2xl border border-border-subtle rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-scale-up"
+        className="panel w-full max-w-2xl border border-border-subtle rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-scale-up bg-surface-card"
       >
         {/* Header */}
         <div className="p-4 sm:p-5 border-b border-border-subtle flex items-start justify-between gap-3 shrink-0 bg-surface-inset">
@@ -50,7 +158,12 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
               <span className="px-2 py-0.5 rounded-lg bg-surface-card text-text-primary text-xs font-mono font-bold border border-border-subtle shadow-sm">
                 {item.baseLevel ? `Fondasi ${item.baseLevel}` : `Level ${item.level}`}
               </span>
-              {item.functions && item.functions.map((fn, idx) => (
+              {isQuizMode && (
+                <span className="px-2 py-0.5 rounded-lg bg-indigo/15 text-indigo text-xs font-heading font-bold border border-indigo/30">
+                  ⚔️ Coba Latihan 1 Soal
+                </span>
+              )}
+              {!isQuizMode && item.functions && item.functions.map((fn, idx) => (
                 <span key={idx} className="px-2 py-0.5 rounded-lg bg-surface-card text-text-secondary text-[11px] font-jp font-semibold border border-border-subtle">
                   {fn}
                 </span>
@@ -83,239 +196,347 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
           </div>
         </div>
 
-        {/* Scrollable Content */}
-        <div className="p-4 sm:p-6 space-y-4 overflow-y-auto scrollbar-thin flex-1">
-          {/* Explanation */}
-          <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-1.5">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-text-muted flex items-center gap-1.5 font-heading">
-              <HelpCircle className="w-3.5 h-3.5 text-gold" />
-              Penjelasan Pola
-            </h4>
-            <p className="text-xs sm:text-sm text-text-primary leading-relaxed whitespace-pre-line">
-              {item.explanation}
-            </p>
-          </div>
-
-          {/* Nuansa & Kata Terkait */}
-          {(item.nuance || (item.relatedKeywords && item.relatedKeywords.length > 0)) && (
-            <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-2.5">
-              {item.nuance && (
-                <div className="space-y-1">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-gold font-heading">
-                    Nuansa Pemakaian (ニュアンス)
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-primary leading-relaxed pl-1">
-                    {item.nuance}
-                  </p>
-                </div>
-              )}
-              {item.relatedKeywords && item.relatedKeywords.length > 0 && (
-                <div className="flex flex-wrap items-center gap-1.5 pt-2 border-t border-border-subtle">
-                  <span className="text-[10px] font-bold text-text-muted font-heading mr-1">
-                    Kata Terkait / Kolokasi Kunci:
-                  </span>
-                  {item.relatedKeywords.map((kw, i) => (
-                    <span key={i} className="px-2 py-0.5 rounded-lg bg-surface-card border border-border-subtle text-gold text-xs font-jp font-medium">
-                      {kw}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Formula */}
-          <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-2">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-gold font-heading">
-              📐 Rumus Pembentukan (Formula)
-            </h4>
-            <FormulaDisplay formula={item.formula} item={item} />
-          </div>
-
-          {/* Cabang Rumus & Kondisi Penggunaan */}
-          {subBranches.length > 0 && (
-            <div className="p-4 sm:p-5 rounded-2xl bg-surface-inset border border-border-subtle space-y-3.5 shadow-md">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-2 border-b border-border-subtle">
-                <div className="flex items-center gap-2">
-                  <span className="p-1 rounded-lg bg-gold/15 text-gold">
-                    <GitBranch className="w-4 h-4" />
-                  </span>
-                  <h4 className="text-xs sm:text-sm font-bold text-text-primary font-heading">
-                    Cabang Rumus & Kondisi Sambungan
-                  </h4>
-                </div>
-
-                {subBranches.length > 1 && (
-                  <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-thin">
-                    {subBranches.map((sub, idx) => {
-                      const isSelected = activeSubIndex === idx;
-                      return (
-                        <button
-                          key={sub.id || idx}
-                          onClick={() => {
-                            setActiveSubIndex(idx);
-                            playSound('click', soundEnabled);
-                          }}
-                          className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border font-jp flex items-center gap-1 ${
-                            isSelected
-                              ? 'bg-surface-elevated text-text-primary border-border-primary shadow-sm font-black'
-                              : 'bg-surface-card border-border-subtle text-text-secondary hover:text-text-primary hover:border-border-strong'
-                          }`}
-                        >
-                          <span>{sub.token}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
+        {/* Scrollable Content: QUIZ MODE vs EXPLANATION MODE */}
+        {isQuizMode && currentQuestion ? (
+          /* ================= MODE COBA LATIHAN (1 SOAL ACAK) ================= */
+          <div className="p-4 sm:p-6 space-y-4 overflow-y-auto scrollbar-thin flex-1 animate-fade-in">
+            <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle text-center space-y-2">
+              <span className="text-xs text-text-secondary font-medium">
+                {currentQuestion.instructionId}
+              </span>
+              <div className="flex items-center justify-center gap-3">
+                <h3 className="text-xl sm:text-2xl font-black text-text-primary font-heading tracking-wide">
+                  {currentQuestion.prompt}
+                </h3>
+                {currentQuestion.ruby && (
+                  <button
+                    type="button"
+                    onClick={() => speakJapanese(currentQuestion.ruby || '')}
+                    className="p-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-gold border border-border-subtle transition-colors shrink-0"
+                    title="Dengar suara"
+                  >
+                    <Volume2 className="w-4 h-4" />
+                  </button>
                 )}
               </div>
-
-              {currentSub && (
-                <div className="space-y-3">
-                  <div className="p-3 rounded-xl bg-surface-card border border-border-subtle flex items-start gap-2.5">
-                    <MapPin className="w-4 h-4 text-gold shrink-0 mt-0.5" />
-                    <div className="space-y-0.5">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-gold font-heading">
-                        Lokasi & Posisi Penggunaan:
-                      </span>
-                      <p className="text-xs sm:text-sm text-text-primary font-medium leading-relaxed">
-                        {currentSub.usageLocation}
-                      </p>
-                    </div>
-                  </div>
-
-                  {currentSub.connectionConditions.length > 0 && (
-                    <div className="space-y-1.5">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-text-muted flex items-center gap-1 font-heading">
-                        <Settings2 className="w-3.5 h-3.5 text-gold" />
-                        Aturan Perubahan Kata (接続):
-                      </span>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        {currentSub.connectionConditions.map((cond, cIdx) => (
-                          <div
-                            key={cIdx}
-                            className="p-2.5 rounded-xl bg-surface-card border border-border-subtle space-y-1"
-                          >
-                            <div className="flex items-center gap-2">
-                              <span className="px-1.5 py-0.5 rounded-md bg-surface-inset text-[10px] font-bold text-gold border border-border-subtle">
-                                {cond.partOfSpeech}
-                              </span>
-                              <span className="text-xs font-mono font-bold text-text-primary">
-                                {cond.rule}
-                              </span>
-                            </div>
-                            {cond.example && (
-                              <p className="text-[11px] text-text-secondary font-jp pl-1">
-                                Contoh: <span className="text-text-primary font-bold">{cond.example}</span>
-                              </p>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
+              {currentQuestion.translation && (
+                <p className="text-xs text-text-muted font-body">
+                  {currentQuestion.translation}
+                </p>
               )}
             </div>
-          )}
 
-          {/* Perbedaan Pola Mirip */}
-          {item.comparisonNotes && item.comparisonNotes.length > 0 && (
-            <div className="p-4 sm:p-5 rounded-2xl bg-surface-inset border border-indigo/30 space-y-3 shadow-md">
-              <div className="flex items-center gap-2 pb-2 border-b border-border-subtle">
-                <span className="p-1.5 rounded-lg bg-indigo/15 text-indigo">
-                  <Swords className="w-4 h-4" />
-                </span>
-                <div>
-                  <h4 className="text-xs sm:text-sm font-bold text-indigo font-heading">
-                    Perbedaan dengan Pola Mirip (使い分け)
-                  </h4>
-                  <p className="text-[11px] text-text-muted">
-                    Pahami perbedaannya agar tidak terkecoh oleh pilihan jebakan di ujian JLPT
-                  </p>
-                </div>
-              </div>
+            {/* 4 Options */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              {currentQuestion.options.map((option, idx) => {
+                const isSelected = selectedAnswerIndex === idx;
+                const isCorrect = idx === currentQuestion.correctIndex;
 
-              <div className="space-y-2">
-                {item.comparisonNotes.map((comp, idx) => (
-                  <div key={idx} className="p-3 rounded-xl bg-surface-card border border-border-subtle space-y-1">
-                    <span className="px-2 py-0.5 rounded-md bg-indigo/15 border border-indigo/30 text-indigo text-xs font-jp font-bold inline-block">
-                      VS {comp.targetGrammar}
-                    </span>
-                    <p className="text-xs sm:text-sm text-text-primary leading-relaxed pt-1">
-                      {comp.difference}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+                let btnStyle = 'bg-surface-inset border-border-subtle hover:border-indigo/40 hover:bg-surface-elevated text-text-primary';
+                if (isAnswerChecked) {
+                  if (isCorrect) {
+                    btnStyle = 'bg-emerald-500/15 border-emerald-500 text-emerald-400 font-bold';
+                  } else if (isSelected) {
+                    btnStyle = 'bg-rose-500/15 border-rose-500 text-rose-400';
+                  } else {
+                    btnStyle = 'opacity-40 border-border-subtle text-text-muted';
+                  }
+                }
 
-          {/* Examples */}
-          <div className="space-y-2.5">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-text-muted font-heading">
-              💬 Contoh Kalimat (例文)
-            </h4>
-            <div className="space-y-2">
-              {item.examples.map((example, i) => {
-                const segments = splitSentenceForHighlight(example.japanese, item);
                 return (
-                  <div
-                    key={i}
-                    className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle flex items-start justify-between gap-3"
+                  <button
+                    key={idx}
+                    disabled={isAnswerChecked}
+                    onClick={() => handleSelectAnswer(idx)}
+                    className={`p-3.5 rounded-2xl border text-left flex items-center justify-between gap-3 transition-all ${btnStyle}`}
                   >
-                    <div className="space-y-1 flex-1">
-                      <p className="text-sm sm:text-base font-bold text-text-primary flex flex-wrap items-baseline gap-0.5">
-                        {segments.map((seg, segIdx) => {
-                          if (seg.isHighlight) {
-                            return (
-                              <span
-                                key={segIdx}
-                                className="formula-highlight text-red-700 dark:text-amber-300 font-extrabold"
-                                title="Pola Rumus Tata Bahasa"
-                              >
-                                <RubyText
-                                  japanese={seg.text}
-                                  showFurigana={true}
-                                />
-                              </span>
-                            );
-                          }
-                          return (
-                            <RubyText
-                              key={segIdx}
-                              japanese={seg.text}
-                              showFurigana={true}
-                            />
-                          );
-                        })}
-                      </p>
-                      <p className="text-xs text-text-secondary">
-                        {example.meaningId}
-                      </p>
+                    <div className="flex items-center gap-2.5">
+                      <span className="w-6 h-6 rounded-lg bg-surface-card border border-border-subtle flex items-center justify-center font-mono text-xs font-bold shrink-0">
+                        {String.fromCharCode(65 + idx)}
+                      </span>
+                      <span className="text-xs sm:text-sm font-bold font-jp">
+                        {option}
+                      </span>
                     </div>
-                    <button
-                      onClick={() => speakJapanese(example.japanese)}
-                      className="p-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-gold border border-border-subtle transition-colors shrink-0"
-                      title="Dengarkan Suara"
-                    >
-                      <Volume2 className="w-4 h-4" />
-                    </button>
-                  </div>
+
+                    {isAnswerChecked && isCorrect && (
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    )}
+                    {isAnswerChecked && isSelected && !isCorrect && (
+                      <XCircle className="w-4 h-4 text-rose-400 shrink-0" />
+                    )}
+                  </button>
                 );
               })}
             </div>
+
+            {/* Answer Feedback & Explanation */}
+            {isAnswerChecked && (
+              <div
+                className={`p-4 rounded-2xl border space-y-2 animate-fade-in ${
+                  selectedAnswerIndex === currentQuestion.correctIndex
+                    ? 'bg-emerald-500/10 border-emerald-500/30'
+                    : 'bg-rose-500/10 border-rose-500/30'
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  {selectedAnswerIndex === currentQuestion.correctIndex ? (
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  ) : (
+                    <XCircle className="w-4 h-4 text-rose-400" />
+                  )}
+                  <span className="font-heading font-bold text-xs">
+                    {selectedAnswerIndex === currentQuestion.correctIndex
+                      ? 'Jawaban Benar! (+15 EXP)'
+                      : 'Belum Tepat! Perhatikan penjelasannya:'}
+                  </span>
+                </div>
+                <p className="text-xs text-text-secondary leading-relaxed">
+                  {currentQuestion.explanation}
+                </p>
+              </div>
+            )}
           </div>
-        </div>
+        ) : (
+          /* ================= MODE MATERI DETAIL (DEFAULT) ================= */
+          <div className="p-4 sm:p-6 space-y-4 overflow-y-auto scrollbar-thin flex-1">
+            {/* Explanation */}
+            <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-1.5">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-text-muted flex items-center gap-1.5 font-heading">
+                <HelpCircle className="w-3.5 h-3.5 text-gold" />
+                Penjelasan Pola
+              </h4>
+              <p className="text-xs sm:text-sm text-text-primary leading-relaxed whitespace-pre-line">
+                {item.explanation}
+              </p>
+            </div>
+
+            {/* Nuansa & Kata Terkait */}
+            {(item.nuance || (item.relatedKeywords && item.relatedKeywords.length > 0)) && (
+              <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-2">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-gold font-heading">
+                  Nuansa Pemakaian (ニュアンス)
+                </h4>
+                {item.nuance && (
+                  <p className="text-xs sm:text-sm text-text-primary leading-relaxed">
+                    {item.nuance}
+                  </p>
+                )}
+                {item.relatedKeywords && item.relatedKeywords.length > 0 && (
+                  <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                    <span className="text-[11px] font-mono text-text-muted">Kata Terkait / Kolokasi Kunci:</span>
+                    {item.relatedKeywords.map((kw, kwIdx) => (
+                      <span key={kwIdx} className="px-2 py-0.5 rounded-md bg-surface-card border border-border-subtle text-text-secondary text-xs font-jp">
+                        {kw}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Formula Block */}
+            <div className="space-y-1.5">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-text-muted font-heading">
+                📐 Rumus Pembentukan (Formula)
+              </h4>
+              <FormulaDisplay
+                formula={item.formula}
+                subFormulas={item.subFormulas}
+                examples={item.examples}
+                soundEnabled={soundEnabled}
+              />
+            </div>
+
+            {/* Sub Formulas */}
+            {subBranches.length > 0 && (
+              <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-3">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-text-muted flex items-center gap-1.5 font-heading">
+                  <GitBranch className="w-3.5 h-3.5 text-gold" />
+                  Cabang Rumus & Kondisi Sambungan
+                </h4>
+
+                {subBranches.length > 1 && (
+                  <div className="flex flex-wrap gap-1.5">
+                    {subBranches.map((branch, i) => (
+                      <button
+                        key={branch.id || i}
+                        onClick={() => {
+                          playSound('click', soundEnabled);
+                          setActiveSubIndex(i);
+                        }}
+                        className={`px-3 py-1 rounded-xl text-xs font-bold transition-all border ${
+                          activeSubIndex === i
+                            ? 'bg-surface-card text-gold border-gold/40 shadow-xs'
+                            : 'bg-surface-inset text-text-secondary border-border-subtle hover:text-text-primary'
+                        }`}
+                      >
+                        {branch.token}
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {currentSub && (
+                  <div className="space-y-3">
+                    <div className="p-3 rounded-xl bg-surface-card border border-border-subtle space-y-1">
+                      <div className="flex items-center gap-1.5 text-xs text-text-muted font-bold font-heading">
+                        <MapPin className="w-3.5 h-3.5 text-gold" />
+                        <span>Lokasi & Posisi Penggunaan:</span>
+                      </div>
+                      <p className="text-xs text-text-primary">
+                        {currentSub.usageLocation}
+                      </p>
+                    </div>
+
+                    {currentSub.connectionConditions && currentSub.connectionConditions.length > 0 && (
+                      <div className="space-y-1.5">
+                        <span className="text-[11px] font-bold text-text-muted uppercase flex items-center gap-1 font-heading">
+                          <Settings2 className="w-3 h-3 text-gold" />
+                          Aturan Perubahan Kata (接続):
+                        </span>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                          {currentSub.connectionConditions.map((cond, idx) => (
+                            <div key={idx} className="p-2.5 rounded-xl bg-surface-card border border-border-subtle flex items-start gap-2">
+                              <span className="px-1.5 py-0.5 rounded-md bg-surface-inset text-gold text-[10px] font-mono font-bold shrink-0">
+                                {cond.partOfSpeech}
+                              </span>
+                              <p className="text-xs text-text-primary">
+                                {cond.rule}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Comparison Notes */}
+            {item.comparisonNotes && item.comparisonNotes.length > 0 && (
+              <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-2">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-text-muted flex items-center gap-1.5 font-heading">
+                  <Swords className="w-3.5 h-3.5 text-gold" />
+                  Perbandingan dengan Pola Serupa
+                </h4>
+                <div className="grid grid-cols-1 gap-2">
+                  {item.comparisonNotes.map((comp, idx) => (
+                    <div key={idx} className="p-3 rounded-xl bg-surface-card border border-border-subtle space-y-1">
+                      <span className="px-2 py-0.5 rounded-md bg-indigo/15 border border-indigo/30 text-indigo text-xs font-jp font-bold inline-block">
+                        VS {comp.targetGrammar}
+                      </span>
+                      <p className="text-xs sm:text-sm text-text-primary leading-relaxed pt-1">
+                        {comp.difference}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Examples */}
+            <div className="space-y-2.5">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-text-muted font-heading">
+                💬 Contoh Kalimat (例文)
+              </h4>
+              <div className="space-y-2">
+                {item.examples.map((example, i) => {
+                  const segments = splitSentenceForHighlight(example.japanese, item);
+                  return (
+                    <div
+                      key={i}
+                      className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle flex items-start justify-between gap-3"
+                    >
+                      <div className="space-y-1 flex-1">
+                        <p className="text-sm sm:text-base font-bold text-text-primary flex flex-wrap items-baseline gap-0.5">
+                          {segments.map((seg, segIdx) => {
+                            if (seg.isHighlight) {
+                              return (
+                                <span
+                                  key={segIdx}
+                                  className="formula-highlight text-red-700 dark:text-amber-300 font-extrabold"
+                                  title="Pola Rumus Tata Bahasa"
+                                >
+                                  <RubyText
+                                    japanese={seg.text}
+                                    showFurigana={true}
+                                  />
+                                </span>
+                              );
+                            }
+                            return (
+                              <RubyText
+                                key={segIdx}
+                                japanese={seg.text}
+                                showFurigana={true}
+                              />
+                            );
+                          })}
+                        </p>
+                        <p className="text-xs text-text-secondary">
+                          {example.meaningId}
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => speakJapanese(example.japanese)}
+                        className="p-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-gold border border-border-subtle transition-colors shrink-0"
+                        title="Dengarkan Suara"
+                      >
+                        <Volume2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Footer */}
-        <div className="p-4 border-t border-border-subtle flex items-center justify-end shrink-0 bg-surface-inset">
-          <button
-            onClick={onClose}
-            className="btn-cta px-5 py-2 rounded-xl text-xs font-bold transition-all"
-          >
-            Tutup
-          </button>
+        <div className="p-4 border-t border-border-subtle flex items-center justify-between shrink-0 bg-surface-inset">
+          {isQuizMode ? (
+            <div className="flex items-center justify-between w-full gap-2">
+              <button
+                type="button"
+                onClick={() => setIsQuizMode(false)}
+                className="px-4 py-2 rounded-xl text-xs font-bold border border-border-subtle bg-surface-card hover:bg-surface-elevated text-text-secondary"
+              >
+                ← Kembali ke Penjelasan
+              </button>
+
+              {isAnswerChecked && (
+                <button
+                  type="button"
+                  onClick={handleNextPracticeQuestion}
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-indigo to-indigo-dark text-white font-heading font-bold text-xs shadow-md shadow-indigo/20 hover:brightness-110"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                  <span>Soal Latihan Lain</span>
+                </button>
+              )}
+            </div>
+          ) : (
+            <div className="flex items-center justify-between w-full gap-2">
+              <button
+                type="button"
+                onClick={handleStartPractice}
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo to-indigo-dark hover:brightness-110 text-white font-heading font-bold text-xs shadow-md shadow-indigo/25 border border-indigo/40 transition-all"
+              >
+                <Swords className="w-4 h-4 text-amber-300" />
+                <span>Coba Latihan (1 Soal)</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={onClose}
+                className="btn-cta px-5 py-2 rounded-xl text-xs font-bold transition-all"
+              >
+                Tutup
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

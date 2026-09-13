@@ -158,6 +158,8 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
           soundEnabled={soundEnabled}
           userDecks={userDecks}
           onToggleBookmark={onToggleBookmark}
+          onRewardPlayer={onRewardPlayer}
+          onCompleteStudyItem={onCompleteStudyItem}
         />
       )}
       {libraryTab === 'soal' && (

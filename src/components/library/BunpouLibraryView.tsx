@@ -1,10 +1,11 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Filter, ChevronDown, Bookmark, LayoutGrid, List } from 'lucide-react';
+import { Search, Filter, ChevronDown, Bookmark, LayoutGrid, List, BookOpen, Zap } from 'lucide-react';
 import { ScrollIcon } from '../ui/EngravingIcons';
 import { BUNPOU_DATABASE } from '../../data/bunpou';
 import { ALL_GRAMMAR_FUNCTION_CATEGORIES } from '../../data/bunpouMetadata';
 import { BunpouItem } from '../../types/content';
 import { BunpouDetailModal } from './BunpouDetailModal';
+import { ConjugationDojoView } from './ConjugationDojoView';
 import { playSound } from '../../utils/audio';
 import { UserDeck } from '../../types/rpg';
 import { isItemBookmarked } from '../../utils/decks';
@@ -24,13 +25,25 @@ interface BunpouLibraryViewProps {
   soundEnabled?: boolean;
   userDecks?: UserDeck[];
   onToggleBookmark?: (id: string, category: 'bunpou', notes?: string, targetDeckId?: string) => void;
+  onRewardPlayer?: (exp: number, gold: number) => void;
+  onCompleteStudyItem?: (
+    moduleId: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss' | 'questions' | 'tryOuts',
+    expGained: number,
+    goldGained: number,
+    itemId?: string,
+    score?: number,
+    total?: number
+  ) => void;
 }
 
 export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
   soundEnabled = true,
   userDecks,
   onToggleBookmark,
+  onRewardPlayer,
+  onCompleteStudyItem,
 }) => {
+  const [subSection, setSubSection] = useState<'dictionary' | 'conjugation'>('dictionary');
   const [searchQuery, setSearchQuery] = useState('');
   const [visibleCount, setVisibleCount] = useState(40);
   const [levelFilter, setLevelFilter] = useState<string>('all');
@@ -125,8 +138,50 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
         </div>
       </div>
 
-      {/* Search & Level Filter */}
-      <div className="flex flex-col sm:flex-row gap-3">
+      {/* Sub-Section Switcher: Kamus Pola Kalimat vs Perubahan Bentuk Kata */}
+      <div className="flex items-center gap-2 p-1.5 bg-surface-card border border-border-subtle rounded-2xl">
+        <button
+          type="button"
+          onClick={() => {
+            setSubSection('dictionary');
+            playSound('click', soundEnabled);
+          }}
+          className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold font-heading transition-all ${
+            subSection === 'dictionary'
+              ? 'bg-surface-elevated text-text-primary shadow-sm border border-border-primary'
+              : 'text-text-secondary hover:text-text-primary hover:bg-surface-inset'
+          }`}
+        >
+          <BookOpen className="w-4 h-4 text-indigo" />
+          <span>📖 Kamus Pola Kalimat ({allBunpou.length.toLocaleString()})</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => {
+            setSubSection('conjugation');
+            playSound('click', soundEnabled);
+          }}
+          className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold font-heading transition-all ${
+            subSection === 'conjugation'
+              ? 'bg-gradient-to-r from-indigo/20 to-purple-500/20 text-indigo border border-indigo/40 shadow-sm'
+              : 'text-text-secondary hover:text-text-primary hover:bg-surface-inset'
+          }`}
+        >
+          <Zap className="w-4 h-4 text-amber-500" />
+          <span>⚡ Perubahan Bentuk Kata (Konjugasi)</span>
+          <span className="hidden sm:inline-block text-[10px] uppercase tracking-wider bg-amber-500/20 text-amber-400 px-1.5 py-0.5 rounded font-mono font-bold">
+            Dojo & Latihan
+          </span>
+        </button>
+      </div>
+
+      {subSection === 'conjugation' ? (
+        <ConjugationDojoView soundEnabled={soundEnabled} onRewardPlayer={onRewardPlayer} />
+      ) : (
+        <>
+          {/* Search & Level Filter */}
+          <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
           <input
@@ -417,6 +472,8 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
           </button>
         </div>
       )}
+        </>
+      )}
 
       {/* Detail Modal */}
       {selectedItem && (
@@ -428,6 +485,8 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
           onToggleBookmark={onToggleBookmark ? () => onToggleBookmark(selectedItem.id, 'bunpou') : undefined}
           userDecks={userDecks}
           onToggleDeckItem={onToggleBookmark && selectedItem ? (deckId) => onToggleBookmark(selectedItem.id, 'bunpou', undefined, deckId) : undefined}
+          onRewardPlayer={onRewardPlayer}
+          onCompleteStudyItem={onCompleteStudyItem}
         />
       )}
     </div>
