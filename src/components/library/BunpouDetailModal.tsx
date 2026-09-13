@@ -169,12 +169,32 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                 </span>
               ))}
             </div>
-            <h2 className="text-xl sm:text-2xl font-black text-text-primary font-heading tracking-wide">
-              {getCanonicalGrammarTitle(item)}
-            </h2>
-            <p className="text-xs sm:text-sm font-semibold text-text-secondary">
-              {item.meaningId}
-            </p>
+            {isQuizMode ? (
+              <div className="space-y-1">
+                <h2 className="text-lg sm:text-xl font-bold text-text-primary font-heading tracking-wide flex items-center gap-2">
+                  <span>⚔️ Latihan Pola Kalimat</span>
+                  {isAnswerChecked && (
+                    <span className="text-xs font-jp px-2 py-0.5 rounded-md bg-indigo/15 text-indigo border border-indigo/30 font-semibold">
+                      {getCanonicalGrammarTitle(item)}
+                    </span>
+                  )}
+                </h2>
+                <p className="text-xs text-text-secondary font-medium">
+                  {isAnswerChecked
+                    ? item.meaningId
+                    : 'Pilihlah bentuk kata atau partikel yang paling tepat untuk melengkapi kalimat.'}
+                </p>
+              </div>
+            ) : (
+              <>
+                <h2 className="text-xl sm:text-2xl font-black text-text-primary font-heading tracking-wide">
+                  {getCanonicalGrammarTitle(item)}
+                </h2>
+                <p className="text-xs sm:text-sm font-semibold text-text-secondary">
+                  {item.meaningId}
+                </p>
+              </>
+            )}
           </div>
 
           <div className="flex items-center gap-1.5 shrink-0">
