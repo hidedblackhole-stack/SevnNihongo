@@ -7,13 +7,10 @@ const supabaseKey = (import.meta as any).env?.VITE_SUPABASE_ANON_KEY || 'eyJhbGc
 
 function getSupabaseUrl(): string {
   if (typeof window !== 'undefined') {
-    const hostname = window.location.hostname;
-    // On localhost, local network IP, or Vercel, route through same-origin proxy to bypass ISP DNS / Adblock blocks
-    const isLocal = hostname === 'localhost' || hostname === '127.0.0.1' || hostname.startsWith('192.168.') || hostname.startsWith('10.') || !hostname.includes('.');
-    const isVercel = hostname.endsWith('.vercel.app');
-    if (isLocal || isVercel) {
-      return `${window.location.origin}/supabase-proxy`;
-    }
+    // Route all in-browser requests through same-origin reverse proxy (/supabase-proxy),
+    // which is handled by vite.config.ts (local dev) and vercel.json (production on .vercel.app & custom domains like sevnquest.sevnsoul.site).
+    // This completely bypasses Indonesian ISP DNS blocks (Nawala/Telkom/Indihome) and CORS issues.
+    return `${window.location.origin}/supabase-proxy`;
   }
   return directUrl;
 }
