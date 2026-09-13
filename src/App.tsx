@@ -118,7 +118,14 @@ export default function App() {
           ...parsed,
           playerName: loadedName,
           itemMastery: loadedMastery,
-          recallQueue: buildSmartRecallQueue(loadedMastery),
+          recallQueue: (() => {
+            try {
+              return buildSmartRecallQueue(loadedMastery);
+            } catch (e) {
+              console.warn('Failed to build initial recall queue', e);
+              return [];
+            }
+          })(),
           currentWorldId: isLegacyN3Initial ? 'world_training' : (parsed.currentWorldId || 'world_training'),
           currentMapId: validMap ? validMap.id : 'map_kana_hiragana',
           currentStageId: validStage ? validStage.id : 'stage_kana_hira_1',
@@ -669,7 +676,11 @@ export default function App() {
           ...updatedMastery,
           [itemId]: updatedRecord
         };
-        updatedRecallQueue = buildSmartRecallQueue(updatedMastery);
+        try {
+          updatedRecallQueue = buildSmartRecallQueue(updatedMastery);
+        } catch (e) {
+          console.warn('Failed to update recall queue', e);
+        }
       }
 
       let newStats: PlayerStats = {

@@ -41,12 +41,20 @@ export class ErrorBoundary extends React.Component<Props, State> {
             <pre className="text-xs font-mono text-red-300 break-all whitespace-pre-wrap">{this.state.error?.toString()}</pre>
           </div>
           
-          <button 
-            className="px-6 py-3 bg-red-800 rounded-xl hover:bg-red-700 text-sm font-bold text-white transition-all shadow-lg active:scale-95"
-            onClick={() => this.setState({ hasError: false, error: null, errorInfo: null })}
-          >
-            Coba Pulihkan
-          </button>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <button 
+              className="px-5 py-2.5 bg-red-800 rounded-xl hover:bg-red-700 text-xs sm:text-sm font-bold text-white transition-all shadow-lg active:scale-95 cursor-pointer"
+              onClick={() => this.setState({ hasError: false, error: null, errorInfo: null })}
+            >
+              Coba Pulihkan
+            </button>
+            <button 
+              className="px-5 py-2.5 bg-zinc-800 rounded-xl hover:bg-zinc-700 text-xs sm:text-sm font-bold text-white transition-all shadow-lg active:scale-95 border border-zinc-600 cursor-pointer"
+              onClick={() => { window.location.href = '/'; }}
+            >
+              Muat Ulang Halaman
+            </button>
+          </div>
         </div>
       );
     }

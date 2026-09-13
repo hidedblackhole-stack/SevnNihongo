@@ -724,21 +724,47 @@ export function generateAdaptiveQuestion(
 
       if (level === 4) {
         // Level 4: Context / Nuance
-        const q4 = bp.questions.find(q => q.contextTag?.includes('nuance')) || bp.questions[bp.questions.length - 1] || bp.questions[0];
+        const q4 = bp.questions?.find(q => q.contextTag?.includes('nuance')) || bp.questions?.[bp.questions.length - 1] || bp.questions?.[0];
+        if (q4) {
+          return {
+            ...q4,
+            prompt: `【Level 4: Context & Nuance】\n${q4.prompt}`,
+            difficultyLevel: 4
+          };
+        }
+      }
+
+      // Default Level 1 or 2: Use existing curated questions if available
+      const baseQ = bp.questions?.[0];
+      if (baseQ) {
         return {
-          ...q4,
-          prompt: `【Level 4: Context & Nuance】\n${q4.prompt}`,
-          difficultyLevel: 4
+          ...baseQ,
+          prompt: `【Level ${level}: ${level === 1 ? 'Pattern Recognition' : 'Fill Blank'}】\n${baseQ.prompt}`,
+          difficultyLevel: level
         };
       }
 
-      // Default Level 1 or 2: Use existing curated questions
-      const baseQ = bp.questions[0];
-      return {
-        ...baseQ,
-        prompt: `【Level ${level}: ${level === 1 ? 'Pattern Recognition' : 'Fill Blank'}】\n${baseQ.prompt}`,
-        difficultyLevel: level
-      };
+      // Fallback: Generate from example or title when bp.questions is undefined
+      const ex = bp.examples?.[0];
+      if (ex) {
+        const patternTitle = bp.title.split(/[(（＋／]/)[0].trim().replace(/^[〜~]/, '');
+        const prompt = ex.japanese.includes(patternTitle)
+          ? ex.japanese.replace(patternTitle, '（　）')
+          : ex.japanese;
+        return {
+          id: `rc_gen_bp_${itemId}`,
+          prompt: `【Level ${level}: Pola Tata Bahasa】\nLengkapilah kalimat berikut agar sesuai dengan pola 「${bp.title}」:\n${prompt}\n(Arti: ${ex.meaningId})`,
+          options: [
+            patternTitle || bp.title,
+            '〜わけではない',
+            '〜はずがない',
+            '〜に違いない'
+          ],
+          correctIndex: 0,
+          difficultyLevel: level,
+          explanation: `Pola 「${bp.title}」 (${bp.meaningId}): ${ex.japanese}`
+        };
+      }
     }
   }
 
@@ -820,102 +846,106 @@ export function buildSmartRecallQueue(
   const queue: RecallQueueItem[] = [];
 
   for (const r of records) {
-    const dueDate = new Date(r.nextReviewDue).getTime();
-    const isDue = dueDate <= now;
-    const daysSinceLastReview = (now - new Date(r.lastReviewedAt).getTime()) / (1000 * 60 * 60 * 24);
+    try {
+      const dueDate = new Date(r.nextReviewDue).getTime();
+      const isDue = dueDate <= now;
+      const daysSinceLastReview = (now - new Date(r.lastReviewedAt).getTime()) / (1000 * 60 * 60 * 24);
 
-    const trueMasteryBreakdown = calculateItemTrueMastery(r, itemMastery);
-    const tm = trueMasteryBreakdown.trueMastery;
+      const trueMasteryBreakdown = calculateItemTrueMastery(r, itemMastery);
+      const tm = trueMasteryBreakdown.trueMastery;
 
-    let urgencyScore = 0;
-    let priorityTier: RecallPriorityTier = 'REVIEW';
-    let reason: RecallQueueItem['reason'] = 'SRS_DUE';
-    let reasonText = '';
-    let tutorInsight = '';
+      let urgencyScore = 0;
+      let priorityTier: RecallPriorityTier = 'REVIEW';
+      let reason: RecallQueueItem['reason'] = 'SRS_DUE';
+      let reasonText = '';
+      let tutorInsight = '';
 
-    // 🔴 1. CRITICAL PRIORITY: Consecutive mistakes or Dokkai Contextual failure
-    if (r.weaknessFlags?.includes('dokkai_context_fail') || r.mistakeCount >= 3 || tm < 45) {
-      priorityTier = 'CRITICAL';
-      urgencyScore = 150 + r.mistakeCount * 10 + (100 - tm);
-      reason = r.weaknessFlags?.includes('dokkai_context_fail') ? 'DOKKAI_WEAKNESS' : 'HIGH_MISTAKES';
-      reasonText = r.weaknessFlags?.includes('dokkai_context_fail')
-        ? `Gagal dalam konteks Dokkai wacana panjang`
-        : `Sering keliru (${r.mistakeCount}x salah berturut-turut)`;
-      tutorInsight = `Tutor: Titik lemah kritis terdeteksi! Kamu menguasai rumus dasarnya, namun keliru ketika diuji dalam variasi konteks kalimat.`;
-    }
-    // 🟠 2. WEAK PRIORITY: Low True Mastery (< 70%)
-    else if (tm < 70 || r.status === 'LEARNING') {
-      priorityTier = 'WEAK';
-      urgencyScore = 100 + (100 - tm) + (r.mistakeCount * 5);
-      reason = 'LOW_MASTERY';
-      reasonText = `True Mastery baru ${tm}% - butuh penguatan`;
-      tutorInsight = `Tutor: Masih dalam tahap penguasaan awal. Latih variasi bentuk konjugasi dan partikelnya.`;
-    }
-    // 🟡 3. REVIEW PRIORITY: SRS Schedule Due Today
-    else if (isDue) {
-      priorityTier = 'REVIEW';
-      urgencyScore = 75 + Math.min(25, Math.floor(daysSinceLastReview) * 2);
-      reason = 'SRS_DUE';
-      reasonText = `Jadwal tinjau berkala (SRS) untuk mengunci memori`;
-      tutorInsight = `Tutor: Waktu tepat mengulang agar materi berpindah ke memori jangka panjang permanen.`;
-    }
-    // 🟢 4. MAINTAIN PRIORITY: Mastered items checked for retention
-    else if (daysSinceLastReview > 5 && r.status !== 'PERFECTED') {
-      priorityTier = 'MAINTAIN';
-      urgencyScore = 40 + Math.min(30, Math.floor(daysSinceLastReview));
-      reason = 'DECAYED';
-      reasonText = `Sudah ${Math.floor(daysSinceLastReview)} hari tidak dilatih`;
-      tutorInsight = `Tutor: Materi ini sudah kamu kuasai (${tm}%), ulangi sejenak untuk menjaga retensi.`;
-    }
-
-    if (urgencyScore > 0) {
-      let title = r.itemId;
-      let subtitle = `${r.category.toUpperCase()} • True Mastery: ${tm}%`;
-
-      if (r.category === 'bunpou') {
-        const bp = BUNPOU_DATABASE[r.itemId];
-        if (bp) {
-          title = bp.title;
-          subtitle = bp.meaningId;
-        }
-      } else if (r.category === 'kotoba') {
-        const kt = KOTOBA_DATABASE[r.itemId];
-        if (kt) {
-          title = `${kt.word} (${kt.reading})`;
-          subtitle = kt.meaningId;
-        }
-      } else if (r.category === 'kanji') {
-        const kj = KANJI_DATABASE[r.itemId];
-        if (kj) {
-          title = `${kj.character} 【${kj.onyomi.join(', ')}】`;
-          subtitle = kj.meaningId;
-        }
-      } else if (r.category === 'dokkai') {
-        const dk = DOKKAI_DATABASE[r.itemId];
-        if (dk) {
-          title = dk.title;
-          subtitle = dk.category;
-        }
+      // 🔴 1. CRITICAL PRIORITY: Consecutive mistakes or Dokkai Contextual failure
+      if (r.weaknessFlags?.includes('dokkai_context_fail') || r.mistakeCount >= 3 || tm < 45) {
+        priorityTier = 'CRITICAL';
+        urgencyScore = 150 + r.mistakeCount * 10 + (100 - tm);
+        reason = r.weaknessFlags?.includes('dokkai_context_fail') ? 'DOKKAI_WEAKNESS' : 'HIGH_MISTAKES';
+        reasonText = r.weaknessFlags?.includes('dokkai_context_fail')
+          ? `Gagal dalam konteks Dokkai wacana panjang`
+          : `Sering keliru (${r.mistakeCount}x salah berturut-turut)`;
+        tutorInsight = `Tutor: Titik lemah kritis terdeteksi! Kamu menguasai rumus dasarnya, namun keliru ketika diuji dalam variasi konteks kalimat.`;
+      }
+      // 🟠 2. WEAK PRIORITY: Low True Mastery (< 70%)
+      else if (tm < 70 || r.status === 'LEARNING') {
+        priorityTier = 'WEAK';
+        urgencyScore = 100 + (100 - tm) + (r.mistakeCount * 5);
+        reason = 'LOW_MASTERY';
+        reasonText = `True Mastery baru ${tm}% - butuh penguatan`;
+        tutorInsight = `Tutor: Masih dalam tahap penguasaan awal. Latih variasi bentuk konjugasi dan partikelnya.`;
+      }
+      // 🟡 3. REVIEW PRIORITY: SRS Schedule Due Today
+      else if (isDue) {
+        priorityTier = 'REVIEW';
+        urgencyScore = 75 + Math.min(25, Math.floor(daysSinceLastReview) * 2);
+        reason = 'SRS_DUE';
+        reasonText = `Jadwal tinjau berkala (SRS) untuk mengunci memori`;
+        tutorInsight = `Tutor: Waktu tepat mengulang agar materi berpindah ke memori jangka panjang permanen.`;
+      }
+      // 🟢 4. MAINTAIN PRIORITY: Mastered items checked for retention
+      else if (daysSinceLastReview > 5 && r.status !== 'PERFECTED') {
+        priorityTier = 'MAINTAIN';
+        urgencyScore = 40 + Math.min(30, Math.floor(daysSinceLastReview));
+        reason = 'DECAYED';
+        reasonText = `Sudah ${Math.floor(daysSinceLastReview)} hari tidak dilatih`;
+        tutorInsight = `Tutor: Materi ini sudah kamu kuasai (${tm}%), ulangi sejenak untuk menjaga retensi.`;
       }
 
-      const queueItem: RecallQueueItem = {
-        id: `recall_${r.itemId}`,
-        itemId: r.itemId,
-        category: r.category,
-        title,
-        subtitle,
-        reason,
-        reasonText,
-        urgencyScore,
-        priorityTier,
-        difficultyLevel: trueMasteryBreakdown.levelTier,
-        trueMasteryScore: tm,
-        tutorInsight,
-        masteryRecord: r
-      };
+      if (urgencyScore > 0) {
+        let title = r.itemId;
+        let subtitle = `${r.category.toUpperCase()} • True Mastery: ${tm}%`;
 
-      queueItem.sampleQuestion = generateAdaptiveQuestion(queueItem, trueMasteryBreakdown.levelTier);
-      queue.push(queueItem);
+        if (r.category === 'bunpou') {
+          const bp = BUNPOU_DATABASE[r.itemId];
+          if (bp) {
+            title = bp.title;
+            subtitle = bp.meaningId;
+          }
+        } else if (r.category === 'kotoba') {
+          const kt = KOTOBA_DATABASE[r.itemId];
+          if (kt) {
+            title = `${kt.word} (${kt.reading})`;
+            subtitle = kt.meaningId;
+          }
+        } else if (r.category === 'kanji') {
+          const kj = KANJI_DATABASE[r.itemId];
+          if (kj) {
+            title = `${kj.character} 【${kj.onyomi.join(', ')}】`;
+            subtitle = kj.meaningId;
+          }
+        } else if (r.category === 'dokkai') {
+          const dk = DOKKAI_DATABASE[r.itemId];
+          if (dk) {
+            title = dk.title;
+            subtitle = dk.category;
+          }
+        }
+
+        const queueItem: RecallQueueItem = {
+          id: `recall_${r.itemId}`,
+          itemId: r.itemId,
+          category: r.category,
+          title,
+          subtitle,
+          reason,
+          reasonText,
+          urgencyScore,
+          priorityTier,
+          difficultyLevel: trueMasteryBreakdown.levelTier,
+          trueMasteryScore: tm,
+          tutorInsight,
+          masteryRecord: r
+        };
+
+        queueItem.sampleQuestion = generateAdaptiveQuestion(queueItem, trueMasteryBreakdown.levelTier);
+        queue.push(queueItem);
+      }
+    } catch (err) {
+      console.warn('[SmartRecall] Failed to build recall item for record:', r?.itemId, err);
     }
   }
 
