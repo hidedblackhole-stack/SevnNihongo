@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Compass, 
@@ -84,6 +84,7 @@ const LEVEL_CONFIG: Record<string, { label: string; color: string }> = {
 };
 
 export const WorldView: React.FC<WorldViewProps> = ({
+  currentWorldId,
   stageProgress = {},
   onSelectStage,
   onSelectWorld,
@@ -105,7 +106,13 @@ export const WorldView: React.FC<WorldViewProps> = ({
   itemMastery = {},
   furiganaEnabled = true,
 }) => {
-  const [selectedWorldId, setSelectedWorldId] = useState<string | null>(null);
+  const [selectedWorldId, setSelectedWorldId] = useState<string | null>(() => currentWorldId || null);
+
+  useEffect(() => {
+    if (currentWorldId !== undefined) {
+      setSelectedWorldId(currentWorldId || null);
+    }
+  }, [currentWorldId]);
 
   // Custom World & Curriculum States
   const [isSelectDeckModalOpen, setIsSelectDeckModalOpen] = useState(false);
@@ -136,6 +143,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
   const handleBack = () => {
     playSound('click', soundEnabled);
     setSelectedWorldId(null);
+    if (onSelectWorld) onSelectWorld('');
   };
 
   const handleOpenCreateCustomWorld = () => {

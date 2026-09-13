@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'motion/react';
-import { BookOpen, Layers, Feather, BookMarked, Headphones, Swords, ArrowLeft, CheckCircle2, Star, AlertCircle, ShieldCheck, ChevronDown, ChevronUp, Crown, Coins } from 'lucide-react';
+import { BookOpen, Layers, Feather, BookMarked, Headphones, Swords, ArrowLeft, CheckCircle2, Star, AlertCircle, ShieldCheck, ChevronDown, ChevronUp, Crown, Coins, ChevronRight, ChevronLeft, Compass, ListFilter, X } from 'lucide-react';
 import { Stage, ItemMasteryRecord } from '../../types/content';
 import { StageClearData } from '../../types/rpg';
 import { BunpouModule } from '../learning/BunpouModule';
@@ -17,12 +17,16 @@ import { KANJI_DATABASE } from '../../data/kanji';
 import { DOKKAI_DATABASE } from '../../data/dokkai';
 import { CHOUKAI_DATABASE } from '../../data/choukai';
 import { getGranularStageProgress } from '../../utils/mastery';
+import { getWorldForStage, getSiblingStagesForStage } from '../../data/world/maps';
 
 interface StageHubViewProps {
   stage: Stage;
   stageProgress?: StageClearData;
   itemMastery?: Record<string, ItemMasteryRecord>;
   onBackToMap: () => void;
+  onBackToWorldList?: () => void;
+  onSelectStage?: (newStage: Stage) => void;
+  allStages?: Stage[];
   onModuleComplete: (
     moduleId: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss',
     expGained: number,
@@ -50,6 +54,9 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
   stageProgress,
   itemMastery = {},
   onBackToMap,
+  onBackToWorldList,
+  onSelectStage,
+  allStages,
   onModuleComplete,
   playerMp,
   playerMaxMp,
@@ -66,6 +73,15 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
 }) => {
   const [activeModule, setActiveModule] = useState<'hub' | 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss'>('hub');
   const [expandedDetails, setExpandedDetails] = useState(false);
+  const [isStageListOpen, setIsStageListOpen] = useState(false);
+
+  // Compute siblings and world info for navigation
+  const siblingInfo = useMemo(() => {
+    return getSiblingStagesForStage(stage);
+  }, [stage.id]);
+
+  const { world, prevStage, nextStage, allStagesInWorld } = siblingInfo;
+  const effectiveStages = allStagesInWorld.length > 0 ? allStagesInWorld : (allStages || []);
 
   // Hardware Back Button Interceptor
   useBackButton(true, () => {
@@ -101,10 +117,10 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
         setActiveModule('hub');
         playSound('click', soundEnabled);
       }}
-      className="rpg-btn rpg-btn-secondary text-xs gap-1.5 self-start mb-2"
+      className="rpg-btn rpg-btn-secondary text-xs gap-1.5 self-start mb-2 cursor-pointer"
     >
       <ArrowLeft className="w-4 h-4 text-amber-400" />
-      <span>Kembali ke Gerbang Stage</span>
+      <span>Kembali ke Gerbang Stage {stage.stageNumber}</span>
     </button>
   );
 
@@ -381,22 +397,127 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto space-y-5 pb-6">
+    <div className="w-full max-w-3xl mx-auto space-y-4 pb-6 animate-fade-in">
+      {/* 0. INTERACTIVE BREADCRUMB NAVIGATION */}
+      <nav aria-label="Jalur Navigasi" className="flex items-center gap-1.5 text-xs text-text-secondary font-mono flex-wrap px-1">
+        <button
+          type="button"
+          onClick={() => {
+            playSound('click', soundEnabled);
+            if (onBackToWorldList) {
+              onBackToWorldList();
+            } else {
+              onBackToMap();
+            }
+          }}
+          className="hover:text-gold flex items-center gap-1 transition-colors group cursor-pointer"
+          title="Kembali ke Pilihan World Utama"
+        >
+          <Compass className="w-3.5 h-3.5 text-gold group-hover:scale-110 transition-transform" />
+          <span>World</span>
+        </button>
+
+        <ChevronRight className="w-3.5 h-3.5 text-text-muted shrink-0" />
+
+        <button
+          type="button"
+          onClick={() => {
+            playSound('click', soundEnabled);
+            onBackToMap();
+          }}
+          className="hover:text-gold font-bold text-text-primary transition-colors cursor-pointer"
+          title="Kembali ke Daftar Stage World Ini"
+        >
+          {world ? (world.name.split('(')[0].trim() || `JLPT ${world.jlptLevel}`) : 'Daftar Stage'}
+        </button>
+
+        <ChevronRight className="w-3.5 h-3.5 text-text-muted shrink-0" />
+
+        <span className="text-gold font-bold truncate max-w-[200px] sm:max-w-none">
+          Stage {stage.stageNumber}: {stage.title_jp || stage.title}
+        </span>
+      </nav>
+
       {/* Top Header Briefing Card */}
-      <div className="panel panel-stitched p-5 sm:p-6 space-y-4 shadow-xl">
-        <div className="flex items-center justify-between">
+      <div className="panel panel-stitched p-4 sm:p-6 space-y-4 shadow-xl">
+        {/* Top Control Bar: Back to Stage List & Fast Stage Switcher */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-border-subtle">
           <button
+            type="button"
             onClick={() => {
               playSound('click', soundEnabled);
               onBackToMap();
             }}
-            className="btn btn-pill text-xs gap-1.5"
+            className="btn btn-pill text-xs gap-1.5 self-start shadow-sm border-gold/30 hover:border-gold cursor-pointer"
+            title="Kembali ke daftar modul stage di world ini"
           >
             <ArrowLeft className="w-4 h-4 text-gold" />
-            <span>Kembali ke Peta</span>
+            <span>Kembali ke Daftar Stage {world ? `(${world.jlptLevel})` : ''}</span>
           </button>
 
-          <div className="flex items-center gap-1 text-gold">
+          {/* Fast Stage Switcher: [◀ Prev] [Stage X/Y ▾] [Next ▶] */}
+          {onSelectStage && effectiveStages.length > 0 && (
+            <div className="flex items-center gap-1 self-end sm:self-auto">
+              <button
+                type="button"
+                disabled={!prevStage}
+                onClick={() => {
+                  if (prevStage) {
+                    playSound('click', soundEnabled);
+                    onSelectStage(prevStage);
+                  }
+                }}
+                className={`btn btn-pill text-xs py-1.5 px-2.5 gap-1 ${
+                  prevStage
+                    ? 'text-text-primary hover:text-gold cursor-pointer'
+                    : 'opacity-40 cursor-not-allowed text-text-muted border-border-subtle'
+                }`}
+                title={prevStage ? `Pindah ke Stage ${prevStage.stageNumber}` : 'Sudah di Stage Pertama'}
+              >
+                <ChevronLeft className="w-3.5 h-3.5" />
+                <span className="hidden xs:inline">Prev</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  playSound('click', soundEnabled);
+                  setIsStageListOpen(true);
+                }}
+                className="btn btn-pill text-xs py-1.5 px-3 gap-1.5 font-mono font-bold text-gold border-gold/40 hover:bg-gold/10 cursor-pointer"
+                title="Buka daftar stage untuk berganti stage langsung"
+              >
+                <ListFilter className="w-3.5 h-3.5" />
+                <span>
+                  Stage {stage.stageNumber}
+                  {effectiveStages.length > 0 ? ` / ${effectiveStages.length}` : ''}
+                </span>
+                <ChevronDown className="w-3 h-3 text-gold/70" />
+              </button>
+
+              <button
+                type="button"
+                disabled={!nextStage}
+                onClick={() => {
+                  if (nextStage) {
+                    playSound('click', soundEnabled);
+                    onSelectStage(nextStage);
+                  }
+                }}
+                className={`btn btn-pill text-xs py-1.5 px-2.5 gap-1 ${
+                  nextStage
+                    ? 'text-text-primary hover:text-gold cursor-pointer'
+                    : 'opacity-40 cursor-not-allowed text-text-muted border-border-subtle'
+                }`}
+                title={nextStage ? `Pindah ke Stage ${nextStage.stageNumber}` : 'Sudah di Stage Terakhir'}
+              >
+                <span className="hidden xs:inline">Next</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
+
+          <div className="flex items-center gap-1 text-gold self-end sm:self-auto">
             {Array.from({ length: 3 }).map((_, i) => (
               <Star
                 key={i}
@@ -592,7 +713,142 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
             );
           })}
         </div>
+
+        {/* Bottom Quick Navigation Between Stages */}
+        {onSelectStage && (prevStage || nextStage) && (
+          <div className="pt-4 border-t border-border-subtle flex items-center justify-between gap-2 flex-wrap">
+            {prevStage ? (
+              <button
+                type="button"
+                onClick={() => {
+                  playSound('click', soundEnabled);
+                  onSelectStage(prevStage);
+                }}
+                className="btn btn-pill text-xs gap-1.5 cursor-pointer hover:border-gold"
+              >
+                <ChevronLeft className="w-4 h-4 text-gold" />
+                <span>Stage {prevStage.stageNumber}: {prevStage.title_jp || prevStage.title}</span>
+              </button>
+            ) : <div />}
+
+            {nextStage && (
+              <button
+                type="button"
+                onClick={() => {
+                  playSound('click', soundEnabled);
+                  onSelectStage(nextStage);
+                }}
+                className="btn btn-pill text-xs gap-1.5 ml-auto cursor-pointer hover:border-gold"
+              >
+                <span>Stage {nextStage.stageNumber}: {nextStage.title_jp || nextStage.title}</span>
+                <ChevronRight className="w-4 h-4 text-gold" />
+              </button>
+            )}
+          </div>
+        )}
       </div>
+
+      {/* Quick Stage Switcher Modal */}
+      {isStageListOpen && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 backdrop-blur-sm animate-fade-in"
+          onClick={() => setIsStageListOpen(false)}
+        >
+          <div 
+            className="panel panel-stitched w-full max-w-lg max-h-[85vh] flex flex-col shadow-2xl border border-border-primary text-text-primary animate-scale-in overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-4 border-b border-border-subtle flex items-center justify-between bg-surface-elevated/60">
+              <div className="flex items-center gap-2">
+                <Compass className="w-5 h-5 text-gold" />
+                <div>
+                  <h3 className="text-sm sm:text-base font-bold font-heading text-text-primary">
+                    Pilih Stage di {world ? (world.name.split('(')[0].trim() || `JLPT ${world.jlptLevel}`) : 'World'}
+                  </h3>
+                  <p className="text-[11px] text-text-secondary">
+                    Langsung berpindah materi tanpa perlu keluar ke menu utama
+                  </p>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  playSound('click', soundEnabled);
+                  setIsStageListOpen(false);
+                }}
+                className="p-1.5 rounded-lg text-text-muted hover:text-text-primary hover:bg-surface-inset transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="p-3 sm:p-4 overflow-y-auto space-y-2 flex-1">
+              {effectiveStages.map((s, i) => {
+                const isCurrent = s.id === stage.id;
+                return (
+                  <button
+                    type="button"
+                    key={s.id}
+                    onClick={() => {
+                      playSound('click', soundEnabled);
+                      setIsStageListOpen(false);
+                      if (onSelectStage) {
+                        onSelectStage(s);
+                      }
+                    }}
+                    className={`w-full text-left p-3 rounded-xl border flex items-center justify-between gap-3 transition-all cursor-pointer ${
+                      isCurrent
+                        ? 'bg-gold/15 border-gold/60 text-gold shadow-sm ring-1 ring-gold/30'
+                        : 'bg-surface-card hover:bg-surface-elevated border-border-subtle text-text-primary'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <span className={`w-7 h-7 rounded-lg flex items-center justify-center font-mono font-bold text-xs shrink-0 ${
+                        isCurrent ? 'bg-gold text-surface-base' : 'bg-surface-inset text-text-secondary'
+                      }`}>
+                        {s.stageNumber || i + 1}
+                      </span>
+                      <div className="min-w-0">
+                        <div className="text-[10px] text-text-secondary font-jp truncate">
+                          {s.title_jp}
+                        </div>
+                        <div className="text-xs font-bold font-heading truncate">
+                          {s.title_en || s.title}
+                        </div>
+                      </div>
+                    </div>
+
+                    {isCurrent ? (
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-gold text-surface-base shrink-0 font-mono">
+                        Sedang Aktif
+                      </span>
+                    ) : (
+                      <span className="text-[10px] text-text-secondary font-mono flex items-center gap-1 shrink-0">
+                        <span>Pilih</span>
+                        <ChevronRight className="w-3.5 h-3.5" />
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="p-3 border-t border-border-subtle bg-surface-elevated/40 flex justify-end">
+              <button
+                type="button"
+                onClick={() => {
+                  playSound('click', soundEnabled);
+                  setIsStageListOpen(false);
+                }}
+                className="btn btn-pill text-xs py-1.5 px-4 font-bold"
+              >
+                Tutup
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

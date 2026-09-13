@@ -181,17 +181,6 @@ export default function App() {
     });
   }, [activeTab]);
 
-  const handleTabChange = useCallback((tab: TabType) => {
-    if (tab === activeTab) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
-    setSelectedStage(null);
-    setIsRecallActive(false);
-    setIsBossBattleActive(false);
-    setActiveTab(tab);
-  }, [activeTab]);
-
   const [selectedStage, setSelectedStage] = useState<Stage | null>(null);
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
   const [isRecallActive, setIsRecallActive] = useState(false);
@@ -199,6 +188,17 @@ export default function App() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [worldNavView, setWorldNavView] = useState<import('./components/map/WorldView').WorldNavView>('world_hub');
+
+  const handleTabChange = useCallback((tab: TabType) => {
+    if (tab === activeTab && !selectedStage && !isRecallActive && !isBossBattleActive) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    setSelectedStage(null);
+    setIsRecallActive(false);
+    setIsBossBattleActive(false);
+    setActiveTab(tab);
+  }, [activeTab, selectedStage, isRecallActive, isBossBattleActive]);
   const [isOnboardingActive, setIsOnboardingActive] = useState<boolean>(() => {
     try {
       return !localStorage.getItem(STORAGE_KEY_ONBOARDING);
@@ -1122,7 +1122,7 @@ export default function App() {
 
       {/* Main Content Area */}
       <main className="flex-1 max-w-4xl w-full mx-auto px-3.5 sm:px-4 py-4 sm:py-5">
-        {isRecallActive ? (
+        {isRecallActive && (
           <RecallModule
             recallQueue={stats.recallQueue || []}
             playerMp={stats.mp}
@@ -1134,7 +1134,9 @@ export default function App() {
             soundEnabled={stats.soundEnabled}
             furiganaEnabled={stats.furiganaEnabled ?? true}
           />
-        ) : isBossBattleActive ? (
+        )}
+
+        {isBossBattleActive && !isRecallActive && (
           <Suspense fallback={<div className="flex items-center justify-center h-full text-stone-400">Loading Boss Battle...</div>}>
             <DungeonBattleModule
               onComplete={(score, total, exp, gold, tryoutId) => {
@@ -1146,13 +1148,20 @@ export default function App() {
               soundEnabled={stats.soundEnabled}
             />
           </Suspense>
-        ) : selectedStage ? (
+        )}
+
+        {selectedStage && !isRecallActive && !isBossBattleActive && (
           <ErrorBoundary>
             <StageHubView
               stage={selectedStage}
               stageProgress={stageProgress[selectedStage.id]}
               itemMastery={stats.itemMastery || {}}
               onBackToMap={() => setSelectedStage(null)}
+              onBackToWorldList={() => {
+                setSelectedStage(null);
+                setStats(prev => ({ ...prev, currentWorldId: '' }));
+              }}
+              onSelectStage={(newStage) => setSelectedStage(newStage)}
               onModuleComplete={handleStageModuleComplete}
               playerMp={stats.mp}
               playerMaxMp={stats.maxMp}
@@ -1168,8 +1177,10 @@ export default function App() {
               furiganaEnabled={stats.furiganaEnabled ?? true}
             />
           </ErrorBoundary>
-        ) : (
-          /* Standard Tab Views (Keep-Alive Container for 0ms Instant Tab Switching) */
+        )}
+
+        {/* Standard Tab Views (Keep-Alive Container for 0ms Instant Tab Switching) */}
+        <div className={Boolean(selectedStage || isRecallActive || isBossBattleActive) ? 'hidden' : 'block'}>
           <div className="tab-views-container relative w-full">
             {/* Home Tab */}
             <div
@@ -1363,7 +1374,7 @@ export default function App() {
               )}
             </div>
           </div>
-        )}
+        </div>
         
         <AuthModal
           isOpen={isAuthModalOpen}

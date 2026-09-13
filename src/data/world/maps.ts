@@ -428,3 +428,46 @@ export function getStagesForMap(mapId: string): Stage[] {
     };
   });
 }
+
+// Helper to determine the World for a given Stage
+export function getWorldForStage(stage: Stage | string): WorldInfo | null {
+  const stageId = typeof stage === 'string' ? stage : stage.id;
+  const stageObj = (stagesDb as RawStageJson[]).find(s => s.id === stageId);
+  if (!stageObj) return null;
+  const mapObj = MAP_REGIONS.find(m => m.id === stageObj.map_id);
+  if (!mapObj) return null;
+  return WORLDS_LIST.find(w => w.id === mapObj.worldId) || null;
+}
+
+// Helper to get sibling stages (prev, next, and full list) in the same World
+export function getSiblingStagesForStage(stage: Stage): {
+  world: WorldInfo | null;
+  prevStage: Stage | null;
+  nextStage: Stage | null;
+  allStagesInWorld: Stage[];
+  currentIndex: number;
+} {
+  const world = getWorldForStage(stage);
+  if (!world) {
+    return {
+      world: null,
+      prevStage: null,
+      nextStage: null,
+      allStagesInWorld: [],
+      currentIndex: -1,
+    };
+  }
+
+  const maps = getMapsForWorld(world.id);
+  const allStages = maps.flatMap(m => getStagesForMap(m.id));
+  const idx = allStages.findIndex(s => s.id === stage.id);
+
+  return {
+    world,
+    prevStage: idx > 0 ? allStages[idx - 1] : null,
+    nextStage: idx >= 0 && idx < allStages.length - 1 ? allStages[idx + 1] : null,
+    allStagesInWorld: allStages,
+    currentIndex: idx,
+  };
+}
+
