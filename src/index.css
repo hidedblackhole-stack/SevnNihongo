@@ -785,14 +785,11 @@ html.theme-light ruby rt,
 }
 
 .ruby-text {
-  line-height: 2.3;
-  word-break: normal;
-  overflow-wrap: break-word;
+  line-height: 2.2;
 }
 .ruby-word {
   ruby-position: over;
-  display: inline-block;
-  white-space: nowrap;
+  ruby-align: center;
 }
 
 /* Mobile-first Safe-Area insets */

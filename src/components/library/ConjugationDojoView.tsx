@@ -186,23 +186,25 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
             </div>
 
             <div className="flex items-center justify-center gap-3 py-1">
-              <div className="text-2xl sm:text-4xl font-black text-text-primary font-heading tracking-wide flex items-center justify-center gap-1.5 flex-wrap">
-                <span className="text-text-muted select-none">「</span>
-                {currentQuestion.targetVerb ? (
-                  <RubyText
-                    japanese={currentQuestion.targetVerb.kanji}
-                    reading={currentQuestion.targetVerb.reading}
-                    className="text-2xl sm:text-4xl font-black text-gold drop-shadow-sm font-jp"
-                  />
-                ) : (
-                  <RubyText
-                    japanese={currentQuestion.prompt}
-                    reading={currentQuestion.ruby}
-                    className="text-2xl sm:text-4xl font-black text-gold drop-shadow-sm font-jp"
-                  />
-                )}
-                <span className="text-text-muted select-none">」</span>
-                <span className="text-text-muted mx-1.5 select-none">➔</span>
+              <div className="text-2xl sm:text-4xl font-black text-text-primary flex items-center justify-center gap-2 flex-wrap">
+                <span className="inline-flex items-center">
+                  <span className="text-text-muted select-none">「</span>
+                  {currentQuestion.targetVerb ? (
+                    <RubyText
+                      japanese={currentQuestion.targetVerb.kanji}
+                      reading={currentQuestion.targetVerb.reading}
+                      className="text-2xl sm:text-4xl font-black text-gold drop-shadow-sm font-jp"
+                    />
+                  ) : (
+                    <RubyText
+                      japanese={currentQuestion.prompt}
+                      reading={currentQuestion.ruby}
+                      className="text-2xl sm:text-4xl font-black text-gold drop-shadow-sm font-jp"
+                    />
+                  )}
+                  <span className="text-text-muted select-none">」</span>
+                </span>
+                <span className="text-text-muted mx-1 select-none">➔</span>
                 <span className="text-indigo">【 ？ 】</span>
               </div>
 
@@ -626,7 +628,7 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
               Tabel Komparasi Konjugasi Verba Contoh
             </h3>
             <div className="overflow-x-auto">
-              <table className="w-full text-xs font-mono">
+              <table className="w-full text-xs font-jp">
                 <thead>
                   <tr className="border-b border-border-subtle text-text-muted text-left">
                     <th className="pb-2">Kamus (Jisho)</th>

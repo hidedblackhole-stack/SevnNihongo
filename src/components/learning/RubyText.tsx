@@ -65,7 +65,7 @@ export const RubyText: React.FC<RubyTextProps> = ({
       {segments.map((segment, index) => {
         if (segment.isKanji && segment.ruby) {
           return (
-            <ruby key={index} className="ruby-word px-[0.5px]">
+            <ruby key={index} className="ruby-word">
               {renderSegmentText(segment.text)}
               <rp>(</rp>
               <rt className="text-[0.62em] font-semibold leading-none select-none text-[#3f3a32] dark:text-[#f0be52] font-jp tracking-tight">
