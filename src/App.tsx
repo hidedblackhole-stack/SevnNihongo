@@ -36,11 +36,13 @@ import { LeaderboardView } from './components/leaderboard/LeaderboardView';
 import { AuthModal } from './components/auth/AuthModal';
 import { supabase, getSession, saveGameToCloud, loadGameFromCloud, upsertLeaderboard } from './lib/supabase';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { SpotlightOnboarding } from './components/tutorial/SpotlightOnboarding';
 
 const STORAGE_KEY_STATS = 'nihongo_quest_player_stats_v2';
 const STORAGE_KEY_STAGES = 'nihongo_quest_stage_progress_v2';
 const STORAGE_KEY_DAILY = 'nihongo_quest_daily_missions_v2';
 const STORAGE_KEY_WEEKLY = 'nihongo_quest_weekly_missions_v2';
+const STORAGE_KEY_ONBOARDING = 'nihongo_quest_onboarding_completed';
 
 // Seed initial item mastery for an authentic start
 const INITIAL_ITEM_MASTERY: Record<string, ItemMasteryRecord> = {};
@@ -175,6 +177,35 @@ export default function App() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [worldNavView, setWorldNavView] = useState<import('./components/map/WorldView').WorldNavView>('world_hub');
+  const [isOnboardingActive, setIsOnboardingActive] = useState<boolean>(() => {
+    try {
+      return !localStorage.getItem(STORAGE_KEY_ONBOARDING);
+    } catch {
+      return false;
+    }
+  });
+
+  const handleCompleteOnboarding = useCallback(() => {
+    setIsOnboardingActive(false);
+    try {
+      localStorage.setItem(STORAGE_KEY_ONBOARDING, 'true');
+    } catch (e) {
+      console.warn('Failed to save onboarding state', e);
+    }
+  }, []);
+
+  const handleOpenAuthFromOnboarding = useCallback(() => {
+    handleCompleteOnboarding();
+    setIsAuthModalOpen(true);
+  }, [handleCompleteOnboarding]);
+
+  const handleReplayOnboarding = useCallback(() => {
+    setSelectedStage(null);
+    setIsRecallActive(false);
+    setIsBossBattleActive(false);
+    setActiveTab('home');
+    setIsOnboardingActive(true);
+  }, []);
 
   // Active Study Tracking (Stage Hub / Learning Modules, Recall SRS, Boss Battles, and Library)
   const isStudying = Boolean(selectedStage || isRecallActive || isBossBattleActive || activeTab === 'library');
@@ -1281,6 +1312,7 @@ export default function App() {
                   syncStatus={cloudSyncStatus}
                   lastSyncedAt={lastSyncedAt}
                   onUpdateName={handleUpdateName}
+                  onReplayTutorial={handleReplayOnboarding}
                 />
               )}
             </motion.div>
@@ -1323,6 +1355,14 @@ export default function App() {
           setIsBossBattleActive(false);
           setActiveTab(tab);
         }}
+        soundEnabled={stats.soundEnabled}
+      />
+
+      {/* Interactive Spotlight Onboarding Tour */}
+      <SpotlightOnboarding
+        isOpen={isOnboardingActive}
+        onComplete={handleCompleteOnboarding}
+        onOpenAuth={handleOpenAuthFromOnboarding}
         soundEnabled={stats.soundEnabled}
       />
     </div>

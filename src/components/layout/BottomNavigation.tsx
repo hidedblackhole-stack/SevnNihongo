@@ -46,6 +46,7 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
             <button
               type="button"
               key={item.id}
+              data-tour={`nav-${item.id}`}
               aria-current={isActive ? 'page' : undefined}
               onClick={() => {
                 onChangeTab(item.id);

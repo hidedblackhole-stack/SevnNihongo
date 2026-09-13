@@ -89,6 +89,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
       {/* 2. HERO: CHARACTER SANCTUARY (THE SINGLE FOCAL POINT) */}
       <motion.div
+        data-tour="hero-card"
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.3 }}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Volume2, VolumeX, RotateCcw, ShieldAlert, Settings, BookOpen, User, LogOut, Coffee, MessageCircle, Sun, Moon, RefreshCw, Cloud, Check } from 'lucide-react';
+import { Volume2, VolumeX, RotateCcw, ShieldAlert, Settings, BookOpen, User, LogOut, Coffee, MessageCircle, Sun, Moon, RefreshCw, Cloud, Check, Sparkles } from 'lucide-react';
 import { PlayerStats } from '../../types/rpg';
 import { speakJapanese, playSound } from '../../utils/audio';
 import { signOut } from '../../lib/supabase';
@@ -14,6 +14,7 @@ interface SettingsViewProps {
   syncStatus?: 'idle' | 'syncing' | 'synced' | 'error';
   lastSyncedAt?: string | null;
   onUpdateName?: (newName: string) => void;
+  onReplayTutorial?: () => void;
 }
 
 export const SettingsView: React.FC<SettingsViewProps> = ({
@@ -26,6 +27,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   syncStatus = 'idle',
   lastSyncedAt,
   onUpdateName,
+  onReplayTutorial,
 }) => {
   const [playerNameInput, setPlayerNameInput] = useState(stats.playerName || '');
   const [isNameSaved, setIsNameSaved] = useState(false);
@@ -387,6 +389,27 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           <span className="px-2.5 py-1 rounded-full bg-surface-inset border border-border-subtle text-text-secondary font-mono text-xs">
             N3 Comprehensive
           </span>
+        </div>
+
+        <div className="flex items-center justify-between pt-3 border-t border-border-subtle">
+          <div>
+            <h4 className="text-xs sm:text-sm font-bold text-text-primary font-heading flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-gold" />
+              <span>Panduan Awal (Tutorial)</span>
+            </h4>
+            <p className="text-xs text-text-secondary">Ulangi tur panduan spotlight interaktif</p>
+          </div>
+          <button
+            type="button"
+            onClick={() => {
+              playSound('click', stats.soundEnabled);
+              if (onReplayTutorial) onReplayTutorial();
+            }}
+            className="btn btn-pill text-xs gap-1.5 text-gold border-gold/40 hover:bg-gold/10"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Ulangi Tur</span>
+          </button>
         </div>
       </div>
 
