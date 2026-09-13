@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Volume2, VolumeX, RotateCcw, ShieldAlert, Settings, BookOpen, User, LogOut, Coffee, MessageCircle, Sun, Moon, RefreshCw, Cloud, Check, Sparkles } from 'lucide-react';
+import { Volume2, VolumeX, RotateCcw, ShieldAlert, Settings, BookOpen, User, LogOut, Coffee, MessageCircle, Sun, Moon, RefreshCw, Cloud, Check, Sparkles, Smartphone, Download } from 'lucide-react';
 import { PlayerStats } from '../../types/rpg';
 import { speakJapanese, playSound } from '../../utils/audio';
 import { signOut } from '../../lib/supabase';
@@ -31,6 +31,21 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
 }) => {
   const [playerNameInput, setPlayerNameInput] = useState(stats.playerName || '');
   const [isNameSaved, setIsNameSaved] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [isStandalone, setIsStandalone] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return false;
+    return window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone === true;
+  });
+
+  useEffect(() => {
+    const handleBeforeInstall = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstall);
+    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
+  }, []);
 
   useEffect(() => {
     if (stats.playerName) {
@@ -410,6 +425,44 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             <RotateCcw className="w-3.5 h-3.5" />
             <span>Ulangi Tur</span>
           </button>
+        </div>
+
+        <div className="flex items-center justify-between pt-3 border-t border-border-subtle">
+          <div>
+            <h4 className="text-xs sm:text-sm font-bold text-text-primary font-heading flex items-center gap-1.5">
+              <Smartphone className="w-3.5 h-3.5 text-indigo" />
+              <span>Aplikasi Web (PWA)</span>
+            </h4>
+            <p className="text-xs text-text-secondary">Pasang di layar utama HP / desktop tanpa bar URL</p>
+          </div>
+          {isStandalone ? (
+            <span className="px-2.5 py-1 rounded-full bg-state-success/15 border border-state-success/30 text-state-success font-bold text-xs">
+              Terpasang
+            </span>
+          ) : deferredPrompt ? (
+            <button
+              type="button"
+              onClick={async () => {
+                playSound('click', stats.soundEnabled);
+                if (deferredPrompt) {
+                  deferredPrompt.prompt();
+                  const { outcome } = await deferredPrompt.userChoice;
+                  if (outcome === 'accepted') {
+                    setDeferredPrompt(null);
+                    setIsStandalone(true);
+                  }
+                }
+              }}
+              className="btn btn-pill text-xs gap-1.5 text-indigo border-indigo/40 hover:bg-indigo/10"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Pasang App</span>
+            </button>
+          ) : (
+            <span className="text-[10px] text-text-muted font-mono">
+              Siap Dipasang
+            </span>
+          )}
         </div>
       </div>
 

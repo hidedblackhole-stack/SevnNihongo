@@ -12,6 +12,15 @@
     <title>SevnQuest - Petualangan Bahasa Jepang (N5 - N1)</title>
     <meta name="description" content="Aplikasi belajar bahasa Jepang (JLPT N5, N4, N3, N2, N1) dengan kanji, kotoba, tata bahasa, flashcard, dan latihan menulis kaligrafi." />
 
+    <!-- Favicons & Brand Icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <!-- Web App Manifest (PWA) -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+
     <!-- Mobile & PWA Optimization for iOS & Android -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -89,6 +98,15 @@
     </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/sw.js').catch(function(err) {
+            console.debug('ServiceWorker registration error:', err);
+          });
+        });
+      }
+    </script>
   </body>
 </html>
 
