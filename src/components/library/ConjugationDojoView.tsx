@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Sparkles,
@@ -40,6 +40,9 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
   // Tabs: 'basic_forms' | 'advanced_forms' | 'verb_groups' | 'other_classes'
   const [activeTab, setActiveTab] = useState<'basic_forms' | 'advanced_forms' | 'verb_groups' | 'other_classes'>('basic_forms');
 
+  // Drill Section Ref for smooth auto-scrolling
+  const drillSectionRef = useRef<HTMLDivElement>(null);
+
   // Drill Quiz State
   const [isDrillActive, setIsDrillActive] = useState(false);
   const [selectedDrillFormId, setSelectedDrillFormId] = useState<string>('all');
@@ -59,6 +62,18 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
     setSelectedAnswerIndex(null);
     setIsAnswerChecked(false);
     setIsDrillActive(true);
+
+    // Smoothly scroll the user to the practice board
+    setTimeout(() => {
+      if (drillSectionRef.current) {
+        drillSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        const el = document.getElementById('conjugation-drill-panel');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    }, 60);
   };
 
   const handleNextQuestion = () => {
@@ -133,7 +148,11 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
 
       {/* 2. MODE DRILL QUIZ AKTIF */}
       {isDrillActive && currentQuestion ? (
-        <div className="panel p-5 sm:p-6 rounded-3xl border border-indigo/40 bg-surface-card shadow-xl space-y-5 animate-scale-up">
+        <div
+          ref={drillSectionRef}
+          id="conjugation-drill-panel"
+          className="panel p-5 sm:p-6 rounded-3xl border border-indigo/40 bg-surface-card shadow-xl space-y-5 animate-scale-up scroll-mt-20 sm:scroll-mt-24"
+        >
           {/* Top Bar Drill */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 border-b border-border-subtle">
             <div className="flex items-center gap-3">
