@@ -116,7 +116,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
 
   // Quick preset generator modal for active deck
   const [isQuickPresetModalOpen, setIsQuickPresetModalOpen] = useState(false);
-  const [quickPresetLevel, setQuickPresetLevel] = useState<'all' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1'>('N5');
+  const [quickPresetLevel, setQuickPresetLevel] = useState<'all' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'Kaigo'>('N5');
   const [quickPresetCount, setQuickPresetCount] = useState<number>(10);
 
   // Item detail inspection modals
@@ -881,19 +881,19 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
                 <label className="block font-bold text-text-secondary uppercase tracking-wider mb-1">
                   Target Level JLPT
                 </label>
-                <div className="grid grid-cols-6 gap-1">
-                  {(['all', 'N5', 'N4', 'N3', 'N2', 'N1'] as const).map((lvl) => (
+                <div className="flex flex-wrap gap-1">
+                  {(['all', 'N5', 'N4', 'N3', 'N2', 'N1', 'Kaigo'] as const).map((lvl) => (
                     <button
                       key={lvl}
                       type="button"
                       onClick={() => setQuickPresetLevel(lvl)}
-                      className={`py-1.5 rounded-lg text-xs font-mono font-bold border transition-all ${
+                      className={`flex-1 min-w-[42px] py-1.5 rounded-lg text-xs font-mono font-bold border transition-all ${
                         quickPresetLevel === lvl
                           ? 'bg-surface-elevated text-gold border-gold/40 shadow-sm'
                           : 'bg-surface-inset text-text-muted border-border-subtle'
                       }`}
                     >
-                      {lvl === 'all' ? 'Semua' : lvl}
+                      {lvl === 'all' ? 'Semua' : lvl === 'Kaigo' ? '🩺 Kaigo' : lvl}
                     </button>
                   ))}
                 </div>

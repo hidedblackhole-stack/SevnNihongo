@@ -17,6 +17,7 @@ const LEVEL_OPTIONS = [
   { value: 'N3', label: 'N3' },
   { value: 'N2', label: 'N2' },
   { value: 'N1', label: 'N1' },
+  { value: 'Kaigo', label: '🩺 Kaigo (Caregiver)' },
 ];
 
 export const LEVEL_BADGE_STYLE: Record<string, string> = {
@@ -25,6 +26,7 @@ export const LEVEL_BADGE_STYLE: Record<string, string> = {
   N3: 'border-border-subtle text-text-primary bg-surface-inset shadow-sm',
   N2: 'border-border-subtle text-text-primary bg-surface-inset shadow-sm',
   N1: 'border-border-subtle text-text-primary bg-surface-inset shadow-sm',
+  Kaigo: 'border-emerald-500/40 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 shadow-sm font-bold',
 };
 
 export type PriorityTier = 'all' | 'essential' | 'important' | 'supplementary';
@@ -85,6 +87,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [visibleCount, setVisibleCount] = useState(50);
   const [levelFilter, setLevelFilter] = useState<string>('all');
+  const [selectedUnit, setSelectedUnit] = useState<string>('all');
   const [priorityFilter, setPriorityFilter] = useState<PriorityTier>('all');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<KotobaItem | null>(null);
@@ -92,8 +95,11 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
   const allKotoba = useMemo(() => Object.values(KOTOBA_DATABASE), []);
 
   const levelCounts = useMemo(() => {
-    const counts: Record<string, number> = { all: allKotoba.length, N5: 0, N4: 0, N3: 0, N2: 0, N1: 0 };
+    const counts: Record<string, number> = { all: allKotoba.length, N5: 0, N4: 0, N3: 0, N2: 0, N1: 0, Kaigo: 0 };
     for (const item of allKotoba) {
+      if (item.tags?.includes('Kaigo')) {
+        counts.Kaigo++;
+      }
       if (item.jlpt && counts[item.jlpt] !== undefined) {
         counts[item.jlpt]++;
       }
@@ -101,19 +107,44 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
     return counts;
   }, [allKotoba]);
 
+  const kaigoUnits = useMemo(() => {
+    const unitMap = new Map<string, number>();
+    for (const item of allKotoba) {
+      if (item.tags?.includes('Kaigo') && item.unitName) {
+        unitMap.set(item.unitName, (unitMap.get(item.unitName) || 0) + 1);
+      }
+    }
+    return Array.from(unitMap.entries()).map(([name, count]) => ({ name, count }));
+  }, [allKotoba]);
+
   const filteredKotoba = useMemo(() => {
+    const q = searchQuery.toLowerCase().trim();
     return allKotoba.filter((item) => {
       const matchSearch =
-        item.word.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.reading.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.meaningId.toLowerCase().includes(searchQuery.toLowerCase());
+        !q ||
+        item.word.toLowerCase().includes(q) ||
+        item.reading.toLowerCase().includes(q) ||
+        item.meaningId.toLowerCase().includes(q) ||
+        (item.meaningJa && item.meaningJa.toLowerCase().includes(q)) ||
+        (item.unitName && item.unitName.toLowerCase().includes(q));
       
-      const matchLevel = levelFilter === 'all' || item.jlpt === levelFilter;
+      const matchLevel =
+        levelFilter === 'all'
+          ? true
+          : levelFilter === 'Kaigo'
+          ? Boolean(item.tags?.includes('Kaigo'))
+          : item.jlpt === levelFilter;
+
+      const matchUnit =
+        levelFilter !== 'Kaigo' || selectedUnit === 'all'
+          ? true
+          : item.unitName === selectedUnit;
+      
       const matchPriority = priorityFilter === 'all' || getKotobaPriority(item).tier === priorityFilter;
       
-      return matchSearch && matchLevel && matchPriority;
+      return matchSearch && matchLevel && matchUnit && matchPriority;
     });
-  }, [allKotoba, searchQuery, levelFilter, priorityFilter]);
+  }, [allKotoba, searchQuery, levelFilter, selectedUnit, priorityFilter]);
 
   const displayedKotoba = filteredKotoba.slice(0, visibleCount);
 
@@ -194,9 +225,9 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
             className="flex items-center gap-2.5 bg-surface-card hover:bg-surface-elevated px-4 py-3 rounded-2xl border border-border-subtle hover:border-border-primary transition-all text-xs font-bold text-text-primary shadow-sm"
           >
             <Filter className="w-4 h-4 text-text-secondary" />
-            <span>{levelFilter === 'all' ? 'Semua Level' : `Level ${levelFilter}`}</span>
+            <span>{levelFilter === 'all' ? 'Semua Level' : levelFilter === 'Kaigo' ? 'Kaigo (Caregiver)' : `Level ${levelFilter}`}</span>
             <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-surface-inset border border-border-subtle text-text-secondary">
-              {levelFilter === 'all' ? '8.367 Kotoba' : `${(levelCounts[levelFilter] || 0).toLocaleString()} Kotoba`}
+              {levelFilter === 'all' ? `${allKotoba.length.toLocaleString()} Kotoba` : `${(levelCounts[levelFilter] || 0).toLocaleString()} Kotoba`}
             </span>
             <ChevronDown className={`w-3.5 h-3.5 text-text-muted transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
           </button>
@@ -238,7 +269,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
                 })}
 
                 <div className="pt-2 px-2 pb-1 border-t border-border-subtle text-[10px] text-text-muted font-mono text-center flex items-center justify-center gap-1.5">
-                  <span>8.367 entri kosakata</span>
+                  <span>{allKotoba.length.toLocaleString()} entri kosakata</span>
                 </div>
               </div>
             </>
@@ -279,10 +310,63 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
         })}
       </div>
 
+      {/* Kaigo Specific Unit Filter Chips */}
+      {levelFilter === 'Kaigo' && (
+        <div className="panel p-3.5 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 space-y-2">
+          <div className="flex items-center justify-between text-xs">
+            <span className="font-bold text-emerald-600 dark:text-emerald-400 font-heading flex items-center gap-1.5">
+              <span>🩺</span> Unit Bidang Keperawatan ({kaigoUnits.length} Unit)
+            </span>
+            <span className="text-[11px] font-mono text-text-muted">
+              {filteredKotoba.length} Kosakata Ditampilkan
+            </span>
+          </div>
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-thin">
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedUnit('all');
+                setVisibleCount(50);
+                playSound('click', soundEnabled);
+              }}
+              className={`px-3 py-1 rounded-xl text-xs font-bold font-mono whitespace-nowrap transition-all border shrink-0 ${
+                selectedUnit === 'all'
+                  ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm'
+                  : 'bg-surface-card text-text-secondary border-border-subtle hover:border-emerald-500/40 hover:text-text-primary'
+              }`}
+            >
+              Semua Unit ({levelCounts.Kaigo})
+            </button>
+            {kaigoUnits.map((u) => {
+              const isSelected = selectedUnit === u.name;
+              return (
+                <button
+                  key={u.name}
+                  type="button"
+                  onClick={() => {
+                    setSelectedUnit(u.name);
+                    setVisibleCount(50);
+                    playSound('click', soundEnabled);
+                  }}
+                  className={`px-3 py-1 rounded-xl text-xs font-bold font-mono whitespace-nowrap transition-all border shrink-0 ${
+                    isSelected
+                      ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm'
+                      : 'bg-surface-card text-text-secondary border-border-subtle hover:border-emerald-500/40 hover:text-text-primary'
+                  }`}
+                >
+                  {u.name} ({u.count})
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       {/* Dictionary List: Clean Standard Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4">
         {displayedKotoba.map((item) => {
           const priority = getKotobaPriority(item);
+          const isKaigoTagged = item.tags?.includes('Kaigo');
 
           return (
             <div
@@ -300,6 +384,16 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
                       <span className={`px-2 py-0.5 rounded-lg text-[10px] font-mono font-bold border ${LEVEL_BADGE_STYLE[item.jlpt] || 'border-border-subtle text-text-primary bg-surface-inset'}`}>
                         {item.jlpt}
                       </span>
+                      {isKaigoTagged && item.jlpt !== 'Kaigo' && (
+                        <span className="px-2 py-0.5 rounded-lg text-[10px] font-mono font-bold border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 shadow-sm">
+                          Kaigo
+                        </span>
+                      )}
+                      {item.unitName && (levelFilter === 'Kaigo' || isKaigoTagged) && (
+                        <span className="px-2 py-0.5 rounded-lg text-[10px] font-mono text-text-muted bg-surface-inset border border-border-subtle truncate max-w-[140px]" title={item.unitName}>
+                          {item.unitName}
+                        </span>
+                      )}
                       <span className={`px-2 py-0.5 rounded-lg text-[10px] font-mono font-bold border ${priority.color}`}>
                         {priority.badge}
                       </span>

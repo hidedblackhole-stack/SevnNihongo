@@ -191,8 +191,18 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                 <div className="flex flex-col items-center text-center space-y-4">
               <div className="flex gap-2 justify-center flex-wrap">
                 <span className="px-2.5 py-1 rounded-lg bg-surface-inset text-text-primary text-xs font-mono font-bold border border-border-subtle shadow-sm">
-                  JLPT {item.jlpt}
+                  {item.jlpt.startsWith('N') ? `JLPT ${item.jlpt}` : item.jlpt}
                 </span>
+                {item.tags?.includes('Kaigo') && item.jlpt !== 'Kaigo' && (
+                  <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-bold border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 shadow-sm">
+                    🩺 Kaigo
+                  </span>
+                )}
+                {item.unitName && (
+                  <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-surface-inset text-text-secondary border border-border-subtle shadow-sm">
+                    Unit: {item.unitName}
+                  </span>
+                )}
                 <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-surface-inset text-text-secondary border border-border-subtle shadow-sm">
                   {(item.id.match(/\d+$/) ? parseInt(item.id.match(/\d+$/)![0], 10) % 10 : 0) < 5
                     ? 'Essential (Core)'
@@ -218,13 +228,16 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                 </button>
               </div>
 
-              <div className="space-y-1 bg-surface-inset p-4 rounded-2xl w-full border border-border-subtle">
+              <div className="space-y-1.5 bg-surface-inset p-4 rounded-2xl w-full border border-border-subtle text-left sm:text-center">
                 <h2 className="text-xl font-black text-text-primary font-heading leading-snug">
                   {item.meaningId}
                 </h2>
-                <p className="text-xs text-text-muted italic">
-                  Makna JP: {item.meaningJa}
-                </p>
+                {item.meaningJa && (
+                  <p className="text-xs text-text-muted italic">
+                    {item.tags?.includes('Kaigo') ? 'Penjelasan JP (やさしい日本語): ' : 'Makna JP: '}
+                    <span className="font-jp not-italic font-semibold text-text-secondary">{item.meaningJa}</span>
+                  </p>
+                )}
               </div>
 
               <button

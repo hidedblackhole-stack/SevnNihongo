@@ -52,7 +52,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
 
   // Content Customization States
   const [contentMode, setContentMode] = useState<ContentSourceMode>('preset');
-  const [presetLevel, setPresetLevel] = useState<'all' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1'>('N5');
+  const [presetLevel, setPresetLevel] = useState<'all' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'Kaigo'>('N5');
   const [presetCount, setPresetCount] = useState<number>(10);
 
   // Manual picker states
@@ -407,7 +407,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                         Pilih Target Level JLPT:
                       </span>
                       <div className="flex items-center gap-1 flex-wrap">
-                        {(['all', 'N5', 'N4', 'N3', 'N2', 'N1'] as const).map((lvl) => (
+                        {(['all', 'N5', 'N4', 'N3', 'N2', 'N1', 'Kaigo'] as const).map((lvl) => (
                           <button
                             key={lvl}
                             type="button"
@@ -421,7 +421,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                                 : 'bg-surface-card text-text-muted border-border-subtle hover:text-text-secondary'
                             }`}
                           >
-                            {lvl === 'all' ? 'Semua' : lvl}
+                            {lvl === 'all' ? 'Semua' : lvl === 'Kaigo' ? '🩺 Kaigo' : lvl}
                           </button>
                         ))}
                       </div>

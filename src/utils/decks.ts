@@ -277,7 +277,7 @@ export function toggleItemInDeck(
 
 export interface GeneratePresetOptions {
   type: DeckType;
-  level: 'all' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1';
+  level: 'all' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'Kaigo';
   count: number;
 }
 
@@ -289,6 +289,7 @@ export function generatePresetDeckItems(options: GeneratePresetOptions): DeckIte
   const matchingKotoba = Object.values(KOTOBA_DATABASE).filter(item => {
     if (!item) return false;
     if (level === 'all') return true;
+    if (level === 'Kaigo') return Boolean(item.tags?.includes('Kaigo'));
     return item.jlpt === level;
   });
 
@@ -298,6 +299,9 @@ export function generatePresetDeckItems(options: GeneratePresetOptions): DeckIte
     if (!item || !item.character || seenKanji.has(item.character)) return false;
     seenKanji.add(item.character);
     if (level === 'all') return true;
+    if (level === 'Kaigo') {
+      return matchingKotoba.some(k => k.kanjiComponents?.includes(item.character));
+    }
     return item.jlpt === level;
   });
 
@@ -305,6 +309,7 @@ export function generatePresetDeckItems(options: GeneratePresetOptions): DeckIte
   const matchingBunpou = Object.values(BUNPOU_DATABASE).filter(item => {
     if (!item) return false;
     if (level === 'all') return true;
+    if (level === 'Kaigo') return item.level === 'N4' || item.level === 'N3';
     return item.level === level;
   });
 

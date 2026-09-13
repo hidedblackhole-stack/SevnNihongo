@@ -170,6 +170,8 @@ export interface KotobaItem {
   };
   relatedWords?: string[];
   collocations?: string[];
+  tags?: string[];
+  unitName?: string;
 }
 
 export interface RelatedWord {
