@@ -4,126 +4,135 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Konfirmasi Email — SevnQuest</title>
-</head>
-<body style="margin: 0; padding: 0; background-color: #f4efe4; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; color: #2c2824;">
+  <style>
+    /* Reset & Base */
+    body, table, td, p, a {
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+    body {
+      margin: 0 !important;
+      padding: 0 !important;
+      background-color: #f5f0e6;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
 
-  <!-- Outer Canvas Table (Warm Washi Background) -->
-  <table width="100%" border="0" cellpadding="0" cellspacing="0" style="background-color: #f4efe4; padding: 40px 16px;">
+    /* Tactile Skeuomorphic Button with Asymmetric Squish Physics */
+    .rpg-btn {
+      display: inline-block;
+      background-color: #1e293b;
+      color: #ffffff !important;
+      text-decoration: none;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      padding: 14px 34px;
+      border-radius: 12px;
+      border: 1px solid #0f172a;
+      border-bottom: 4px solid #080d16;
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.16);
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+      transform: scale(1) translateY(0);
+      /* Springs back to full size on release with overshooting spring */
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), border-bottom-width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .rpg-btn:hover {
+      background-color: #28364e;
+      box-shadow: 0 6px 14px rgba(15, 23, 42, 0.22);
+    }
+
+    /* Instant squish down to ~88% scale on press (fast 0.08s ease-out) */
+    .rpg-btn:active {
+      transform: scale(0.88) translateY(2px);
+      border-bottom-width: 2px;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.25);
+      transition: transform 0.08s ease-out, box-shadow 0.08s ease-out, border-bottom-width 0.08s ease-out;
+    }
+  </style>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f5f0e6; color: #2c2824;">
+
+  <!-- Outer Canvas Table (Solid Warm Washi) -->
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" style="background-color: #f5f0e6; padding: 48px 16px;">
     <tr>
       <td align="center">
 
-        <!-- Main Card Container (Washi Paper Skeuomorphic Card) -->
-        <table width="100%" border="0" cellpadding="0" cellspacing="0" style="max-width: 540px; background-color: #fdfbf7; border: 1px solid #dcd3c1; border-radius: 18px; box-shadow: 0 8px 24px rgba(70, 55, 40, 0.08), 0 2px 6px rgba(70, 55, 40, 0.04); overflow: hidden;">
+        <!-- Skeuomorphic Solid Card -->
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" style="max-width: 480px; background-color: #ffffff; border: 1px solid #e2dacd; border-radius: 16px; box-shadow: 0 4px 16px rgba(40, 32, 24, 0.06); overflow: hidden;">
           
-          <!-- Header Area (Clean & Simple) -->
+          <!-- Header -->
           <tr>
-            <td align="center" style="padding: 32px 24px 20px 24px; border-bottom: 1px solid #ede5d5;">
+            <td align="center" style="padding: 36px 24px 20px 24px; border-bottom: 1px solid #f0eae1;">
               
-              <!-- Torii Emblem Badge (Skeuomorphic raised seal) -->
+              <!-- Torii Seal Emblem -->
               <table border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 12px;">
                 <tr>
-                  <td align="center" style="background-color: #f3ece0; border: 1px solid #dcd3c1; width: 50px; height: 50px; border-radius: 14px; font-size: 24px; line-height: 50px; box-shadow: 0 2px 6px rgba(70, 55, 40, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);">
+                  <td align="center" style="background-color: #f6f2ea; border: 1px solid #e0d7c7; border-bottom: 2px solid #cfc4b0; width: 48px; height: 48px; border-radius: 12px; font-size: 22px; line-height: 48px;">
                     ⛩️
                   </td>
                 </tr>
               </table>
 
-              <!-- Brand Title -->
-              <h1 style="margin: 0 0 4px 0; color: #2c2824; font-size: 20px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase;">
+              <!-- Title -->
+              <div style="font-size: 17px; font-weight: 800; letter-spacing: 0.08em; color: #1e293b; text-transform: uppercase;">
                 SEVNQUEST
-              </h1>
-              <p style="margin: 0; color: #8a8072; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;">
-                セブンクエスト • Petualangan Bahasa Jepang
-              </p>
+              </div>
+              <div style="font-size: 11px; color: #8c8273; font-weight: 600; letter-spacing: 0.05em; margin-top: 2px;">
+                セブンクエスト
+              </div>
             </td>
           </tr>
 
-          <!-- Main Body Content -->
+          <!-- Body -->
           <tr>
-            <td style="padding: 28px 28px 20px 28px;">
+            <td align="center" style="padding: 32px 28px 24px 28px;">
+              
+              <h1 style="margin: 0 0 10px 0; font-size: 17px; font-weight: 700; color: #1e293b;">
+                Konfirmasi Akun Petualang
+              </h1>
 
-              <!-- Sashiko Stitched Frame (Base Style Dashed Inset) -->
-              <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border: 1.5px dashed #cfc5b0; border-radius: 14px; background-color: #faf6ed; padding: 24px 20px;">
+              <p style="margin: 0 0 28px 0; font-size: 14px; color: #475569; line-height: 1.6; max-width: 380px;">
+                Satu langkah lagi untuk memulai petualangan. Tekan tombol di bawah untuk memverifikasi email dan mengaktifkan Cloud Save:
+              </p>
+
+              <!-- Squishy Skeuomorphic Button Container -->
+              <table border="0" cellpadding="0" cellspacing="0" style="margin: 0 auto 28px auto;">
                 <tr>
-                  <td>
-                    <!-- Badge: Japanese Welcome -->
-                    <div style="display: inline-block; background-color: #f0e8d8; border: 1px solid #dcd3c1; border-radius: 9999px; padding: 3px 12px; margin-bottom: 12px;">
-                      <span style="color: #635c52; font-size: 11px; font-weight: 700;">ようこそ、冒険者！(Selamat Datang, Petualang)</span>
-                    </div>
-
-                    <!-- Title -->
-                    <h2 style="margin: 0 0 12px 0; color: #2c2824; font-size: 17px; font-weight: 700; line-height: 1.4;">
-                      Konfirmasi Alamat Email Petualang
-                    </h2>
-
-                    <!-- Intro Body -->
-                    <p style="margin: 0 0 14px 0; color: #5c554b; font-size: 13px; line-height: 1.6;">
-                      Terima kasih telah bergabung di <strong>SevnQuest</strong>. Satu langkah lagi untuk mengaktifkan akun petualanganmu dan menghubungkan data ke Cloud.
-                    </p>
-
-                    <!-- Simple Clean Feature List -->
-                    <table width="100%" border="0" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border: 1px solid #e5dcce; border-radius: 10px; padding: 12px 14px; margin: 16px 0 22px 0;">
-                      <tr>
-                        <td style="color: #635c52; font-size: 12px; line-height: 1.8;">
-                          • <strong>Cloud Save:</strong> Progres level, stage, dan EXP aman di semua perangkat.<br>
-                          • <strong>Akses Peta:</strong> Petualangan Kana, Kanji, Tata Bahasa (Bunpou) &amp; Kaigo.<br>
-                          • <strong>Papan Skor:</strong> Catat pencapaianmu di leaderboard petualang.
-                        </td>
-                      </tr>
-                    </table>
-
-                    <!-- Skeuomorphic Tactile Button (Simple Aizome / Indigo Tactile Button) -->
-                    <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin: 24px 0 16px 0;">
-                      <tr>
-                        <td align="center">
-                          <a href="{{ .ConfirmationURL }}" target="_blank" style="display: inline-block; background: linear-gradient(180deg, #2f4568 0%, #1f304a 100%); color: #ffffff; font-size: 14px; font-weight: 700; text-decoration: none; padding: 13px 28px; border-radius: 12px; border-top: 1px solid #4a638d; border-bottom: 3px solid #142032; border-left: 1px solid #233550; border-right: 1px solid #233550; box-shadow: 0 4px 12px rgba(31, 48, 74, 0.25); letter-spacing: 0.3px;">
-                            ⚔️ Konfirmasi Email &amp; Masuk
-                          </a>
-                        </td>
-                      </tr>
-                    </table>
-
-                    <!-- Fallback Link -->
-                    <p style="margin: 20px 0 4px 0; color: #8a8072; font-size: 11px; line-height: 1.5;">
-                      Jika tombol di atas tidak dapat diklik, salin dan buka tautan berikut:
-                    </p>
-                    <p style="margin: 0 0 16px 0; word-break: break-all; font-size: 11px; line-height: 1.4;">
-                      <a href="{{ .ConfirmationURL }}" target="_blank" style="color: #243c5e; text-decoration: underline;">
-                        {{ .ConfirmationURL }}
-                      </a>
-                    </p>
-
-                    <!-- Expiration Notice -->
-                    <div style="background-color: #f2ebd9; border-left: 3px solid #a89373; padding: 8px 12px; border-radius: 6px; margin-top: 16px;">
-                      <p style="margin: 0; color: #6b6254; font-size: 11px; line-height: 1.5;">
-                        ⏳ <em>Tautan ini aktif selama 24 jam. Jika kamu tidak merasa mendaftar di SevnQuest, silakan abaikan email ini.</em>
-                      </p>
-                    </div>
-
+                  <td align="center">
+                    <a href="{{ .ConfirmationURL }}" class="rpg-btn" target="_blank" style="display: inline-block; background-color: #1e293b; color: #ffffff; text-decoration: none; font-size: 15px; font-weight: 700; padding: 14px 34px; border-radius: 12px; border: 1px solid #0f172a; border-bottom: 4px solid #080d16; box-shadow: 0 4px 10px rgba(15, 23, 42, 0.16);">
+                      Konfirmasi Email
+                    </a>
                   </td>
                 </tr>
               </table>
+
+              <!-- Direct URL Fallback -->
+              <p style="margin: 0 0 6px 0; font-size: 11px; color: #94a3b8;">
+                Atau buka tautan ini di browser:
+              </p>
+              <div style="word-break: break-all; font-size: 11px; line-height: 1.4; margin-bottom: 24px;">
+                <a href="{{ .ConfirmationURL }}" target="_blank" style="color: #2563eb; text-decoration: underline;">
+                  {{ .ConfirmationURL }}
+                </a>
+              </div>
 
             </td>
           </tr>
 
           <!-- Footer -->
           <tr>
-            <td align="center" style="padding: 18px 24px 24px 24px; border-top: 1px solid #ede5d5;">
-              <p style="margin: 0 0 4px 0; color: #5c554b; font-size: 12px; font-weight: 700;">
-                SevnQuest (セブンクエスト)
-              </p>
-              <p style="margin: 0 0 6px 0; color: #8a8072; font-size: 11px; line-height: 1.4;">
-                Platform RPG Belajar Bahasa Jepang • Dari Kana hingga N1 &amp; Kaigo
-              </p>
-              <p style="margin: 0; color: #a3998b; font-size: 10px;">
-                Email ini dikirim otomatis oleh sistem akun SevnQuest.
+            <td align="center" style="padding: 16px 24px; background-color: #faf8f5; border-top: 1px solid #f0eae1;">
+              <p style="margin: 0; font-size: 11px; color: #8c8273;">
+                Tautan berlaku 24 jam. Jika kamu tidak mendaftar di SevnQuest, abaikan email ini.
               </p>
             </td>
           </tr>
 
         </table>
-        <!-- End Card -->
 
       </td>
     </tr>
