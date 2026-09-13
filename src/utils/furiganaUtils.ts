@@ -73,6 +73,26 @@ export function katakanaToHiragana(char: string): string {
 }
 
 /**
+ * Compare two characters, treating katakana and hiragana equivalents as equal.
+ */
+export function charsMatch(c1: string, c2: string): boolean {
+  if (!c1 || !c2) return false;
+  if (c1 === c2) return true;
+  return katakanaToHiragana(c1) === katakanaToHiragana(c2);
+}
+
+/**
+ * Check if haystack starts with needle at given position, kana-insensitive.
+ */
+export function startsWithKana(haystack: string, needle: string, pos: number): boolean {
+  if (pos + needle.length > haystack.length) return false;
+  for (let i = 0; i < needle.length; i++) {
+    if (!charsMatch(haystack[pos + i], needle[i])) return false;
+  }
+  return true;
+}
+
+/**
  * Merge adjacent non-kanji segments into single segments for clean DOM rendering.
  */
 export function mergeNonKanjiSegments(segments: RubySegment[]): RubySegment[] {
@@ -124,8 +144,15 @@ export function autoAnnotateFurigana(text: string, excludeKanji?: Set<string>): 
       // prefer the verb/adjective stem kunyomi from kanji dictionary (e.g. 終わった -> お, 割った -> わ, 乾いた -> かわ)
       if (wordMatch.length === 1 && i + 1 < text.length && isHiragana(text[i + 1]) && furiganaDict.kanji[wordMatch]) {
         reading = furiganaDict.kanji[wordMatch];
+        segments.push({ text: wordMatch, ruby: reading, isKanji: true });
+      } else if (Array.from(wordMatch).some(c => !isKanji(c))) {
+        // Word contains both kanji and okurigana (e.g. 飽きる, 食べる, 思い出す)
+        // Align wordMatch against reading so only kanji characters receive ruby, leaving okurigana as plain text
+        const subSegments = alignKanjiReadings(wordMatch, reading, excludeKanji);
+        segments.push(...subSegments);
+      } else {
+        segments.push({ text: wordMatch, ruby: reading, isKanji: true });
       }
-      segments.push({ text: wordMatch, ruby: reading, isKanji: true });
       i += wordMatch.length;
       continue;
     }
@@ -200,38 +227,59 @@ export function alignKanjiReadings(
         jIdx++;
       }
 
-      let readingEnd = rIdx;
-      if (jIdx < japanese.length) {
-        const nextJChar = japanese[jIdx];
-        if (!isKanji(nextJChar)) {
-          const searchFrom = rIdx + kanjiSeq.length;
-          let found = -1;
+      // Collect the following non-kanji anchor sequence in japanese
+      let anchor = '';
+      let lookAhead = jIdx;
+      while (lookAhead < japanese.length && (!isKanji(japanese[lookAhead]) || excludeKanji?.has(japanese[lookAhead]))) {
+        anchor += japanese[lookAhead];
+        lookAhead++;
+      }
 
-          for (let i = Math.max(rIdx + 1, searchFrom - 1); i < reading.length; i++) {
-            if (
-              reading[i] === nextJChar ||
-              (isKatakana(nextJChar) && reading[i] === katakanaToHiragana(nextJChar)) ||
-              (isHiragana(nextJChar) && reading[i] === nextJChar)
-            ) {
+      let readingEnd = rIdx;
+      if (anchor.length > 0) {
+        // In Japanese, each kanji has at least 1 mora (character) in reading
+        const minLen = kanjiSeq.length;
+        let found = -1;
+
+        // Try matching anchor sequence with up to 4 characters prefix
+        for (let aLen = Math.min(anchor.length, 4); aLen >= 1; aLen--) {
+          const subAnchor = anchor.substring(0, aLen);
+          for (let i = rIdx + minLen; i <= reading.length - aLen; i++) {
+            if (startsWithKana(reading, subAnchor, i)) {
               found = i;
               break;
             }
           }
+          if (found >= 0) break;
+        }
 
-          if (found >= 0) {
-            readingEnd = found;
-          } else {
-            readingEnd = Math.min(rIdx + kanjiSeq.length * 2, reading.length);
+        // Fallback: if minLen was too strict, try from rIdx + 1
+        if (found < 0) {
+          for (let aLen = Math.min(anchor.length, 4); aLen >= 1; aLen--) {
+            const subAnchor = anchor.substring(0, aLen);
+            for (let i = rIdx + 1; i <= reading.length - aLen; i++) {
+              if (startsWithKana(reading, subAnchor, i)) {
+                found = i;
+                break;
+              }
+            }
+            if (found >= 0) break;
           }
+        }
+
+        if (found >= 0) {
+          readingEnd = found;
         } else {
-          readingEnd = Math.min(rIdx + kanjiSeq.length * 2, reading.length);
+          readingEnd = Math.min(rIdx + kanjiSeq.length * 3, reading.length);
         }
       } else {
         readingEnd = reading.length;
       }
 
       const rubyText = reading.substring(rIdx, readingEnd);
-      segments.push({ text: kanjiSeq, ruby: rubyText, isKanji: true });
+      // Fallback to dictionary if rubyText is empty
+      const finalRuby = rubyText || furiganaDict.words[kanjiSeq] || furiganaDict.kanji[kanjiSeq] || undefined;
+      segments.push({ text: kanjiSeq, ruby: finalRuby, isKanji: true });
       rIdx = readingEnd;
     } else if (isKanji(jChar) && excludeKanji?.has(jChar)) {
       let excludedSeq = '';
@@ -239,28 +287,18 @@ export function alignKanjiReadings(
         excludedSeq += japanese[jIdx];
         jIdx++;
       }
-
-      if (jIdx < japanese.length) {
-        const nextJChar = japanese[jIdx];
-        if (!isKanji(nextJChar)) {
-          for (let i = rIdx + 1; i < reading.length; i++) {
-            if (reading[i] === nextJChar) {
-              rIdx = i;
-              break;
-            }
-          }
-        } else {
-          rIdx += excludedSeq.length * 2;
-        }
-      } else {
-        rIdx = reading.length;
-      }
-
       segments.push({ text: excludedSeq, isKanji: false });
     } else {
       segments.push({ text: jChar, isKanji: false });
       jIdx++;
-      if (rIdx < reading.length) {
+      // Skip any extraneous whitespace in reading if jChar is not whitespace
+      while (rIdx < reading.length && /[\s　]/.test(reading[rIdx]) && !/[\s　]/.test(jChar)) {
+        rIdx++;
+      }
+      // Advance rIdx if reading matches jChar
+      if (rIdx < reading.length && charsMatch(jChar, reading[rIdx])) {
+        rIdx++;
+      } else if (rIdx < reading.length && /[\s　]/.test(jChar) && /[\s　]/.test(reading[rIdx])) {
         rIdx++;
       }
     }

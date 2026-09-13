@@ -942,7 +942,7 @@
     ],
     "correct_answer": 2,
     "explanation": "Jawaban benar: 【飽き】\nArti kalimat: \"Dia agak gampang bosanan, cepat jenuh pada apapun.\"\nKaidah perubahan kata: 飽きる -> stem 飽き + っぽい (gampang bosan).",
-    "ruby": "かのじょはちょっと（　　）っぽくて、なにごとにもあきやすい。"
+    "ruby": "かのじょはちょっと（　）っぽくて、なにごとにもあきやすい。"
   },
   {
     "id": "w1d4g1_q1",
