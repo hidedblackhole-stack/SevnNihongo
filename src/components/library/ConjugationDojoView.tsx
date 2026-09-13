@@ -703,7 +703,7 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
                       </p>
                       <div className="flex flex-wrap gap-1.5 pt-1">
                         {sub.examples.map((ex, eIdx) => (
-                          <span key={eIdx} className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-surface-card border border-border-subtle text-gold">
+                          <span key={eIdx} className="text-[11px] font-jp leading-relaxed px-2 py-0.5 rounded-md bg-surface-card border border-border-subtle text-gold">
                             {ex}
                           </span>
                         ))}

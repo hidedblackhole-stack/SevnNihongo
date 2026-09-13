@@ -622,17 +622,26 @@ export const WORD_CLASS_GUIDES: WordClassGuide[] = [
       {
         name: 'Bentuk Positif & Lampau',
         rule: '• Sekarang: [〜い] (高い = Mahal)\n• Lampau: Buang [い] + [かった] (高かった = Dulu mahal)',
-        examples: ['高い (takai) → 高かった (takakatta)', '暑い (atsui) → 暑かった (atsukatta)'],
+        examples: [
+          '高い (takai) → 高かった (takakatta) (Mahal → Dulu mahal)',
+          '暑い (atsui) → 暑かった (atsukatta) (Panas → Dulu panas)',
+        ],
       },
       {
         name: 'Bentuk Negatif',
-        rule: '• Negatif Sekarang: Buang [い] + [くない] (高くない = Tidak mahal)\n• Negatif Lampau: Buang [い] + [くなかった] (高くなった)',
-        examples: ['安い (yasui) → 安くない (yasukunai)', '寒い (samui) → 寒くなかった (samukunakatta)'],
+        rule: '• Negatif Sekarang: Buang [い] + [くない] (高くない = Tidak mahal)\n• Negatif Lampau: Buang [い] + [くなかった] (高くなかった = Dulu tidak mahal)',
+        examples: [
+          '安い (yasui) → 安くない (yasukunai) (Murah → Tidak murah)',
+          '寒い (samui) → 寒くなかった (samukunakatta) (Dingin → Dulu tidak dingin)',
+        ],
       },
       {
         name: 'Bentuk Sambung & Keterangan (Adverb)',
-        rule: '• Menyambung kalimat: Buang [い] + [くて] (安くて美味しい)\n• Menjadi Adverb (kata keterangan): Buang [い] + [く] + V (早く起きる = Bangun pagi)',
-        examples: ['早い (hayai) → 早く (hayaku + V)', '美味しい (oishii) → 美味しくて (oishikute)'],
+        rule: '• Menyambung kalimat: Buang [い] + [くて] (安くて美味しい = Murah dan enak)\n• Menjadi Adverb (kata keterangan): Buang [い] + [く] + V (早く起きる = Bangun pagi)',
+        examples: [
+          '早い (hayai) → 早く (hayaku) + V (Cepat → Dengan cepat)',
+          '美味しい (oishii) → 美味しくて (oishikute) (Enak → Enak dan...)',
+        ],
       },
     ],
   },
@@ -644,18 +653,30 @@ export const WORD_CLASS_GUIDES: WordClassGuide[] = [
     subGroups: [
       {
         name: 'Modifikasi Kata Benda',
-        rule: 'Tambahkan [な] sebelum kata benda.\nContoh: 静か (shizuka) + 部屋 (heya) → 静かな部屋 (Kamar yang tenang).',
-        examples: ['有名 (yuumei) → 有名な人 (Orang terkenal)', '綺麗 (kirei) → 綺麗な花 (Bunga indah)'],
+        rule: '• Pola: [Kata Sifat-na] + [な] + [Kata Benda]\n• Fungsi: Menerangkan kata benda secara langsung (atributif)',
+        examples: [
+          '有名 (yuumei) → 有名な人 (yuumei na hito) (Terkenal → Orang terkenal)',
+          '綺麗 (kirei) → 綺麗な花 (kirei na hana) (Cantik/Indah → Bunga indah)',
+          '静か (shizuka) → 静かな部屋 (shizuka na heya) (Tenang → Kamar tenang)',
+        ],
       },
       {
         name: 'Predikat (Akhir Kalimat)',
-        rule: '• Positif: [〜だ / です] (静かです)\n• Lampau: [〜だった / でした] (静かでした)\n• Negatif: [〜ではない / じゃありません] (静かじゃない)',
-        examples: ['便利 (benri) → 便利です / 便利でした / 便利じゃない'],
+        rule: '• Sekarang Positif: [〜だ / です] (静かです = Tenang)\n• Lampau: [〜だった / でした] (静かでした = Dulu tenang)\n• Negatif: [〜ではない / じゃありません] (静かじゃない = Tidak tenang)',
+        examples: [
+          '便利 (benri) → 便利です (benri desu) (Praktis → Praktis [positif])',
+          '静か (shizuka) → 静かでした (shizuka deshita) (Tenang → Dulu tenang [lampau])',
+          '好き (suki) → 好きじゃない (suki ja nai) (Suka → Tidak suka [negatif])',
+        ],
       },
       {
         name: 'Menjadi Kata Keterangan (Adverb)',
-        rule: 'Tambahkan [に] sebelum kata kerja.\nContoh: 静かに食べる (Makan dengan tenang), 下手に話す (Bicara secara kaku).',
-        examples: ['静か (shizuka) → 静かに (shizuka ni)', '上手 (jouzu) → 上手に (jouzu ni)'],
+        rule: '• Pola: [Kata Sifat-na] + [に] + [Kata Kerja]\n• Fungsi: Mengubah kata sifat menjadi kata keterangan cara (Adverb)',
+        examples: [
+          '静か (shizuka) → 静かに (shizuka ni) + V (Tenang → Dengan tenang)',
+          '上手 (jouzu) → 上手に (jouzu ni) + V (Mahir → Dengan mahir)',
+          '下手 (heta) → 下手に (heta ni) + V (Kaku → Dengan kaku/kurang mahir)',
+        ],
       },
     ],
   },
@@ -667,13 +688,21 @@ export const WORD_CLASS_GUIDES: WordClassGuide[] = [
     subGroups: [
       {
         name: 'Kopula Predikat',
-        rule: '• Sekarang Positif: [N だ / です] (学生です)\n• Lampau: [N だった / でした] (学生でした)\n• Negatif: [N ではない / じゃありません] (学生じゃない)',
-        examples: ['学生 (gakusei) → 学生です', '雨 (ame) → 雨でした'],
+        rule: '• Sekarang Positif: [N だ / です] (学生です = Adalah siswa)\n• Lampau: [N だった / でした] (学生でした = Dulu adalah siswa)\n• Negatif: [N ではない / じゃありません] (学生じゃない = Bukan siswa)',
+        examples: [
+          '学生 (gakusei) → 学生です (gakusei desu) (Siswa → Adalah siswa)',
+          '雨 (ame) → 雨でした (ame deshita) (Hujan → Dulu hujan [lampau])',
+          '日本人 (nihonjin) → 日本人じゃない (nihonjin ja nai) (Orang Jepang → Bukan orang Jepang)',
+        ],
       },
       {
         name: 'Menyambung dengan Kata Benda Lain',
-        rule: 'Gunakan partikel kepemilikan / penjelas [の].\nContoh: 日本 (Nihon) + 車 (kuruma) → 日本の車 (Mobil buatan Jepang).',
-        examples: ['先生の本 (Buku milik guru)', '日本語の勉強 (Belajar bahasa Jepang)'],
+        rule: '• Pola: [Kata Benda A] + [の] + [Kata Benda B]\n• Fungsi: Menyatakan kepemilikan, asal negara/tempat, atau kategori materi',
+        examples: [
+          '先生 (sensei) → 先生の本 (sensei no hon) (Guru → Buku milik guru)',
+          '日本 (nihon) → 日本の車 (nihon no kuruma) (Jepang → Mobil buatan Jepang)',
+          '日本語 (nihongo) → 日本語の勉強 (nihongo no benkyou) (Bahasa Jepang → Belajar bahasa Jepang)',
+        ],
       },
     ],
   },
