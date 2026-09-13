@@ -105,7 +105,7 @@ export const SelectDeckForWorldModal: React.FC<SelectDeckForWorldModalProps> = (
                       onClose();
                       onGoToBukuSaku();
                     }}
-                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo to-indigo-dark text-white font-heading font-bold text-xs shadow-md shadow-indigo/25 hover:brightness-110 transition-all"
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-indigo hover:bg-indigo/90 text-white font-heading font-bold text-xs shadow-sm border border-indigo/30 transition-colors"
                   >
                     <BookOpen className="w-4 h-4" />
                     <span>Buka Buku Saku & Buat Deck</span>
@@ -227,7 +227,7 @@ export const SelectDeckForWorldModal: React.FC<SelectDeckForWorldModalProps> = (
                   onClose();
                   onGoToBukuSaku();
                 }}
-                className="text-indigo hover:text-indigo-light font-bold flex items-center gap-1 font-heading"
+                className="text-indigo hover:text-indigo/80 font-bold flex items-center gap-1 font-heading"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Buat Deck Baru di Buku Saku</span>

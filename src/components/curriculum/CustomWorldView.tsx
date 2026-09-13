@@ -278,7 +278,7 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
               initial={{ width: 0 }}
               animate={{ width: `${completionPercent}%` }}
               transition={{ duration: 0.5, ease: 'easeOut' }}
-              className="h-full rounded-full bg-gradient-to-r from-indigo to-emerald-400 shadow-xs"
+              className="h-full rounded-full bg-indigo shadow-xs"
             />
           </div>
         </div>
@@ -415,7 +415,7 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
                           e.stopPropagation();
                           handleStartStage(stage);
                         }}
-                        className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo to-indigo-dark text-white font-heading font-bold text-xs shadow-md shadow-indigo/25 hover:opacity-95 transition-all"
+                        className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-indigo hover:bg-indigo/90 text-white font-heading font-bold text-xs shadow-sm border border-indigo/30 transition-colors"
                       >
                         <Play className="w-4 h-4 fill-white" />
                         <span>Mulai Stage</span>
@@ -427,7 +427,7 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
                           e.stopPropagation();
                           handleStartStage(stage);
                         }}
-                        className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl border border-emerald-500/40 bg-emerald-500/10 text-emerald-400 font-heading font-bold text-xs hover:bg-emerald-500/20 transition-all"
+                        className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl border border-emerald-500/40 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-heading font-bold text-xs hover:bg-emerald-500/20 transition-all"
                       >
                         <RotateCcw className="w-3.5 h-3.5" />
                         <span>Ulangi Stage</span>

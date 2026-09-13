@@ -334,7 +334,7 @@ export const CustomStageRunner: React.FC<CustomStageRunnerProps> = ({
                 <button
                   type="button"
                   onClick={handleNextFlashcard}
-                  className="px-5 py-2.5 rounded-xl bg-indigo text-white hover:bg-indigo-dark font-heading font-bold flex items-center gap-2 text-xs shadow-md transition-all"
+                  className="px-5 py-2.5 rounded-xl bg-indigo text-white hover:bg-indigo/90 font-heading font-bold flex items-center gap-2 text-xs shadow-sm border border-indigo/30 transition-colors"
                 >
                   <span>
                     {fcIndex + 1 >= resolvedItems.length
@@ -420,7 +420,7 @@ export const CustomStageRunner: React.FC<CustomStageRunnerProps> = ({
           {/* 4. VICTORY / STAGE CLEARED SCREEN */}
           {currentPhase === 'victory' && (
             <div className="text-center space-y-6 max-w-md mx-auto my-auto animate-fade-in p-4">
-              <div className="w-20 h-20 rounded-3xl bg-gradient-to-tr from-gold/20 to-amber-500/30 border border-gold/40 flex items-center justify-center mx-auto text-gold shadow-lg shadow-gold/10">
+              <div className="w-20 h-20 rounded-3xl bg-gold/15 border border-gold/30 flex items-center justify-center mx-auto text-gold shadow-sm">
                 <Trophy className="w-10 h-10" />
               </div>
 
@@ -465,7 +465,7 @@ export const CustomStageRunner: React.FC<CustomStageRunnerProps> = ({
               <button
                 type="button"
                 onClick={handleClaimAndExit}
-                className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-indigo to-indigo-dark text-white font-heading font-bold text-sm shadow-lg hover:shadow-indigo/25 transition-all"
+                className="w-full py-3.5 rounded-2xl bg-indigo hover:bg-indigo/90 text-white font-heading font-bold text-sm shadow-sm border border-indigo/30 transition-colors"
               >
                 Klaim Reward & Lanjutkan World →
               </button>

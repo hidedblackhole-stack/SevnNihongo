@@ -331,7 +331,7 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
                 <button
                   type="button"
                   onClick={handleNextQuestion}
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo hover:bg-indigo-light text-white font-heading font-bold text-xs shadow-md shadow-indigo/20 transition-all"
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo hover:bg-indigo/90 text-white font-heading font-bold text-xs shadow-sm border border-indigo/30 transition-colors"
                 >
                   <span>Soal Berikutnya</span>
                   <ArrowRight className="w-3.5 h-3.5" />

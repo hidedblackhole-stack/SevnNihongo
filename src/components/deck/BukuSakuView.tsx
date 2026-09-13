@@ -565,7 +565,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
                   className={`px-4 py-2.5 rounded-2xl font-heading font-bold text-xs flex items-center gap-2 transition-all ${
                     resolvedItems.length === 0
                       ? 'opacity-40 cursor-not-allowed bg-surface-inset text-text-muted border border-border-subtle'
-                      : 'bg-gradient-to-r from-indigo to-indigo-dark text-white border border-indigo/40 shadow-sm hover:scale-105'
+                      : 'bg-indigo hover:bg-indigo/90 text-white border border-indigo/30 shadow-sm hover:scale-[1.02]'
                   }`}
                   title="Jadikan deck ini kurikulum petualangan stage bergaya World"
                 >

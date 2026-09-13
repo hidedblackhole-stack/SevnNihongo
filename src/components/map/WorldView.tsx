@@ -222,7 +222,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
         <button
           type="button"
           onClick={handleOpenCreateCustomWorld}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold font-heading bg-gradient-to-r from-indigo to-indigo-dark hover:brightness-110 text-white shadow-md shadow-indigo/25 border border-indigo/40 transition-all self-stretch sm:self-auto justify-center"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold font-heading bg-indigo hover:bg-indigo/90 text-white shadow-sm border border-indigo/30 transition-colors self-stretch sm:self-auto justify-center"
           title="Buat Kustom World baru dari materi Buku Saku"
         >
           <Sparkles className="w-4 h-4 text-amber-300" />
@@ -370,7 +370,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
                   <button
                     type="button"
                     onClick={handleOpenCreateCustomWorld}
-                    className="text-xs text-indigo hover:text-indigo-light font-bold flex items-center gap-1 font-heading"
+                    className="text-xs text-indigo hover:text-indigo/80 font-bold flex items-center gap-1 font-heading"
                   >
                     <Plus className="w-3.5 h-3.5" />
                     <span>Buat World Baru</span>
@@ -394,7 +394,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
                           playSound('click', soundEnabled);
                           setActiveCustomWorldDeckId(curriculum.deckId);
                         }}
-                        className="panel panel-stitched p-5 rounded-3xl transition-all cursor-pointer shadow-md flex flex-col justify-between min-h-[220px] group border border-indigo/30 hover:border-indigo/60 bg-gradient-to-br from-surface-card via-surface-card to-indigo/5 relative overflow-hidden"
+                        className="panel panel-stitched p-5 rounded-3xl transition-all cursor-pointer shadow-sm hover:shadow-md flex flex-col justify-between min-h-[220px] group border border-border-subtle hover:border-indigo/40 bg-surface-card hover:bg-surface-elevated relative overflow-hidden"
                       >
                         <div className="space-y-2 relative z-10">
                           <div className="flex items-center justify-between">
@@ -429,13 +429,13 @@ export const WorldView: React.FC<WorldViewProps> = ({
                             </div>
                             <div className="w-full h-2 rounded-full bg-surface-inset border border-border-subtle overflow-hidden">
                               <div
-                                className="h-full bg-gradient-to-r from-indigo to-emerald-400 rounded-full"
+                                className="h-full bg-indigo rounded-full"
                                 style={{ width: `${pct}%` }}
                               />
                             </div>
                           </div>
 
-                          <div className="flex items-center justify-end text-xs font-bold text-indigo group-hover:text-indigo-light transition-colors pt-1">
+                          <div className="flex items-center justify-end text-xs font-bold text-indigo group-hover:text-indigo/80 transition-colors pt-1">
                             <span className="flex items-center gap-1">
                               Masuk World <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                             </span>
