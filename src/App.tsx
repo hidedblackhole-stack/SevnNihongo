@@ -1068,7 +1068,7 @@ export default function App() {
             </div>
             <div>
               <span className="text-xs sm:text-sm font-bold tracking-widest text-text-primary font-heading">
-                Nihongo Quest
+                SevnQuest
               </span>
               <p className="text-[10px] text-text-secondary font-mono tracking-wider">
                 5 Alam Petualangan (N5 - N1)

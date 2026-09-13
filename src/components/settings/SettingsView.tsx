@@ -77,7 +77,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       {/* Account Section */}
       <div className="panel p-4 sm:p-5 space-y-4 shadow-md">
         <h3 className="text-xs font-bold uppercase tracking-wider text-text-secondary flex items-center gap-1.5 font-heading">
-          <User className="w-4 h-4 text-indigo" /> Akun N3Quest
+          <User className="w-4 h-4 text-indigo" /> Akun SevnQuest
         </h3>
 
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -383,11 +383,11 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
 
         <div className="flex items-center justify-between pt-3 border-t border-border-subtle">
           <div>
-            <h4 className="text-xs sm:text-sm font-bold text-text-primary font-heading">Kurikulum Nihongo Soumatome</h4>
-            <p className="text-xs text-text-secondary">Struktur materi 6 Map / 6 Minggu</p>
+            <h4 className="text-xs sm:text-sm font-bold text-text-primary font-heading">Kurikulum Petualangan SevnQuest</h4>
+            <p className="text-xs text-text-secondary">5 Alam Petualangan & 8.300+ Kosakata</p>
           </div>
           <span className="px-2.5 py-1 rounded-full bg-surface-inset border border-border-subtle text-text-secondary font-mono text-xs">
-            N3 Comprehensive
+            Kana - N1 + Kaigo
           </span>
         </div>
 

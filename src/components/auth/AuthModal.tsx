@@ -135,7 +135,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full bg-surface-inset border border-border-subtle rounded-xl py-3 pl-10 pr-4 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-border-primary focus:ring-1 focus:ring-border-primary transition-all"
-                  placeholder="scholar@n3quest.com"
+                  placeholder="petualang@sevnquest.com"
                   required
                 />
               </div>
