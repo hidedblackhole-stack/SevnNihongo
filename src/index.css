@@ -1194,6 +1194,10 @@ html.theme-light ruby rt,
   border-top: 1px solid var(--color-border-subtle);
   box-shadow: 0 -6px 20px var(--neu-d);
   position: relative;
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .skeuo-navbar.fixed,
@@ -1622,4 +1626,22 @@ button, a, input, select, textarea, [role="button"] {
 .pr-safe {
   padding-right: max(0.25rem, env(safe-area-inset-right, 0px));
 }
+
+/* Fast GPU-accelerated tab transition for mobile & desktop */
+@keyframes tabFadeIn {
+  from {
+    opacity: 0.88;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-tab-enter {
+  animation: tabFadeIn 0.12s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
 

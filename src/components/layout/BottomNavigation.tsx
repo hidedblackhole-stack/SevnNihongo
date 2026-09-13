@@ -12,7 +12,7 @@ interface BottomNavigationProps {
   soundEnabled?: boolean;
 }
 
-export const BottomNavigation: React.FC<BottomNavigationProps> = ({
+const BottomNavigationComponent: React.FC<BottomNavigationProps> = ({
   activeTab,
   onChangeTab,
   soundEnabled = true,
@@ -34,6 +34,8 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
         paddingBottom: 'max(0.375rem, env(safe-area-inset-bottom))',
         paddingLeft: 'max(0.25rem, env(safe-area-inset-left))',
         paddingRight: 'max(0.25rem, env(safe-area-inset-right))',
+        transform: 'translateZ(0)',
+        willChange: 'transform',
       }}
       className="fixed z-40 skeuo-navbar bottom-0 inset-x-0 md:inset-x-auto md:top-0 md:bottom-0 md:left-0 md:right-auto md:w-24 md:h-[100dvh] md:min-h-[100dvh] pt-1.5 pb-1 px-1 sm:px-2 md:py-8 overflow-x-auto md:overflow-y-auto select-none"
     >
@@ -53,14 +55,14 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
                 playSound('click', soundEnabled);
               }}
               style={{ touchAction: 'manipulation' }}
-              className={`flex flex-col items-center justify-center min-w-[44px] min-h-[44px] py-1 px-1.5 sm:px-3 rounded-2xl transition-all duration-150 active:scale-95 ${
+              className={`flex flex-col items-center justify-center min-w-[44px] min-h-[44px] py-1 px-1.5 sm:px-3 rounded-2xl transition-[transform,color] duration-150 active:scale-95 ${
                 isActive
                   ? 'text-indigo font-bold scale-105'
                   : 'text-text-secondary hover:text-text-primary'
               }`}
             >
               <div
-                className={`p-1.5 sm:p-2 rounded-xl transition-all ${
+                className={`p-1.5 sm:p-2 rounded-xl transition-[background-color,border-color,box-shadow] duration-150 ${
                   isActive
                     ? 'bg-surface-elevated shadow-md text-indigo ring-1 ring-indigo/40'
                     : 'bg-surface-inset/40 text-text-secondary border border-transparent'
@@ -78,3 +80,5 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
     </nav>
   );
 };
+
+export const BottomNavigation = React.memo(BottomNavigationComponent);

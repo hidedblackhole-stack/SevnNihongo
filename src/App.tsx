@@ -170,6 +170,28 @@ export default function App() {
 
   // Navigation & UI State
   const [activeTab, setActiveTab] = useState<TabType>('home');
+  const [visitedTabs, setVisitedTabs] = useState<Set<TabType>>(() => new Set<TabType>(['home']));
+
+  useEffect(() => {
+    setVisitedTabs(prev => {
+      if (prev.has(activeTab)) return prev;
+      const next = new Set(prev);
+      next.add(activeTab);
+      return next;
+    });
+  }, [activeTab]);
+
+  const handleTabChange = useCallback((tab: TabType) => {
+    if (tab === activeTab) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    setSelectedStage(null);
+    setIsRecallActive(false);
+    setIsBossBattleActive(false);
+    setActiveTab(tab);
+  }, [activeTab]);
+
   const [selectedStage, setSelectedStage] = useState<Stage | null>(null);
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
   const [isRecallActive, setIsRecallActive] = useState(false);
@@ -1147,28 +1169,32 @@ export default function App() {
             />
           </ErrorBoundary>
         ) : (
-          /* Standard Tab Views */
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.2 }}
+          /* Standard Tab Views (Keep-Alive Container for 0ms Instant Tab Switching) */
+          <div className="tab-views-container relative w-full">
+            {/* Home Tab */}
+            <div
+              className={activeTab === 'home' ? 'block animate-tab-enter' : 'hidden'}
+              aria-hidden={activeTab !== 'home'}
             >
-              {activeTab === 'home' && (
+              {visitedTabs.has('home') && (
                 <HomeView
                   stats={stats}
                   dailyMissions={dailyMissions}
                   stageProgress={stageProgress}
                   onOpenStatusModal={() => setIsStatusModalOpen(true)}
                   onNavigateToStage={handleLaunchStageById}
-                  onNavigateTab={(tab) => setActiveTab(tab)}
+                  onNavigateTab={(tab) => handleTabChange(tab as TabType)}
                   onStartRecall={() => setIsRecallActive(true)}
                 />
               )}
+            </div>
 
-              {activeTab === 'maps' && (
+            {/* World / Maps Tab */}
+            <div
+              className={activeTab === 'maps' ? 'block animate-tab-enter' : 'hidden'}
+              aria-hidden={activeTab !== 'maps'}
+            >
+              {visitedTabs.has('maps') && (
                 <ErrorBoundary>
                   <WorldView
                     currentMapId={stats.currentMapId}
@@ -1199,7 +1225,7 @@ export default function App() {
                         return next;
                       });
                     }}
-                    onNavigateTab={(tab) => setActiveTab(tab)}
+                    onNavigateTab={(tab) => handleTabChange(tab as TabType)}
                     onRewardPlayer={handleRewardPlayer}
                     onCompleteStudyItem={handleStudyComplete}
                     playerMp={stats.mp}
@@ -1217,8 +1243,14 @@ export default function App() {
                   />
                 </ErrorBoundary>
               )}
+            </div>
 
-              {activeTab === 'daily' && (
+            {/* Missions Tab (Daily & Weekly) */}
+            <div
+              className={(activeTab === 'daily' || activeTab === 'weekly') ? 'block animate-tab-enter' : 'hidden'}
+              aria-hidden={activeTab !== 'daily' && activeTab !== 'weekly'}
+            >
+              {(visitedTabs.has('daily') || visitedTabs.has('weekly')) && (
                 <MissionsView
                   dailyMissions={dailyMissions}
                   weeklyMissions={weeklyMissions}
@@ -1226,24 +1258,27 @@ export default function App() {
                   soundEnabled={stats.soundEnabled}
                 />
               )}
+            </div>
 
-              {activeTab === 'weekly' && (
-                <MissionsView
-                  dailyMissions={dailyMissions}
-                  weeklyMissions={weeklyMissions}
-                  onClaimReward={handleClaimMission}
-                  soundEnabled={stats.soundEnabled}
-                />
-              )}
-
-              {activeTab === 'leaderboard' && (
+            {/* Leaderboard Tab */}
+            <div
+              className={activeTab === 'leaderboard' ? 'block animate-tab-enter' : 'hidden'}
+              aria-hidden={activeTab !== 'leaderboard'}
+            >
+              {visitedTabs.has('leaderboard') && (
                 <LeaderboardView
                   currentUserId={stats.userId!}
                   soundEnabled={stats.soundEnabled}
                 />
               )}
+            </div>
 
-              {activeTab === 'library' && (
+            {/* Library Tab */}
+            <div
+              className={activeTab === 'library' ? 'block animate-tab-enter' : 'hidden'}
+              aria-hidden={activeTab !== 'library'}
+            >
+              {visitedTabs.has('library') && (
                 <LibraryView
                   soundEnabled={stats.soundEnabled}
                   onRewardPlayer={handleRewardPlayer}
@@ -1253,8 +1288,14 @@ export default function App() {
                   onToggleBookmark={handleToggleBookmark}
                 />
               )}
+            </div>
 
-              {activeTab === 'deck' && (
+            {/* Deck / Buku Saku Tab */}
+            <div
+              className={activeTab === 'deck' ? 'block animate-tab-enter' : 'hidden'}
+              aria-hidden={activeTab !== 'deck'}
+            >
+              {visitedTabs.has('deck') && (
                 <BukuSakuView
                   userDecks={stats.userDecks}
                   onUpdateDecks={(updatedDecks) => {
@@ -1289,9 +1330,14 @@ export default function App() {
                   furiganaEnabled={stats.furiganaEnabled ?? true}
                 />
               )}
+            </div>
 
-
-              {activeTab === 'settings' && (
+            {/* Settings Tab */}
+            <div
+              className={activeTab === 'settings' ? 'block animate-tab-enter' : 'hidden'}
+              aria-hidden={activeTab !== 'settings'}
+            >
+              {visitedTabs.has('settings') && (
                 <SettingsView
                   stats={stats}
                   onUpdateSettings={(newSettings) => setStats(prev => ({ ...prev, ...newSettings }))}
@@ -1315,8 +1361,8 @@ export default function App() {
                   onReplayTutorial={handleReplayOnboarding}
                 />
               )}
-            </motion.div>
-          </AnimatePresence>
+            </div>
+          </div>
         )}
         
         <AuthModal
@@ -1349,12 +1395,7 @@ export default function App() {
       {/* Bottom Fixed Navigation Bar */}
       <BottomNavigation
         activeTab={activeTab}
-        onChangeTab={(tab) => {
-          setSelectedStage(null);
-          setIsRecallActive(false);
-          setIsBossBattleActive(false);
-          setActiveTab(tab);
-        }}
+        onChangeTab={handleTabChange}
         soundEnabled={stats.soundEnabled}
       />
 

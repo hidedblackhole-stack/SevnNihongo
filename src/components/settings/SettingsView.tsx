@@ -3,6 +3,7 @@ import { Volume2, VolumeX, RotateCcw, ShieldAlert, Settings, BookOpen, User, Log
 import { PlayerStats } from '../../types/rpg';
 import { speakJapanese, playSound } from '../../utils/audio';
 import { signOut } from '../../lib/supabase';
+import { PwaInstallModal } from '../pwa/PwaInstallModal';
 
 interface SettingsViewProps {
   stats: PlayerStats;
@@ -31,21 +32,83 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
 }) => {
   const [playerNameInput, setPlayerNameInput] = useState(stats.playerName || '');
   const [isNameSaved, setIsNameSaved] = useState(false);
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(() => {
+    if (typeof window !== 'undefined') {
+      return (window as any).__pwaInstallPrompt || null;
+    }
+    return null;
+  });
+  const [showInstallGuide, setShowInstallGuide] = useState(false);
   const [isStandalone, setIsStandalone] = useState<boolean>(() => {
     if (typeof window === 'undefined') return false;
-    return window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone === true;
+    return (
+      window.matchMedia('(display-mode: standalone)').matches ||
+      (window.navigator as any).standalone === true ||
+      document.referrer.includes('android-app://')
+    );
   });
 
   useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).__pwaInstallPrompt && !deferredPrompt) {
+      setDeferredPrompt((window as any).__pwaInstallPrompt);
+    }
+
     const handleBeforeInstall = (e: Event) => {
       e.preventDefault();
+      (window as any).__pwaInstallPrompt = e;
       setDeferredPrompt(e);
     };
 
+    const handlePromptReady = () => {
+      if ((window as any).__pwaInstallPrompt) {
+        setDeferredPrompt((window as any).__pwaInstallPrompt);
+      }
+    };
+
+    const handleAppInstalled = () => {
+      setDeferredPrompt(null);
+      if (typeof window !== 'undefined') {
+        (window as any).__pwaInstallPrompt = null;
+      }
+      setIsStandalone(true);
+    };
+
     window.addEventListener('beforeinstallprompt', handleBeforeInstall);
-    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
-  }, []);
+    window.addEventListener('pwa-prompt-ready', handlePromptReady);
+    window.addEventListener('appinstalled', handleAppInstalled);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
+      window.removeEventListener('pwa-prompt-ready', handlePromptReady);
+      window.removeEventListener('appinstalled', handleAppInstalled);
+    };
+  }, [deferredPrompt]);
+
+  const handleInstallClick = async () => {
+    playSound('click', stats.soundEnabled);
+    const prompt = deferredPrompt || (typeof window !== 'undefined' && (window as any).__pwaInstallPrompt);
+
+    if (prompt && typeof prompt.prompt === 'function') {
+      try {
+        prompt.prompt();
+        const { outcome } = await prompt.userChoice;
+        if (outcome === 'accepted') {
+          playSound('fanfare', stats.soundEnabled);
+          setDeferredPrompt(null);
+          if (typeof window !== 'undefined') {
+            (window as any).__pwaInstallPrompt = null;
+          }
+          setIsStandalone(true);
+        }
+        return;
+      } catch (err) {
+        console.debug('Native prompt error, fallback to guide modal', err);
+      }
+    }
+
+    // Fallback: Show interactive device-specific installation guide
+    setShowInstallGuide(true);
+  };
 
   useEffect(() => {
     if (stats.playerName) {
@@ -436,32 +499,19 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             <p className="text-xs text-text-secondary">Pasang di layar utama HP / desktop tanpa bar URL</p>
           </div>
           {isStandalone ? (
-            <span className="px-2.5 py-1 rounded-full bg-state-success/15 border border-state-success/30 text-state-success font-bold text-xs">
-              Terpasang
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-state-success/15 border border-state-success/30 text-state-success font-bold text-xs font-heading shadow-sm">
+              <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+              <span>Terpasang</span>
             </span>
-          ) : deferredPrompt ? (
+          ) : (
             <button
               type="button"
-              onClick={async () => {
-                playSound('click', stats.soundEnabled);
-                if (deferredPrompt) {
-                  deferredPrompt.prompt();
-                  const { outcome } = await deferredPrompt.userChoice;
-                  if (outcome === 'accepted') {
-                    setDeferredPrompt(null);
-                    setIsStandalone(true);
-                  }
-                }
-              }}
-              className="btn btn-pill text-xs gap-1.5 text-indigo border-indigo/40 hover:bg-indigo/10"
+              onClick={handleInstallClick}
+              className="btn btn-pill text-xs gap-1.5 text-indigo border-indigo/40 hover:bg-indigo/10 py-1.5 px-3.5 flex items-center font-bold shadow-sm transition-all active:scale-95 cursor-pointer"
             >
               <Download className="w-3.5 h-3.5" />
               <span>Pasang App</span>
             </button>
-          ) : (
-            <span className="text-[10px] text-text-muted font-mono">
-              Siap Dipasang
-            </span>
           )}
         </div>
       </div>
@@ -524,6 +574,15 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           <span>Reset Progres Petualangan</span>
         </button>
       </div>
+
+      {/* PWA Installation Guide Modal */}
+      <PwaInstallModal
+        isOpen={showInstallGuide}
+        onClose={() => setShowInstallGuide(false)}
+        deferredPrompt={deferredPrompt || (typeof window !== 'undefined' && (window as any).__pwaInstallPrompt)}
+        onInstalled={() => setIsStandalone(true)}
+        soundEnabled={stats.soundEnabled}
+      />
     </div>
   );
 };

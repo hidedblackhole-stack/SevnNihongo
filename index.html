@@ -78,6 +78,18 @@
   </head>
   <body class="bg-page text-text-primary antialiased selection:bg-gold selection:text-surface-base">
     <script>
+      window.__pwaInstallPrompt = null;
+      window.addEventListener('beforeinstallprompt', function (e) {
+        e.preventDefault();
+        window.__pwaInstallPrompt = e;
+        window.dispatchEvent(new CustomEvent('pwa-prompt-ready'));
+      });
+      window.addEventListener('appinstalled', function () {
+        window.__pwaInstallPrompt = null;
+        window.dispatchEvent(new CustomEvent('pwa-installed'));
+      });
+    </script>
+    <script>
       window.addEventListener('error', function (e) {
         console.error('[Global Crash Caught]:', e);
         var root = document.getElementById('root');
