@@ -3,6 +3,17 @@ import { getSubBranchesForBunpou } from './bunpouSubKnowledge';
 import { enrichBunpouItem } from './bunpouMetadata';
 import bunpouJson from './db/bunpou.json';
 import questionsJson from './db/bunpou_questions.json';
+import sentencesJson from './db/sentences.json';
+
+// Build sentence reading lookup map from canonical sentences database
+const sentenceReadingMap = new Map<string, string>();
+if (Array.isArray(sentencesJson)) {
+  for (const s of (sentencesJson as any[])) {
+    if (s.japanese && s.reading) {
+      sentenceReadingMap.set(s.japanese, s.reading);
+    }
+  }
+}
 
 interface RawExample {
   jp: string;
@@ -56,10 +67,10 @@ export const BUNPOU_DATABASE: Record<string, BunpouItem> = {};
 (bunpouJson as RawBunpou[]).forEach(item => {
   const questions = questionsByMaterial.get(item.id) || [];
   
-  // Format examples
+  // Format examples with canonical readings
   const examples = (item.examples || []).map(ex => ({
     japanese: ex.jp,
-    reading: ex.reading || ex.jp,
+    reading: ex.reading || sentenceReadingMap.get(ex.jp) || ex.jp,
     meaningId: ex.id || ex.en || 'Contoh kalimat.',
     meaningEn: ex.en || ex.id
   }));

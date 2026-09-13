@@ -23,15 +23,18 @@ export function findGrammarSpan(japanese: string, item: BunpouItem): GrammarSpan
   const f = item.formula || '';
   const t = item.title || '';
 
+  // Particle-safe verb stem pattern to avoid swallowing preceding topic/subject clauses (e.g. "今日は")
+  const VERB_STEM = '[^はがをにもへでとからまで、。！？\\s]+?';
+
   // 1. High-priority Key Connectors & Suffixes
   const keyConnectors: { target: string; pattern: RegExp }[] = [
     { target: 'ようにする', pattern: /(?:ように(?:する|します|した|しました|しましょう|しない|してください))/ },
     { target: 'ようになる', pattern: /(?:ように(?:なる|なります|なった|なりました|ならない|なって))/ },
     { target: 'ように。', pattern: /(?:ように[。！]?$|ように(?:言う|頼む))/ },
     { target: 'ように', pattern: /(?:ように)/ },
-    { target: 'と思う', pattern: /([一-龠々ぁ-ん]+?(?:[おこごそぞとのぼぽもろよ]う|よう)と(?:思う|思います|思っている|と思っています|と思った|思いました))/ },
-    { target: 'とする', pattern: /([一-龠々ぁ-ん]+?(?:[おこごそぞとのぼぽもろよ]う|よう)と(?:する|します|した|しました|して|している))/ },
-    { target: 'としない', pattern: /([一-龠々ぁ-ん]+?(?:[おこごそぞとのぼぽもろよ]う|よう)と(?:しない|しません|しなかった|しないで))/ },
+    { target: 'と思う', pattern: new RegExp('(' + VERB_STEM + '(?:[おこごそぞとのぼぽもろよ]う|よう)と(?:思う|思います|思っている|と思っています|と思った|思いました))') },
+    { target: 'とする', pattern: new RegExp('(' + VERB_STEM + '(?:[おこごそぞとのぼぽもろよ]う|よう)と(?:する|します|した|しました|して|している))') },
+    { target: 'としない', pattern: new RegExp('(' + VERB_STEM + '(?:[おこごそぞとのぼぽもろよ]う|よう)と(?:しない|しません|しなかった|しないで))') },
     { target: 'みたいだ', pattern: /(?:みたい(?:だ|に|な|だった|で)?)/ },
     { target: 'らしい', pattern: /(?:らしい(?:です|かった|く)?)/ },
     { target: 'っぽい', pattern: /(?:っぽい(?:です|かった|く)?)/ },
@@ -60,7 +63,7 @@ export function findGrammarSpan(japanese: string, item: BunpouItem): GrammarSpan
   // 2. Auxiliary Verb Inflexions & Conjugations
   // Passive (受身形)
   if (f.includes('れる') || t.includes('受身') || f.includes('受身')) {
-    const m = japanese.match(/([一-龠々ぁ-ん]+?(?:れる|れます|れた|れました|れない|れなくて|れて|られる|られます|られた|られました|られない|られて)(?:いる|います|いた|いました|しまった|しまいました)?)/);
+    const m = japanese.match(new RegExp('(' + VERB_STEM + '(?:れる|れます|れた|れました|れない|れなくて|れて|られる|られます|られた|られました|られない|られて)(?:いる|います|いた|いました|しまった|しまいました)?)'));
     if (m && m.index !== undefined) {
       return { start: m.index, end: m.index + m[0].length, matched: m[0] };
     }
@@ -68,7 +71,7 @@ export function findGrammarSpan(japanese: string, item: BunpouItem): GrammarSpan
 
   // Causative (使役形)
   if (f.includes('せて') || t.includes('させて') || f.includes('させる') || t.includes('使役')) {
-    const m = japanese.match(/([一-龠々ぁ-ん]+?(?:させて|せて)(?:ください|もらえる|もらえますか|もらえませんか|いただく|いただけますか)?)/);
+    const m = japanese.match(new RegExp('(' + VERB_STEM + '(?:させて|せて)(?:ください|もらえる|もらえますか|もらえませんか|いただく|いただけますか)?)'));
     if (m && m.index !== undefined) {
       return { start: m.index, end: m.index + m[0].length, matched: m[0] };
     }
@@ -76,7 +79,7 @@ export function findGrammarSpan(japanese: string, item: BunpouItem): GrammarSpan
 
   // Chau / Jau (〜ちゃう / 〜じゃう)
   if (f.includes('ちゃう') || t.includes('ちゃう') || f.includes('じゃう') || t.includes('じゃう')) {
-    const m = japanese.match(/([一-龠々ぁ-ん]+?(?:ちゃう|ちゃった|ちゃおう|ちゃいます|じゃう|じゃった|じゃおう|じゃいます))/);
+    const m = japanese.match(new RegExp('(' + VERB_STEM + '(?:ちゃう|ちゃった|ちゃおう|ちゃいます|じゃう|じゃった|じゃおう|じゃいます))'));
     if (m && m.index !== undefined) {
       return { start: m.index, end: m.index + m[0].length, matched: m[0] };
     }
@@ -84,7 +87,7 @@ export function findGrammarSpan(japanese: string, item: BunpouItem): GrammarSpan
 
   // Toku / Doku (〜とく / 〜どく)
   if (f.includes('とく') || t.includes('とく') || f.includes('どく') || t.includes('どく')) {
-    const m = japanese.match(/([一-龠々ぁ-ん]+?(?:とく|とこう|といた|どく|どこう|どいた))/);
+    const m = japanese.match(new RegExp('(' + VERB_STEM + '(?:とく|とこう|といた|どく|どこう|どいた))'));
     if (m && m.index !== undefined) {
       return { start: m.index, end: m.index + m[0].length, matched: m[0] };
     }
@@ -92,7 +95,7 @@ export function findGrammarSpan(japanese: string, item: BunpouItem): GrammarSpan
 
   // Naito / Nakucha (〜ないと / 〜なくちゃ)
   if (f.includes('ないと') || t.includes('ないと') || f.includes('なくちゃ') || t.includes('なくちゃ')) {
-    const m = japanese.match(/([一-龠々ぁ-ん]+?(?:ないと|なくちゃ|なきゃ))/);
+    const m = japanese.match(new RegExp('(' + VERB_STEM + '(?:ないと|なくちゃ|なきゃ))'));
     if (m && m.index !== undefined) {
       return { start: m.index, end: m.index + m[0].length, matched: m[0] };
     }
@@ -100,7 +103,7 @@ export function findGrammarSpan(japanese: string, item: BunpouItem): GrammarSpan
 
   // Te-iru (〜ている)
   if (f.includes('ている') || t.includes('ている')) {
-    const m = japanese.match(/([一-龠々ぁ-ん]+?(?:て|で)(?:いる|います|いた|いました|いない|いなかった|いて))/);
+    const m = japanese.match(new RegExp('(' + VERB_STEM + '(?:て|で)(?:いる|います|いた|いました|いない|いなかった|いて))'));
     if (m && m.index !== undefined) {
       return { start: m.index, end: m.index + m[0].length, matched: m[0] };
     }
@@ -108,7 +111,7 @@ export function findGrammarSpan(japanese: string, item: BunpouItem): GrammarSpan
 
   // Te-aru (〜てある)
   if (f.includes('てある') || t.includes('てある')) {
-    const m = japanese.match(/([一-龠々ぁ-ん]+?(?:て|で)(?:ある|あります|あった|ありました))/);
+    const m = japanese.match(new RegExp('(' + VERB_STEM + '(?:て|で)(?:ある|あります|あった|ありました))'));
     if (m && m.index !== undefined) {
       return { start: m.index, end: m.index + m[0].length, matched: m[0] };
     }

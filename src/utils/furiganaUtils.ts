@@ -119,7 +119,12 @@ export function autoAnnotateFurigana(text: string, excludeKanji?: Set<string>): 
     }
 
     if (wordMatch) {
-      const reading = furiganaDict.words[wordMatch];
+      let reading = furiganaDict.words[wordMatch];
+      // If a single kanji matched as a word but is immediately followed by hiragana (okurigana),
+      // prefer the verb/adjective stem kunyomi from kanji dictionary (e.g. 終わった -> お, 割った -> わ, 乾いた -> かわ)
+      if (wordMatch.length === 1 && i + 1 < text.length && isHiragana(text[i + 1]) && furiganaDict.kanji[wordMatch]) {
+        reading = furiganaDict.kanji[wordMatch];
+      }
       segments.push({ text: wordMatch, ruby: reading, isKanji: true });
       i += wordMatch.length;
       continue;
