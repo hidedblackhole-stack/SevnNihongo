@@ -35,6 +35,21 @@ const KATAKANA_ORDER = [
   'ワ','ヲ','ン'
 ];
 
+const getKanaRowLabel = (char: string): string => {
+  if (['あ','い','う','え','お','ア','イ','ウ','エ','オ'].includes(char)) return 'Baris A (Vokal)';
+  if (['か','き','く','け','こ','カ','キ','ク','ケ','コ'].includes(char)) return 'Baris Ka (k-)';
+  if (['さ','し','す','せ','そ','サ','シ','ス','セ','ソ'].includes(char)) return 'Baris Sa (s-)';
+  if (['た','ち','つ','て','と','タ','チ','ツ','テ','ト'].includes(char)) return 'Baris Ta (t-)';
+  if (['な','に','ぬ','ね','の','ナ','ニ','ヌ','ネ','ノ'].includes(char)) return 'Baris Na (n-)';
+  if (['は','ひ','ふ','へ','ほ','ハ','ヒ','フ','ヘ','ホ'].includes(char)) return 'Baris Ha (h-)';
+  if (['ま','み','む','め','も','マ','ミ','ム','メ','モ'].includes(char)) return 'Baris Ma (m-)';
+  if (['や','ゆ','よ','ヤ','ユ','ヨ'].includes(char)) return 'Baris Ya (y-)';
+  if (['ら','り','る','れ','ろ','ラ','リ','ル','レ','ロ'].includes(char)) return 'Baris Ra (r-)';
+  if (['わ','を','ん','ワ','ヲ','ン'].includes(char)) return 'Baris Wa (w-/n)';
+  return 'Aksara Kana';
+};
+
+
 const LEVEL_OPTIONS = [
   { value: 'all', label: 'Semua Aksara' },
   { value: 'KANA', label: 'KANA (Dasar)' },
@@ -360,13 +375,13 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
             const isKata = item.radical === 'Katakana' || (item.jlpt === 'KANA' && item.character >= 'ァ' && item.character <= 'ン');
             const isNum = suujiSet.has(item.character);
 
-            const badgeLabel = isHira ? 'HIRAGANA' : isKata ? 'KATAKANA' : isNum ? 'ANGKA' : item.jlpt || 'N3';
+            const badgeLabel = isHira ? 'Hiragana' : isKata ? 'Katakana' : isNum ? 'Angka' : item.jlpt || 'N3';
             const badgeColor = isHira
-              ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30'
+              ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
               : isKata
-                ? 'bg-sky-500/15 text-sky-400 border-sky-500/30'
+                ? 'bg-sky-500/15 text-sky-600 dark:text-sky-400 border-sky-500/30'
                 : isNum
-                  ? 'bg-indigo-500/15 text-indigo-400 border-indigo-500/30'
+                  ? 'bg-indigo/15 text-indigo dark:text-indigo-soft border-indigo/30'
                   : 'bg-surface-inset text-text-primary border-border-subtle';
 
             return (
@@ -376,15 +391,15 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
                   setSelectedKanji(item);
                   playSound('click', soundEnabled);
                 }}
-                className="group panel p-4 rounded-2xl border border-border-subtle hover:border-border-muted transition-all cursor-pointer flex flex-col items-center justify-between text-center space-y-3 hover:shadow-md hover:-translate-y-0.5"
+                className="group panel p-3.5 sm:p-4 rounded-2xl border border-border-subtle hover:border-border-muted transition-all cursor-pointer flex flex-col items-center justify-between text-center space-y-3 hover:shadow-md hover:-translate-y-0.5"
               >
                 {/* Top Badges */}
-                <div className="w-full flex items-center justify-between text-[10px] font-mono text-text-muted">
-                  <span className={`px-1.5 py-0.5 rounded font-bold border text-[9px] tracking-wider ${badgeColor}`}>
+                <div className="w-full flex items-center justify-between text-[10px] font-mono text-text-muted gap-1">
+                  <span className={`px-1.5 py-0.5 rounded-md font-bold border text-[9.5px] tracking-wide whitespace-nowrap shrink-0 leading-none ${badgeColor}`}>
                     {badgeLabel}
                   </span>
-                  <div className="flex items-center gap-1.5">
-                    <span>{item.strokeCount}画</span>
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    <span className="whitespace-nowrap">{item.strokeCount}画</span>
                     {onToggleBookmark && (
                       <button
                         type="button"
@@ -414,18 +429,29 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
                 </div>
 
                 {/* Meaning & Readings */}
-                <div className="w-full space-y-1">
-                  <h4 className="text-xs font-bold text-text-primary truncate font-heading" title={item.meaningId}>
-                    {item.meaningId}
+                <div className="w-full space-y-0.5">
+                  <h4
+                    className="text-xs font-bold text-text-primary truncate font-heading"
+                    title={item.meaningId}
+                  >
+                    {isHira || isKata
+                      ? `Huruf 「${item.character}」`
+                      : item.meaningId}
                   </h4>
-                  <div className="text-[11px] text-text-muted font-jp truncate">
-                    {item.onyomi?.[0] ? item.onyomi[0].split(' ')[0] : item.kunyomi?.[0]?.split(' ')[0] || '-'}
+                  <div className="text-[11px] text-text-muted font-mono truncate">
+                    {isHira || isKata
+                      ? `Romaji: ${(item.kunyomi?.[0] || item.onyomi?.[0] || '-').toLowerCase()}`
+                      : (item.onyomi?.[0] ? item.onyomi[0].split(' ')[0] : item.kunyomi?.[0]?.split(' ')[0] || '-')}
                   </div>
                 </div>
 
                 {/* Category / Radical Tag */}
-                <span className="text-[9px] text-text-muted font-jp px-2 py-0.5 rounded bg-surface-inset/60 border border-border-subtle truncate max-w-full">
-                  {isHira ? 'Huruf Hiragana' : isKata ? 'Huruf Katakana' : isNum ? 'Angka / Sūji' : (item.radical || item.jlpt || 'Kanji')}
+                <span className="text-[9.5px] text-text-secondary font-medium px-2 py-0.5 rounded-md bg-surface-inset/70 border border-border-subtle truncate max-w-full whitespace-nowrap">
+                  {isHira || isKata
+                    ? getKanaRowLabel(item.character)
+                    : isNum
+                      ? 'Angka / Sūji'
+                      : (item.radical ? `Radikal: ${item.radical}` : (item.jlpt || 'Kanji'))}
                 </span>
               </div>
             );

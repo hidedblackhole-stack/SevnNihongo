@@ -223,19 +223,19 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
   const isSuuji = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '百', '千', '万', '零'].includes(item.character);
 
   const levelBadgeLabel = isHiragana
-    ? 'HIRAGANA'
+    ? 'Hiragana'
     : isKatakana
-      ? 'KATAKANA'
+      ? 'Katakana'
       : isSuuji
-        ? 'ANGKA / SŪJI'
+        ? 'Angka / Sūji'
         : `${item.jlpt || 'N3'} Kanji`;
 
   const levelBadgeClass = isHiragana
-    ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30'
+    ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
     : isKatakana
-      ? 'bg-sky-500/15 text-sky-400 border-sky-500/30'
+      ? 'bg-sky-500/15 text-sky-600 dark:text-sky-400 border-sky-500/30'
       : isSuuji
-        ? 'bg-indigo-500/15 text-indigo-400 border-indigo-500/30'
+        ? 'bg-indigo/15 text-indigo dark:text-indigo-soft border-indigo/30'
         : 'bg-surface-inset text-wine-accent border-wine-accent/30';
 
   return (
