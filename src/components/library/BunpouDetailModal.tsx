@@ -86,6 +86,28 @@ function getRandomGrammarQuestion(item: BunpouItem): Question {
   };
 }
 
+const renderClozePrompt = (prompt: string, ruby?: string) => {
+  const blankRegex = /（[\s　]*）|\([\s　]*\)/;
+  if (!blankRegex.test(prompt)) {
+    return <RubyText japanese={prompt} reading={ruby} />;
+  }
+
+  const parts = prompt.split(blankRegex);
+  return (
+    <span className="inline">
+      <RubyText japanese={parts[0]} />
+      <span className="inline-flex items-center justify-center px-3 py-0.5 mx-1.5 rounded-lg border-2 border-dashed border-indigo/60 bg-surface-card text-indigo font-mono font-bold text-sm select-none align-middle shadow-sm">
+        （ ？ ）
+      </span>
+      {parts.slice(1).map((part, pIdx) => (
+        <React.Fragment key={pIdx}>
+          <RubyText japanese={part} />
+        </React.Fragment>
+      ))}
+    </span>
+  );
+};
+
 export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
   item,
   onClose,
@@ -220,29 +242,35 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
         {isQuizMode && currentQuestion ? (
           /* ================= MODE COBA LATIHAN (1 SOAL ACAK) ================= */
           <div className="p-4 sm:p-6 space-y-4 overflow-y-auto scrollbar-thin flex-1 animate-fade-in">
-            <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle text-center space-y-2">
-              <span className="text-xs text-text-secondary font-medium">
-                {currentQuestion.instructionId}
-              </span>
-              <div className="flex items-center justify-center gap-3">
-                <h3 className="text-xl sm:text-2xl font-black text-text-primary font-heading tracking-wide">
-                  <RubyText japanese={currentQuestion.prompt} reading={currentQuestion.ruby} />
-                </h3>
+            <div className="relative p-4 sm:p-5 rounded-2xl bg-surface-inset border border-border-subtle space-y-3">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-xs text-text-secondary font-medium">
+                  {currentQuestion.instructionId || 'Pilihlah bentuk atau partikel yang paling tepat:'}
+                </span>
                 {currentQuestion.ruby && (
                   <button
                     type="button"
                     onClick={() => speakJapanese(currentQuestion.ruby || '')}
-                    className="p-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-gold border border-border-subtle transition-colors shrink-0"
+                    className="p-1.5 rounded-xl bg-surface-card hover:bg-surface-elevated text-gold border border-border-subtle transition-colors shrink-0 shadow-sm"
                     title="Dengar suara"
                   >
                     <Volume2 className="w-4 h-4" />
                   </button>
                 )}
               </div>
+
+              <div className="py-1 text-center sm:text-left">
+                <h3 className="text-base sm:text-lg md:text-xl font-bold text-text-primary leading-[2.5] font-jp tracking-wide break-words">
+                  {renderClozePrompt(currentQuestion.prompt, currentQuestion.ruby)}
+                </h3>
+              </div>
+
               {currentQuestion.translation && (
-                <p className="text-xs text-text-muted font-body">
-                  {currentQuestion.translation}
-                </p>
+                <div className="pt-2 border-t border-border-subtle/40">
+                  <p className="text-xs text-text-muted font-body">
+                    {currentQuestion.translation}
+                  </p>
+                </div>
               )}
             </div>
 
@@ -530,7 +558,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                 <button
                   type="button"
                   onClick={handleNextPracticeQuestion}
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-indigo to-indigo-dark text-white font-heading font-bold text-xs shadow-md shadow-indigo/20 hover:brightness-110"
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo hover:bg-indigo/90 text-white font-heading font-bold text-xs shadow-sm border border-indigo/30 transition-colors"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
                   <span>Soal Latihan Lain</span>
@@ -542,7 +570,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
               <button
                 type="button"
                 onClick={handleStartPractice}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo to-indigo-dark hover:brightness-110 text-white font-heading font-bold text-xs shadow-md shadow-indigo/25 border border-indigo/40 transition-all"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo hover:bg-indigo/90 text-white font-heading font-bold text-xs shadow-sm border border-indigo/30 transition-colors"
               >
                 <Swords className="w-4 h-4 text-amber-300" />
                 <span>Coba Latihan (1 Soal)</span>

@@ -123,7 +123,7 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
         <button
           type="button"
           onClick={() => handleStartDrill('all')}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold font-heading bg-gradient-to-r from-indigo to-indigo-dark hover:brightness-110 text-white shadow-md shadow-indigo/25 border border-indigo/40 transition-all self-stretch md:self-auto justify-center"
+          className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold font-heading bg-indigo hover:bg-indigo/90 text-white shadow-sm border border-indigo/30 transition-colors self-stretch md:self-auto justify-center"
         >
           <Flame className="w-4 h-4 text-amber-300 fill-amber-300" />
           <span>Mulai Latihan Konjugasi</span>

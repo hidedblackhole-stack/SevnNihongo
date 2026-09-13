@@ -784,8 +784,16 @@ html.theme-light ruby rt,
   opacity: 0.85;
 }
 
-.ruby-text { line-height: 2.2; }
-.ruby-word { ruby-position: over; }
+.ruby-text {
+  line-height: 2.3;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+.ruby-word {
+  ruby-position: over;
+  display: inline-block;
+  white-space: nowrap;
+}
 
 /* Mobile-first Safe-Area insets */
 @layer base {

@@ -164,13 +164,13 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
           }}
           className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold font-heading transition-all ${
             subSection === 'conjugation'
-              ? 'bg-gradient-to-r from-indigo/20 to-purple-500/20 text-indigo border border-indigo/40 shadow-sm'
+              ? 'bg-surface-elevated text-indigo shadow-sm border border-border-primary'
               : 'text-text-secondary hover:text-text-primary hover:bg-surface-inset'
           }`}
         >
           <Zap className="w-4 h-4 text-amber-500" />
           <span>⚡ Perubahan Bentuk Kata (Konjugasi)</span>
-          <span className="hidden sm:inline-block text-[10px] uppercase tracking-wider bg-amber-500/20 text-amber-400 px-1.5 py-0.5 rounded font-mono font-bold">
+          <span className="hidden sm:inline-block text-[10px] uppercase tracking-wider bg-surface-inset text-amber-500 border border-border-subtle px-1.5 py-0.5 rounded font-mono font-bold">
             Dojo & Latihan
           </span>
         </button>
