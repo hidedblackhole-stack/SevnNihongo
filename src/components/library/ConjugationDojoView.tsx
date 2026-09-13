@@ -174,7 +174,7 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
               >
                 <option value="all">⚡ Semua Bentuk Acak</option>
                 {CONJUGATION_FORMS_INFO.map(f => (
-                  <option key={f.id} value={f.id}>{f.badge}: {f.name.split('(')[0].trim()}</option>
+                  <option key={f.id} value={f.id}>{f.badge}: {f.friendlyTarget || f.name}</option>
                 ))}
               </select>
 
@@ -201,7 +201,13 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
                   />
                 </span>
               ) : null}
-              <span>{currentQuestion.targetVerb ? `(${currentQuestion.targetVerb.meaningId})` : ''} ke dalam {currentQuestion.targetForm?.name || 'bentuk target'}!</span>
+              <span>
+                {currentQuestion.targetVerb ? `(${currentQuestion.targetVerb.meaningId})` : ''} ke{' '}
+                <strong className="text-indigo font-bold underline decoration-indigo/40 decoration-2 underline-offset-2">
+                  {currentQuestion.targetForm?.friendlyTarget || currentQuestion.targetForm?.name || 'bentuk target'}
+                </strong>
+                !
+              </span>
             </div>
 
             <div className="flex items-center justify-center gap-3 py-1">
@@ -237,20 +243,27 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
               </button>
             </div>
 
-            <div className="text-xs text-text-muted font-mono flex items-center justify-center gap-1.5 flex-wrap">
-              <span>Kata:</span>
-              {currentQuestion.targetVerb ? (
-                <RubyText
-                  japanese={currentQuestion.targetVerb.kanji}
-                  reading={currentQuestion.targetVerb.reading}
-                  className="font-bold text-text-primary font-jp"
-                />
-              ) : (
-                <span>{currentQuestion.ruby}</span>
-              )}
-              {currentQuestion.targetVerb && <span>({currentQuestion.targetVerb.meaningId})</span>}
-              <span className="mx-1">•</span>
-              <span>Target: <strong className="text-text-secondary">{currentQuestion.targetForm?.name}</strong></span>
+            <div className="text-xs text-text-muted font-mono flex items-center justify-center gap-2 flex-wrap pt-1">
+              <span className="flex items-center gap-1">
+                <span>Kata:</span>
+                {currentQuestion.targetVerb ? (
+                  <RubyText
+                    japanese={currentQuestion.targetVerb.kanji}
+                    reading={currentQuestion.targetVerb.reading}
+                    className="font-bold text-text-primary font-jp"
+                  />
+                ) : (
+                  <span>{currentQuestion.ruby}</span>
+                )}
+                {currentQuestion.targetVerb && <span className="text-text-secondary">({currentQuestion.targetVerb.meaningId})</span>}
+              </span>
+              <span className="text-text-muted">•</span>
+              <span className="flex items-center gap-1">
+                <span>Target ke:</span>
+                <span className="px-2 py-0.5 rounded-md bg-indigo/15 text-indigo font-bold border border-indigo/30">
+                  {currentQuestion.targetForm?.friendlyTarget || currentQuestion.targetForm?.name}
+                </span>
+              </span>
             </div>
           </div>
 

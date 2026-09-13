@@ -30,6 +30,7 @@ export interface VerbItem {
 export interface ConjugationFormInfo {
   id: string;
   name: string;
+  friendlyTarget?: string;
   japaneseName: string;
   badge: string;
   summary: string;
@@ -160,7 +161,7 @@ const RAW_VERBS: Omit<VerbItem, 'formsReadings'>[] = [
     kanji: '行く',
     reading: 'いく',
     romaji: 'iku',
-    meaningId: 'Pergi (Pengecualian Bentuk Te/Ta)',
+    meaningId: 'Pergi',
     group: 'godan',
     godanEnding: 'ku',
     forms: {
@@ -460,7 +461,8 @@ export const VERB_CONJUGATION_DATABASE: VerbItem[] = RAW_VERBS.map(verb => ({
 export const CONJUGATION_FORMS_INFO: ConjugationFormInfo[] = [
   {
     id: 'te',
-    name: 'Bentuk Te (Sambung / Perintah / Kondisi)',
+    name: 'Bentuk Sambung [~te]',
+    friendlyTarget: 'Bentuk Sambung [~te]',
     japaneseName: 'て形 (Te-kei)',
     badge: 'て形',
     summary: 'Digunakan untuk menyambung kalimat, permohonan santun (~te kudasai), izin (~te mo ii), dan sedang berlangsung (~te iru).',
@@ -478,7 +480,8 @@ export const CONJUGATION_FORMS_INFO: ConjugationFormInfo[] = [
   },
   {
     id: 'nai',
-    name: 'Bentuk Nai (Negatif Kasual / Larangan)',
+    name: 'Bentuk Negatif [~nai]',
+    friendlyTarget: 'Bentuk Negatif [~nai]',
     japaneseName: 'ない形 (Nai-kei)',
     badge: 'ない形',
     summary: 'Menyatakan tidak melakukan sesuatu, larangan santun (~naide kudasai), atau keharusan (~nakereba naranai).',
@@ -496,7 +499,8 @@ export const CONJUGATION_FORMS_INFO: ConjugationFormInfo[] = [
   },
   {
     id: 'ta',
-    name: 'Bentuk Ta (Lampau Kasual / Pengalaman)',
+    name: 'Bentuk Lampau [~ta]',
+    friendlyTarget: 'Bentuk Lampau [~ta]',
     japaneseName: 'た形 (Ta-kei)',
     badge: 'た形',
     summary: 'Menyatakan kejadian lampau/selesai, pengalaman pernah melakukan (~koto ga aru), atau anjuran baiknya (~hou ga ii).',
@@ -514,7 +518,8 @@ export const CONJUGATION_FORMS_INFO: ConjugationFormInfo[] = [
   },
   {
     id: 'masu',
-    name: 'Bentuk Masu (Sopan Standar)',
+    name: 'Bentuk Sopan [~masu]',
+    friendlyTarget: 'Bentuk Sopan [~masu]',
     japaneseName: 'ます形 (Masu-kei)',
     badge: 'ます形',
     summary: 'Bentuk sopan sehari-hari (Desu/Masu), ajakan (~mashou), dan kata benda hasil tindakan.',
@@ -532,7 +537,8 @@ export const CONJUGATION_FORMS_INFO: ConjugationFormInfo[] = [
   },
   {
     id: 'potential',
-    name: 'Bentuk Potensial (Kemampuan / Bisa / Dapat)',
+    name: 'Bentuk Bisa / Dapat [~eru/rareru]',
+    friendlyTarget: 'Bentuk Bisa / Dapat [~eru/rareru]',
     japaneseName: '可能形 (Kanou-kei)',
     badge: '可能形',
     summary: 'Menyatakan kesanggupan atau kemampuan melakukan sesuatu ("bisa/dapat..."). Partikel を biasanya berganti menjadi が.',
@@ -550,7 +556,8 @@ export const CONJUGATION_FORMS_INFO: ConjugationFormInfo[] = [
   },
   {
     id: 'passive',
-    name: 'Bentuk Pasif (Dikenai Tindakan / Fakta Umum)',
+    name: 'Bentuk Pasif / Kena [~reru/rareru]',
+    friendlyTarget: 'Bentuk Pasif / Kena [~reru/rareru]',
     japaneseName: '受身形 (Ukemi-kei)',
     badge: '受身形',
     summary: 'Menyatakan subjek yang menerima atau terkena dampak dari tindakan pihak lain ("di-...kan"), atau fakta umum sejarah.',
@@ -568,7 +575,8 @@ export const CONJUGATION_FORMS_INFO: ConjugationFormInfo[] = [
   },
   {
     id: 'causative',
-    name: 'Bentuk Kausatif (Menyuruh / Mengizinkan)',
+    name: 'Bentuk Menyuruh / Izin [~aseru/saseru]',
+    friendlyTarget: 'Bentuk Menyuruh / Izin [~aseru/saseru]',
     japaneseName: '使役形 (Shieki-kei)',
     badge: '使役形',
     summary: 'Menyatakan membuat seseorang melakukan tindakan, menyuruh anak/bawahan, atau memberi izin ("membiarkan/mengizinkan").',
@@ -723,6 +731,7 @@ export interface ConjugationDrillQuestion extends Question {
   targetForm: {
     id: string;
     name: string;
+    friendlyTarget?: string;
     japaneseName: string;
   };
 }
@@ -797,17 +806,19 @@ export function generateConjugationQuestion(targetFormId?: string): ConjugationD
     ? 'Golongan 2 (Ichidan / 一段動詞)'
     : 'Golongan 3 (Irregular / 不規則動詞)';
 
+  const targetLabel = formInfo.friendlyTarget || formInfo.name;
+
   return {
     id: `drill_${verb.id}_${formInfo.id}_${Date.now()}`,
     instruction: `次の動詞を「${formInfo.japaneseName}」に変えなさい。`,
-    instructionId: `Ubah kata kerja 「${verb.kanji}」 (${verb.reading} - ${verb.meaningId}) ke dalam ${formInfo.name}!`,
+    instructionId: `Ubah kata kerja 「${verb.kanji}」 (${verb.reading} - ${verb.meaningId}) ke ${targetLabel}!`,
     prompt: `「${verb.kanji}」 ➔ 【 ？ 】`,
     ruby: `「${verb.reading}」 ➔ 【 ？ 】`,
-    translation: `Kata: ${verb.kanji} (${verb.meaningId}) | Target: ${formInfo.name}`,
+    translation: `Kata: ${verb.kanji} (${verb.meaningId}) • Target ke: ${targetLabel}`,
     options: allOptions,
     optionsRuby: allOptionsRuby,
     correctIndex,
-    explanation: `Kata kerja 「${verb.kanji}」 (${verb.reading}) termasuk ${groupLabel}. Bentuk ${formInfo.name} yang benar adalah 「${correctAnswer}」.`,
+    explanation: `Kata kerja 「${verb.kanji}」 (${verb.reading}) termasuk ${groupLabel}. Perubahan ke ${targetLabel} yang benar adalah 「${correctAnswer}」.`,
     targetVerb: {
       id: verb.id,
       kanji: verb.kanji,
@@ -818,6 +829,7 @@ export function generateConjugationQuestion(targetFormId?: string): ConjugationD
     targetForm: {
       id: formInfo.id,
       name: formInfo.name,
+      friendlyTarget: targetLabel,
       japaneseName: formInfo.japaneseName,
     },
   };
