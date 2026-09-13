@@ -22,9 +22,11 @@ import {
   VERB_CONJUGATION_DATABASE,
   generateConjugationQuestion,
   ConjugationFormInfo,
+  ConjugationDrillQuestion,
 } from '../../data/conjugationRules';
 import { Question } from '../../types/content';
 import { speakJapanese, playSound } from '../../utils/audio';
+import { RubyText } from '../learning/RubyText';
 
 interface ConjugationDojoViewProps {
   soundEnabled?: boolean;
@@ -41,7 +43,7 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
   // Drill Quiz State
   const [isDrillActive, setIsDrillActive] = useState(false);
   const [selectedDrillFormId, setSelectedDrillFormId] = useState<string>('all');
-  const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
+  const [currentQuestion, setCurrentQuestion] = useState<ConjugationDrillQuestion | null>(null);
   const [selectedAnswerIndex, setSelectedAnswerIndex] = useState<number | null>(null);
   const [isAnswerChecked, setIsAnswerChecked] = useState(false);
   const [streak, setStreak] = useState(0);
@@ -168,26 +170,67 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
           </div>
 
           {/* Question Box */}
-          <div className="space-y-3 text-center py-4 bg-surface-inset/60 rounded-2xl border border-border-subtle p-4">
-            <span className="text-xs text-text-secondary font-medium">
-              {currentQuestion.instructionId}
-            </span>
-            <div className="flex items-center justify-center gap-3">
-              <h2 className="text-2xl sm:text-3xl font-black text-text-primary font-heading tracking-wide">
-                {currentQuestion.prompt}
-              </h2>
+          <div className="space-y-3 text-center py-5 bg-surface-inset/60 rounded-2xl border border-border-subtle p-4">
+            <div className="text-xs text-text-secondary font-medium flex items-center justify-center gap-1.5 flex-wrap">
+              <span>Ubah kata kerja</span>
+              {currentQuestion.targetVerb ? (
+                <span className="inline-flex items-center px-2 py-0.5 rounded-lg bg-surface-card border border-border-subtle text-text-primary font-bold">
+                  <RubyText
+                    japanese={currentQuestion.targetVerb.kanji}
+                    reading={currentQuestion.targetVerb.reading}
+                    className="text-xs font-bold font-jp"
+                  />
+                </span>
+              ) : null}
+              <span>{currentQuestion.targetVerb ? `(${currentQuestion.targetVerb.meaningId})` : ''} ke dalam {currentQuestion.targetForm?.name || 'bentuk target'}!</span>
+            </div>
+
+            <div className="flex items-center justify-center gap-3 py-1">
+              <div className="text-2xl sm:text-4xl font-black text-text-primary font-heading tracking-wide flex items-center justify-center gap-1.5 flex-wrap">
+                <span className="text-text-muted select-none">「</span>
+                {currentQuestion.targetVerb ? (
+                  <RubyText
+                    japanese={currentQuestion.targetVerb.kanji}
+                    reading={currentQuestion.targetVerb.reading}
+                    className="text-2xl sm:text-4xl font-black text-gold drop-shadow-sm font-jp"
+                  />
+                ) : (
+                  <RubyText
+                    japanese={currentQuestion.prompt}
+                    reading={currentQuestion.ruby}
+                    className="text-2xl sm:text-4xl font-black text-gold drop-shadow-sm font-jp"
+                  />
+                )}
+                <span className="text-text-muted select-none">」</span>
+                <span className="text-text-muted mx-1.5 select-none">➔</span>
+                <span className="text-indigo">【 ？ 】</span>
+              </div>
+
               <button
                 type="button"
-                onClick={() => speakJapanese(currentQuestion.ruby || '')}
-                className="p-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-gold border border-border-subtle transition-colors"
+                onClick={() => speakJapanese(currentQuestion.targetVerb?.reading || currentQuestion.ruby || '')}
+                className="p-2.5 rounded-xl bg-surface-card hover:bg-surface-elevated text-gold border border-border-subtle transition-colors shadow-sm"
                 title="Dengarkan pelafalan"
               >
-                <Volume2 className="w-4 h-4" />
+                <Volume2 className="w-5 h-5" />
               </button>
             </div>
-            <p className="text-xs text-text-muted font-mono">
-              {currentQuestion.translation}
-            </p>
+
+            <div className="text-xs text-text-muted font-mono flex items-center justify-center gap-1.5 flex-wrap">
+              <span>Kata:</span>
+              {currentQuestion.targetVerb ? (
+                <RubyText
+                  japanese={currentQuestion.targetVerb.kanji}
+                  reading={currentQuestion.targetVerb.reading}
+                  className="font-bold text-text-primary font-jp"
+                />
+              ) : (
+                <span>{currentQuestion.ruby}</span>
+              )}
+              {currentQuestion.targetVerb && <span>({currentQuestion.targetVerb.meaningId})</span>}
+              <span className="mx-1">•</span>
+              <span>Target: <strong className="text-text-secondary">{currentQuestion.targetForm?.name}</strong></span>
+            </div>
           </div>
 
           {/* Options Grid */}
@@ -195,6 +238,7 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
             {currentQuestion.options.map((option, idx) => {
               const isSelected = selectedAnswerIndex === idx;
               const isCorrect = idx === currentQuestion.correctIndex;
+              const optionReading = currentQuestion.optionsRuby?.[idx];
 
               let btnStyle = 'bg-surface-card border-border-subtle hover:border-indigo/40 hover:bg-surface-elevated text-text-primary';
               if (isAnswerChecked) {
@@ -216,12 +260,16 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
                   onClick={() => handleSelectAnswer(idx)}
                   className={`p-4 rounded-2xl border text-left flex items-center justify-between gap-3 transition-all ${btnStyle}`}
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 flex-1 min-w-0">
                     <span className="w-7 h-7 rounded-xl bg-surface-inset border border-border-subtle flex items-center justify-center font-mono text-xs font-bold shrink-0">
                       {String.fromCharCode(65 + idx)}
                     </span>
-                    <span className="text-sm font-bold font-jp">
-                      {option}
+                    <span className="text-base font-bold font-jp">
+                      <RubyText
+                        japanese={option}
+                        reading={optionReading}
+                        className="text-base font-bold font-jp"
+                      />
                     </span>
                   </div>
 
@@ -594,25 +642,26 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
                   {VERB_CONJUGATION_DATABASE.map(v => (
                     <tr key={v.id} className="hover:bg-surface-inset/60">
                       <td className="py-2.5 font-bold text-text-primary font-jp">
-                        {v.kanji} ({v.romaji})
+                        <RubyText japanese={v.kanji} reading={v.reading} />
+                        <span className="text-text-muted text-[10px] ml-1 font-mono">({v.romaji})</span>
                       </td>
                       <td className="py-2.5 text-text-muted capitalize">
                         {v.group}
                       </td>
-                      <td className="py-2.5 text-gold font-bold">
-                        {v.forms.te}
+                      <td className="py-2.5 text-gold font-bold font-jp">
+                        <RubyText japanese={v.forms.te} reading={v.formsReadings?.te} />
                       </td>
-                      <td className="py-2.5 text-emerald-400">
-                        {v.forms.nai}
+                      <td className="py-2.5 text-emerald-400 font-jp">
+                        <RubyText japanese={v.forms.nai} reading={v.formsReadings?.nai} />
                       </td>
-                      <td className="py-2.5 text-text-secondary">
-                        {v.forms.ta}
+                      <td className="py-2.5 text-text-secondary font-jp">
+                        <RubyText japanese={v.forms.ta} reading={v.formsReadings?.ta} />
                       </td>
-                      <td className="py-2.5 text-indigo">
-                        {v.forms.potential}
+                      <td className="py-2.5 text-indigo font-jp">
+                        <RubyText japanese={v.forms.potential} reading={v.formsReadings?.potential} />
                       </td>
-                      <td className="py-2.5 text-wine-accent">
-                        {v.forms.passive}
+                      <td className="py-2.5 text-wine-accent font-jp">
+                        <RubyText japanese={v.forms.passive} reading={v.formsReadings?.passive} />
                       </td>
                     </tr>
                   ))}

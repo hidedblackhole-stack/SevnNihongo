@@ -2,6 +2,19 @@ import { Question } from '../types/content';
 
 export type VerbGroup = 'godan' | 'ichidan' | 'irregular';
 
+export interface VerbForms {
+  dictionary: string; // 辞書形
+  masu: string;       // ます形
+  te: string;         // て形
+  ta: string;         // た形 (lampau)
+  nai: string;        // ない形 (negatif)
+  potential: string;  // 可能形 (bisa/dapat)
+  passive: string;    // 受身形 (dikenai)
+  causative: string;  // 使役形 (menyuruh/mengizinkan)
+  ba: string;         // ば形 (jika/pengandaian)
+  volitional: string; // 意向形 (mari/hendak)
+}
+
 export interface VerbItem {
   id: string;
   kanji: string;
@@ -10,18 +23,8 @@ export interface VerbItem {
   meaningId: string;
   group: VerbGroup;
   godanEnding?: 'u' | 'ku' | 'gu' | 'su' | 'tsu' | 'nu' | 'bu' | 'mu' | 'ru';
-  forms: {
-    dictionary: string; // 辞書形
-    masu: string;       // ます形
-    te: string;         // て形
-    ta: string;         // た形 (lampau)
-    nai: string;        // ない形 (negatif)
-    potential: string;  // 可能形 (bisa/dapat)
-    passive: string;    // 受身形 (dikenai)
-    causative: string;  // 使役形 (menyuruh/mengizinkan)
-    ba: string;         // ば形 (jika/pengandaian)
-    volitional: string; // 意向形 (mari/hendak)
-  };
+  forms: VerbForms;
+  formsReadings: VerbForms;
 }
 
 export interface ConjugationFormInfo {
@@ -58,7 +61,57 @@ export interface WordClassGuide {
 /* ==========================================================================
    1. DATABASE VERBA & CONJUGATION PAIRS (LENGKAP GOLONGAN 1, 2, 3)
    ========================================================================== */
-export const VERB_CONJUGATION_DATABASE: VerbItem[] = [
+
+/**
+ * Universal helper that returns the exact hiragana reading of any conjugated form of a verb.
+ */
+export function getConjugatedFormReading(verb: { kanji: string; reading: string }, formText: string): string {
+  if (!formText) return '';
+  if (verb.kanji === 'する') return formText;
+  if (verb.kanji === '来る') {
+    if (
+      formText.startsWith('来な') ||
+      formText.startsWith('来ら') ||
+      formText.startsWith('来さ') ||
+      formText.startsWith('来よ')
+    ) {
+      return formText.replace('来', 'こ');
+    }
+    if (formText.startsWith('来ま') || formText.startsWith('来て') || formText.startsWith('来た')) {
+      return formText.replace('来', 'き');
+    }
+    return formText.replace('来', 'く');
+  }
+
+  // Find kanji prefix in verb
+  const kanjiMatch = verb.kanji.match(/^[\u4e00-\u9faf]+/);
+  if (!kanjiMatch) return formText;
+  const kanjiPrefix = kanjiMatch[0];
+  const okurigana = verb.kanji.slice(kanjiPrefix.length);
+  const stemReading = verb.reading.slice(0, verb.reading.length - okurigana.length);
+
+  if (formText.startsWith(kanjiPrefix)) {
+    return stemReading + formText.slice(kanjiPrefix.length);
+  }
+  return formText;
+}
+
+export function computeVerbFormsReadings(verb: { kanji: string; reading: string; forms: VerbForms }): VerbForms {
+  return {
+    dictionary: getConjugatedFormReading(verb, verb.forms.dictionary),
+    masu: getConjugatedFormReading(verb, verb.forms.masu),
+    te: getConjugatedFormReading(verb, verb.forms.te),
+    ta: getConjugatedFormReading(verb, verb.forms.ta),
+    nai: getConjugatedFormReading(verb, verb.forms.nai),
+    potential: getConjugatedFormReading(verb, verb.forms.potential),
+    passive: getConjugatedFormReading(verb, verb.forms.passive),
+    causative: getConjugatedFormReading(verb, verb.forms.causative),
+    ba: getConjugatedFormReading(verb, verb.forms.ba),
+    volitional: getConjugatedFormReading(verb, verb.forms.volitional),
+  };
+}
+
+const RAW_VERBS: Omit<VerbItem, 'formsReadings'>[] = [
   // --- GOLONGAN 1 (GODAN / 五段動詞) ---
   {
     id: 'v_nomu',
@@ -396,6 +449,11 @@ export const VERB_CONJUGATION_DATABASE: VerbItem[] = [
   },
 ];
 
+export const VERB_CONJUGATION_DATABASE: VerbItem[] = RAW_VERBS.map(verb => ({
+  ...verb,
+  formsReadings: computeVerbFormsReadings(verb),
+}));
+
 /* ==========================================================================
    2. PANDUAN BENTUK-BENTUK PERUBAHAN KATA (CONJUGATION FORMS ENCYCLOPEDIA)
    ========================================================================== */
@@ -625,7 +683,22 @@ export const WORD_CLASS_GUIDES: WordClassGuide[] = [
    4. GENERATOR SOAL LATIHAN KONJUGASI INTERAKTIF (DRILL GENERATOR)
    ========================================================================== */
 
-export function generateConjugationQuestion(targetFormId?: string): Question {
+export interface ConjugationDrillQuestion extends Question {
+  targetVerb: {
+    id: string;
+    kanji: string;
+    reading: string;
+    meaningId: string;
+    group: VerbGroup;
+  };
+  targetForm: {
+    id: string;
+    name: string;
+    japaneseName: string;
+  };
+}
+
+export function generateConjugationQuestion(targetFormId?: string): ConjugationDrillQuestion {
   // 1. Pick a verb randomly
   const verb = VERB_CONJUGATION_DATABASE[Math.floor(Math.random() * VERB_CONJUGATION_DATABASE.length)];
   
@@ -686,6 +759,9 @@ export function generateConjugationQuestion(targetFormId?: string): Question {
   const allOptions = [correctAnswer, ...uniqueDistractors].sort(() => 0.5 - Math.random());
   const correctIndex = allOptions.indexOf(correctAnswer);
 
+  // Exact hiragana readings for all options
+  const allOptionsRuby = allOptions.map(opt => getConjugatedFormReading(verb, opt));
+
   const groupLabel = verb.group === 'godan'
     ? 'Golongan 1 (Godan / 五段動詞)'
     : verb.group === 'ichidan'
@@ -697,10 +773,23 @@ export function generateConjugationQuestion(targetFormId?: string): Question {
     instruction: `次の動詞を「${formInfo.japaneseName}」に変えなさい。`,
     instructionId: `Ubah kata kerja 「${verb.kanji}」 (${verb.reading} - ${verb.meaningId}) ke dalam ${formInfo.name}!`,
     prompt: `「${verb.kanji}」 ➔ 【 ？ 】`,
-    ruby: `${verb.reading}`,
+    ruby: `「${verb.reading}」 ➔ 【 ？ 】`,
     translation: `Kata: ${verb.kanji} (${verb.meaningId}) | Target: ${formInfo.name}`,
     options: allOptions,
+    optionsRuby: allOptionsRuby,
     correctIndex,
     explanation: `Kata kerja 「${verb.kanji}」 (${verb.reading}) termasuk ${groupLabel}. Bentuk ${formInfo.name} yang benar adalah 「${correctAnswer}」.`,
+    targetVerb: {
+      id: verb.id,
+      kanji: verb.kanji,
+      reading: verb.reading,
+      meaningId: verb.meaningId,
+      group: verb.group,
+    },
+    targetForm: {
+      id: formInfo.id,
+      name: formInfo.name,
+      japaneseName: formInfo.japaneseName,
+    },
   };
 }

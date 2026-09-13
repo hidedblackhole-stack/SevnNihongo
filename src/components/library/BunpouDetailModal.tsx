@@ -206,7 +206,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
               </span>
               <div className="flex items-center justify-center gap-3">
                 <h3 className="text-xl sm:text-2xl font-black text-text-primary font-heading tracking-wide">
-                  {currentQuestion.prompt}
+                  <RubyText japanese={currentQuestion.prompt} reading={currentQuestion.ruby} />
                 </h3>
                 {currentQuestion.ruby && (
                   <button
@@ -255,7 +255,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                         {String.fromCharCode(65 + idx)}
                       </span>
                       <span className="text-xs sm:text-sm font-bold font-jp">
-                        {option}
+                        <RubyText japanese={option} reading={currentQuestion.optionsRuby?.[idx]} />
                       </span>
                     </div>
 
