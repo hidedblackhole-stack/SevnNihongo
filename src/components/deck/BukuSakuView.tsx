@@ -33,7 +33,7 @@ import {
   loadAllCurriculumProgress,
   saveCurriculumProgress,
 } from '../../utils/curriculumEngine';
-import { KotobaItem, KanjiItem, BunpouItem } from '../../types/content';
+import { KotobaItem, KanjiItem, BunpouItem, ItemMasteryRecord } from '../../types/content';
 import {
   ensureUserDecks,
   createCustomDeck,
@@ -71,6 +71,18 @@ interface BukuSakuViewProps {
     total?: number
   ) => void;
   soundEnabled?: boolean;
+  playerMp?: number;
+  playerMaxMp?: number;
+  playerInt?: number;
+  playerStr?: number;
+  playerHp?: number;
+  playerMaxHp?: number;
+  onUseMp?: (amount: number) => boolean;
+  onHpDamage?: (amount: number) => void;
+  onGameOver?: () => void;
+  onStartRemediationRecall?: (itemIds: string[]) => void;
+  itemMastery?: Record<string, ItemMasteryRecord>;
+  furiganaEnabled?: boolean;
 }
 
 export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
@@ -79,6 +91,18 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
   onRewardPlayer,
   onCompleteStudyItem,
   soundEnabled = true,
+  playerMp = 100,
+  playerMaxMp = 100,
+  playerInt = 10,
+  playerStr = 10,
+  playerHp = 100,
+  playerMaxHp = 100,
+  onUseMp = () => true,
+  onHpDamage,
+  onGameOver,
+  onStartRemediationRecall,
+  itemMastery = {},
+  furiganaEnabled = true,
 }) => {
   const decks = useMemo(() => ensureUserDecks(userDecks), [userDecks]);
 
@@ -278,6 +302,18 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
           }}
           onRewardPlayer={onRewardPlayer}
           onCompleteStudyItem={onCompleteStudyItem}
+          playerMp={playerMp}
+          playerMaxMp={playerMaxMp}
+          playerInt={playerInt}
+          playerStr={playerStr}
+          playerHp={playerHp}
+          playerMaxHp={playerMaxHp}
+          onUseMp={onUseMp}
+          onHpDamage={onHpDamage}
+          onGameOver={onGameOver}
+          onStartRemediationRecall={onStartRemediationRecall}
+          itemMastery={itemMastery}
+          furiganaEnabled={furiganaEnabled}
           onReconfigure={() => setIsCurriculumConfigOpen(true)}
           onBack={() => setActiveWorldDeckId(null)}
           soundEnabled={soundEnabled}

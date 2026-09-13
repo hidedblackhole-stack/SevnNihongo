@@ -64,6 +64,7 @@ export interface CustomStageProgress {
   total?: number;
   stars?: number; // 1 - 3
   clearedAt?: string;
+  clearedModules?: ('bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss')[];
 }
 
 export interface CustomCurriculumProgress {

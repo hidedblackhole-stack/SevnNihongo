@@ -1230,6 +1230,18 @@ export default function App() {
                   onRewardPlayer={handleRewardPlayer}
                   onCompleteStudyItem={handleStudyComplete}
                   soundEnabled={stats.soundEnabled}
+                  playerMp={stats.mp}
+                  playerMaxMp={stats.maxMp}
+                  playerInt={stats.int}
+                  playerStr={stats.str}
+                  playerHp={stats.hp}
+                  playerMaxHp={stats.maxHp}
+                  onUseMp={handleUseMp}
+                  onHpDamage={handleHpDamage}
+                  onGameOver={handleGameOver}
+                  onStartRemediationRecall={handleStartRemediationRecall}
+                  itemMastery={stats.itemMastery || {}}
+                  furiganaEnabled={stats.furiganaEnabled ?? true}
                 />
               )}
 

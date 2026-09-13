@@ -1,21 +1,14 @@
 import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import {
   ArrowLeft,
   Compass,
-  Sparkles,
   Lock,
   CheckCircle2,
   Play,
   RotateCcw,
   Star,
-  Layers,
-  BookOpen,
-  PenTool,
-  Brain,
   Sliders,
-  Trophy,
-  ShieldAlert,
 } from 'lucide-react';
 import {
   CustomCurriculum,
@@ -24,9 +17,12 @@ import {
   StageStatus,
 } from '../../types/curriculum';
 import {
+  customStageToStage,
   saveCurriculumProgress,
 } from '../../utils/curriculumEngine';
-import { CustomStageRunner } from './CustomStageRunner';
+import { StageHubView } from '../stage/StageHubView';
+import { ItemMasteryRecord } from '../../types/content';
+import { StageClearData } from '../../types/rpg';
 import { playSound } from '../../utils/audio';
 
 interface CustomWorldViewProps {
@@ -45,6 +41,18 @@ interface CustomWorldViewProps {
   onReconfigure: () => void;
   onBack: () => void;
   soundEnabled?: boolean;
+  playerMp?: number;
+  playerMaxMp?: number;
+  playerInt?: number;
+  playerStr?: number;
+  playerHp?: number;
+  playerMaxHp?: number;
+  onUseMp?: (amount: number) => boolean;
+  onHpDamage?: (amount: number) => void;
+  onGameOver?: () => void;
+  onStartRemediationRecall?: (itemIds: string[]) => void;
+  itemMastery?: Record<string, ItemMasteryRecord>;
+  furiganaEnabled?: boolean;
 }
 
 export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
@@ -56,8 +64,20 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
   onReconfigure,
   onBack,
   soundEnabled = true,
+  playerMp = 100,
+  playerMaxMp = 100,
+  playerInt = 10,
+  playerStr = 10,
+  playerHp = 100,
+  playerMaxHp = 100,
+  onUseMp = () => true,
+  onHpDamage,
+  onGameOver,
+  onStartRemediationRecall,
+  itemMastery = {},
+  furiganaEnabled = true,
 }) => {
-  const [activeStageForRunner, setActiveStageForRunner] = useState<CustomStage | null>(null);
+  const [activeCustomStage, setActiveCustomStage] = useState<CustomStage | null>(null);
 
   // Calculate statistics
   const totalStages = curriculum.stages.length;
@@ -73,37 +93,62 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
 
   const handleStartStage = (stage: CustomStage) => {
     playSound('click', soundEnabled);
-    setActiveStageForRunner(stage);
+    setActiveCustomStage(stage);
   };
 
-  const handleStageComplete = (
-    score: number,
-    total: number,
+  const handleCustomModuleComplete = (
+    moduleId: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss',
     expGained: number,
-    goldGained: number
+    goldGained: number,
+    itemId?: string,
+    score?: number,
+    total?: number
   ) => {
-    if (!activeStageForRunner) return;
+    if (!activeCustomStage) return;
 
-    const currentStageId = activeStageForRunner.id;
+    if (onCompleteStudyItem) {
+      onCompleteStudyItem(moduleId, expGained, goldGained, itemId, score, total);
+    }
+    if (onRewardPlayer && (expGained > 0 || goldGained > 0)) {
+      onRewardPlayer(expGained, goldGained);
+    }
+
+    const currentStageId = activeCustomStage.id;
     const stageIndex = curriculum.stages.findIndex(s => s.id === currentStageId);
+    const existingProg = progress.stages[currentStageId] || { status: 'current' };
 
-    // Calculate earned stars
-    const percentage = total > 0 ? (score / total) * 100 : 100;
-    const stars = percentage >= 90 ? 3 : percentage >= 60 ? 2 : 1;
+    const clearedModules = existingProg.clearedModules || [];
+    const updatedClearedModules = clearedModules.includes(moduleId)
+      ? clearedModules
+      : [...clearedModules, moduleId];
 
-    // Create updated stages map
+    // Determine expected modules for this custom stage based on its items
+    const hasBunpou = activeCustomStage.items.some(i => i.type === 'bunpou');
+    const hasKotoba = activeCustomStage.items.some(i => i.type === 'kotoba');
+    const hasKanji = activeCustomStage.items.some(i => i.type === 'kanji');
+    const expectedModulesCount = [
+      hasBunpou ? 'bunpou' : null,
+      hasKotoba ? 'kotoba' : null,
+      hasKanji ? 'kanji' : null,
+    ].filter(Boolean).length || 1;
+
+    const isStageCleared = updatedClearedModules.length >= expectedModulesCount || moduleId === 'boss';
+    const calculatedStars = Math.min(3, Math.max(1, Math.ceil((updatedClearedModules.length / expectedModulesCount) * 3)));
+
     const updatedStages = { ...progress.stages };
     updatedStages[currentStageId] = {
-      status: 'completed',
-      score,
-      total,
-      stars,
-      clearedAt: new Date().toISOString(),
+      ...existingProg,
+      status: isStageCleared ? 'completed' : (existingProg.status === 'completed' ? 'completed' : 'current'),
+      score: score !== undefined ? (existingProg.score || 0) + score : existingProg.score,
+      total: total !== undefined ? (existingProg.total || 0) + total : existingProg.total,
+      stars: Math.max(existingProg.stars || 0, calculatedStars),
+      clearedAt: isStageCleared ? (existingProg.clearedAt || new Date().toISOString()) : existingProg.clearedAt,
+      clearedModules: updatedClearedModules,
     };
 
-    // Unlock next stage if exists
+    // Unlock next stage if this stage is completed
     let nextStageIndex = progress.currentStageIndex;
-    if (stageIndex + 1 < curriculum.stages.length) {
+    if (isStageCleared && stageIndex + 1 < curriculum.stages.length) {
       const nextStage = curriculum.stages[stageIndex + 1];
       if (updatedStages[nextStage.id]?.status !== 'completed') {
         updatedStages[nextStage.id] = { status: 'current' };
@@ -123,18 +168,50 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
 
     onUpdateProgress(updatedProgress);
     saveCurriculumProgress(updatedProgress);
-
-    // Reward player
-    if (onRewardPlayer) {
-      onRewardPlayer(expGained, goldGained);
-    }
-    if (onCompleteStudyItem) {
-      onCompleteStudyItem('boss', expGained, goldGained, currentStageId, score, total);
-    }
-
-    setActiveStageForRunner(null);
   };
 
+  // IF AN ACTIVE STAGE IS SELECTED: RENDER STAGEHUBVIEW (EXACTLY AS IN SCREENSHOT 1)
+  if (activeCustomStage) {
+    const stageObj = customStageToStage(activeCustomStage, curriculum.deckTitle);
+    const stageProg = progress.stages[activeCustomStage.id];
+    const stageClearData: StageClearData = {
+      stageId: activeCustomStage.id,
+      cleared: stageProg?.status === 'completed',
+      stars: stageProg?.stars || 0,
+      score: stageProg?.score,
+      clearedModules: stageProg?.clearedModules || [],
+      clearedAt: stageProg?.clearedAt,
+    };
+
+    return (
+      <div className="w-full animate-fade-in">
+        <StageHubView
+          stage={stageObj}
+          stageProgress={stageClearData}
+          itemMastery={itemMastery}
+          onBackToMap={() => {
+            playSound('click', soundEnabled);
+            setActiveCustomStage(null);
+          }}
+          onModuleComplete={handleCustomModuleComplete}
+          playerMp={playerMp}
+          playerMaxMp={playerMaxMp}
+          playerInt={playerInt}
+          playerStr={playerStr}
+          playerHp={playerHp}
+          playerMaxHp={playerMaxHp}
+          onUseMp={onUseMp}
+          onHpDamage={onHpDamage}
+          onGameOver={onGameOver}
+          onStartRemediationRecall={onStartRemediationRecall}
+          soundEnabled={soundEnabled}
+          furiganaEnabled={furiganaEnabled}
+        />
+      </div>
+    );
+  }
+
+  // STANDARD ROADMAP VIEW
   return (
     <div className="w-full max-w-4xl mx-auto space-y-6 pb-20 sm:pb-12 animate-fade-in px-2 sm:px-0">
       {/* 1. TOP NAVIGATION & WORLD HEADER */}
@@ -231,7 +308,12 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
               <motion.div
                 key={stage.id}
                 whileHover={!isLocked ? { scale: 1.005 } : {}}
+                onClick={() => {
+                  if (!isLocked) handleStartStage(stage);
+                }}
                 className={`panel p-4 sm:p-5 rounded-2xl border transition-all ${
+                  !isLocked ? 'cursor-pointer' : ''
+                } ${
                   isCurrent
                     ? 'border-indigo shadow-md shadow-indigo/10 bg-surface-card ring-1 ring-indigo/40'
                     : isCompleted
@@ -329,7 +411,10 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
                     {isCurrent ? (
                       <button
                         type="button"
-                        onClick={() => handleStartStage(stage)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleStartStage(stage);
+                        }}
                         className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo to-indigo-dark text-white font-heading font-bold text-xs shadow-md shadow-indigo/25 hover:opacity-95 transition-all"
                       >
                         <Play className="w-4 h-4 fill-white" />
@@ -338,7 +423,10 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
                     ) : isCompleted ? (
                       <button
                         type="button"
-                        onClick={() => handleStartStage(stage)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleStartStage(stage);
+                        }}
                         className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl border border-emerald-500/40 bg-emerald-500/10 text-emerald-400 font-heading font-bold text-xs hover:bg-emerald-500/20 transition-all"
                       >
                         <RotateCcw className="w-3.5 h-3.5" />
@@ -357,17 +445,6 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
           })}
         </div>
       </div>
-
-      {/* STAGE RUNNER MODAL */}
-      {activeStageForRunner && (
-        <CustomStageRunner
-          stage={activeStageForRunner}
-          config={curriculum.config}
-          onCompleteStage={handleStageComplete}
-          onClose={() => setActiveStageForRunner(null)}
-          soundEnabled={soundEnabled}
-        />
-      )}
     </div>
   );
 };

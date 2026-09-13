@@ -1,5 +1,5 @@
 import { UserDeck, DeckItemCategory } from '../types/rpg';
-import { Question, KotobaItem, KanjiItem, BunpouItem } from '../types/content';
+import { Question, KotobaItem, KanjiItem, BunpouItem, Stage } from '../types/content';
 import {
   CurriculumConfig,
   CustomStage,
@@ -160,15 +160,15 @@ export function generateCurriculum(deck: UserDeck, rawConfig: CurriculumConfig):
     const pCount = (polaChunks[i] || []).length;
     if (kCount > 0) summaryParts.push(`${kCount} Kanji`);
     if (koCount > 0) summaryParts.push(`${koCount} Kotoba`);
-    if (pCount > 0) summaryParts.push(`${pCount} Pola`);
+    if (pCount > 0) summaryParts.push(`${pCount} Tata Bahasa`);
 
     stages.push({
       id: `stage_${stageNumber}`,
       stageNumber,
-      title: `Stage ${stageNumber}: Fondasi Pembelajaran`,
+      title: `Stage ${stageNumber}: 第${stageNumber}節：${deck.title}`,
       description: summaryParts.length > 0
-        ? `Latihan terstruktur memuat ${summaryParts.join(', ')}.`
-        : 'Latihan penguasaan materi pilihan.',
+        ? `Drill Stage ${stageNumber}: Pembelajaran ${summaryParts.join(', ')}, dan kuis pemahaman.`
+        : `Drill Stage ${stageNumber}: Pembelajaran materi terstruktur dari ${deck.title}.`,
       items: stageItems,
       activities,
       isExam: false,
@@ -195,7 +195,7 @@ export function generateCurriculum(deck: UserDeck, rawConfig: CurriculumConfig):
     stages.push({
       id: `stage_${examStageNumber}_exam`,
       stageNumber: examStageNumber,
-      title: `Stage ${examStageNumber}: Ujian Campuran Akhir (Final Boss Exam)`,
+      title: `Stage ${examStageNumber}: 👑 Ujian Akhir Penguasaan Buku Saku`,
       description: `Evaluasi komprehensif menguji sinergi antara Kanji, Kotoba, dan Pola Kalimat yang telah dipelajari.`,
       items: allItems,
       activities: ['mixed_exam'],
@@ -214,6 +214,35 @@ export function generateCurriculum(deck: UserDeck, rawConfig: CurriculumConfig):
     updatedAt: now,
     config,
     stages,
+  };
+}
+
+/**
+ * Adapts a CustomStage into the standard Stage object expected by StageHubView.
+ * Provides 100% feature and visual parity with standard RPG story stages.
+ */
+export function customStageToStage(customStage: CustomStage, deckTitle?: string): Stage {
+  const bunpouIds = customStage.items.filter(i => i.type === 'bunpou').map(i => i.id);
+  const kotobaIds = customStage.items.filter(i => i.type === 'kotoba').map(i => i.id);
+  const kanjiIds = customStage.items.filter(i => i.type === 'kanji').map(i => i.id);
+
+  return {
+    id: customStage.id,
+    mapId: `custom_world_${customStage.id}`,
+    stageNumber: customStage.stageNumber,
+    title: customStage.title,
+    description: customStage.description,
+    isBoss: !!customStage.isExam,
+    bossName: customStage.isExam ? `Penguji Agung: ${deckTitle || 'Buku Saku'}` : undefined,
+    bossTitle: customStage.isExam ? 'Ujian Evaluasi Kurikulum Kustom' : undefined,
+    bossHp: customStage.isExam ? Math.max(800, customStage.items.length * 120) : undefined,
+    bunpouIds,
+    kotobaIds,
+    kanjiIds,
+    dokkaiIds: [],
+    choukaiIds: [],
+    rewardExp: customStage.rewardExp,
+    rewardGold: customStage.rewardGold,
   };
 }
 
