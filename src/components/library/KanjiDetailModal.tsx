@@ -4,7 +4,7 @@ import { X, Bookmark, ChevronLeft, ChevronRight } from 'lucide-react';
 import { KanjiItem } from '../../types/content';
 import { playSound } from '../../utils/audio';
 import { KanjiDetailCard } from '../learning/KanjiDetailCard';
-import { WritingRewardResult } from '../learning/CanvasWritingPractice';
+import { WritingRewardResult } from '../../utils/rewards';
 import { UserDeck } from '../../types/rpg';
 import { DeckBookmarkPicker } from '../deck/DeckBookmarkPicker';
 

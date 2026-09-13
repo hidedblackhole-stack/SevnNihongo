@@ -12,3 +12,4 @@ Ocr JLPT/
 scratch/
 .vscode/
 *.bak
+.codegraph/

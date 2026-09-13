@@ -68,6 +68,25 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600;700&family=Noto+Sans+JP:wght@500;700&family=Noto+Serif+JP:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Zen+Old+Mincho:wght@600;700;900&display=swap" rel="stylesheet">
   </head>
   <body class="bg-page text-text-primary antialiased selection:bg-gold selection:text-surface-base">
+    <script>
+      window.addEventListener('error', function (e) {
+        console.error('[Global Crash Caught]:', e);
+        var root = document.getElementById('root');
+        if (root && root.children.length === 0) {
+          var box = document.getElementById('critical-crash-box');
+          if (!box) {
+            box = document.createElement('div');
+            box.id = 'critical-crash-box';
+            box.style.cssText = 'position:fixed;inset:16px;z-index:999999;padding:24px;background:#450a0a;color:#fecaca;border:2px solid #ef4444;border-radius:16px;font-family:monospace;overflow:auto;';
+            document.body.appendChild(box);
+          }
+          box.innerHTML = '<h3 style="margin:0 0 12px 0;color:#f87171;font-size:16px;">⚠️ Gagal Memuat Modul Aplikasi (Script Error):</h3>' +
+            '<div style="background:rgba(0,0,0,0.5);padding:12px;border-radius:8px;font-size:12px;white-space:pre-wrap;margin-bottom:12px;">' + (e.message || e.error || e) + '</div>' +
+            '<div style="font-size:11px;color:#fca5a5;">Sumber: ' + (e.filename || 'unknown') + ':' + (e.lineno || '0') + '</div>' +
+            '<button onclick="location.reload(true)" style="margin-top:16px;padding:8px 16px;background:#ef4444;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:bold;">Muat Ulang Halaman (Hard Refresh)</button>';
+        }
+      });
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

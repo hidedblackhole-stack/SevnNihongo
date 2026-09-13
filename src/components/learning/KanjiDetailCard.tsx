@@ -517,7 +517,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
         /* Kanji Writing Practice Canvas */
         <div className="panel p-5 sm:p-6 space-y-4 text-center">
           <div>
-            {/* Highlighted Yomikata / Reading Header */}
+            {/* Highlighted Yomikata / Reading Header (Hidden Kanji to test recall in writing mode) */}
             <div className="flex flex-wrap items-stretch justify-center gap-3 sm:gap-4 mb-4 min-h-[52px]">
               {item.relatedWords && item.relatedWords.length > 0 ? (
                 item.relatedWords.slice(0, 2).map((rw, i) => (
@@ -527,17 +527,12 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
                     onClick={() => speakJapanese(rw.word)}
                     title="Klik untuk mendengar audio kata ini"
                   >
-                    {/* Kanji Word with target kanji clearly highlighted */}
-                    <div className="flex items-center justify-center gap-1.5 mb-1.5">
+                    {/* Yomikata Reading with high-contrast target badge */}
+                    <div className="flex items-center justify-center gap-1.5 mb-1">
                       <div className="text-xl sm:text-2xl font-bold font-jp">
-                        {renderWordWithKanjiHighlight(rw.word, item.character)}
+                        {getHighlightedYomikata(rw.word, rw.reading, item)}
                       </div>
                       <Volume2 className="w-4 h-4 text-text-muted opacity-60 group-hover:text-wine-accent group-hover:scale-110 transition-all flex-shrink-0" />
-                    </div>
-
-                    {/* Yomikata Reading with high-contrast target badge */}
-                    <div className="mb-1">
-                      {getHighlightedYomikata(rw.word, rw.reading, item)}
                     </div>
 
                     {/* Indonesian meaning */}
@@ -556,15 +551,14 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
                   }
                   title="Klik untuk mendengar"
                 >
-                  <div className="text-2xl sm:text-3xl font-bold font-jp text-wine-accent drop-shadow-sm mb-1 flex items-center gap-1.5">
-                    <span>{item.character}</span>
+                  <div className="text-xl sm:text-2xl font-bold font-jp text-wine-accent drop-shadow-sm mb-1 flex items-center gap-1.5">
+                    <span>
+                      {item.kunyomi?.[0]?.replace(/[.-]/g, '') ||
+                        item.onyomi?.[0] ||
+                        ''}
+                    </span>
                     <Volume2 className="w-4 h-4 text-text-muted opacity-60 group-hover:text-wine-accent transition-colors" />
                   </div>
-                  <span className="text-xs font-jp font-bold text-wine-accent mb-0.5">
-                    {item.kunyomi?.[0]?.replace(/[.-]/g, '') ||
-                      item.onyomi?.[0] ||
-                      ''}
-                  </span>
                   <span className="text-[11px] text-text-secondary mt-0.5 font-medium">{item.meaningId}</span>
                 </div>
               )}

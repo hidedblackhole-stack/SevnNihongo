@@ -18,9 +18,21 @@ import {
   RefreshCw,
   Download,
   Sliders,
+  Compass,
   X
 } from 'lucide-react';
 import { UserDeck, DeckItemCategory, DeckType, DeckItemRef } from '../../types/rpg';
+import { CurriculumConfigModal } from '../curriculum/CurriculumConfigModal';
+import { CustomWorldView } from '../curriculum/CustomWorldView';
+import { CustomCurriculum, CustomCurriculumProgress } from '../../types/curriculum';
+import {
+  generateCurriculum,
+  initializeCurriculumProgress,
+  loadAllCustomCurriculums,
+  saveCustomCurriculum,
+  loadAllCurriculumProgress,
+  saveCurriculumProgress,
+} from '../../utils/curriculumEngine';
 import { KotobaItem, KanjiItem, BunpouItem } from '../../types/content';
 import {
   ensureUserDecks,
@@ -87,6 +99,12 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
   const [selectedKotoba, setSelectedKotoba] = useState<KotobaItem | null>(null);
   const [selectedKanji, setSelectedKanji] = useState<KanjiItem | null>(null);
   const [selectedBunpou, setSelectedBunpou] = useState<BunpouItem | null>(null);
+
+  // Custom Curriculum & World state
+  const [activeWorldDeckId, setActiveWorldDeckId] = useState<string | null>(null);
+  const [isCurriculumConfigOpen, setIsCurriculumConfigOpen] = useState(false);
+  const [curriculums, setCurriculums] = useState<Record<string, CustomCurriculum>>(() => loadAllCustomCurriculums());
+  const [curriculumProgressMap, setCurriculumProgressMap] = useState<Record<string, CustomCurriculumProgress>>(() => loadAllCurriculumProgress());
 
   // Active selected deck object
   const activeDeck = useMemo(() => {
@@ -250,7 +268,21 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
       )}
 
       {/* Main Container */}
-      {!activeDeck ? (
+      {activeWorldDeckId && curriculums[activeWorldDeckId] ? (
+        <CustomWorldView
+          curriculum={curriculums[activeWorldDeckId]}
+          progress={curriculumProgressMap[activeWorldDeckId] || initializeCurriculumProgress(curriculums[activeWorldDeckId])}
+          onUpdateProgress={(updated) => {
+            setCurriculumProgressMap(prev => ({ ...prev, [activeWorldDeckId]: updated }));
+            saveCurriculumProgress(updated);
+          }}
+          onRewardPlayer={onRewardPlayer}
+          onCompleteStudyItem={onCompleteStudyItem}
+          onReconfigure={() => setIsCurriculumConfigOpen(true)}
+          onBack={() => setActiveWorldDeckId(null)}
+          soundEnabled={soundEnabled}
+        />
+      ) : !activeDeck ? (
         /* ================= DECK LIST VIEW ================= */
         <div className="space-y-6">
           {/* Header & Stats Banner */}
@@ -342,6 +374,11 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
                           ) : (
                             <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider font-mono text-text-secondary bg-surface-inset px-2 py-0.5 rounded-md border border-border-subtle">
                               {deck.type || 'mixed'}
+                            </span>
+                          )}
+                          {curriculums[deck.id] && (
+                            <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider font-mono text-indigo bg-indigo/10 px-2 py-0.5 rounded-md border border-indigo/30">
+                              🗺️ World
                             </span>
                           )}
                         </div>
@@ -478,6 +515,28 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
 
               {/* Action Buttons: Practice Launchers & Add Material */}
               <div className="flex items-center gap-2 flex-wrap w-full md:w-auto justify-start md:justify-end">
+                {/* Custom World / Curriculum Button */}
+                <button
+                  disabled={resolvedItems.length === 0}
+                  onClick={() => {
+                    playSound('click', soundEnabled);
+                    if (curriculums[activeDeck.id]) {
+                      setActiveWorldDeckId(activeDeck.id);
+                    } else {
+                      setIsCurriculumConfigOpen(true);
+                    }
+                  }}
+                  className={`px-4 py-2.5 rounded-2xl font-heading font-bold text-xs flex items-center gap-2 transition-all ${
+                    resolvedItems.length === 0
+                      ? 'opacity-40 cursor-not-allowed bg-surface-inset text-text-muted border border-border-subtle'
+                      : 'bg-gradient-to-r from-indigo to-indigo-dark text-white border border-indigo/40 shadow-sm hover:scale-105'
+                  }`}
+                  title="Jadikan deck ini kurikulum petualangan stage bergaya World"
+                >
+                  <Compass className="w-3.5 h-3.5 text-gold" />
+                  <span>{curriculums[activeDeck.id] ? 'Petualangan World' : 'Rancang World Stage'}</span>
+                </button>
+
                 {/* Flashcard Button */}
                 <button
                   disabled={resolvedItems.length === 0}
@@ -874,6 +933,28 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
           soundEnabled={soundEnabled}
         />
       )}
+
+      {/* Curriculum Config Modal */}
+      <CurriculumConfigModal
+        isOpen={isCurriculumConfigOpen}
+        deck={activeDeck || (activeWorldDeckId ? decks.find(d => d.id === activeWorldDeckId) || null : null)}
+        onClose={() => setIsCurriculumConfigOpen(false)}
+        onGenerate={(config) => {
+          const targetDeck = activeDeck || (activeWorldDeckId ? decks.find(d => d.id === activeWorldDeckId) || null : null);
+          if (!targetDeck) return;
+          const generated = generateCurriculum(targetDeck, config);
+          saveCustomCurriculum(generated);
+          setCurriculums(prev => ({ ...prev, [targetDeck.id]: generated }));
+
+          const initialProg = initializeCurriculumProgress(generated);
+          saveCurriculumProgress(initialProg);
+          setCurriculumProgressMap(prev => ({ ...prev, [targetDeck.id]: initialProg }));
+
+          setIsCurriculumConfigOpen(false);
+          setActiveWorldDeckId(targetDeck.id);
+        }}
+        soundEnabled={soundEnabled}
+      />
     </div>
   );
 };

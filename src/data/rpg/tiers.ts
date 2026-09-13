@@ -250,7 +250,7 @@ export interface TierGateCheckResult {
 
 export function checkTierGate(
   potentialTierIndex: number,
-  _stageProgress: Record<string, import('../types/rpg').StageClearData> = {},
+  _stageProgress: Record<string, import('../../types/rpg').StageClearData> = {},
   _worldStagesMap: Record<string, string[]> = {}
 ): TierGateCheckResult {
   return {
@@ -262,7 +262,7 @@ export function checkTierGate(
 
 export function getTierForExp(
   totalExp: number,
-  stageProgress?: Record<string, import('../types/rpg').StageClearData>,
+  stageProgress?: Record<string, import('../../types/rpg').StageClearData>,
   worldStagesMap?: Record<string, string[]>
 ): {
   tierIndex: number;
