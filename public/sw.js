@@ -1,73 +1,113 @@
-// SevnQuest Service Worker for PWA Support
-const CACHE_NAME = 'sevnquest-v1';
-const CORE_ASSETS = [
-  '/',
-  '/index.html',
+// SevnQuest Service Worker for PWA Support (v2.3)
+const CACHE_NAME = 'sevnquest-v2.3';
+const STATIC_ASSETS = [
   '/manifest.webmanifest',
+  '/favicon.ico',
   '/favicon-32x32.png',
+  '/favicon-16x16.png',
+  '/apple-touch-icon.png',
   '/icon-192.png',
   '/icon-512.png'
 ];
 
+// 1. Install: Pre-cache core branding icons only (DO NOT pre-cache index.html to avoid stale chunk mismatches)
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(CORE_ASSETS).catch((err) => {
-        console.warn('[PWA] Pre-caching failed (ignorable):', err);
+      return cache.addAll(STATIC_ASSETS).catch((err) => {
+        console.warn('[PWA] Pre-caching static assets failed (ignorable):', err);
       });
     })
   );
   self.skipWaiting();
 });
 
+// 2. Activate: Immediately purge all outdated caches from previous deployments
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
       return Promise.all(
-        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
+        keys.map((key) => {
+          if (key !== CACHE_NAME) {
+            console.log('[PWA] Purging outdated cache:', key);
+            return caches.delete(key);
+          }
+        })
       );
-    })
+    }).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
-// Network-first strategy for dynamic data, cache-first for images & fonts
+// 3. Allow client messages to trigger instant activation
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
+
+// 4. Fetch Strategy:
+//    - HTML / Navigation: NETWORK-FIRST (Always get fresh index.html when online, fallback to cache when offline)
+//    - Supabase / API: NETWORK-ONLY (Never cache)
+//    - Static Assets (.js, .css, images, fonts): CACHE-FIRST with network fallback
 self.addEventListener('fetch', (event) => {
   const request = event.request;
 
-  // Do not intercept non-GET requests or supabase-proxy/API calls
-  if (request.method !== 'GET' || request.url.includes('/supabase-proxy') || request.url.includes('supabase.co')) {
+  // Ignore non-GET, chrome-extension, or supabase proxy requests
+  if (
+    request.method !== 'GET' ||
+    request.url.includes('/supabase-proxy') ||
+    request.url.includes('supabase.co') ||
+    request.url.startsWith('chrome-extension://')
+  ) {
     return;
   }
 
+  const url = new URL(request.url);
+  const isHtml =
+    request.mode === 'navigate' ||
+    (request.headers.get('accept') && request.headers.get('accept').includes('text/html')) ||
+    url.pathname === '/' ||
+    url.pathname.endsWith('/index.html');
+
+  // A. HTML / Navigation Requests: NETWORK-FIRST
+  if (isHtml) {
+    event.respondWith(
+      fetch(request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const responseClone = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(request, responseClone));
+          }
+          return networkResponse;
+        })
+        .catch(() => {
+          // Offline fallback
+          return caches.match(request).then((cached) => cached || caches.match('/index.html'));
+        })
+    );
+    return;
+  }
+
+  // B. Static Assets: Cache-first with network fallback
   event.respondWith(
     caches.match(request).then((cachedResponse) => {
       if (cachedResponse) {
-        // Fetch in background to revalidate cache
-        fetch(request).then((networkResponse) => {
-          if (networkResponse && networkResponse.status === 200) {
-            caches.open(CACHE_NAME).then((cache) => cache.put(request, networkResponse));
-          }
-        }).catch(() => {});
         return cachedResponse;
       }
 
       return fetch(request).then((networkResponse) => {
-        if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
-          return networkResponse;
+        // Only cache valid 200 responses
+        if (
+          networkResponse &&
+          networkResponse.status === 200 &&
+          (networkResponse.type === 'basic' || networkResponse.type === 'cors')
+        ) {
+          const responseClone = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(request, responseClone);
+          });
         }
-
-        const responseToCache = networkResponse.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(request, responseToCache);
-        });
-
         return networkResponse;
-      }).catch(() => {
-        // Offline fallback if needed
-        if (request.headers.get('accept')?.includes('text/html')) {
-          return caches.match('/index.html');
-        }
       });
     })
   );

@@ -90,30 +90,124 @@
       });
     </script>
     <script>
-      window.addEventListener('error', function (e) {
-        console.error('[Global Crash Caught]:', e);
-        var root = document.getElementById('root');
-        if (root && root.children.length === 0) {
-          var box = document.getElementById('critical-crash-box');
-          if (!box) {
-            box = document.createElement('div');
-            box.id = 'critical-crash-box';
-            box.style.cssText = 'position:fixed;inset:16px;z-index:999999;padding:24px;background:#450a0a;color:#fecaca;border:2px solid #ef4444;border-radius:16px;font-family:monospace;overflow:auto;';
-            document.body.appendChild(box);
-          }
-          box.innerHTML = '<h3 style="margin:0 0 12px 0;color:#f87171;font-size:16px;">⚠️ Gagal Memuat Modul Aplikasi (Script Error):</h3>' +
-            '<div style="background:rgba(0,0,0,0.5);padding:12px;border-radius:8px;font-size:12px;white-space:pre-wrap;margin-bottom:12px;">' + (e.message || e.error || e) + '</div>' +
-            '<div style="font-size:11px;color:#fca5a5;">Sumber: ' + (e.filename || 'unknown') + ':' + (e.lineno || '0') + '</div>' +
-            '<button onclick="location.reload(true)" style="margin-top:16px;padding:8px 16px;background:#ef4444;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:bold;">Muat Ulang Halaman (Hard Refresh)</button>';
+      (function() {
+        var hasRecovered = false;
+        function forceClearAndReload() {
+          if (hasRecovered) return;
+          hasRecovered = true;
+          try {
+            if ('serviceWorker' in navigator) {
+              navigator.serviceWorker.getRegistrations().then(function(regs) {
+                for (var i = 0; i < regs.length; i++) { regs[i].unregister(); }
+              });
+            }
+            if ('caches' in window) {
+              caches.keys().then(function(keys) {
+                Promise.all(keys.map(function(k) { return caches.delete(k); })).then(function() {
+                  window.location.reload(true);
+                });
+              });
+              return;
+            }
+          } catch (e) {}
+          window.location.reload(true);
         }
-      });
+
+        window.__sevnForceReload = forceClearAndReload;
+
+        function showRecoveryUI(detail) {
+          var root = document.getElementById('root');
+          if (root && root.children.length === 0) {
+            var box = document.getElementById('critical-crash-box');
+            if (!box) {
+              box = document.createElement('div');
+              box.id = 'critical-crash-box';
+              box.style.cssText = 'position:fixed;inset:0;z-index:999999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background:#12151d;color:#e2e8f0;font-family:system-ui,sans-serif;text-align:center;';
+              document.body.appendChild(box);
+            }
+            box.innerHTML = '<div style="max-width:380px;background:#1a1f2c;border:1px solid rgba(235,178,59,0.3);border-radius:20px;padding:28px 20px;box-shadow:0 12px 32px rgba(0,0,0,0.6);">' +
+              '<div style="font-size:36px;margin-bottom:12px;">⛩️</div>' +
+              '<h3 style="margin:0 0 8px 0;color:#fcd34d;font-size:16px;font-weight:700;">Pembaruan SevnQuest Terdeteksi</h3>' +
+              '<p style="margin:0 0 20px 0;font-size:12px;color:#94a3b8;line-height:1.6;">Sedang menyinkronkan berkas petualangan versi terbaru agar tidak terjadi blank screen.</p>' +
+              '<button onclick="window.__sevnForceReload()" style="padding:10px 24px;background:linear-gradient(180deg,#ebc351 0%,#b58924 100%);color:#12151d;border:none;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.3);display:inline-flex;align-items:center;gap:6px;">' +
+                '🔄 Muat Ulang Versi Terbaru' +
+              '</button>' +
+              (detail ? '<div style="margin-top:14px;font-size:10px;color:#64748b;font-family:monospace;word-break:break-all;">' + detail + '</div>' : '') +
+            '</div>';
+          }
+        }
+
+        // 1. Capture script resource load failures (e.g. 404 or MIME error on outdated chunk)
+        window.addEventListener('error', function(e) {
+          var target = e.target;
+          var isScriptOrChunkError = (target && target.tagName === 'SCRIPT') ||
+            (e.message && (e.message.indexOf('chunk') !== -1 || e.message.indexOf('Failed to fetch') !== -1 || e.message.indexOf('MIME') !== -1));
+          
+          if (isScriptOrChunkError) {
+            console.warn('[PWA Auto-Recovery] Script chunk load failure caught:', e);
+            var retryKey = 'sevn_pwa_auto_retry';
+            var last = sessionStorage.getItem(retryKey);
+            if (!last || Date.now() - Number(last) > 15000) {
+              sessionStorage.setItem(retryKey, String(Date.now()));
+              forceClearAndReload();
+              return;
+            }
+            showRecoveryUI(e.message || 'Gagal memuat modul JavaScript aplikasi');
+          }
+        }, true);
+
+        // 2. Capture dynamic import rejections
+        window.addEventListener('unhandledrejection', function(e) {
+          var reason = e.reason || '';
+          var msg = (typeof reason === 'object' ? reason.message : String(reason)) || '';
+          if (msg.indexOf('dynamically imported module') !== -1 || msg.indexOf('chunk') !== -1 || msg.indexOf('Failed to fetch') !== -1) {
+            console.warn('[PWA Auto-Recovery] Chunk rejection caught:', msg);
+            var retryKey = 'sevn_pwa_auto_retry';
+            var last = sessionStorage.getItem(retryKey);
+            if (!last || Date.now() - Number(last) > 15000) {
+              sessionStorage.setItem(retryKey, String(Date.now()));
+              forceClearAndReload();
+              return;
+            }
+            showRecoveryUI(msg);
+          }
+        });
+
+        // 3. Mount Watchdog: if #root is still completely empty after 4.5 seconds, provide recovery
+        setTimeout(function() {
+          var root = document.getElementById('root');
+          if (root && root.children.length === 0) {
+            console.warn('[PWA Watchdog] #root is empty after 4.5s, triggering recovery');
+            var retryKey = 'sevn_watchdog_retry';
+            var last = sessionStorage.getItem(retryKey);
+            if (!last || Date.now() - Number(last) > 20000) {
+              sessionStorage.setItem(retryKey, String(Date.now()));
+              forceClearAndReload();
+              return;
+            }
+            showRecoveryUI('Modul utama belum terpasang.');
+          }
+        }, 4500);
+      })();
     </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <script>
       if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
         window.addEventListener('load', function() {
-          navigator.serviceWorker.register('/sw.js').catch(function(err) {
+          navigator.serviceWorker.register('/sw.js').then(function(reg) {
+            reg.update();
+            reg.addEventListener('updatefound', function() {
+              var newWorker = reg.installing;
+              if (newWorker) {
+                newWorker.addEventListener('statechange', function() {
+                  if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                    newWorker.postMessage({ type: 'SKIP_WAITING' });
+                  }
+                });
+              }
+            });
+          }).catch(function(err) {
             console.debug('ServiceWorker registration error:', err);
           });
         });
