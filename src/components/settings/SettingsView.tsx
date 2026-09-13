@@ -407,112 +407,145 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       </div>
 
       {/* Learning Preferences */}
-      <div className="panel p-4 sm:p-5 space-y-3.5 shadow-md">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-text-secondary flex items-center gap-1.5 font-heading">
-          <BookOpen className="w-4 h-4 text-indigo" /> Pengaturan Belajar
+      <div className="panel p-4 sm:p-5 space-y-4 shadow-md">
+        <h3 className="text-xs font-bold uppercase tracking-wider text-text-secondary flex items-center gap-2 font-mono">
+          <BookOpen className="w-4 h-4 text-indigo" />
+          <span>Pengaturan Belajar</span>
         </h3>
 
-        <div className="flex items-center justify-between">
-          <div>
-            <h4 className="text-xs sm:text-sm font-bold text-text-primary font-heading">Tema Visual</h4>
-            <p className="text-xs text-text-secondary">Pilih Mode Gelap (Indigo Malam) atau Terang (Washi Hangat)</p>
+        <div className="divide-y divide-border-subtle">
+          {/* 1. Tema Visual */}
+          <div className="py-3.5 first:pt-1 last:pb-0 flex items-center justify-between gap-3">
+            <div className="min-w-0 flex-1 pr-3">
+              <h4 className="text-sm font-bold text-text-primary font-heading flex items-center gap-2 tracking-normal">
+                <Sun className="w-4 h-4 text-indigo shrink-0" />
+                <span>Tema Visual</span>
+              </h4>
+              <p className="text-xs text-text-secondary mt-0.5 leading-relaxed">
+                Pilih Mode Gelap (Indigo Malam) atau Terang (Washi Hangat)
+              </p>
+            </div>
+            <div className="shrink-0 inline-flex items-center p-1 rounded-xl bg-surface-inset border border-border-subtle shadow-inner">
+              <button
+                type="button"
+                onClick={() => {
+                  onUpdateSettings({ theme: 'dark' });
+                  playSound('click', stats.soundEnabled);
+                }}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all inline-flex items-center gap-1.5 whitespace-nowrap cursor-pointer select-none ${
+                  stats.theme !== 'light'
+                    ? 'bg-surface-elevated text-gold border border-gold/40 shadow-[0_2px_4px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.12)]'
+                    : 'text-text-muted hover:text-text-primary'
+                }`}
+              >
+                <Moon className="w-3.5 h-3.5" />
+                <span>Gelap</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  onUpdateSettings({ theme: 'light' });
+                  playSound('click', stats.soundEnabled);
+                }}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all inline-flex items-center gap-1.5 whitespace-nowrap cursor-pointer select-none ${
+                  stats.theme === 'light'
+                    ? 'bg-surface-card text-indigo border border-border-primary/80 shadow-[0_2px_4px_var(--neu-d),inset_0_1px_0_rgba(255,255,255,0.95)]'
+                    : 'text-text-muted hover:text-text-primary'
+                }`}
+              >
+                <Sun className="w-3.5 h-3.5" />
+                <span>Terang</span>
+              </button>
+            </div>
           </div>
-          <div className="flex items-center gap-1.5 p-1 rounded-lg bg-surface-inset border border-border-subtle">
+
+          {/* 2. Bantuan Furigana & Kanji */}
+          <div className="py-3.5 first:pt-1 last:pb-0 flex items-center justify-between gap-3">
+            <div className="min-w-0 flex-1 pr-3">
+              <h4 className="text-sm font-bold text-text-primary font-heading flex items-center gap-2 tracking-normal">
+                <BookOpen className="w-4 h-4 text-indigo shrink-0" />
+                <span>Bantuan Furigana & Kanji</span>
+              </h4>
+              <p className="text-xs text-text-secondary mt-0.5 leading-relaxed">
+                Tampilkan cara baca Hiragana di atas huruf Kanji
+              </p>
+            </div>
             <button
               type="button"
               onClick={() => {
-                onUpdateSettings({ theme: 'dark' });
+                const isCurrentlyActive = stats.furiganaEnabled ?? true;
+                onUpdateSettings({ furiganaEnabled: !isCurrentlyActive });
                 playSound('click', stats.soundEnabled);
               }}
-              className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all flex items-center gap-1.5 ${
-                stats.theme !== 'light'
-                  ? 'bg-surface-elevated text-indigo border border-indigo/40 shadow-sm'
-                  : 'text-text-muted hover:text-text-primary'
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all inline-flex items-center gap-2 shrink-0 select-none cursor-pointer border active:translate-y-[1px] ${
+                (stats.furiganaEnabled ?? true)
+                  ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-700 dark:text-emerald-400 shadow-[0_2px_4px_var(--neu-d),inset_0_1px_0_rgba(255,255,255,0.7)]'
+                  : 'bg-surface-inset text-text-muted border-border-subtle hover:text-text-primary hover:border-border-primary'
               }`}
+              title="Klik untuk menyalakan atau mematikan Furigana"
             >
-              <Moon className="w-3.5 h-3.5" /> Gelap
+              <span
+                className={`w-2 h-2 rounded-full transition-colors ${
+                  (stats.furiganaEnabled ?? true)
+                    ? 'bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.8)]'
+                    : 'bg-text-muted/40'
+                }`}
+              />
+              <span className="whitespace-nowrap">{(stats.furiganaEnabled ?? true) ? 'Aktif' : 'Nonaktif'}</span>
             </button>
+          </div>
+
+          {/* 3. Panduan Awal (Tutorial) */}
+          <div className="py-3.5 first:pt-1 last:pb-0 flex items-center justify-between gap-3">
+            <div className="min-w-0 flex-1 pr-3">
+              <h4 className="text-sm font-bold text-text-primary font-heading flex items-center gap-2 tracking-normal">
+                <Sparkles className="w-4 h-4 text-gold shrink-0" />
+                <span>Panduan Awal (Tutorial)</span>
+              </h4>
+              <p className="text-xs text-text-secondary mt-0.5 leading-relaxed">
+                Ulangi tur panduan spotlight interaktif
+              </p>
+            </div>
             <button
               type="button"
               onClick={() => {
-                onUpdateSettings({ theme: 'light' });
                 playSound('click', stats.soundEnabled);
+                if (onReplayTutorial) onReplayTutorial();
               }}
-              className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all flex items-center gap-1.5 ${
-                stats.theme === 'light'
-                  ? 'bg-surface-elevated text-indigo border border-indigo/40 shadow-sm'
-                  : 'text-text-muted hover:text-text-primary'
-              }`}
+              className="px-3.5 py-1.5 rounded-xl text-xs font-bold inline-flex items-center gap-1.5 shrink-0 whitespace-nowrap select-none transition-all active:translate-y-[1px] text-amber-900 dark:text-gold border border-gold/40 hover:border-gold bg-surface-card hover:bg-gold/10 shadow-[0_2px_4px_var(--neu-d),inset_0_1px_0_rgba(255,255,255,0.9)] dark:shadow-[0_2px_4px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.1)] cursor-pointer"
             >
-              <Sun className="w-3.5 h-3.5" /> Terang
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>Ulangi Tur</span>
             </button>
           </div>
-        </div>
 
-        <div className="flex items-center justify-between pt-3 border-t border-border-subtle">
-          <div>
-            <h4 className="text-xs sm:text-sm font-bold text-text-primary font-heading">Bantuan Furigana & Kanji</h4>
-            <p className="text-xs text-text-secondary">Bantuan cara baca Hiragana di atas kanji</p>
+          {/* 4. Aplikasi Web (PWA) */}
+          <div className="py-3.5 first:pt-1 last:pb-0 flex items-center justify-between gap-3">
+            <div className="min-w-0 flex-1 pr-3">
+              <h4 className="text-sm font-bold text-text-primary font-heading flex items-center gap-2 tracking-normal">
+                <Smartphone className="w-4 h-4 text-indigo shrink-0" />
+                <span>Aplikasi Web (PWA)</span>
+              </h4>
+              <p className="text-xs text-text-secondary mt-0.5 leading-relaxed">
+                Pasang di layar utama HP / desktop tanpa bar URL
+              </p>
+            </div>
+            {isStandalone ? (
+              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-700 dark:text-emerald-400 font-bold text-xs shrink-0 whitespace-nowrap shadow-sm">
+                <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                <span>Terpasang</span>
+              </span>
+            ) : (
+              <button
+                type="button"
+                onClick={handleInstallClick}
+                className="px-3.5 py-1.5 rounded-xl text-xs font-bold inline-flex items-center gap-1.5 shrink-0 whitespace-nowrap select-none transition-all active:translate-y-[1px] text-indigo border border-indigo/40 hover:border-indigo bg-surface-card hover:bg-indigo/10 shadow-[0_2px_4px_var(--neu-d),inset_0_1px_0_rgba(255,255,255,0.9)] dark:shadow-[0_2px_4px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.1)] cursor-pointer"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>Pasang App</span>
+              </button>
+            )}
           </div>
-          <span className="px-2.5 py-1 rounded-full bg-state-success/15 border border-state-success/30 text-state-success font-bold text-xs">
-            Aktif
-          </span>
-        </div>
-
-        <div className="flex items-center justify-between pt-3 border-t border-border-subtle">
-          <div>
-            <h4 className="text-xs sm:text-sm font-bold text-text-primary font-heading">Kurikulum Petualangan SevnQuest</h4>
-            <p className="text-xs text-text-secondary">5 Alam Petualangan & 8.300+ Kosakata</p>
-          </div>
-          <span className="px-2.5 py-1 rounded-full bg-surface-inset border border-border-subtle text-text-secondary font-mono text-xs">
-            Kana - N1 + Kaigo
-          </span>
-        </div>
-
-        <div className="flex items-center justify-between pt-3 border-t border-border-subtle">
-          <div>
-            <h4 className="text-xs sm:text-sm font-bold text-text-primary font-heading flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-gold" />
-              <span>Panduan Awal (Tutorial)</span>
-            </h4>
-            <p className="text-xs text-text-secondary">Ulangi tur panduan spotlight interaktif</p>
-          </div>
-          <button
-            type="button"
-            onClick={() => {
-              playSound('click', stats.soundEnabled);
-              if (onReplayTutorial) onReplayTutorial();
-            }}
-            className="btn btn-pill text-xs gap-1.5 text-gold border-gold/40 hover:bg-gold/10"
-          >
-            <RotateCcw className="w-3.5 h-3.5" />
-            <span>Ulangi Tur</span>
-          </button>
-        </div>
-
-        <div className="flex items-center justify-between pt-3 border-t border-border-subtle">
-          <div>
-            <h4 className="text-xs sm:text-sm font-bold text-text-primary font-heading flex items-center gap-1.5">
-              <Smartphone className="w-3.5 h-3.5 text-indigo" />
-              <span>Aplikasi Web (PWA)</span>
-            </h4>
-            <p className="text-xs text-text-secondary">Pasang di layar utama HP / desktop tanpa bar URL</p>
-          </div>
-          {isStandalone ? (
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-state-success/15 border border-state-success/30 text-state-success font-bold text-xs font-heading shadow-sm">
-              <Check className="w-3.5 h-3.5 stroke-[2.5]" />
-              <span>Terpasang</span>
-            </span>
-          ) : (
-            <button
-              type="button"
-              onClick={handleInstallClick}
-              className="btn btn-pill text-xs gap-1.5 text-indigo border-indigo/40 hover:bg-indigo/10 py-1.5 px-3.5 flex items-center font-bold shadow-sm transition-all active:scale-95 cursor-pointer"
-            >
-              <Download className="w-3.5 h-3.5" />
-              <span>Pasang App</span>
-            </button>
-          )}
         </div>
       </div>
 

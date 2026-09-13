@@ -447,25 +447,71 @@ html.theme-light,
     font-size: 11px;
   }
 
-  /* Light mode: transform buttons and pills from dark/purple into cream washi skeuomorphic elements */
-  html.theme-light .btn-pill,
-  .theme-light .btn-pill {
-    background: var(--color-surface-inset);
+  /* Light mode: interactive pill buttons should be RAISED tactile skeuomorphic buttons, never sunken slots */
+  html.theme-light button.btn-pill,
+  html.theme-light a.btn-pill,
+  html.theme-light .btn.btn-pill,
+  .theme-light button.btn-pill,
+  .theme-light a.btn-pill,
+  .theme-light .btn.btn-pill {
+    background: var(--color-surface-card);
     color: var(--text-primary);
-    border: 1px solid var(--color-border-subtle);
+    border: 1px solid var(--color-border-primary);
     box-shadow:
-      inset 1.5px 1.5px 3.5px var(--neu-d),
-      inset -1.5px -1.5px 3.5px var(--neu-l);
+      2px 2px 5px var(--neu-d),
+      -1px -1px 3px var(--neu-l),
+      inset 0 1px 0 rgba(255, 255, 255, 0.85);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
   }
 
-  html.theme-light .btn:not(.btn-cta):not(.btn-pill):not(.btn-danger),
-  .theme-light .btn:not(.btn-cta):not(.btn-pill):not(.btn-danger) {
+  html.theme-light button.btn-pill:hover,
+  html.theme-light a.btn-pill:hover,
+  html.theme-light .btn.btn-pill:hover,
+  .theme-light button.btn-pill:hover,
+  .theme-light a.btn-pill:hover,
+  .theme-light .btn.btn-pill:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      3px 3px 8px var(--neu-d),
+      -2px -2px 5px var(--neu-l),
+      inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    filter: brightness(1.02);
+  }
+
+  html.theme-light button.btn-pill:active,
+  html.theme-light a.btn-pill:active,
+  html.theme-light .btn.btn-pill:active,
+  .theme-light button.btn-pill:active,
+  .theme-light a.btn-pill:active,
+  .theme-light .btn.btn-pill:active {
+    transform: translateY(1px);
+    box-shadow:
+      inset 1.5px 1.5px 3.5px var(--neu-d),
+      inset -1px -1px 2px var(--neu-l);
+  }
+
+  /* Static non-interactive pill badges: subtle clean washi pill */
+  html.theme-light span.btn-pill,
+  html.theme-light div.btn-pill:not(button):not(a),
+  .theme-light span.btn-pill,
+  .theme-light div.btn-pill:not(button):not(a) {
+    background: var(--color-surface-inset);
+    color: var(--text-secondary);
+    border: 1px solid var(--color-border-subtle);
+    box-shadow:
+      inset 1px 1px 3px var(--neu-d),
+      inset -1px -1px 3px var(--neu-l);
+  }
+
+  html.theme-light .btn:not(.btn-cta):not(.btn-danger),
+  .theme-light .btn:not(.btn-cta):not(.btn-danger) {
     background: var(--color-surface-card);
     color: var(--text-primary);
     border: 1px solid var(--color-border-primary);
     box-shadow:
       3px 3px 8px var(--neu-d),
-      -3px -3px 8px var(--neu-l);
+      -3px -3px 8px var(--neu-l),
+      inset 0 1px 0 rgba(255, 255, 255, 0.85);
   }
 
   /* 4.3 World Gate Skeuomorphic Elements (Gerbang Dunia Hub) */
