@@ -189,27 +189,7 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
           </div>
 
           {/* Question Box */}
-          <div className="space-y-3 text-center py-5 bg-surface-inset/60 rounded-2xl border border-border-subtle p-4">
-            <div className="text-xs text-text-secondary font-medium flex items-center justify-center gap-1.5 flex-wrap">
-              <span>Ubah kata kerja</span>
-              {currentQuestion.targetVerb ? (
-                <span className="inline-flex items-center px-2 py-0.5 rounded-lg bg-surface-card border border-border-subtle text-text-primary font-bold">
-                  <RubyText
-                    japanese={currentQuestion.targetVerb.kanji}
-                    reading={currentQuestion.targetVerb.reading}
-                    className="text-xs font-bold font-jp"
-                  />
-                </span>
-              ) : null}
-              <span>
-                {currentQuestion.targetVerb ? `(${currentQuestion.targetVerb.meaningId})` : ''} ke{' '}
-                <strong className="text-indigo font-bold underline decoration-indigo/40 decoration-2 underline-offset-2">
-                  {currentQuestion.targetForm?.friendlyTarget || currentQuestion.targetForm?.name || 'bentuk target'}
-                </strong>
-                !
-              </span>
-            </div>
-
+          <div className="space-y-4 text-center py-6 bg-surface-inset/60 rounded-2xl border border-border-subtle p-5">
             <div className="flex items-center justify-center gap-3 py-1">
               <div className="text-2xl sm:text-4xl font-black text-text-primary flex items-center justify-center gap-2 flex-wrap">
                 <span className="inline-flex items-center">
