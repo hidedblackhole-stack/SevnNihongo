@@ -111,7 +111,8 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
         translation: ex.meaningId,
         options: shuffledOptions,
         correctIndex,
-        explanation: `${ex.japanese}\n\n=> ${item.title}: ${item.meaningId}`
+        explanation: `${ex.japanese}\n\n=> ${item.title}: ${item.meaningId}`,
+        level: item.baseLevel || item.level || 'N3',
       });
     }
 
@@ -124,6 +125,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
         <QuizEngine
           title={activeQuizSet.title}
           questions={activeQuestions}
+          level={activeQuizSet.baseLevel || activeQuizSet.level || 'N3'}
           playerMp={playerMp}
           playerInt={playerInt}
           onUseMp={onUseMp}

@@ -13,6 +13,7 @@ import { sendScoreEvent } from '../../lib/supabase';
 interface QuizEngineProps {
   title: string;
   questions: Question[];
+  level?: string;
   onComplete: (score: number, total: number, expGained: number, goldGained: number) => void;
   onExit: () => void;
   baseExpPerQuestion?: number;
@@ -28,6 +29,7 @@ interface QuizEngineProps {
 export const QuizEngine: React.FC<QuizEngineProps> = ({
   title,
   questions: propQuestions,
+  level,
   onComplete,
   onExit,
   baseExpPerQuestion = 15,
@@ -114,7 +116,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
       setHiddenOptions([]);
     } else {
       setIsFinished(true);
-      const sampleLevel = (currentQ as any)?.level || (questions[0] as any)?.level || undefined;
+      const sampleLevel = level || (currentQ as any)?.level || (questions[0] as any)?.level || 'N3';
       const quizReward = calculateQuizReward(sampleLevel, correctCount, totalQ, playerInt);
       const expGained = quizReward.totalExpGained;
       const goldGained = quizReward.goldGained;
@@ -154,7 +156,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
 
   if (isFinished) {
     const isSuccess = correctCount >= Math.ceil(totalQ * 0.6);
-    const sampleLevel = (currentQ as any)?.level || (questions[0] as any)?.level || undefined;
+    const sampleLevel = level || (currentQ as any)?.level || (questions[0] as any)?.level || 'N3';
     const quizReward = calculateQuizReward(sampleLevel, correctCount, totalQ, playerInt);
     const expGained = quizReward.totalExpGained;
 

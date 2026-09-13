@@ -230,31 +230,80 @@ export function calculateFlashcardReward(baseExp: number, _isMastered: boolean):
   return { expGained: baseExp, goldGained: 0 };
 }
 
-/**
- * Quiz & Question Bank reward calculation based on component Base EXP.
- */
-export function calculateQuizReward(options: {
+export interface QuizRewardOptions {
   level?: string;
-  totalQuestions: number;
-  correctCount: number;
-}): {
+  totalQuestions?: number;
+  correctCount?: number;
+  playerInt?: number;
+}
+
+export interface QuizRewardResult {
   expGained: number;
+  totalExpGained: number;
   goldGained: number;
   accuracyPercentage: number;
   accuracyBonusMultiplier: number;
-} {
-  const { level = 'N5', totalQuestions, correctCount } = options;
-  const basePerQuestion = QUIZ_LEVEL_BASE_EXP[level.toUpperCase()] || QUIZ_LEVEL_BASE_EXP.N5;
+}
 
-  const accuracy = totalQuestions > 0 ? correctCount / totalQuestions : 0;
+/**
+ * Quiz & Question Bank reward calculation based on JLPT level and accuracy.
+ * Supports both object argument and legacy positional arguments:
+ * calculateQuizReward({ level, totalQuestions, correctCount })
+ * calculateQuizReward(level, correctCount, totalQuestions, playerInt)
+ */
+export function calculateQuizReward(
+  optionsOrLevel?: QuizRewardOptions | string,
+  maybeCorrectCount?: number,
+  maybeTotalQuestions?: number,
+  maybePlayerInt?: number
+): QuizRewardResult {
+  let level = 'N5';
+  let totalQuestions = 0;
+  let correctCount = 0;
+  let playerInt = 0;
+
+  if (typeof optionsOrLevel === 'object' && optionsOrLevel !== null) {
+    level = optionsOrLevel.level || 'N5';
+    totalQuestions = optionsOrLevel.totalQuestions ?? 0;
+    correctCount = optionsOrLevel.correctCount ?? 0;
+    playerInt = optionsOrLevel.playerInt ?? 0;
+  } else {
+    // Positional arguments: (level, correctCount, totalQuestions, playerInt)
+    if (typeof optionsOrLevel === 'string') {
+      level = optionsOrLevel;
+    }
+    correctCount = maybeCorrectCount ?? 0;
+    totalQuestions = maybeTotalQuestions ?? 0;
+    playerInt = maybePlayerInt ?? 0;
+  }
+
+  const cleanLevel = (level || 'N5').toUpperCase();
+  const basePerQuestion = QUIZ_LEVEL_BASE_EXP[cleanLevel] || QUIZ_LEVEL_BASE_EXP.N5;
+
+  const accuracy = totalQuestions > 0 ? Math.min(1, Math.max(0, correctCount / totalQuestions)) : 0;
   const accuracyPercentage = Math.round(accuracy * 100);
 
-  const expGained = correctCount * basePerQuestion;
+  let accuracyBonusMultiplier = 1.0;
+  if (accuracy === 1.0) {
+    accuracyBonusMultiplier = 1.3; // +30% Perfect Score
+  } else if (accuracy >= 0.8) {
+    accuracyBonusMultiplier = 1.1; // +10% High Mastery
+  } else if (accuracy < 0.6) {
+    accuracyBonusMultiplier = 0.8;
+  }
+
+  // Optional INT stat bonus (+0.5% exp per INT point)
+  const intMultiplier = 1 + (Math.max(0, playerInt) * 0.005);
+
+  const baseTotal = correctCount * basePerQuestion;
+  const expGained = Math.max(10, Math.round(baseTotal * accuracyBonusMultiplier * intMultiplier));
+  const goldGained = Math.max(5, Math.round(expGained * 0.5));
 
   return {
     expGained,
-    goldGained: 0,
+    totalExpGained: expGained,
+    goldGained,
     accuracyPercentage,
-    accuracyBonusMultiplier: 1.0,
+    accuracyBonusMultiplier,
   };
 }
