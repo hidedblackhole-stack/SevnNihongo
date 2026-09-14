@@ -14,7 +14,8 @@ import {
   Sparkles,
   Plus,
   Star,
-  Sliders
+  Sliders,
+  Swords
 } from 'lucide-react';
 import { StageClearData, UserDeck } from '../../types/rpg';
 import { Stage, WorldInfo, ItemMasteryRecord } from '../../types/content';
@@ -33,12 +34,17 @@ import { ensureUserDecks } from '../../utils/decks';
 import { SelectDeckForWorldModal } from '../curriculum/SelectDeckForWorldModal';
 import { CurriculumConfigModal } from '../curriculum/CurriculumConfigModal';
 import { CustomWorldView } from '../curriculum/CustomWorldView';
+import { DungeonType, DungeonPayload, DungeonConfig, generateDungeonSession } from '../../utils/dungeonGenerator';
+import { DungeonPortalHub } from '../dungeon/DungeonPortalHub';
+import { DungeonSetupModal } from '../dungeon/DungeonSetupModal';
+import { DungeonSessionRunner } from '../dungeon/DungeonSessionRunner';
 
 export type WorldNavView = 'world_hub' | 'level_hub' | 'maps' | 'dungeon';
 
 interface WorldViewProps {
   currentMapId: string;
   currentWorldId: string;
+  resetSignal?: number;
   stageProgress: Record<string, StageClearData>;
   playerLevel: number;
   onSelectStage: (stage: Stage) => void;
@@ -85,6 +91,7 @@ const LEVEL_CONFIG: Record<string, { label: string; color: string }> = {
 
 export const WorldView: React.FC<WorldViewProps> = ({
   currentWorldId,
+  resetSignal,
   stageProgress = {},
   onSelectStage,
   onSelectWorld,
@@ -105,14 +112,54 @@ export const WorldView: React.FC<WorldViewProps> = ({
   onStartRemediationRecall,
   itemMastery = {},
   furiganaEnabled = true,
+  navView,
+  onNavViewChange,
 }) => {
   const [selectedWorldId, setSelectedWorldId] = useState<string | null>(() => currentWorldId || null);
 
   useEffect(() => {
     if (currentWorldId !== undefined) {
       setSelectedWorldId(currentWorldId || null);
+      if (!currentWorldId) {
+        setActiveCustomWorldDeckId(null);
+      }
     }
   }, [currentWorldId]);
+
+  // Reset to initial World Selection screen when navbar triggers reset
+  const [worldMode, setWorldMode] = useState<'training' | 'dungeon'>(() => {
+    return navView === 'dungeon' ? 'dungeon' : 'training';
+  });
+  const [setupDungeonType, setSetupDungeonType] = useState<DungeonType | null>(null);
+  const [activeDungeonPayload, setActiveDungeonPayload] = useState<DungeonPayload | null>(null);
+
+  useEffect(() => {
+    if (navView === 'dungeon') {
+      setWorldMode('dungeon');
+    } else if (navView === 'world_hub') {
+      setWorldMode('training');
+    }
+  }, [navView]);
+
+  useEffect(() => {
+    if (resetSignal !== undefined && resetSignal > 0) {
+      setSelectedWorldId(null);
+      setActiveCustomWorldDeckId(null);
+      setDeckForCurriculumConfig(null);
+      setIsSelectDeckModalOpen(false);
+      setWorldMode('training');
+      setSetupDungeonType(null);
+      setActiveDungeonPayload(null);
+    }
+  }, [resetSignal]);
+
+  const handleSwitchMode = (mode: 'training' | 'dungeon') => {
+    playSound('click', soundEnabled);
+    setWorldMode(mode);
+    if (onNavViewChange) {
+      onNavViewChange(mode === 'dungeon' ? 'dungeon' : 'world_hub');
+    }
+  };
 
   // Custom World & Curriculum States
   const [isSelectDeckModalOpen, setIsSelectDeckModalOpen] = useState(false);
@@ -213,31 +260,77 @@ export const WorldView: React.FC<WorldViewProps> = ({
       {/* 1. HEADER UTAMA: WORLD */}
       <div className="panel p-4 sm:p-5 rounded-2xl sm:rounded-3xl shadow-md border border-border-subtle flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3.5">
-          <div className="w-11 h-11 rounded-2xl bg-gold/15 text-gold border border-gold/30 flex items-center justify-center shrink-0 shadow-sm">
-            <Compass className="w-6 h-6" />
+          <div className={`w-11 h-11 rounded-2xl ${worldMode === 'dungeon' ? 'bg-crimson/15 text-crimson border-crimson/30' : 'bg-gold/15 text-gold border-gold/30'} border flex items-center justify-center shrink-0 shadow-sm`}>
+            {worldMode === 'dungeon' ? <Swords className="w-6 h-6" /> : <Compass className="w-6 h-6" />}
           </div>
           <div>
             <h1 className="text-xl sm:text-2xl font-bold text-text-primary font-heading tracking-wide">
-              Petualangan World
+              {worldMode === 'dungeon' ? 'Petualangan Dungeon' : 'Petualangan World'}
             </h1>
             <p className="text-xs sm:text-sm text-text-secondary font-body">
-              Pilih jalur petualangan dan taklukkan stage pembelajaran terstruktur dari Kana hingga N1.
+              {worldMode === 'dungeon'
+                ? 'Latihan bebas prosedural: menulis kanji, flashcard kilat, susun kalimat J-LIE, konjugasi, dan arena kuis.'
+                : 'Pilih jalur petualangan dan taklukkan stage pembelajaran terstruktur dari Kana hingga N1.'}
             </p>
           </div>
         </div>
 
         {/* TOMBOL: BUAT KUSTOM WORLD */}
+        {worldMode === 'training' && (
+          <button
+            type="button"
+            onClick={handleOpenCreateCustomWorld}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold font-heading bg-indigo hover:bg-indigo/90 text-white shadow-sm border border-indigo/30 transition-colors self-stretch sm:self-auto justify-center"
+            title="Buat Kustom World baru dari materi Buku Saku"
+          >
+            <Sparkles className="w-4 h-4 text-amber-300" />
+            <span>Buat Kustom World</span>
+            <ChevronRight className="w-3.5 h-3.5" />
+          </button>
+        )}
+      </div>
+
+      {/* 2. MODE SWITCHER BAR: TRAINING VS DUNGEON */}
+      <div className="panel p-1.5 rounded-2xl bg-surface-inset border border-border-subtle flex items-center gap-2 shadow-inner">
         <button
           type="button"
-          onClick={handleOpenCreateCustomWorld}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold font-heading bg-indigo hover:bg-indigo/90 text-white shadow-sm border border-indigo/30 transition-colors self-stretch sm:self-auto justify-center"
-          title="Buat Kustom World baru dari materi Buku Saku"
+          onClick={() => handleSwitchMode('training')}
+          className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold font-heading transition-all ${
+            worldMode === 'training'
+              ? 'bg-surface-card text-text-primary shadow-sm border border-border-subtle'
+              : 'text-text-muted hover:text-text-primary'
+          }`}
         >
-          <Sparkles className="w-4 h-4 text-amber-300" />
-          <span>Buat Kustom World</span>
-          <ChevronRight className="w-3.5 h-3.5" />
+          <Compass className={`w-4 h-4 ${worldMode === 'training' ? 'text-gold' : ''}`} />
+          <span>Mode Training (Kurikulum)</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => handleSwitchMode('dungeon')}
+          className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold font-heading transition-all ${
+            worldMode === 'dungeon'
+              ? 'bg-surface-card text-crimson shadow-sm border border-crimson/30'
+              : 'text-text-muted hover:text-text-primary'
+          }`}
+        >
+          <Swords className={`w-4 h-4 ${worldMode === 'dungeon' ? 'text-crimson' : ''}`} />
+          <span>Mode Dungeon (Latihan Bebas)</span>
+          <span className="px-1.5 py-0.5 rounded text-[9px] font-mono bg-crimson/20 text-crimson font-black uppercase tracking-wider">
+            Baru
+          </span>
         </button>
       </div>
+
+      {worldMode === 'dungeon' ? (
+        /* VIEW MODE DUNGEON: PORTAL HUB */
+        <DungeonPortalHub
+          onSelectDungeon={(type) => {
+            setSetupDungeonType(type);
+          }}
+          soundEnabled={soundEnabled}
+        />
+      ) : (
 
       <>
         {selectedWorld ? (
@@ -591,6 +684,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
           </div>
         )}
       </>
+      )}
 
       {/* MODAL 1: PILIH DECK DARI BUKU SAKU */}
       <SelectDeckForWorldModal
@@ -615,6 +709,40 @@ export const WorldView: React.FC<WorldViewProps> = ({
           existingConfig={customCurriculums[deckForCurriculumConfig.id]?.config}
           onSave={handleSaveCurriculum}
           onClose={() => setDeckForCurriculumConfig(null)}
+          soundEnabled={soundEnabled}
+        />
+      )}
+
+      {/* MODAL 3: DUNGEON SETUP MODAL */}
+      {setupDungeonType && (
+        <DungeonSetupModal
+          isOpen={true}
+          dungeonType={setupDungeonType}
+          onClose={() => setSetupDungeonType(null)}
+          onStartDungeon={(cfg) => {
+            try {
+              const payload = generateDungeonSession(cfg);
+              setSetupDungeonType(null);
+              setActiveDungeonPayload(payload);
+            } catch (err) {
+              console.error('Failed to start dungeon session:', err);
+            }
+          }}
+          soundEnabled={soundEnabled}
+        />
+      )}
+
+      {/* MODAL 4: DUNGEON SESSION RUNNER */}
+      {activeDungeonPayload && (
+        <DungeonSessionRunner
+          payload={activeDungeonPayload}
+          onClose={() => setActiveDungeonPayload(null)}
+          onRestart={(cfg) => {
+            const payload = generateDungeonSession(cfg);
+            setActiveDungeonPayload(payload);
+          }}
+          onRewardPlayer={onRewardPlayer}
+          onCompleteStudyItem={onCompleteStudyItem}
           soundEnabled={soundEnabled}
         />
       )}

@@ -69,28 +69,33 @@ export const preloadStrokeData = (word: string) => {
 };
 
 export interface KanjiWritingCanvasProps {
-  kanjiChar: string;
+  kanjiChar?: string;
+  character?: string; // Backwards compatible alias
   level?: string;
   totalSheets?: number; // default: 1 (sandbox mode)
   onCompleteSheet?: (sheetNumber: number, score: number, reward?: WritingRewardResult) => void;
   onFinish?: (reward?: WritingRewardResult) => void; // Callback when sheet is completed and user finishes
+  onComplete?: () => void; // Backwards compatible alias for onFinish
   soundEnabled?: boolean;
   autoAdvance?: boolean;
   leniency?: number;
   averageDistanceThreshold?: number;
   strokeCount?: number;
   meaning?: string;
-  kunyomi?: string;
-  onyomi?: string;
+  meaningId?: string; // Backwards compatible alias
+  kunyomi?: string | string[];
+  onyomi?: string | string[];
   showStopwatch?: boolean; // Stopwatch on writing canvas (default: true)
 }
 
 export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
-  kanjiChar,
+  kanjiChar: rawKanjiChar,
+  character,
   level,
   totalSheets = 1,
   onCompleteSheet,
   onFinish,
+  onComplete,
   soundEnabled = true,
   autoAdvance = false,
   leniency,
@@ -98,6 +103,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
   strokeCount,
   showStopwatch = true,
 }) => {
+  const kanjiChar = rawKanjiChar || character || '';
   const isKana = kanjiChar.length > 0 && kanjiChar.charCodeAt(0) >= 0x3040 && kanjiChar.charCodeAt(0) <= 0x30ff;
   // Dynamic calibration: Kana has sweeping curves (e.g. stroke 2 of か & カ) requiring ~400 threshold and 1.05 leniency
   // to avoid false rejections, while Kanji uses 360 threshold and 1.0 leniency.
@@ -266,6 +272,10 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
   // 2. HanziWriter Setup (Layer Interaktif)
   useEffect(() => {
     if (!writerContainerRef.current) return;
+    if (!kanjiChar) {
+      setIsLoading(false);
+      return;
+    }
     if (canvasSize === 0) return;
 
     writerContainerRef.current.innerHTML = '';

@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { AnimatePresence } from 'motion/react';
 import { Search, Filter, ChevronDown, Bookmark, LayoutGrid, List, BookOpen, Zap } from 'lucide-react';
 import { ScrollIcon } from '../ui/EngravingIcons';
 import { BUNPOU_DATABASE } from '../../data/bunpou';
@@ -476,19 +477,21 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
       )}
 
       {/* Detail Modal */}
-      {selectedItem && (
-        <BunpouDetailModal
-          item={selectedItem}
-          onClose={() => setSelectedItem(null)}
-          soundEnabled={soundEnabled}
-          isBookmarked={Boolean(isItemBookmarked(userDecks, selectedItem.id, 'bunpou'))}
-          onToggleBookmark={onToggleBookmark ? () => onToggleBookmark(selectedItem.id, 'bunpou') : undefined}
-          userDecks={userDecks}
-          onToggleDeckItem={onToggleBookmark && selectedItem ? (deckId) => onToggleBookmark(selectedItem.id, 'bunpou', undefined, deckId) : undefined}
-          onRewardPlayer={onRewardPlayer}
-          onCompleteStudyItem={onCompleteStudyItem}
-        />
-      )}
+      <AnimatePresence>
+        {selectedItem && (
+          <BunpouDetailModal
+            item={selectedItem}
+            onClose={() => setSelectedItem(null)}
+            soundEnabled={soundEnabled}
+            isBookmarked={Boolean(isItemBookmarked(userDecks, selectedItem.id, 'bunpou'))}
+            onToggleBookmark={onToggleBookmark ? () => onToggleBookmark(selectedItem.id, 'bunpou') : undefined}
+            userDecks={userDecks}
+            onToggleDeckItem={onToggleBookmark && selectedItem ? (deckId) => onToggleBookmark(selectedItem.id, 'bunpou', undefined, deckId) : undefined}
+            onRewardPlayer={onRewardPlayer}
+            onCompleteStudyItem={onCompleteStudyItem}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };

@@ -771,7 +771,7 @@ export function generateConjugationQuestion(targetFormId?: string): ConjugationD
   }
 
   // Distractor 2: Pick an adjacent real form of the same verb (e.g. masu form or ta form instead of te)
-  const otherKeys = (['masu', 'te', 'ta', 'nai', 'potential', 'passive', 'causative'] as (keyof VerbItem['forms'][])[])
+  const otherKeys = (['masu', 'te', 'ta', 'nai', 'potential', 'passive', 'causative'] as (keyof VerbItem['forms'])[])
     .filter(k => k !== correctFormKey);
   const otherKey = otherKeys[Math.floor(Math.random() * otherKeys.length)];
   distractors.push(verb.forms[otherKey]);

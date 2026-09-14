@@ -1,4 +1,5 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Bookmark, ChevronLeft, ChevronRight } from 'lucide-react';
 import { KanjiItem } from '../../types/content';
@@ -40,12 +41,13 @@ export const KanjiDetailModal: React.FC<KanjiDetailModalProps> = ({
   onCompleteSheet,
 }) => {
   if (!isOpen || !item) return null;
+  if (typeof document === 'undefined') return null;
 
-  return (
+  return createPortal(
     <AnimatePresence>
       <motion.div
         key="kanji-modal-container"
-        className="fixed inset-0 z-[60] flex items-center justify-center px-4 py-6 sm:p-6"
+        className="fixed inset-0 z-[80] flex items-center justify-center px-4 py-6 sm:p-6"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -144,6 +146,7 @@ export const KanjiDetailModal: React.FC<KanjiDetailModalProps> = ({
           />
         </motion.div>
       </motion.div>
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 };

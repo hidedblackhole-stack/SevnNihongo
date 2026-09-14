@@ -7,6 +7,7 @@ import { KOTOBA_DATABASE } from '../../data/kotoba';
 import { QuizEngine } from './QuizEngine';
 import { speakJapanese, playSound } from '../../utils/audio';
 import { RubyText } from './RubyText';
+import { UniversalFlashcard } from './UniversalFlashcard';
 import { KotobaDetailModal } from '../library/KotobaDetailModal';
 
 interface KotobaModuleProps {
@@ -439,10 +440,7 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
         </div>
 
         {/* Interactive 3D Flip Card */}
-        <div
-          onClick={handleFlipCard}
-          className="relative w-full aspect-[4/3] max-h-[340px] rounded-3xl cursor-pointer perspective-1000 select-none group"
-        >
+        <div className="relative">
           <AnimatePresence>
             {expPopup && (
               <motion.div
@@ -456,118 +454,13 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
               </motion.div>
             )}
           </AnimatePresence>
-          <motion.div
-            animate={{ rotateY: isFlipped ? 180 : 0 }}
-            transition={{ duration: 0.5, type: 'spring', damping: 20 }}
-            className="w-full h-full relative [transform-style:preserve-3d]"
-          >
-            {/* FRONT OF CARD (Japanese Kanji + Furigana) */}
-            <div className="absolute inset-0 [backface-visibility:hidden] rounded-3xl border border-border-subtle bg-surface-card p-6 sm:p-8 flex flex-col items-center justify-between shadow-xl">
-              <div className="w-full flex justify-between items-center text-xs">
-                <span className="px-2.5 py-1 rounded-full bg-surface-inset text-indigo border border-border-subtle text-[11px] font-mono">
-                  {currentItem.jlpt} • {currentItem.wordType}
-                </span>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handlePlayAudio(currentItem.word);
-                  }}
-                  className="p-2 rounded-xl bg-surface-inset hover:bg-surface-elevated text-gold border border-border-subtle transition-colors"
-                >
-                  <Volume2 className="w-4 h-4" />
-                </button>
-              </div>
-
-              {/* Center Big Word */}
-              <div className="text-center space-y-2 my-auto">
-                {furiganaEnabled ? (
-                  <h3 className="text-4xl sm:text-5xl font-black text-text-primary tracking-wider font-heading">
-                    <RubyText
-                      japanese={currentItem.word}
-                      reading={currentItem.reading}
-                      showFurigana={furiganaEnabled}
-                    />
-                  </h3>
-                ) : (
-                  <>
-                    <p className="text-sm sm:text-base font-mono text-indigo font-medium">
-                      {currentItem.reading}
-                    </p>
-                    <h3 className="text-4xl sm:text-5xl font-black text-text-primary tracking-wider font-jp font-heading">
-                      {currentItem.word}
-                    </h3>
-                  </>
-                )}
-                <p className="text-xs text-text-muted pt-2">
-                  (Klik untuk membalik kartu & melihat arti)
-                </p>
-              </div>
-
-              {/* Kanji Breakdown Pills */}
-              <div className="flex flex-wrap gap-1.5 justify-center">
-                {(currentItem.kanjiComponents || []).map((k, i) => (
-                  <span key={i} className="text-[10px] px-2 py-0.5 rounded-md bg-surface-inset text-text-secondary border border-border-subtle">
-                    {k}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* BACK OF CARD (Indonesian & Japanese Meaning + Example) */}
-            <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-3xl border border-border-subtle bg-surface-elevated p-6 sm:p-8 flex flex-col items-center justify-between shadow-xl">
-              <div className="w-full flex justify-between items-center text-xs">
-                <span className="text-indigo font-bold">Terjemahan & Arti</span>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handlePlayAudio(currentItem.word);
-                  }}
-                  className="p-2 rounded-xl bg-surface-inset hover:bg-surface-elevated text-gold border border-border-subtle transition-colors"
-                >
-                  <Volume2 className="w-4 h-4" />
-                </button>
-              </div>
-
-              <div className="text-center space-y-2.5 my-auto">
-                <h4 className="text-2xl sm:text-3xl font-black text-gold font-heading">
-                  {currentItem.meaningId}
-                </h4>
-                <p className="text-xs text-text-secondary italic">
-                  Definisi JP: {currentItem.meaningJa}
-                </p>
-
-                {currentItem.exampleSentence && (
-                  <div className="mt-3 p-3 rounded-xl bg-surface-inset border border-border-subtle text-left space-y-1 max-w-sm mx-auto">
-                    {furiganaEnabled ? (
-                      <p className="text-xs font-bold text-text-primary">
-                        <RubyText
-                          japanese={currentItem.exampleSentence.japanese}
-                          reading={currentItem.exampleSentence.reading}
-                          showFurigana={furiganaEnabled}
-                        />
-                      </p>
-                    ) : (
-                      <>
-                        <p className="text-[11px] text-indigo font-mono">
-                          {currentItem.exampleSentence.reading}
-                        </p>
-                        <p className="text-xs font-bold text-text-primary font-jp">
-                          {currentItem.exampleSentence.japanese}
-                        </p>
-                      </>
-                    )}
-                    <p className="text-[11px] text-text-secondary">
-                      {currentItem.exampleSentence.meaningId}
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              <p className="text-[11px] text-text-muted">
-                (Klik untuk kembali ke tampilan depan)
-              </p>
-            </div>
-          </motion.div>
+          <UniversalFlashcard
+            item={currentItem}
+            isFlipped={isFlipped}
+            onFlip={handleFlipCard}
+            soundEnabled={soundEnabled}
+            furiganaEnabled={furiganaEnabled}
+          />
         </div>
 
         {/* Card Controls */}

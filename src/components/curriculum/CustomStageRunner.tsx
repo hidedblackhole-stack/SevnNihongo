@@ -6,7 +6,6 @@ import {
   ArrowRight,
   ArrowLeft,
   RotateCcw,
-  Volume2,
   CheckCircle2,
   Trophy,
   PenTool,
@@ -19,10 +18,10 @@ import confetti from 'canvas-confetti';
 import { CustomStage, CurriculumConfig } from '../../types/curriculum';
 import { resolveDeckItem, ResolvedDeckItem } from '../../utils/decks';
 import { generateStageQuestions } from '../../utils/curriculumEngine';
-import { KanjiWritingCanvas } from '../learning/KanjiWritingCanvas';
+import { UniversalFlashcard } from '../learning/UniversalFlashcard';
+import { UniversalWritingCard } from '../learning/UniversalWritingCard';
 import { QuizEngine } from '../learning/QuizEngine';
-import { playSound, speakJapanese } from '../../utils/audio';
-import { RubyText } from '../learning/RubyText';
+import { playSound } from '../../utils/audio';
 
 interface CustomStageRunnerProps {
   stage: CustomStage;
@@ -261,63 +260,17 @@ export const CustomStageRunner: React.FC<CustomStageRunnerProps> = ({
                 </span>
               </div>
 
-              {/* Card Container */}
-              <div
-                onClick={() => {
+              {/* Unified 3D Flip Flashcard */}
+              <UniversalFlashcard
+                item={currentFcItem}
+                isFlipped={fcFlipped}
+                onFlip={() => {
                   setFcFlipped(prev => !prev);
                   playSound('click', soundEnabled);
                 }}
-                className="cursor-pointer min-h-[260px] sm:min-h-[300px] p-6 rounded-3xl bg-surface-inset border-2 border-border-subtle hover:border-indigo/50 transition-all flex flex-col items-center justify-center text-center relative shadow-lg group"
-              >
-                <span className="absolute top-4 right-4 text-[10px] text-text-secondary font-mono">
-                  Klik untuk balik kartu ↻
-                </span>
-
-                {!fcFlipped ? (
-                  /* Front of Card */
-                  <div className="space-y-4 my-auto">
-                    <h2 className="text-4xl sm:text-5xl font-bold font-japanese text-text-primary tracking-wide">
-                      {currentFcItem.displayTitle}
-                    </h2>
-                    {currentFcItem.displayReading && (
-                      <p className="text-base text-indigo font-japanese font-medium">
-                        {currentFcItem.displayReading}
-                      </p>
-                    )}
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        speakJapanese(currentFcItem.displayTitle);
-                      }}
-                      className="p-2.5 rounded-2xl bg-surface-card border border-border-subtle text-indigo hover:bg-indigo hover:text-white transition-all mx-auto inline-flex items-center gap-2 text-xs font-mono"
-                    >
-                      <Volume2 className="w-4 h-4" />
-                      <span>Dengarkan Audio</span>
-                    </button>
-                  </div>
-                ) : (
-                  /* Back of Card */
-                  <div className="space-y-3 my-auto animate-fade-in">
-                    <span className="text-xs font-bold uppercase tracking-wider text-indigo font-mono">
-                      Arti & Penjelasan
-                    </span>
-                    <h3 className="text-xl sm:text-2xl font-bold text-text-primary font-heading">
-                      {currentFcItem.displayMeaning}
-                    </h3>
-                    {currentFcItem.displayReading && (
-                      <p className="text-sm text-text-secondary font-mono">
-                        Bacaan: {currentFcItem.displayReading}
-                      </p>
-                    )}
-                    {currentFcItem.bunpou?.explanation && (
-                      <p className="text-xs text-text-secondary italic max-w-sm mx-auto pt-2">
-                        "{currentFcItem.bunpou.explanation}"
-                      </p>
-                    )}
-                  </div>
-                )}
-              </div>
+                soundEnabled={soundEnabled}
+                furiganaEnabled={furiganaEnabled}
+              />
 
               {/* Navigation Bar */}
               <div className="flex items-center justify-between gap-3 pt-2">
@@ -365,13 +318,10 @@ export const CustomStageRunner: React.FC<CustomStageRunnerProps> = ({
               </div>
 
               <div className="panel p-4 rounded-3xl bg-surface-inset border border-border-subtle">
-                <KanjiWritingCanvas
-                  kanjiChar={currentKanjiItem.kanji.character}
-                  level={currentKanjiItem.kanji.jlpt}
+                <UniversalWritingCard
+                  item={currentKanjiItem}
                   totalSheets={config.kanjiSettings.canvasPerKanji || 3}
                   soundEnabled={soundEnabled}
-                  strokeCount={currentKanjiItem.kanji.strokeCount}
-                  meaning={currentKanjiItem.kanji.meaningId || currentKanjiItem.kanji.meaningEn}
                   onFinish={() => {
                     handleFinishKanjiWriting();
                   }}

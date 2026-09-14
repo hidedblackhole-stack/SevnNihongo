@@ -114,6 +114,7 @@ export interface UserDeck {
   id: string;
   title: string;
   description?: string;
+  level?: string;
   type: DeckType;
   isDefault?: boolean; // True for default "Buku Saku Bookmark"
   coverIcon?: string;  // e.g. '🔖', '⚡', '✍️', '📖', '🎯', '🌸'

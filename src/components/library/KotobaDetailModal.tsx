@@ -1,4 +1,5 @@
 import React, { useMemo, useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Volume2, Layers, Link as LinkIcon, Network, Edit3, Bookmark, ChevronLeft, ChevronRight } from 'lucide-react';
 import { BookIcon } from '../ui/EngravingIcons';
@@ -78,12 +79,13 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
   }, [item]);
 
   if (!isOpen || !item) return null;
+  if (typeof document === 'undefined') return null;
 
   const relatedWords = item.relatedWords || dynamicRelatedWords.map(rw => rw.word);
   const collocations = item.collocations || [];
 
-  return (
-    <motion.div key="modal-container" className="fixed inset-0 z-[60] flex items-center justify-center px-4 py-6 sm:p-6" exit={{ opacity: 0 }}>
+  return createPortal(
+    <motion.div key="modal-container" className="fixed inset-0 z-[80] flex items-center justify-center px-4 py-6 sm:p-6" exit={{ opacity: 0 }}>
         {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -93,7 +95,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
             onClose();
             playSound('click', soundEnabled);
           }}
-          className="absolute inset-0 bg-surface-ground/80 backdrop-blur-sm"
+          className="fixed inset-0 bg-black/75 backdrop-blur-sm"
         />
 
         {/* Modal Window */}
@@ -342,6 +344,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
 
           </div>
         </motion.div>
-      </motion.div>
+      </motion.div>,
+    document.body
   );
 };

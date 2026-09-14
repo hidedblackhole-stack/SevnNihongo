@@ -223,7 +223,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
           sourceTitle: 'Bank Soal Kanji Resmi',
           instruction: 'Pilihlah cara baca (yomikata) atau kanji yang tepat:',
           prompt: kq.prompt,
-          ruby: kq.ruby,
+          ruby: (kq as any).ruby,
           options: kq.options || [],
           correctIndex: kq.correct_index !== undefined ? kq.correct_index : 0,
           explanation: kq.explanation || 'Perhatikan bentuk kanji dan kaidah pembacaan onyomi/kunyomi.'

@@ -97,6 +97,9 @@ export interface Question {
   scrambleWords?: string[]; // For Level 5 Sentence Production mode
   orderedTarget?: string[]; // Correct ordered word sequence
   starIndex?: number; // 0-based index of slot that has the star (default 2, meaning 3rd slot)
+  category?: string;
+  difficulty?: string;
+  level?: string;
 }
 
 export interface ExampleSentence {
@@ -151,6 +154,8 @@ export interface BunpouMixedSet {
   title: string;
   description: string;
   questions: Question[]; // 7 mixed questions
+  baseLevel?: 'N5' | 'N4' | 'N3' | 'N2';
+  level?: string;
 }
 
 export interface KotobaItem {
@@ -278,6 +283,9 @@ export interface Stage {
   mapId: string;
   stageNumber: number;
   title: string;
+  title_jp?: string;
+  title_en?: string;
+  title_id?: string;
   description: string;
   isBoss: boolean;
   bossName?: string;

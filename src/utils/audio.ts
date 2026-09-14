@@ -58,6 +58,7 @@ export type SoundType =
   | 'wrong'
   | 'levelup'
   | 'levelUp'
+  | 'level_up'
   | 'click'
   | 'coin'
   | 'attack'
@@ -72,7 +73,7 @@ export function playSound(type: SoundType, soundEnabled: boolean = true) {
     if (!ctx) return;
 
     // Normalize sound alias
-    const normalizedType = type === 'victory' ? 'fanfare' : type === 'levelUp' ? 'levelup' : type;
+    const normalizedType = type === 'victory' ? 'fanfare' : (type === 'levelUp' || type === 'level_up') ? 'levelup' : type;
 
     const now = ctx.currentTime;
     const master = getMasterOutput(ctx);

@@ -7,18 +7,22 @@ import { extractDeckRefs } from '../../utils/curriculumEngine';
 import { playSound } from '../../utils/audio';
 
 interface CurriculumConfigModalProps {
-  isOpen: boolean;
+  isOpen?: boolean;
   deck: UserDeck | null;
   onClose: () => void;
-  onGenerate: (config: CurriculumConfig) => void;
+  onGenerate?: (config: CurriculumConfig) => void;
+  onSave?: (config: CurriculumConfig) => void;
+  existingConfig?: CurriculumConfig;
   soundEnabled?: boolean;
 }
 
 export const CurriculumConfigModal: React.FC<CurriculumConfigModalProps> = ({
-  isOpen,
+  isOpen = true,
   deck,
   onClose,
   onGenerate,
+  onSave,
+  existingConfig,
   soundEnabled = true,
 }) => {
   if (!isOpen || !deck) return null;
@@ -27,24 +31,27 @@ export const CurriculumConfigModal: React.FC<CurriculumConfigModalProps> = ({
 
   // Stage count slider state (default 3 to 5 based on total items)
   const defaultStageCount = Math.max(1, Math.min(refs.totalCount > 10 ? 5 : 3, 10));
-  const [stageCount, setStageCount] = useState<number>(defaultStageCount);
+  const [stageCount, setStageCount] = useState<number>(() => existingConfig?.stageCount ?? defaultStageCount);
 
   // Selected types (default to all available in the deck)
   const [selectedTypes, setSelectedTypes] = useState<DeckItemCategory[]>(() => {
+    if (existingConfig?.includeTypes && existingConfig.includeTypes.length > 0) {
+      return [...existingConfig.includeTypes];
+    }
     return refs.availableTypes.length > 0 ? [...refs.availableTypes] : ['kotoba'];
   });
 
   // Category specific settings
-  const [kanjiFlashcard, setKanjiFlashcard] = useState(true);
-  const [kanjiWriteMode, setKanjiWriteMode] = useState(true);
-  const [canvasRepetitions, setCanvasRepetitions] = useState<number>(3);
-  const [kanjiQuiz, setKanjiQuiz] = useState(true);
+  const [kanjiFlashcard, setKanjiFlashcard] = useState(() => existingConfig?.kanjiSettings?.flashcard ?? true);
+  const [kanjiWriteMode, setKanjiWriteMode] = useState(() => existingConfig?.kanjiSettings?.writeMode ?? true);
+  const [canvasRepetitions, setCanvasRepetitions] = useState<number>(() => existingConfig?.kanjiSettings?.canvasPerKanji ?? 3);
+  const [kanjiQuiz, setKanjiQuiz] = useState(() => existingConfig?.kanjiSettings?.quiz ?? true);
 
-  const [kotobaFlashcard, setKotobaFlashcard] = useState(true);
-  const [kotobaQuiz, setKotobaQuiz] = useState(true);
+  const [kotobaFlashcard, setKotobaFlashcard] = useState(() => existingConfig?.kotobaSettings?.flashcard ?? true);
+  const [kotobaQuiz, setKotobaQuiz] = useState(() => existingConfig?.kotobaSettings?.quiz ?? true);
 
-  const [bunpouStudy, setBunpouStudy] = useState(true);
-  const [bunpouQuiz, setBunpouQuiz] = useState(true);
+  const [bunpouStudy, setBunpouStudy] = useState(() => existingConfig?.polaSettings?.study ?? true);
+  const [bunpouQuiz, setBunpouQuiz] = useState(() => existingConfig?.polaSettings?.quiz ?? true);
 
   // Toggle content type inclusion
   const handleToggleType = (cat: DeckItemCategory) => {
@@ -95,7 +102,8 @@ export const CurriculumConfigModal: React.FC<CurriculumConfigModalProps> = ({
         quiz: bunpouQuiz,
       },
     };
-    onGenerate(config);
+    if (onGenerate) onGenerate(config);
+    if (onSave) onSave(config);
   };
 
   return (

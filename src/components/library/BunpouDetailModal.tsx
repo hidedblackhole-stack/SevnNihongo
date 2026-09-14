@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
+import { motion } from 'motion/react';
 import {
   X,
   Volume2,
@@ -163,15 +165,35 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
     }
   };
 
-  return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-surface-ground/80 backdrop-blur-sm animate-fade-in"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
+  if (typeof document === 'undefined') return null;
+
+  return createPortal(
+    <motion.div
+      key="bunpou-modal-container"
+      className="fixed inset-0 z-[80] flex items-center justify-center p-3 sm:p-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
     >
-      <div
-        className="panel w-full max-w-2xl border border-border-subtle rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-scale-up bg-surface-card"
+      {/* Backdrop */}
+      <motion.div
+        className="fixed inset-0 bg-black/75 backdrop-blur-sm"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={() => {
+          onClose();
+          playSound('click', soundEnabled);
+        }}
+      />
+
+      {/* Modal Dialog */}
+      <motion.div
+        initial={{ scale: 0.95, opacity: 0, y: 15 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.95, opacity: 0, y: 15 }}
+        transition={{ duration: 0.18, ease: 'easeOut' }}
+        className="relative z-10 panel w-full max-w-2xl border border-border-subtle rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] bg-surface-card"
       >
         {/* Header */}
         <div className="p-4 sm:p-5 border-b border-border-subtle flex items-start justify-between gap-3 shrink-0 bg-surface-inset">
@@ -390,9 +412,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
               </h4>
               <FormulaDisplay
                 formula={item.formula}
-                subFormulas={item.subFormulas}
-                examples={item.examples}
-                soundEnabled={soundEnabled}
+                item={item}
               />
             </div>
 
@@ -586,7 +606,8 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
             </div>
           )}
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>,
+    document.body
   );
 };

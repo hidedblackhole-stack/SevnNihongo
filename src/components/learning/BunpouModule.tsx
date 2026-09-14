@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { BookOpen, Swords, Volume2, HelpCircle, GitBranch, MapPin, Settings2 } from 'lucide-react';
+import { BookOpen, Swords, Volume2, HelpCircle, GitBranch, MapPin, Settings2, Sparkles } from 'lucide-react';
 import { BunpouItem, BunpouMixedSet, Question } from '../../types/content';
 import { BUNPOU_DATABASE, BUNPOU_MIXED_DATABASE } from '../../data/bunpou';
 import { getSubBranchesForBunpou } from '../../data/bunpouSubKnowledge';
 import { QuizEngine } from './QuizEngine';
 import { FormulaDisplay } from './FormulaDisplay';
 import { RubyText } from './RubyText';
+import { SakubunStudio } from './SakubunStudio';
 import { speakJapanese, playSound } from '../../utils/audio';
 import { splitSentenceForHighlight } from '../../utils/grammarHighlight';
 
@@ -32,7 +33,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
   soundEnabled = true,
   furiganaEnabled = true,
 }) => {
-  const [activeTab, setActiveTab] = useState<'materi' | 'mixed'>('materi');
+  const [activeTab, setActiveTab] = useState<'materi' | 'sakubun' | 'mixed'>('materi');
   const [selectedBunpouId, setSelectedBunpouId] = useState<string>(bunpouIds[0] || 'bunpou_001');
   const [activeSubIndex, setActiveSubIndex] = useState<number>(0);
   const [activeQuizSet, setActiveQuizSet] = useState<BunpouItem | BunpouMixedSet | null>(null);
@@ -176,6 +177,20 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
             }`}
           >
             Materi ({bunpouIds.length})
+          </button>
+          <button
+            onClick={() => {
+              setActiveTab('sakubun');
+              playSound('click', soundEnabled);
+            }}
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 font-heading ${
+              activeTab === 'sakubun'
+                ? 'bg-amber-500/20 text-amber-400 border border-amber-500/40 shadow-sm'
+                : 'text-text-muted hover:text-text-primary'
+            }`}
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Susun Kalimat</span>
           </button>
           <button
             onClick={() => {
@@ -543,15 +558,41 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
               </div>
             </div>
 
-            {/* CTA to start practice */}
-            <button
-              onClick={() => startSingleQuiz(currentBunpou)}
-              className="w-full py-3.5 rounded-2xl btn-cta font-bold text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 active:scale-95 transition-all font-heading"
-            >
-              <span>Mulai Ujian 7 Soal ({currentBunpou.title})</span>
-            </button>
+            {/* CTAs to start practice & Sakubun */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveTab('sakubun');
+                  playSound('click', soundEnabled);
+                }}
+                className="py-3 px-4 rounded-2xl bg-amber-500/15 border border-amber-500/40 text-amber-400 font-bold text-xs sm:text-sm shadow-sm flex items-center justify-center gap-2 active:scale-95 hover:bg-amber-500/25 transition-all font-heading cursor-pointer"
+              >
+                <Sparkles className="w-4 h-4" />
+                <span>Susun Kalimat Pola Ini</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => startSingleQuiz(currentBunpou)}
+                className="py-3 px-4 rounded-2xl btn-cta font-bold text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 active:scale-95 transition-all font-heading cursor-pointer"
+              >
+                <span>Mulai Ujian 7 Soal</span>
+              </button>
+            </div>
           </div>
         </div>
+      ) : activeTab === 'sakubun' ? (
+        <SakubunStudio
+          initialPatternId={currentBunpou.id}
+          playerMp={playerMp}
+          playerInt={playerInt}
+          onUseMp={onUseMp}
+          soundEnabled={soundEnabled}
+          furiganaEnabled={furiganaEnabled}
+          onReward={onReward}
+          onClose={() => setActiveTab('materi')}
+        />
       ) : (
         /* Mixed Set View */
         <div className="panel p-6 text-center space-y-4 shadow-xl border border-gold/30">

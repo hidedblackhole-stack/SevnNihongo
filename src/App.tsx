@@ -195,16 +195,40 @@ export default function App() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [worldNavView, setWorldNavView] = useState<import('./components/map/WorldView').WorldNavView>('world_hub');
+  const [worldResetCount, setWorldResetCount] = useState(0);
+  const [deckResetCount, setDeckResetCount] = useState(0);
 
   const handleTabChange = useCallback((tab: TabType) => {
+    // If re-tapping the current active tab (Pop to Root / Scroll to Top)
     if (tab === activeTab && !selectedStage && !isRecallActive && !isBossBattleActive) {
+      if (tab === 'maps') {
+        setStats(prev => ({ ...prev, currentWorldId: '' }));
+        setWorldNavView('world_hub');
+        setWorldResetCount(c => c + 1);
+      } else if (tab === 'deck') {
+        setDeckResetCount(c => c + 1);
+      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
+
+    // Dismiss any fullscreen stage overlays or active modals
     setSelectedStage(null);
     setIsRecallActive(false);
     setIsBossBattleActive(false);
+    setIsStatusModalOpen(false);
+
+    // Reset tab to its initial "Halaman Awal" when entering
+    if (tab === 'maps') {
+      setStats(prev => ({ ...prev, currentWorldId: '' }));
+      setWorldNavView('world_hub');
+      setWorldResetCount(c => c + 1);
+    } else if (tab === 'deck') {
+      setDeckResetCount(c => c + 1);
+    }
+
     setActiveTab(tab);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [activeTab, selectedStage, isRecallActive, isBossBattleActive]);
   const [isOnboardingActive, setIsOnboardingActive] = useState<boolean>(() => {
     try {
@@ -1220,7 +1244,8 @@ export default function App() {
                 <ErrorBoundary>
                   <WorldView
                     currentMapId={stats.currentMapId}
-                    currentWorldId={stats.currentWorldId || 'world_n5'}
+                    currentWorldId={stats.currentWorldId || ''}
+                    resetSignal={worldResetCount}
                     navView={worldNavView}
                     onNavViewChange={(view, worldId) => {
                       setWorldNavView(view);
@@ -1320,6 +1345,7 @@ export default function App() {
               {visitedTabs.has('deck') && (
                 <BukuSakuView
                   userDecks={stats.userDecks}
+                  resetSignal={deckResetCount}
                   onUpdateDecks={(updatedDecks) => {
                     setStats(prev => {
                       const updated = { ...prev, userDecks: updatedDecks };

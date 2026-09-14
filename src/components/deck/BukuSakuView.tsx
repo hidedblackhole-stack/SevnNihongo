@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Plus,
@@ -61,6 +61,7 @@ import { BunpouDetailModal } from '../library/BunpouDetailModal';
 interface BukuSakuViewProps {
   userDecks?: UserDeck[];
   onUpdateDecks: (decks: UserDeck[]) => void;
+  resetSignal?: number;
   onRewardPlayer?: (exp: number, gold: number) => void;
   onCompleteStudyItem?: (
     moduleId: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss' | 'questions' | 'tryOuts',
@@ -88,6 +89,7 @@ interface BukuSakuViewProps {
 export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
   userDecks,
   onUpdateDecks,
+  resetSignal,
   onRewardPlayer,
   onCompleteStudyItem,
   soundEnabled = true,
@@ -107,6 +109,22 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
   const decks = useMemo(() => ensureUserDecks(userDecks), [userDecks]);
 
   const [selectedDeckId, setSelectedDeckId] = useState<string | null>(null);
+
+  // Reset to initial Deck List screen when navbar triggers reset
+  useEffect(() => {
+    if (resetSignal !== undefined && resetSignal > 0) {
+      setSelectedDeckId(null);
+      setActiveRunner(null);
+      setIsCreateModalOpen(false);
+      setIsAddItemModalOpen(false);
+      setEditingDeck(null);
+      setSelectedKotoba(null);
+      setSelectedKanji(null);
+      setSelectedBunpou(null);
+      setActiveWorldDeckId(null);
+      setIsCurriculumConfigOpen(false);
+    }
+  }, [resetSignal]);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [editingDeck, setEditingDeck] = useState<UserDeck | null>(null);
   const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
@@ -962,13 +980,15 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
         soundEnabled={soundEnabled}
       />
 
-      {selectedBunpou && (
-        <BunpouDetailModal
-          item={selectedBunpou}
-          onClose={() => setSelectedBunpou(null)}
-          soundEnabled={soundEnabled}
-        />
-      )}
+      <AnimatePresence>
+        {selectedBunpou && (
+          <BunpouDetailModal
+            item={selectedBunpou}
+            onClose={() => setSelectedBunpou(null)}
+            soundEnabled={soundEnabled}
+          />
+        )}
+      </AnimatePresence>
 
       {/* Curriculum Config Modal */}
       <CurriculumConfigModal

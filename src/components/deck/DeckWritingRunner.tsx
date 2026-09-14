@@ -4,8 +4,7 @@ import { X, ArrowLeft, ArrowRight, Trophy, PenTool, RotateCcw } from 'lucide-rea
 import confetti from 'canvas-confetti';
 import { UserDeck } from '../../types/rpg';
 import { resolveDeckItem, ResolvedDeckItem } from '../../utils/decks';
-import { KanjiWritingCanvas } from '../learning/KanjiWritingCanvas';
-import { KotobaWritingPractice } from '../learning/KotobaWritingPractice';
+import { UniversalWritingCard } from '../learning/UniversalWritingCard';
 import { playSound } from '../../utils/audio';
 import { WritingRewardResult } from '../../utils/rewards';
 
@@ -215,42 +214,16 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
         ) : (
           /* Active Writing Canvas */
           <div className="w-full space-y-3">
-            {/* Render Canvas depending on whether it's Kanji or Kotoba */}
-            {currentItem?.category === 'kanji' && currentItem.kanji && (
+            {/* Render Canvas using Unified UniversalWritingCard */}
+            {currentItem && (
               <div className="panel p-4 sm:p-5 rounded-3xl border border-border-subtle shadow-lg">
-                <KanjiWritingCanvas
-                  kanjiChar={currentItem.kanji.character}
-                  meaning={currentItem.kanji.meaningId}
-                  onyomi={(currentItem.kanji.onyomi || []).join('、')}
-                  kunyomi={(currentItem.kanji.kunyomi || []).join('、')}
-                  strokeCount={currentItem.kanji.strokeCount}
-                  level={currentItem.kanji.jlpt}
+                <UniversalWritingCard
+                  item={currentItem}
                   soundEnabled={soundEnabled}
                   showStopwatch={true}
                   totalSheets={1}
-                  onFinish={(reward) => {
+                  onFinish={(_score, reward) => {
                     handleNextItem(reward?.expGained, reward?.goldGained);
-                  }}
-                />
-              </div>
-            )}
-
-            {currentItem?.category === 'kotoba' && currentItem.kotoba && (
-              <div className="panel p-4 sm:p-5 rounded-3xl border border-border-subtle shadow-lg">
-                <KotobaWritingPractice
-                  kotoba={currentItem.kotoba}
-                  soundEnabled={soundEnabled}
-                  nextButtonLabel={
-                    currentIndex + 1 === writableItems.length
-                      ? 'Selesaikan Latihan'
-                      : 'Lanjut ke Kata Berikutnya'
-                  }
-                  onFinishWord={(score, reward) => {
-                    handleNextItem(reward?.expGained, reward?.goldGained);
-                  }}
-                  onCancel={() => {
-                    playSound('click', soundEnabled);
-                    onClose();
                   }}
                 />
               </div>

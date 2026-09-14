@@ -128,6 +128,8 @@ export interface WritingRewardResult {
     focusTimeBonus: boolean;
     mistakesPenalty: number;
     animationPenalty: number;
+    watermarkUsed?: boolean;
+    hintsUsed?: number;
   };
 }
 
@@ -216,6 +218,8 @@ export function calculateWritingReward(
       focusTimeBonus,
       mistakesPenalty: Number(mistakesPenalty.toFixed(2)),
       animationPenalty: Number(animationPenalty.toFixed(2)),
+      watermarkUsed: options.watermarkUsed,
+      hintsUsed: options.animationCount,
     },
   };
 }

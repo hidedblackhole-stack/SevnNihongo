@@ -182,7 +182,7 @@ if (Array.isArray(kanjiQuestionsDb)) {
       kanjiQuestionsMap.get(kanjiId)!.push({
         id: q.id,
         prompt: q.prompt,
-        ruby: q.ruby,
+        ruby: (q as any).ruby,
         options: q.options,
         correctIndex: q.correct_index,
         explanation: q.explanation
