@@ -462,10 +462,10 @@ export const CurriculumConfigModal: React.FC<CurriculumConfigModalProps> = ({
               type="button"
               disabled={refs.totalCount === 0 || previewTotalItems === 0}
               onClick={handleGenerate}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold font-heading bg-indigo hover:bg-indigo/90 text-white shadow-sm border border-indigo/30 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-skeuo-indigo text-xs py-2.5 px-5 shadow-md active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <Sparkles className="w-4 h-4 text-gold" />
-              <span>Generate Kurikulum & Buka World</span>
+              <Sparkles className="w-4 h-4 text-gold shrink-0" />
+              <span className="whitespace-nowrap font-bold">Generate Kurikulum & Buka World</span>
             </button>
           </div>
         </motion.div>

@@ -615,6 +615,134 @@ html.theme-light,
       inset 0 1px 0 rgba(255, 255, 255, 0.35);
   }
 
+  /* 4.2.1 Skeuomorphic Indigo Action Button (.btn-skeuo-indigo) */
+  .btn-skeuo-indigo {
+    border-radius: 14px;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: var(--font-body);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+    background: linear-gradient(180deg, #2e3954 0%, #1e2638 100%);
+    color: #edf0f6;
+    border: 1px solid rgba(111, 147, 207, 0.35);
+    box-shadow:
+      3px 3px 8px var(--neu-d),
+      -2px -2px 6px var(--neu-l),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+    text-decoration: none;
+  }
+
+  .btn-skeuo-indigo:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+    box-shadow:
+      4px 4px 10px var(--neu-d),
+      -3px -3px 8px var(--neu-l),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  .btn-skeuo-indigo:active {
+    transform: translateY(1px);
+    box-shadow:
+      inset 2px 2px 5px var(--neu-d),
+      inset -1px -1px 3px var(--neu-l);
+  }
+
+  /* Light mode: Rich Aizome Navy Leather Button */
+  html.theme-light .btn-skeuo-indigo,
+  .theme-light .btn-skeuo-indigo {
+    background: linear-gradient(180deg, #2b456e 0%, #1c3050 100%);
+    color: #fdfbf7;
+    border: 1px solid #14243b;
+    box-shadow:
+      0 3px 8px rgba(24, 40, 64, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  }
+
+  html.theme-light .btn-skeuo-indigo:hover,
+  .theme-light .btn-skeuo-indigo:hover {
+    background: linear-gradient(180deg, #325182 0%, #20375c 100%);
+    box-shadow:
+      0 4px 12px rgba(24, 40, 64, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  }
+
+  html.theme-light .btn-skeuo-indigo:active,
+  .theme-light .btn-skeuo-indigo:active {
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.45);
+  }
+
+  /* 4.2.2 Skeuomorphic Gold Button (.btn-skeuo-gold) */
+  .btn-skeuo-gold {
+    border-radius: 14px;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 800;
+    font-family: var(--font-body);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+    background: linear-gradient(180deg, #f7ce68 0%, #d49e32 100%);
+    color: #1a1303;
+    border: 1px solid #b8831e;
+    box-shadow:
+      3px 4px 10px rgba(0, 0, 0, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+    text-decoration: none;
+  }
+
+  .btn-skeuo-gold:hover {
+    filter: brightness(1.06);
+    transform: translateY(-1px);
+    box-shadow:
+      4px 5px 12px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.75);
+  }
+
+  .btn-skeuo-gold:active {
+    transform: translateY(1px);
+    box-shadow:
+      inset 2px 2px 5px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Light mode: Warm Kinako Ochre Gold with crisp text */
+  html.theme-light .btn-skeuo-gold,
+  .theme-light .btn-skeuo-gold {
+    background: linear-gradient(180deg, #d99f2e 0%, #b37c19 100%);
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(80, 50, 5, 0.5);
+    border: 1px solid #8f5e08;
+    box-shadow:
+      0 3px 8px rgba(140, 91, 8, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+
+  html.theme-light .btn-skeuo-gold:hover,
+  .theme-light .btn-skeuo-gold:hover {
+    background: linear-gradient(180deg, #e5a934 0%, #be841c 100%);
+    box-shadow:
+      0 5px 12px rgba(140, 91, 8, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  }
+
+  html.theme-light .btn-skeuo-gold:active,
+  .theme-light .btn-skeuo-gold:active {
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.4);
+  }
+
   /* 4.3 Breadcrumb / Stage Label */
   .breadcrumb-label {
     font-family: var(--font-mono);

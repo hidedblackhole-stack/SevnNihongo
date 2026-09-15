@@ -138,11 +138,11 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
         <button
           type="button"
           onClick={() => handleStartDrill('all')}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold font-heading bg-indigo hover:bg-indigo/90 text-white shadow-sm border border-indigo/30 transition-colors self-stretch md:self-auto justify-center"
+          className="btn-skeuo-indigo self-stretch md:self-auto justify-center text-xs py-2.5 px-5 shadow-md active:scale-95 transition-all"
         >
-          <Flame className="w-4 h-4 text-amber-300 fill-amber-300" />
-          <span>Mulai Latihan Konjugasi</span>
-          <ChevronRight className="w-4 h-4" />
+          <Flame className="w-4 h-4 text-gold fill-gold shrink-0" />
+          <span className="whitespace-nowrap font-bold">Mulai Latihan Konjugasi</span>
+          <ChevronRight className="w-4 h-4 opacity-75 shrink-0" />
         </button>
       </div>
 
@@ -324,10 +324,10 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
                 <button
                   type="button"
                   onClick={handleNextQuestion}
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo hover:bg-indigo/90 text-white font-heading font-bold text-xs shadow-sm border border-indigo/30 transition-colors"
+                  className="btn-skeuo-indigo py-2 px-4 text-xs shadow-sm active:scale-95 transition-all"
                 >
-                  <span>Soal Berikutnya</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <span className="whitespace-nowrap font-bold">Soal Berikutnya</span>
+                  <ArrowRight className="w-3.5 h-3.5 shrink-0" />
                 </button>
               </div>
 
@@ -340,16 +340,16 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
       ) : null}
 
       {/* 3. NAVIGASI TAB ENSIKLOPEDIA */}
-      <div className="book-tab-nav flex-wrap justify-start">
+      <div className="book-tab-nav max-w-full overflow-x-auto no-scrollbar flex-nowrap justify-start py-1 px-1.5 gap-1.5 sm:gap-2">
         <button
           type="button"
           onClick={() => {
             playSound('click', soundEnabled);
             setActiveTab('basic_forms');
           }}
-          className={`book-tab-btn ${activeTab === 'basic_forms' ? 'active' : 'inactive'}`}
+          className={`book-tab-btn shrink-0 whitespace-nowrap ${activeTab === 'basic_forms' ? 'active' : 'inactive'}`}
         >
-          <div className="w-6 h-6 rounded-lg bg-surface-inset border border-border-subtle flex items-center justify-center text-xs font-jp font-bold text-text-primary">
+          <div className="w-6 h-6 rounded-lg bg-surface-inset border border-border-subtle flex items-center justify-center text-xs font-jp font-bold text-text-primary shrink-0">
             て
           </div>
           <div className="text-left">
@@ -364,9 +364,9 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
             playSound('click', soundEnabled);
             setActiveTab('advanced_forms');
           }}
-          className={`book-tab-btn ${activeTab === 'advanced_forms' ? 'active' : 'inactive'}`}
+          className={`book-tab-btn shrink-0 whitespace-nowrap ${activeTab === 'advanced_forms' ? 'active' : 'inactive'}`}
         >
-          <div className="w-6 h-6 rounded-lg bg-surface-inset border border-border-subtle flex items-center justify-center text-xs font-jp font-bold text-text-primary">
+          <div className="w-6 h-6 rounded-lg bg-surface-inset border border-border-subtle flex items-center justify-center text-xs font-jp font-bold text-text-primary shrink-0">
             能
           </div>
           <div className="text-left">
@@ -381,9 +381,9 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
             playSound('click', soundEnabled);
             setActiveTab('verb_groups');
           }}
-          className={`book-tab-btn ${activeTab === 'verb_groups' ? 'active' : 'inactive'}`}
+          className={`book-tab-btn shrink-0 whitespace-nowrap ${activeTab === 'verb_groups' ? 'active' : 'inactive'}`}
         >
-          <div className="w-6 h-6 rounded-lg bg-surface-inset border border-border-subtle flex items-center justify-center text-xs font-jp font-bold text-text-primary">
+          <div className="w-6 h-6 rounded-lg bg-surface-inset border border-border-subtle flex items-center justify-center text-xs font-jp font-bold text-text-primary shrink-0">
             動
           </div>
           <div className="text-left">
@@ -398,9 +398,9 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
             playSound('click', soundEnabled);
             setActiveTab('other_classes');
           }}
-          className={`book-tab-btn ${activeTab === 'other_classes' ? 'active' : 'inactive'}`}
+          className={`book-tab-btn shrink-0 whitespace-nowrap ${activeTab === 'other_classes' ? 'active' : 'inactive'}`}
         >
-          <div className="w-6 h-6 rounded-lg bg-surface-inset border border-border-subtle flex items-center justify-center text-xs font-jp font-bold text-text-primary">
+          <div className="w-6 h-6 rounded-lg bg-surface-inset border border-border-subtle flex items-center justify-center text-xs font-jp font-bold text-text-primary shrink-0">
             形
           </div>
           <div className="text-left">
@@ -639,20 +639,20 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
             <h3 className="text-sm font-bold text-text-primary font-heading">
               Tabel Komparasi Konjugasi Verba Contoh
             </h3>
-            <div className="overflow-x-auto">
-              <table className="w-full text-xs font-jp">
+            <div className="overflow-x-auto no-scrollbar">
+              <table className="w-full min-w-[620px] text-xs font-jp">
                 <thead>
-                  <tr className="border-b border-border-subtle text-text-muted text-left">
-                    <th className="pb-2">Kamus (Jisho)</th>
-                    <th className="pb-2">Golongan</th>
-                    <th className="pb-2">Bentuk Te</th>
-                    <th className="pb-2">Bentuk Nai</th>
-                    <th className="pb-2">Bentuk Ta</th>
-                    <th className="pb-2">Potensial</th>
-                    <th className="pb-2">Pasif</th>
+                  <tr className="border-b border-border-subtle text-text-muted text-left whitespace-nowrap">
+                    <th className="pb-2.5 pr-3">Kamus (Jisho)</th>
+                    <th className="pb-2.5 pr-3">Golongan</th>
+                    <th className="pb-2.5 pr-3">Bentuk Te</th>
+                    <th className="pb-2.5 pr-3">Bentuk Nai</th>
+                    <th className="pb-2.5 pr-3">Bentuk Ta</th>
+                    <th className="pb-2.5 pr-3">Potensial</th>
+                    <th className="pb-2.5">Pasif</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-border-subtle">
+                <tbody className="divide-y divide-border-subtle whitespace-nowrap">
                   {VERB_CONJUGATION_DATABASE.map(v => (
                     <tr key={v.id} className="hover:bg-surface-inset/60">
                       <td className="py-2.5 font-bold text-text-primary font-jp">

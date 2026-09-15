@@ -415,10 +415,10 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
                           e.stopPropagation();
                           handleStartStage(stage);
                         }}
-                        className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-indigo hover:bg-indigo/90 text-white font-heading font-bold text-xs shadow-sm border border-indigo/30 transition-colors"
+                        className="btn-skeuo-indigo w-full sm:w-auto text-xs py-2.5 px-5 shadow-md active:scale-95 transition-all"
                       >
-                        <Play className="w-4 h-4 fill-white" />
-                        <span>Mulai Stage</span>
+                        <Play className="w-4 h-4 fill-current shrink-0" />
+                        <span className="whitespace-nowrap font-bold">Mulai Stage</span>
                       </button>
                     ) : isCompleted ? (
                       <button

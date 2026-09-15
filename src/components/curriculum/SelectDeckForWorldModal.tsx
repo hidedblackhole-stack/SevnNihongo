@@ -105,10 +105,10 @@ export const SelectDeckForWorldModal: React.FC<SelectDeckForWorldModalProps> = (
                       onClose();
                       onGoToBukuSaku();
                     }}
-                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-indigo hover:bg-indigo/90 text-white font-heading font-bold text-xs shadow-sm border border-indigo/30 transition-colors"
+                    className="btn-skeuo-indigo w-full sm:w-auto text-xs py-2.5 px-5 shadow-md active:scale-95 transition-all"
                   >
-                    <BookOpen className="w-4 h-4" />
-                    <span>Buka Buku Saku & Buat Deck</span>
+                    <BookOpen className="w-4 h-4 shrink-0" />
+                    <span className="whitespace-nowrap">Buka Buku Saku & Buat Deck</span>
                   </button>
 
                   <button

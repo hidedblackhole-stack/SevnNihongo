@@ -578,10 +578,10 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                 <button
                   type="button"
                   onClick={handleNextPracticeQuestion}
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo hover:bg-indigo/90 text-white font-heading font-bold text-xs shadow-sm border border-indigo/30 transition-colors"
+                  className="btn-skeuo-indigo px-4 py-2 text-xs shadow-sm active:scale-95 transition-all"
                 >
-                  <RotateCcw className="w-3.5 h-3.5" />
-                  <span>Soal Latihan Lain</span>
+                  <RotateCcw className="w-3.5 h-3.5 shrink-0" />
+                  <span className="whitespace-nowrap">Soal Latihan Lain</span>
                 </button>
               )}
             </div>
@@ -590,16 +590,16 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
               <button
                 type="button"
                 onClick={handleStartPractice}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo hover:bg-indigo/90 text-white font-heading font-bold text-xs shadow-sm border border-indigo/30 transition-colors"
+                className="btn-skeuo-indigo px-4 py-2.5 text-xs shadow-sm active:scale-95 transition-all"
               >
-                <Swords className="w-4 h-4 text-amber-300" />
-                <span>Coba Latihan (1 Soal)</span>
+                <Swords className="w-4 h-4 text-gold shrink-0" />
+                <span className="whitespace-nowrap">Coba Latihan (1 Soal)</span>
               </button>
 
               <button
                 type="button"
                 onClick={onClose}
-                className="btn-cta px-5 py-2 rounded-xl text-xs font-bold transition-all"
+                className="btn-skeuo-indigo px-5 py-2 text-xs shadow-sm active:scale-95 transition-all"
               >
                 Tutup
               </button>

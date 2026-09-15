@@ -280,12 +280,12 @@ export const WorldView: React.FC<WorldViewProps> = ({
           <button
             type="button"
             onClick={handleOpenCreateCustomWorld}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold font-heading bg-indigo hover:bg-indigo/90 text-white shadow-sm border border-indigo/30 transition-colors self-stretch sm:self-auto justify-center"
+            className="btn-skeuo-indigo self-stretch sm:self-auto justify-center text-xs py-2.5 px-4 shadow-md active:scale-95 transition-all"
             title="Buat Kustom World baru dari materi Buku Saku"
           >
-            <Sparkles className="w-4 h-4 text-amber-300" />
-            <span>Buat Kustom World</span>
-            <ChevronRight className="w-3.5 h-3.5" />
+            <Sparkles className="w-4 h-4 text-gold shrink-0" />
+            <span className="whitespace-nowrap font-bold">Buat Kustom World</span>
+            <ChevronRight className="w-3.5 h-3.5 opacity-70 shrink-0" />
           </button>
         )}
       </div>
@@ -295,28 +295,34 @@ export const WorldView: React.FC<WorldViewProps> = ({
         <button
           type="button"
           onClick={() => handleSwitchMode('training')}
-          className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold font-heading transition-all ${
+          className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 px-2.5 sm:px-4 rounded-xl text-xs sm:text-sm font-bold font-sans transition-all whitespace-nowrap ${
             worldMode === 'training'
               ? 'bg-surface-card text-text-primary shadow-sm border border-border-subtle'
               : 'text-text-muted hover:text-text-primary'
           }`}
         >
-          <Compass className={`w-4 h-4 ${worldMode === 'training' ? 'text-gold' : ''}`} />
-          <span>Mode Training (Kurikulum)</span>
+          <Compass className={`w-4 h-4 shrink-0 ${worldMode === 'training' ? 'text-gold' : ''}`} />
+          <span>
+            <span className="inline sm:hidden">Training</span>
+            <span className="hidden sm:inline">Mode Training (Kurikulum)</span>
+          </span>
         </button>
 
         <button
           type="button"
           onClick={() => handleSwitchMode('dungeon')}
-          className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold font-heading transition-all ${
+          className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 px-2.5 sm:px-4 rounded-xl text-xs sm:text-sm font-bold font-sans transition-all whitespace-nowrap ${
             worldMode === 'dungeon'
               ? 'bg-surface-card text-crimson shadow-sm border border-crimson/30'
               : 'text-text-muted hover:text-text-primary'
           }`}
         >
-          <Swords className={`w-4 h-4 ${worldMode === 'dungeon' ? 'text-crimson' : ''}`} />
-          <span>Mode Dungeon (Latihan Bebas)</span>
-          <span className="px-1.5 py-0.5 rounded text-[9px] font-mono bg-crimson/20 text-crimson font-black uppercase tracking-wider">
+          <Swords className={`w-4 h-4 shrink-0 ${worldMode === 'dungeon' ? 'text-crimson' : ''}`} />
+          <span>
+            <span className="inline sm:hidden">Dungeon</span>
+            <span className="hidden sm:inline">Mode Dungeon (Latihan Bebas)</span>
+          </span>
+          <span className="px-1.5 py-0.5 rounded text-[9px] font-mono bg-crimson/20 text-crimson font-black uppercase tracking-wider shrink-0">
             Baru
           </span>
         </button>

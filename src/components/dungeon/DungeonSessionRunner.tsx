@@ -269,10 +269,10 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                     playSound('click', soundEnabled);
                     onClose();
                   }}
-                  className="w-full sm:w-auto px-8 py-2.5 rounded-xl bg-indigo hover:bg-indigo/90 text-white text-xs font-bold font-heading shadow-md transition-all flex items-center justify-center gap-2"
+                  className="btn-skeuo-indigo w-full sm:w-auto px-8 py-2.5 text-xs shadow-md transition-all active:scale-95"
                 >
-                  <span>Kembali ke Gerbang</span>
-                  <ChevronRight className="w-4 h-4" />
+                  <span className="whitespace-nowrap">Kembali ke Gerbang</span>
+                  <ChevronRight className="w-4 h-4 shrink-0" />
                 </button>
               </div>
             </div>
@@ -472,9 +472,9 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                             type="button"
                             disabled={sakubunPlacedTiles.length === 0}
                             onClick={handleCheckSakubun}
-                            className="px-8 py-2.5 rounded-xl bg-indigo hover:bg-indigo/90 disabled:opacity-40 text-white text-xs font-bold font-heading shadow-md"
+                            className="btn-skeuo-indigo px-8 py-2.5 disabled:opacity-40 text-xs shadow-md active:scale-95 transition-all"
                           >
-                            Periksa Kalimat
+                            <span className="whitespace-nowrap">Periksa Kalimat</span>
                           </button>
                         </div>
                       )}
@@ -547,9 +547,9 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                           <button
                             type="button"
                             onClick={() => advanceToNextFloor(selectedAnswerIndex === q.correctIndex, 20, 10)}
-                            className="px-5 py-2 rounded-xl bg-indigo hover:bg-indigo/90 text-white text-xs font-bold font-heading shrink-0"
+                            className="btn-skeuo-indigo px-5 py-2 text-xs shadow-sm active:scale-95 transition-all shrink-0"
                           >
-                            Lantai Berikutnya →
+                            <span className="whitespace-nowrap">Lantai Berikutnya →</span>
                           </button>
                         </div>
                       )}
@@ -624,9 +624,9 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                           <button
                             type="button"
                             onClick={() => advanceToNextFloor(selectedAnswerIndex === q.correctIndex, 15, 8)}
-                            className="px-5 py-2 rounded-xl bg-indigo hover:bg-indigo/90 text-white text-xs font-bold font-heading shrink-0"
+                            className="btn-skeuo-indigo px-5 py-2 text-xs shadow-sm active:scale-95 transition-all shrink-0"
                           >
-                            Lantai Berikutnya →
+                            <span className="whitespace-nowrap">Lantai Berikutnya →</span>
                           </button>
                         </div>
                       )}

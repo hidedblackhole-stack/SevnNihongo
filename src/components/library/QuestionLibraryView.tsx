@@ -505,19 +505,21 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
               <button
+                type="button"
                 onClick={() => handleStartDrill(activeSection, levelFilter)}
-                className="w-full sm:w-auto px-6 py-3 rounded-xl bg-gold text-surface-ground font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm hover:opacity-95 transition-all"
+                className="btn-skeuo-gold w-full sm:w-auto px-6 py-3 text-xs sm:text-sm shadow-md active:scale-95 transition-all"
               >
-                <RotateCcw className="w-4 h-4" />
-                <span>Latihan 10 Soal Baru (Acak)</span>
+                <RotateCcw className="w-4 h-4 shrink-0" />
+                <span className="whitespace-nowrap">Latihan 10 Soal Baru (Acak)</span>
               </button>
 
               <button
+                type="button"
                 onClick={() => setIsDrillActive(false)}
-                className="w-full sm:w-auto px-6 py-3 rounded-xl bg-surface-inset border border-border-subtle hover:border-border-muted text-text-primary font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all"
+                className="btn-skeuo-indigo w-full sm:w-auto px-6 py-3 text-xs sm:text-sm shadow-md active:scale-95 transition-all"
               >
-                <ArrowLeft className="w-4 h-4" />
-                <span>Kembali ke Bank Soal</span>
+                <ArrowLeft className="w-4 h-4 shrink-0" />
+                <span className="whitespace-nowrap">Kembali ke Bank Soal</span>
               </button>
             </div>
           </div>
@@ -762,18 +764,19 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
             {/* Footer Next Button */}
             <div className="pt-2 flex justify-end">
               <button
+                type="button"
                 onClick={handleDrillNext}
                 disabled={!isAnswered}
                 className={`px-6 py-3 rounded-2xl font-bold text-xs sm:text-sm flex items-center gap-2 transition-all ${
                   isAnswered
-                    ? 'bg-gold text-surface-ground hover:opacity-95 shadow-sm'
+                    ? 'btn-skeuo-gold shadow-md active:scale-95 cursor-pointer'
                     : 'bg-surface-inset border border-border-subtle text-text-muted opacity-50 cursor-not-allowed'
                 }`}
               >
-                <span>
+                <span className="whitespace-nowrap">
                   {drillCurrentIndex < drillQuestions.length - 1 ? 'Soal Berikutnya' : 'Selesaikan Latihan & Evaluasi'}
                 </span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 shrink-0" />
               </button>
             </div>
           </div>
@@ -869,11 +872,12 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
           </div>
 
           <button
+            type="button"
             onClick={() => handleStartDrill(activeSection, levelFilter)}
-            className="w-full py-3 px-4 rounded-2xl bg-gold text-surface-ground font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm hover:opacity-95 transition-all"
+            className="btn-skeuo-gold w-full py-3.5 px-4 text-xs sm:text-sm shadow-md active:scale-98 transition-all cursor-pointer"
           >
-            <Play className="w-4 h-4 fill-current" />
-            <span>Mulai Latihan Harian (10 Soal)</span>
+            <Play className="w-4 h-4 fill-current shrink-0" />
+            <span className="whitespace-nowrap">Mulai Latihan Harian (10 Soal)</span>
           </button>
         </div>
 
@@ -898,6 +902,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
           </div>
 
           <button
+            type="button"
             onClick={() => {
               if (filteredTryouts.length > 0) {
                 setActiveDungeonTryout(filteredTryouts[0].data);
@@ -906,10 +911,10 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
               }
               playSound('click', soundEnabled);
             }}
-            className="w-full py-3 px-4 rounded-2xl bg-surface-inset border border-border-subtle hover:border-border-muted text-text-primary font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all"
+            className="btn-skeuo-indigo w-full py-3.5 px-4 text-xs sm:text-sm shadow-md active:scale-98 transition-all cursor-pointer"
           >
-            <Compass className="w-4 h-4" />
-            <span>
+            <Compass className="w-4 h-4 shrink-0 text-gold" />
+            <span className="whitespace-nowrap">
               {activeSection === 'tryout' ? 'Pilih Paket Ujian di Bawah' : 'Buka Paket Ujian Nyata'}
             </span>
           </button>

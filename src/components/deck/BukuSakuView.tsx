@@ -592,15 +592,15 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
                       setIsCurriculumConfigOpen(true);
                     }
                   }}
-                  className={`px-4 py-2.5 rounded-2xl font-heading font-bold text-xs flex items-center gap-2 transition-all ${
+                  className={`px-4 py-2.5 rounded-2xl font-sans font-bold text-xs flex items-center gap-2 transition-all ${
                     resolvedItems.length === 0
                       ? 'opacity-40 cursor-not-allowed bg-surface-inset text-text-muted border border-border-subtle'
-                      : 'bg-indigo hover:bg-indigo/90 text-white border border-indigo/30 shadow-sm hover:scale-[1.02]'
+                      : 'btn-skeuo-indigo shadow-md hover:scale-[1.02]'
                   }`}
                   title="Jadikan deck ini kurikulum petualangan stage bergaya World"
                 >
-                  <Compass className="w-3.5 h-3.5 text-gold" />
-                  <span>{curriculums[activeDeck.id] ? 'Petualangan World' : 'Rancang World Stage'}</span>
+                  <Compass className="w-3.5 h-3.5 text-gold shrink-0" />
+                  <span className="whitespace-nowrap">{curriculums[activeDeck.id] ? 'Petualangan World' : 'Rancang World Stage'}</span>
                 </button>
 
                 {/* Flashcard Button */}
