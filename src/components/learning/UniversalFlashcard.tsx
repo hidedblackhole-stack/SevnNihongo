@@ -33,6 +33,8 @@ export interface UniversalFlashcardProps {
   topRightExtra?: React.ReactNode;
 }
 
+import { asFlashcard } from '../../engine/traits/traits';
+
 interface NormalizedCardData {
   category: 'kanji' | 'kotoba' | 'bunpou';
   kanji?: KanjiItem;
@@ -45,57 +47,29 @@ interface NormalizedCardData {
 }
 
 function normalizeItem(raw: UniversalFlashcardItem): NormalizedCardData {
-  const item = raw as any;
-
-  // 1. Explicit or derived category
-  let category: 'kanji' | 'kotoba' | 'bunpou' = item.category || 'kotoba';
-  if (!item.category) {
-    if (item.kanji || (item.character && item.strokeCount !== undefined)) {
-      category = 'kanji';
-    } else if (item.bunpou || item.formula) {
-      category = 'bunpou';
-    } else {
-      category = 'kotoba';
-    }
-  }
-
-  const kanji: KanjiItem | undefined = item.kanji || (category === 'kanji' ? item : undefined);
-  const kotoba: KotobaItem | undefined = item.kotoba || (category === 'kotoba' ? item : undefined);
-  const bunpou: BunpouItem | undefined = item.bunpou || (category === 'bunpou' ? item : undefined);
-
-  let displayTitle = item.displayTitle || '';
-  let displayReading = item.displayReading || '';
-  let displayMeaning = item.displayMeaning || '';
-  let level = item.level || 'N5';
-
-  if (category === 'kanji' && kanji) {
-    displayTitle = displayTitle || kanji.character || '';
-    displayReading = displayReading || (kanji.onyomi?.[0] || kanji.kunyomi?.[0] || '');
-    displayMeaning = displayMeaning || kanji.meaningId || kanji.meaningEn || '';
-    level = level || kanji.jlpt || 'N5';
-  } else if (category === 'bunpou' && bunpou) {
-    displayTitle = displayTitle || bunpou.title || '';
-    displayReading = displayReading || bunpou.formula || '';
-    displayMeaning = displayMeaning || bunpou.meaningId || '';
-    level = level || bunpou.level || 'N3';
-  } else if (kotoba) {
-    displayTitle = displayTitle || kotoba.word || '';
-    displayReading = displayReading || kotoba.reading || '';
-    displayMeaning = displayMeaning || kotoba.meaningId || kotoba.meaningEn || '';
-    level = level || kotoba.jlpt || 'N5';
+  const trait = asFlashcard(raw);
+  if (!trait) {
+    return {
+      category: 'kotoba',
+      displayTitle: (raw as any)?.displayTitle || (raw as any)?.word || (raw as any)?.character || '—',
+      displayReading: (raw as any)?.displayReading || (raw as any)?.reading || '',
+      displayMeaning: (raw as any)?.displayMeaning || (raw as any)?.meaningId || '',
+      level: (raw as any)?.level || 'N5',
+    };
   }
 
   return {
-    category,
-    kanji,
-    kotoba,
-    bunpou,
-    displayTitle,
-    displayReading,
-    displayMeaning,
-    level,
+    category: trait.category,
+    kanji: trait.kanji,
+    kotoba: trait.kotoba,
+    bunpou: trait.bunpou,
+    displayTitle: trait.displayTitle,
+    displayReading: trait.displayReading,
+    displayMeaning: trait.displayMeaning,
+    level: trait.level,
   };
 }
+
 
 export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
   item,

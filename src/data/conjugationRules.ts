@@ -736,9 +736,9 @@ export interface ConjugationDrillQuestion extends Question {
   };
 }
 
-export function generateConjugationQuestion(targetFormId?: string): ConjugationDrillQuestion {
-  // 1. Pick a verb randomly
-  const verb = VERB_CONJUGATION_DATABASE[Math.floor(Math.random() * VERB_CONJUGATION_DATABASE.length)];
+export function generateConjugationQuestion(targetFormId?: string, targetVerb?: VerbItem): ConjugationDrillQuestion {
+  // 1. Pick a verb randomly or use targetVerb
+  const verb = targetVerb || VERB_CONJUGATION_DATABASE[Math.floor(Math.random() * VERB_CONJUGATION_DATABASE.length)];
   
   // 2. Pick target form
   const availableForms = CONJUGATION_FORMS_INFO;

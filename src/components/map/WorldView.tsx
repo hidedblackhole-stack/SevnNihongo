@@ -718,10 +718,12 @@ export const WorldView: React.FC<WorldViewProps> = ({
         <DungeonSetupModal
           isOpen={true}
           dungeonType={setupDungeonType}
+          userDecks={userDecks}
+          onNavigateTab={onNavigateTab}
           onClose={() => setSetupDungeonType(null)}
           onStartDungeon={(cfg) => {
             try {
-              const payload = generateDungeonSession(cfg);
+              const payload = generateDungeonSession(cfg, userDecks);
               setSetupDungeonType(null);
               setActiveDungeonPayload(payload);
             } catch (err) {
@@ -738,7 +740,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
           payload={activeDungeonPayload}
           onClose={() => setActiveDungeonPayload(null)}
           onRestart={(cfg) => {
-            const payload = generateDungeonSession(cfg);
+            const payload = generateDungeonSession(cfg, userDecks);
             setActiveDungeonPayload(payload);
           }}
           onRewardPlayer={onRewardPlayer}

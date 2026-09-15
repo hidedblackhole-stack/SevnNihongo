@@ -82,6 +82,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
         setError('Password minimal harus 6 karakter.');
       } else if (msg.includes('Invalid API key') || msg.includes('apikey')) {
         setError('Koneksi server sedang disegarkan. Mohon refresh halaman browser (Ctrl+F5) lalu coba lagi.');
+      } else if (msg.includes('Error sending confirmation email') || msg.includes('confirmation email')) {
+        setError('Server Supabase gagal mengirim email verifikasi (limit SMTP tercapai). Solusi: Matikan opsi "Confirm email" di Supabase Dashboard (Authentication > Providers > Email) agar user bisa langsung daftar.');
       } else {
         setError(msg || 'Terjadi kesalahan saat proses autentikasi.');
       }
@@ -92,68 +94,75 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-      <div className="w-full max-w-md panel bg-surface-card border border-border-primary rounded-3xl overflow-hidden shadow-2xl relative animate-in fade-in zoom-in duration-200">
-        
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm">
+      <div className="w-full max-w-md panel panel-stitched bg-surface-card border border-border-subtle rounded-3xl overflow-hidden shadow-[6px_6px_24px_var(--neu-d),-4px_-4px_16px_var(--neu-l)] relative animate-in fade-in zoom-in duration-200">
+        {/* Washi Texture Overlay */}
+        <div className="skeuo-grain" />
+
         {/* Header */}
-        <div className="flex justify-between items-center p-4 border-b border-border-subtle bg-surface-card">
-          <h2 className="font-bold text-text-primary text-lg font-heading">
-            {isLogin ? 'Masuk (Opsional)' : 'Buat Akun (Opsional)'}
-          </h2>
+        <div className="flex justify-between items-center p-4 sm:p-5 border-b border-border-subtle bg-surface-inset/80 relative z-10 shadow-xs">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-surface-card border border-gold/40 flex items-center justify-center text-gold shadow-xs">
+              <Lock className="w-4 h-4" />
+            </div>
+            <h2 className="font-bold text-text-primary text-base sm:text-lg font-heading tracking-wide">
+              {isLogin ? 'Masuk ke Akun' : 'Buat Akun Petualang'}
+            </h2>
+          </div>
           <button 
             onClick={() => {
               playSound('click', soundEnabled);
               onClose();
             }}
-            className="p-2 rounded-full hover:bg-surface-elevated text-text-muted hover:text-text-primary transition-colors"
+            className="w-8 h-8 rounded-xl hover:bg-surface-elevated text-text-muted hover:text-text-primary transition-all border border-border-subtle flex items-center justify-center shadow-xs cursor-pointer"
             title="Tutup / Lanjutkan tanpa login"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Form */}
-        <div className="p-6">
+        <div className="p-5 sm:p-6 relative z-10 space-y-4">
           {error && (
-            <div className="flex items-start gap-2 p-3 mb-6 bg-rose-500/15 border border-rose-500/50 rounded-xl text-rose-500 text-sm">
-              <AlertCircle className="w-5 h-5 shrink-0 text-rose-500" />
+            <div className="flex items-start gap-2.5 p-3.5 bg-rose-500/15 border border-rose-500/40 rounded-2xl text-rose-400 text-xs shadow-xs leading-relaxed">
+              <AlertCircle className="w-4 h-4 shrink-0 text-rose-400 mt-0.5" />
               <p>{error}</p>
             </div>
           )}
 
           {successMessage && (
-            <div className="flex items-start gap-2 p-3 mb-6 bg-emerald-500/15 border border-emerald-500/50 rounded-xl text-emerald-600 dark:text-emerald-300 text-sm">
-              <div className="w-2 h-2 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
+            <div className="flex items-start gap-2.5 p-3.5 bg-emerald-500/15 border border-emerald-500/40 rounded-2xl text-emerald-300 text-xs shadow-xs leading-relaxed">
+              <div className="w-2 h-2 rounded-full bg-emerald-400 mt-1.5 shrink-0" />
               <p>{successMessage}</p>
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-1">
-              <label className="text-xs font-bold text-text-secondary ml-1 font-heading">Email</label>
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-text-secondary ml-1 font-heading uppercase tracking-wider">Email (Gmail)</label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
+                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-surface-inset border border-border-subtle rounded-xl py-3 pl-10 pr-4 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-border-primary focus:ring-1 focus:ring-border-primary transition-all"
-                  placeholder="petualang@sevnquest.com"
+                  className="w-full bg-surface-inset border border-border-subtle rounded-xl py-3 pl-10 pr-4 text-xs sm:text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/30 transition-all shadow-[inset_1.5px_1.5px_4px_var(--neu-d)]"
+                  placeholder="nama@gmail.com"
                   required
                 />
               </div>
             </div>
 
-            <div className="space-y-1">
-              <label className="text-xs font-bold text-text-secondary ml-1 font-heading">Password</label>
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-text-secondary ml-1 font-heading uppercase tracking-wider">Password</label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
+                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-surface-inset border border-border-subtle rounded-xl py-3 pl-10 pr-4 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-border-primary focus:ring-1 focus:ring-border-primary transition-all"
-                  placeholder="••••••••"
+                  className="w-full bg-surface-inset border border-border-subtle rounded-xl py-3 pl-10 pr-4 text-xs sm:text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/30 transition-all shadow-[inset_1.5px_1.5px_4px_var(--neu-d)]"
+                  placeholder="Minimal 6 karakter"
                   required
                   minLength={6}
                 />
@@ -163,26 +172,28 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
             <button
               type="submit"
               disabled={isLoading}
-              className="rpg-btn rpg-btn-primary w-full py-3.5 text-sm font-heading mt-6 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-cta w-full py-3.5 text-xs sm:text-sm font-heading font-black mt-6 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-[4px_4px_14px_var(--neu-d)] cursor-pointer"
             >
-              {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : isLogin ? 'Login' : 'Sign Up'}
+              {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : isLogin ? 'Masuk ke Akun' : 'Daftar Akun Baru'}
             </button>
 
-            <button
-              type="button"
-              onClick={() => {
-                playSound('click', soundEnabled);
-                onClose();
-              }}
-              className="w-full py-2.5 text-xs text-text-muted hover:text-text-primary transition-colors text-center mt-2 font-medium"
-            >
-              Lanjut Belajar Tanpa Login (Mode Tamu)
-            </button>
+            {!isMandatory && (
+              <button
+                type="button"
+                onClick={() => {
+                  playSound('click', soundEnabled);
+                  onClose();
+                }}
+                className="w-full py-2.5 text-xs text-text-muted hover:text-text-primary transition-colors text-center font-medium cursor-pointer"
+              >
+                Lanjut Belajar Tanpa Login (Mode Tamu)
+              </button>
+            )}
           </form>
 
-          {/* Toggle */}
-          <div className="mt-6 text-center text-sm text-text-secondary">
-            {isLogin ? "Don't have an account? " : "Already have an account? "}
+          {/* Toggle Login / SignUp */}
+          <div className="mt-4 pt-4 border-t border-border-subtle text-center text-xs text-text-secondary">
+            {isLogin ? 'Belum punya akun? ' : 'Sudah punya akun? '}
             <button
               type="button"
               onClick={() => {
@@ -190,15 +201,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
                 setError(null);
                 playSound('click', soundEnabled);
               }}
-              className="text-gold font-bold hover:underline"
+              className="text-gold font-bold hover:underline cursor-pointer ml-1"
             >
-              {isLogin ? 'Sign Up' : 'Login'}
+              {isLogin ? 'Daftar Sekarang' : 'Masuk di Sini'}
             </button>
           </div>
           
           {!isLogin && (
-            <p className="text-[10px] text-text-muted text-center mt-4 px-4">
-              Creating an account will securely link your local progress to the cloud Leaderboard.
+            <p className="text-[10px] text-text-muted text-center mt-2 px-2">
+              Akun akan menyinkronkan progres petualangan dan peringkat Leaderboard ke cloud secara aman.
             </p>
           )}
         </div>

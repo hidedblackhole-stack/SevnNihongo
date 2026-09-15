@@ -143,7 +143,9 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <div className="relative w-full max-w-2xl max-h-[94vh] flex flex-col panel border border-border-subtle rounded-3xl shadow-2xl overflow-hidden bg-surface-card animate-scale-up">
+      <div className="panel panel-stitched relative w-full max-w-2xl max-h-[94vh] flex flex-col border border-border-subtle rounded-3xl shadow-2xl overflow-hidden bg-surface-card animate-scale-up">
+        {/* Subtle Washi Texture Overlay */}
+        <div className="skeuo-grain" />
         
         {/* TOP HUD: Dungeon Floor Header */}
         <div className="p-3.5 sm:p-4 border-b border-border-subtle flex items-center justify-between gap-3 bg-surface-inset shrink-0">
@@ -160,8 +162,8 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                   {config.type === 'conjugation' && '⚡ Altar Konjugasi'}
                   {config.type === 'quiz' && '🎯 Arena Kuis Cepat'}
                 </span>
-                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-surface-card text-indigo border border-border-subtle font-bold">
-                  {config.levelCategory}
+                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-surface-card text-indigo border border-border-subtle font-bold max-w-[150px] truncate">
+                  {config.deckTitle ? `📖 ${config.deckTitle}` : config.levelCategory}
                 </span>
               </div>
               <span className="text-[10px] text-text-secondary font-mono">

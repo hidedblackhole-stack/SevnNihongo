@@ -7,6 +7,7 @@ import { resolveDeckItem, ResolvedDeckItem } from '../../utils/decks';
 import { UniversalWritingCard } from '../learning/UniversalWritingCard';
 import { playSound } from '../../utils/audio';
 import { WritingRewardResult } from '../../utils/rewards';
+import { asWritable } from '../../engine/traits/traits';
 
 interface DeckWritingRunnerProps {
   deck: UserDeck;
@@ -30,12 +31,13 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
   onCompleteStudyItem,
   soundEnabled = true,
 }) => {
-  // Resolve writable items (only kanji or kotoba)
+  // Resolve writable items by capability trait (ECS System model)
   const writableItems = useMemo(() => {
     return (deck.items || [])
       .map(ref => resolveDeckItem(ref))
-      .filter((it): it is ResolvedDeckItem => it !== null && (it.category === 'kanji' || it.category === 'kotoba'));
+      .filter((it): it is ResolvedDeckItem => it !== null && asWritable(it) !== null);
   }, [deck.items]);
+
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [completedItems, setCompletedItems] = useState<number[]>([]);

@@ -340,9 +340,6 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
                   {item.radicalName ? ` • Radikal Asal: ${item.radicalName}` : ''}
                 </p>
               )}
-              <p className="text-[11px] text-text-muted pt-0.5">
-                ID Entitas: <span className="font-mono text-text-primary font-bold">{item.id}</span>
-              </p>
             </div>
           </div>
 
@@ -523,7 +520,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
                 item.relatedWords.slice(0, 2).map((rw, i) => (
                   <div
                     key={i}
-                    className="flex flex-col items-center justify-between px-3.5 py-2.5 rounded-2xl bg-surface-card/85 dark:bg-surface-card/50 border border-border-default hover:border-wine-accent/50 hover:shadow-md transition-all shadow-xs group cursor-pointer min-w-[135px] max-w-[220px]"
+                    className="flex flex-col items-center justify-between px-3.5 py-2.5 rounded-2xl bg-surface-inset hover:bg-surface-card border border-border-subtle hover:border-wine-accent/40 transition-all shadow-inner group cursor-pointer min-w-[135px] max-w-[220px]"
                     onClick={() => speakJapanese(rw.word)}
                     title="Klik untuk mendengar audio kata ini"
                   >
@@ -543,7 +540,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
                 ))
               ) : (
                 <div
-                  className="flex flex-col items-center justify-between px-4 py-2.5 rounded-2xl bg-surface-card/85 dark:bg-surface-card/50 border border-border-default group cursor-pointer"
+                  className="flex flex-col items-center justify-between px-4 py-2.5 rounded-2xl bg-surface-inset hover:bg-surface-card border border-border-subtle hover:border-wine-accent/40 transition-all shadow-inner group cursor-pointer"
                   onClick={() =>
                     speakJapanese(
                       item.kunyomi?.[0]?.replace(/[.-]/g, '') || item.onyomi?.[0] || item.character

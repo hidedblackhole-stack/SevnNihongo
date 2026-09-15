@@ -54,8 +54,8 @@ export const PATTERN_SCHEMAS: Record<string, GrammarPatternSchema> = {
       { role: 'object', particle: 'を', required: false, allowedWordTypes: ['noun'] },
       { role: 'predicate', required: true, allowedWordTypes: ['verb'], conjugationRequirement: 'ta' },
     ],
-    meaningTemplateId: 'Sebaiknya {predicate} {object}',
-    meaningTemplateEn: 'You should {predicate} {object}',
+    meaningTemplateId: 'Sebaiknya {predicate} {object} di {location}',
+    meaningTemplateEn: 'You should {predicate} {object} at {location}',
     nuanceExplanation: 'Memberikan anjuran atau saran kuat yang menguntungkan lawan bicara.',
   },
 
@@ -89,8 +89,9 @@ export const PATTERN_SCHEMAS: Record<string, GrammarPatternSchema> = {
       { role: 'object', particle: 'を', required: false, allowedWordTypes: ['noun'] },
       { role: 'predicate', required: true, allowedWordTypes: ['verb'], conjugationRequirement: 'te' },
     ],
-    meaningTemplateId: 'Sedang {predicate} {object}',
-    meaningTemplateEn: 'Is {predicate}ing {object}',
+    meaningTemplateId: 'Sedang {predicate} {object} di {location}',
+    meaningTemplateEn: 'Is {predicate}ing {object} at {location}',
+
     nuanceExplanation: 'Menyatakan kegiatan yang sedang berjalan atau keadaan hasil dari tindakan sebelumnya.',
   },
 

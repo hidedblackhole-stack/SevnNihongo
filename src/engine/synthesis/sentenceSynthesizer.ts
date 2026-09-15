@@ -28,52 +28,52 @@ export interface SynthesizeOptions {
 export const NATURAL_PAIRS: {
   verb: { word: string; reading: string; meaningId: string; meaningEn: string };
   object: { word: string; reading: string; meaningId: string; meaningEn: string };
-  defaultLocation?: { word: string; reading: string; meaningId: string };
+  defaultLocation?: { word: string; reading: string; meaningId: string; meaningEn?: string };
 }[] = [
   {
     verb: { word: '読む', reading: 'よむ', meaningId: 'membaca', meaningEn: 'read' },
     object: { word: '本', reading: 'ほん', meaningId: 'buku', meaningEn: 'book' },
-    defaultLocation: { word: '図書館', reading: 'としょかん', meaningId: 'perpustakaan' },
+    defaultLocation: { word: '図書館', reading: 'としょかん', meaningId: 'perpustakaan', meaningEn: 'the library' },
   },
   {
     verb: { word: '食べる', reading: 'たべる', meaningId: 'makan', meaningEn: 'eat' },
     object: { word: 'ご飯', reading: 'ごはん', meaningId: 'nasi', meaningEn: 'meal' },
-    defaultLocation: { word: '食堂', reading: 'しょくどう', meaningId: 'kantin' },
+    defaultLocation: { word: '食堂', reading: 'しょくどう', meaningId: 'kantin', meaningEn: 'the cafeteria' },
   },
   {
     verb: { word: '飲む', reading: 'のむ', meaningId: 'minum', meaningEn: 'drink' },
     object: { word: '水', reading: 'みず', meaningId: 'air', meaningEn: 'water' },
-    defaultLocation: { word: 'ここ', reading: 'ここ', meaningId: 'sini' },
+    defaultLocation: { word: 'ここ', reading: 'ここ', meaningId: 'sini', meaningEn: 'here' },
   },
   {
     verb: { word: '勉強する', reading: 'べんきょうする', meaningId: 'belajar', meaningEn: 'study' },
     object: { word: '日本語', reading: 'にほんご', meaningId: 'bahasa Jepang', meaningEn: 'Japanese' },
-    defaultLocation: { word: '教室', reading: 'きょうしつ', meaningId: 'kelas' },
+    defaultLocation: { word: '教室', reading: 'きょうしつ', meaningId: 'kelas', meaningEn: 'the classroom' },
   },
   {
     verb: { word: '聞く', reading: 'きく', meaningId: 'mendengarkan', meaningEn: 'listen to' },
     object: { word: '音楽', reading: 'おんがく', meaningId: 'musik', meaningEn: 'music' },
-    defaultLocation: { word: '部屋', reading: 'へや', meaningId: 'kamar' },
+    defaultLocation: { word: '部屋', reading: 'へや', meaningId: 'kamar', meaningEn: 'the room' },
   },
   {
     verb: { word: '吸う', reading: 'すう', meaningId: 'merokok / menghisap', meaningEn: 'smoke' },
     object: { word: 'たばこ', reading: 'たばこ', meaningId: 'rokok', meaningEn: 'cigarette' },
-    defaultLocation: { word: 'ここ', reading: 'ここ', meaningId: 'sini' },
+    defaultLocation: { word: 'ここ', reading: 'ここ', meaningId: 'sini', meaningEn: 'here' },
   },
   {
     verb: { word: '撮る', reading: 'とる', meaningId: 'mengambil', meaningEn: 'take' },
     object: { word: '写真', reading: 'しゃしん', meaningId: 'foto', meaningEn: 'photo' },
-    defaultLocation: { word: '美術館', reading: 'びじゅつかん', meaningId: 'museum' },
+    defaultLocation: { word: '美術館', reading: 'びじゅつかん', meaningId: 'museum', meaningEn: 'the museum' },
   },
   {
     verb: { word: '書く', reading: 'かく', meaningId: 'menulis', meaningEn: 'write' },
     object: { word: '手紙', reading: 'てがみ', meaningId: 'surat', meaningEn: 'letter' },
-    defaultLocation: { word: '部屋', reading: 'へや', meaningId: 'kamar' },
+    defaultLocation: { word: '部屋', reading: 'へや', meaningId: 'kamar', meaningEn: 'the room' },
   },
   {
     verb: { word: '見る', reading: 'みる', meaningId: 'menonton', meaningEn: 'watch' },
     object: { word: 'テレビ', reading: 'てれび', meaningId: 'televisi', meaningEn: 'TV' },
-    defaultLocation: { word: '家', reading: 'いえ', meaningId: 'rumah' },
+    defaultLocation: { word: '家', reading: 'いえ', meaningId: 'rumah', meaningEn: 'home' },
   },
 ];
 
@@ -106,6 +106,7 @@ export function synthesizeSentence(options: SynthesizeOptions): SynthesizedSente
         word: options.locationWord,
         reading: options.locationReading || options.locationWord,
         meaningId: options.locationMeaningId || options.locationWord,
+        meaningEn: options.locationMeaningEn,
       }
     : pair.defaultLocation;
 
@@ -121,7 +122,8 @@ export function synthesizeSentence(options: SynthesizeOptions): SynthesizedSente
 
   // 1. Location (if applicable to pattern and exists)
   const hasLocationSlot = schema.slots.some(s => s.role === 'location');
-  if (hasLocationSlot && location) {
+  const locationIncluded = Boolean(hasLocationSlot && location);
+  if (locationIncluded && location) {
     breakdown.push({ text: location.word, reading: location.reading, role: 'location' });
     breakdown.push({ text: 'で', reading: 'で', role: 'location_particle', isParticle: true });
     jpStr += `${location.word}で`;
@@ -153,20 +155,44 @@ export function synthesizeSentence(options: SynthesizeOptions): SynthesizedSente
   jpStr += '。';
   rdStr += '。';
 
-  // Generate natural Indonesian and English translations
+  // Construct precise location phrases
+  const locPhraseId = locationIncluded && location
+    ? (location.meaningId === 'sini' ? 'di sini' : `di ${location.meaningId}`)
+    : '';
+
+  const locPhraseEn = locationIncluded && location
+    ? (location.meaningEn
+        ? (location.meaningEn === 'here' ? 'here' : (location.meaningEn === 'home' ? 'at home' : `in ${location.meaningEn}`))
+        : (location.meaningId === 'sini' ? 'here' : `at the ${location.meaningId}`))
+    : '';
+
+  // Generate natural Indonesian translation
   let meaningId = schema.meaningTemplateId
+    .replace('di {location}', locPhraseId)
+    .replace('{location}', locPhraseId)
     .replace('{predicate}', verb.meaningId)
     .replace('{object}', object ? object.meaningId : '')
-    .replace('{location}', location ? location.meaningId : '')
     .replace(/\s+/g, ' ')
     .trim();
 
+  // If location was included in Japanese but template lacked the location tag, append it
+  if (locationIncluded && locPhraseId && !meaningId.includes(locPhraseId)) {
+    meaningId = `${meaningId} ${locPhraseId}`;
+  }
+
+  // Generate natural English translation
   let meaningEn = schema.meaningTemplateEn
+    .replace('at {location}', locPhraseEn)
+    .replace('in {location}', locPhraseEn)
+    .replace('{location}', locPhraseEn)
     .replace('{predicate}', verb.meaningEn)
     .replace('{object}', object ? object.meaningEn : '')
-    .replace('{location}', location ? (location.meaningId === 'perpustakaan' ? 'the library' : location.meaningId) : '')
     .replace(/\s+/g, ' ')
     .trim();
+
+  if (locationIncluded && locPhraseEn && !meaningEn.includes(locPhraseEn)) {
+    meaningEn = `${meaningEn} ${locPhraseEn}`;
+  }
 
   return {
     id: `synth_${schema.id}_${Date.now()}`,
@@ -178,3 +204,4 @@ export function synthesizeSentence(options: SynthesizeOptions): SynthesizedSente
     breakdown,
   };
 }
+

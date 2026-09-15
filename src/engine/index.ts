@@ -8,3 +8,6 @@ export * from './syntax/particleRules';
 export * from './syntax/patternSchemas';
 export * from './synthesis/sentenceSynthesizer';
 export * from './practice/sentenceBuilderEngine';
+export * from './traits/traits';
+export * from './registry/entityRegistry';
+

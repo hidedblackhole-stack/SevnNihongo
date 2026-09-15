@@ -48,15 +48,18 @@ import {
   resolveDeckItem,
   ResolvedDeckItem,
   DEFAULT_BOOKMARK_DECK_ID,
+  toggleBookmarkItem,
 } from '../../utils/decks';
 import { playSound } from '../../utils/audio';
 import { CreateDeckModal } from './CreateDeckModal';
 import { DeckAddItemModal } from './DeckAddItemModal';
 import { DeckFlashcardRunner } from './DeckFlashcardRunner';
 import { DeckWritingRunner } from './DeckWritingRunner';
+import { UniversalEntityModal } from '../modals/UniversalEntityModal';
 import { KotobaDetailModal } from '../library/KotobaDetailModal';
 import { KanjiDetailModal } from '../library/KanjiDetailModal';
 import { BunpouDetailModal } from '../library/BunpouDetailModal';
+
 
 interface BukuSakuViewProps {
   userDecks?: UserDeck[];
@@ -118,6 +121,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
       setIsCreateModalOpen(false);
       setIsAddItemModalOpen(false);
       setEditingDeck(null);
+      setInspectedEntity(null);
       setSelectedKotoba(null);
       setSelectedKanji(null);
       setSelectedBunpou(null);
@@ -137,10 +141,12 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
   const [quickPresetLevel, setQuickPresetLevel] = useState<'all' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'Kaigo'>('N5');
   const [quickPresetCount, setQuickPresetCount] = useState<number>(10);
 
-  // Item detail inspection modals
+  // Item detail inspection modals (Universal Pluggable Inspector)
+  const [inspectedEntity, setInspectedEntity] = useState<any | null>(null);
   const [selectedKotoba, setSelectedKotoba] = useState<KotobaItem | null>(null);
   const [selectedKanji, setSelectedKanji] = useState<KanjiItem | null>(null);
   const [selectedBunpou, setSelectedBunpou] = useState<BunpouItem | null>(null);
+
 
   // Custom Curriculum & World state
   const [activeWorldDeckId, setActiveWorldDeckId] = useState<string | null>(null);
@@ -247,6 +253,12 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
     const updated = removeItemFromDeck(decks, activeDeck.id, itemId, category);
     onUpdateDecks(updated);
   };
+
+  const handleToggleBookmark = (id: string, category: DeckItemCategory, notes?: string) => {
+    const { userDecks: updated } = toggleBookmarkItem(decks, id, category, notes);
+    onUpdateDecks(updated);
+  };
+
 
   const handleImportBookmarks = () => {
     if (!activeDeck) return;
@@ -791,7 +803,11 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
                 return (
                   <div
                     key={`${item.category}:${item.ref.id}`}
-                    className="panel p-4 sm:p-5 rounded-2xl border border-border-subtle hover:border-border-primary transition-all flex items-start justify-between gap-3 group shadow-sm"
+                    onClick={() => {
+                      playSound('click', soundEnabled);
+                      setInspectedEntity(item);
+                    }}
+                    className="panel p-4 sm:p-5 rounded-2xl border border-border-subtle hover:border-border-primary hover:border-gold/40 cursor-pointer transition-all flex items-start justify-between gap-3 group shadow-sm"
                   >
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5 mb-1.5 flex-wrap">
@@ -808,7 +824,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
                         )}
                       </div>
 
-                      <h4 className="font-bold text-base sm:text-lg font-jp text-text-primary">
+                      <h4 className="font-bold text-base sm:text-lg font-jp text-text-primary group-hover:text-gold transition-colors">
                         {item.displayTitle}
                       </h4>
                       <p className="text-xs text-text-secondary mt-0.5 line-clamp-2">
@@ -817,17 +833,11 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
                     </div>
 
                     {/* Action buttons */}
-                    <div className="flex items-center gap-1.5 shrink-0 pt-1">
+                    <div className="flex items-center gap-1.5 shrink-0 pt-1" onClick={e => e.stopPropagation()}>
                       <button
                         onClick={() => {
                           playSound('click', soundEnabled);
-                          if (item.category === 'kotoba' && item.kotoba) {
-                            setSelectedKotoba(item.kotoba);
-                          } else if (item.category === 'kanji' && item.kanji) {
-                            setSelectedKanji(item.kanji);
-                          } else if (item.category === 'bunpou' && item.bunpou) {
-                            setSelectedBunpou(item.bunpou);
-                          }
+                          setInspectedEntity(item);
                         }}
                         className="px-2.5 py-1.5 rounded-xl bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-text-primary text-xs font-bold border border-border-subtle transition-colors"
                         title="Lihat Detail Lengkap"
@@ -848,6 +858,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
               })}
             </div>
           )}
+
         </div>
       )}
 
@@ -965,7 +976,19 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
         </div>
       )}
 
-      {/* Item Detail Modals */}
+      {/* Universal Pluggable Entity Modal (ECS Inspector) */}
+      <UniversalEntityModal
+        isOpen={Boolean(inspectedEntity)}
+        entity={inspectedEntity}
+        onClose={() => setInspectedEntity(null)}
+        soundEnabled={soundEnabled}
+        userDecks={decks}
+        onToggleBookmark={handleToggleBookmark}
+        onRewardPlayer={onRewardPlayer}
+        onCompleteStudyItem={onCompleteStudyItem}
+      />
+
+      {/* Legacy Fallback Item Detail Modals */}
       <KotobaDetailModal
         isOpen={Boolean(selectedKotoba)}
         item={selectedKotoba}
@@ -979,6 +1002,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
         onClose={() => setSelectedKanji(null)}
         soundEnabled={soundEnabled}
       />
+
 
       <AnimatePresence>
         {selectedBunpou && (

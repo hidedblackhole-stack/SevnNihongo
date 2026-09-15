@@ -5,6 +5,8 @@ import { ResolvedDeckItem } from '../../utils/decks';
 import { KanjiItem, KotobaItem } from '../../types/content';
 import { WritingRewardResult } from '../../utils/rewards';
 
+import { asWritable } from '../../engine/traits/traits';
+
 export type UniversalWritingItem =
   | ResolvedDeckItem
   | KanjiItem
@@ -40,30 +42,28 @@ export const UniversalWritingCard: React.FC<UniversalWritingCardProps> = ({
   showStopwatch = true,
   className = '',
 }) => {
-  const raw = item as any;
+  const writableTrait = asWritable(item);
 
-  // 1. Detect if it is Kanji
-  const isKanji =
-    raw.category === 'kanji' ||
-    Boolean(raw.kanji) ||
-    (Boolean(raw.character) && typeof raw.strokeCount === 'number');
+  // If item cannot be written, provide a safe fallback or return null
+  if (!writableTrait) {
+    return (
+      <div className={`w-full text-center p-6 panel rounded-2xl text-text-muted ${className}`}>
+        Materi ini tidak memiliki data goresan untuk ditulis.
+      </div>
+    );
+  }
 
-  if (isKanji) {
-    const kanji: KanjiItem = raw.kanji || raw;
-    const kanjiChar = kanji.character || raw.displayTitle || '';
-    const meaning = kanji.meaningId || kanji.meaningEn || raw.displayMeaning || '';
-    const onyomiStr = Array.isArray(kanji.onyomi) ? kanji.onyomi.join('、') : (kanji.onyomi || '');
-    const kunyomiStr = Array.isArray(kanji.kunyomi) ? kanji.kunyomi.join('、') : (kanji.kunyomi || '');
-
+  // 1. Single Kanji drawing canvas
+  if (writableTrait.isSingleKanji) {
     return (
       <div className={`w-full flex justify-center ${className}`}>
         <KanjiWritingCanvas
-          kanjiChar={kanjiChar}
-          level={kanji.jlpt || raw.level || 'N5'}
-          meaning={meaning}
-          strokeCount={kanji.strokeCount}
-          onyomi={onyomiStr}
-          kunyomi={kunyomiStr}
+          kanjiChar={writableTrait.character}
+          level={writableTrait.level}
+          meaning={writableTrait.meaning}
+          strokeCount={writableTrait.strokeCount}
+          onyomi={writableTrait.onyomi || ''}
+          kunyomi={writableTrait.kunyomi || ''}
           soundEnabled={soundEnabled}
           totalSheets={totalSheets}
           showStopwatch={showStopwatch}
@@ -80,32 +80,29 @@ export const UniversalWritingCard: React.FC<UniversalWritingCardProps> = ({
     );
   }
 
-  // 2. Kotoba or general word
-  const kotoba: KotobaItem =
-    raw.kotoba ||
-    (raw.word
-      ? raw
-      : {
-          id: raw.id || 'custom_kotoba_write',
-          word: raw.displayTitle || '日本',
-          reading: raw.displayReading || 'にほん',
-          meaningId: raw.displayMeaning || 'Jepang',
-          meaningEn: 'Japan',
-          meaningJa: '日本',
-          jlpt: raw.level || 'N5',
-          wordType: 'noun',
-          kanjiComponents: Array.from(raw.displayTitle || '日本'),
-          exampleSentence: {
-            japanese: `${raw.displayTitle || '日本'}へ行きます。`,
-            reading: `${raw.displayReading || 'にほん'}へいきます。`,
-            meaningId: `Pergi ke ${raw.displayMeaning || 'Jepang'}.`,
-          },
-        });
+  // 2. Multi-character Kotoba writing practice
+  const kotobaItem: KotobaItem =
+    (writableTrait.sourceItem?.word ? writableTrait.sourceItem : null) || {
+      id: (item as any).id || 'custom_kotoba_write',
+      word: writableTrait.character,
+      reading: (item as any).reading || (item as any).displayReading || writableTrait.character,
+      meaningId: writableTrait.meaning || 'Latihan Menulis',
+      meaningEn: (item as any).meaningEn || 'Writing Practice',
+      meaningJa: writableTrait.character,
+      jlpt: writableTrait.level || 'N5',
+      wordType: 'noun',
+      kanjiComponents: writableTrait.characters,
+      exampleSentence: {
+        japanese: `${writableTrait.character}を練習します。`,
+        reading: `${writableTrait.character}をれんしゅうします。`,
+        meaningId: `Berlatih menulis ${writableTrait.character}.`,
+      },
+    };
 
   return (
     <div className={`w-full ${className}`}>
       <KotobaWritingPractice
-        kotoba={kotoba}
+        kotoba={kotobaItem}
         soundEnabled={soundEnabled}
         onFinishWord={(score, reward) => {
           onFinish(score, reward);
@@ -114,3 +111,4 @@ export const UniversalWritingCard: React.FC<UniversalWritingCardProps> = ({
     </div>
   );
 };
+
