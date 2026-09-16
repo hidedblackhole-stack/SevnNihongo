@@ -33,25 +33,29 @@ export const JapaneseImeInput: React.FC<JapaneseImeInputProps> = ({
   rows = 2,
 }) => {
   const [imeActive, setImeActive] = useState<boolean>(true);
+  const [composingRomaji, setComposingRomaji] = useState<string>('');
+  const [composingKana, setComposingKana] = useState<string>('');
   const [activeCandidateIndex, setActiveCandidateIndex] = useState<number>(0);
   const [showCandidates, setShowCandidates] = useState<boolean>(false);
   const [focused, setFocused] = useState<boolean>(false);
 
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement | null>(null);
 
-  // Extract the current "active word" at the cursor or the trailing token
-  const activeWord = useMemo(() => {
-    if (!value) return '';
-    // Find trailing token separated by space or punctuation
-    const matches = value.match(/([a-zA-Z\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]+)$/);
-    return matches ? matches[1] : '';
+  // If the parent clears the input value externally (e.g. clicking "Hapus Teks"), reset composing state
+  useEffect(() => {
+    if (!value) {
+      setComposingRomaji('');
+      setComposingKana('');
+      setShowCandidates(false);
+      setActiveCandidateIndex(0);
+    }
   }, [value]);
 
-  // Candidates for the active token
+  // Generate candidates for the current composing token
   const candidates: HenkanCandidate[] = useMemo(() => {
-    if (!imeActive || !activeWord) return [];
-    return getHenkanCandidates(activeWord, contextWords);
-  }, [imeActive, activeWord, contextWords]);
+    if (!imeActive || !composingKana.trim()) return [];
+    return getHenkanCandidates(composingKana, contextWords);
+  }, [imeActive, composingKana, contextWords]);
 
   useEffect(() => {
     setActiveCandidateIndex(0);
@@ -59,17 +63,170 @@ export const JapaneseImeInput: React.FC<JapaneseImeInputProps> = ({
   }, [candidates, focused]);
 
   const handleApplyCandidate = (cand: HenkanCandidate) => {
-    if (!activeWord) return;
     playSound('click', soundEnabled);
 
-    // Replace the trailing active word with the candidate text
-    const beforeWord = value.slice(0, value.length - activeWord.length);
-    const newValue = beforeWord + cand.text;
-    onChange(newValue);
+    // Commit candidate text into the sentence
+    const newCommitted = value + cand.text;
+    onChange(newCommitted);
+
+    // Clear active composition buffer for the next word
+    setComposingRomaji('');
+    setComposingKana('');
     setShowCandidates(false);
+    setActiveCandidateIndex(0);
 
     if (inputRef.current) {
       inputRef.current.focus();
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    if (!imeActive) {
+      if (e.key === 'Enter' && onSubmit && !e.shiftKey) {
+        e.preventDefault();
+        onSubmit();
+      }
+      return;
+    }
+
+    // 1. SPACE BAR: Commit selected candidate and advance to next word!
+    if (e.key === ' ') {
+      e.preventDefault();
+      if (composingKana.length > 0) {
+        if (candidates.length > 0) {
+          const chosen = candidates[activeCandidateIndex] || candidates[0];
+          handleApplyCandidate(chosen);
+        } else {
+          // Commit current kana as-is
+          const newCommitted = value + composingKana;
+          onChange(newCommitted);
+          setComposingRomaji('');
+          setComposingKana('');
+          setShowCandidates(false);
+        }
+      } else {
+        // When not composing, allow inserting regular space
+        onChange(value + ' ');
+      }
+      return;
+    }
+
+    // 2. ENTER KEY: Commit composition as-is or submit full sentence
+    if (e.key === 'Enter') {
+      if (composingKana.length > 0) {
+        e.preventDefault();
+        const chosen = candidates[activeCandidateIndex] || { text: composingKana, type: 'hiragana' as const };
+        handleApplyCandidate(chosen);
+        return;
+      }
+
+      if (onSubmit && !e.shiftKey) {
+        e.preventDefault();
+        onSubmit();
+        return;
+      }
+    }
+
+    // 3. BACKSPACE: Delete active composition buffer first, then committed text
+    if (e.key === 'Backspace') {
+      if (composingRomaji.length > 0) {
+        e.preventDefault();
+        const nextRomaji = composingRomaji.slice(0, -1);
+        setComposingRomaji(nextRomaji);
+        const nextKana = convertRomajiToKana(nextRomaji);
+        setComposingKana(nextKana);
+        if (!nextRomaji) {
+          setShowCandidates(false);
+        }
+        return;
+      }
+
+      if (value.length > 0) {
+        e.preventDefault();
+        onChange(value.slice(0, -1));
+        return;
+      }
+    }
+
+    // 4. TAB / ARROW KEYS: Cycle candidate selection
+    if (showCandidates && candidates.length > 0) {
+      if (e.key === 'Tab' || e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        setActiveCandidateIndex(prev => (prev + 1) % candidates.length);
+        return;
+      }
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        setActiveCandidateIndex(prev => (prev - 1 + candidates.length) % candidates.length);
+        return;
+      }
+    }
+
+    // 5. NUMBER KEYS 1-9: Directly pick candidate
+    if (showCandidates && /^[1-9]$/.test(e.key)) {
+      const idx = parseInt(e.key, 10) - 1;
+      if (idx < candidates.length) {
+        e.preventDefault();
+        handleApplyCandidate(candidates[idx]);
+        return;
+      }
+    }
+
+    // 6. ESCAPE: Close candidate bar
+    if (e.key === 'Escape' && showCandidates) {
+      e.preventDefault();
+      setShowCandidates(false);
+      return;
+    }
+
+    // 7. JAPANESE PUNCTUATION
+    if (e.key === '.') {
+      e.preventDefault();
+      const prefix = composingKana ? (candidates[activeCandidateIndex]?.text || composingKana) : '';
+      onChange(value + prefix + '。');
+      setComposingRomaji('');
+      setComposingKana('');
+      setShowCandidates(false);
+      return;
+    }
+    if (e.key === ',') {
+      e.preventDefault();
+      const prefix = composingKana ? (candidates[activeCandidateIndex]?.text || composingKana) : '';
+      onChange(value + prefix + '、');
+      setComposingRomaji('');
+      setComposingKana('');
+      setShowCandidates(false);
+      return;
+    }
+    if (e.key === '?') {
+      e.preventDefault();
+      const prefix = composingKana ? (candidates[activeCandidateIndex]?.text || composingKana) : '';
+      onChange(value + prefix + '？');
+      setComposingRomaji('');
+      setComposingKana('');
+      setShowCandidates(false);
+      return;
+    }
+    if (e.key === '!') {
+      e.preventDefault();
+      const prefix = composingKana ? (candidates[activeCandidateIndex]?.text || composingKana) : '';
+      onChange(value + prefix + '！');
+      setComposingRomaji('');
+      setComposingKana('');
+      setShowCandidates(false);
+      return;
+    }
+
+    // 8. ALPHABET CHARACTERS (a-z, A-Z)
+    if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey && /^[a-zA-Z]$/.test(e.key)) {
+      e.preventDefault();
+      const nextRomaji = composingRomaji + e.key.toLowerCase();
+      setComposingRomaji(nextRomaji);
+      const nextKana = convertRomajiToKana(nextRomaji);
+      setComposingKana(nextKana);
+      setShowCandidates(true);
+      setActiveCandidateIndex(0);
+      return;
     }
   };
 
@@ -81,70 +238,25 @@ export const JapaneseImeInput: React.FC<JapaneseImeInputProps> = ({
       return;
     }
 
-    // Convert romaji to kana in real-time
-    const converted = convertRomajiToKana(rawVal);
-    onChange(converted);
+    // Fallback for mobile virtual keyboards or direct input
+    if (!composingRomaji) {
+      onChange(rawVal);
+    }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    // Space bar: trigger Henkan or cycle candidates
-    if (e.key === ' ' && imeActive && candidates.length > 0 && activeWord.length > 0) {
-      e.preventDefault();
-      if (!showCandidates) {
-        setShowCandidates(true);
-        setActiveCandidateIndex(0);
-        // Automatically apply the first candidate
-        handleApplyCandidate(candidates[0]);
-      } else {
-        // Cycle to next candidate
-        const nextIdx = (activeCandidateIndex + 1) % candidates.length;
-        setActiveCandidateIndex(nextIdx);
-        handleApplyCandidate(candidates[nextIdx]);
-      }
-      return;
-    }
-
-    // Enter key
-    if (e.key === 'Enter') {
-      if (showCandidates && candidates[activeCandidateIndex]) {
-        e.preventDefault();
-        handleApplyCandidate(candidates[activeCandidateIndex]);
-        setShowCandidates(false);
-        return;
-      }
-
-      if (onSubmit && !e.shiftKey) {
-        e.preventDefault();
-        onSubmit();
-        return;
-      }
-    }
-
-    // Escape: close candidate bar
-    if (e.key === 'Escape' && showCandidates) {
-      e.preventDefault();
+  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    e.preventDefault();
+    const pasted = e.clipboardData.getData('text');
+    if (pasted) {
+      onChange(value + (composingKana || '') + pasted);
+      setComposingRomaji('');
+      setComposingKana('');
       setShowCandidates(false);
-      return;
-    }
-
-    // Number keys 1-9 while candidate dropdown is active
-    if (showCandidates && /^[1-9]$/.test(e.key)) {
-      const idx = parseInt(e.key, 10) - 1;
-      if (idx < candidates.length) {
-        e.preventDefault();
-        handleApplyCandidate(candidates[idx]);
-        return;
-      }
-    }
-
-    // Tab key: cycle candidate
-    if (e.key === 'Tab' && showCandidates && candidates.length > 0) {
-      e.preventDefault();
-      const nextIdx = (activeCandidateIndex + 1) % candidates.length;
-      setActiveCandidateIndex(nextIdx);
-      handleApplyCandidate(candidates[nextIdx]);
     }
   };
+
+  // Full displayed text inside the input: committed text + active composition
+  const displayValue = value + composingKana;
 
   return (
     <div className="relative w-full space-y-1.5">
@@ -160,15 +272,15 @@ export const JapaneseImeInput: React.FC<JapaneseImeInputProps> = ({
           <textarea
             ref={inputRef as React.RefObject<HTMLTextAreaElement>}
             rows={rows}
-            value={value}
+            value={displayValue}
             disabled={disabled}
             autoFocus={autoFocus}
             placeholder={placeholder}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
+            onPaste={handlePaste}
             onFocus={() => setFocused(true)}
             onBlur={() => {
-              // Slight timeout so click on candidate bar registers before blur closes it
               setTimeout(() => setFocused(false), 200);
             }}
             className={`w-full bg-transparent px-4 py-3 text-sm sm:text-base font-jp font-medium text-text-primary placeholder:text-text-muted placeholder:font-body outline-hidden resize-none ${className}`}
@@ -177,12 +289,13 @@ export const JapaneseImeInput: React.FC<JapaneseImeInputProps> = ({
           <input
             ref={inputRef as React.RefObject<HTMLInputElement>}
             type="text"
-            value={value}
+            value={displayValue}
             disabled={disabled}
             autoFocus={autoFocus}
             placeholder={placeholder}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
+            onPaste={handlePaste}
             onFocus={() => setFocused(true)}
             onBlur={() => {
               setTimeout(() => setFocused(false), 200);
@@ -191,7 +304,7 @@ export const JapaneseImeInput: React.FC<JapaneseImeInputProps> = ({
           />
         )}
 
-        {/* Right Action Icons (IME Toggle & Commit Hint) */}
+        {/* Right Action Icons (Input Mode Toggle & Commit Hint) */}
         <div className="flex items-center gap-1.5 pr-3 shrink-0">
           {showImeToggle && (
             <button
@@ -206,19 +319,26 @@ export const JapaneseImeInput: React.FC<JapaneseImeInputProps> = ({
                   ? 'bg-gold/20 text-gold border border-gold/40 shadow-xs'
                   : 'bg-surface-card text-text-muted border border-border-subtle hover:text-text-primary'
               }`}
-              title={imeActive ? 'IME Jepang Aktif (Romaji -> Kana)' : 'Mode Huruf Latin'}
+              title={imeActive ? 'Input Jepang Aktif (Romaji -> Kana)' : 'Mode Huruf Latin'}
             >
               <Languages className="w-3.5 h-3.5" />
               <span>{imeActive ? 'あ' : 'A'}</span>
             </button>
           )}
 
-          {onSubmit && value.trim().length > 0 && (
+          {onSubmit && (value.trim().length > 0 || composingKana.trim().length > 0) && (
             <button
               type="button"
-              onClick={onSubmit}
+              onClick={() => {
+                if (composingKana.length > 0) {
+                  const chosen = candidates[activeCandidateIndex] || { text: composingKana, type: 'hiragana' as const };
+                  handleApplyCandidate(chosen);
+                } else if (onSubmit) {
+                  onSubmit();
+                }
+              }}
               className="w-7 h-7 rounded-lg bg-surface-card hover:bg-gold/20 text-text-muted hover:text-gold border border-border-subtle flex items-center justify-center transition-all cursor-pointer shadow-xs"
-              title="Kirim Kalimat (Enter)"
+              title="Konfirmasi / Kirim Kalimat (Enter)"
             >
               <CornerDownLeft className="w-3.5 h-3.5" />
             </button>
@@ -226,16 +346,16 @@ export const JapaneseImeInput: React.FC<JapaneseImeInputProps> = ({
         </div>
       </div>
 
-      {/* Floating Henkan Candidate Bar */}
+      {/* Floating Candidate Bar (Pilihan Kata) */}
       {showCandidates && candidates.length > 0 && (
-        <div className="flex items-center gap-1.5 flex-wrap p-1.5 bg-surface-card border border-gold/40 rounded-xl shadow-[3px_3px_10px_var(--neu-d),0_0_12px_rgba(240,190,82,0.15)] animate-fade-in z-20">
+        <div className="flex items-center gap-1.5 flex-wrap p-2 bg-surface-card border border-gold/40 rounded-2xl shadow-[3px_3px_10px_var(--neu-d),0_0_14px_rgba(240,190,82,0.18)] animate-fade-in z-20">
           <div className="flex items-center gap-1 text-[10px] font-mono font-bold text-text-muted px-1.5 shrink-0">
-            <Sparkles className="w-3 h-3 text-gold" />
-            <span>Henkan (変換):</span>
+            <Sparkles className="w-3.5 h-3.5 text-gold" />
+            <span>Pilihan Kata:</span>
           </div>
 
-          <div className="flex items-center gap-1 flex-wrap">
-            {candidates.slice(0, 5).map((cand, idx) => {
+          <div className="flex items-center gap-1.5 flex-wrap">
+            {candidates.slice(0, 6).map((cand, idx) => {
               const isSelected = idx === activeCandidateIndex;
               return (
                 <button
@@ -245,18 +365,18 @@ export const JapaneseImeInput: React.FC<JapaneseImeInputProps> = ({
                     e.preventDefault(); // Prevent input blur
                     handleApplyCandidate(cand);
                   }}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-jp font-bold flex items-center gap-1.5 transition-all select-none cursor-pointer ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-jp font-bold flex items-center gap-1.5 transition-all select-none cursor-pointer ${
                     isSelected
-                      ? 'bg-gold text-surface-base border border-gold font-black shadow-xs'
-                      : 'bg-surface-inset hover:bg-surface-elevated text-text-primary border border-border-subtle hover:border-gold/30'
+                      ? 'bg-gold text-surface-base border border-gold font-black shadow-md scale-105'
+                      : 'bg-surface-inset hover:bg-surface-elevated text-text-primary border border-border-subtle hover:border-gold/40'
                   }`}
                 >
                   <span className={`text-[10px] font-mono ${isSelected ? 'opacity-80' : 'text-text-muted'}`}>
                     {idx + 1}.
                   </span>
-                  <span>{cand.text}</span>
+                  <span className="text-sm">{cand.text}</span>
                   {cand.label && (
-                    <span className={`text-[9px] px-1 py-0.2 rounded font-mono font-semibold ${
+                    <span className={`text-[9px] px-1.5 py-0.5 rounded-md font-mono font-medium ${
                       isSelected ? 'bg-surface-base/20 text-surface-base' : 'bg-surface-card text-text-muted'
                     }`}>
                       {cand.label}
@@ -268,7 +388,7 @@ export const JapaneseImeInput: React.FC<JapaneseImeInputProps> = ({
           </div>
 
           <span className="text-[10px] font-mono text-text-muted ml-auto pr-1 hidden sm:inline-block">
-            Tekan <kbd className="px-1 py-0.5 rounded bg-surface-inset border border-border-subtle">Space</kbd> untuk Henkan
+            Tekan <kbd className="px-1.5 py-0.5 rounded bg-surface-inset border border-border-subtle font-bold text-gold">Space</kbd> untuk pilih & lanjut kata berikutnya
           </span>
         </div>
       )}

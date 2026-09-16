@@ -499,12 +499,12 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                             }`}
                           >
                             <PenTool className="w-3.5 h-3.5" />
-                            <span>Ketik Manual (IME)</span>
+                            <span>Ketik Manual</span>
                           </button>
                         </div>
 
                         <span className="text-[11px] font-mono text-text-muted hidden sm:inline-block">
-                          {sakubunMode === 'typing' ? 'Ketik Romaji otomatis jadi Kana & Henkan' : 'Klik balok kata untuk menyusun kalimat'}
+                          {sakubunMode === 'typing' ? 'Ketik Romaji otomatis jadi Kana & Kanji' : 'Klik balok kata untuk menyusun kalimat'}
                         </span>
                       </div>
 
