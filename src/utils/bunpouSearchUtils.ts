@@ -9,6 +9,7 @@
 
 import { BunpouItem } from '../types/content';
 import { getCanonicalGrammarTitle } from './bunpouTitleUtils';
+import * as wanakana from 'wanakana';
 
 /**
  * Normalizes text by standardizing fullwidth/halfwidth characters,
@@ -85,6 +86,24 @@ export function matchBunpouItem(item: BunpouItem, rawQuery: string): boolean {
       compactTitle.includes(compactQ) ||
       compactCanonicalTitle.includes(compactQ) ||
       compactReading.includes(compactQ)
+    ) {
+      return true;
+    }
+  }
+
+  // 3. Romaji-to-Kana query matching (e.g. "you ni" -> "ように", "hazu da" -> "はずだ")
+  const qKana = wanakana.toHiragana(normQ, { IMEMode: true });
+  const compactQKana = toCompactStr(qKana);
+  if (compactQKana.length >= 2) {
+    if (
+      normCanonicalTitle.includes(qKana) ||
+      normTitle.includes(qKana) ||
+      normFormula.includes(qKana) ||
+      normReading.includes(qKana) ||
+      compactCanonicalTitle.includes(compactQKana) ||
+      compactTitle.includes(compactQKana) ||
+      compactFormula.includes(compactQKana) ||
+      compactReading.includes(compactQKana)
     ) {
       return true;
     }

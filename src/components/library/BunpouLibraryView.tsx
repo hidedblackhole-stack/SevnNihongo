@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { AnimatePresence } from 'motion/react';
-import { Search, Filter, ChevronDown, Bookmark, LayoutGrid, List, BookOpen, Zap } from 'lucide-react';
+import { Search, Filter, ChevronDown, Bookmark, LayoutGrid, List, BookOpen, Zap, Languages, X } from 'lucide-react';
 import { ScrollIcon } from '../ui/EngravingIcons';
 import { BUNPOU_DATABASE } from '../../data/bunpou';
 import { ALL_GRAMMAR_FUNCTION_CATEGORIES } from '../../data/bunpouMetadata';
@@ -12,6 +12,7 @@ import { UserDeck } from '../../types/rpg';
 import { isItemBookmarked } from '../../utils/decks';
 import { getCanonicalGrammarTitle } from '../../utils/bunpouTitleUtils';
 import { matchBunpouItem } from '../../utils/bunpouSearchUtils';
+import { convertRomajiToKana } from '../../utils/imeEngine';
 
 const LEVEL_OPTIONS = [
   { value: 'all', label: 'Semua Level' },
@@ -46,6 +47,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
 }) => {
   const [subSection, setSubSection] = useState<'dictionary' | 'conjugation'>('dictionary');
   const [searchQuery, setSearchQuery] = useState('');
+  const [imeActive, setImeActive] = useState(true);
   const [visibleCount, setVisibleCount] = useState(40);
   const [levelFilter, setLevelFilter] = useState<string>('all');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -183,18 +185,50 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
         <>
           {/* Search & Level Filter */}
           <div className="flex flex-col sm:flex-row gap-3">
-        <div className="relative flex-1">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
+        <div className="relative flex-1 flex items-center">
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted pointer-events-none" />
           <input
             type="text"
-            placeholder="Cari rumus (Vる+ように、Vている、みたいだ), romaji, arti, atau fungsi..."
+            placeholder={imeActive ? "Cari rumus (ketik romaji otomatis jadi kana)..." : "Cari rumus (Vる+ように、Vている), arti, fungsi..."}
             value={searchQuery}
             onChange={(e) => {
-              setSearchQuery(e.target.value);
+              const raw = e.target.value;
+              const converted = imeActive ? convertRomajiToKana(raw) : raw;
+              setSearchQuery(converted);
               setVisibleCount(40);
             }}
-            className="w-full pl-10 pr-4 py-3 bg-surface-inset border border-border-subtle rounded-2xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-border-primary transition-all shadow-inner font-medium"
+            className="w-full pl-10 pr-20 py-3 bg-surface-inset border border-border-subtle rounded-2xl text-sm text-text-primary placeholder:text-text-muted focus:outline-hidden focus:border-border-primary transition-all shadow-inner font-medium font-jp"
           />
+
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                className="w-6 h-6 rounded-lg text-text-muted hover:text-text-primary hover:bg-surface-card flex items-center justify-center transition-all cursor-pointer"
+                title="Hapus pencarian"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
+
+            <button
+              type="button"
+              onClick={() => {
+                playSound('click', soundEnabled);
+                setImeActive(prev => !prev);
+              }}
+              className={`px-2 py-1 rounded-lg text-xs font-mono font-bold flex items-center gap-1 transition-all cursor-pointer select-none ${
+                imeActive
+                  ? 'bg-gold/20 text-gold border border-gold/40 shadow-xs'
+                  : 'bg-surface-card text-text-muted border border-border-subtle hover:text-text-primary'
+              }`}
+              title={imeActive ? 'IME Jepang Aktif (Romaji -> Kana)' : 'Mode Huruf Latin'}
+            >
+              <Languages className="w-3.5 h-3.5" />
+              <span>{imeActive ? 'あ' : 'A'}</span>
+            </button>
+          </div>
         </div>
 
         <div className="relative shrink-0">

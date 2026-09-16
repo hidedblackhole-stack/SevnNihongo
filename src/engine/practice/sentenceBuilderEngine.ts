@@ -10,6 +10,7 @@ import {
 import { synthesizeSentence, SynthesizeOptions, NATURAL_PAIRS } from '../synthesis/sentenceSynthesizer';
 import { PATTERN_SCHEMAS } from '../syntax/patternSchemas';
 import { conjugateVerb } from '../morphology/inflectionEngine';
+import * as wanakana from 'wanakana';
 
 export interface ExerciseOptions extends Partial<SynthesizeOptions> {
   patternId?: string;
@@ -226,3 +227,62 @@ export function validateSentenceSubmission(
     pedagogicalAdvice: 'Pastikan setiap partikel diletakkan tepat setelah kata benda yang diterangkannya (contoh: [Kata Benda] + [Partikel]).',
   };
 }
+
+/**
+ * Validates a free-form typed Japanese sentence against the exercise rules.
+ * Supports exact match, valid sequence permutations, and phonetic Hiragana equivalency.
+ */
+export function validateSentenceTextSubmission(
+  exercise: SentencePracticeExercise,
+  submittedText: string
+): ValidationFeedback {
+  const cleanInput = submittedText.replace(/[。.\s　]/g, '').trim();
+  const cleanTarget = exercise.targetSentenceJp.replace(/[。.\s　]/g, '').trim();
+
+  const tileMap = new Map<string, SentenceTile>(exercise.availableTiles.map(t => [t.id, t]));
+
+  // Build string representations of all valid tile sequences
+  const validSentenceStrings = exercise.validSequences.map(seq => {
+    return seq.map(id => tileMap.get(id)?.text || '').join('').replace(/[。.\s　]/g, '').trim();
+  });
+
+  // Check 1: Exact match with target or any valid sequence
+  if (cleanInput === cleanTarget || validSentenceStrings.includes(cleanInput)) {
+    return {
+      isCorrect: true,
+      score: 100,
+      submittedSentence: submittedText,
+      targetSentence: exercise.targetSentenceJp,
+      detailedFeedback: 'Susunan kalimat 100% tepat dan alami!',
+      pedagogicalAdvice: 'Luar biasa! Refleks tata bahasa dan penulisan kalimatmu sangat akurat.',
+    };
+  }
+
+  // Check 2: Phonetic reading match (e.g. user typed pure hiragana or converted romaji)
+  const inputKana = wanakana.toHiragana(cleanInput, { IMEMode: true });
+  const targetKana = wanakana.toHiragana(cleanTarget, { IMEMode: true });
+  const validKanaStrings = validSentenceStrings.map(s => wanakana.toHiragana(s, { IMEMode: true }));
+
+  if (inputKana === targetKana || validKanaStrings.includes(inputKana)) {
+    return {
+      isCorrect: true,
+      score: 95,
+      submittedSentence: submittedText,
+      targetSentence: exercise.targetSentenceJp,
+      detailedFeedback: 'Pelafalan dan susunan kalimat 100% benar!',
+      pedagogicalAdvice: 'Hebat! Kalimatmu benar secara fonetik dan tata bahasa.',
+    };
+  }
+
+  // Fallback incorrect
+  return {
+    isCorrect: false,
+    score: 40,
+    submittedSentence: submittedText,
+    targetSentence: exercise.targetSentenceJp,
+    errorType: 'wrong_order',
+    detailedFeedback: `Jawaban yang diharapkan: 「${exercise.targetSentenceJp}」`,
+    pedagogicalAdvice: 'Perhatikan susunan partikel, bentuk konjugasi kata kerja, atau akhiran pola kalimatnya.',
+  };
+}
+

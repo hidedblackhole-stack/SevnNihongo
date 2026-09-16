@@ -17,13 +17,17 @@ import {
   Coins,
   ChevronRight,
   LogOut,
-  Swords
+  Swords,
+  Layers,
+  PenTool,
+  BookOpen
 } from 'lucide-react';
 import { DungeonPayload, DungeonConfig } from '../../utils/dungeonGenerator';
 import { playSound, speakJapanese } from '../../utils/audio';
 import { UniversalFlashcard } from '../learning/UniversalFlashcard';
 import { UniversalWritingCard } from '../learning/UniversalWritingCard';
-import { SentenceTile, validateSentenceSubmission, ValidationFeedback } from '../../engine';
+import { SentenceTile, validateSentenceSubmission, validateSentenceTextSubmission, ValidationFeedback } from '../../engine';
+import { JapaneseImeInput } from '../common/JapaneseImeInput';
 
 interface DungeonSessionRunnerProps {
   payload: DungeonPayload;
@@ -66,6 +70,8 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
   const [isAnswerChecked, setIsAnswerChecked] = useState(false);
 
   // Sub-exercise state for Sakubun (Sentence Builder)
+  const [sakubunMode, setSakubunMode] = useState<'tiles' | 'typing'>('tiles');
+  const [sakubunTypedText, setSakubunTypedText] = useState<string>('');
   const [sakubunPlacedTiles, setSakubunPlacedTiles] = useState<SentenceTile[]>([]);
   const [sakubunAvailableTiles, setSakubunAvailableTiles] = useState<SentenceTile[]>([]);
   const [sakubunFeedback, setSakubunFeedback] = useState<ValidationFeedback | null>(null);
@@ -77,6 +83,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
       setSakubunPlacedTiles([]);
       setSakubunAvailableTiles([...(ex.availableTiles || [])]);
       setSakubunFeedback(null);
+      setSakubunTypedText('');
     }
     // Reset floor sub-states
     setIsFlashcardFlipped(false);
@@ -382,7 +389,10 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                   };
 
                   const handleCheckSakubun = () => {
-                    const fb = validateSentenceSubmission(ex, sakubunPlacedTiles.map(t => t.id));
+                    const fb = sakubunMode === 'typing'
+                      ? validateSentenceTextSubmission(ex, sakubunTypedText)
+                      : validateSentenceSubmission(ex, sakubunPlacedTiles.map(t => t.id));
+
                     setSakubunFeedback(fb);
                     if (fb.isCorrect) {
                       playSound('correct', soundEnabled);
@@ -390,6 +400,10 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                       playSound('wrong', soundEnabled);
                     }
                   };
+
+                  const isCheckDisabled = sakubunMode === 'typing'
+                    ? sakubunTypedText.trim().length === 0
+                    : sakubunPlacedTiles.length === 0;
 
                   return (
                     <div className="space-y-4">
@@ -403,39 +417,145 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                         </h4>
                       </div>
 
-                      {/* Drop / Placement Area */}
-                      <div className="p-4 rounded-2xl bg-surface-inset border-2 border-dashed border-border-subtle min-h-[70px] flex flex-wrap items-center gap-2">
-                        {sakubunPlacedTiles.length === 0 ? (
-                          <span className="text-xs text-text-muted italic mx-auto">
-                            Klik potongan kata di bawah untuk menyusun kalimat...
-                          </span>
-                        ) : (
-                          sakubunPlacedTiles.map((t) => (
-                            <button
-                              key={t.id}
-                              type="button"
-                              onClick={() => handleRemoveTile(t)}
-                              className="px-3 py-1.5 rounded-xl bg-surface-card hover:bg-rose-500/20 text-text-primary border border-border-primary text-xs sm:text-sm font-bold font-jp shadow-sm"
-                            >
-                              {t.text}
-                            </button>
-                          ))
-                        )}
+                      {/* Mode Switcher: Balok Kata vs Ketik Manual (IME) */}
+                      <div className="flex items-center justify-between gap-2 flex-wrap pb-0.5">
+                        <div className="inline-flex p-1 bg-surface-inset rounded-2xl border border-border-subtle shadow-inner gap-1">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              playSound('click', soundEnabled);
+                              setSakubunMode('tiles');
+                            }}
+                            className={`px-3 py-1.5 rounded-xl text-xs font-heading font-bold transition-all flex items-center gap-1.5 cursor-pointer select-none ${
+                              sakubunMode === 'tiles'
+                                ? 'bg-indigo-deep text-gold border border-gold/40 shadow-xs'
+                                : 'text-text-muted hover:text-text-primary hover:bg-surface-card/40'
+                            }`}
+                          >
+                            <Layers className="w-3.5 h-3.5" />
+                            <span>Pilih Balok Kata</span>
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => {
+                              playSound('click', soundEnabled);
+                              setSakubunMode('typing');
+                            }}
+                            className={`px-3 py-1.5 rounded-xl text-xs font-heading font-bold transition-all flex items-center gap-1.5 cursor-pointer select-none ${
+                              sakubunMode === 'typing'
+                                ? 'bg-indigo-deep text-gold border border-gold/40 shadow-xs'
+                                : 'text-text-muted hover:text-text-primary hover:bg-surface-card/40'
+                            }`}
+                          >
+                            <PenTool className="w-3.5 h-3.5" />
+                            <span>Ketik Manual (IME)</span>
+                          </button>
+                        </div>
+
+                        <span className="text-[11px] font-mono text-text-muted hidden sm:inline-block">
+                          {sakubunMode === 'typing' ? 'Ketik Romaji otomatis jadi Kana & Henkan' : 'Klik balok kata untuk menyusun kalimat'}
+                        </span>
                       </div>
 
-                      {/* Available Tiles Bank */}
-                      <div className="flex flex-wrap gap-2 justify-center">
-                        {sakubunAvailableTiles.map((t) => (
-                          <button
-                            key={t.id}
-                            type="button"
-                            onClick={() => handleSelectTile(t)}
-                            className="px-3.5 py-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-primary border border-border-subtle text-xs sm:text-sm font-bold font-jp shadow-sm transition-transform active:scale-95"
-                          >
-                            {t.text}
-                          </button>
-                        ))}
-                      </div>
+                      {/* MODE 1: PILIH BALOK KATA */}
+                      {sakubunMode === 'tiles' && (
+                        <div className="space-y-3 animate-fade-in">
+                          {/* Drop / Placement Area */}
+                          <div className="p-4 rounded-2xl bg-surface-inset border-2 border-dashed border-border-subtle min-h-[70px] flex flex-wrap items-center gap-2">
+                            {sakubunPlacedTiles.length === 0 ? (
+                              <span className="text-xs text-text-muted italic mx-auto">
+                                Klik potongan kata di bawah untuk menyusun kalimat...
+                              </span>
+                            ) : (
+                              sakubunPlacedTiles.map((t) => (
+                                <button
+                                  key={t.id}
+                                  type="button"
+                                  onClick={() => handleRemoveTile(t)}
+                                  className="px-3 py-1.5 rounded-xl bg-surface-card hover:bg-rose-500/20 text-text-primary border border-border-primary text-xs sm:text-sm font-bold font-jp shadow-sm cursor-pointer transition-transform active:scale-95"
+                                >
+                                  {t.text}
+                                </button>
+                              ))
+                            )}
+                          </div>
+
+                          {/* Available Tiles Bank */}
+                          <div className="flex flex-wrap gap-2 justify-center">
+                            {sakubunAvailableTiles.map((t) => (
+                              <button
+                                key={t.id}
+                                type="button"
+                                onClick={() => handleSelectTile(t)}
+                                className="px-3.5 py-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-primary border border-border-subtle text-xs sm:text-sm font-bold font-jp shadow-sm transition-transform active:scale-95 cursor-pointer"
+                              >
+                                {t.text}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* MODE 2: KETIK MANUAL (IME) */}
+                      {sakubunMode === 'typing' && (
+                        <div className="space-y-3 animate-fade-in">
+                          {/* Japanese IME Input with Live Romaji-Kana & Henkan */}
+                          <JapaneseImeInput
+                            value={sakubunTypedText}
+                            onChange={(val) => {
+                              setSakubunTypedText(val);
+                              if (sakubunFeedback) setSakubunFeedback(null);
+                            }}
+                            onSubmit={handleCheckSakubun}
+                            placeholder="Ketik kalimat di sini (contoh: terebi o miru -> テレビを見る)..."
+                            contextWords={ex.availableTiles.map(t => t.text)}
+                            soundEnabled={soundEnabled}
+                            autoFocus
+                          />
+
+                          {/* Vocabulary Assistance Palette */}
+                          <div className="p-3 rounded-2xl bg-surface-inset/60 border border-border-subtle/70 space-y-2">
+                            <div className="flex items-center justify-between text-[10px] font-mono text-text-muted px-0.5">
+                              <span className="flex items-center gap-1">
+                                <BookOpen className="w-3 h-3 text-gold" />
+                                <span>Potongan Kosakata Bantuan (klik untuk sisipkan):</span>
+                              </span>
+                              {sakubunTypedText && (
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    playSound('click', soundEnabled);
+                                    setSakubunTypedText('');
+                                    if (sakubunFeedback) setSakubunFeedback(null);
+                                  }}
+                                  className="text-text-muted hover:text-rose-400 font-bold transition-colors cursor-pointer"
+                                >
+                                  Hapus Teks
+                                </button>
+                              )}
+                            </div>
+
+                            <div className="flex flex-wrap gap-1.5">
+                              {ex.availableTiles.map((t) => (
+                                <button
+                                  key={t.id}
+                                  type="button"
+                                  onClick={() => {
+                                    playSound('click', soundEnabled);
+                                    setSakubunTypedText(prev => prev + t.text);
+                                    if (sakubunFeedback) setSakubunFeedback(null);
+                                  }}
+                                  className="px-2.5 py-1 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-primary border border-border-subtle text-xs font-bold font-jp shadow-2xs hover:border-gold/30 transition-all active:scale-95 cursor-pointer"
+                                  title={`Sisipkan 「${t.text}」`}
+                                >
+                                  {t.text}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      )}
 
                       {/* Feedback or Check Button */}
                       {sakubunFeedback ? (
@@ -447,22 +567,22 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                             {sakubunFeedback.isCorrect ? (
                               <button
                                 type="button"
-                                onClick={() => advanceToNextFloor(true, 25, 15)}
-                                className="px-5 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold font-heading"
+                                onClick={() => advanceToNextFloor(true, 30, 15)}
+                                className="px-5 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold font-heading cursor-pointer"
                               >
                                 Lantai Berikutnya →
                               </button>
                             ) : (
                               <button
                                 type="button"
-                                onClick={() => advanceToNextFloor(false, 8, 4)}
-                                className="px-4 py-1.5 rounded-xl bg-surface-card border border-border-subtle text-text-secondary text-xs font-bold"
+                                onClick={() => advanceToNextFloor(false, 10, 5)}
+                                className="px-4 py-1.5 rounded-xl bg-surface-card border border-border-subtle text-text-secondary hover:text-text-primary text-xs font-bold cursor-pointer"
                               >
                                 Lewati →
                               </button>
                             )}
                           </div>
-                          <p className="text-xs text-text-secondary">
+                          <p className="text-xs text-text-secondary font-body">
                             {sakubunFeedback.detailedFeedback} {sakubunFeedback.pedagogicalAdvice}
                           </p>
                         </div>
@@ -470,9 +590,9 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                         <div className="flex justify-center pt-2">
                           <button
                             type="button"
-                            disabled={sakubunPlacedTiles.length === 0}
+                            disabled={isCheckDisabled}
                             onClick={handleCheckSakubun}
-                            className="btn-skeuo-indigo px-8 py-2.5 disabled:opacity-40 text-xs shadow-md active:scale-95 transition-all"
+                            className="btn-skeuo-indigo px-8 py-2.5 disabled:opacity-40 text-xs shadow-md active:scale-95 transition-all cursor-pointer"
                           >
                             <span className="whitespace-nowrap">Periksa Kalimat</span>
                           </button>

@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { AnimatePresence } from 'motion/react';
-import { Search, Volume2, Filter, ChevronDown, Star, Bookmark } from 'lucide-react';
+import { Search, Volume2, Filter, ChevronDown, Star, Bookmark, Languages, X } from 'lucide-react';
 import { BookIcon } from '../ui/EngravingIcons';
 import { KOTOBA_DATABASE } from '../../data/kotoba';
 import { playSound, speakJapanese } from '../../utils/audio';
@@ -9,6 +9,7 @@ import { KotobaItem } from '../../types/content';
 import { KotobaDetailModal } from './KotobaDetailModal';
 import { UserDeck } from '../../types/rpg';
 import { isItemBookmarked } from '../../utils/decks';
+import { convertRomajiToKana, matchJapaneseQuery } from '../../utils/imeEngine';
 
 const LEVEL_OPTIONS = [
   { value: 'all', label: 'Semua Level' },
@@ -85,6 +86,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
   onCompleteStudyItem,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [imeActive, setImeActive] = useState(true);
   const [visibleCount, setVisibleCount] = useState(50);
   const [levelFilter, setLevelFilter] = useState<string>('all');
   const [selectedUnit, setSelectedUnit] = useState<string>('all');
@@ -122,11 +124,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
     return allKotoba.filter((item) => {
       const matchSearch =
         !q ||
-        item.word.toLowerCase().includes(q) ||
-        item.reading.toLowerCase().includes(q) ||
-        item.meaningId.toLowerCase().includes(q) ||
-        (item.meaningJa && item.meaningJa.toLowerCase().includes(q)) ||
-        (item.unitName && item.unitName.toLowerCase().includes(q));
+        matchJapaneseQuery(q, [item.word, item.reading, item.meaningId, item.meaningJa, item.unitName]);
       
       const matchLevel =
         levelFilter === 'all'
@@ -201,18 +199,50 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
 
       {/* Filters and Search */}
       <div className="flex flex-col sm:flex-row gap-3">
-        <div className="relative flex-1">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
+        <div className="relative flex-1 flex items-center">
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted pointer-events-none" />
           <input
             type="text"
-            placeholder="Cari kanji, romaji, atau arti bahasa Indonesia..."
+            placeholder={imeActive ? "Cari kata (ketik romaji otomatis jadi kana)..." : "Cari kanji, romaji, atau arti..."}
             value={searchQuery}
             onChange={(e) => {
-              setSearchQuery(e.target.value);
+              const raw = e.target.value;
+              const converted = imeActive ? convertRomajiToKana(raw) : raw;
+              setSearchQuery(converted);
               setVisibleCount(50); // reset visible count on search
             }}
-            className="w-full pl-10 pr-4 py-3 bg-surface-inset border border-border-subtle rounded-2xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-border-primary transition-all shadow-inner font-medium"
+            className="w-full pl-10 pr-20 py-3 bg-surface-inset border border-border-subtle rounded-2xl text-sm text-text-primary placeholder:text-text-muted focus:outline-hidden focus:border-border-primary transition-all shadow-inner font-medium font-jp"
           />
+
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                className="w-6 h-6 rounded-lg text-text-muted hover:text-text-primary hover:bg-surface-card flex items-center justify-center transition-all cursor-pointer"
+                title="Hapus pencarian"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
+
+            <button
+              type="button"
+              onClick={() => {
+                playSound('click', soundEnabled);
+                setImeActive(prev => !prev);
+              }}
+              className={`px-2 py-1 rounded-lg text-xs font-mono font-bold flex items-center gap-1 transition-all cursor-pointer select-none ${
+                imeActive
+                  ? 'bg-gold/20 text-gold border border-gold/40 shadow-xs'
+                  : 'bg-surface-card text-text-muted border border-border-subtle hover:text-text-primary'
+              }`}
+              title={imeActive ? 'IME Jepang Aktif (Romaji -> Kana)' : 'Mode Huruf Latin'}
+            >
+              <Languages className="w-3.5 h-3.5" />
+              <span>{imeActive ? 'あ' : 'A'}</span>
+            </button>
+          </div>
         </div>
 
         <div className="relative shrink-0">
