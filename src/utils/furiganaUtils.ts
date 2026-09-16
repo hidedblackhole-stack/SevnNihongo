@@ -201,7 +201,8 @@ export function alignKanjiReadings(
   }
 
   const japanese = normalizeJapanesePunctuation(origJapanese);
-  const reading = normalizeJapanesePunctuation(origReading);
+  const reading = normalizeJapanesePunctuation(origReading).replace(/\s{2,}/g, ' / ');
+
 
   if (japanese === reading) {
     return [{ text: origJapanese, isKanji: false }];

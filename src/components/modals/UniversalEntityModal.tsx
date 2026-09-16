@@ -41,6 +41,8 @@ import { RubyText } from '../learning/RubyText';
 import { FormulaDisplay } from '../learning/FormulaDisplay';
 import { KanjiWritingCanvas } from '../learning/KanjiWritingCanvas';
 import { KotobaWritingPractice } from '../learning/KotobaWritingPractice';
+import { parseReadingVariations } from '../../utils/readingHighlightUtils';
+
 import { UserDeck, DeckItemCategory } from '../../types/rpg';
 import { DeckBookmarkPicker } from '../deck/DeckBookmarkPicker';
 import { Question } from '../../types/content';
@@ -304,11 +306,41 @@ export const UniversalEntityModal: React.FC<UniversalEntityModalProps> = ({
           {/* Hero Identity Banner */}
           <div className="flex items-start justify-between gap-4 p-4 rounded-2xl bg-surface-inset border border-border-subtle">
             <div className="space-y-1">
-              {unified.reading && (
-                <span className="text-xs sm:text-sm font-jp text-text-secondary block">
-                  {unified.reading}
-                </span>
-              )}
+              {unified.reading && (() => {
+                const readingVars = parseReadingVariations(unified.reading);
+                if (readingVars.length > 1) {
+                  return (
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <span className="text-xs font-mono font-bold text-amber-600 dark:text-amber-400 bg-amber-500/15 border border-amber-500/30 px-2 py-0.5 rounded-full">
+                          ⚡ {readingVars.length} Cara Baca Alternatif
+                        </span>
+                        {readingVars.map((v, i) => (
+                          <button
+                            key={i}
+                            type="button"
+                            onClick={() => speakJapanese(v)}
+                            className="px-2 py-0.5 rounded-lg bg-surface-card border border-amber-500/30 text-text-primary text-xs font-jp font-bold flex items-center gap-1 hover:border-amber-500 transition-colors"
+                            title={`Dengar cara baca #${i + 1}: ${v}`}
+                          >
+                            <span className="text-[10px] text-amber-500 font-mono font-bold">#{i + 1}</span>
+                            <span>{v}</span>
+                            <Volume2 className="w-3 h-3 text-amber-500" />
+                          </button>
+                        ))}
+                      </div>
+                      <span className="text-xs sm:text-sm font-jp text-text-muted block">
+                        ({readingVars.join(' / ')})
+                      </span>
+                    </div>
+                  );
+                }
+                return (
+                  <span className="text-xs sm:text-sm font-jp text-text-secondary block">
+                    {unified.reading}
+                  </span>
+                );
+              })()}
               <h2 className="text-2xl sm:text-3xl font-jp font-bold text-text-primary tracking-wide flex items-center gap-2">
                 <span>{unified.title}</span>
                 <button

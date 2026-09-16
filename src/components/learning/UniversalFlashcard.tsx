@@ -4,6 +4,8 @@ import { RubyText } from './RubyText';
 import { playSound, speakJapanese } from '../../utils/audio';
 import { ResolvedDeckItem } from '../../utils/decks';
 import { KotobaItem, KanjiItem, BunpouItem } from '../../types/content';
+import { parseReadingVariations } from '../../utils/readingHighlightUtils';
+
 
 export type UniversalFlashcardItem =
   | ResolvedDeckItem
@@ -82,6 +84,19 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
 }) => {
   const norm = normalizeItem(item);
 
+  const kotobaVariations = React.useMemo(() => {
+    return parseReadingVariations(norm.kotoba?.reading || norm.displayReading);
+  }, [norm.kotoba?.reading, norm.displayReading]);
+  const hasMultipleKotobaReadings = kotobaVariations.length > 1;
+  const kotobaRubyReading = hasMultipleKotobaReadings
+    ? kotobaVariations.join(' / ')
+    : (norm.kotoba?.reading || norm.displayReading);
+
+  const kanjiTotalReadings = React.useMemo(() => {
+    return (norm.kanji?.onyomi?.length || 0) + (norm.kanji?.kunyomi?.length || 0);
+  }, [norm.kanji?.onyomi, norm.kanji?.kunyomi]);
+  const hasMultipleKanjiReadings = kanjiTotalReadings > 1;
+
   const handleCardClick = () => {
     playSound('click', soundEnabled);
     onFlip();
@@ -110,6 +125,11 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                   <span className="px-2.5 py-1 rounded-full bg-surface-inset text-text-secondary border border-border-subtle text-[11px] font-mono">
                     {norm.kanji?.strokeCount || 1} Goresan
                   </span>
+                  {hasMultipleKanjiReadings && (
+                    <span className="px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 text-[10px] font-mono font-bold flex items-center gap-1">
+                      <span>⚡</span> {kanjiTotalReadings} Cara Baca
+                    </span>
+                  )}
                   {norm.kanji?.radical && (
                     <span className="px-2 py-0.5 rounded-full bg-surface-inset text-text-muted border border-border-subtle text-[10px] font-jp">
                       部首: {norm.kanji.radical}
@@ -201,9 +221,16 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
             <>
               {/* Kotoba Top Meta Bar */}
               <div className="w-full flex justify-between items-center text-xs">
-                <span className="px-2.5 py-1 rounded-full bg-surface-inset text-indigo border border-border-subtle text-[11px] font-mono font-bold">
-                  {norm.kotoba?.jlpt || norm.level} • {norm.kotoba?.wordType || 'Kosakata'}
-                </span>
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  <span className="px-2.5 py-1 rounded-full bg-surface-inset text-indigo border border-border-subtle text-[11px] font-mono font-bold">
+                    {norm.kotoba?.jlpt || norm.level} • {norm.kotoba?.wordType || 'Kosakata'}
+                  </span>
+                  {hasMultipleKotobaReadings && (
+                    <span className="px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 text-[10px] font-mono font-bold flex items-center gap-1">
+                      <span>⚡</span> {kotobaVariations.length} Cara Baca
+                    </span>
+                  )}
+                </div>
                 <div className="flex items-center gap-1.5">
                   {topRightExtra}
                   <button
@@ -225,7 +252,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                 <h3 className="text-4xl sm:text-5xl font-black text-text-primary tracking-wider font-heading drop-shadow-sm">
                   <RubyText
                     japanese={norm.kotoba?.word || norm.displayTitle}
-                    reading={norm.kotoba?.reading || norm.displayReading}
+                    reading={kotobaRubyReading}
                     showFurigana={furiganaEnabled}
                   />
                 </h3>
@@ -352,6 +379,12 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                     </div>
                   </div>
                 </div>
+
+                {hasMultipleKanjiReadings && (
+                  <p className="text-[10px] text-amber-600 dark:text-amber-400 font-mono text-center pt-0.5">
+                    *Kanji memiliki {kanjiTotalReadings} cara baca (Onyomi &amp; Kunyomi). Hafalkan terpisah sesuai konteks!
+                  </p>
+                )}
 
                 {/* Related Words */}
                 {norm.kanji?.relatedWords && norm.kanji.relatedWords.length > 0 && (
@@ -496,6 +529,36 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                   <p className="text-xs text-text-muted italic">
                     English: {norm.kotoba.meaningEn}
                   </p>
+                )}
+
+                {/* Alternative Readings Box for Kotoba */}
+                {hasMultipleKotobaReadings && (
+                  <div className="w-full p-2.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-left space-y-1.5 my-1">
+                    <div className="flex items-center justify-between text-[11px] font-bold text-amber-600 dark:text-amber-400 font-heading">
+                      <span>⚡ Memiliki {kotobaVariations.length} Cara Baca (Hafalkan Terpisah):</span>
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {kotobaVariations.map((v, i) => (
+                        <button
+                          key={i}
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            speakJapanese(v);
+                          }}
+                          className="px-2.5 py-1 rounded-xl bg-surface-card border border-amber-500/30 hover:border-amber-500 text-text-primary text-xs font-jp font-bold flex items-center gap-1.5 transition-colors shadow-xs"
+                          title={`Dengarkan bacaan #${i + 1}: ${v}`}
+                        >
+                          <span className="text-[10px] font-mono text-amber-500 font-bold">#{i + 1}</span>
+                          <span>{v}</span>
+                          <Volume2 className="w-3 h-3 text-amber-500" />
+                        </button>
+                      ))}
+                    </div>
+                    <p className="text-[10px] text-text-muted leading-tight">
+                      *Peringatan: Bukan dibaca sekaligus! Masing-masing digunakan sesuai konteks.
+                    </p>
+                  </div>
                 )}
 
                 {/* Example Sentence */}

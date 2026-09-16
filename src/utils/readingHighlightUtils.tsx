@@ -145,11 +145,42 @@ export const renderWordWithKanjiHighlight = (word: string, targetChar: string) =
   );
 };
 
+/**
+ * Splits a reading string that may contain multiple alternative readings.
+ * Delimiters supported:
+ * - slashes: '/' or '／'
+ * - Japanese commas: '、'
+ * - Standard commas/semicolons: ',' or ';'
+ * - Multiple consecutive spaces: '\s{2,}'
+ */
+export const parseReadingVariations = (reading?: string): string[] => {
+  if (!reading) return [];
+  const normalized = reading
+    .replace(/／/g, '/')
+    .replace(/、/g, '/')
+    .replace(/[,;]/g, '/')
+    .replace(/\s{2,}/g, '/');
+
+  return normalized
+    .split('/')
+    .map(r => r.trim())
+    .filter(Boolean);
+};
+
+/**
+ * Formats a reading string canonically with ' / ' separator if multiple variations exist.
+ */
+export const formatNormalizedReading = (reading?: string): string => {
+  const variations = parseReadingVariations(reading);
+  if (variations.length <= 1) return reading?.trim() || '';
+  return variations.join(' / ');
+};
+
 export const getHighlightedYomikata = (word: string, reading: string, kanji: KanjiItem) => {
   if (!reading) return <span className="text-wine-accent font-bold">{word}</span>;
 
-  // Handle slash-separated readings if any (e.g. 'まいつき / まいげつ')
-  const readings = reading.split('/').map(r => r.trim());
+  // Handle alternative readings (slashes, double spaces, commas, etc.)
+  const readings = parseReadingVariations(reading);
 
   return (
     <div className="inline-flex flex-wrap items-center justify-center gap-1.5 font-jp text-sm sm:text-base">
@@ -185,3 +216,4 @@ export const getHighlightedYomikata = (word: string, reading: string, kanji: Kan
     </div>
   );
 };
+

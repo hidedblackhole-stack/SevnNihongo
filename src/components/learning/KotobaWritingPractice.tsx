@@ -6,6 +6,7 @@ import { KanjiWritingCanvas, preloadStrokeData } from './KanjiWritingCanvas';
 import { RubyText } from './RubyText';
 import { playSound, speakJapanese } from '../../utils/audio';
 import { getKotobaBaseExp, calculateWritingReward, WritingRewardResult } from '../../utils/rewards';
+import { parseReadingVariations } from '../../utils/readingHighlightUtils';
 
 interface KotobaWritingPracticeProps {
   kotoba: KotobaItem;
@@ -23,6 +24,18 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
   nextButtonLabel,
 }) => {
   const characters = useMemo(() => Array.from(kotoba.word), [kotoba.word]);
+  const readingVariations = useMemo(() => parseReadingVariations(kotoba.reading), [kotoba.reading]);
+  const hasMultipleReadings = readingVariations.length > 1;
+  const [selectedReadingIdx, setSelectedReadingIdx] = useState<number>(-1);
+
+  const displayPracticeReading = useMemo(() => {
+    if (!hasMultipleReadings) return kotoba.reading;
+    if (selectedReadingIdx >= 0 && selectedReadingIdx < readingVariations.length) {
+      return readingVariations[selectedReadingIdx];
+    }
+    return readingVariations.join(' / ');
+  }, [hasMultipleReadings, kotoba.reading, selectedReadingIdx, readingVariations]);
+
   const [currentCharIndex, setCurrentCharIndex] = useState(0);
   const [completedChars, setCompletedChars] = useState<number[]>([]);
   const [totalMistakes, setTotalMistakes] = useState(0);
@@ -235,16 +248,47 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
           {/* Giant Word & Reading Box */}
           <div className="text-center space-y-2 py-2">
             <h1 className="text-4xl sm:text-5xl font-black text-text-primary font-jp tracking-wider drop-shadow-sm">
-              <RubyText japanese={kotoba.word} reading={kotoba.reading} showFurigana={true} />
+              <RubyText japanese={kotoba.word} reading={displayPracticeReading} showFurigana={true} />
             </h1>
-            <button
-              onClick={() => speakJapanese(kotoba.word)}
-              className="mx-auto flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-colors text-xs font-bold border border-border-subtle shadow-sm"
-              title="Dengarkan pelafalan"
-            >
-              <Volume2 className="w-3.5 h-3.5 text-wine-accent" />
-              <span>Dengarkan Pelafalan</span>
-            </button>
+            {hasMultipleReadings ? (
+              <div className="space-y-1.5 pt-1">
+                <div className="flex items-center justify-center gap-1.5 flex-wrap">
+                  {readingVariations.map((v, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => {
+                        setSelectedReadingIdx(i);
+                        speakJapanese(v);
+                        playSound('click', soundEnabled);
+                      }}
+                      className={`px-2.5 py-1 rounded-xl text-xs font-bold font-jp border transition-all flex items-center gap-1.5 ${
+                        selectedReadingIdx === i
+                          ? 'bg-amber-500/20 text-amber-600 dark:text-amber-300 border-amber-500/50 shadow-xs ring-1 ring-amber-500/30 font-black'
+                          : 'bg-surface-inset text-text-secondary border-border-subtle hover:border-amber-500/30 hover:text-text-primary'
+                      }`}
+                      title={`Putar pelafalan #${i + 1}: ${v}`}
+                    >
+                      <span className="text-[10px] font-mono text-amber-500 font-bold">#{i + 1}</span>
+                      <span>{v}</span>
+                      <Volume2 className="w-3.5 h-3.5 text-amber-500" />
+                    </button>
+                  ))}
+                </div>
+                <p className="text-[10.5px] text-amber-600 dark:text-amber-400 font-mono">
+                  *Memiliki {readingVariations.length} cara baca alternatif. Hafalkan terpisah!
+                </p>
+              </div>
+            ) : (
+              <button
+                onClick={() => speakJapanese(kotoba.word)}
+                className="mx-auto flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-colors text-xs font-bold border border-border-subtle shadow-sm"
+                title="Dengarkan pelafalan"
+              >
+                <Volume2 className="w-3.5 h-3.5 text-wine-accent" />
+                <span>Dengarkan Pelafalan</span>
+              </button>
+            )}
           </div>
 
           {/* Meaning Description Box */}

@@ -430,9 +430,16 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
               >
                 {/* Top Badges */}
                 <div className="w-full flex items-center justify-between text-[10px] font-mono text-text-muted gap-1">
-                  <span className={`px-1.5 py-0.5 rounded-md font-bold border text-[9.5px] tracking-wide whitespace-nowrap shrink-0 leading-none ${badgeColor}`}>
-                    {badgeLabel}
-                  </span>
+                  <div className="flex items-center gap-1 shrink-0 overflow-hidden">
+                    <span className={`px-1.5 py-0.5 rounded-md font-bold border text-[9.5px] tracking-wide whitespace-nowrap shrink-0 leading-none ${badgeColor}`}>
+                      {badgeLabel}
+                    </span>
+                    {!isHira && !isKata && ((item.onyomi?.length || 0) + (item.kunyomi?.length || 0)) > 1 && (
+                      <span className="px-1 py-0.5 rounded text-[8.5px] font-bold font-mono bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 whitespace-nowrap leading-none" title={`${(item.onyomi?.length || 0) + (item.kunyomi?.length || 0)} variasi cara baca`}>
+                        ⚡{((item.onyomi?.length || 0) + (item.kunyomi?.length || 0))} Bacaan
+                      </span>
+                    )}
+                  </div>
                   <div className="flex items-center gap-1.5 shrink-0">
                     <span className="whitespace-nowrap">{item.strokeCount}画</span>
                     {onToggleBookmark && (

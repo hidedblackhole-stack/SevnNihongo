@@ -58,6 +58,10 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
   const isKatakana = item.radical === 'Katakana' || (item.jlpt === 'KANA' && item.character >= 'ァ' && item.character <= 'ン');
   const isKana = isHiragana || isKatakana;
   const isSuuji = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '百', '千', '万', '零'].includes(item.character);
+  const onyomiList = item.onyomi || [];
+  const kunyomiList = item.kunyomi || [];
+  const totalKanjiReadings = onyomiList.length + kunyomiList.length;
+  const hasMultipleReadings = !isKana && totalKanjiReadings > 1;
 
   const levelBadgeLabel = isHiragana
     ? 'Hiragana'
@@ -98,6 +102,11 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
             <span className="px-3 py-1 rounded-full text-xs font-mono font-medium bg-surface-inset border border-border-subtle text-text-secondary">
               {item.strokeCount} Goresan
             </span>
+            {hasMultipleReadings && (
+              <span className="px-3 py-1 rounded-full text-xs font-mono font-bold border border-amber-500/40 text-amber-600 dark:text-amber-400 bg-amber-500/10 shadow-xs flex items-center gap-1">
+                <span>⚡</span> {totalKanjiReadings} Cara Baca
+              </span>
+            )}
             {masteryRecord && (
               <div className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-surface-inset border border-border-subtle text-text-secondary">
                 <span title="Latihan menulis">✍️ {masteryRecord.writingCount || 0}x</span>
@@ -175,6 +184,11 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
                     {isKana ? 'Kategori: ' : '部首: '}{item.radical} {item.radicalName ? `(${item.radicalName})` : ''}
                   </span>
                 )}
+                {hasMultipleReadings && (
+                  <span className="px-2.5 py-0.5 rounded-full border border-amber-500/40 text-amber-600 dark:text-amber-400 bg-amber-500/10 text-xs font-mono font-bold flex items-center gap-1">
+                    <span>⚡</span> {totalKanjiReadings} Cara Baca ({onyomiList.length} On • {kunyomiList.length} Kun)
+                  </span>
+                )}
               </div>
 
               <h3 className="text-2xl font-bold font-heading text-text-primary">
@@ -212,54 +226,82 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {/* Onyomi */}
-              <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-1">
-                <span className="text-[11px] font-bold text-wine-accent uppercase tracking-wider font-mono">
-                  音読み (Onyomi - Bacaan Cina)
-                </span>
-                <div className="text-base font-bold text-text-primary font-mono flex flex-wrap gap-2 pt-1">
-                  {(item.onyomi || []).length > 0 ? (
-                    item.onyomi.map((on, i) => (
-                      <button
-                        key={i}
-                        onClick={() => speakJapanese(on.split(' ')[0])}
-                        className="px-2.5 py-1 rounded-lg bg-surface-card text-wine-accent border border-wine-accent/20 font-bold hover:border-wine-accent/50 flex items-center gap-1.5 transition-colors text-xs font-jp"
-                        title="Klik untuk mendengar"
-                      >
-                        <span>{on}</span>
-                        <Volume2 className="w-3 h-3 text-wine-accent/60" />
-                      </button>
-                    ))
-                  ) : (
-                    <span className="text-text-muted text-xs italic">-</span>
-                  )}
+            <div className="space-y-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {/* Onyomi */}
+                <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-1">
+                  <span className="text-[11px] font-bold text-wine-accent uppercase tracking-wider font-mono">
+                    音読み (Onyomi - Bacaan Cina)
+                  </span>
+                  <div className="text-base font-bold text-text-primary font-mono flex flex-wrap gap-2 pt-1">
+                    {(item.onyomi || []).length > 0 ? (
+                      item.onyomi.map((on, i) => (
+                        <button
+                          key={i}
+                          onClick={() => speakJapanese(on.split(' ')[0])}
+                          className="px-2.5 py-1 rounded-lg bg-surface-card text-wine-accent border border-wine-accent/20 font-bold hover:border-wine-accent/50 flex items-center gap-1.5 transition-colors text-xs font-jp"
+                          title="Klik untuk mendengar"
+                        >
+                          <span>{on}</span>
+                          <Volume2 className="w-3 h-3 text-wine-accent/60" />
+                        </button>
+                      ))
+                    ) : (
+                      <span className="text-text-muted text-xs italic">-</span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Kunyomi */}
+                <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-1">
+                  <span className="text-[11px] font-bold text-state-success uppercase tracking-wider font-mono">
+                    訓読み (Kunyomi - Bacaan Jepang)
+                  </span>
+                  <div className="text-base font-bold text-text-primary font-mono flex flex-wrap gap-2 pt-1">
+                    {(item.kunyomi || []).length > 0 ? (
+                      item.kunyomi.map((kun, i) => (
+                        <button
+                          key={i}
+                          onClick={() => speakJapanese(kun.split(' ')[0].replace(/[.-]/g, ''))}
+                          className="px-2.5 py-1 rounded-lg bg-surface-card text-state-success border border-state-success/20 font-bold hover:border-state-success/50 flex items-center gap-1.5 transition-colors text-xs font-jp"
+                          title="Klik untuk mendengar"
+                        >
+                          <span>{kun}</span>
+                          <Volume2 className="w-3 h-3 text-state-success/60" />
+                        </button>
+                      ))
+                    ) : (
+                      <span className="text-text-muted text-xs italic">-</span>
+                    )}
+                  </div>
                 </div>
               </div>
 
-              {/* Kunyomi */}
-              <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-1">
-                <span className="text-[11px] font-bold text-state-success uppercase tracking-wider font-mono">
-                  訓読み (Kunyomi - Bacaan Jepang)
-                </span>
-                <div className="text-base font-bold text-text-primary font-mono flex flex-wrap gap-2 pt-1">
-                  {(item.kunyomi || []).length > 0 ? (
-                    item.kunyomi.map((kun, i) => (
-                      <button
-                        key={i}
-                        onClick={() => speakJapanese(kun.split(' ')[0].replace(/[.-]/g, ''))}
-                        className="px-2.5 py-1 rounded-lg bg-surface-card text-state-success border border-state-success/20 font-bold hover:border-state-success/50 flex items-center gap-1.5 transition-colors text-xs font-jp"
-                        title="Klik untuk mendengar"
-                      >
-                        <span>{kun}</span>
-                        <Volume2 className="w-3 h-3 text-state-success/60" />
-                      </button>
-                    ))
-                  ) : (
-                    <span className="text-text-muted text-xs italic">-</span>
-                  )}
+              {/* Tips Edukasi Cara Baca Kanji */}
+              {hasMultipleReadings && (
+                <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/25 space-y-1.5 text-xs text-left shadow-inner">
+                  <div className="flex items-center gap-1.5 font-bold text-amber-600 dark:text-amber-400 font-heading text-[11.5px]">
+                    <span>💡 TIPS CARA BACA KANJI ({totalKanjiReadings} BACAAN):</span>
+                  </div>
+                  <p className="text-[11.5px] text-text-secondary leading-relaxed">
+                    Kanji ini memiliki <strong>{totalKanjiReadings} variasi cara baca</strong> ({onyomiList.length} Onyomi &amp; {kunyomiList.length} Kunyomi). <em>Jangan dihafal sekaligus sebagai satu kesatuan kata!</em> Hafalkan secara terpisah sesuai konteksnya:
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-0.5 text-[11px]">
+                    <div className="p-2.5 rounded-xl bg-surface-card border border-wine-accent/20 text-text-secondary space-y-0.5">
+                      <span className="font-bold text-wine-accent flex items-center gap-1 font-mono">
+                        <span>音</span> 音読み (Onyomi):
+                      </span>
+                      <p className="text-[10.5px]">Dipakai saat kanji bergabung dengan kanji lain membentuk kata majemuk (jukugo).</p>
+                    </div>
+                    <div className="p-2.5 rounded-xl bg-surface-card border border-state-success/20 text-text-secondary space-y-0.5">
+                      <span className="font-bold text-state-success flex items-center gap-1 font-mono">
+                        <span>訓</span> 訓読み (Kunyomi):
+                      </span>
+                      <p className="text-[10.5px]">Dipakai saat kanji berdiri sendiri sebagai kata mandiri atau diikuti okurigana (hiragana).</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           )}
 

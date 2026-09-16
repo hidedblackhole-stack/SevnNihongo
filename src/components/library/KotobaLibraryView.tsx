@@ -10,6 +10,8 @@ import { KotobaDetailModal } from './KotobaDetailModal';
 import { UserDeck } from '../../types/rpg';
 import { isItemBookmarked } from '../../utils/decks';
 import { convertRomajiToKana, matchJapaneseQuery } from '../../utils/imeEngine';
+import { parseReadingVariations } from '../../utils/readingHighlightUtils';
+
 
 const LEVEL_OPTIONS = [
   { value: 'all', label: 'Semua Level' },
@@ -406,6 +408,9 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
         {displayedKotoba.map((item) => {
           const priority = getKotobaPriority(item);
           const isKaigoTagged = item.tags?.includes('Kaigo');
+          const variations = parseReadingVariations(item.reading);
+          const hasMultipleReadings = variations.length > 1;
+          const listReading = hasMultipleReadings ? variations.join(' / ') : item.reading;
 
           return (
             <div
@@ -439,9 +444,14 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
                       <span className="px-1.5 py-0.5 rounded-md bg-surface-inset text-text-muted text-[9px] font-mono uppercase">
                         {item.wordType}
                       </span>
+                      {hasMultipleReadings && (
+                        <span className="px-2 py-0.5 rounded-lg text-[10px] font-mono font-bold bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 flex items-center gap-1 shadow-xs">
+                          <span>⚡</span> {variations.length} Cara Baca
+                        </span>
+                      )}
                     </div>
                     <h3 className="text-xl sm:text-2xl font-bold text-text-primary font-jp tracking-wide mb-1 flex items-end gap-2 transition-colors">
-                      <RubyText japanese={item.word} reading={item.reading} showFurigana={true} />
+                      <RubyText japanese={item.word} reading={listReading} showFurigana={true} />
                     </h3>
                     <p className="text-xs sm:text-sm font-semibold text-text-secondary transition-colors leading-snug">
                       {item.meaningId}
