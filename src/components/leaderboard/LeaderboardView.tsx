@@ -82,10 +82,22 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({ currentUserId,
   };
 
   const getRankIcon = (index: number) => {
-    if (index === 0) return <Crown className="w-5 h-5 text-yellow-400 drop-shadow-[0_0_8px_rgba(250,204,21,0.6)]" fill="currentColor" />;
-    if (index === 1) return <Medal className="w-5 h-5 text-gray-300" fill="currentColor" />;
-    if (index === 2) return <Medal className="w-5 h-5 text-amber-700" fill="currentColor" />;
-    return <span className="text-sm font-bold text-text-muted w-5 text-center">{index + 1}</span>;
+    if (index === 0) return <Crown className="w-5 h-5 text-yellow-400 drop-shadow-[0_0_8px_rgba(250,204,21,0.6)] shrink-0" fill="currentColor" />;
+    if (index === 1) return <Medal className="w-5 h-5 text-gray-300 shrink-0" fill="currentColor" />;
+    if (index === 2) return <Medal className="w-5 h-5 text-amber-700 shrink-0" fill="currentColor" />;
+
+    const rankNum = index + 1;
+    const isLarge = rankNum >= 100;
+
+    return (
+      <span
+        className={`font-bold font-mono tabular-nums text-text-muted text-center whitespace-nowrap leading-none ${
+          isLarge ? 'text-xs tracking-tight' : 'text-sm'
+        }`}
+      >
+        {rankNum}
+      </span>
+    );
   };
 
   const getRankStyle = (index: number) => {
@@ -193,7 +205,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({ currentUserId,
                     title="Klik untuk melihat profil karakter petualang"
                   >
                     {/* Rank */}
-                    <div className="flex items-center justify-center w-8 shrink-0">
+                    <div className="flex items-center justify-center min-w-[2.25rem] sm:min-w-[2.5rem] w-auto shrink-0 px-0.5 text-center">
                       {getRankIcon(index)}
                     </div>
 
