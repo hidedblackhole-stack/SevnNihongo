@@ -170,7 +170,7 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[75] overflow-y-auto p-3 sm:p-4 bg-surface-ground/80 backdrop-blur-sm flex justify-center items-start sm:items-center animate-fade-in">
+        <div className="fixed inset-0 z-[75] p-3 sm:p-4 bg-surface-ground/80 backdrop-blur-sm flex justify-center items-center animate-fade-in">
           {/* Backdrop Click */}
           <div
             className="fixed inset-0 -z-10"
@@ -184,10 +184,10 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
             initial={{ scale: 0.95, opacity: 0, y: 15 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.95, opacity: 0, y: 15 }}
-            className="panel w-full max-w-2xl border border-border-subtle rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[88vh] my-auto relative bg-surface-card"
+            className="w-full max-w-2xl border border-border-subtle rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh] sm:max-h-[88vh] relative bg-surface-card"
           >
             {/* Header */}
-          <div className="p-4 sm:p-5 border-b border-border-subtle flex items-center justify-between bg-surface-inset">
+          <div className="p-4 sm:p-5 border-b border-border-subtle flex items-center justify-between bg-surface-inset shrink-0">
             <div>
               <h3 className="font-heading font-bold text-base sm:text-lg text-text-primary flex items-center gap-2">
                 <span>{targetDeck.coverIcon || '📖'}</span>
@@ -210,7 +210,7 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
           </div>
 
           {/* Search & Filter Bar */}
-          <div className="p-4 border-b border-border-subtle space-y-3 bg-surface-card">
+          <div className="p-4 border-b border-border-subtle space-y-3 bg-surface-card shrink-0">
             <div className="relative">
               <Search className="w-4 h-4 text-text-muted absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
@@ -316,7 +316,7 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
           </div>
 
           {/* Results List */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-2.5 pb-20">
+          <div className="flex-1 min-h-0 overflow-y-auto p-4 space-y-2.5 pb-20">
             {displayedItems.length === 0 ? (
               <div className="text-center py-12 text-text-muted text-xs">
                 Tidak ada materi yang cocok dengan pencarian &quot;{searchQuery}&quot;

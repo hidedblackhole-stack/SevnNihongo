@@ -51,7 +51,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
   const [error, setError] = useState('');
 
   // Content Customization States
-  const [contentMode, setContentMode] = useState<ContentSourceMode>('preset');
+  const [contentMode, setContentMode] = useState<ContentSourceMode>('empty');
   const [presetLevel, setPresetLevel] = useState<'all' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'Kaigo'>('N5');
   const [presetCount, setPresetCount] = useState<number>(10);
 
@@ -80,7 +80,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
       setDescription('');
       setType('mixed');
       setCoverIcon('📖');
-      setContentMode('preset');
+      setContentMode('empty');
       setPresetLevel('N5');
       setPresetCount(10);
       setSelectedManualKeys(new Set());
@@ -219,7 +219,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[70] overflow-y-auto p-3 sm:p-4 bg-surface-ground/80 backdrop-blur-sm flex justify-center items-start sm:items-center animate-fade-in">
+        <div className="fixed inset-0 z-[70] p-3 sm:p-4 bg-surface-ground/80 backdrop-blur-sm flex justify-center items-center animate-fade-in">
           {/* Backdrop Click */}
           <div
             className="fixed inset-0 -z-10"
@@ -233,7 +233,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
             initial={{ scale: 0.95, opacity: 0, y: 15 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.95, opacity: 0, y: 15 }}
-            className="panel w-full max-w-xl border border-border-subtle rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[88vh] my-auto bg-surface-card relative"
+            className="w-full max-w-xl border border-border-subtle rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh] sm:max-h-[88vh] bg-surface-card relative"
           >
             {/* Header */}
             <div className="p-4 sm:p-5 border-b border-border-subtle flex items-center justify-between bg-surface-inset shrink-0">
@@ -386,10 +386,10 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                 {/* Mode Selector Tabs */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 p-1 rounded-2xl bg-surface-inset border border-border-subtle">
                   {[
+                    { id: 'empty', label: '📝 Kosong', sub: 'Mulai Kosong' },
                     { id: 'preset', label: '⚡ Otomatis', sub: 'Preset Level' },
                     { id: 'bookmark', label: '🔖 Bookmark', sub: `${bookmarkItems.length} Materi` },
                     { id: 'manual', label: '🔍 Pilih Sendiri', sub: 'Pilih Manual' },
-                    { id: 'empty', label: '📝 Kosong', sub: 'Mulai Kosong' },
                   ].map((m) => {
                     const isSelected = contentMode === m.id;
                     return (
@@ -587,10 +587,14 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                   </div>
                 )}
 
-                {/* Mode 4: Empty */}
+                {/* Mode: Empty */}
                 {contentMode === 'empty' && (
-                  <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle text-xs text-text-secondary">
-                    Deck akan dibuat kosong (0 materi). Kamu dapat menambahkan materi secara fleksibel kapan saja melalui tombol <strong>+ Tambah Materi</strong> di dalam deck.
+                  <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle text-xs text-text-secondary flex items-start gap-2.5">
+                    <span className="text-base">📝</span>
+                    <div>
+                      <p className="font-bold text-text-primary mb-0.5">Deck Kosong (0 Materi Bawaan)</p>
+                      <p>Deck akan dibuat dalam keadaan bersih. Kamu bebas menambahkan materi kapan saja lewat tombol <strong>+ Tambah Materi</strong> di dalam deck.</p>
+                    </div>
                   </div>
                 )}
               </div>
