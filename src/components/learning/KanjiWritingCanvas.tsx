@@ -172,6 +172,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
       radical: dbItem?.radical || '',
       radicalName: dbItem?.radicalName || '',
       relatedWords: effectiveRelatedWords,
+      questions: dbItem?.questions || [],
     };
   }, [dbItem, kanjiChar, effectiveMeaning, onyomiList, kunyomiList, level, isKana, strokeCount, effectiveRelatedWords]);
 
