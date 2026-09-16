@@ -9,6 +9,77 @@ import { KANJI_DATABASE } from '../../data/kanji';
 import { KanjiItem } from '../../types/content';
 import { getHighlightedYomikata } from '../../utils/readingHighlightUtils';
 
+export const SMALL_KANA_SET = new Set([
+  // Hiragana sutegana
+  'ぁ', 'ぃ', 'ぅ', 'ぇ', 'ぉ',
+  'っ',
+  'ゃ', 'ゅ', 'ょ',
+  'ゎ',
+  // Katakana sutegana
+  'ァ', 'ィ', 'ゥ', 'ェ', 'ォ',
+  'ッ',
+  'ャ', 'ュ', 'ョ',
+  'ヮ',
+  'ヵ', 'ヶ',
+]);
+
+export const isSmallKana = (char: string): boolean => {
+  return char.length > 0 && SMALL_KANA_SET.has(char);
+};
+
+export function transformSmallKanaData(charData: any) {
+  if (!charData || !Array.isArray(charData.strokes) || !Array.isArray(charData.medians)) {
+    return charData;
+  }
+
+  // Authentic Japanese Yokogaki layout:
+  // Scale down to ~58% and position in bottom-left quadrant (左下)
+  const scale = 0.58;
+  const targetCx = 275;
+  const targetCy = 140;
+  const origCx = 512;
+  const origCy = 388;
+
+  const transformedStrokes = charData.strokes.map((pathStr: string) => {
+    return pathStr.replace(/([MCZ])([^MCZ]*)/gi, (match, cmd, args) => {
+      if (cmd.toUpperCase() === 'Z') return cmd;
+      const numRegex = /[-+]?(?:\d*\.\d+|\d+)/g;
+      const nums: number[] = [];
+      let m: RegExpExecArray | null;
+      while ((m = numRegex.exec(args)) !== null) {
+        nums.push(parseFloat(m[0]));
+      }
+      if (nums.length === 0) return cmd;
+      const transformed: string[] = [];
+      for (let i = 0; i < nums.length; i += 2) {
+        const x = nums[i];
+        const y = nums[i + 1];
+        if (y !== undefined) {
+          const newX = Math.round(targetCx + (x - origCx) * scale);
+          const newY = Math.round(targetCy + (y - origCy) * scale);
+          transformed.push(`${newX},${newY}`);
+        } else {
+          transformed.push(Math.round(x).toString());
+        }
+      }
+      return cmd + transformed.join(' ');
+    });
+  });
+
+  const transformedMedians = charData.medians.map((stroke: number[][]) =>
+    stroke.map(([x, y]: number[]) => [
+      Math.round(targetCx + (x - origCx) * scale),
+      Math.round(targetCy + (y - origCy) * scale)
+    ])
+  );
+
+  return {
+    ...charData,
+    strokes: transformedStrokes,
+    medians: transformedMedians,
+  };
+}
+
 const strokeDataCache = new Map<string, any>();
 const activeFetches = new Map<string, Promise<any>>();
 
@@ -19,7 +90,10 @@ export const preloadStrokeData = (word: string) => {
 
     // Check embedded Kana stroke dictionary first (instant 0ms, zero network)
     if (KANA_STROKE_DICT[char]) {
-      strokeDataCache.set(char, KANA_STROKE_DICT[char]);
+      const data = isSmallKana(char)
+        ? transformSmallKanaData(KANA_STROKE_DICT[char])
+        : KANA_STROKE_DICT[char];
+      strokeDataCache.set(char, data);
       return;
     }
 
@@ -58,9 +132,10 @@ export const preloadStrokeData = (word: string) => {
           });
       })
       .then(data => {
-        strokeDataCache.set(char, data);
+        const finalData = isSmallKana(char) ? transformSmallKanaData(data) : data;
+        strokeDataCache.set(char, finalData);
         activeFetches.delete(char);
-        return data;
+        return finalData;
       })
       .catch(err => {
         activeFetches.delete(char);
@@ -122,6 +197,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
 }) => {
   const kanjiChar = rawKanjiChar || character || '';
   const isKana = kanjiChar.length > 0 && kanjiChar.charCodeAt(0) >= 0x3040 && kanjiChar.charCodeAt(0) <= 0x30ff;
+  const isSmall = isSmallKana(kanjiChar);
 
   // Database lookup fallback for complete character metadata
   const dbItem = useMemo(() => {
@@ -178,8 +254,9 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
 
   // Dynamic calibration: Kana has sweeping curves (e.g. stroke 2 of か & カ) requiring ~400 threshold and 1.05 leniency
   // to avoid false rejections, while Kanji uses 360 threshold and 1.0 leniency.
-  const effectiveLeniency = leniency ?? (isKana ? 1.05 : 1.0);
-  const effectiveDistanceThreshold = averageDistanceThreshold ?? (isKana ? 400 : 360);
+  // Small Kana (sutegana) scaled in bottom-left quadrant uses 1.15 leniency and 440 threshold.
+  const effectiveLeniency = leniency ?? (isSmall ? 1.15 : (isKana ? 1.05 : 1.0));
+  const effectiveDistanceThreshold = averageDistanceThreshold ?? (isSmall ? 440 : (isKana ? 400 : 360));
 
   const gridCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const writerContainerRef = useRef<HTMLDivElement | null>(null);
@@ -318,6 +395,12 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     ctx.fillStyle = isLightMode ? '#f1efe8' : '#191d26';
     ctx.fillRect(0, 0, canvasSize, canvasSize);
 
+    // If small kana, highlight bottom-left quadrant (左下 / Yokogaki standard)
+    if (isSmall) {
+      ctx.fillStyle = isLightMode ? 'rgba(99, 102, 241, 0.08)' : 'rgba(99, 102, 241, 0.12)';
+      ctx.fillRect(0, canvasSize / 2, canvasSize / 2, canvasSize / 2);
+    }
+
     // Grid lines: Dark Sashiko (rgba(111, 147, 207, 0.20)) vs Light Sashiko (rgba(37, 62, 99, 0.18))
     ctx.strokeStyle = isLightMode ? 'rgba(37, 62, 99, 0.18)' : 'rgba(111, 147, 207, 0.20)';
     ctx.lineWidth = 1;
@@ -338,7 +421,23 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     ctx.moveTo(canvasSize, 0);
     ctx.lineTo(0, canvasSize);
     ctx.stroke();
-  }, [canvasSize, isLightMode]);
+
+    // Subtle guide crosshairs for bottom-left quadrant if small kana
+    if (isSmall) {
+      ctx.strokeStyle = isLightMode ? 'rgba(99, 102, 241, 0.40)' : 'rgba(129, 140, 248, 0.40)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([2, 3]);
+
+      ctx.beginPath();
+      // Vertical midpoint of bottom-left quadrant
+      ctx.moveTo(canvasSize / 4, canvasSize / 2);
+      ctx.lineTo(canvasSize / 4, canvasSize);
+      // Horizontal midpoint of bottom-left quadrant
+      ctx.moveTo(0, canvasSize * 0.75);
+      ctx.lineTo(canvasSize / 2, canvasSize * 0.75);
+      ctx.stroke();
+    }
+  }, [canvasSize, isLightMode, isSmall]);
 
   // 2. HanziWriter Setup (Layer Interaktif)
   useEffect(() => {
@@ -367,20 +466,26 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
         drawingColor: isLightMode ? '#262420' : '#f8fafc',
         outlineColor: isLightMode ? 'rgba(37, 62, 99, 0.20)' : 'rgba(151, 181, 224, 0.25)',
         showHintAfterMisses: 2,
-        drawingWidth: 12,
+        drawingWidth: isSmall ? 10 : 12,
         leniency: effectiveLeniency,
         averageDistanceThreshold: effectiveDistanceThreshold,
         charDataLoader: (char, onComplete, onError) => {
-          if (KANA_STROKE_DICT[char]) {
-            strokeDataCache.set(char, KANA_STROKE_DICT[char]);
-            setIsLoading(false);
-            onComplete(KANA_STROKE_DICT[char]);
-            return;
-          }
-
           if (strokeDataCache.has(char)) {
             setIsLoading(false);
             onComplete(strokeDataCache.get(char));
+            return;
+          }
+
+          const processData = (rawData: any) => {
+            if (!rawData) return rawData;
+            return isSmallKana(char) ? transformSmallKanaData(rawData) : rawData;
+          };
+
+          if (KANA_STROKE_DICT[char]) {
+            const finalData = processData(KANA_STROKE_DICT[char]);
+            strokeDataCache.set(char, finalData);
+            setIsLoading(false);
+            onComplete(finalData);
             return;
           }
 
@@ -391,8 +496,10 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
           activeFetches.get(char)!
             .then(data => {
               if (isCancelled) return;
+              const finalData = processData(data);
+              strokeDataCache.set(char, finalData);
               setIsLoading(false);
-              onComplete(data);
+              onComplete(finalData);
             })
             .catch(err => {
               if (isCancelled) return;
@@ -868,6 +975,14 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
               Goresan {Math.min(currentStrokeIndex + 1, totalCharStrokes)}/{totalCharStrokes}
             </span>
           ) : null}
+          {isSmall && (
+            <span
+              className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo/15 text-indigo border border-indigo/30 flex items-center gap-1 font-heading"
+              title="Huruf kecil ditulis di kuadran kiri-bawah (sutegana)"
+            >
+              Kuadran Kiri Bawah (左下)
+            </span>
+          )}
           {mistakesCount > 0 && !isQuizComplete ? (
             <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-surface-inset text-rose-400 border border-rose-500/30 flex items-center gap-1 font-mono">
               Salah: {mistakesCount}
@@ -914,7 +1029,11 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
         {!hasStrokeData && (
           <div className="absolute inset-0 z-10">
             {showGuide && (
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none text-text-primary/20 text-9xl font-jp font-bold">
+              <div className={`absolute inset-0 flex pointer-events-none select-none text-text-primary/20 font-jp font-bold ${
+                isSmall
+                  ? 'items-end justify-start p-8 text-7xl'
+                  : 'items-center justify-center text-9xl'
+              }`}>
                 {kanjiChar}
               </div>
             )}
