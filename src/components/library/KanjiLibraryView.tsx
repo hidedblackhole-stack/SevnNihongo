@@ -434,11 +434,6 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
                     <span className={`px-1.5 py-0.5 rounded-md font-bold border text-[9.5px] tracking-wide whitespace-nowrap shrink-0 leading-none ${badgeColor}`}>
                       {badgeLabel}
                     </span>
-                    {!isHira && !isKata && ((item.onyomi?.length || 0) + (item.kunyomi?.length || 0)) > 1 && (
-                      <span className="px-1 py-0.5 rounded text-[8.5px] font-bold font-mono bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 whitespace-nowrap leading-none" title={`${(item.onyomi?.length || 0) + (item.kunyomi?.length || 0)} variasi cara baca`}>
-                        ⚡{((item.onyomi?.length || 0) + (item.kunyomi?.length || 0))} Bacaan
-                      </span>
-                    )}
                   </div>
                   <div className="flex items-center gap-1.5 shrink-0">
                     <span className="whitespace-nowrap">{item.strokeCount}画</span>
@@ -493,7 +488,9 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
                     ? getKanaRowLabel(item.character)
                     : isNum
                       ? 'Angka / Sūji'
-                      : (item.radical ? `Radikal: ${item.radical}` : (item.jlpt || 'Kanji'))}
+                      : (item.radical && !item.radical.includes('Lihat') && item.radical.trim() !== ''
+                          ? `Radikal: ${item.radical}`
+                          : `Kanji ${item.jlpt || ''}`.trim())}
                 </span>
               </div>
             );

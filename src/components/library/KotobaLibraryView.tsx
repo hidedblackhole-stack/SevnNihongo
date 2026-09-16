@@ -445,11 +445,6 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
                       <span className="px-1.5 py-0.5 rounded-md bg-surface-inset text-text-muted text-[9px] font-mono uppercase">
                         {item.wordType}
                       </span>
-                      {hasMultipleReadings && (
-                        <span className="px-2 py-0.5 rounded-lg text-[10px] font-mono font-bold bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 flex items-center gap-1 shadow-xs">
-                          <span>⚡</span> {variations.length} Cara Baca
-                        </span>
-                      )}
                     </div>
                     <h3 className="text-xl sm:text-2xl font-bold text-text-primary font-jp tracking-wide mb-1 flex items-end gap-2 transition-colors">
                       <RubyText japanese={item.word} reading={listReading} showFurigana={true} />
