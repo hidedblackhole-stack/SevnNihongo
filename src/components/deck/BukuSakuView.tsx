@@ -72,7 +72,8 @@ interface BukuSakuViewProps {
     goldGained: number,
     itemId?: string,
     score?: number,
-    total?: number
+    total?: number,
+    interactionType?: 'writing' | 'flashcard' | 'quiz'
   ) => void;
   soundEnabled?: boolean;
   playerMp?: number;
@@ -994,6 +995,10 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
         item={selectedKotoba}
         onClose={() => setSelectedKotoba(null)}
         soundEnabled={soundEnabled}
+        masteryRecord={selectedKotoba ? itemMastery?.[selectedKotoba.id] : undefined}
+        onRewardPlayer={onRewardPlayer}
+        onCompleteStudyItem={onCompleteStudyItem}
+        userDecks={decks}
       />
 
       <KanjiDetailModal

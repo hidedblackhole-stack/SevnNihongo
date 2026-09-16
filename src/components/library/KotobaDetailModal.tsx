@@ -41,7 +41,8 @@ interface KotobaDetailModalProps {
     goldGained: number,
     itemId?: string,
     score?: number,
-    total?: number
+    total?: number,
+    interactionType?: 'writing' | 'flashcard' | 'quiz'
   ) => void;
 }
 
@@ -66,15 +67,36 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
 }) => {
   const [isWritingMode, setIsWritingMode] = useState(false);
   const [selectedReadingIndex, setSelectedReadingIndex] = useState<number>(-1);
+  const hasRecordedWritingRef = React.useRef(false);
 
   useEffect(() => {
     if (!isOpen) {
       setIsWritingMode(false);
+      hasRecordedWritingRef.current = false;
     } else if (item?.id) {
       setSelectedReadingIndex(-1);
+      hasRecordedWritingRef.current = false;
       onRecordInteraction?.(item.id, 'kotoba', 'flashcard', true);
     }
   }, [isOpen, item?.id]);
+
+  const handleWritingWordCompleted = (score: number, reward?: import('../../utils/rewards').WritingRewardResult) => {
+    if (!item) return;
+    if (hasRecordedWritingRef.current) return;
+    hasRecordedWritingRef.current = true;
+
+    const exp = reward?.expGained ?? 20;
+    const gold = reward?.goldGained ?? 5;
+    if (onCompleteStudyItem) {
+      onCompleteStudyItem('kotoba', exp, gold, item.id, score >= 60 ? 1 : 0, 1, 'writing');
+    } else {
+      if (onRecordInteraction) {
+        onRecordInteraction(item.id, 'kotoba', 'writing', score >= 60);
+      }
+      onRewardPlayer?.(exp, gold);
+      onRecordStudy?.('flashcards', item.id, 1);
+    }
+  };
 
   const readingVariations = useMemo(() => parseReadingVariations(item?.reading), [item?.reading]);
   const hasMultipleReadings = readingVariations.length > 1;
@@ -195,18 +217,11 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                 kotoba={item}
                 soundEnabled={soundEnabled}
                 nextButtonLabel={hasNext ? 'Lanjut ke Kata Berikutnya' : 'Selesai Menulis'}
+                onCompleteWord={(score, reward) => {
+                  handleWritingWordCompleted(score, reward);
+                }}
                 onFinishWord={(score, reward) => {
-                  const exp = reward?.expGained ?? 20;
-                  const gold = reward?.goldGained ?? 5;
-                  if (onRecordInteraction) {
-                    onRecordInteraction(item.id, 'kotoba', 'writing', score >= 60);
-                  }
-                  if (onCompleteStudyItem) {
-                    onCompleteStudyItem('kotoba', exp, gold, item.id, score >= 60 ? 1 : 0, 1);
-                  } else {
-                    onRewardPlayer?.(exp, gold);
-                    onRecordStudy?.('flashcards', item.id, 1);
-                  }
+                  handleWritingWordCompleted(score, reward);
                   if (onNext && hasNext) {
                     onNext();
                   } else {

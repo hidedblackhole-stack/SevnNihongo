@@ -10,7 +10,8 @@ import { parseReadingVariations } from '../../utils/readingHighlightUtils';
 
 interface KotobaWritingPracticeProps {
   kotoba: KotobaItem;
-  onFinishWord: (score: number, reward?: WritingRewardResult) => void;
+  onFinishWord?: (score: number, reward?: WritingRewardResult) => void;
+  onCompleteWord?: (score: number, reward?: WritingRewardResult) => void;
   onCancel?: () => void;
   soundEnabled?: boolean;
   nextButtonLabel?: string;
@@ -19,6 +20,7 @@ interface KotobaWritingPracticeProps {
 export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
   kotoba,
   onFinishWord,
+  onCompleteWord,
   onCancel,
   soundEnabled = true,
   nextButtonLabel,
@@ -43,6 +45,9 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
   const [animationCount, setAnimationCount] = useState(0);
   const [lastReward, setLastReward] = useState<WritingRewardResult | null>(null);
 
+  // Award guard to prevent duplicate rewards for the same completion
+  const hasAwardedRef = React.useRef(false);
+
   // Master Kotoba Stopwatch: persists across all syllables/characters
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(true);
@@ -59,6 +64,7 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
     setLastReward(null);
     setElapsedSeconds(0);
     setIsTimerRunning(true);
+    hasAwardedRef.current = false;
     // Preload all stroke data in the background!
     preloadStrokeData(kotoba.word);
   }, [kotoba.word]);
@@ -84,12 +90,19 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
 
   const currentChar = characters[currentCharIndex];
 
+  const triggerWordCompletion = (score: number, reward?: WritingRewardResult) => {
+    if (hasAwardedRef.current) return;
+    hasAwardedRef.current = true;
+    onCompleteWord?.(score, reward);
+  };
+
   const handleReset = () => {
     setCurrentCharIndex(0);
     setCompletedChars([]);
     setTotalMistakes(0);
     setElapsedSeconds(0); // Reset stopwatch from the beginning of the syllables
     setIsTimerRunning(true);
+    hasAwardedRef.current = false;
     playSound('click', soundEnabled);
   };
 
@@ -115,7 +128,9 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
         strokeCount: characters.length * 4,
       });
       setLastReward(reward);
-      // Removed automatic setTimeout: User reads the explanation card and advances manually via button
+      const score = Math.max(0, 100 - (totalMistakes * 10));
+      triggerWordCompletion(score, reward);
+      // User reads the explanation card and can advance or go back to detail
     }
   };
 
@@ -403,7 +418,8 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
               onClick={() => {
                 playSound('click', soundEnabled);
                 const score = Math.max(0, 100 - (totalMistakes * 10));
-                onFinishWord(score, lastReward || undefined);
+                triggerWordCompletion(score, lastReward || undefined);
+                onFinishWord?.(score, lastReward || undefined);
               }}
               className="flex-1 btn btn-cta py-3 px-4 rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-md active:scale-95"
             >
@@ -417,6 +433,8 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
               type="button"
               onClick={() => {
                 playSound('click', soundEnabled);
+                const score = Math.max(0, 100 - (totalMistakes * 10));
+                triggerWordCompletion(score, lastReward || undefined);
                 onCancel();
               }}
               className="text-xs text-text-muted hover:text-text-primary underline underline-offset-2 font-bold transition-colors pt-1"

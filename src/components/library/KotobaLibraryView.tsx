@@ -82,7 +82,8 @@ interface KotobaLibraryViewProps {
     goldGained: number,
     itemId?: string,
     score?: number,
-    total?: number
+    total?: number,
+    interactionType?: 'writing' | 'flashcard' | 'quiz'
   ) => void;
 }
 

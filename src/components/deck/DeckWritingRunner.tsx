@@ -19,7 +19,8 @@ interface DeckWritingRunnerProps {
     goldGained: number,
     itemId?: string,
     score?: number,
-    total?: number
+    total?: number,
+    interactionType?: 'writing' | 'flashcard' | 'quiz'
   ) => void;
   soundEnabled?: boolean;
 }
@@ -59,7 +60,8 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
           itemGold ?? 5,
           currentItem.ref.id,
           1,
-          1
+          1,
+          'writing'
         );
       }
     }

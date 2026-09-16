@@ -655,16 +655,20 @@ export default function App() {
     goldGained: number,
     itemId?: string,
     score?: number,
-    total?: number
+    total?: number,
+    interactionTypeOverride?: 'writing' | 'flashcard' | 'quiz'
   ) => {
     if (expGained > 0 || goldGained > 0) {
       handleRewardPlayer(expGained, goldGained);
     }
 
+    const effectiveInteraction: 'writing' | 'flashcard' | 'quiz' =
+      interactionTypeOverride || (moduleId === 'kanji' ? 'writing' : (moduleId === 'kotoba' ? 'flashcard' : 'quiz'));
+
     // Advance mission progress based on completed module
+    if (effectiveInteraction === 'writing' || moduleId === 'kanji') advanceMissions('kanji', 1);
     if (moduleId === 'bunpou') advanceMissions('bunpou', 1);
-    else if (moduleId === 'kotoba') advanceMissions('kotoba', 1);
-    else if (moduleId === 'kanji') advanceMissions('kanji', 1);
+    else if (moduleId === 'kotoba' && effectiveInteraction !== 'writing') advanceMissions('kotoba', 1);
     else if (moduleId === 'choukai') advanceMissions('choukai', 1);
     else if (moduleId === 'dokkai') {
       const isPerfect = score !== undefined && total !== undefined && total > 0 && score === total;
@@ -687,8 +691,6 @@ export default function App() {
         const cat = moduleId === 'boss' ? 'bunpou' : (moduleId === 'questions' || moduleId === 'tryOuts' ? 'kotoba' : moduleId);
         const currentItem = prev.itemMastery ? prev.itemMastery[itemId] : undefined;
         const isContextual = moduleId === 'dokkai' || moduleId === 'boss';
-        const interactionType: 'writing' | 'flashcard' | 'quiz' =
-          moduleId === 'kanji' ? 'writing' : (moduleId === 'kotoba' ? 'flashcard' : 'quiz');
         const updatedRecord = recordItemAttempt(
           currentItem,
           itemId,
@@ -697,7 +699,7 @@ export default function App() {
           total,
           undefined,
           isContextual,
-          interactionType
+          effectiveInteraction
         );
         updatedMastery = {
           ...updatedMastery,
@@ -718,15 +720,15 @@ export default function App() {
 
       // Record Activity for Stats Profile (the specific module)
       const effectiveId = itemId || `study_${moduleId}_${Date.now()}`;
-      if (moduleId === 'kotoba') newStats = recordStudyActivity(newStats, 'flashcards', effectiveId);
-      else if (moduleId === 'kanji') newStats = recordStudyActivity(newStats, 'kanjiWriting', effectiveId);
+      if (effectiveInteraction === 'writing' || moduleId === 'kanji') newStats = recordStudyActivity(newStats, 'kanjiWriting', effectiveId);
+      else if (moduleId === 'kotoba') newStats = recordStudyActivity(newStats, 'flashcards', effectiveId);
       else if (moduleId === 'boss') newStats = recordStudyActivity(newStats, 'bossBattles', effectiveId);
       else if (moduleId === 'questions') newStats = recordStudyActivity(newStats, 'questions', effectiveId, total || 1);
       else if (moduleId === 'tryOuts') newStats = recordStudyActivity(newStats, 'tryOuts', effectiveId, 1);
       else newStats = recordStudyActivity(newStats, moduleId as any, effectiveId);
 
       // Record total questions answered if it was a quiz
-      if (total && total > 1 && moduleId !== 'kanji' && moduleId !== 'kotoba') {
+      if (total && total > 1 && moduleId !== 'kanji' && moduleId !== 'kotoba' && effectiveInteraction !== 'writing') {
         newStats = recordStudyActivity(newStats, 'questions', effectiveId, total);
       }
 

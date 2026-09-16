@@ -64,7 +64,8 @@ export interface UniversalEntityModalProps {
     goldGained: number,
     itemId?: string,
     score?: number,
-    total?: number
+    total?: number,
+    interactionType?: 'writing' | 'flashcard' | 'quiz'
   ) => void;
 }
 
@@ -584,8 +585,23 @@ export const UniversalEntityModal: React.FC<UniversalEntityModalProps> = ({
                     }
                   }
                   soundEnabled={soundEnabled}
+                  onCompleteWord={(score, reward) => {
+                    const exp = reward?.expGained || 20;
+                    const gold = reward?.goldGained || 10;
+                    if (onCompleteStudyItem) {
+                      onCompleteStudyItem('kotoba', exp, gold, unified.id, score >= 60 ? 1 : 0, 1, 'writing');
+                    } else if (onRewardPlayer) {
+                      onRewardPlayer(exp, gold);
+                    }
+                  }}
                   onFinishWord={(score, reward) => {
-                    if (onRewardPlayer) onRewardPlayer(reward?.expGained || 20, reward?.goldGained || 10);
+                    const exp = reward?.expGained || 20;
+                    const gold = reward?.goldGained || 10;
+                    if (onCompleteStudyItem) {
+                      onCompleteStudyItem('kotoba', exp, gold, unified.id, score >= 60 ? 1 : 0, 1, 'writing');
+                    } else if (onRewardPlayer) {
+                      onRewardPlayer(exp, gold);
+                    }
                   }}
                 />
               )}
