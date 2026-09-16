@@ -395,12 +395,6 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     ctx.fillStyle = isLightMode ? '#f1efe8' : '#191d26';
     ctx.fillRect(0, 0, canvasSize, canvasSize);
 
-    // If small kana, highlight bottom-left quadrant (左下 / Yokogaki standard)
-    if (isSmall) {
-      ctx.fillStyle = isLightMode ? 'rgba(99, 102, 241, 0.08)' : 'rgba(99, 102, 241, 0.12)';
-      ctx.fillRect(0, canvasSize / 2, canvasSize / 2, canvasSize / 2);
-    }
-
     // Grid lines: Dark Sashiko (rgba(111, 147, 207, 0.20)) vs Light Sashiko (rgba(37, 62, 99, 0.18))
     ctx.strokeStyle = isLightMode ? 'rgba(37, 62, 99, 0.18)' : 'rgba(111, 147, 207, 0.20)';
     ctx.lineWidth = 1;
@@ -421,23 +415,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     ctx.moveTo(canvasSize, 0);
     ctx.lineTo(0, canvasSize);
     ctx.stroke();
-
-    // Subtle guide crosshairs for bottom-left quadrant if small kana
-    if (isSmall) {
-      ctx.strokeStyle = isLightMode ? 'rgba(99, 102, 241, 0.40)' : 'rgba(129, 140, 248, 0.40)';
-      ctx.lineWidth = 1;
-      ctx.setLineDash([2, 3]);
-
-      ctx.beginPath();
-      // Vertical midpoint of bottom-left quadrant
-      ctx.moveTo(canvasSize / 4, canvasSize / 2);
-      ctx.lineTo(canvasSize / 4, canvasSize);
-      // Horizontal midpoint of bottom-left quadrant
-      ctx.moveTo(0, canvasSize * 0.75);
-      ctx.lineTo(canvasSize / 2, canvasSize * 0.75);
-      ctx.stroke();
-    }
-  }, [canvasSize, isLightMode, isSmall]);
+  }, [canvasSize, isLightMode]);
 
   // 2. HanziWriter Setup (Layer Interaktif)
   useEffect(() => {
@@ -975,14 +953,6 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
               Goresan {Math.min(currentStrokeIndex + 1, totalCharStrokes)}/{totalCharStrokes}
             </span>
           ) : null}
-          {isSmall && (
-            <span
-              className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo/15 text-indigo border border-indigo/30 flex items-center gap-1 font-heading"
-              title="Huruf kecil ditulis di kuadran kiri-bawah (sutegana)"
-            >
-              Kuadran Kiri Bawah (左下)
-            </span>
-          )}
           {mistakesCount > 0 && !isQuizComplete ? (
             <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-surface-inset text-rose-400 border border-rose-500/30 flex items-center gap-1 font-mono">
               Salah: {mistakesCount}

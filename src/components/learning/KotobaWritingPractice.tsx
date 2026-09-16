@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Check, Edit3, RotateCcw, ArrowLeft, ArrowRight, Volume2, Layers, BookOpen, Clock } from 'lucide-react';
 import { KotobaItem } from '../../types/content';
-import { KanjiWritingCanvas, preloadStrokeData, isSmallKana } from './KanjiWritingCanvas';
+import { KanjiWritingCanvas, preloadStrokeData } from './KanjiWritingCanvas';
 import { RubyText } from './RubyText';
 import { playSound, speakJapanese } from '../../utils/audio';
 import { getKotobaBaseExp, calculateWritingReward, WritingRewardResult } from '../../utils/rewards';
@@ -210,13 +210,8 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
 
           {/* Writing Canvas for the Current Character */}
           <div className="w-full flex flex-col items-center gap-3">
-            <div className="text-xs font-bold text-text-secondary font-mono flex items-center gap-2 flex-wrap justify-center">
-              <span>Tulis karakter ke-{currentCharIndex + 1} ({currentChar})</span>
-              {isSmallKana(currentChar) && (
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo/15 text-indigo border border-indigo/30 font-heading">
-                  Huruf Kecil (Sutegana)
-                </span>
-              )}
+            <div className="text-xs font-bold text-text-secondary font-mono">
+              Tulis karakter ke-{currentCharIndex + 1} ({currentChar})
             </div>
             <div className="w-full flex justify-center" key={`canvas-${currentCharIndex}-${currentChar}`}>
               <KanjiWritingCanvas
