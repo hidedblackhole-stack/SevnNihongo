@@ -28,6 +28,7 @@ import { UniversalFlashcard } from '../learning/UniversalFlashcard';
 import { UniversalWritingCard } from '../learning/UniversalWritingCard';
 import { SentenceTile, validateSentenceSubmission, validateSentenceTextSubmission, ValidationFeedback } from '../../engine';
 import { JapaneseImeInput } from '../common/JapaneseImeInput';
+import { RubyText } from '../learning/RubyText';
 
 interface DungeonSessionRunnerProps {
   payload: DungeonPayload;
@@ -611,13 +612,31 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
 
                   return (
                     <div className="space-y-4">
-                      <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle text-center space-y-1">
-                        <span className="text-[10px] font-mono text-gold uppercase font-bold">
+                      <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle text-center space-y-2">
+                        <span className="text-[10px] font-mono text-gold uppercase font-bold tracking-wider">
                           Ubah kata ke {q.targetForm?.name || (q as any).targetFormName || 'Bentuk Tertentu'}:
                         </span>
-                        <h3 className="text-2xl font-black text-text-primary font-jp">
-                          {q.targetVerb?.kanji || (q as any).dictionaryWord || q.prompt}
-                        </h3>
+                        <div className="flex items-center justify-center gap-2 pt-1 pb-0.5">
+                          <h3 className="text-2xl sm:text-3xl font-black text-text-primary font-jp">
+                            <RubyText
+                              japanese={q.targetVerb?.kanji || (q as any).dictionaryWord || q.prompt}
+                              reading={q.targetVerb?.reading || (q as any).reading || q.ruby}
+                              showFurigana={true}
+                              className="text-2xl sm:text-3xl font-black text-text-primary font-jp"
+                            />
+                          </h3>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const textToSpeak = q.targetVerb?.reading || q.targetVerb?.kanji || (q as any).dictionaryWord || '';
+                              if (textToSpeak) speakJapanese(textToSpeak);
+                            }}
+                            className="p-1.5 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-gold border border-border-subtle transition-colors shadow-2xs cursor-pointer"
+                            title="Dengarkan pelafalan"
+                          >
+                            <Volume2 className="w-4 h-4" />
+                          </button>
+                        </div>
                         <p className="text-xs text-text-muted">
                           {q.targetVerb?.meaningId || (q as any).meaning || ''}
                         </p>
@@ -649,7 +668,12 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                               className={`p-3.5 rounded-2xl border text-left flex items-center justify-between transition-all ${style}`}
                             >
                               <span className="font-jp font-bold text-sm">
-                                {opt}
+                                <RubyText
+                                  japanese={opt}
+                                  reading={q.optionsRuby?.[idx]}
+                                  showFurigana={true}
+                                  className="font-jp font-bold text-sm"
+                                />
                               </span>
                               {isAnswerChecked && isCorrect && <CheckCircle2 className="w-4 h-4 text-emerald-400" />}
                               {isAnswerChecked && isSelected && !isCorrect && <XCircle className="w-4 h-4 text-rose-400" />}
@@ -691,7 +715,11 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                           {q.instruction || 'Pilihlah jawaban yang paling tepat:'}
                         </span>
                         <h3 className="text-base sm:text-lg font-bold text-text-primary font-jp leading-relaxed">
-                          {q.prompt}
+                          <RubyText
+                            japanese={q.prompt}
+                            reading={q.ruby}
+                            showFurigana={true}
+                          />
                         </h3>
                       </div>
 
@@ -725,7 +753,11 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                                   {String.fromCharCode(65 + idx)}
                                 </span>
                                 <span className="text-xs sm:text-sm font-jp font-bold">
-                                  {opt}
+                                  <RubyText
+                                    japanese={opt}
+                                    reading={q.optionsRuby?.[idx]}
+                                    showFurigana={true}
+                                  />
                                 </span>
                               </div>
                               {isAnswerChecked && isCorrect && <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />}
