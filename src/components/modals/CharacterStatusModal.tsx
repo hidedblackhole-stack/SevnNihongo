@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   X,
@@ -41,6 +42,25 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
   stats,
   stageProgress = {},
 }) => {
+  useEffect(() => {
+    if (!isOpen) return;
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        playSound('click', stats.soundEnabled);
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose, stats.soundEnabled]);
+
   if (!isOpen) return null;
 
   const { tierIndex: effectiveTierIndex } = getTierForExp(
@@ -55,15 +75,22 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
   const unlockedAchievements = stats.streakDays > 0 ? 1 : 0;
   const totalAchievements = 12;
 
-  return (
+  const modalContent = (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md overflow-y-auto"
+        onClick={() => {
+          playSound('click', stats.soundEnabled);
+          onClose();
+        }}
+      >
         <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 15 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 15 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
           className="relative w-full max-w-2xl panel border border-border-subtle rounded-3xl p-5 sm:p-6 text-text-primary shadow-2xl overflow-hidden my-auto max-h-[95vh] flex flex-col"
+          onClick={(e) => e.stopPropagation()}
         >
           {/* Modal Header */}
           <div className="flex items-center justify-between pb-3 border-b border-border-subtle shrink-0 mb-4">
@@ -170,11 +197,11 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
               </div>
             </div>
 
-            {/* 3. N3 MASTERY VS COVERAGE */}
+            {/* 3. MASTERY VS COVERAGE (N5 - N1) */}
             <div className="space-y-3">
               <h3 className="text-xs font-bold uppercase tracking-widest text-text-secondary flex items-center gap-2 font-heading">
                 <Target className="w-4 h-4 text-gold" />
-                N3 Mastery vs Coverage
+                Mastery vs Coverage (N5 - N1)
               </h3>
               
               <div className="p-4 rounded-3xl bg-surface-inset border border-border-subtle space-y-4">
@@ -284,4 +311,6 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
       </div>
     </AnimatePresence>
   );
+
+  return createPortal(modalContent, document.body);
 };

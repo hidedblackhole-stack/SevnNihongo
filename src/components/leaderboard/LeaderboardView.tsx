@@ -3,19 +3,22 @@ import { Trophy, Medal, Loader2, RefreshCw, Flame, Crown } from 'lucide-react';
 import { getLeaderboard, getWeeklyLeaderboard, getCurrentWeekId, LeaderboardEntry, WeeklyLeaderboardEntry } from '../../lib/supabase';
 import { playSound } from '../../utils/audio';
 import { RPG_TIERS } from '../../data/tiers';
+import { TIER_AVATAR_MAP } from '../avatar/TierAvatar';
+import { PlayerProfileModal } from './PlayerProfileModal';
 
 interface LeaderboardViewProps {
   currentUserId: string;
   soundEnabled: boolean;
+  onOpenStatusModal?: () => void;
 }
 
 type LeaderboardTab = 'all-time' | 'weekly';
 
-export const LeaderboardView: React.FC<LeaderboardViewProps> = ({ currentUserId, soundEnabled }) => {
+export const LeaderboardView: React.FC<LeaderboardViewProps> = ({ currentUserId, soundEnabled, onOpenStatusModal }) => {
   const [activeTab, setActiveTab] = useState<LeaderboardTab>('all-time');
   const [allTimeEntries, setAllTimeEntries] = useState<LeaderboardEntry[]>([]);
   const [weeklyEntries, setWeeklyEntries] = useState<WeeklyLeaderboardEntry[]>([]);
-  const [selectedPlayer, setSelectedPlayer] = useState<LeaderboardEntry | null>(null);
+  const [selectedPlayer, setSelectedPlayer] = useState<(LeaderboardEntry & { rank?: number; weeklyScore?: number }) | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -43,6 +46,35 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({ currentUserId,
   useEffect(() => {
     fetchLeaderboard();
   }, [activeTab]);
+
+  const handleSelectPlayer = (entry: LeaderboardEntry | WeeklyLeaderboardEntry, index: number) => {
+    playSound('open_modal', soundEnabled);
+    if (activeTab === 'all-time') {
+      const allTime = entry as LeaderboardEntry;
+      setSelectedPlayer({
+        ...allTime,
+        rank: index + 1,
+      });
+    } else {
+      const weekly = entry as WeeklyLeaderboardEntry;
+      const allTimeMatch = allTimeEntries.find((e) => e.user_id === weekly.user_id);
+      setSelectedPlayer({
+        user_id: weekly.user_id,
+        player_name: weekly.player_name,
+        level: allTimeMatch?.level || 1,
+        total_exp: allTimeMatch?.total_exp || weekly.score,
+        tier_index: weekly.tier_index,
+        last_updated: weekly.updated_at,
+        avatar_url: weekly.avatar_url || allTimeMatch?.avatar_url,
+        stat_tryout: allTimeMatch?.stat_tryout || 0,
+        stat_flashcard: allTimeMatch?.stat_flashcard || 0,
+        stat_kanji: allTimeMatch?.stat_kanji || 0,
+        stat_boss: allTimeMatch?.stat_boss || 0,
+        rank: index + 1,
+        weeklyScore: weekly.score,
+      });
+    }
+  };
 
   const getRankIcon = (index: number) => {
     if (index === 0) return <Crown className="w-5 h-5 text-yellow-400 drop-shadow-[0_0_8px_rgba(250,204,21,0.6)]" fill="currentColor" />;
@@ -132,46 +164,53 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({ currentUserId,
           ) : (
             <div className="space-y-2">
               {currentEntries.map((entry, index) => {
-              const isMe = entry.user_id === currentUserId;
-              const tier = RPG_TIERS[Math.min(entry.tier_index, RPG_TIERS.length - 1)];
+                const isMe = entry.user_id === currentUserId;
+                const tier = RPG_TIERS[Math.min(entry.tier_index ?? 0, RPG_TIERS.length - 1)];
+                const avatarThumbnail = TIER_AVATAR_MAP[tier?.tier || 1];
 
-              // Type coercion for dynamic rendering
-              const expToDisplay = activeTab === 'all-time' 
-                ? (entry as LeaderboardEntry).total_exp 
-                : (entry as WeeklyLeaderboardEntry).score;
-                
-              const levelToDisplay = activeTab === 'all-time'
-                ? (entry as LeaderboardEntry).level
-                : null; // Weekly doesn't have level
+                // Type coercion for dynamic rendering
+                const expToDisplay = activeTab === 'all-time' 
+                  ? (entry as LeaderboardEntry).total_exp 
+                  : (entry as WeeklyLeaderboardEntry).score;
+                  
+                const levelToDisplay = activeTab === 'all-time'
+                  ? (entry as LeaderboardEntry).level
+                  : null; // Weekly doesn't have level
 
                 return (
                   <div
                     key={entry.user_id}
-                    onClick={() => {
-                      if (activeTab === 'all-time') {
-                        setSelectedPlayer(entry as LeaderboardEntry);
-                      }
-                    }}
-                    className={`flex items-center gap-3 p-3 sm:px-4 rounded-2xl transition-all border shadow-sm ${getRankStyle(index)} ${isMe ? 'ring-2 ring-amber-500/50 scale-[1.01]' : ''} ${activeTab === 'all-time' ? 'cursor-pointer hover:scale-[1.01]' : ''}`}
+                    onClick={() => handleSelectPlayer(entry, index)}
+                    className={`flex items-center gap-3 p-3 sm:px-4 rounded-2xl transition-all border shadow-sm cursor-pointer hover:scale-[1.01] active:scale-[0.99] ${getRankStyle(index)} ${isMe ? 'ring-2 ring-amber-500/50 scale-[1.01]' : ''}`}
+                    title="Klik untuk melihat profil karakter petualang"
                   >
                     {/* Rank */}
                     <div className="flex items-center justify-center w-8 shrink-0">
                       {getRankIcon(index)}
                     </div>
 
-                    {/* Avatar / Class Icon placeholder */}
+                    {/* Avatar / Character Portrait */}
                     <div className="w-10 h-10 rounded-xl bg-surface-inset flex flex-col items-center justify-center shrink-0 border border-border-subtle overflow-hidden shadow-inner relative">
                       {entry.avatar_url ? (
                         <span className="text-xl leading-none" style={{ filter: 'drop-shadow(0 2px 2px rgba(0,0,0,0.5))' }}>
                           {entry.avatar_url}
                         </span>
+                      ) : avatarThumbnail ? (
+                        <img
+                          src={avatarThumbnail}
+                          alt={tier?.name || 'Avatar'}
+                          className="w-full h-full object-cover object-top filter drop-shadow-sm"
+                          loading="lazy"
+                        />
                       ) : tier ? (
                         <span className="font-bold text-text-muted opacity-80">{tier.name.charAt(0)}</span>
                       ) : (
                         <div className="w-6 h-6 bg-surface-elevated rounded-full" />
                       )}
                       {levelToDisplay && (
-                        <span className="absolute bottom-0 text-[9px] font-bold text-gold">Lv.{levelToDisplay}</span>
+                        <span className="absolute bottom-0 text-[8px] font-mono font-bold text-gold bg-black/70 px-1 rounded-t">
+                          Lv.{levelToDisplay}
+                        </span>
                       )}
                     </div>
 
@@ -213,55 +252,15 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({ currentUserId,
         </div>
       </div>
 
-        {/* Player Profile Flex Modal */}
-        {selectedPlayer && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedPlayer(null)}>
-            <div 
-              className="panel bg-surface-card border border-border-primary p-6 rounded-3xl w-full max-w-sm shadow-2xl space-y-6 relative overflow-hidden text-center"
-              onClick={e => e.stopPropagation()}
-            >
-              {/* Close Button */}
-              <button 
-                onClick={() => setSelectedPlayer(null)}
-                className="absolute top-4 right-4 text-text-muted hover:text-text-primary text-xl"
-              >
-                &times;
-              </button>
-
-              <div className="space-y-2">
-                <div className="w-20 h-20 mx-auto rounded-2xl bg-surface-inset border-2 border-gold/40 flex items-center justify-center text-4xl shadow-inner">
-                  {selectedPlayer.avatar_url || '👤'}
-                </div>
-                <h3 className="text-xl font-bold font-heading text-text-primary">{selectedPlayer.player_name}</h3>
-                <p className="text-sm font-bold text-gold">Level {selectedPlayer.level}</p>
-                <p className="text-xs text-text-secondary">{RPG_TIERS[Math.min(selectedPlayer.tier_index, RPG_TIERS.length - 1)]?.name || 'Novice'}</p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div className="bg-surface-inset p-3 rounded-xl border border-border-subtle">
-                  <div className="text-[10px] text-text-muted font-bold uppercase">Ujian</div>
-                  <div className="font-mono text-lg text-emerald-500 font-bold">{selectedPlayer.stat_tryout || 0}</div>
-                </div>
-                <div className="bg-surface-inset p-3 rounded-xl border border-border-subtle">
-                  <div className="text-[10px] text-text-muted font-bold uppercase">Flashcard</div>
-                  <div className="font-mono text-lg text-indigo font-bold">{selectedPlayer.stat_flashcard || 0}</div>
-                </div>
-                <div className="bg-surface-inset p-3 rounded-xl border border-border-subtle">
-                  <div className="text-[10px] text-text-muted font-bold uppercase">Kanji</div>
-                  <div className="font-mono text-lg text-gold font-bold">{selectedPlayer.stat_kanji || 0}</div>
-                </div>
-                <div className="bg-surface-inset p-3 rounded-xl border border-border-subtle">
-                  <div className="text-[10px] text-text-muted font-bold uppercase">Boss Mati</div>
-                  <div className="font-mono text-lg text-rose-500 font-bold">{selectedPlayer.stat_boss || 0}</div>
-                </div>
-              </div>
-
-              <div className="text-xs text-text-muted">
-                TOTAL EXP: <span className="font-bold text-text-primary">{selectedPlayer.total_exp.toLocaleString()}</span>
-              </div>
-            </div>
-          </div>
-        )}
+      {/* Player Profile Portal Modal (Teleported to document.body) */}
+      <PlayerProfileModal
+        player={selectedPlayer}
+        isOpen={Boolean(selectedPlayer)}
+        onClose={() => setSelectedPlayer(null)}
+        isCurrentUser={selectedPlayer?.user_id === currentUserId}
+        soundEnabled={soundEnabled}
+        onOpenFullStatusModal={onOpenStatusModal}
+      />
     </div>
   );
 };

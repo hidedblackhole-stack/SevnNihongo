@@ -1316,6 +1316,7 @@ export default function App() {
                 <LeaderboardView
                   currentUserId={stats.userId!}
                   soundEnabled={stats.soundEnabled}
+                  onOpenStatusModal={() => setIsStatusModalOpen(true)}
                 />
               )}
             </div>

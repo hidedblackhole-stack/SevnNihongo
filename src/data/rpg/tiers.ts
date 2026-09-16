@@ -21,7 +21,7 @@ export const RPG_TIERS: TierInfo[] = [
     visualAssetDesc: 'Sturdy leather armor, reinforced boots, bronze buckle, small dagger.',
     baseColor: 'to-teal-800',
     glowColor: 'shadow-emerald-500/30',
-    requiredExpTotal: 300,
+    requiredExpTotal: 1200,
     perks: '+5% Gold bonus dari kuis. Membuka Flashcard Speed Mode.',
     iconName: 'Shield'
   },
@@ -33,7 +33,7 @@ export const RPG_TIERS: TierInfo[] = [
     visualAssetDesc: 'Hardened iron short sword, carved wooden round shield, padded gambeson.',
     baseColor: 'to-cyan-800',
     glowColor: 'shadow-blue-500/30',
-    requiredExpTotal: 800,
+    requiredExpTotal: 4000,
     perks: '+10% EXP pada latihan Kanji. 50/50 Kuis Hint terbuka.',
     iconName: 'Sword'
   },
@@ -45,7 +45,7 @@ export const RPG_TIERS: TierInfo[] = [
     visualAssetDesc: 'Polished steel chainmail, steel broadsword with faint glow, heraldic crest.',
     baseColor: 'to-blue-800',
     glowColor: 'shadow-blue-500/40',
-    requiredExpTotal: 1500,
+    requiredExpTotal: 10000,
     perks: '+10 Max MP. Kontrol kecepatan audio Choukai terbuka.',
     iconName: 'Zap'
   },
@@ -57,7 +57,7 @@ export const RPG_TIERS: TierInfo[] = [
     visualAssetDesc: 'Full steel plate armor, visor helmet with plume, glowing knight blade.',
     baseColor: 'to-purple-900',
     glowColor: 'shadow-purple-500/40',
-    requiredExpTotal: 2500,
+    requiredExpTotal: 22000,
     perks: '+15% Serangan Boss Battle. Bonus EXP Misi Harian +20%.',
     iconName: 'Award'
   },
@@ -69,7 +69,7 @@ export const RPG_TIERS: TierInfo[] = [
     visualAssetDesc: 'Royal velvet cape with gold trims, engraved runic plate, luminous longsword.',
     baseColor: 'to-red-800',
     glowColor: 'shadow-rose-500/50',
-    requiredExpTotal: 4000,
+    requiredExpTotal: 45000,
     perks: '+1 Perisai Pembeku Streak harian. +25% Gold dari Dokkai.',
     iconName: 'Crown'
   },
@@ -81,7 +81,7 @@ export const RPG_TIERS: TierInfo[] = [
     visualAssetDesc: 'Gilded gold-and-silver heavy armor, radiant holy shield, sun-etched claymore.',
     baseColor: 'to-amber-600',
     glowColor: 'shadow-amber-400/50',
-    requiredExpTotal: 6000,
+    requiredExpTotal: 80000,
     perks: '+20% Critical Study EXP boost. Gratis 1 MP Potion setiap login harian.',
     iconName: 'Sun'
   },
@@ -93,7 +93,7 @@ export const RPG_TIERS: TierInfo[] = [
     visualAssetDesc: 'Cosmic glowing energy aura, floating celestial relic, legendary glowing excalibur.',
     baseColor: 'to-indigo-900',
     glowColor: 'shadow-sky-400/60',
-    requiredExpTotal: 8500,
+    requiredExpTotal: 135000,
     perks: 'Lembar latihan kanji tanpa batas dengan evaluasi otomatis. +30% seluruh EXP.',
     iconName: 'Flame'
   },
@@ -105,7 +105,7 @@ export const RPG_TIERS: TierInfo[] = [
     visualAssetDesc: 'Levitating avatar, elemental vortex of thunder & flames, divine twin blades.',
     baseColor: 'to-purple-800',
     glowColor: 'shadow-fuchsia-500/60',
-    requiredExpTotal: 12000,
+    requiredExpTotal: 210000,
     perks: 'Kemampuan Super Boss Slayer: Kerusakan 2x lipat terhadap semua Stage Boss.',
     iconName: 'Swords'
   },
@@ -117,7 +117,7 @@ export const RPG_TIERS: TierInfo[] = [
     visualAssetDesc: 'Transcendent deity form, luminous halo crown, 6 wings of pure radiant light.',
     baseColor: 'to-amber-500',
     glowColor: 'shadow-amber-300/80',
-    requiredExpTotal: 16000,
+    requiredExpTotal: 320000,
     perks: 'Penguasaan Penuh Seluruh 5 Alam Jepang (N5-N1). RPG Stats & Study Boost Maksimal.',
     iconName: 'Star'
   }

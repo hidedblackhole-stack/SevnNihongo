@@ -269,7 +269,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
             </h1>
             <p className="text-xs sm:text-sm text-text-secondary font-body">
               {worldMode === 'dungeon'
-                ? 'Latihan bebas prosedural: menulis kanji, flashcard kilat, susun kalimat J-LIE, konjugasi, dan arena kuis.'
+                ? 'Latihan bebas: menulis aksara, flashcard kilat, susun pola kalimat, ubah bentuk kata, dan kuis cepat.'
                 : 'Pilih jalur petualangan dan taklukkan stage pembelajaran terstruktur dari Kana hingga N1.'}
             </p>
           </div>

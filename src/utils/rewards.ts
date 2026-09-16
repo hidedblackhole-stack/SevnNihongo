@@ -4,24 +4,8 @@ import { KanjiItem, KotobaItem, BunpouItem } from '../types/content';
  * Base EXP constants based on JLPT tier difficulty.
  */
 export const KANJI_LEVEL_BASE_EXP: Record<string, number> = {
-  KANA: 10,
-  SUUJI: 10,
-  N5: 15,
-  N4: 25,
-  N3: 35,
-  N2: 50,
-  N1: 70,
-};
-
-export const KOTOBA_LEVEL_BASE_EXP: Record<string, number> = {
-  N5: 12,
-  N4: 18,
-  N3: 28,
-  N2: 40,
-  N1: 55,
-};
-
-export const BUNPOU_LEVEL_BASE_EXP: Record<string, number> = {
+  KANA: 12,
+  SUUJI: 12,
   N5: 20,
   N4: 30,
   N3: 45,
@@ -29,17 +13,33 @@ export const BUNPOU_LEVEL_BASE_EXP: Record<string, number> = {
   N1: 90,
 };
 
-export const QUIZ_LEVEL_BASE_EXP: Record<string, number> = {
+export const KOTOBA_LEVEL_BASE_EXP: Record<string, number> = {
   N5: 15,
-  N4: 20,
-  N3: 25,
-  N2: 35,
-  N1: 50,
+  N4: 22,
+  N3: 32,
+  N2: 48,
+  N1: 65,
+};
+
+export const BUNPOU_LEVEL_BASE_EXP: Record<string, number> = {
+  N5: 25,
+  N4: 35,
+  N3: 50,
+  N2: 70,
+  N1: 95,
+};
+
+export const QUIZ_LEVEL_BASE_EXP: Record<string, number> = {
+  N5: 18,
+  N4: 25,
+  N3: 35,
+  N2: 50,
+  N1: 70,
 };
 
 /**
  * Calculates the intrinsic Base EXP of a Kanji/Kana/Suuji character.
- * Formula: Level Weight + (strokeCount * 2)
+ * Formula: Level Weight + (strokeCount * 2.5)
  */
 export function getKanjiBaseExp(kanji: {
   character: string;
@@ -61,7 +61,7 @@ export function getKanjiBaseExp(kanji: {
   const levelBase = KANJI_LEVEL_BASE_EXP[levelKey] || KANJI_LEVEL_BASE_EXP.N3;
   const strokes = kanji.strokeCount || (isKana ? 3 : 8);
 
-  return levelBase + (strokes * 2);
+  return levelBase + Math.round(strokes * 2.5);
 }
 
 /**

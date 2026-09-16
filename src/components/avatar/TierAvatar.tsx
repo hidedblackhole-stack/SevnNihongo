@@ -26,7 +26,7 @@ import tier8Img from '../../assets/avatars/tier-8.png';
 import tier9Img from '../../assets/avatars/tier-9.png';
 import tier10Img from '../../assets/avatars/tier-10.png';
 
-const TIER_AVATAR_MAP: Record<number, string> = {
+export const TIER_AVATAR_MAP: Record<number, string> = {
   1: tier1Img,
   2: tier2Img,
   3: tier3Img,

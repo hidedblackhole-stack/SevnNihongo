@@ -52,7 +52,7 @@ const DUNGEON_META: Record<
   writing: {
     title: 'Dungeon Menulis Aksara',
     jpTitle: '書道の試練 (Kanji Writing Trial)',
-    subtitle: 'Latihan goresan kanvas kaligrafi stroke-by-stroke',
+    subtitle: 'Latihan menulis aksara goresan demi goresan',
     iconEmoji: '✍️',
     requirementHint: 'Memerlukan materi aksara (Kanji atau Kosakata)',
     themeColor: 'border-wine-accent/40 text-wine-accent',
@@ -61,7 +61,7 @@ const DUNGEON_META: Record<
   flashcard: {
     title: 'Dungeon Gerbang Ingatan',
     jpTitle: '記憶の回廊 (Speed Flashcard Drill)',
-    subtitle: 'Drill kilat bolak-balik arti, bacaan & audio',
+    subtitle: 'Hafalan kilat bolak-balik arti, bacaan & audio',
     iconEmoji: '🎴',
     requirementHint: 'Mendukung semua tipe materi (Kanji, Kosakata, Tata Bahasa)',
     themeColor: 'border-teal/40 text-teal',
@@ -69,8 +69,8 @@ const DUNGEON_META: Record<
   },
   sakubun: {
     title: 'Dungeon Kuil Tata Bahasa',
-    jpTitle: '作文の神殿 (J-LIE Sentence Builder)',
-    subtitle: 'Menyusun potongan kata menjadi kalimat utuh (J-LIE)',
+    jpTitle: '作文の神殿 (Sentence Builder)',
+    subtitle: 'Menyusun potongan kata dan pola menjadi kalimat utuh',
     iconEmoji: '🧩',
     requirementHint: 'Memerlukan materi pola tata bahasa (Bunpou)',
     themeColor: 'border-gold/40 text-gold',
@@ -79,7 +79,7 @@ const DUNGEON_META: Record<
   conjugation: {
     title: 'Dungeon Altar Konjugasi',
     jpTitle: '活用の祭壇 (Conjugation Dojo)',
-    subtitle: 'Refleks cepat perubahan bentuk kata kerja & kata sifat',
+    subtitle: 'Latihan cepat mengubah bentuk kata kerja & kata sifat',
     iconEmoji: '⚡',
     requirementHint: 'Memerlukan materi kosakata kata kerja/sifat (Kotoba)',
     themeColor: 'border-indigo/40 text-indigo',
@@ -88,7 +88,7 @@ const DUNGEON_META: Record<
   quiz: {
     title: 'Dungeon Arena Kuis Cepat',
     jpTitle: '闘技場の戦い (Rapid Battle Quiz)',
-    subtitle: 'Pertempuran kuis pilihan ganda acak standar JLPT',
+    subtitle: 'Latihan kuis pilihan ganda acak standar JLPT',
     iconEmoji: '🎯',
     requirementHint: 'Mendukung materi Kanji, Kosakata, atau Tata Bahasa',
     themeColor: 'border-emerald-500/40 text-emerald-400',
