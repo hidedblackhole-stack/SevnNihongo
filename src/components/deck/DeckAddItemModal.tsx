@@ -169,14 +169,24 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[75] flex items-center justify-center p-3 sm:p-4 bg-surface-ground/80 backdrop-blur-sm animate-fade-in">
-        <motion.div
-          initial={{ scale: 0.95, opacity: 0, y: 15 }}
-          animate={{ scale: 1, opacity: 1, y: 0 }}
-          exit={{ scale: 0.95, opacity: 0, y: 15 }}
-          className="panel w-full max-w-2xl border border-border-subtle rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] relative"
-        >
-          {/* Header */}
+      {isOpen && (
+        <div className="fixed inset-0 z-[75] overflow-y-auto p-3 sm:p-4 bg-surface-ground/80 backdrop-blur-sm flex justify-center items-start sm:items-center animate-fade-in">
+          {/* Backdrop Click */}
+          <div
+            className="fixed inset-0 -z-10"
+            onClick={() => {
+              playSound('click', soundEnabled);
+              onClose();
+            }}
+          />
+
+          <motion.div
+            initial={{ scale: 0.95, opacity: 0, y: 15 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.95, opacity: 0, y: 15 }}
+            className="panel w-full max-w-2xl border border-border-subtle rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[88vh] my-auto relative bg-surface-card"
+          >
+            {/* Header */}
           <div className="p-4 sm:p-5 border-b border-border-subtle flex items-center justify-between bg-surface-inset">
             <div>
               <h3 className="font-heading font-bold text-base sm:text-lg text-text-primary flex items-center gap-2">
@@ -465,6 +475,7 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
           )}
         </motion.div>
       </div>
-    </AnimatePresence>
+    )}
+  </AnimatePresence>
   );
 };

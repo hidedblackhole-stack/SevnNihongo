@@ -218,45 +218,59 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[70] flex items-center justify-center p-3 sm:p-4 bg-surface-ground/80 backdrop-blur-sm animate-fade-in">
-        <motion.div
-          initial={{ scale: 0.95, opacity: 0, y: 15 }}
-          animate={{ scale: 1, opacity: 1, y: 0 }}
-          exit={{ scale: 0.95, opacity: 0, y: 15 }}
-          className="panel w-full max-w-xl border border-border-subtle rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh]"
-        >
-          {/* Header */}
-          <div className="p-4 sm:p-5 border-b border-border-subtle flex items-center justify-between bg-surface-inset">
-            <div className="flex items-center gap-2.5">
-              <span className="text-2xl p-1 rounded-xl bg-surface-card border border-border-subtle">{coverIcon}</span>
-              <div>
-                <h3 className="font-heading font-bold text-base sm:text-lg text-text-primary flex items-center gap-2">
-                  <span>{editingDeck ? 'Edit Buku Saku' : 'Buat Buku Saku Baru'}</span>
-                  {!editingDeck && estimatedCount > 0 && (
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-gold/15 text-gold border border-gold/30">
-                      +{estimatedCount} materi siap
-                    </span>
-                  )}
-                </h3>
-                <p className="text-xs text-text-secondary">
-                  Sesuaikan nama, tipe latihan, dan kustomisasi materi awal
-                </p>
+      {isOpen && (
+        <div className="fixed inset-0 z-[70] overflow-y-auto p-3 sm:p-4 bg-surface-ground/80 backdrop-blur-sm flex justify-center items-start sm:items-center animate-fade-in">
+          {/* Backdrop Click */}
+          <div
+            className="fixed inset-0 -z-10"
+            onClick={() => {
+              playSound('click', soundEnabled);
+              onClose();
+            }}
+          />
+
+          <motion.div
+            initial={{ scale: 0.95, opacity: 0, y: 15 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.95, opacity: 0, y: 15 }}
+            className="panel w-full max-w-xl border border-border-subtle rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[88vh] my-auto bg-surface-card relative"
+          >
+            {/* Header */}
+            <div className="p-4 sm:p-5 border-b border-border-subtle flex items-center justify-between bg-surface-inset shrink-0">
+              <div className="flex items-center gap-2.5">
+                <span className="text-2xl p-1 rounded-xl bg-surface-card border border-border-subtle">{coverIcon}</span>
+                <div>
+                  <h3 className="font-heading font-bold text-base sm:text-lg text-text-primary flex items-center gap-2">
+                    <span>{editingDeck ? 'Edit Buku Saku' : 'Buat Buku Saku Baru'}</span>
+                    {!editingDeck && estimatedCount > 0 && (
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-gold/15 text-gold border border-gold/30">
+                        +{estimatedCount} materi siap
+                      </span>
+                    )}
+                  </h3>
+                  <p className="text-xs text-text-secondary">
+                    Sesuaikan nama, tipe latihan, dan kustomisasi materi awal
+                  </p>
+                </div>
               </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  playSound('click', soundEnabled);
+                  onClose();
+                }}
+                className="p-1.5 rounded-xl text-text-secondary hover:text-text-primary hover:bg-surface-card transition-colors"
+                title="Tutup"
+              >
+                <X className="w-5 h-5" />
+              </button>
             </div>
 
-            <button
-              onClick={() => {
-                playSound('click', soundEnabled);
-                onClose();
-              }}
-              className="p-1.5 rounded-xl text-text-secondary hover:text-text-primary hover:bg-surface-card transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-
-          {/* Form Content */}
-          <form onSubmit={handleSubmit} className="p-4 sm:p-5 overflow-y-auto space-y-4 flex-1">
+            {/* Form Content */}
+            <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0 overflow-hidden">
+              {/* Scrollable Form Body */}
+              <div className="p-4 sm:p-5 overflow-y-auto space-y-4 flex-1 min-h-0">
             {/* Title */}
             <div>
               <label className="block text-xs font-bold font-heading uppercase tracking-wider text-text-secondary mb-1">
@@ -581,36 +595,38 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                 )}
               </div>
             )}
+          </div>
 
-            {/* Actions */}
-            <div className="pt-3 border-t border-border-subtle flex items-center justify-end gap-2.5">
-              <button
-                type="button"
-                onClick={() => {
-                  playSound('click', soundEnabled);
-                  onClose();
-                }}
-                className="px-4 py-2 rounded-xl text-xs font-bold text-text-secondary hover:bg-surface-inset border border-transparent"
-              >
-                Batal
-              </button>
-              <button
-                type="submit"
-                className="px-5 py-2.5 rounded-xl text-xs font-heading font-bold bg-surface-elevated text-text-primary border border-border-primary shadow-sm hover:shadow transition-all flex items-center gap-2 hover:scale-102"
-              >
-                <Check className="w-3.5 h-3.5 text-gold" />
-                <span>
-                  {editingDeck
-                    ? 'Simpan Perubahan'
-                    : estimatedCount > 0
-                    ? `Buat Deck (${estimatedCount} Materi)`
-                    : 'Buat Deck Kosong'}
-                </span>
-              </button>
-            </div>
-          </form>
-        </motion.div>
-      </div>
-    </AnimatePresence>
+          {/* Fixed Footer Actions */}
+          <div className="p-3.5 sm:p-4 border-t border-border-subtle flex items-center justify-end gap-2.5 bg-surface-inset shrink-0">
+            <button
+              type="button"
+              onClick={() => {
+                playSound('click', soundEnabled);
+                onClose();
+              }}
+              className="px-4 py-2 rounded-xl text-xs font-bold text-text-secondary hover:bg-surface-card border border-transparent transition-colors"
+            >
+              Batal
+            </button>
+            <button
+              type="submit"
+              className="px-5 py-2.5 rounded-xl text-xs font-heading font-bold bg-surface-elevated text-text-primary border border-border-primary shadow-sm hover:shadow transition-all flex items-center gap-2 hover:scale-102 active:scale-95"
+            >
+              <Check className="w-3.5 h-3.5 text-gold" />
+              <span>
+                {editingDeck
+                  ? 'Simpan Perubahan'
+                  : estimatedCount > 0
+                  ? `Buat Deck (${estimatedCount} Materi)`
+                  : 'Buat Deck Kosong'}
+              </span>
+            </button>
+          </div>
+        </form>
+      </motion.div>
+    </div>
+  )}
+</AnimatePresence>
   );
 };
