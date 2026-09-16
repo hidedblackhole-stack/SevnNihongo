@@ -377,6 +377,9 @@ CREATE TABLE IF NOT EXISTS user_mastery (
     true_mastery_percentage NUMERIC(5,2) DEFAULT 0, -- Weighted composite score
     mastery_level INTEGER DEFAULT 1,           -- 1 to 5
     attempts_count INTEGER DEFAULT 0,
+    practice_count_writing INTEGER DEFAULT 0,
+    practice_count_flashcard INTEGER DEFAULT 0,
+    practice_count_quiz INTEGER DEFAULT 0,
     correct_count INTEGER DEFAULT 0,
     wrong_count INTEGER DEFAULT 0,
     streak INTEGER DEFAULT 0,
@@ -519,3 +522,27 @@ CREATE POLICY "Users can manage their own SRS" ON user_srs
 
 CREATE POLICY "Users can insert and view their activity" ON user_activity
     FOR ALL USING (auth.uid() = user_id);
+
+-- ==============================================================================
+-- 25. 🛠️ IDEMPOTENT PATCHES & LEADERBOARD REBALANCE SYNC
+-- ==============================================================================
+-- Run these if user_mastery table was already created earlier:
+ALTER TABLE user_mastery ADD COLUMN IF NOT EXISTS practice_count_writing INTEGER DEFAULT 0;
+ALTER TABLE user_mastery ADD COLUMN IF NOT EXISTS practice_count_flashcard INTEGER DEFAULT 0;
+ALTER TABLE user_mastery ADD COLUMN IF NOT EXISTS practice_count_quiz INTEGER DEFAULT 0;
+
+-- Sync existing leaderboard records to the rebalanced N5-N1 EXP thresholds:
+-- UPDATE leaderboard
+-- SET tier_index = CASE
+--     WHEN total_exp >= 320000 THEN 9 -- Mythic Deity (N1)
+--     WHEN total_exp >= 210000 THEN 8 -- Champion (N1)
+--     WHEN total_exp >= 135000 THEN 7 -- Hero (N2)
+--     WHEN total_exp >= 80000 THEN 6  -- Paladin (N2)
+--     WHEN total_exp >= 45000 THEN 5  -- Elite Knight (N3)
+--     WHEN total_exp >= 22000 THEN 4  -- Knight (N3)
+--     WHEN total_exp >= 10000 THEN 3  -- Squire (N4)
+--     WHEN total_exp >= 4000 THEN 2   -- Apprentice (N4)
+--     WHEN total_exp >= 1200 THEN 1   -- Novice (N5)
+--     ELSE 0                          -- Villager (N5)
+-- END;
+

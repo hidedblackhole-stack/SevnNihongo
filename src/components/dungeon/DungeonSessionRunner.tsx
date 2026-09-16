@@ -293,7 +293,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                   if (!it) return null;
 
                   return (
-                    <div className="space-y-4">
+                    <div className="panel p-4 sm:p-5 rounded-3xl border border-border-subtle shadow-lg">
                       <UniversalWritingCard
                         item={it}
                         soundEnabled={soundEnabled}

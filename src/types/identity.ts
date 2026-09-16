@@ -315,6 +315,9 @@ export interface UserMasteryEntity {
   trueMasteryPercentage: number;             // Composite 4D score
   masteryLevel: 1 | 2 | 3 | 4 | 5;
   attemptsCount: number;
+  writingCount?: number;
+  flashcardCount?: number;
+  quizCount?: number;
   correctCount: number;
   wrongCount: number;
   streak: number;

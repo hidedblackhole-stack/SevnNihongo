@@ -228,6 +228,9 @@ export interface ItemMasteryRecord {
   bestScore: { score: number; total: number };
   bestScoreAchievedAt: string; // ISO date when best score was achieved
   attemptsCount: number;
+  writingCount?: number; // Total berapa kali latihan menulis aksara ini (Canvas)
+  flashcardCount?: number; // Total berapa kali dibolak-balik / dipelajari via flashcard
+  quizCount?: number; // Total berapa kali dilatih via kuis / susun kalimat / dsb
   consecutivePerfects: number;
   mistakeCount: number;
   lastReviewedAt: string; // ISO String

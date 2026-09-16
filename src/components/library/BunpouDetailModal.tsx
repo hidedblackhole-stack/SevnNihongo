@@ -16,7 +16,7 @@ import {
   RotateCcw,
   Sparkles
 } from 'lucide-react';
-import { BunpouItem, Question } from '../../types/content';
+import { BunpouItem, Question, ItemMasteryRecord } from '../../types/content';
 import { FormulaDisplay } from '../learning/FormulaDisplay';
 import { RubyText } from '../learning/RubyText';
 import { speakJapanese, playSound } from '../../utils/audio';
@@ -28,6 +28,7 @@ import { DeckBookmarkPicker } from '../deck/DeckBookmarkPicker';
 
 interface BunpouDetailModalProps {
   item: BunpouItem;
+  masteryRecord?: ItemMasteryRecord;
   onClose: () => void;
   soundEnabled?: boolean;
   isBookmarked?: boolean;
@@ -35,6 +36,12 @@ interface BunpouDetailModalProps {
   userDecks?: UserDeck[];
   onToggleDeckItem?: (deckId: string) => void;
   onRewardPlayer?: (exp: number, gold: number) => void;
+  onRecordInteraction?: (
+    itemId: string,
+    category: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai',
+    interactionType: 'writing' | 'flashcard' | 'quiz',
+    success?: boolean
+  ) => void;
   onCompleteStudyItem?: (
     moduleId: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss' | 'questions' | 'tryOuts',
     expGained: number,
@@ -112,6 +119,7 @@ const renderClozePrompt = (prompt: string, ruby?: string) => {
 
 export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
   item,
+  masteryRecord,
   onClose,
   soundEnabled = true,
   isBookmarked = false,
@@ -119,6 +127,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
   userDecks,
   onToggleDeckItem,
   onRewardPlayer,
+  onRecordInteraction,
   onCompleteStudyItem,
 }) => {
   const [activeSubIndex, setActiveSubIndex] = useState<number>(0);
@@ -154,6 +163,9 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
     setIsAnswerChecked(true);
 
     const isCorrect = idx === currentQuestion.correctIndex;
+    if (onRecordInteraction) {
+      onRecordInteraction(item.id, 'bunpou', 'quiz', isCorrect);
+    }
     if (isCorrect) {
       playSound('correct', soundEnabled);
       if (onRewardPlayer) onRewardPlayer(15, 10);
@@ -162,6 +174,9 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
       }
     } else {
       playSound('wrong', soundEnabled);
+      if (onCompleteStudyItem) {
+        onCompleteStudyItem('bunpou', 0, 0, item.id, 0, 1);
+      }
     }
   };
 
@@ -202,6 +217,13 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
               <span className="px-2 py-0.5 rounded-lg bg-surface-card text-text-primary text-xs font-mono font-bold border border-border-subtle shadow-sm">
                 {item.baseLevel ? `Fondasi ${item.baseLevel}` : `Level ${item.level}`}
               </span>
+              {masteryRecord && (
+                <span className="px-2 py-0.5 rounded-lg bg-surface-card text-text-secondary text-xs font-mono font-bold border border-border-subtle shadow-sm flex items-center gap-1.5">
+                  <span title="Berapa kali dilatih via latihan kuis">⚔️ Dilatih: {masteryRecord.quizCount || (masteryRecord.attemptsCount || 0)}x</span>
+                  <span className="opacity-40">|</span>
+                  <span className="text-gold" title="Mastery">Lv.{masteryRecord.masteryLevel || 1} ({masteryRecord.masteryPercentage || 0}%)</span>
+                </span>
+              )}
               {isQuizMode && (
                 <span className="px-2 py-0.5 rounded-lg bg-indigo/15 text-indigo text-xs font-heading font-bold border border-indigo/30">
                   ⚔️ Coba Latihan 1 Soal

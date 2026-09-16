@@ -5,11 +5,19 @@ import { BunpouLibraryView } from './BunpouLibraryView';
 import { QuestionLibraryView } from './QuestionLibraryView';
 import { playSound } from '../../utils/audio';
 import { UserDeck, DeckItemCategory } from '../../types/rpg';
+import { ItemMasteryRecord } from '../../types/content';
 
 interface LibraryViewProps {
   soundEnabled?: boolean;
+  itemMastery?: Record<string, ItemMasteryRecord>;
   onRewardPlayer?: (exp: number, gold: number) => void;
   onRecordStudy?: (category: 'tryOuts' | 'questions' | 'dokkai' | 'choukai' | 'bunpou' | 'bossBattles' | 'kanjiWriting' | 'flashcards', id: string, count?: number) => void;
+  onRecordInteraction?: (
+    itemId: string,
+    category: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai',
+    interactionType: 'writing' | 'flashcard' | 'quiz',
+    success?: boolean
+  ) => void;
   onCompleteStudyItem?: (
     moduleId: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss' | 'questions' | 'tryOuts',
     expGained: number,
@@ -26,8 +34,10 @@ export type LibraryTab = 'kotoba' | 'kanji' | 'bunpou' | 'soal';
 
 export const LibraryView: React.FC<LibraryViewProps> = ({
   soundEnabled = true,
+  itemMastery,
   onRewardPlayer,
   onRecordStudy,
+  onRecordInteraction,
   onCompleteStudyItem,
   userDecks,
   onToggleBookmark,
@@ -136,29 +146,35 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
       {libraryTab === 'kotoba' && (
         <KotobaLibraryView
           soundEnabled={soundEnabled}
+          itemMastery={itemMastery}
           userDecks={userDecks}
           onToggleBookmark={onToggleBookmark}
           onRewardPlayer={onRewardPlayer}
           onRecordStudy={onRecordStudy as any}
+          onRecordInteraction={onRecordInteraction}
           onCompleteStudyItem={onCompleteStudyItem}
         />
       )}
       {libraryTab === 'kanji' && (
         <KanjiLibraryView
           soundEnabled={soundEnabled}
+          itemMastery={itemMastery}
           userDecks={userDecks}
           onToggleBookmark={onToggleBookmark}
           onRewardPlayer={onRewardPlayer}
           onRecordStudy={onRecordStudy as any}
+          onRecordInteraction={onRecordInteraction}
           onCompleteStudyItem={onCompleteStudyItem}
         />
       )}
       {libraryTab === 'bunpou' && (
         <BunpouLibraryView
           soundEnabled={soundEnabled}
+          itemMastery={itemMastery}
           userDecks={userDecks}
           onToggleBookmark={onToggleBookmark}
           onRewardPlayer={onRewardPlayer}
+          onRecordInteraction={onRecordInteraction}
           onCompleteStudyItem={onCompleteStudyItem}
         />
       )}

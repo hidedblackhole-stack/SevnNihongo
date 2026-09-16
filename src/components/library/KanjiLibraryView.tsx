@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Search, Filter, ChevronDown, BookOpen, Volume2, Bookmark, Languages, X } from 'lucide-react';
 import { KANJI_DATABASE } from '../../data/kanji';
-import { KanjiItem } from '../../types/content';
+import { KanjiItem, ItemMasteryRecord } from '../../types/content';
 import { KanjiDetailModal } from './KanjiDetailModal';
 import { playSound, speakJapanese } from '../../utils/audio';
 import { UserDeck } from '../../types/rpg';
@@ -70,10 +70,17 @@ const KANA_CATEGORIES = [
 
 interface KanjiLibraryViewProps {
   soundEnabled?: boolean;
+  itemMastery?: Record<string, ItemMasteryRecord>;
   userDecks?: UserDeck[];
   onToggleBookmark?: (id: string, category: 'kanji', notes?: string, targetDeckId?: string) => void;
   onRewardPlayer?: (exp: number, gold: number) => void;
   onRecordStudy?: (category: 'kanjiWriting', id: string, count?: number) => void;
+  onRecordInteraction?: (
+    itemId: string,
+    category: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai',
+    interactionType: 'writing' | 'flashcard' | 'quiz',
+    success?: boolean
+  ) => void;
   onCompleteStudyItem?: (
     moduleId: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss' | 'questions' | 'tryOuts',
     expGained: number,
@@ -86,10 +93,12 @@ interface KanjiLibraryViewProps {
 
 export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
   soundEnabled = true,
+  itemMastery,
   userDecks,
   onToggleBookmark,
   onRewardPlayer,
   onRecordStudy,
+  onRecordInteraction,
   onCompleteStudyItem,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -511,6 +520,7 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
         isOpen={Boolean(selectedKanji)}
         onClose={() => setSelectedKanji(null)}
         item={selectedKanji}
+        masteryRecord={selectedKanji ? itemMastery?.[selectedKanji.id || selectedKanji.character] : undefined}
         soundEnabled={soundEnabled}
         isBookmarked={Boolean(selectedKanji && isItemBookmarked(userDecks, selectedKanji.id || selectedKanji.character, 'kanji'))}
         onToggleBookmark={onToggleBookmark && selectedKanji ? () => onToggleBookmark(selectedKanji.id || selectedKanji.character, 'kanji') : undefined}
@@ -521,6 +531,9 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
           const exp = reward?.expGained ?? 15;
           const gold = reward?.goldGained ?? 5;
           const kanjiId = selectedKanji.id || selectedKanji.character;
+          if (onRecordInteraction) {
+            onRecordInteraction(kanjiId, 'kanji', 'writing', score >= 60);
+          }
           if (onCompleteStudyItem) {
             onCompleteStudyItem('kanji', exp, gold, kanjiId, score >= 60 ? 1 : 0, 1);
           } else {

@@ -2,7 +2,7 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Bookmark, ChevronLeft, ChevronRight } from 'lucide-react';
-import { KanjiItem } from '../../types/content';
+import { KanjiItem, ItemMasteryRecord } from '../../types/content';
 import { playSound } from '../../utils/audio';
 import { KanjiDetailCard } from '../learning/KanjiDetailCard';
 import { WritingRewardResult } from '../../utils/rewards';
@@ -13,6 +13,7 @@ interface KanjiDetailModalProps {
   isOpen: boolean;
   onClose: () => void;
   item: KanjiItem | null;
+  masteryRecord?: ItemMasteryRecord;
   soundEnabled?: boolean;
   isBookmarked?: boolean;
   onToggleBookmark?: () => void;
@@ -29,6 +30,7 @@ export const KanjiDetailModal: React.FC<KanjiDetailModalProps> = ({
   isOpen,
   onClose,
   item,
+  masteryRecord,
   soundEnabled = true,
   isBookmarked = false,
   onToggleBookmark,
@@ -133,6 +135,7 @@ export const KanjiDetailModal: React.FC<KanjiDetailModalProps> = ({
           <KanjiDetailCard
             key={item.id || item.character}
             item={item}
+            masteryRecord={masteryRecord}
             soundEnabled={soundEnabled}
             furiganaEnabled={true}
             initialTab="detail"

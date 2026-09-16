@@ -5,7 +5,7 @@ import { BookIcon } from '../ui/EngravingIcons';
 import { KOTOBA_DATABASE } from '../../data/kotoba';
 import { playSound, speakJapanese } from '../../utils/audio';
 import { RubyText } from '../learning/RubyText';
-import { KotobaItem } from '../../types/content';
+import { KotobaItem, ItemMasteryRecord } from '../../types/content';
 import { KotobaDetailModal } from './KotobaDetailModal';
 import { UserDeck } from '../../types/rpg';
 import { isItemBookmarked } from '../../utils/decks';
@@ -63,10 +63,17 @@ export function getKotobaPriority(item: KotobaItem): { tier: 'essential' | 'impo
 
 interface KotobaLibraryViewProps {
   soundEnabled?: boolean;
+  itemMastery?: Record<string, ItemMasteryRecord>;
   userDecks?: UserDeck[];
   onToggleBookmark?: (id: string, category: 'kotoba', notes?: string, targetDeckId?: string) => void;
   onRewardPlayer?: (exp: number, gold: number) => void;
   onRecordStudy?: (category: 'flashcards', id: string, count?: number) => void;
+  onRecordInteraction?: (
+    itemId: string,
+    category: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai',
+    interactionType: 'writing' | 'flashcard' | 'quiz',
+    success?: boolean
+  ) => void;
   onCompleteStudyItem?: (
     moduleId: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss' | 'questions' | 'tryOuts',
     expGained: number,
@@ -79,10 +86,12 @@ interface KotobaLibraryViewProps {
 
 export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
   soundEnabled = true,
+  itemMastery,
   userDecks,
   onToggleBookmark,
   onRewardPlayer,
   onRecordStudy,
+  onRecordInteraction,
   onCompleteStudyItem,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -499,6 +508,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
             isOpen={true}
             onClose={() => setSelectedItem(null)}
             item={selectedItem}
+            masteryRecord={selectedItem ? itemMastery?.[selectedItem.id] : undefined}
             soundEnabled={soundEnabled}
             isBookmarked={Boolean(isItemBookmarked(userDecks, selectedItem.id, 'kotoba'))}
             onToggleBookmark={onToggleBookmark ? () => onToggleBookmark(selectedItem.id, 'kotoba') : undefined}
@@ -506,6 +516,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
             onToggleDeckItem={onToggleBookmark ? (deckId) => onToggleBookmark(selectedItem.id, 'kotoba', undefined, deckId) : undefined}
             onRewardPlayer={onRewardPlayer}
             onRecordStudy={onRecordStudy}
+            onRecordInteraction={onRecordInteraction}
             onCompleteStudyItem={onCompleteStudyItem}
             onNext={handleNextItem}
             onPrev={handlePrevItem}

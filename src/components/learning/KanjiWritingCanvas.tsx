@@ -1,10 +1,13 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { RotateCcw, Check, PlayCircle, Eye, EyeOff, Loader2, Clock, Sparkles } from 'lucide-react';
+import React, { useRef, useState, useEffect, useMemo } from 'react';
+import { RotateCcw, Check, PlayCircle, Eye, EyeOff, Loader2, Clock, Sparkles, Volume2 } from 'lucide-react';
 import HanziWriter from 'hanzi-writer';
-import { playSound } from '../../utils/audio';
+import { playSound, speakJapanese } from '../../utils/audio';
 import { sendScoreEvent } from '../../lib/supabase';
 import { KANA_STROKE_DICT } from '../../data/kanaStrokeDict';
 import { getKanjiBaseExp, calculateWritingReward, WritingRewardResult } from '../../utils/rewards';
+import { KANJI_DATABASE } from '../../data/kanji';
+import { KanjiItem } from '../../types/content';
+import { getHighlightedYomikata } from '../../utils/readingHighlightUtils';
 
 const strokeDataCache = new Map<string, any>();
 const activeFetches = new Map<string, Promise<any>>();
@@ -85,7 +88,12 @@ export interface KanjiWritingCanvasProps {
   meaningId?: string; // Backwards compatible alias
   kunyomi?: string | string[];
   onyomi?: string | string[];
+  reading?: string;
+  romaji?: string;
+  relatedWords?: Array<{ word: string; reading: string; meaningId: string; meaningEn?: string }>;
   showStopwatch?: boolean; // Stopwatch on writing canvas (default: true)
+  showPromptHeader?: boolean; // Complete prompt header with readings & audio (default: true)
+  className?: string;
 }
 
 export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
@@ -101,10 +109,72 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
   leniency,
   averageDistanceThreshold,
   strokeCount,
+  meaning,
+  meaningId,
+  kunyomi,
+  onyomi,
+  reading,
+  romaji,
+  relatedWords,
   showStopwatch = true,
+  showPromptHeader = true,
+  className = '',
 }) => {
   const kanjiChar = rawKanjiChar || character || '';
   const isKana = kanjiChar.length > 0 && kanjiChar.charCodeAt(0) >= 0x3040 && kanjiChar.charCodeAt(0) <= 0x30ff;
+
+  // Database lookup fallback for complete character metadata
+  const dbItem = useMemo(() => {
+    return KANJI_DATABASE[kanjiChar] || null;
+  }, [kanjiChar]);
+
+  const effectiveMeaning = meaning || meaningId || dbItem?.meaningId || dbItem?.meaningEn || '';
+
+  const onyomiList: string[] = useMemo(() => {
+    if (onyomi) {
+      if (Array.isArray(onyomi)) return onyomi;
+      return onyomi.split(/[、,]/).map(s => s.trim()).filter(Boolean);
+    }
+    return dbItem?.onyomi || [];
+  }, [onyomi, dbItem]);
+
+  const kunyomiList: string[] = useMemo(() => {
+    if (kunyomi) {
+      if (Array.isArray(kunyomi)) return kunyomi;
+      return kunyomi.split(/[、,]/).map(s => s.trim()).filter(Boolean);
+    }
+    return dbItem?.kunyomi || [];
+  }, [kunyomi, dbItem]);
+
+  const effectiveRelatedWords = useMemo(() => {
+    if (relatedWords && relatedWords.length > 0) return relatedWords;
+    return dbItem?.relatedWords || [];
+  }, [relatedWords, dbItem]);
+
+  const effectiveRomaji = useMemo(() => {
+    if (romaji) return romaji;
+    if (isKana) {
+      return kunyomiList[0] || onyomiList[0] || kanjiChar;
+    }
+    return '';
+  }, [romaji, isKana, kunyomiList, onyomiList, kanjiChar]);
+
+  const promptKanjiItem: KanjiItem = useMemo(() => {
+    return {
+      id: dbItem?.id || `kj_${kanjiChar}`,
+      character: kanjiChar,
+      meaningId: effectiveMeaning,
+      meaningEn: dbItem?.meaningEn || '',
+      onyomi: onyomiList,
+      kunyomi: kunyomiList,
+      jlpt: level || dbItem?.jlpt || (isKana ? 'KANA' : 'N5'),
+      strokeCount: strokeCount || dbItem?.strokeCount || 1,
+      radical: dbItem?.radical || '',
+      radicalName: dbItem?.radicalName || '',
+      relatedWords: effectiveRelatedWords,
+    };
+  }, [dbItem, kanjiChar, effectiveMeaning, onyomiList, kunyomiList, level, isKana, strokeCount, effectiveRelatedWords]);
+
   // Dynamic calibration: Kana has sweeping curves (e.g. stroke 2 of か & カ) requiring ~400 threshold and 1.05 leniency
   // to avoid false rejections, while Kanji uses 360 threshold and 1.0 leniency.
   const effectiveLeniency = leniency ?? (isKana ? 1.05 : 1.0);
@@ -625,7 +695,104 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
   };
 
   return (
-    <div className="flex flex-col items-center w-full max-w-md mx-auto space-y-4">
+    <div className={`flex flex-col items-center w-full max-w-md mx-auto space-y-4 ${className}`}>
+      {/* Complete Prompt & Yomikata Card Header (Unified Standard across Library, Dungeon & Decks) */}
+      {showPromptHeader && (
+        <div className="w-full max-w-[340px] sm:max-w-[360px] flex flex-col items-center space-y-3 mb-1 text-center">
+          {/* Highlighted Yomikata / Reading Header (Hidden Kanji to test recall in writing mode) */}
+          <div className="flex flex-wrap items-stretch justify-center gap-3 sm:gap-4 min-h-[52px] w-full">
+            {effectiveRelatedWords && effectiveRelatedWords.length > 0 ? (
+              effectiveRelatedWords.slice(0, 2).map((rw, i) => (
+                <div
+                  key={i}
+                  className="flex flex-col items-center justify-between px-3.5 py-2.5 rounded-2xl bg-surface-inset hover:bg-surface-card border border-border-subtle hover:border-wine-accent/40 transition-all shadow-inner group cursor-pointer min-w-[135px] max-w-[220px]"
+                  onClick={() => speakJapanese(rw.word)}
+                  title="Klik untuk mendengar audio kata ini"
+                >
+                  {/* Yomikata Reading with high-contrast target badge */}
+                  <div className="flex items-center justify-center gap-1.5 mb-1">
+                    <div className="text-xl sm:text-2xl font-bold font-jp">
+                      {getHighlightedYomikata(rw.word, rw.reading, promptKanjiItem)}
+                    </div>
+                    <Volume2 className="w-4 h-4 text-text-muted opacity-60 group-hover:text-wine-accent group-hover:scale-110 transition-all flex-shrink-0" />
+                  </div>
+
+                  {/* Indonesian meaning */}
+                  <span className="text-[11px] text-text-secondary text-center leading-tight line-clamp-2 mt-0.5 font-medium">
+                    {rw.meaningId}
+                  </span>
+                </div>
+              ))
+            ) : (
+              <div
+                className="flex flex-col items-center justify-between px-4 py-2.5 rounded-2xl bg-surface-inset hover:bg-surface-card border border-border-subtle hover:border-wine-accent/40 transition-all shadow-inner group cursor-pointer w-full"
+                onClick={() =>
+                  speakJapanese(
+                    kunyomiList[0]?.replace(/[.-]/g, '') || onyomiList[0] || kanjiChar
+                  )
+                }
+                title="Klik untuk mendengar"
+              >
+                <div className="text-xl sm:text-2xl font-bold font-jp text-wine-accent drop-shadow-sm mb-1 flex items-center gap-1.5">
+                  <span>
+                    {kunyomiList[0]?.replace(/[.-]/g, '') ||
+                      onyomiList[0] ||
+                      reading ||
+                      kanjiChar}
+                  </span>
+                  <Volume2 className="w-4 h-4 text-text-muted opacity-60 group-hover:text-wine-accent transition-colors" />
+                </div>
+                {effectiveMeaning && (
+                  <span className="text-[11px] text-text-secondary mt-0.5 font-medium">{effectiveMeaning}</span>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Readings (ON / KUN or ROMAJI) and Meaning Pill Badge */}
+          <div className="flex flex-col items-center justify-center gap-1.5 text-xs w-full">
+            {isKana ? (
+              <div className="flex items-center gap-1.5">
+                <span className="text-text-muted font-bold bg-surface-inset px-2 py-0.5 rounded text-[10px] font-mono">
+                  ROMAJI
+                </span>
+                <span className="text-wine-accent font-mono font-bold tracking-wider">
+                  {effectiveRomaji}
+                </span>
+              </div>
+            ) : (
+              <>
+                {onyomiList.length > 0 && (
+                  <div className="flex flex-wrap items-center justify-center gap-1.5">
+                    <span className="text-text-muted font-bold bg-surface-inset px-1.5 py-0.5 rounded text-[10px]">
+                      ON
+                    </span>
+                    <span className="text-wine-accent font-jp tracking-wider font-medium">
+                      {onyomiList.join(', ')}
+                    </span>
+                  </div>
+                )}
+                {kunyomiList.length > 0 && (
+                  <div className="flex flex-wrap items-center justify-center gap-1.5">
+                    <span className="text-text-muted font-bold bg-surface-inset px-1.5 py-0.5 rounded text-[10px]">
+                      KUN
+                    </span>
+                    <span className="text-state-success font-jp tracking-wider font-medium">
+                      {kunyomiList.join(', ')}
+                    </span>
+                  </div>
+                )}
+              </>
+            )}
+            {effectiveMeaning && (
+              <div className="text-text-primary mt-2 font-medium px-3.5 py-1.5 bg-surface-inset rounded-xl border border-border-subtle shadow-sm text-center">
+                {effectiveMeaning}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Multi-Sheet Indicator Tabs (Only shown if totalSheets > 1) */}
       {totalSheets > 1 && (
         <div className="w-full max-w-[340px] sm:max-w-[360px]">

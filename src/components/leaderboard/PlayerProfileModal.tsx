@@ -17,7 +17,7 @@ import {
   BookOpen,
 } from 'lucide-react';
 import { TierAvatar } from '../avatar/TierAvatar';
-import { RPG_TIERS } from '../../data/tiers';
+import { RPG_TIERS, getTierForExp } from '../../data/tiers';
 import { playSound } from '../../utils/audio';
 import { LeaderboardEntry } from '../../lib/supabase';
 
@@ -61,12 +61,12 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
 
   if (!isOpen || !player) return null;
 
-  const tierIndex = Math.min(Math.max(0, player.tier_index ?? 0), RPG_TIERS.length - 1);
+  const currentExp = player.total_exp ?? 0;
+  // Dynamically reconcile tier with rebalanced EXP curve
+  const { tierIndex: computedTierIndex } = getTierForExp(currentExp);
+  const tierIndex = computedTierIndex;
   const currentTier = RPG_TIERS[tierIndex];
   const nextTier = tierIndex < RPG_TIERS.length - 1 ? RPG_TIERS[tierIndex + 1] : null;
-
-  // Calculate progress toward next tier
-  const currentExp = player.total_exp ?? 0;
   let progressPercent = 100;
   let expToNext = 0;
   if (nextTier) {

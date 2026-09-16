@@ -28,7 +28,7 @@ import { BukuSakuView } from './components/deck/BukuSakuView';
 import { ensureUserDecks, createDefaultBookmarkDeck, toggleBookmarkItem, toggleItemInDeck, DEFAULT_BOOKMARK_DECK_ID } from './utils/decks';
 import { DeckItemCategory, UserDeck } from './types/rpg';
 import { playSound } from './utils/audio';
-import { recordItemAttempt, buildSmartRecallQueue } from './utils/mastery';
+import { recordItemAttempt, recordItemInteraction, buildSmartRecallQueue } from './utils/mastery';
 import { recordStudyActivity, INITIAL_STUDY_STATS } from './utils/activity';
 import { BUNPOU_DATABASE } from './data/bunpou';
 import { v4 as uuidv4 } from 'uuid';
@@ -687,6 +687,8 @@ export default function App() {
         const cat = moduleId === 'boss' ? 'bunpou' : (moduleId === 'questions' || moduleId === 'tryOuts' ? 'kotoba' : moduleId);
         const currentItem = prev.itemMastery ? prev.itemMastery[itemId] : undefined;
         const isContextual = moduleId === 'dokkai' || moduleId === 'boss';
+        const interactionType: 'writing' | 'flashcard' | 'quiz' =
+          moduleId === 'kanji' ? 'writing' : (moduleId === 'kotoba' ? 'flashcard' : 'quiz');
         const updatedRecord = recordItemAttempt(
           currentItem,
           itemId,
@@ -694,7 +696,8 @@ export default function App() {
           score,
           total,
           undefined,
-          isContextual
+          isContextual,
+          interactionType
         );
         updatedMastery = {
           ...updatedMastery,
@@ -730,6 +733,43 @@ export default function App() {
       return newStats;
     });
   };
+
+  // Lightweight Item Interaction Handler (Flashcard flip, Quick Kanji draw, Bunpou practice)
+  const handleRecordItemInteraction = useCallback((
+    itemId: string,
+    category: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai',
+    interactionType: 'writing' | 'flashcard' | 'quiz',
+    success: boolean = true
+  ) => {
+    setStats(prev => {
+      const currentItem = prev.itemMastery ? prev.itemMastery[itemId] : undefined;
+      const updatedRecord = recordItemInteraction(
+        currentItem,
+        itemId,
+        category,
+        interactionType,
+        success
+      );
+      const updatedMastery = {
+        ...(prev.itemMastery || {}),
+        [itemId]: updatedRecord
+      };
+      let newStats: PlayerStats = {
+        ...prev,
+        itemMastery: updatedMastery
+      };
+
+      if (interactionType === 'writing') {
+        newStats = recordStudyActivity(newStats, 'kanjiWriting', itemId, 1);
+      } else if (interactionType === 'flashcard') {
+        newStats = recordStudyActivity(newStats, 'flashcards', itemId, 1);
+      } else if (interactionType === 'quiz') {
+        newStats = recordStudyActivity(newStats, category === 'bunpou' ? 'bunpou' : 'questions', itemId, 1);
+      }
+
+      return newStats;
+    });
+  }, []);
 
   // Stage Module Completion Handler (Integrates Progress & Mastery System)
   const handleStageModuleComplete = (
@@ -1329,8 +1369,10 @@ export default function App() {
               {visitedTabs.has('library') && (
                 <LibraryView
                   soundEnabled={stats.soundEnabled}
+                  itemMastery={stats.itemMastery}
                   onRewardPlayer={handleRewardPlayer}
                   onRecordStudy={(cat, id, count) => setStats(prev => recordStudyActivity(prev, cat, id, count))}
+                  onRecordInteraction={handleRecordItemInteraction}
                   onCompleteStudyItem={handleStudyComplete}
                   userDecks={stats.userDecks}
                   onToggleBookmark={handleToggleBookmark}

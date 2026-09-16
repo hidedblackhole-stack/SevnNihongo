@@ -90,13 +90,18 @@ export function recordItemAttempt(
   score: number,
   totalQuestions: number,
   detectedErrorTypes?: ErrorType[],
-  isContextualApplication: boolean = false
+  isContextualApplication: boolean = false,
+  interactionType?: 'writing' | 'flashcard' | 'quiz'
 ): ItemMasteryRecord {
   const now = new Date();
   const dateStr = now.toISOString();
   const ratio = totalQuestions > 0 ? score / totalQuestions : 0;
   const isPerfect = score === totalQuestions && totalQuestions > 0;
   const mistakesInThisAttempt = Math.max(0, totalQuestions - score);
+
+  // Determine effective interaction type if not specified
+  const effectiveInteraction: 'writing' | 'flashcard' | 'quiz' = 
+    interactionType || (category === 'kanji' ? 'writing' : 'quiz');
 
   // Compile error patterns
   const existingErrors: ErrorPatternRecord[] = existingRecord?.errorPatterns ? [...existingRecord.errorPatterns] : [];
@@ -148,6 +153,9 @@ export function recordItemAttempt(
       bestScore: { score, total: totalQuestions },
       bestScoreAchievedAt: dateStr,
       attemptsCount: 1,
+      writingCount: effectiveInteraction === 'writing' ? 1 : 0,
+      flashcardCount: effectiveInteraction === 'flashcard' ? 1 : 0,
+      quizCount: effectiveInteraction === 'quiz' ? 1 : 0,
       consecutivePerfects: isPerfect ? 1 : 0,
       mistakeCount: mistakesInThisAttempt,
       lastReviewedAt: dateStr,
@@ -161,6 +169,9 @@ export function recordItemAttempt(
 
   // Update existing record
   const attemptsCount = existingRecord.attemptsCount + 1;
+  const writingCount = (existingRecord.writingCount || 0) + (effectiveInteraction === 'writing' ? 1 : 0);
+  const flashcardCount = (existingRecord.flashcardCount || 0) + (effectiveInteraction === 'flashcard' ? 1 : 0);
+  const quizCount = (existingRecord.quizCount || 0) + (effectiveInteraction === 'quiz' ? 1 : 0);
   const mistakeCount = existingRecord.mistakeCount + mistakesInThisAttempt;
   const consecutivePerfects = isPerfect ? existingRecord.consecutivePerfects + 1 : 0;
   const contextualSuccessCount = (existingRecord.contextualSuccessCount || 0) + (isContextualApplication && ratio >= 0.8 ? 1 : 0);
@@ -272,6 +283,9 @@ export function recordItemAttempt(
     bestScore: bestScoreObj,
     bestScoreAchievedAt,
     attemptsCount,
+    writingCount,
+    flashcardCount,
+    quizCount,
     consecutivePerfects,
     mistakeCount,
     lastReviewedAt: dateStr,
@@ -281,6 +295,93 @@ export function recordItemAttempt(
     weaknessFlags,
     errorPatterns: existingErrors,
     contextualSuccessCount
+  };
+}
+
+/**
+ * Lightweight Item Interaction Recorder:
+ * Useful for non-scoring or single-action interactions like flipping a flashcard,
+ * completing a kanji sheet, or viewing/reading with recall.
+ */
+export function recordItemInteraction(
+  existingRecord: ItemMasteryRecord | undefined,
+  itemId: string,
+  category: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai',
+  interactionType: 'writing' | 'flashcard' | 'quiz',
+  success: boolean = true
+): ItemMasteryRecord {
+  const now = new Date();
+  const dateStr = now.toISOString();
+
+  const prevWriting = existingRecord?.writingCount || 0;
+  const prevFlashcard = existingRecord?.flashcardCount || 0;
+  const prevQuiz = existingRecord?.quizCount || 0;
+  const prevAttempts = existingRecord?.attemptsCount || 0;
+
+  const newWriting = prevWriting + (interactionType === 'writing' ? 1 : 0);
+  const newFlashcard = prevFlashcard + (interactionType === 'flashcard' ? 1 : 0);
+  const newQuiz = prevQuiz + (interactionType === 'quiz' ? 1 : 0);
+  const newAttempts = prevAttempts + 1;
+
+  if (!existingRecord) {
+    const initialMastery = interactionType === 'flashcard' ? 25 : (interactionType === 'writing' ? 45 : 35);
+    const initialLvl: MasteryDifficultyLevel = interactionType === 'writing' ? 2 : 1;
+    const interval = 1;
+    const nextDue = new Date(now.getTime() + interval * 24 * 60 * 60 * 1000).toISOString();
+
+    return {
+      itemId,
+      category,
+      status: 'LEARNING',
+      masteryPercentage: initialMastery,
+      masteryLevel: initialLvl,
+      bestScore: { score: success ? 1 : 0, total: 1 },
+      bestScoreAchievedAt: dateStr,
+      attemptsCount: newAttempts,
+      writingCount: newWriting,
+      flashcardCount: newFlashcard,
+      quizCount: newQuiz,
+      consecutivePerfects: success ? 1 : 0,
+      mistakeCount: success ? 0 : 1,
+      lastReviewedAt: dateStr,
+      nextReviewDue: nextDue,
+      reviewIntervalDays: interval,
+      decayFactor: 1.0,
+      contextualSuccessCount: 0
+    };
+  }
+
+  // Update existing record
+  const currentPct = existingRecord.masteryPercentage || 0;
+  // Gradual mastery boost on active interaction:
+  // Writing gives up to +5%, Flashcard +2%, Quiz +4%
+  const boost = interactionType === 'writing' ? 5 : (interactionType === 'quiz' ? 4 : 2);
+  const updatedPct = Math.min(100, Math.max(currentPct, currentPct + (success ? boost : 0)));
+  
+  let newLevel = existingRecord.masteryLevel;
+  if (updatedPct >= 90) newLevel = 5;
+  else if (updatedPct >= 75) newLevel = 4;
+  else if (updatedPct >= 60) newLevel = 3;
+  else if (updatedPct >= 40) newLevel = 2;
+  else newLevel = 1;
+
+  let newStatus: MasteryStatus = existingRecord.status;
+  if (updatedPct >= 95) newStatus = 'PERFECTED';
+  else if (updatedPct >= 80) newStatus = 'MASTERED';
+  else if (updatedPct >= 50) newStatus = 'COMPLETED';
+  else newStatus = 'LEARNING';
+
+  return {
+    ...existingRecord,
+    status: newStatus,
+    masteryPercentage: updatedPct,
+    masteryLevel: newLevel,
+    attemptsCount: newAttempts,
+    writingCount: newWriting,
+    flashcardCount: newFlashcard,
+    quizCount: newQuiz,
+    lastReviewedAt: dateStr,
+    decayFactor: 1.0
   };
 }
 

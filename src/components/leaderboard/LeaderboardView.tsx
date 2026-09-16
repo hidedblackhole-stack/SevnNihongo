@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Trophy, Medal, Loader2, RefreshCw, Flame, Crown } from 'lucide-react';
 import { getLeaderboard, getWeeklyLeaderboard, getCurrentWeekId, LeaderboardEntry, WeeklyLeaderboardEntry } from '../../lib/supabase';
 import { playSound } from '../../utils/audio';
-import { RPG_TIERS } from '../../data/tiers';
+import { RPG_TIERS, getTierForExp } from '../../data/tiers';
 import { TIER_AVATAR_MAP } from '../avatar/TierAvatar';
 import { PlayerProfileModal } from './PlayerProfileModal';
 
@@ -51,19 +51,24 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({ currentUserId,
     playSound('open_modal', soundEnabled);
     if (activeTab === 'all-time') {
       const allTime = entry as LeaderboardEntry;
+      const totalExp = allTime.total_exp || 0;
+      const computedTierIndex = getTierForExp(totalExp).tierIndex;
       setSelectedPlayer({
         ...allTime,
+        tier_index: computedTierIndex,
         rank: index + 1,
       });
     } else {
       const weekly = entry as WeeklyLeaderboardEntry;
       const allTimeMatch = allTimeEntries.find((e) => e.user_id === weekly.user_id);
+      const totalExp = allTimeMatch?.total_exp || weekly.score;
+      const computedTierIndex = getTierForExp(totalExp).tierIndex;
       setSelectedPlayer({
         user_id: weekly.user_id,
         player_name: weekly.player_name,
         level: allTimeMatch?.level || 1,
-        total_exp: allTimeMatch?.total_exp || weekly.score,
-        tier_index: weekly.tier_index,
+        total_exp: totalExp,
+        tier_index: computedTierIndex,
         last_updated: weekly.updated_at,
         avatar_url: weekly.avatar_url || allTimeMatch?.avatar_url,
         stat_tryout: allTimeMatch?.stat_tryout || 0,
@@ -165,13 +170,16 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({ currentUserId,
             <div className="space-y-2">
               {currentEntries.map((entry, index) => {
                 const isMe = entry.user_id === currentUserId;
-                const tier = RPG_TIERS[Math.min(entry.tier_index ?? 0, RPG_TIERS.length - 1)];
-                const avatarThumbnail = TIER_AVATAR_MAP[tier?.tier || 1];
 
                 // Type coercion for dynamic rendering
                 const expToDisplay = activeTab === 'all-time' 
                   ? (entry as LeaderboardEntry).total_exp 
                   : (entry as WeeklyLeaderboardEntry).score;
+
+                // Dynamically reconcile tier with rebalanced EXP curve
+                const { tierIndex: computedTierIndex } = getTierForExp(expToDisplay);
+                const tier = RPG_TIERS[computedTierIndex];
+                const avatarThumbnail = TIER_AVATAR_MAP[tier?.tier || 1];
                   
                 const levelToDisplay = activeTab === 'all-time'
                   ? (entry as LeaderboardEntry).level

@@ -192,6 +192,7 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
                 soundEnabled={soundEnabled}
                 autoAdvance={true}
                 showStopwatch={false} // Use Kotoba's master word-level stopwatch
+                showPromptHeader={false} // Master card already displays Kotoba prompt header
                 level={kotoba.jlpt}
                 onCompleteSheet={(sheet, sheetScore, reward) => {
                   if (sheetScore < 100) {

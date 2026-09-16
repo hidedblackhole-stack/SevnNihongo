@@ -512,7 +512,7 @@ export const UniversalEntityModal: React.FC<UniversalEntityModalProps> = ({
           {activeTab === 'writing' && writableTrait && (
             <div className="space-y-4 animate-fade-in">
               <div className="p-3 rounded-2xl bg-surface-inset border border-border-subtle text-xs text-text-secondary flex items-center justify-between">
-                <span>Latihan kaligrafi kuas interaktif dengan pengenalan arah coretan.</span>
+                <span>Latihan menulis interaktif dengan panduan arah goresan.</span>
                 <span className="font-mono font-bold text-gold">
                   {writableTrait.strokeCount} Goresan
                 </span>
@@ -527,6 +527,7 @@ export const UniversalEntityModal: React.FC<UniversalEntityModalProps> = ({
                     strokeCount={writableTrait.strokeCount}
                     onyomi={writableTrait.onyomi || ''}
                     kunyomi={writableTrait.kunyomi || ''}
+                    relatedWords={writableTrait.sourceItem?.relatedWords}
                     soundEnabled={soundEnabled}
                     totalSheets={1}
                     showStopwatch={true}

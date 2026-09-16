@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Volume2, Layers, Link as LinkIcon, Network, Edit3, Bookmark, ChevronLeft, ChevronRight } from 'lucide-react';
 import { BookIcon } from '../ui/EngravingIcons';
-import { KotobaItem } from '../../types/content';
+import { KotobaItem, ItemMasteryRecord } from '../../types/content';
 import { playSound, speakJapanese } from '../../utils/audio';
 import { RubyText } from '../learning/RubyText';
 import { KOTOBA_DATABASE } from '../../data/kotoba';
@@ -16,6 +16,7 @@ interface KotobaDetailModalProps {
   isOpen: boolean;
   onClose: () => void;
   item: KotobaItem | null;
+  masteryRecord?: ItemMasteryRecord;
   soundEnabled?: boolean;
   isBookmarked?: boolean;
   onToggleBookmark?: () => void;
@@ -27,6 +28,12 @@ interface KotobaDetailModalProps {
   hasPrev?: boolean;
   onRewardPlayer?: (exp: number, gold: number) => void;
   onRecordStudy?: (category: 'flashcards', id: string, count?: number) => void;
+  onRecordInteraction?: (
+    itemId: string,
+    category: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai',
+    interactionType: 'writing' | 'flashcard' | 'quiz',
+    success?: boolean
+  ) => void;
   onCompleteStudyItem?: (
     moduleId: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss' | 'questions' | 'tryOuts',
     expGained: number,
@@ -41,6 +48,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
   isOpen,
   onClose,
   item,
+  masteryRecord,
   soundEnabled = true,
   isBookmarked = false,
   onToggleBookmark,
@@ -52,6 +60,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
   hasPrev = false,
   onRewardPlayer,
   onRecordStudy,
+  onRecordInteraction,
   onCompleteStudyItem,
 }) => {
   const [isWritingMode, setIsWritingMode] = useState(false);
@@ -59,8 +68,10 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
   useEffect(() => {
     if (!isOpen) {
       setIsWritingMode(false);
+    } else if (item?.id) {
+      onRecordInteraction?.(item.id, 'kotoba', 'flashcard', true);
     }
-  }, [isOpen]);
+  }, [isOpen, item?.id]);
 
   // Dynamically compute related words based on shared Kanji components
   const dynamicRelatedWords = useMemo(() => {
@@ -173,6 +184,9 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                 onFinishWord={(score, reward) => {
                   const exp = reward?.expGained ?? 20;
                   const gold = reward?.goldGained ?? 5;
+                  if (onRecordInteraction) {
+                    onRecordInteraction(item.id, 'kotoba', 'writing', score >= 60);
+                  }
                   if (onCompleteStudyItem) {
                     onCompleteStudyItem('kotoba', exp, gold, item.id, score >= 60 ? 1 : 0, 1);
                   } else {
@@ -216,6 +230,16 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                   {item.wordType}
                 </span>
               </div>
+
+              {masteryRecord && (
+                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-surface-inset border border-border-subtle text-text-secondary shadow-xs">
+                  <span title="Berapa kali dipelajari via flashcard">🎴 Flashcard: {masteryRecord.flashcardCount || 0}x</span>
+                  <span className="opacity-40">|</span>
+                  <span title="Berapa kali latihan menulis kata ini">✍️ Ditulis: {masteryRecord.writingCount || 0}x</span>
+                  <span className="opacity-40">|</span>
+                  <span className="text-gold" title="Mastery">Lv.{masteryRecord.masteryLevel || 1} ({masteryRecord.masteryPercentage || 0}%)</span>
+                </div>
+              )}
               
               <div className="space-y-1">
                 <h1 className="text-5xl font-black text-text-primary font-jp tracking-wider">

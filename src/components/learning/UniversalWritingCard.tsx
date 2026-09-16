@@ -64,6 +64,7 @@ export const UniversalWritingCard: React.FC<UniversalWritingCardProps> = ({
           strokeCount={writableTrait.strokeCount}
           onyomi={writableTrait.onyomi || ''}
           kunyomi={writableTrait.kunyomi || ''}
+          relatedWords={writableTrait.sourceItem?.relatedWords}
           soundEnabled={soundEnabled}
           totalSheets={totalSheets}
           showStopwatch={showStopwatch}

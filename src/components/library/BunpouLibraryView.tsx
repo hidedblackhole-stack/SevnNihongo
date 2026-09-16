@@ -4,7 +4,7 @@ import { Search, Filter, ChevronDown, Bookmark, LayoutGrid, List, BookOpen, Zap,
 import { ScrollIcon } from '../ui/EngravingIcons';
 import { BUNPOU_DATABASE } from '../../data/bunpou';
 import { ALL_GRAMMAR_FUNCTION_CATEGORIES } from '../../data/bunpouMetadata';
-import { BunpouItem } from '../../types/content';
+import { BunpouItem, ItemMasteryRecord } from '../../types/content';
 import { BunpouDetailModal } from './BunpouDetailModal';
 import { ConjugationDojoView } from './ConjugationDojoView';
 import { playSound } from '../../utils/audio';
@@ -25,9 +25,16 @@ const LEVEL_OPTIONS = [
 
 interface BunpouLibraryViewProps {
   soundEnabled?: boolean;
+  itemMastery?: Record<string, ItemMasteryRecord>;
   userDecks?: UserDeck[];
   onToggleBookmark?: (id: string, category: 'bunpou', notes?: string, targetDeckId?: string) => void;
   onRewardPlayer?: (exp: number, gold: number) => void;
+  onRecordInteraction?: (
+    itemId: string,
+    category: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai',
+    interactionType: 'writing' | 'flashcard' | 'quiz',
+    success?: boolean
+  ) => void;
   onCompleteStudyItem?: (
     moduleId: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss' | 'questions' | 'tryOuts',
     expGained: number,
@@ -40,9 +47,11 @@ interface BunpouLibraryViewProps {
 
 export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
   soundEnabled = true,
+  itemMastery,
   userDecks,
   onToggleBookmark,
   onRewardPlayer,
+  onRecordInteraction,
   onCompleteStudyItem,
 }) => {
   const [subSection, setSubSection] = useState<'dictionary' | 'conjugation'>('dictionary');
@@ -515,6 +524,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
         {selectedItem && (
           <BunpouDetailModal
             item={selectedItem}
+            masteryRecord={selectedItem ? itemMastery?.[selectedItem.id] : undefined}
             onClose={() => setSelectedItem(null)}
             soundEnabled={soundEnabled}
             isBookmarked={Boolean(isItemBookmarked(userDecks, selectedItem.id, 'bunpou'))}
@@ -522,6 +532,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
             userDecks={userDecks}
             onToggleDeckItem={onToggleBookmark && selectedItem ? (deckId) => onToggleBookmark(selectedItem.id, 'bunpou', undefined, deckId) : undefined}
             onRewardPlayer={onRewardPlayer}
+            onRecordInteraction={onRecordInteraction}
             onCompleteStudyItem={onCompleteStudyItem}
           />
         )}

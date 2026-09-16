@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { PlayerStats } from '../types/rpg';
 import { UserMasteryEntity, UserActivityEntity } from '../types/identity';
+import { getTierForExp } from '../data/tiers';
 
 const directUrl = (import.meta as any).env?.VITE_SUPABASE_URL || 'https://iokhdhqnpslpwsxspvaj.supabase.co';
 const supabaseKey = (import.meta as any).env?.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlva2hkaHFucHNscHdzeHNwdmFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg0MjQyMDUsImV4cCI6MjEwNDAwMDIwNX0.8o2UFh4VXRUObjvBq_rVRxIar7yZSU7vrCgaHutYyPE';
@@ -141,10 +142,12 @@ export async function sendScoreEvent(eventType: 'quiz_answer' | 'kanji_write', r
     const userId = stats.userId;
     if (!userId) return;
 
+    const effectiveTierIndex = getTierForExp(stats.totalExp || 0).tierIndex;
+
     const { error } = await supabase.rpc('submit_score_event', {
       p_user_id: userId,
       p_player_name: stats.playerName || 'Unknown Player',
-      p_tier_index: stats.tierIndex || 0,
+      p_tier_index: effectiveTierIndex,
       p_event_type: eventType,
       p_ref_id: refId,
       p_is_correct: isCorrect
@@ -176,6 +179,8 @@ export async function upsertLeaderboard(stats: PlayerStats) {
   if (!stats.userId) return;
   
   try {
+    const effectiveTierIndex = getTierForExp(stats.totalExp || 0).tierIndex;
+
     const { error } = await supabase
       .from('leaderboard')
       .upsert({
@@ -183,7 +188,7 @@ export async function upsertLeaderboard(stats: PlayerStats) {
         player_name: stats.playerName || 'Unknown Player',
         level: stats.level,
         total_exp: stats.totalExp,
-        tier_index: stats.tierIndex || 0,
+        tier_index: effectiveTierIndex,
         avatar_url: stats.avatar || null,
         stat_tryout: stats.studyStats?.tryOuts?.total || 0,
         stat_flashcard: stats.studyStats?.flashcards?.total || 0,
@@ -401,6 +406,9 @@ export async function syncUserMasteryRelational(masteryRecords: UserMasteryEntit
       true_mastery_percentage: rec.trueMasteryPercentage || 0,
       mastery_level: rec.masteryLevel || 1,
       attempts_count: rec.attemptsCount || 0,
+      practice_count_writing: rec.writingCount || 0,
+      practice_count_flashcard: rec.flashcardCount || 0,
+      practice_count_quiz: rec.quizCount || 0,
       correct_count: rec.correctCount || 0,
       wrong_count: rec.wrongCount || 0,
       streak: rec.streak || 0,
@@ -494,6 +502,9 @@ export async function loadUserMasteryRelational(): Promise<UserMasteryEntity[]> 
       trueMasteryPercentage: Number(row.true_mastery_percentage) || 0,
       masteryLevel: row.mastery_level || 1,
       attemptsCount: row.attempts_count || 0,
+      writingCount: row.practice_count_writing || 0,
+      flashcardCount: row.practice_count_flashcard || 0,
+      quizCount: row.practice_count_quiz || 0,
       correctCount: row.correct_count || 0,
       wrongCount: row.wrong_count || 0,
       streak: row.streak || 0,
