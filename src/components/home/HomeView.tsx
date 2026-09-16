@@ -4,6 +4,7 @@ import { Heart, Zap, Play, Flame, ChevronRight, Target, Coins } from 'lucide-rea
 import { ScrollIcon, QuillIcon, ShieldIcon } from '../ui/EngravingIcons';
 import { PlayerStats, Mission, StageClearData } from '../../types/rpg';
 import { getTierForExp } from '../../data/tiers';
+import { getEffectiveTier } from '../../utils/ascension';
 import { MAP_REGIONS, getStagesForMap, WORLD_STAGES_MAP } from '../../data/maps';
 import { TierAvatar } from '../avatar/TierAvatar';
 import { playSound } from '../../utils/audio';
@@ -28,11 +29,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
   onNavigateTab,
   onStartRecall,
 }) => {
-  const { tierIndex: effectiveTierIndex } = getTierForExp(
-    stats.totalExp,
-    stageProgress,
-    WORLD_STAGES_MAP
-  );
+  const { effectiveTierIndex } = getEffectiveTier(stats);
 
   // Check if player has completed any stage
   const hasClearedAnyStage = stageProgress ? Object.values(stageProgress).some(s => s?.cleared) : false;

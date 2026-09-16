@@ -10,6 +10,7 @@ import { Swords, Coins, Gem, Clock, Cloud, RefreshCw } from 'lucide-react';
 import { PlayerStats, StageClearData, Mission, ShopItem, DEFAULT_NAMES } from './types/rpg';
 import { Stage, ItemMasteryRecord, RecallQueueItem } from './types/content';
 import { RPG_TIERS, getTierForExp, calculateMaxHp, calculateMaxMp, getLevelInfo, calculateLevelFromExp } from './data/tiers';
+import { getEffectiveTier, getJlptLevelForTierIndex } from './utils/ascension';
 import { MAP_REGIONS, getStagesForMap, WORLD_STAGES_MAP } from './data/maps';
 import { INITIAL_DAILY_MISSIONS, INITIAL_WEEKLY_MISSIONS } from './data/missions';
 import { useStudyTimeTracker } from './hooks/useStudyTimeTracker';
@@ -334,16 +335,19 @@ export default function App() {
         const finalLevel = cloudData.stats?.level || calculateLevelFromExp(cloudExp);
         const finalHp = calculateMaxHp(finalLevel, cloudData.stats?.vit || 0);
         const finalMp = calculateMaxMp(finalLevel, cloudData.stats?.int || 0);
-        const { tierIndex } = getTierForExp(cloudExp, cloudData.stageProgress, WORLD_STAGES_MAP);
-
-        const mergedStats: PlayerStats = {
+        const candidateMerged: PlayerStats = {
           ...DEFAULT_STATS,
           ...currentStats,
           ...cloudData.stats,
           userId: targetUserId || currentStats.userId,
           level: finalLevel,
           totalExp: cloudExp,
-          tierIndex,
+        };
+        const { effectiveTierIndex } = getEffectiveTier(candidateMerged);
+
+        const mergedStats: PlayerStats = {
+          ...candidateMerged,
+          tierIndex: effectiveTierIndex,
           hp: Math.max(currentStats.hp, finalHp),
           maxHp: finalHp,
           mp: Math.max(currentStats.mp, finalMp),
@@ -572,18 +576,21 @@ export default function App() {
     return () => clearTimeout(timerId);
   }, [weeklyMissions]);
 
-  // Give EXP & Gold reward directly (pure base EXP, no RPG multipliers or level gates)
+  // Give EXP & Gold reward directly (pure base EXP, respects JLPT Ascension gates)
   const handleRewardPlayer = (expGained: number, goldGained: number = 0) => {
     setStats(prev => {
       const newTotalExp = Math.max(0, prev.totalExp + expGained);
-      const { tierIndex: newTierIndex } = getTierForExp(newTotalExp, stageProgress, WORLD_STAGES_MAP);
+      const { effectiveTierIndex, isGated, gatedReason } = getEffectiveTier({
+        ...prev,
+        totalExp: newTotalExp,
+      });
 
       return {
         ...prev,
         totalExp: newTotalExp,
-        tierIndex: Math.max(0, newTierIndex),
-        tierPromotionGated: false,
-        gatedReason: undefined,
+        tierIndex: Math.max(0, effectiveTierIndex),
+        tierPromotionGated: isGated,
+        gatedReason: gatedReason,
         gold: Math.max(0, prev.gold + goldGained),
       };
     });
@@ -892,6 +899,39 @@ export default function App() {
       updated.maxHp = calculateMaxHp(updated.level, updated.vit);
       updated.maxMp = calculateMaxMp(updated.level, updated.int);
       return updated;
+    });
+  };
+
+  // Handle Ascension across JLPT tiers
+  const handleAscendTier = (targetTierIndex: number, _targetJlpt: string | null) => {
+    playSound('levelup', stats.soundEnabled);
+    try {
+      confetti({
+        particleCount: 120,
+        spread: 90,
+        origin: { y: 0.6 }
+      });
+    } catch (e) {
+      console.log('Confetti effect failed', e);
+    }
+
+    setStats(prev => {
+      const currentJlpt = getJlptLevelForTierIndex(prev.tierIndex ?? 0);
+      const existingAscended = prev.ascendedLevels || [];
+      const updatedAscended = Array.from(new Set([...existingAscended, currentJlpt as any]));
+
+      const candidateStats: PlayerStats = {
+        ...prev,
+        tierIndex: targetTierIndex,
+        ascendedLevels: updatedAscended as ('N5' | 'N4' | 'N3' | 'N2' | 'N1')[],
+        tierPromotionGated: false,
+        gatedReason: undefined,
+      };
+
+      const { effectiveTierIndex } = getEffectiveTier(candidateStats);
+      candidateStats.tierIndex = Math.max(targetTierIndex, effectiveTierIndex);
+
+      return candidateStats;
     });
   };
 
@@ -1483,6 +1523,7 @@ export default function App() {
           setIsRecallActive(true);
         }}
         onUpdateName={handleUpdateName}
+        onAscendTier={handleAscendTier}
       />
 
       {/* Bottom Fixed Navigation Bar */}

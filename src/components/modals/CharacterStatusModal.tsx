@@ -14,7 +14,12 @@ import {
   Layers,
   Trophy,
   Check,
-  Edit2
+  Edit2,
+  Sparkles,
+  ShieldAlert,
+  CheckCircle2,
+  AlertTriangle,
+  ArrowRight
 } from 'lucide-react';
 import { PlayerStats } from '../../types/rpg';
 import { getTierForExp } from '../../data/tiers';
@@ -22,6 +27,7 @@ import { TierAvatar } from '../avatar/TierAvatar';
 import { playSound } from '../../utils/audio';
 import { calculateLanguageProfile, calculateCoverage } from '../../utils/mastery';
 import { INITIAL_STUDY_STATS } from '../../utils/activity';
+import { calculateAscensionProgress, getEffectiveTier } from '../../utils/ascension';
 
 import { WORLD_STAGES_MAP } from '../../data/maps';
 
@@ -34,6 +40,7 @@ interface CharacterStatusModalProps {
   onRecoverHp?: () => void;
   onStartRecall?: () => void;
   onUpdateName?: (newName: string) => void;
+  onAscendTier?: (targetTierIndex: number, targetJlpt: string | null) => void;
 }
 
 export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
@@ -41,6 +48,7 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
   onClose,
   stats,
   stageProgress = {},
+  onAscendTier,
 }) => {
   useEffect(() => {
     if (!isOpen) return;
@@ -63,11 +71,8 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
 
   if (!isOpen) return null;
 
-  const { tierIndex: effectiveTierIndex } = getTierForExp(
-    stats.totalExp,
-    stageProgress,
-    WORLD_STAGES_MAP
-  );
+  const { effectiveTierIndex } = getEffectiveTier(stats);
+  const ascensionProgress = calculateAscensionProgress(stats);
   
   const languageProfile = calculateLanguageProfile(stats.itemMastery || {});
   const coverage = calculateCoverage(stats);
@@ -139,7 +144,191 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
               </div>
             </div>
 
-            {/* 2. STUDY STATISTICS (TOTAL VS UNIQUE) */}
+            {/* 2. ASCENSION TIER PROGRESSION CARD */}
+            <div className="p-4 rounded-3xl bg-surface-inset border border-border-subtle space-y-4 shadow-sm relative overflow-hidden">
+              {/* Background ambient glow if ready to ascend */}
+              {ascensionProgress.canAscend && (
+                <div className="absolute -top-12 -right-12 w-44 h-44 bg-state-success/15 rounded-full blur-3xl pointer-events-none animate-pulse" />
+              )}
+              {ascensionProgress.isGated && (
+                <div className="absolute -top-12 -right-12 w-44 h-44 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+              )}
+
+              {/* Header */}
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <div className={`p-2 rounded-xl border ${
+                    ascensionProgress.canAscend
+                      ? 'bg-state-success/15 border-state-success/30 text-state-success'
+                      : ascensionProgress.isGated
+                      ? 'bg-amber-500/15 border-amber-500/30 text-amber-400'
+                      : 'bg-surface-card border-border-subtle text-indigo'
+                  }`}>
+                    {ascensionProgress.canAscend ? (
+                      <Sparkles className="w-4 h-4 animate-bounce" />
+                    ) : ascensionProgress.isGated ? (
+                      <ShieldAlert className="w-4 h-4" />
+                    ) : (
+                      <Zap className="w-4 h-4" />
+                    )}
+                  </div>
+                  <div>
+                    <h3 className="text-xs sm:text-sm font-bold text-text-primary font-heading flex items-center gap-1.5">
+                      Ujian Ascend Tier
+                      {ascensionProgress.targetJlpt && (
+                        <span className="text-text-muted font-mono font-normal">
+                          ({ascensionProgress.currentJlpt} <ArrowRight className="w-3 h-3 inline text-text-muted" /> {ascensionProgress.targetJlpt})
+                        </span>
+                      )}
+                    </h3>
+                    <p className="text-[10px] text-text-secondary font-mono">
+                      Syarat Naik Tingkat: Minimal 75% di setiap kategori
+                    </p>
+                  </div>
+                </div>
+
+                {/* Status Badge */}
+                <div>
+                  {ascensionProgress.canAscend ? (
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold font-mono bg-state-success/20 text-state-success border border-state-success/40 flex items-center gap-1 shadow-sm">
+                      <Sparkles className="w-3 h-3 fill-state-success" />
+                      Siap Ascend
+                    </span>
+                  ) : ascensionProgress.isGated ? (
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold font-mono bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1">
+                      <AlertTriangle className="w-3 h-3" />
+                      Tertahan (&lt;75%)
+                    </span>
+                  ) : ascensionProgress.isAscended ? (
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold font-mono bg-indigo/20 text-indigo border border-indigo/40 flex items-center gap-1">
+                      <CheckCircle2 className="w-3 h-3" />
+                      Tercapai
+                    </span>
+                  ) : (
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold font-mono bg-surface-card text-text-muted border border-border-subtle">
+                      Persiapan Ujian
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* Overall Accumulation Progress Bar */}
+              <div className="space-y-1.5 bg-surface-card/60 p-3 rounded-2xl border border-border-subtle">
+                <div className="flex items-center justify-between text-xs font-mono">
+                  <span className="text-text-secondary flex items-center gap-1 text-[11px]">
+                    Akumulasi Penguasaan Tier ({ascensionProgress.currentJlpt})
+                  </span>
+                  <div className="flex items-center gap-1.5 font-bold">
+                    <span className={ascensionProgress.overallPassed ? 'text-state-success' : 'text-text-primary'}>
+                      {ascensionProgress.overallAccumulationPct}%
+                    </span>
+                    <span className="text-text-muted text-[10px]">/ 75% Target</span>
+                  </div>
+                </div>
+
+                <div className="relative h-2.5 w-full bg-surface-inset rounded-full overflow-hidden border border-border-subtle">
+                  {/* 75% Threshold Marker */}
+                  <div
+                    className="absolute top-0 bottom-0 w-0.5 bg-text-muted/40 z-10"
+                    style={{ left: '75%' }}
+                    title="Ambang Batas 75%"
+                  />
+                  <div
+                    className={`h-full rounded-full transition-all duration-500 ${
+                      ascensionProgress.overallPassed
+                        ? 'bg-gradient-to-r from-state-success to-emerald-400 shadow-sm shadow-state-success/40'
+                        : 'bg-gradient-to-r from-indigo to-cyan-500'
+                    }`}
+                    style={{ width: `${Math.min(100, ascensionProgress.overallAccumulationPct)}%` }}
+                  />
+                </div>
+              </div>
+
+              {/* 3 Pillars Summary Grid */}
+              <div className="grid grid-cols-3 gap-2">
+                {[
+                  {
+                    key: 'kanji',
+                    label: 'Kanji',
+                    data: ascensionProgress.kanji,
+                    icon: Edit2,
+                    color: 'text-wine-accent',
+                    barColor: 'bg-wine-accent',
+                  },
+                  {
+                    key: 'kotoba',
+                    label: 'Kotoba',
+                    data: ascensionProgress.kotoba,
+                    icon: Layers,
+                    color: 'text-indigo',
+                    barColor: 'bg-indigo',
+                  },
+                  {
+                    key: 'bunpou',
+                    label: 'Bunpou',
+                    data: ascensionProgress.bunpou,
+                    icon: BookOpen,
+                    color: 'text-gold',
+                    barColor: 'bg-gold',
+                  },
+                ].map((pillar) => (
+                  <div
+                    key={pillar.key}
+                    className="p-2.5 rounded-2xl bg-surface-card border border-border-subtle flex flex-col justify-between space-y-1.5 text-center"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className={`text-[10px] font-bold ${pillar.color} font-heading uppercase`}>
+                        {pillar.label}
+                      </span>
+                      {pillar.data.passed ? (
+                        <CheckCircle2 className="w-3.5 h-3.5 text-state-success shrink-0" />
+                      ) : (
+                        <span className="text-[9px] font-mono text-text-muted shrink-0">
+                          {pillar.data.percentage}/75%
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex items-baseline justify-center gap-1 font-mono">
+                      <span className="text-sm sm:text-base font-bold text-text-primary">
+                        {pillar.data.percentage}%
+                      </span>
+                    </div>
+
+                    <div className="h-1.5 w-full bg-surface-inset rounded-full overflow-hidden">
+                      <div
+                        className={`h-full ${pillar.data.passed ? 'bg-state-success' : pillar.barColor} rounded-full`}
+                        style={{ width: `${Math.min(100, pillar.data.percentage)}%` }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Status Message & Action Button */}
+              <div className="space-y-2 pt-1">
+                <p className="text-[11px] text-text-secondary leading-relaxed font-sans">
+                  {ascensionProgress.statusMessage}
+                </p>
+
+                {ascensionProgress.canAscend && (
+                  <button
+                    onClick={() => {
+                      if (ascensionProgress.nextTierIndex && ascensionProgress.targetJlpt) {
+                        playSound('levelup', stats.soundEnabled);
+                        onAscendTier?.(ascensionProgress.nextTierIndex, ascensionProgress.targetJlpt);
+                      }
+                    }}
+                    className="w-full py-2.5 px-4 rounded-2xl font-bold font-heading text-xs uppercase tracking-wider bg-gradient-to-r from-state-success via-emerald-500 to-teal-500 hover:from-state-success/90 hover:to-teal-400 text-white shadow-lg shadow-state-success/25 hover:shadow-state-success/40 active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <Sparkles className="w-4 h-4 fill-white animate-spin" />
+                    ⚡ Lakukan Ascend ke {ascensionProgress.targetJlpt}!
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* 3. STUDY STATISTICS (TOTAL VS UNIQUE) */}
             <div className="space-y-3">
               <h3 className="text-xs font-bold uppercase tracking-widest text-text-secondary flex items-center gap-2 font-heading">
                 <BookOpen className="w-4 h-4 text-indigo" />

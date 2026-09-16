@@ -68,10 +68,11 @@ export interface PlayerStats {
   currentStageId: string;
   stageProgress?: Record<string, StageClearData>;
 
-  // Tier Promotion Gate
+  // Tier Promotion Gate & Ascension System
   tierPromotionGated?: boolean;
   gatedReason?: string;
   targetTierIndex?: number;
+  ascendedLevels?: ('N5' | 'N4' | 'N3' | 'N2' | 'N1')[];
 
   // Mastery Tracking & SRS
   itemMastery?: Record<string, import('./content').ItemMasteryRecord>;
