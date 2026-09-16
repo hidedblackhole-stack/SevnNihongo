@@ -29,6 +29,18 @@ import { UniversalWritingCard } from '../learning/UniversalWritingCard';
 import { SentenceTile, validateSentenceSubmission, validateSentenceTextSubmission, ValidationFeedback } from '../../engine';
 import { JapaneseImeInput } from '../common/JapaneseImeInput';
 import { RubyText } from '../learning/RubyText';
+import { getKanjiBaseExp, getKotobaBaseExp, getBunpouBaseExp } from '../../utils/rewards';
+import { ResolvedDeckItem } from '../../utils/decks';
+
+// Dynamic micro-multiplier for flashcard flips: Base EXP * 0.005
+const FLASHCARD_FLIP_MULTIPLIER = 0.005;
+
+function getResolvedItemBaseExp(it: ResolvedDeckItem): number {
+  if (it.category === 'kanji' && it.kanji) return getKanjiBaseExp(it.kanji);
+  if (it.category === 'kotoba' && it.kotoba) return getKotobaBaseExp(it.kotoba);
+  if (it.category === 'bunpou' && it.bunpou) return getBunpouBaseExp(it.bunpou);
+  return 20;
+}
 
 interface DungeonSessionRunnerProps {
   payload: DungeonPayload;
@@ -41,7 +53,8 @@ interface DungeonSessionRunnerProps {
     goldGained: number,
     itemId?: string,
     score?: number,
-    total?: number
+    total?: number,
+    interactionTypeOverride?: 'writing' | 'flashcard' | 'quiz'
   ) => void;
   soundEnabled?: boolean;
 }
@@ -65,6 +78,27 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
 
   // Sub-exercise state for Flashcard
   const [isFlashcardFlipped, setIsFlashcardFlipped] = useState(false);
+  const [flashcardExpPopup, setFlashcardExpPopup] = useState<number | null>(null);
+
+  const handleFlashcardFlip = (it: ResolvedDeckItem) => {
+    playSound('click', soundEnabled);
+    setIsFlashcardFlipped(prev => !prev);
+
+    const baseExp = getResolvedItemBaseExp(it);
+    const flipExp = Math.max(0.01, Number((baseExp * FLASHCARD_FLIP_MULTIPLIER).toFixed(2)));
+
+    setAccumulatedExp(prev => Number((prev + flipExp).toFixed(2)));
+    setFlashcardExpPopup(flipExp);
+
+    if (onCompleteStudyItem) {
+      const mod = it.category === 'kanji' ? 'kanji' : (it.category === 'bunpou' ? 'bunpou' : 'kotoba');
+      onCompleteStudyItem(mod, flipExp, 0, it.ref.id, 1, 1, 'flashcard');
+    }
+
+    setTimeout(() => {
+      setFlashcardExpPopup(null);
+    }, 800);
+  };
 
   // Sub-exercise state for Quiz / Conjugation
   const [selectedAnswerIndex, setSelectedAnswerIndex] = useState<number | null>(null);
@@ -88,13 +122,14 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
     }
     // Reset floor sub-states
     setIsFlashcardFlipped(false);
+    setFlashcardExpPopup(null);
     setSelectedAnswerIndex(null);
     setIsAnswerChecked(false);
   }, [currentFloorIndex, config.type, payload.sakubunExercises]);
 
   // Next Floor or Finish Dungeon
   const advanceToNextFloor = (isCorrectAnswer: boolean, expAward = 20, goldAward = 10) => {
-    const nextExp = accumulatedExp + expAward;
+    const nextExp = Number((accumulatedExp + expAward).toFixed(2));
     const nextGold = accumulatedGold + goldAward;
     const nextCorrect = isCorrectAnswer ? correctCount + 1 : correctCount;
 
@@ -183,7 +218,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
           {/* Progress Bar & Rewards Counter */}
           <div className="flex items-center gap-3">
             <div className="hidden sm:flex items-center gap-2 text-xs font-mono font-bold">
-              <span className="text-indigo">+{accumulatedExp} EXP</span>
+              <span className="text-indigo">+{Number(accumulatedExp.toFixed(2))} EXP</span>
               <span className="text-gold">+{accumulatedGold} G</span>
             </div>
 
@@ -246,7 +281,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                 <div className="space-y-0.5">
                   <span className="text-[10px] text-text-muted uppercase font-mono">Total EXP</span>
                   <p className="text-base sm:text-lg font-bold font-mono text-indigo">
-                    +{accumulatedExp}
+                    +{Number(accumulatedExp.toFixed(2))}
                   </p>
                 </div>
                 <div className="space-y-0.5">
@@ -317,51 +352,65 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                   const jp = it.kotoba?.word || it.kanji?.character || it.bunpou?.title || it.displayTitle || '';
 
                   return (
-                    <div className="space-y-5">
-                      <UniversalFlashcard
-                        item={it}
-                        isFlipped={isFlashcardFlipped}
-                        onFlip={() => {
-                          playSound('click', soundEnabled);
-                          setIsFlashcardFlipped(!isFlashcardFlipped);
-                        }}
-                        soundEnabled={soundEnabled}
-                        furiganaEnabled={true}
-                      />
+                    <div className="space-y-4">
+                      {/* Interactive 3D Flip Card with Floating EXP Popup */}
+                      <div className="relative">
+                        <AnimatePresence>
+                          {flashcardExpPopup !== null && (
+                            <motion.div
+                              key={`exp-popup-${Date.now()}`}
+                              initial={{ opacity: 0, y: 0, scale: 0.7 }}
+                              animate={{ opacity: 1, y: -36, scale: 1.1 }}
+                              exit={{ opacity: 0, y: -50 }}
+                              transition={{ duration: 0.5, ease: 'easeOut' }}
+                              className="absolute top-3 right-3 sm:top-6 sm:right-6 z-50 text-emerald-400 font-mono font-black text-sm sm:text-base drop-shadow-md pointer-events-none flex items-center gap-1 bg-surface-card/90 px-2.5 py-1 rounded-full border border-emerald-500/40 backdrop-blur-xs"
+                            >
+                              +{flashcardExpPopup} EXP
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
 
-                      {/* Flashcard Action Buttons */}
-                      <div className="flex items-center justify-center gap-3">
+                        <UniversalFlashcard
+                          item={it}
+                          isFlipped={isFlashcardFlipped}
+                          onFlip={() => handleFlashcardFlip(it)}
+                          soundEnabled={soundEnabled}
+                          furiganaEnabled={true}
+                        />
+                      </div>
+
+                      {/* Flashcard Action Bar */}
+                      <div className="flex items-center justify-between gap-2.5 max-w-md mx-auto w-full pt-1">
                         {jp && (
                           <button
                             type="button"
                             onClick={() => speakJapanese(jp)}
-                            className="p-3 rounded-2xl bg-surface-inset border border-border-subtle text-gold hover:bg-surface-elevated transition-colors"
-                            title="Dengar Suara"
+                            className="p-3 rounded-2xl bg-surface-inset border border-border-subtle text-gold hover:bg-surface-elevated transition-colors shadow-xs cursor-pointer shrink-0"
+                            title="Dengarkan Pelafalan"
                           >
-                            <Volume2 className="w-4 h-4" />
+                            <Volume2 className="w-5 h-5" />
                           </button>
                         )}
 
                         <button
                           type="button"
-                          onClick={() => {
-                            playSound('wrong', soundEnabled);
-                            advanceToNextFloor(false, 5, 2);
-                          }}
-                          className="px-5 py-3 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-400 font-heading font-bold text-xs hover:bg-rose-500/20 transition-all"
+                          onClick={() => handleFlashcardFlip(it)}
+                          className="flex-1 py-3 px-4 rounded-2xl bg-surface-card hover:bg-surface-elevated border border-border-subtle text-text-primary font-heading font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-xs cursor-pointer"
                         >
-                          Belum Hafal
+                          <RotateCcw className="w-4 h-4 text-gold" />
+                          <span>{isFlashcardFlipped ? 'Tutup Arti' : 'Balik Kartu'}</span>
                         </button>
 
                         <button
                           type="button"
                           onClick={() => {
-                            playSound('correct', soundEnabled);
-                            advanceToNextFloor(true, 18, 8);
+                            playSound('click', soundEnabled);
+                            advanceToNextFloor(true, 0, 1);
                           }}
-                          className="px-6 py-3 rounded-2xl bg-emerald-500/15 border border-emerald-500 text-emerald-400 font-heading font-bold text-xs hover:bg-emerald-500/25 transition-all shadow-sm"
+                          className="flex-1 btn-skeuo-indigo py-3 px-4 text-xs font-heading font-bold shadow-md transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
                         >
-                          Sudah Hafal (+18 EXP)
+                          <span>{currentFloorIndex + 1 >= totalFloors ? 'Selesaikan' : 'Lantai Berikutnya'}</span>
+                          <ChevronRight className="w-4 h-4 shrink-0" />
                         </button>
                       </div>
                     </div>
