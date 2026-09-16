@@ -51,7 +51,7 @@ const DUNGEON_META: Record<
 > = {
   writing: {
     title: 'Dungeon Menulis Aksara',
-    jpTitle: '書道の試練 (Kanji Writing Trial)',
+    jpTitle: '書道の試練 (Kanji & Kotoba Writing)',
     subtitle: 'Latihan menulis aksara goresan demi goresan',
     iconEmoji: '✍️',
     requirementHint: 'Memerlukan materi aksara (Kanji atau Kosakata)',
@@ -69,7 +69,7 @@ const DUNGEON_META: Record<
   },
   sakubun: {
     title: 'Dungeon Kuil Tata Bahasa',
-    jpTitle: '作文の神殿 (Sentence Builder)',
+    jpTitle: '作文の神殿 (Sakubun Sentence Builder)',
     subtitle: 'Menyusun potongan kata dan pola menjadi kalimat utuh',
     iconEmoji: '🧩',
     requirementHint: 'Memerlukan materi pola tata bahasa (Bunpou)',
@@ -78,7 +78,7 @@ const DUNGEON_META: Record<
   },
   conjugation: {
     title: 'Dungeon Altar Konjugasi',
-    jpTitle: '活用の祭壇 (Conjugation Dojo)',
+    jpTitle: '活用の祭壇 (Conjugation Drill)',
     subtitle: 'Latihan cepat mengubah bentuk kata kerja & kata sifat',
     iconEmoji: '⚡',
     requirementHint: 'Memerlukan materi kosakata kata kerja/sifat (Kotoba)',
@@ -103,21 +103,21 @@ const LEVEL_CATEGORY_OPTIONS: {
   desc: string;
   badge: string;
 }[] = [
-  { id: 'all', label: 'Semua Tingkat', jpBadge: '全段', desc: 'Campuran materi dasar s/d mahir', badge: 'Campuran' },
-  { id: 'N5', label: 'JLPT N5', jpBadge: '初級', desc: 'Kosakata, kanji & pola pemula', badge: 'Dasar' },
-  { id: 'N4', label: 'JLPT N4', jpBadge: '準中', desc: 'Percakapan harian & bentuk kata', badge: 'Pra-Menengah' },
-  { id: 'N3', label: 'JLPT N3', jpBadge: '中級', desc: 'Teks umum & kosakata menengah', badge: 'Menengah' },
-  { id: 'N2', label: 'JLPT N2', jpBadge: '上級', desc: 'Nuansa formal & opini bisnis', badge: 'Mahir' },
-  { id: 'N1', label: 'JLPT N1', jpBadge: '達人', desc: 'Aksara tingkat tinggi & idiom', badge: 'Ahli' },
-  { id: 'Kaigo', label: 'Kaigo (Caregiver)', jpBadge: '介護', desc: 'Keperawatan & instruksi fisik', badge: 'Profesi' },
-  { id: 'PM', label: 'PM / Medis', jpBadge: '医療', desc: 'Organ tubuh & medis darurat', badge: 'Kesehatan' },
+  { id: 'all', label: 'Semua Level', jpBadge: '全段', desc: 'N5 - N1 Campuran', badge: 'Campuran' },
+  { id: 'N5', label: 'JLPT N5', jpBadge: '初級', desc: 'Dasar Pemula', badge: 'Dasar' },
+  { id: 'N4', label: 'JLPT N4', jpBadge: '準中', desc: 'Pra-Menengah', badge: 'Pra-Menengah' },
+  { id: 'N3', label: 'JLPT N3', jpBadge: '中級', desc: 'Menengah', badge: 'Menengah' },
+  { id: 'N2', label: 'JLPT N2', jpBadge: '上級', desc: 'Menengah Atas', badge: 'Mahir' },
+  { id: 'N1', label: 'JLPT N1', jpBadge: '達人', desc: 'Tingkat Mahir', badge: 'Ahli' },
+  { id: 'Kaigo', label: 'Kaigo', jpBadge: '介護', desc: 'Keperawatan', badge: 'Profesi' },
+  { id: 'PM', label: 'PM Medis', jpBadge: '医療', desc: 'Kesehatan', badge: 'Kesehatan' },
 ];
 
 const FLOOR_COUNT_OPTIONS = [
-  { count: 5, label: '5 Lantai', sub: 'Quick Raid (~3 mnt)', expEst: 100, goldEst: 50 },
-  { count: 10, label: '10 Lantai', sub: 'Standard (~7 mnt)', expEst: 200, goldEst: 100 },
-  { count: 15, label: '15 Lantai', sub: 'Deep Descent (~12 mnt)', expEst: 320, goldEst: 170 },
-  { count: 20, label: '20 Lantai', sub: 'Grand Trial (~18 mnt)', expEst: 450, goldEst: 250 },
+  { count: 5, label: '5 Lantai', sub: '~3 Menit' },
+  { count: 10, label: '10 Lantai', sub: '~7 Menit' },
+  { count: 15, label: '15 Lantai', sub: '~12 Menit' },
+  { count: 20, label: '20 Lantai', sub: '~18 Menit' },
 ];
 
 export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
@@ -155,7 +155,12 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
   if (typeof document === 'undefined') return null;
 
   const meta = DUNGEON_META[dungeonType] || DUNGEON_META.writing;
-  const activeFloorOption = FLOOR_COUNT_OPTIONS.find(f => f.count === selectedFloorCount) || FLOOR_COUNT_OPTIONS[1];
+
+  // Dynamic EXP & Gold calculation based on dungeon type rates
+  const expPerQuestion = dungeonType === 'sakubun' ? 30 : dungeonType === 'quiz' || dungeonType === 'flashcard' ? 20 : 25;
+  const goldPerQuestion = dungeonType === 'sakubun' ? 15 : dungeonType === 'quiz' || dungeonType === 'flashcard' ? 10 : 12;
+  const estimatedExp = selectedFloorCount * expPerQuestion;
+  const estimatedGold = selectedFloorCount * goldPerQuestion;
 
   const handleStart = () => {
     if (sourceType === 'deck' && !selectedDeckId) return;
@@ -223,7 +228,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
 
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono font-bold tracking-widest text-text-muted uppercase">
+                <span className="text-[10px] font-mono font-bold tracking-wider text-text-muted">
                   {meta.jpTitle}
                 </span>
               </div>
@@ -243,7 +248,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
               playSound('click', soundEnabled);
               onClose();
             }}
-            className="w-9 h-9 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-all border border-border-subtle flex items-center justify-center shadow-[2px_2px_5px_var(--neu-d),-1px_-1px_3px_var(--neu-l)] active:translate-y-0.5 active:shadow-[inset_2px_2px_4px_var(--neu-d)] cursor-pointer"
+            className="w-9 h-9 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-all border border-border-subtle flex items-center justify-center shadow-[2px_2px_5px_var(--neu-d),-1px_-1px_3px_var(--neu-l)] active:translate-y-0.5 active:shadow-[inset_2px_2px_4px_var(--neu-d)] cursor-pointer shrink-0"
             title="Tutup"
           >
             <X className="w-4 h-4" />
@@ -260,7 +265,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                 <span>1. Pilih Tingkat atau Kategori:</span>
               </label>
 
-              <span className="text-[11px] font-mono font-bold px-2 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-gold shadow-xs">
+              <span className="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-gold shadow-xs">
                 {sourceType === 'preset'
                   ? LEVEL_CATEGORY_OPTIONS.find(c => c.id === selectedCategory)?.badge
                   : `${compatibleDecks.length} Deck Kompatibel`}
@@ -318,27 +323,27 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                         playSound('click', soundEnabled);
                         setSelectedCategory(opt.id);
                       }}
-                      className={`p-3 rounded-2xl text-left transition-all relative flex flex-col justify-between min-h-[76px] select-none cursor-pointer ${
+                      className={`p-2.5 sm:p-3 rounded-2xl text-left transition-all relative flex flex-col justify-between min-h-[74px] sm:min-h-[78px] select-none cursor-pointer overflow-hidden ${
                         isSelected
                           ? 'bg-gradient-to-b from-surface-elevated to-surface-card border-2 border-gold text-text-primary shadow-[0_0_14px_rgba(240,190,82,0.25),3px_3px_8px_var(--neu-d),-1px_-1px_4px_var(--neu-l)] ring-1 ring-gold/40'
                           : 'bg-surface-inset hover:bg-surface-elevated/60 border border-border-subtle/80 shadow-[inset_1.5px_1.5px_4px_var(--neu-d),inset_-1px_-1px_3px_var(--neu-l)] hover:border-gold/30 hover:scale-[1.01]'
                       }`}
                     >
-                      <div className="flex items-center justify-between w-full">
-                        <span className={`text-xs font-heading font-black tracking-wide ${isSelected ? 'text-gold' : 'text-text-primary'}`}>
+                      <div className="flex items-center justify-between gap-1.5 w-full min-w-0">
+                        <span className={`text-xs font-heading font-black tracking-wide truncate ${isSelected ? 'text-gold' : 'text-text-primary'}`}>
                           {opt.label}
                         </span>
                         {isSelected ? (
-                          <div className="w-4 h-4 rounded-full bg-gold text-surface-base flex items-center justify-center shadow-xs">
+                          <div className="w-4 h-4 rounded-full bg-gold text-surface-base flex items-center justify-center shrink-0 shadow-xs">
                             <Check className="w-2.5 h-2.5 stroke-[3]" />
                           </div>
                         ) : (
-                          <span className="text-[9px] font-mono text-text-muted font-bold px-1 rounded bg-surface-card/50">
+                          <span className="text-[9px] font-mono text-text-muted font-bold px-1.5 py-0.5 rounded bg-surface-card/70 border border-border-subtle/50 shrink-0 whitespace-nowrap">
                             {opt.jpBadge}
                           </span>
                         )}
                       </div>
-                      <span className="text-[10px] text-text-muted line-clamp-1 mt-1 font-body">
+                      <span className="text-[10px] text-text-muted truncate mt-1.5 font-body block" title={opt.desc}>
                         {opt.desc}
                       </span>
                     </button>
@@ -485,16 +490,16 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                       playSound('click', soundEnabled);
                       setSelectedFloorCount(opt.count);
                     }}
-                    className={`p-3 rounded-2xl text-center transition-all select-none cursor-pointer ${
+                    className={`py-3 px-2 rounded-2xl text-center transition-all select-none cursor-pointer ${
                       isSelected
                         ? 'bg-gradient-to-b from-gold/25 to-gold/10 border-2 border-gold text-gold shadow-[0_0_14px_rgba(240,190,82,0.25),2px_2px_8px_var(--neu-d),-1px_-1px_4px_var(--neu-l)] ring-1 ring-gold/40'
                         : 'bg-surface-inset hover:bg-surface-elevated/60 border border-border-subtle shadow-[inset_1.5px_1.5px_4px_var(--neu-d),inset_-1px_-1px_3px_var(--neu-l)] hover:border-gold/30 hover:scale-[1.01]'
                     }`}
                   >
-                    <span className={`block text-sm font-heading font-black ${isSelected ? 'text-gold' : 'text-text-primary'}`}>
+                    <span className={`block text-xs sm:text-sm font-heading font-black tracking-wide ${isSelected ? 'text-gold' : 'text-text-primary'}`}>
                       {opt.label}
                     </span>
-                    <span className="block text-[10px] text-text-muted mt-0.5 font-body">
+                    <span className="block text-[10px] text-text-muted mt-0.5 font-mono font-semibold">
                       {opt.sub}
                     </span>
                   </button>
@@ -527,11 +532,11 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                 <div className="w-9 h-9 rounded-xl bg-surface-inset border border-teal/40 flex items-center justify-center shrink-0 text-teal shadow-[inset_1.5px_1.5px_3px_var(--neu-d)]">
                   <Shield className="w-4 h-4" />
                 </div>
-                <div>
-                  <span className="block text-xs font-heading font-black text-text-primary">
+                <div className="min-w-0">
+                  <span className="block text-xs font-heading font-black text-text-primary truncate">
                     Mode Santai (Standard)
                   </span>
-                  <span className="block text-[11px] text-text-muted font-body mt-0.5 leading-tight">
+                  <span className="block text-[11px] text-text-muted font-body mt-0.5 leading-snug">
                     Fokus belajar tanpa batas waktu untuk memperdalam ingatan.
                   </span>
                 </div>
@@ -553,11 +558,11 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                 <div className="w-9 h-9 rounded-xl bg-surface-inset border border-rose-500/40 flex items-center justify-center shrink-0 text-rose-400 shadow-[inset_1.5px_1.5px_3px_var(--neu-d)]">
                   <Clock className="w-4 h-4" />
                 </div>
-                <div>
-                  <span className="block text-xs font-heading font-black text-text-primary">
+                <div className="min-w-0">
+                  <span className="block text-xs font-heading font-black text-text-primary truncate">
                     Mode Survival (Timer)
                   </span>
-                  <span className="block text-[11px] text-text-muted font-body mt-0.5 leading-tight">
+                  <span className="block text-[11px] text-text-muted font-body mt-0.5 leading-snug">
                     Batas waktu per soal untuk melatih kecepatan refleks tempur.
                   </span>
                 </div>
@@ -566,27 +571,29 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
           </div>
 
           {/* SECTION 4: CARVED TREASURE REWARD PLAQUE */}
-          <div className="p-3.5 rounded-2xl bg-surface-inset border border-gold/30 flex items-center justify-between text-xs shadow-[inset_2px_2px_6px_var(--neu-d),inset_-1px_-1px_3px_var(--neu-l)]">
-            <div className="flex items-center gap-2 text-text-secondary">
-              <div className="w-7 h-7 rounded-lg bg-surface-card border border-gold/40 flex items-center justify-center text-gold shadow-xs">
+          <div className="p-3.5 rounded-2xl bg-surface-inset border border-gold/30 flex flex-wrap items-center justify-between gap-2.5 text-xs shadow-[inset_2px_2px_6px_var(--neu-d),inset_-1px_-1px_3px_var(--neu-l)]">
+            <div className="flex items-center gap-2 text-text-secondary min-w-0">
+              <div className="w-7 h-7 rounded-lg bg-surface-card border border-gold/40 flex items-center justify-center text-gold shadow-xs shrink-0">
                 <Trophy className="w-3.5 h-3.5" />
               </div>
-              <span className="font-heading font-bold text-text-secondary">Estimasi Hadiah Ekspedisi:</span>
-            </div>
-            <div className="flex items-center gap-3 font-mono font-bold">
-              <span className="text-indigo bg-indigo/10 px-2 py-0.5 rounded-lg border border-indigo/25">
-                +{activeFloorOption.expEst} EXP
+              <span className="font-heading font-bold text-text-secondary truncate">
+                Estimasi Hadiah Ekspedisi:
               </span>
-              <span className="text-gold bg-gold/10 px-2 py-0.5 rounded-lg border border-gold/25 flex items-center gap-1">
-                <Coins className="w-3 h-3 text-gold" />
-                +{activeFloorOption.goldEst} G
+            </div>
+            <div className="flex items-center gap-2.5 font-mono font-bold shrink-0">
+              <span className="text-indigo bg-indigo/10 px-2.5 py-1 rounded-xl border border-indigo/25 shadow-2xs">
+                +{estimatedExp} EXP
+              </span>
+              <span className="text-gold bg-gold/10 px-2.5 py-1 rounded-xl border border-gold/25 flex items-center gap-1 shadow-2xs">
+                <Coins className="w-3 h-3 text-gold shrink-0" />
+                +{estimatedGold} G
               </span>
             </div>
           </div>
         </div>
 
         {/* ================= SKEUOMORPHIC FOOTER ================= */}
-        <div className="relative z-10 p-4 border-t border-border-subtle flex items-center justify-between gap-3 bg-surface-inset/80 backdrop-blur-xs shadow-[0_-3px_10px_rgba(0,0,0,0.2)]">
+        <div className="relative z-10 p-3.5 sm:p-4 border-t border-border-subtle flex items-center justify-between gap-3 bg-surface-inset/90 backdrop-blur-xs shadow-[0_-3px_10px_rgba(0,0,0,0.2)]">
           {/* Debossed Wooden Button */}
           <button
             type="button"
@@ -594,7 +601,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
               playSound('click', soundEnabled);
               onClose();
             }}
-            className="px-5 py-2.5 rounded-xl border border-border-subtle bg-surface-card hover:bg-surface-elevated text-xs font-bold text-text-secondary hover:text-text-primary transition-all shadow-[2px_2px_5px_var(--neu-d),-1px_-1px_3px_var(--neu-l)] active:translate-y-0.5 active:shadow-[inset_2px_2px_4px_var(--neu-d)] cursor-pointer"
+            className="shrink-0 whitespace-nowrap px-5 sm:px-6 py-3 rounded-2xl border border-border-subtle bg-surface-card hover:bg-surface-elevated text-xs sm:text-sm font-heading font-bold text-text-secondary hover:text-text-primary transition-all shadow-[2px_2px_5px_var(--neu-d),-1px_-1px_3px_var(--neu-l)] active:translate-y-0.5 active:shadow-[inset_2px_2px_4px_var(--neu-d)] cursor-pointer"
           >
             Batal
           </button>
@@ -604,14 +611,14 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
             type="button"
             disabled={isStartDisabled}
             onClick={handleStart}
-            className={`flex-1 sm:flex-none flex items-center justify-center gap-2.5 px-7 py-3 rounded-2xl font-heading font-black text-xs sm:text-sm transition-all select-none cursor-pointer ${
+            className={`flex-1 min-w-0 whitespace-nowrap flex items-center justify-center gap-2 sm:gap-2.5 px-4 sm:px-7 py-3 rounded-2xl font-heading font-black text-xs sm:text-sm transition-all select-none cursor-pointer ${
               isStartDisabled
                 ? 'bg-surface-inset text-text-muted border border-border-subtle shadow-[inset_2px_2px_5px_var(--neu-d)] cursor-not-allowed opacity-50'
-                : 'btn-cta hover:scale-[1.02] active:scale-[0.98] shadow-[4px_4px_14px_var(--neu-d),-2px_-2px_6px_var(--neu-l),0_0_18px_rgba(111,147,207,0.35)]'
+                : 'btn-cta hover:scale-[1.01] active:scale-[0.99] shadow-[4px_4px_14px_var(--neu-d),-2px_-2px_6px_var(--neu-l),0_0_18px_rgba(111,147,207,0.35)]'
             }`}
           >
             <Swords className="w-4 h-4 text-gold shrink-0" />
-            <span>
+            <span className="truncate">
               {isStartDisabled
                 ? 'Pilih Deck yang Sesuai'
                 : sourceType === 'deck'
