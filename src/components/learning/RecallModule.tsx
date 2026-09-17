@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Flame, CheckCircle2, XCircle, Volume2, ArrowRight, RotateCcw, Award, ShieldAlert, BookOpen, Layers, Undo2, Check } from 'lucide-react';
+import { motion } from 'motion/react';
+import { Flame, CheckCircle2, XCircle, Volume2, ArrowRight, Award, ShieldAlert, BookOpen, Check } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { RecallQueueItem, RecallPriorityTier, Question, MasteryDifficultyLevel } from '../../types/content';
-import { BUNPOU_DATABASE } from '../../data/bunpou';
-import { KOTOBA_DATABASE } from '../../data/kotoba';
-import { KANJI_DATABASE } from '../../data/kanji';
-import { DOKKAI_DATABASE } from '../../data/dokkai';
-import { CHOUKAI_DATABASE } from '../../data/choukai';
+import { RecallQueueItem, RecallPriorityTier } from '../../types/content';
 import { playSound, speakJapanese } from '../../utils/audio';
 import { RubyText } from './RubyText';
 
@@ -25,7 +20,7 @@ interface RecallModuleProps {
 
 export const RecallModule: React.FC<RecallModuleProps> = ({
   recallQueue,
-  playerMp,
+  playerMp: _playerMp,
   playerInt,
   onUseMp,
   onItemReviewed,

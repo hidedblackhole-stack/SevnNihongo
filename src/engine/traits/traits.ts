@@ -33,7 +33,7 @@ export interface WritableTrait {
 // ------------------------------------------------------------------------------
 // 2. AUDIO TRAIT (Spoken Japanese & Audio Playback)
 // ------------------------------------------------------------------------------
-export interface AudioTrait {
+interface AudioTrait {
   readonly trait: 'audio';
   japaneseText: string;
   reading?: string;
@@ -161,7 +161,7 @@ export function asWritable(item: any): WritableTrait | null {
 /**
  * Checks if the given item can be spoken/pronounced.
  */
-export function asAudio(item: any): AudioTrait | null {
+function asAudio(item: any): AudioTrait | null {
   if (!item) return null;
   const raw = item.ref ? (item.kotoba || item.kanji || item.bunpou || item) : item;
 

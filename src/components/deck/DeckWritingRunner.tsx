@@ -6,7 +6,6 @@ import { UserDeck } from '../../types/rpg';
 import { resolveDeckItem, ResolvedDeckItem } from '../../utils/decks';
 import { UniversalWritingCard } from '../learning/UniversalWritingCard';
 import { playSound } from '../../utils/audio';
-import { WritingRewardResult } from '../../utils/rewards';
 import { asWritable } from '../../engine/traits/traits';
 
 interface DeckWritingRunnerProps {

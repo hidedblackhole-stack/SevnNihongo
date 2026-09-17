@@ -1,5 +1,5 @@
 import React from 'react';
-import { Castle, Compass, Scroll, Sword, BookText, ShoppingBag, Map, Heart, Zap, Play, Flame, Shield, Key, PenTool, BookMarked } from 'lucide-react';
+import { Castle, Compass, Scroll, BookText, PenTool, BookMarked } from 'lucide-react';
 
 const VintageFilter = () => (
   <svg style={{ width: 0, height: 0, position: 'absolute' }} aria-hidden="true">
@@ -23,7 +23,7 @@ const VintageFilter = () => (
   </svg>
 );
 
-export const withVintageEngraving = (IconComponent: React.ComponentType<any>) => {
+const withVintageEngraving = (IconComponent: React.ComponentType<any>) => {
   return ({ className = '', style, ...props }: any) => (
     <>
       <VintageFilter />
@@ -40,14 +40,6 @@ export const withVintageEngraving = (IconComponent: React.ComponentType<any>) =>
 export const CastleIcon = withVintageEngraving(Castle);
 export const CompassIcon = withVintageEngraving(Compass);
 export const ScrollIcon = withVintageEngraving(Scroll);
-export const SwordIcon = withVintageEngraving(Sword);
 export const BookIcon = withVintageEngraving(BookText);
-export const TreasureIcon = withVintageEngraving(ShoppingBag);
-export const ShieldIcon = withVintageEngraving(Shield);
 export const QuillIcon = withVintageEngraving(PenTool);
-export const KeyIcon = withVintageEngraving(Key);
-export const MapIcon = withVintageEngraving(Map);
-export const HeartIcon = withVintageEngraving(Heart);
-export const FlameIcon = withVintageEngraving(Flame);
-export const ZapIcon = withVintageEngraving(Zap);
 export const BookmarkIcon = withVintageEngraving(BookMarked);

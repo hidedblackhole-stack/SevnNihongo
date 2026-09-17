@@ -17,7 +17,7 @@ export interface HighlightedSegment {
 /**
  * Finds the substring in a Japanese sentence that matches the grammar pattern.
  */
-export function findGrammarSpan(japanese: string, item: BunpouItem): GrammarSpan | null {
+function findGrammarSpan(japanese: string, item: BunpouItem): GrammarSpan | null {
   if (!japanese || !item) return null;
 
   const f = item.formula || '';

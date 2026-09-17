@@ -3,9 +3,9 @@ import {
   Search, Volume2, CheckCircle2, XCircle, HelpCircle, 
   Feather, BookOpen, Headphones, FileText, Check, 
   Swords, Play, RotateCcw, Trophy, Award, ArrowRight, 
-  ChevronRight, ArrowLeft, Layers, Compass, Clock, Flame
+  ArrowLeft, Layers, Compass, Clock, Flame
 } from 'lucide-react';
-import { ALL_TRYOUTS, TryOutMeta } from '../../data/tryouts';
+import { ALL_TRYOUTS } from '../../data/tryouts';
 import { TryOutData } from '../../types/content';
 import kanjiQuestionsDb from '../../data/db/kanji_questions.json';
 import bunpouQuestionsDb from '../../data/db/bunpou_questions.json';
@@ -101,7 +101,6 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
   const [drillQuestions, setDrillQuestions] = useState<UnifiedQuestionItem[]>([]);
   const [drillCurrentIndex, setDrillCurrentIndex] = useState(0);
   const [drillUserAnswers, setDrillUserAnswers] = useState<Record<number, number>>({});
-  const [drillRevealed, setDrillRevealed] = useState<Record<number, boolean>>({});
   const [drillCompleted, setDrillCompleted] = useState(false);
 
   // Free Explorer User Interactive Answers state: questionId -> selectedOptionIndex
@@ -328,7 +327,6 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
     setDrillQuestions(shuffled);
     setDrillCurrentIndex(0);
     setDrillUserAnswers({});
-    setDrillRevealed({});
     setDrillCompleted(false);
     setIsDrillActive(true);
     playSound('click', soundEnabled);
@@ -341,7 +339,6 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
 
     const isCorrect = optionIdx === currentQ.correctIndex;
     setDrillUserAnswers((prev) => ({ ...prev, [drillCurrentIndex]: optionIdx }));
-    setDrillRevealed((prev) => ({ ...prev, [drillCurrentIndex]: true }));
 
     if (isCorrect) {
       playSound('correct', soundEnabled);

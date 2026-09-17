@@ -163,8 +163,10 @@ export interface KotobaItem {
   word: string;
   reading: string; // Hiragana / Katakana
   meaningId: string; // Indonesian meaning
+  definitionId?: string; // Indonesian definition/explanation (penjelasan makna bahasa Indonesia)
   meaningEn: string;
   meaningJa: string;
+  meaningJaId?: string;
   jlpt: string;
   wordType: 'noun' | 'verb' | 'adjective-i' | 'adjective-na' | 'adverb' | 'expression';
   kanjiComponents: string[];

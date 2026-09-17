@@ -25,7 +25,7 @@ import { PlayerStats } from '../types/rpg';
 const SRS_INTERVALS_DAYS = [1, 2, 4, 7, 14, 30];
 
 // Humanized diagnostic insights for each error type
-export const ERROR_DIAGNOSTIC_INSIGHTS: Record<ErrorType, { label: string; explanation: string; advice: string }> = {
+const ERROR_DIAGNOSTIC_INSIGHTS: Record<ErrorType, { label: string; explanation: string; advice: string }> = {
   PASSIVE_CONFUSION: {
     label: 'Tertukar Pasif (受身形)',
     explanation: 'Kamu memilih bentuk Causative bukannya Passive. Kamu menguasai rumus dasarnya, namun keliru menentukan siapa subjek yang menerima tindakan.',
@@ -668,9 +668,9 @@ export function calculateOverallMastery(records: Record<string, ItemMasteryRecor
  * Distinguishes Skill Acquisition (Bunpou/Kotoba/Kanji) vs Skill Application (Dokkai/Choukai)
  * Formula: Knowledge (20%) + Recognition (25%) + Application (35%) + Retention (20%)
  */
-export function calculateItemTrueMastery(
+function calculateItemTrueMastery(
   record: ItemMasteryRecord,
-  allRecords: Record<string, ItemMasteryRecord> = {}
+  _allRecords: Record<string, ItemMasteryRecord> = {}
 ): TrueMasteryBreakdown {
   let title = record.itemId;
   if (record.category === 'bunpou' && BUNPOU_DATABASE[record.itemId]) {
@@ -766,7 +766,7 @@ export function calculateItemTrueMastery(
  * Level 4: Context Selection / Nuance Distractors
  * Level 5: Interactive Sentence Production (Arrange Word Scramble)
  */
-export function generateAdaptiveQuestion(
+function generateAdaptiveQuestion(
   item: RecallQueueItem,
   level: MasteryDifficultyLevel
 ): Question {
@@ -1256,7 +1256,7 @@ export function getGranularStageProgress(
  */
 export function diagnoseDokkaiMistake(
   dokkaiItem: DokkaiItem,
-  wrongQuestionIndex: number = 0
+  _wrongQuestionIndex: number = 0
 ): {
   diagnosticMessage: string;
   tutorAdvice: string;

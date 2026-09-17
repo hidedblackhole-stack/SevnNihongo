@@ -1,11 +1,10 @@
 import React, { useMemo } from 'react';
 import { motion } from 'motion/react';
-import { Heart, Zap, Play, Flame, ChevronRight, Target, Coins } from 'lucide-react';
-import { ScrollIcon, QuillIcon, ShieldIcon } from '../ui/EngravingIcons';
+import { Play, Flame, ChevronRight } from 'lucide-react';
+import { ScrollIcon, QuillIcon } from '../ui/EngravingIcons';
 import { PlayerStats, Mission, StageClearData } from '../../types/rpg';
-import { getTierForExp } from '../../data/tiers';
 import { getEffectiveTier } from '../../utils/ascension';
-import { MAP_REGIONS, getStagesForMap, WORLD_STAGES_MAP } from '../../data/maps';
+import { MAP_REGIONS, getStagesForMap } from '../../data/maps';
 import { TierAvatar } from '../avatar/TierAvatar';
 import { playSound } from '../../utils/audio';
 import { calculateOverallMastery, generateAdaptiveRecommendation } from '../../utils/mastery';
@@ -16,7 +15,7 @@ export interface HomeViewProps {
   stageProgress?: Record<string, StageClearData>;
   onOpenStatusModal: () => void;
   onNavigateToStage: (stageId: string) => void;
-  onNavigateTab: (tab: 'maps' | 'daily' | 'weekly' | 'shop' | 'settings') => void;
+  onNavigateTab: (tab: 'maps' | 'daily' | 'weekly' | 'settings') => void;
   onStartRecall?: () => void;
 }
 

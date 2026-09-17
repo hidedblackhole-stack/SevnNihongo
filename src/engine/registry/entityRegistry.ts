@@ -9,23 +9,7 @@ import { BUNPOU_DATABASE } from '../../data/bunpou';
 import { KotobaItem, KanjiItem, BunpouItem } from '../../types/content';
 import { DeckItemRef } from '../../types/rpg';
 import { ResolvedDeckItem } from '../../utils/decks';
-import {
-  TraitType,
-  WritableTrait,
-  AudioTrait,
-  FlashcardTrait,
-  GrammarFormulaTrait,
-  RelationalTrait,
-  QuizTrait,
-  asWritable,
-  asAudio,
-  asFlashcard,
-  asGrammarFormula,
-  asRelational,
-  asQuiz,
-  hasTrait,
-  getTraits,
-} from '../traits/traits';
+import { TraitType, hasTrait, getTraits } from '../traits/traits';
 
 export interface UnifiedEntity {
   id: string;
@@ -356,23 +340,3 @@ class EntityRegistryService {
 
 export const EntityRegistry = new EntityRegistryService();
 
-// Re-export trait functions for convenience
-export {
-  asWritable,
-  asAudio,
-  asFlashcard,
-  asGrammarFormula,
-  asRelational,
-  asQuiz,
-  hasTrait,
-  getTraits,
-};
-export type {
-  WritableTrait,
-  AudioTrait,
-  FlashcardTrait,
-  GrammarFormulaTrait,
-  RelationalTrait,
-  QuizTrait,
-  TraitType,
-};

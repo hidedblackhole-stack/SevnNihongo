@@ -3,7 +3,7 @@
 // Powered by Japanese Language Intelligence Engine (J-LIE)
 // ==============================================================================
 
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
 import {
@@ -17,7 +17,6 @@ import {
   BookOpen,
   Send,
   HelpCircle,
-  Layers,
 } from 'lucide-react';
 import {
   generateSentenceExercise,
@@ -278,7 +277,7 @@ export const SakubunStudio: React.FC<SakubunStudioProps> = ({
             </div>
           ) : (
             <AnimatePresence>
-              {selectedTiles.map((tile, idx) => {
+              {selectedTiles.map((tile, _idx) => {
                 const isParticle = tile.role === 'particle';
                 const isSuffix = tile.role === 'grammar_suffix';
                 return (

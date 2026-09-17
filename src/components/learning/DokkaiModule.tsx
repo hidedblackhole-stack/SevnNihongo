@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookMarked, CheckCircle2, ChevronRight, HelpCircle, FileText, AlertTriangle, Layers, BookOpen } from 'lucide-react';
+import { BookMarked, FileText, AlertTriangle, Layers } from 'lucide-react';
 import { DokkaiItem } from '../../types/content';
 import { DOKKAI_DATABASE } from '../../data/dokkai';
 import { QuizEngine } from './QuizEngine';
@@ -21,7 +21,7 @@ interface DokkaiModuleProps {
 export const DokkaiModule: React.FC<DokkaiModuleProps> = ({
   dokkaiIds,
   onReward,
-  onBack,
+  onBack: _onBack,
   playerMp,
   playerInt,
   onUseMp,

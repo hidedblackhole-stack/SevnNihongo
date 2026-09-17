@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Sparkles, Check, Bookmark, Search, Sliders, Layers, FileText } from 'lucide-react';
+import { X, Sparkles, Check, Bookmark, Search } from 'lucide-react';
 import { DeckType, UserDeck, DeckItemRef, DeckItemCategory } from '../../types/rpg';
 import { playSound } from '../../utils/audio';
 import { generatePresetDeckItems, DEFAULT_BOOKMARK_DECK_ID } from '../../utils/decks';

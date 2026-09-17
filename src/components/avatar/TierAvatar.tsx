@@ -66,7 +66,6 @@ export const TierAvatar: React.FC<TierAvatarProps> = ({
   }[size];
 
   // Specific visual elements based on Tier 1 to 10
-  const isPeasant = tierNum === 1;
   const isNovice = tierNum === 2;
   const isApprentice = tierNum === 3;
   const isSquire = tierNum === 4;

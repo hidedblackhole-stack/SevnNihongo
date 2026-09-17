@@ -167,50 +167,14 @@ export function getLevelInfo(totalExp: number): {
   };
 }
 
-export function calculateExpBonus(
-  baseExp: number,
-  playerInt: number = 0,
-  tierIndex: number = 0
-): {
-  baseExp: number;
-  totalExpGained: number;
-  bonusExp: number;
-  bonusPercentage: number;
-} {
-  // INT gives +1.5% bonus EXP per point, capped at 40%
-  let intBonusPercent = Math.min(Math.max(0, playerInt) * 1.5, 40);
-
-  // Tier passive perks bonus
-  let tierBonusPercent = 0;
-  if (tierIndex >= 7) {
-    tierBonusPercent += 30; // Tier 8+ Hero bonus
-  } else if (tierIndex >= 6) {
-    tierBonusPercent += 20; // Tier 7 Paladin bonus
-  } else if (tierIndex >= 2) {
-    tierBonusPercent += 10; // Tier 3+ Apprentice bonus
-  }
-
-  const totalBonusPercent = intBonusPercent + tierBonusPercent;
-  const bonusMultiplier = 1 + (totalBonusPercent / 100);
-  const totalExpGained = Math.round(baseExp * bonusMultiplier);
-  const bonusExp = Math.max(0, totalExpGained - baseExp);
-
-  return {
-    baseExp,
-    totalExpGained,
-    bonusExp,
-    bonusPercentage: totalBonusPercent
-  };
-}
-
-export interface TierGateRequirement {
+interface TierGateRequirement {
   requiredWorldId: string;
   requiredWorldName: string;
   requiredJlpt: string;
   minStageCompletionPct: number; // 77
 }
 
-export const TIER_GATE_REQUIREMENTS: Record<number, TierGateRequirement> = {
+const TIER_GATE_REQUIREMENTS: Record<number, TierGateRequirement> = {
   2: { // Entering Tier 3 (Apprentice - N4)
     requiredWorldId: 'world_n5',
     requiredWorldName: 'World N5 (Dunia Permulaan)',
@@ -248,7 +212,7 @@ export interface TierGateCheckResult {
   currentPercentage?: number;
 }
 
-export function checkTierGate(
+function checkTierGate(
   potentialTierIndex: number,
   _stageProgress: Record<string, import('../../types/rpg').StageClearData> = {},
   _worldStagesMap: Record<string, string[]> = {}

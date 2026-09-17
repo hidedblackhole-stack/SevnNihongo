@@ -37,8 +37,14 @@ export class ErrorBoundary extends React.Component<Props, State> {
           <h2 className="font-bold text-xl mb-4 text-red-400">💥 Sistem Mengalami Crash (Black Screen Dicegah)</h2>
           <p className="text-sm mb-4 text-center text-red-300">Tolong screenshot layar ini dan berikan ke AI Assistant.</p>
           
-          <div className="w-full bg-black/50 p-4 rounded-xl overflow-x-auto mb-4 border border-red-900">
-            <pre className="text-xs font-mono text-red-300 break-all whitespace-pre-wrap">{this.state.error?.toString()}</pre>
+          <div className="w-full bg-black/50 p-4 rounded-xl overflow-x-auto mb-4 border border-red-900 max-h-96 overflow-y-auto">
+            <pre className="text-xs font-mono text-red-300 break-all whitespace-pre-wrap font-bold">{this.state.error?.toString()}</pre>
+            {this.state.error?.stack && (
+              <pre className="text-[11px] font-mono text-red-400/90 break-all whitespace-pre-wrap mt-2 pt-2 border-t border-red-900/60">{this.state.error.stack}</pre>
+            )}
+            {this.state.errorInfo?.componentStack && (
+              <pre className="text-[11px] font-mono text-amber-300/90 break-all whitespace-pre-wrap mt-2 pt-2 border-t border-red-900/60">{this.state.errorInfo.componentStack}</pre>
+            )}
           </div>
           
           <div className="flex flex-wrap items-center justify-center gap-3">

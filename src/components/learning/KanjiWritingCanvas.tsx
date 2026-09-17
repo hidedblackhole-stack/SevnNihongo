@@ -9,7 +9,7 @@ import { KANJI_DATABASE } from '../../data/kanji';
 import { KanjiItem } from '../../types/content';
 import { getHighlightedYomikata } from '../../utils/readingHighlightUtils';
 
-export const SMALL_KANA_SET = new Set([
+const SMALL_KANA_SET = new Set([
   // Hiragana sutegana
   'ぁ', 'ぃ', 'ぅ', 'ぇ', 'ぉ',
   'っ',
@@ -23,11 +23,62 @@ export const SMALL_KANA_SET = new Set([
   'ヵ', 'ヶ',
 ]);
 
-export const isSmallKana = (char: string): boolean => {
+const isSmallKana = (char: string): boolean => {
   return char.length > 0 && SMALL_KANA_SET.has(char);
 };
 
-export function transformSmallKanaData(charData: any) {
+const HANDAKUTEN_KANA_SET = new Set([
+  'ぱ', 'ぴ', 'ぷ', 'ぺ', 'ぽ',
+  'パ', 'ピ', 'プ', 'ペ', 'ポ'
+]);
+
+/**
+ * Japanese Handakuten (Maru / 半濁点 ゜) circular stroke recognition helper.
+ * Standard Fréchet distance algorithms fail on small closed circular loops because
+ * users naturally draw circles clockwise, counter-clockwise, from top, bottom,
+ * or as a quick dot/circle gesture. This interceptor validates that the stroke
+ * is localized within the maru target zone (approx (875, 750) in 1024x1024 HanziWriter coords)
+ * and allows smooth, frustration-free writing of the maru ring.
+ */
+function attachMaruHandler(writerInstance: any, char: string) {
+  const quiz = writerInstance?._quiz;
+  if (!quiz) return;
+  if (!HANDAKUTEN_KANA_SET.has(char)) return;
+
+  const originalEndUserStroke = quiz.endUserStroke.bind(quiz);
+
+  quiz.endUserStroke = function (this: any) {
+    if (!this._userStroke) return;
+    const currentStrokeIdx = this._currentStrokeIndex;
+    const isLastStroke = currentStrokeIdx === this._character.strokes.length - 1;
+
+    if (isLastStroke) {
+      const userPts = this._userStroke.points;
+      if (userPts && userPts.length > 0) {
+        if (userPts.length === 1) {
+          userPts.push({ x: userPts[0].x + 1, y: userPts[0].y + 1 });
+        }
+
+        const sum = userPts.reduce((acc: { x: number; y: number }, pt: { x: number; y: number }) => ({ x: acc.x + pt.x, y: acc.y + pt.y }), { x: 0, y: 0 });
+        const centroid = { x: sum.x / userPts.length, y: sum.y / userPts.length };
+        const distToMaru = Math.hypot(centroid.x - 875, centroid.y - 750);
+
+        if (distToMaru <= 160) {
+          const prevMark = this._options.markStrokeCorrectAfterMisses;
+          this._options.markStrokeCorrectAfterMisses = 1;
+          this._mistakesOnStroke = 0;
+          const res = originalEndUserStroke();
+          this._options.markStrokeCorrectAfterMisses = prevMark;
+          return res;
+        }
+      }
+    }
+
+    return originalEndUserStroke();
+  };
+}
+
+function transformSmallKanaData(charData: any) {
   if (!charData || !Array.isArray(charData.strokes) || !Array.isArray(charData.medians)) {
     return charData;
   }
@@ -41,7 +92,7 @@ export function transformSmallKanaData(charData: any) {
   const origCy = 388;
 
   const transformedStrokes = charData.strokes.map((pathStr: string) => {
-    return pathStr.replace(/([MCZ])([^MCZ]*)/gi, (match, cmd, args) => {
+    return pathStr.replace(/([MCZ])([^MCZ]*)/gi, (_match, cmd, args) => {
       if (cmd.toUpperCase() === 'Z') return cmd;
       const numRegex = /[-+]?(?:\d*\.\d+|\d+)/g;
       const nums: number[] = [];
@@ -178,7 +229,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
   totalSheets = 1,
   onCompleteSheet,
   onFinish,
-  onComplete,
+  onComplete: _onComplete,
   soundEnabled = true,
   autoAdvance = false,
   leniency,
@@ -542,7 +593,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
         leniency: effectiveLeniency,
         averageDistanceThreshold: effectiveDistanceThreshold,
         quizStartStrokeNum: startStroke,
-        acceptBackwardsStrokes: false,
+        acceptBackwardsStrokes: isKana,
         showHintAfterMisses: 2,
         onMistake: () => {
           setMistakesCount(prev => prev + 1);
@@ -583,6 +634,8 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
           }
         }
       });
+
+      attachMaruHandler(writerRef.current, kanjiChar);
     } catch {
       // ignore
     }

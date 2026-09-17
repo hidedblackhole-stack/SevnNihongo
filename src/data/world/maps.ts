@@ -131,7 +131,7 @@ export const WORLDS_LIST: WorldInfo[] = [
   }
 ];
 
-export function getWorldById(worldId: string): WorldInfo {
+function getWorldById(worldId: string): WorldInfo {
   return WORLDS_LIST.find(w => w.id === worldId) || WORLDS_LIST[0];
 }
 
@@ -382,7 +382,7 @@ export function getMapsForWorld(worldId: string): MapRegion[] {
 }
 
 // Build map of worldId -> stageIds[] for fast gate checking
-export const WORLD_STAGES_MAP: Record<string, string[]> = {};
+const WORLD_STAGES_MAP: Record<string, string[]> = {};
 (mapsDb as RawMapJson[]).forEach(m => {
   const wId = m.world_id || 'world_n3';
   if (!WORLD_STAGES_MAP[wId]) WORLD_STAGES_MAP[wId] = [];
@@ -430,7 +430,7 @@ export function getStagesForMap(mapId: string): Stage[] {
 }
 
 // Helper to determine the World for a given Stage
-export function getWorldForStage(stage: Stage | string): WorldInfo | null {
+function getWorldForStage(stage: Stage | string): WorldInfo | null {
   const stageId = typeof stage === 'string' ? stage : stage.id;
   const stageObj = (stagesDb as RawStageJson[]).find(s => s.id === stageId);
   if (!stageObj) return null;

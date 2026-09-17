@@ -198,7 +198,6 @@ export function conjugateVerb(word: string, reading?: string): VerbConjugationRe
   // ─────────────────────────────────────────────────────────────
   // 4. GODAN VERBS
   // ─────────────────────────────────────────────────────────────
-  const lastCharJp = w[w.length - 1];
   const lastCharRd = r[r.length - 1];
   const stemJp = w.slice(0, -1);
   const stemRd = r.slice(0, -1);

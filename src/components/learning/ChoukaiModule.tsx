@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Headphones, Play, Pause, RotateCcw, Volume2, FileText, Sliders } from 'lucide-react';
+import { Headphones, Play, Pause, RotateCcw, FileText } from 'lucide-react';
 import { ChoukaiItem } from '../../types/content';
 import { CHOUKAI_DATABASE } from '../../data/choukai';
 import { QuizEngine } from './QuizEngine';
@@ -20,14 +20,14 @@ interface ChoukaiModuleProps {
 export const ChoukaiModule: React.FC<ChoukaiModuleProps> = ({
   choukaiIds,
   onReward,
-  onBack,
+  onBack: _onBack,
   playerMp,
   playerInt,
   onUseMp,
   soundEnabled = true,
   furiganaEnabled = true,
 }) => {
-  const [selectedChoukaiId, setSelectedChoukaiId] = useState<string>(choukaiIds[0] || 'choukai_001');
+  const selectedChoukaiId = choukaiIds[0] || 'choukai_001';
   const [isPlaying, setIsPlaying] = useState(false);
   const [speechRate, setSpeechRate] = useState(0.9);
   const [showTranscript, setShowTranscript] = useState(false);

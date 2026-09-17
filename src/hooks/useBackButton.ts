@@ -23,7 +23,7 @@ export function useBackButton(
     // Push a dummy state to trap the back button
     window.history.pushState({ backTrap: true }, '', window.location.href);
 
-    const handlePopState = (event: PopStateEvent) => {
+    const handlePopState = (_event: PopStateEvent) => {
       // Prevent standard browser back and invoke the onBack handler
       const shouldExit = onBackRef.current();
 

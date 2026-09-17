@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Star, RotateCcw, CheckCircle2, XCircle, Volume2, ArrowRight } from 'lucide-react';
+import { Star, RotateCcw, CheckCircle2, XCircle, Volume2 } from 'lucide-react';
 import { Question } from '../../types/content';
 import { playSound, speakJapanese } from '../../utils/audio';
 import { RubyText } from './RubyText';

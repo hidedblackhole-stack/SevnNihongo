@@ -10,23 +10,19 @@ import {
   X,
   Volume2,
   Bookmark,
-  Layers,
   PenTool,
   BookOpen,
   Network,
   HelpCircle,
   ArrowLeft,
-  Sparkles,
   GitBranch,
   ChevronRight,
-  RotateCcw,
   CheckCircle2,
   XCircle,
 } from 'lucide-react';
 import { EntityRegistry, UnifiedEntity } from '../../engine/registry/entityRegistry';
 import {
   asWritable,
-  asAudio,
   asFlashcard,
   asGrammarFormula,
   asRelational,
@@ -44,7 +40,6 @@ import { KotobaWritingPractice } from '../learning/KotobaWritingPractice';
 import { parseReadingVariations } from '../../utils/readingHighlightUtils';
 
 import { UserDeck, DeckItemCategory } from '../../types/rpg';
-import { DeckBookmarkPicker } from '../deck/DeckBookmarkPicker';
 import { Question } from '../../types/content';
 
 export interface UniversalEntityModalProps {
@@ -76,18 +71,17 @@ export const UniversalEntityModal: React.FC<UniversalEntityModalProps> = ({
   onClose,
   entityId,
   entity: initialEntity,
-  category: initialCategory,
+  category: _initialCategory,
   soundEnabled = true,
   userDecks,
   onToggleBookmark,
-  onToggleDeckItem,
+  onToggleDeckItem: _onToggleDeckItem,
   onRewardPlayer,
   onCompleteStudyItem,
 }) => {
   // Navigation stack for deep-linking (e.g. Kotoba -> constituent Kanji -> back)
   const [historyStack, setHistoryStack] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState<ModalTab>('overview');
-  const [isBookmarkPickerOpen, setIsBookmarkPickerOpen] = useState(false);
 
   // Quick Quiz State
   const [quizAnswered, setQuizAnswered] = useState<number | null>(null);
@@ -103,7 +97,6 @@ export const UniversalEntityModal: React.FC<UniversalEntityModalProps> = ({
       setActiveTab('overview');
       setQuizAnswered(null);
       setQuizScoreRecorded(false);
-      setIsBookmarkPickerOpen(false);
     } else {
       setHistoryStack([]);
     }

@@ -1,4 +1,4 @@
-import { PlayerStats, StudyStatistics, ActivityLog } from '../types/rpg';
+import { PlayerStats, StudyStatistics } from '../types/rpg';
 
 export type ActivityType = keyof StudyStatistics;
 

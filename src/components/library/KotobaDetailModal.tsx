@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { motion, AnimatePresence } from 'motion/react';
-import { X, Volume2, Layers, Link as LinkIcon, Network, Edit3, Bookmark, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion } from 'motion/react';
+import { X, Volume2, Layers, Link as LinkIcon, Network, Edit3, ChevronLeft, ChevronRight } from 'lucide-react';
 import { BookIcon } from '../ui/EngravingIcons';
 import { KotobaItem, ItemMasteryRecord } from '../../types/content';
 import { playSound, speakJapanese } from '../../utils/audio';
@@ -349,14 +349,25 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
               </div>
 
 
-              <div className="space-y-1.5 bg-surface-inset p-4 rounded-2xl w-full border border-border-subtle text-left sm:text-center">
+              <div className="space-y-2 bg-surface-inset p-4 rounded-2xl w-full border border-border-subtle text-left sm:text-center">
                 <h2 className="text-xl font-black text-text-primary font-heading leading-snug">
                   {item.meaningId}
                 </h2>
-                {item.meaningJa && (
+                {(item.definitionId || item.meaningJaId) && (
+                  <p className="text-xs text-indigo-400 dark:text-indigo-300 leading-relaxed font-medium">
+                    <span className="font-bold text-text-secondary">Penjelasan Makna: </span>
+                    {item.definitionId || item.meaningJaId}
+                  </p>
+                )}
+                {item.meaningJa && item.meaningJa !== item.word && (
                   <p className="text-xs text-text-muted italic">
                     {item.tags?.includes('Kaigo') ? 'Penjelasan JP (やさしい日本語): ' : 'Makna JP: '}
                     <span className="font-jp not-italic font-semibold text-text-secondary">{item.meaningJa}</span>
+                  </p>
+                )}
+                {item.meaningEn && (
+                  <p className="text-[11px] text-text-muted">
+                    English: {item.meaningEn}
                   </p>
                 )}
               </div>

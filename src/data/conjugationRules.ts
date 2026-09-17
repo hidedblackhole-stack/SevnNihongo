@@ -66,7 +66,7 @@ export interface WordClassGuide {
 /**
  * Universal helper that returns the exact hiragana reading of any conjugated form of a verb.
  */
-export function getConjugatedFormReading(verb: { kanji: string; reading: string }, formText: string): string {
+function getConjugatedFormReading(verb: { kanji: string; reading: string }, formText: string): string {
   if (!formText) return '';
   if (verb.kanji === 'する') return formText;
   if (verb.kanji === '来る') {
@@ -97,7 +97,7 @@ export function getConjugatedFormReading(verb: { kanji: string; reading: string 
   return formText;
 }
 
-export function computeVerbFormsReadings(verb: { kanji: string; reading: string; forms: VerbForms }): VerbForms {
+function computeVerbFormsReadings(verb: { kanji: string; reading: string; forms: VerbForms }): VerbForms {
   return {
     dictionary: getConjugatedFormReading(verb, verb.forms.dictionary),
     masu: getConjugatedFormReading(verb, verb.forms.masu),

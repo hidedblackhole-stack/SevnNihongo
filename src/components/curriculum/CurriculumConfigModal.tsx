@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Sparkles, Sliders, Layers, CheckCircle2, AlertCircle, Compass, PenTool, BookOpen, Brain, ShieldAlert } from 'lucide-react';
+import { X, Sparkles, Sliders, Layers, CheckCircle2, AlertCircle, Compass, PenTool, BookOpen, Brain } from 'lucide-react';
 import { UserDeck, DeckItemCategory } from '../../types/rpg';
 import { CurriculumConfig } from '../../types/curriculum';
 import { extractDeckRefs } from '../../utils/curriculumEngine';

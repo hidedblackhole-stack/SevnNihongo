@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Layers, Volume2, CheckCircle2, RotateCcw, ArrowRight, ArrowLeft, BookCheck } from 'lucide-react';
+import { Volume2, ArrowRight, ArrowLeft, BookCheck } from 'lucide-react';
 import { BookIcon } from '../ui/EngravingIcons';
 import { KotobaItem, Question } from '../../types/content';
 import { KOTOBA_DATABASE } from '../../data/kotoba';
@@ -24,7 +24,7 @@ interface KotobaModuleProps {
 export const KotobaModule: React.FC<KotobaModuleProps> = ({
   kotobaIds,
   onReward,
-  onBack,
+  onBack: _onBack,
   playerMp,
   playerInt,
   onUseMp,
@@ -139,7 +139,7 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
     const GREETING_DISTRACTORS = ['Selamat siang', 'Selamat malam', 'Sampai jumpa', 'Terima kasih', 'Sama-sama', 'Permisi', 'Maaf', 'Halo'];
     const TIME_DISTRACTORS = ['Kemarin', 'Besok lusa', 'Tadi malam', 'Minggu depan', 'Bulan lalu', 'Tahun ini', 'Hari ini', 'Sekarang'];
 
-    return pool.map((item, idx) => {
+    return pool.map((item, _idx) => {
       const isGreeting = item.wordType === 'expression' || /^(おはよう|こんにちは|こんばんは|さようなら|ありがとう|いただきます|ごちそうさま|いってきます|ただいま)/.test(item.word);
       const isTimeWord = /^(きょう|きのう|あした|あさ|ひる|よる|こんばん|まいあさ|まいばん)/.test(item.reading || item.word) || /\b(pagi|siang|malam|besok|kemarin|hari ini)\b/i.test(item.meaningId);
 

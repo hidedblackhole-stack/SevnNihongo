@@ -4,15 +4,12 @@ import {
   Swords,
   Trophy,
   Shield,
-  Zap,
   Volume2,
   Flame,
-  Star,
   CheckCircle2,
   XCircle,
   AlertTriangle,
   ArrowRight,
-  RotateCcw,
   BookOpen,
   Layers,
   Feather,
@@ -22,7 +19,7 @@ import {
 import confetti from 'canvas-confetti';
 import { Question } from '../../types/content';
 import { playSound, speakJapanese } from '../../utils/audio';
-import { generateBossBattleDiagnostic, ERROR_DIAGNOSTIC_INSIGHTS } from '../../utils/mastery';
+import { generateBossBattleDiagnostic } from '../../utils/mastery';
 
 interface BossBattleModuleProps {
   bossName: string;
@@ -50,7 +47,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
   bossHpTotal = 1200,
   questions: propQuestions,
   playerStr,
-  playerInt,
+  playerInt: _playerInt,
   playerHp: initialHp,
   playerMaxHp,
   playerMp,

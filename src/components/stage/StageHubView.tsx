@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion } from 'motion/react';
-import { BookOpen, Layers, Feather, BookMarked, Headphones, Swords, ArrowLeft, CheckCircle2, Star, AlertCircle, ShieldCheck, ChevronDown, ChevronUp, Crown, Coins, ChevronRight, ChevronLeft, Compass, ListFilter, X } from 'lucide-react';
+import { BookOpen, Layers, Feather, BookMarked, Headphones, Swords, ArrowLeft, CheckCircle2, Star, ShieldCheck, ChevronDown, ChevronUp, Crown, ChevronRight, ChevronLeft, Compass, ListFilter, X } from 'lucide-react';
 import { Stage, ItemMasteryRecord } from '../../types/content';
 import { StageClearData } from '../../types/rpg';
 import { BunpouModule } from '../learning/BunpouModule';
@@ -17,7 +17,7 @@ import { KANJI_DATABASE } from '../../data/kanji';
 import { DOKKAI_DATABASE } from '../../data/dokkai';
 import { CHOUKAI_DATABASE } from '../../data/choukai';
 import { getGranularStageProgress } from '../../utils/mastery';
-import { getWorldForStage, getSiblingStagesForStage } from '../../data/world/maps';
+import { getSiblingStagesForStage } from '../../data/world/maps';
 
 interface StageHubViewProps {
   stage: Stage;
@@ -260,7 +260,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
         {renderBackButton()}
         <DokkaiModule
           dokkaiIds={stage.dokkaiIds}
-          onReward={(exp, gold, mod, itemId, score, total) => handleModuleReward('dokkai', exp, gold, itemId, score, total)}
+          onReward={(exp, gold, _mod, itemId, score, total) => handleModuleReward('dokkai', exp, gold, itemId, score, total)}
           onBack={() => setActiveModule('hub')}
           playerMp={playerMp}
           playerInt={playerInt}
@@ -278,7 +278,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
         {renderBackButton()}
         <ChoukaiModule
           choukaiIds={stage.choukaiIds}
-          onReward={(exp, gold, mod, itemId, score, total) => handleModuleReward('choukai', exp, gold, itemId, score, total)}
+          onReward={(exp, gold, _mod, itemId, score, total) => handleModuleReward('choukai', exp, gold, itemId, score, total)}
           onBack={() => setActiveModule('hub')}
           playerMp={playerMp}
           playerInt={playerInt}

@@ -183,5 +183,4 @@ function buildMixedSets(): Record<string, BunpouMixedSet> {
   return sets;
 }
 
-export const BUNPOU_MIXED_SETS = buildMixedSets();
-export const BUNPOU_MIXED_DATABASE = BUNPOU_MIXED_SETS;
+export const BUNPOU_MIXED_DATABASE = buildMixedSets();

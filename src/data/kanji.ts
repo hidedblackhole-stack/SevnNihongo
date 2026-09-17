@@ -212,7 +212,6 @@ for (const [id, k] of Object.entries(STATIC_KANJI)) {
 }
 
 export const KANJI_DATABASE: Record<string, KanjiItem> = indexedDb;
-export const KANJI_QUESTIONS_POOL = kanjiQuestionsDb;
 
 export const STAGE_1_KANJI_QUIZ = [
   {

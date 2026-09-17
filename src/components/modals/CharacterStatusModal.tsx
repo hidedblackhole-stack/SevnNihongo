@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   X,
-  Heart,
   Zap,
   Star,
   Flame,
@@ -13,7 +12,6 @@ import {
   Calendar,
   Layers,
   Trophy,
-  Check,
   Edit2,
   Sparkles,
   ShieldAlert,
@@ -22,14 +20,11 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { PlayerStats } from '../../types/rpg';
-import { getTierForExp } from '../../data/tiers';
 import { TierAvatar } from '../avatar/TierAvatar';
 import { playSound } from '../../utils/audio';
 import { calculateLanguageProfile, calculateCoverage } from '../../utils/mastery';
 import { INITIAL_STUDY_STATS } from '../../utils/activity';
 import { calculateAscensionProgress, getEffectiveTier } from '../../utils/ascension';
-
-import { WORLD_STAGES_MAP } from '../../data/maps';
 
 interface CharacterStatusModalProps {
   isOpen: boolean;
@@ -47,7 +42,7 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
   isOpen,
   onClose,
   stats,
-  stageProgress = {},
+  stageProgress: _stageProgress = {},
   onAscendTier,
 }) => {
   useEffect(() => {

@@ -6,7 +6,7 @@ import { RPG_TIERS } from '../data/rpg/tiers';
 
 export type JlptLevel = 'N5' | 'N4' | 'N3' | 'N2' | 'N1';
 
-export const ASCENSION_THRESHOLD = 75; // 75% mastery required to ascend
+const ASCENSION_THRESHOLD = 75; // 75% mastery required to ascend
 
 export interface AscensionPillarProgress {
   category: 'kanji' | 'kotoba' | 'bunpou';
@@ -52,7 +52,7 @@ export function getJlptLevelForTierIndex(tierIndex: number): JlptLevel {
 /**
  * Returns the ascension gate configuration for each JLPT level
  */
-export const JLPT_ASCENSION_GATES: Record<JlptLevel, {
+const JLPT_ASCENSION_GATES: Record<JlptLevel, {
   targetJlpt: JlptLevel | null;
   gateTierIndex: number;
   nextTierIndex: number;
@@ -68,7 +68,7 @@ export const JLPT_ASCENSION_GATES: Record<JlptLevel, {
 /**
  * Calculates user's mastery for a specific JLPT level across Kanji, Kotoba, and Bunpou
  */
-export function calculateJlptPillars(stats: PlayerStats, jlpt: JlptLevel): {
+function calculateJlptPillars(stats: PlayerStats, jlpt: JlptLevel): {
   kanji: AscensionPillarProgress;
   kotoba: AscensionPillarProgress;
   bunpou: AscensionPillarProgress;

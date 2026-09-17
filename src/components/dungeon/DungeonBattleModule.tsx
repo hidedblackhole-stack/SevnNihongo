@@ -2,11 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Skull, Clock, ChevronLeft, ChevronRight, Flag, CheckCircle2, 
-  Volume2, Trophy, Award, Calendar, BookOpen, Layers, Filter 
+  Volume2, Trophy, Award, BookOpen, Layers 
 } from 'lucide-react';
 import { TryOutData } from '../../types/content';
 import { playSound } from '../../utils/audio';
-import { ALL_TRYOUTS, DEFAULT_TRYOUT, TryOutMeta } from '../../data/tryouts';
+import { ALL_TRYOUTS, DEFAULT_TRYOUT } from '../../data/tryouts';
 
 interface DungeonBattleModuleProps {
   tryOutData?: TryOutData;

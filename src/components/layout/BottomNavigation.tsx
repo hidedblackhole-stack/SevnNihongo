@@ -1,7 +1,7 @@
 import React from 'react';
 import { Settings } from 'lucide-react';
 import { Trophy } from 'lucide-react';
-import { CastleIcon, CompassIcon, ScrollIcon, SwordIcon, BookIcon, TreasureIcon, BookmarkIcon, MapIcon } from '../ui/EngravingIcons';
+import { CastleIcon, CompassIcon, ScrollIcon, BookIcon, BookmarkIcon } from '../ui/EngravingIcons';
 import { playSound } from '../../utils/audio';
 
 export type TabType = 'home' | 'maps' | 'daily' | 'weekly' | 'leaderboard' | 'library' | 'deck' | 'shop' | 'settings';

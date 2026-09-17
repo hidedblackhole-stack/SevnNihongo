@@ -9,12 +9,9 @@ import {
   MapPin,
   Settings2,
   Swords,
-  Bookmark,
   CheckCircle2,
   XCircle,
-  ArrowRight,
-  RotateCcw,
-  Sparkles
+  RotateCcw
 } from 'lucide-react';
 import { BunpouItem, Question, ItemMasteryRecord } from '../../types/content';
 import { FormulaDisplay } from '../learning/FormulaDisplay';

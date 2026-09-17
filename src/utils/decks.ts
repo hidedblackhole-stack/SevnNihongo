@@ -222,16 +222,6 @@ export function clearDeckItems(
   });
 }
 
-export function getDecksContainingItem(
-  userDecks: UserDeck[] | undefined,
-  itemId: string,
-  category: DeckItemCategory
-): string[] {
-  const currentDecks = ensureUserDecks(userDecks);
-  return currentDecks
-    .filter(d => d.items.some(it => it.id === itemId && it.category === category))
-    .map(d => d.id);
-}
 
 export function toggleItemInDeck(
   userDecks: UserDeck[] | undefined,

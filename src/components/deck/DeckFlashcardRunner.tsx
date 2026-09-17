@@ -1,11 +1,10 @@
 import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { X, Volume2, RotateCcw, RotateCw, ArrowRight, ArrowLeft, Trophy, Sparkles } from 'lucide-react';
+import { motion } from 'motion/react';
+import { X, RotateCcw, RotateCw, ArrowRight, ArrowLeft, Trophy } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { UserDeck } from '../../types/rpg';
 import { ResolvedDeckItem, resolveDeckItem } from '../../utils/decks';
-import { playSound, speakJapanese } from '../../utils/audio';
-import { RubyText } from '../learning/RubyText';
+import { playSound } from '../../utils/audio';
 import { UniversalFlashcard } from '../learning/UniversalFlashcard';
 import { getKanjiBaseExp, getKotobaBaseExp, getBunpouBaseExp, calculateFlashcardReward } from '../../utils/rewards';
 
@@ -41,8 +40,6 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
   const [queue, setQueue] = useState<ResolvedDeckItem[]>(resolvedItems);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
-  const [masteredCount, setMasteredCount] = useState(0);
-  const [reviewCount, setReviewCount] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
   const [accumulatedExp, setAccumulatedExp] = useState(0);
   const [accumulatedGold, setAccumulatedGold] = useState(0);
@@ -103,8 +100,6 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
     setQueue(resolvedItems);
     setCurrentIndex(0);
     setIsFlipped(false);
-    setMasteredCount(0);
-    setReviewCount(0);
     setAccumulatedExp(0);
     setAccumulatedGold(0);
     setFinalRewards(null);

@@ -134,16 +134,6 @@ export interface StageClearData {
   clearedAt?: string;
 }
 
-export interface InventoryItem {
-  id: string;
-  name: string;
-  description: string;
-  type: 'potion_hp' | 'potion_mp' | 'booster_exp' | 'skin' | 'scroll' | 'badge';
-  count: number;
-  icon: string;
-  rarity: 'common' | 'rare' | 'epic' | 'legendary';
-}
-
 export interface TierInfo {
   tier: number; // 1 to 10
   name: string;
@@ -170,20 +160,4 @@ export interface Mission {
   claimed: boolean;
   type: 'daily' | 'weekly';
   category: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'streak' | 'general';
-}
-
-export interface ShopItem {
-  id: string;
-  name: string;
-  category: 'consumable' | 'skin' | 'scroll' | 'potion' | 'equipment';
-  type?: 'potion' | 'scroll' | 'equipment' | 'skin';
-  description: string;
-  price: number;
-  currency: 'gold' | 'gems';
-  priceGold?: number;
-  priceGems?: number;
-  icon: string;
-  effectType?: 'heal_hp' | 'restore_mp' | 'exp_boost' | 'unlock_skin' | 'stat_boost';
-  effectValue?: number | string;
-  rarity: 'common' | 'rare' | 'epic' | 'legendary';
 }

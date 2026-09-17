@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Smartphone, Laptop, Share2, PlusSquare, Download, Check, X, Sparkles, ExternalLink } from 'lucide-react';
+import { Smartphone, Laptop, Share2, PlusSquare, Download, Check, X, Sparkles } from 'lucide-react';
 import { playSound } from '../../utils/audio';
 
 interface PwaInstallModalProps {

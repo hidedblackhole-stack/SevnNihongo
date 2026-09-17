@@ -7,25 +7,6 @@ import { ErrorBoundary } from '../ErrorBoundary';
 import { speakJapanese, playSound } from '../../utils/audio';
 import { WritingRewardResult } from '../../utils/rewards';
 
-import {
-  kataToHira,
-  rendakuMap,
-  handakutenMap,
-  getKanjiStems,
-  findReadingSegments,
-  renderWordWithKanjiHighlight,
-  getHighlightedYomikata,
-} from '../../utils/readingHighlightUtils';
-
-export {
-  kataToHira,
-  rendakuMap,
-  handakutenMap,
-  getKanjiStems,
-  findReadingSegments,
-  renderWordWithKanjiHighlight,
-  getHighlightedYomikata,
-};
 
 export interface KanjiDetailCardProps {
   item: KanjiItem;

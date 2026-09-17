@@ -1,5 +1,5 @@
 import { UserDeck, DeckItemCategory } from '../types/rpg';
-import { Question, KotobaItem, KanjiItem, BunpouItem, Stage } from '../types/content';
+import { Stage } from '../types/content';
 import {
   CurriculumConfig,
   CustomStage,
@@ -8,12 +8,9 @@ import {
   CustomCurriculumProgress,
   ActivityType,
 } from '../types/curriculum';
-import { KOTOBA_DATABASE } from '../data/kotoba';
-import { KANJI_DATABASE } from '../data/kanji';
-import { BUNPOU_DATABASE } from '../data/bunpou';
 
-export const STORAGE_KEY_CURRICULUMS = 'nihongo_quest_custom_curriculums';
-export const STORAGE_KEY_PROGRESS = 'nihongo_quest_custom_curriculum_progress';
+const STORAGE_KEY_CURRICULUMS = 'nihongo_quest_custom_curriculums';
+const STORAGE_KEY_PROGRESS = 'nihongo_quest_custom_curriculum_progress';
 
 export interface DeckRefsSummary {
   kanjiIds: string[];
@@ -80,7 +77,7 @@ function chunkArray<T>(items: T[], chunkCount: number): T[][] {
 /**
  * Validates and sanitizes CurriculumConfig against the actual contents of the deck.
  */
-export function validateConfigAgainstDeck(deck: UserDeck, config: CurriculumConfig): CurriculumConfig {
+function validateConfigAgainstDeck(deck: UserDeck, config: CurriculumConfig): CurriculumConfig {
   const refs = extractDeckRefs(deck);
   const validIncludeTypes = config.includeTypes.filter(type => refs.availableTypes.includes(type));
 
@@ -268,86 +265,7 @@ export function initializeCurriculumProgress(curriculum: CustomCurriculum): Cust
   };
 }
 
-/**
- * Synthesizes quiz questions for a stage from master databases.
- */
-export function generateStageQuestions(
-  stage: CustomStage,
-  maxQuestions: number = 10
-): Question[] {
-  const questions: Question[] = [];
 
-  // 1. Gather Bunpou Questions
-  const bunpouItems = stage.items.filter(it => it.type === 'bunpou');
-  bunpouItems.forEach(bRef => {
-    const item = BUNPOU_DATABASE[bRef.id];
-    if (item && item.questions && item.questions.length > 0) {
-      // Pick up to 2 questions per grammar item
-      const picked = [...item.questions].sort(() => 0.5 - Math.random()).slice(0, 2);
-      questions.push(...picked);
-    }
-  });
-
-  // 2. Gather Kanji Questions
-  const kanjiItems = stage.items.filter(it => it.type === 'kanji');
-  kanjiItems.forEach(kRef => {
-    const item = KANJI_DATABASE[kRef.id];
-    if (item && item.questions && item.questions.length > 0) {
-      const picked = [...item.questions].sort(() => 0.5 - Math.random()).slice(0, 2);
-      questions.push(...picked);
-    } else if (item) {
-      // Synthesize quick question if none exists
-      const onyomiStr = (item.onyomi || []).join(', ');
-      const meaningStr = item.meaningId || item.meaningEn || 'Arti kanji';
-      questions.push({
-        id: `q_k_${item.id}_synth`,
-        prompt: `Apa arti dan cara baca dari Kanji "${item.character}"?`,
-        options: [
-          `${meaningStr} (${onyomiStr || item.character})`,
-          'Air dan sungai (Mizu)',
-          'Gunung tinggi (Yama)',
-          'Langit biru (Sora)',
-        ],
-        correctIndex: 0,
-        explanation: `Kanji ${item.character} memiliki arti "${meaningStr}" dengan On'yomi: ${onyomiStr || '-'}.`,
-      });
-    }
-  });
-
-  // 3. Gather Kotoba Questions
-  const kotobaItems = stage.items.filter(it => it.type === 'kotoba');
-  kotobaItems.forEach(koRef => {
-    const item = KOTOBA_DATABASE[koRef.id];
-    if (!item) return;
-
-    // Distractor candidates
-    const allKotoba = Object.values(KOTOBA_DATABASE);
-    const distractors = allKotoba
-      .filter(k => k.id !== item.id && k.meaningId && k.meaningId !== item.meaningId)
-      .sort(() => 0.5 - Math.random())
-      .slice(0, 3)
-      .map(k => k.meaningId);
-
-    while (distractors.length < 3) {
-      distractors.push(`Makna kata ${distractors.length + 1}`);
-    }
-
-    const options = [item.meaningId, ...distractors].sort(() => 0.5 - Math.random());
-    const correctIdx = options.indexOf(item.meaningId);
-
-    questions.push({
-      id: `q_ko_${item.id}_synth`,
-      prompt: `Apa arti dari kosakata "${item.word}" (${item.reading})?`,
-      options,
-      correctIndex: correctIdx >= 0 ? correctIdx : 0,
-      explanation: `"${item.word}" dibaca "${item.reading}", bermakna "${item.meaningId}".`,
-    });
-  });
-
-  // Shuffle all gathered questions and cap to maxQuestions
-  const shuffled = questions.sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, maxQuestions);
-}
 
 /* ==========================================================================
    LOCAL STORAGE PERSISTENCE HELPERS

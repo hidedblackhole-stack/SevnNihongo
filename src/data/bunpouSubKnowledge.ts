@@ -6,7 +6,7 @@ export type { SubFormulaBranch, ConnectionCondition };
  * Curated knowledge base of sub-formulas, usage locations, and connection conditions
  * for JLPT N3 grammar patterns.
  */
-export const CURATED_SUB_BRANCHES: Record<string, SubFormulaBranch[]> = {
+const CURATED_SUB_BRANCHES: Record<string, SubFormulaBranch[]> = {
   // ── Week 1 Day 3 Grammar 1: 女みたいだ ──
   w1d3g1: [
     {
@@ -801,7 +801,7 @@ function inferConditionsFromLeft(leftSide: string): ConnectionCondition[] {
 /**
  * Fallback automatic generator that derives sub-branches for any bunpou formula.
  */
-export function extractSubBranchesFromFormula(item: BunpouItem): SubFormulaBranch[] {
+function extractSubBranchesFromFormula(item: BunpouItem): SubFormulaBranch[] {
   const formula = item.formula || '';
   if (!formula.trim()) {
     return [

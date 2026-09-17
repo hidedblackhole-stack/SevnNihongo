@@ -1,30 +1,21 @@
 import React, { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import {
-  Sparkles,
   Zap,
-  BookOpen,
   Volume2,
   CheckCircle2,
   XCircle,
-  RotateCcw,
   ArrowRight,
-  HelpCircle,
-  Layers,
   ChevronRight,
   Flame,
-  Star,
-  Award
 } from 'lucide-react';
 import {
   CONJUGATION_FORMS_INFO,
   WORD_CLASS_GUIDES,
   VERB_CONJUGATION_DATABASE,
   generateConjugationQuestion,
-  ConjugationFormInfo,
   ConjugationDrillQuestion,
 } from '../../data/conjugationRules';
-import { Question } from '../../types/content';
 import { speakJapanese, playSound } from '../../utils/audio';
 import { RubyText } from '../learning/RubyText';
 

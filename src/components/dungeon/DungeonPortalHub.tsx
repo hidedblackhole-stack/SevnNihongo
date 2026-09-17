@@ -8,7 +8,6 @@ import {
   Swords,
   Sparkles,
   ChevronRight,
-  ShieldAlert,
   Flame,
   Trophy,
   Compass

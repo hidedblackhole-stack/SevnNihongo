@@ -283,7 +283,7 @@ export const CONJUGATION_PATTERNS: Record<string, ConjugationPattern> = {
 
 // ─── Grammar Connectors / Function Words ────────────────────────────
 
-export const GRAMMAR_CONNECTORS: Record<string, GrammarConnector> = {
+const GRAMMAR_CONNECTORS: Record<string, GrammarConnector> = {
   to_omou: {
     id: 'to_omou',
     token: 'と思う',

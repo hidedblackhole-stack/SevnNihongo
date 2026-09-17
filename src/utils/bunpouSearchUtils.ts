@@ -15,7 +15,7 @@ import * as wanakana from 'wanakana';
  * Normalizes text by standardizing fullwidth/halfwidth characters,
  * operators, tildes, and whitespace.
  */
-export function normalizeSearchStr(str: string): string {
+function normalizeSearchStr(str: string): string {
   if (!str) return '';
   return str
     .toLowerCase()
@@ -34,7 +34,7 @@ export function normalizeSearchStr(str: string): string {
  * e.g. "Vる + ように" → "vるように"
  * e.g. "Vて ＋ いる" → "vている"
  */
-export function toCompactStr(str: string): string {
+function toCompactStr(str: string): string {
   if (!str) return '';
   return str.toLowerCase().replace(/[\s+＋/／~～〜()（）\[\]【】・、，,.:;'"\-_]/g, '');
 }

@@ -1,9 +1,7 @@
-import { KanjiItem, KotobaItem, BunpouItem } from '../types/content';
-
 /**
  * Base EXP constants based on JLPT tier difficulty.
  */
-export const KANJI_LEVEL_BASE_EXP: Record<string, number> = {
+const KANJI_LEVEL_BASE_EXP: Record<string, number> = {
   KANA: 12,
   SUUJI: 12,
   N5: 20,
@@ -13,7 +11,7 @@ export const KANJI_LEVEL_BASE_EXP: Record<string, number> = {
   N1: 90,
 };
 
-export const KOTOBA_LEVEL_BASE_EXP: Record<string, number> = {
+const KOTOBA_LEVEL_BASE_EXP: Record<string, number> = {
   N5: 15,
   N4: 22,
   N3: 32,
@@ -21,7 +19,7 @@ export const KOTOBA_LEVEL_BASE_EXP: Record<string, number> = {
   N1: 65,
 };
 
-export const BUNPOU_LEVEL_BASE_EXP: Record<string, number> = {
+const BUNPOU_LEVEL_BASE_EXP: Record<string, number> = {
   N5: 25,
   N4: 35,
   N3: 50,
@@ -29,7 +27,7 @@ export const BUNPOU_LEVEL_BASE_EXP: Record<string, number> = {
   N1: 95,
 };
 
-export const QUIZ_LEVEL_BASE_EXP: Record<string, number> = {
+const QUIZ_LEVEL_BASE_EXP: Record<string, number> = {
   N5: 18,
   N4: 25,
   N3: 35,

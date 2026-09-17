@@ -1,23 +1,16 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { AnimatePresence } from 'motion/react';
 import {
   Plus,
-  BookMarked,
-  Layers,
   ArrowLeft,
   Trash2,
   Edit2,
   PenTool,
   Play,
   Search,
-  ExternalLink,
   BookOpen,
-  CheckCircle2,
   Sparkles,
   Bookmark,
-  RefreshCw,
-  Download,
-  Sliders,
   Compass,
   X
 } from 'lucide-react';

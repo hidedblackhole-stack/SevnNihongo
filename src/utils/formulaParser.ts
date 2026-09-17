@@ -3,8 +3,6 @@
 // for the interactive formula display system.
 
 import {
-  CONJUGATION_PATTERNS,
-  GRAMMAR_CONNECTORS,
   findPatternBySymbol,
   findConnectorByToken,
   findAuxiliaryByToken,
@@ -123,7 +121,6 @@ function classifyToken(text: string): FormulaToken[] {
  * Match a token text to a known verb conjugation pattern.
  */
 function matchVerbPattern(text: string): [string, string] | undefined {
-  const cleaned = text.replace(/\s+/g, '');
 
   // Direct symbol matches from bank
   const directMatch = findPatternBySymbol(text);
@@ -265,64 +262,6 @@ export function parseFormula(formula: string): FormulaToken[] {
   return tokens.filter(t => t.text.trim() !== '');
 }
 
-// Map pattern IDs to natural Indonesian language
-const PATTERN_EXPLANATION_MAP: Record<string, string> = {
-  noun: 'Kata Benda',
-  adj_i: 'Kata Sifat-i',
-  adj_na: 'Kata Sifat-na',
-  jisho: 'Kata Kerja Kamus (Vる)',
-  nai: 'Kata Kerja Negatif (Vない)',
-  te_kei: 'Kata Kerja Bentuk Te (Vて)',
-  te_kei_voiced: 'Kata Kerja Bentuk De (Vで)',
-  ta: 'Kata Kerja Bentuk Ta (Vた)',
-  masu: 'Kata Kerja Masu (Coret Masu)',
-  ba: 'Kata Kerja Pengandaian (Vば)',
-  ikou: 'Kata Kerja Maksud (Vよう)',
-  meirei: 'Kata Kerja Perintah',
-  shieki: 'Kata Kerja Kausatif (Menyuruh)',
-  shieki_te: 'Kata Kerja Kausatif Bentuk Te (Vさせて)',
-  ukemi: 'Kata Kerja Pasif (Vれる)',
-  zu: 'Kata Kerja Tanpa Melakukan (Vず)',
-  kano: 'Kata Kerja Potensial (Bisa)',
-};
-
-export function generateFormulaExplanation(tokens: FormulaToken[]): string {
-  if (tokens.length === 0) return '';
-
-  let explanation = '';
-  
-  for (let i = 0; i < tokens.length; i++) {
-    const token = tokens[i];
-    
-    if (token.type === 'separator') {
-      const sep = token.text.trim();
-      if (sep === '＋') {
-        explanation += ' ditambah ';
-      } else if (sep === '／' || sep === '・') {
-        explanation += ' atau ';
-      } else if (sep === '→') {
-        explanation += ' lalu diubah menjadi ';
-      } else {
-        explanation += ` ${sep} `;
-      }
-    } else if (token.type === 'pattern' && token.linkedPatternId) {
-      explanation += PATTERN_EXPLANATION_MAP[token.linkedPatternId] || token.text;
-    } else if (token.type === 'connector' || token.type === 'literal') {
-      explanation += `"${token.text.trim()}"`;
-    }
-  }
-
-  // Capitalize first letter and add period if missing
-  explanation = explanation.trim();
-  if (explanation.length > 0) {
-    explanation = explanation.charAt(0).toUpperCase() + explanation.slice(1);
-    if (!explanation.endsWith('.')) {
-      explanation += '.';
-    }
-  }
-
-  return explanation.replace(/\s+/g, ' ');
-}
 
 /**
  * Splits a composite formula string into distinct variants.

@@ -26,7 +26,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
   bunpouIds,
   bunpouMixedSetId = 'bunpou_mixed_001',
   onReward,
-  onBack,
+  onBack: _onBack,
   playerMp,
   playerInt,
   onUseMp,

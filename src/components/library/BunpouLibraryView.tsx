@@ -92,11 +92,6 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
     return counts;
   }, [allBunpou]);
 
-  // Unique list of categories for pill filters
-  const categories = useMemo(() => {
-    return ['Semua Fungsi', ...ALL_GRAMMAR_FUNCTION_CATEGORIES];
-  }, []);
-
   const filteredBunpou = useMemo(() => {
     return allBunpou.filter((item) => {
       // 1. Level Filter

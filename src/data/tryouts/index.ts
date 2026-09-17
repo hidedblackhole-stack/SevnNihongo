@@ -93,13 +93,5 @@ export const ALL_TRYOUTS: TryOutMeta[] = [
   }
 ];
 
-export function getTryoutsByLevel(level: 'N1' | 'N2' | 'N3' | 'N4' | 'N5'): TryOutMeta[] {
-  return ALL_TRYOUTS.filter(t => t.level === level);
-}
-
-export function getTryoutById(id: string): TryOutData | undefined {
-  const match = ALL_TRYOUTS.find(t => t.id === id);
-  return match?.data;
-}
 
 export const DEFAULT_TRYOUT = (ALL_TRYOUTS.find(t => t.id === 'n3_002') || ALL_TRYOUTS[0]).data;

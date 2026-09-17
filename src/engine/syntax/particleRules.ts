@@ -86,7 +86,7 @@ export const PARTICLE_RULES: Record<ParticleType, ParticleRule> = {
  */
 export function validateParticlePairing(
   predicateWord: string,
-  targetWord: string,
+  _targetWord: string,
   selectedParticle: ParticleType,
   expectedRole: 'object' | 'location' | 'target' | 'time'
 ): { isValid: boolean; errorReason?: string; correctParticle?: ParticleType } {

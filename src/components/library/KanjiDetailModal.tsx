@@ -1,7 +1,7 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Bookmark, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { KanjiItem, ItemMasteryRecord } from '../../types/content';
 import { playSound } from '../../utils/audio';
 import { KanjiDetailCard } from '../learning/KanjiDetailCard';

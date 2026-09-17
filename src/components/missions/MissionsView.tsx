@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Calendar, CheckCircle2, Trophy, Clock, Coins } from 'lucide-react';
+import { Calendar, CheckCircle2, Trophy, Clock } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { ScrollIcon } from '../ui/EngravingIcons';
 import { Mission } from '../../types/rpg';

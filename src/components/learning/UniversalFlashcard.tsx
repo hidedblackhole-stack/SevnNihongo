@@ -520,7 +520,13 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                 <h4 className="text-2xl sm:text-3xl font-black text-gold font-heading leading-tight">
                   {norm.kotoba?.meaningId || norm.displayMeaning}
                 </h4>
-                {norm.kotoba?.meaningJa && (
+                {(norm.kotoba?.definitionId || norm.kotoba?.meaningJaId) && (
+                  <p className="text-xs text-amber-200/90 dark:text-amber-300 font-medium">
+                    <span className="font-bold text-text-primary">Penjelasan: </span>
+                    {norm.kotoba.definitionId || norm.kotoba.meaningJaId}
+                  </p>
+                )}
+                {norm.kotoba?.meaningJa && norm.kotoba.meaningJa !== (norm.kotoba?.word || norm.displayTitle) && (
                   <p className="text-xs text-text-secondary italic font-jp">
                     Definisi JP: {norm.kotoba.meaningJa}
                   </p>

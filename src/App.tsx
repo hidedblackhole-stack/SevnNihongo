@@ -3,15 +3,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect, useRef, useCallback, Suspense, lazy } from 'react';
+import { useState, useEffect, useRef, useCallback, Suspense, lazy } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
-import { Swords, Coins, Gem, Clock, Cloud, RefreshCw } from 'lucide-react';
-import { PlayerStats, StageClearData, Mission, ShopItem, DEFAULT_NAMES } from './types/rpg';
-import { Stage, ItemMasteryRecord, RecallQueueItem } from './types/content';
-import { RPG_TIERS, getTierForExp, calculateMaxHp, calculateMaxMp, getLevelInfo, calculateLevelFromExp } from './data/tiers';
+import { Swords, Cloud, Clock } from 'lucide-react';
+import { PlayerStats, StageClearData, Mission, DEFAULT_NAMES, DeckItemCategory, UserDeck } from './types/rpg';
+import { Stage, ItemMasteryRecord } from './types/content';
+import { getTierForExp, calculateMaxHp, calculateMaxMp, getLevelInfo, calculateLevelFromExp } from './data/tiers';
 import { getEffectiveTier, getJlptLevelForTierIndex } from './utils/ascension';
-import { MAP_REGIONS, getStagesForMap, WORLD_STAGES_MAP } from './data/maps';
+import { MAP_REGIONS, getStagesForMap } from './data/maps';
 import { INITIAL_DAILY_MISSIONS, INITIAL_WEEKLY_MISSIONS } from './data/missions';
 import { useStudyTimeTracker } from './hooks/useStudyTimeTracker';
 import { formatStudyTime, formatDetailedStudyTime, getTodayLocalDate } from './utils/time';
@@ -27,11 +27,9 @@ const DungeonBattleModule = lazy(() => import('./components/dungeon/DungeonBattl
 import { LibraryView } from './components/library/LibraryView';
 import { BukuSakuView } from './components/deck/BukuSakuView';
 import { ensureUserDecks, createDefaultBookmarkDeck, toggleBookmarkItem, toggleItemInDeck, DEFAULT_BOOKMARK_DECK_ID } from './utils/decks';
-import { DeckItemCategory, UserDeck } from './types/rpg';
 import { playSound } from './utils/audio';
 import { recordItemAttempt, recordItemInteraction, buildSmartRecallQueue } from './utils/mastery';
 import { recordStudyActivity, INITIAL_STUDY_STATS } from './utils/activity';
-import { BUNPOU_DATABASE } from './data/bunpou';
 import { v4 as uuidv4 } from 'uuid';
 import { LeaderboardView } from './components/leaderboard/LeaderboardView';
 import { AuthModal } from './components/auth/AuthModal';
@@ -839,7 +837,7 @@ export default function App() {
   };
 
   // Launch targeted remediation recall directly from diagnostic
-  const handleStartRemediationRecall = (itemIds: string[]) => {
+  const handleStartRemediationRecall = (_itemIds: string[]) => {
     setSelectedStage(null);
     setIsRecallActive(true);
   };
@@ -935,54 +933,7 @@ export default function App() {
     });
   };
 
-  // Buy item in Shop
-  const handleBuyShopItem = (item: ShopItem) => {
-    const isGold = item.currency === 'gold';
-    if (isGold && stats.gold < item.price) return;
-    if (!isGold && stats.gems < item.price) return;
 
-    const newGold = isGold ? stats.gold - item.price : stats.gold;
-    const newGems = !isGold ? stats.gems - item.price : stats.gems;
-
-    if (item.id === 'pot_hp_small') {
-      setStats(prev => ({
-        ...prev,
-        gold: newGold,
-        gems: newGems,
-        hp: Math.min(prev.maxHp, prev.hp + 50),
-        inventory: [...prev.inventory, item.id],
-      }));
-    } else if (item.id === 'pot_hp_elixir') {
-      setStats(prev => ({
-        ...prev,
-        gold: newGold,
-        gems: newGems,
-        hp: prev.maxHp,
-        inventory: [...prev.inventory, item.id],
-      }));
-    } else if (item.id === 'pot_mp_small') {
-      setStats(prev => ({
-        ...prev,
-        gold: newGold,
-        gems: newGems,
-        mp: Math.min(prev.maxMp, prev.mp + 30),
-        inventory: [...prev.inventory, item.id],
-      }));
-    } else if (item.id === 'scroll_exp_sm') {
-      setStats(prev => ({ ...prev, gold: newGold, gems: newGems, inventory: [...prev.inventory, item.id] }));
-      handleRewardPlayer(100, 0);
-    } else if (item.id === 'scroll_exp_lg') {
-      setStats(prev => ({ ...prev, gold: newGold, gems: newGems, inventory: [...prev.inventory, item.id] }));
-      handleRewardPlayer(500, 0);
-    } else {
-      setStats(prev => ({
-        ...prev,
-        gold: newGold,
-        gems: newGems,
-        inventory: [...prev.inventory, item.id],
-      }));
-    }
-  };
 
   // Claim Mission Reward
   const handleClaimMission = (mission: Mission) => {
@@ -1256,7 +1207,7 @@ export default function App() {
         {isBossBattleActive && !isRecallActive && (
           <Suspense fallback={<div className="flex items-center justify-center h-full text-stone-400">Loading Boss Battle...</div>}>
             <DungeonBattleModule
-              onComplete={(score, total, exp, gold, tryoutId) => {
+              onComplete={(_score, _total, exp, gold, tryoutId) => {
                 handleRewardPlayer(exp, gold);
                 setStats(prev => recordStudyActivity(prev, 'bossBattles', tryoutId || 'tryout_n3_002'));
                 setIsBossBattleActive(false);

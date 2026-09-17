@@ -33,7 +33,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
   onComplete,
   onExit,
   baseExpPerQuestion = 15,
-  baseGoldPerQuestion = 10,
+  baseGoldPerQuestion: _baseGoldPerQuestion = 10,
   playerMp = 50,
   playerInt = 10,
   onUseMp,

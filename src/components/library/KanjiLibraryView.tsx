@@ -1,12 +1,12 @@
-import React, { useState, useMemo } from 'react';
-import { Search, Filter, ChevronDown, BookOpen, Volume2, Bookmark, Languages, X } from 'lucide-react';
+import React, { useState, useMemo, useDeferredValue } from 'react';
+import { Search, Filter, ChevronDown, BookOpen, Bookmark, Languages, X } from 'lucide-react';
 import { KANJI_DATABASE } from '../../data/kanji';
 import { KanjiItem, ItemMasteryRecord } from '../../types/content';
 import { KanjiDetailModal } from './KanjiDetailModal';
-import { playSound, speakJapanese } from '../../utils/audio';
+import { playSound } from '../../utils/audio';
 import { UserDeck } from '../../types/rpg';
 import { isItemBookmarked } from '../../utils/decks';
-import { convertRomajiToKana, matchJapaneseQuery } from '../../utils/imeEngine';
+import { convertRomajiToKana, createJapaneseQueryMatcher } from '../../utils/imeEngine';
 
 const SUUJI_CHARACTERS = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '百', '千', '万', '零'];
 
@@ -102,6 +102,7 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
   onCompleteStudyItem,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const deferredQuery = useDeferredValue(searchQuery);
   const [imeActive, setImeActive] = useState(true);
   const [visibleCount, setVisibleCount] = useState(48);
   const [levelFilter, setLevelFilter] = useState<string>('all');
@@ -123,6 +124,18 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
     }
     return list;
   }, []);
+
+  // Pre-index Kanji for sub-millisecond search across all 2,300 items
+  const kanjiSearchIndex = useMemo(() => {
+    return allKanji.map(item => ({
+      item,
+      searchStr: `${item.character} ${item.meaningId || ''} ${item.meaningEn || ''} ${item.radical || ''} ${item.radicalName || ''} ${(item.onyomi || []).join(' ')} ${(item.kunyomi || []).join(' ')}`.toLowerCase(),
+      isHiragana: HIRAGANA_ORDER.includes(item.character),
+      isKatakana: KATAKANA_ORDER.includes(item.character),
+      isSuuji: suujiSet.has(item.character),
+      jlpt: item.jlpt || 'N3',
+    }));
+  }, [allKanji, suujiSet]);
 
   const levelCounts = useMemo(() => {
     const counts: Record<string, number> = {
@@ -160,35 +173,33 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
   }, [allKanji, suujiSet]);
 
   const filteredKanji = useMemo(() => {
-    const filtered = allKanji.filter((item) => {
+    const q = deferredQuery.toLowerCase().trim();
+    const hasQuery = Boolean(q);
+    const matcher = createJapaneseQueryMatcher(q);
+
+    const filtered: KanjiItem[] = [];
+
+    for (let i = 0; i < kanjiSearchIndex.length; i++) {
+      const entry = kanjiSearchIndex[i];
+      const item = entry.item;
+
       // 1. Level Filter
       if (levelFilter === 'KANA') {
-        const isHiragana = HIRAGANA_ORDER.includes(item.character);
-        const isKatakana = KATAKANA_ORDER.includes(item.character);
-        const isSuuji = suujiSet.has(item.character);
-
-        if (!isHiragana && !isKatakana && !isSuuji) return false;
-
-        // Sub-filter inside KANA
-        if (kanaCategory === 'hiragana' && !isHiragana) return false;
-        if (kanaCategory === 'katakana' && !isKatakana) return false;
-        if (kanaCategory === 'suuji' && !isSuuji) return false;
+        if (!entry.isHiragana && !entry.isKatakana && !entry.isSuuji) continue;
+        if (kanaCategory === 'hiragana' && !entry.isHiragana) continue;
+        if (kanaCategory === 'katakana' && !entry.isKatakana) continue;
+        if (kanaCategory === 'suuji' && !entry.isSuuji) continue;
       } else if (levelFilter !== 'all') {
-        if ((item.jlpt || 'N3') !== levelFilter) return false;
+        if (entry.jlpt !== levelFilter) continue;
       }
 
-      // 2. Search Query (Supports Romaji, Kana, Onyomi, Kunyomi, Meaning)
-      if (!searchQuery.trim()) return true;
-      const q = searchQuery.toLowerCase().trim();
+      // 2. Search Query Match
+      if (hasQuery && !matcher.matchesText(entry.searchStr)) {
+        continue;
+      }
 
-      const charMatch = matchJapaneseQuery(q, [item.character]);
-      const meaningMatch = item.meaningId?.toLowerCase().includes(q) || item.meaningEn?.toLowerCase().includes(q);
-      const radicalMatch = matchJapaneseQuery(q, [item.radical, item.radicalName]);
-      const onyomiMatch = item.onyomi?.some(on => matchJapaneseQuery(q, [on]));
-      const kunyomiMatch = item.kunyomi?.some(kun => matchJapaneseQuery(q, [kun]));
-
-      return charMatch || meaningMatch || radicalMatch || onyomiMatch || kunyomiMatch;
-    });
+      filtered.push(item);
+    }
 
     // Sort KANA neatly by official order
     if (levelFilter === 'KANA') {
@@ -206,7 +217,7 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
     }
 
     return filtered;
-  }, [allKanji, levelFilter, kanaCategory, searchQuery, suujiSet]);
+  }, [kanjiSearchIndex, levelFilter, kanaCategory, deferredQuery]);
 
   const displayedKanji = filteredKanji.slice(0, visibleCount);
 
@@ -530,7 +541,7 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
         onToggleBookmark={onToggleBookmark && selectedKanji ? () => onToggleBookmark(selectedKanji.id || selectedKanji.character, 'kanji') : undefined}
         userDecks={userDecks}
         onToggleDeckItem={onToggleBookmark && selectedKanji ? (deckId) => onToggleBookmark(selectedKanji.id || selectedKanji.character, 'kanji', undefined, deckId) : undefined}
-        onCompleteSheet={(sheet, score, reward) => {
+        onCompleteSheet={(_sheet, score, reward) => {
           if (!selectedKanji) return;
           const exp = reward?.expGained ?? 15;
           const gold = reward?.goldGained ?? 5;

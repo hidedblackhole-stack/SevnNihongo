@@ -1,24 +1,19 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import { 
   Compass, 
-  Layers, 
   CheckCircle2, 
   ChevronRight, 
   ArrowLeft, 
   Play, 
-  BookOpen, 
-  PenTool, 
-  HelpCircle,
-  Bookmark,
-  Sparkles,
-  Plus,
-  Star,
-  Sliders,
+  Bookmark, 
+  Sparkles, 
+  Plus, 
+  Star, 
   Swords
 } from 'lucide-react';
 import { StageClearData, UserDeck } from '../../types/rpg';
-import { Stage, WorldInfo, ItemMasteryRecord } from '../../types/content';
+import { Stage, ItemMasteryRecord } from '../../types/content';
 import { WORLDS_LIST, getMapsForWorld, getStagesForMap } from '../../data/maps';
 import { playSound } from '../../utils/audio';
 import { CustomCurriculum, CustomCurriculumProgress, CurriculumConfig } from '../../types/curriculum';
@@ -34,7 +29,7 @@ import { ensureUserDecks } from '../../utils/decks';
 import { SelectDeckForWorldModal } from '../curriculum/SelectDeckForWorldModal';
 import { CurriculumConfigModal } from '../curriculum/CurriculumConfigModal';
 import { CustomWorldView } from '../curriculum/CustomWorldView';
-import { DungeonType, DungeonPayload, DungeonConfig, generateDungeonSession } from '../../utils/dungeonGenerator';
+import { DungeonType, DungeonPayload, generateDungeonSession } from '../../utils/dungeonGenerator';
 import { DungeonPortalHub } from '../dungeon/DungeonPortalHub';
 import { DungeonSetupModal } from '../dungeon/DungeonSetupModal';
 import { DungeonSessionRunner } from '../dungeon/DungeonSessionRunner';

@@ -1,12 +1,12 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Check, Edit3, RotateCcw, ArrowLeft, ArrowRight, Volume2, Layers, BookOpen, Clock } from 'lucide-react';
+import { Edit3, RotateCcw, ArrowRight, Volume2, Layers, BookOpen, Clock } from 'lucide-react';
 import { KotobaItem } from '../../types/content';
 import { KanjiWritingCanvas, preloadStrokeData } from './KanjiWritingCanvas';
 import { RubyText } from './RubyText';
 import { playSound, speakJapanese } from '../../utils/audio';
 import { getKotobaBaseExp, calculateWritingReward, WritingRewardResult } from '../../utils/rewards';
-import { parseReadingVariations } from '../../utils/readingHighlightUtils';
+import { parseReadingVariations, getHighlightedKotobaYomikata } from '../../utils/readingHighlightUtils';
 
 interface KotobaWritingPracticeProps {
   kotoba: KotobaItem;
@@ -160,15 +160,29 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
               )}
             </div>
             
-            <div className="bg-surface-inset p-4 rounded-2xl border border-border-subtle shadow-inner">
-              <h3 className="text-xl sm:text-2xl font-black text-text-primary leading-snug font-heading">
+            {/* Yomikata / Reading Card with dynamic syllable highlight per character (matching KanjiWritingCanvas layout) */}
+            <div
+              className="flex flex-col items-center justify-between px-4 py-3 rounded-2xl bg-surface-inset hover:bg-surface-card border border-border-subtle hover:border-wine-accent/40 transition-all shadow-inner group cursor-pointer w-full text-center"
+              onClick={() => speakJapanese(kotoba.word)}
+              title="Klik untuk mendengar audio kata ini"
+            >
+              {/* Highlighted Yomikata Reading */}
+              <div className="flex items-center justify-center gap-2 mb-1">
+                <div className="font-bold font-jp">
+                  {getHighlightedKotobaYomikata(kotoba.word, displayPracticeReading, currentCharIndex)}
+                </div>
+                <Volume2 className="w-4 h-4 text-text-muted opacity-60 group-hover:text-wine-accent group-hover:scale-110 transition-all flex-shrink-0" />
+              </div>
+
+              {/* Indonesian Meaning */}
+              <span className="text-xs sm:text-sm text-text-secondary font-medium leading-tight">
                 {kotoba.meaningId}
-              </h3>
+              </span>
             </div>
           </div>
 
           {/* Target Slots */}
-          <div className="flex items-end justify-center gap-2 sm:gap-3 py-2 min-h-[70px]">
+          <div className="flex items-end justify-center gap-2 sm:gap-3 py-1 min-h-[64px]">
             {characters.map((char, i) => {
               const isDone = completedChars.includes(i);
               const isActive = i === currentCharIndex;
@@ -209,10 +223,7 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
           </div>
 
           {/* Writing Canvas for the Current Character */}
-          <div className="w-full flex flex-col items-center gap-3">
-            <div className="text-xs font-bold text-text-secondary font-mono">
-              Tulis karakter ke-{currentCharIndex + 1} ({currentChar})
-            </div>
+          <div className="w-full flex flex-col items-center">
             <div className="w-full flex justify-center" key={`canvas-${currentCharIndex}-${currentChar}`}>
               <KanjiWritingCanvas
                 kanjiChar={currentChar}
@@ -222,7 +233,7 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
                 showStopwatch={false} // Use Kotoba's master word-level stopwatch
                 showPromptHeader={false} // Master card already displays Kotoba prompt header
                 level={kotoba.jlpt}
-                onCompleteSheet={(sheet, sheetScore, reward) => {
+                onCompleteSheet={(_sheet, sheetScore, reward) => {
                   if (sheetScore < 100) {
                     setTotalMistakes(prev => prev + 1);
                   }
@@ -307,13 +318,20 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
           </div>
 
           {/* Meaning Description Box */}
-          <div className="space-y-1 bg-surface-inset p-4 rounded-2xl border border-border-subtle shadow-inner text-center sm:text-left">
+          <div className="space-y-1.5 bg-surface-inset p-4 rounded-2xl border border-border-subtle shadow-inner text-center sm:text-left">
             <h3 className="text-lg sm:text-xl font-black text-text-primary font-heading leading-snug">
               {kotoba.meaningId}
             </h3>
-            {kotoba.meaningJa && (
+            {(kotoba.definitionId || kotoba.meaningJaId) && (
+              <p className="text-xs text-indigo-400 dark:text-indigo-300 leading-relaxed font-medium">
+                <span className="font-bold text-text-secondary">Penjelasan Makna: </span>
+                {kotoba.definitionId || kotoba.meaningJaId}
+              </p>
+            )}
+            {kotoba.meaningJa && kotoba.meaningJa !== kotoba.word && (
               <p className="text-xs text-text-muted italic pt-0.5">
-                Makna JP: {kotoba.meaningJa}
+                <span className="not-italic font-semibold text-text-secondary">Makna JP: </span>
+                <span className="font-jp">{kotoba.meaningJa}</span>
               </p>
             )}
             {kotoba.meaningEn && (

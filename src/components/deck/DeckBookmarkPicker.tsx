@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Bookmark, Check, ChevronDown, Plus, Sparkles, X } from 'lucide-react';
+import { Bookmark, Check, ChevronDown, X } from 'lucide-react';
 import { UserDeck, DeckItemCategory } from '../../types/rpg';
 import { playSound } from '../../utils/audio';
 import { DEFAULT_BOOKMARK_DECK_ID } from '../../utils/decks';

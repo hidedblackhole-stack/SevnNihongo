@@ -19,7 +19,7 @@ const furiganaDict: FuriganaDict = furiganaDictRaw as FuriganaDict;
 /**
  * Check if a character is a CJK Unified Ideograph (kanji) or ideographic iteration mark.
  */
-export function isKanji(char: string): boolean {
+function isKanji(char: string): boolean {
   if (!char) return false;
   const code = char.charCodeAt(0);
   return (
@@ -34,7 +34,7 @@ export function isKanji(char: string): boolean {
 /**
  * Check if a character is hiragana.
  */
-export function isHiragana(char: string): boolean {
+function isHiragana(char: string): boolean {
   if (!char) return false;
   const code = char.charCodeAt(0);
   return code >= 0x3040 && code <= 0x309F;
@@ -43,7 +43,7 @@ export function isHiragana(char: string): boolean {
 /**
  * Check if a character is katakana.
  */
-export function isKatakana(char: string): boolean {
+function isKatakana(char: string): boolean {
   if (!char) return false;
   const code = char.charCodeAt(0);
   return code >= 0x30A0 && code <= 0x30FF;
@@ -63,7 +63,7 @@ export function normalizeJapanesePunctuation(str: string): string {
 /**
  * Convert a single katakana character to hiragana.
  */
-export function katakanaToHiragana(char: string): string {
+function katakanaToHiragana(char: string): string {
   if (!char) return '';
   const code = char.charCodeAt(0);
   if (code >= 0x30A1 && code <= 0x30F6) {
@@ -75,7 +75,7 @@ export function katakanaToHiragana(char: string): string {
 /**
  * Compare two characters, treating katakana and hiragana equivalents as equal.
  */
-export function charsMatch(c1: string, c2: string): boolean {
+function charsMatch(c1: string, c2: string): boolean {
   if (!c1 || !c2) return false;
   if (c1 === c2) return true;
   return katakanaToHiragana(c1) === katakanaToHiragana(c2);
@@ -84,7 +84,7 @@ export function charsMatch(c1: string, c2: string): boolean {
 /**
  * Check if haystack starts with needle at given position, kana-insensitive.
  */
-export function startsWithKana(haystack: string, needle: string, pos: number): boolean {
+function startsWithKana(haystack: string, needle: string, pos: number): boolean {
   if (pos + needle.length > haystack.length) return false;
   for (let i = 0; i < needle.length; i++) {
     if (!charsMatch(haystack[pos + i], needle[i])) return false;
@@ -95,7 +95,7 @@ export function startsWithKana(haystack: string, needle: string, pos: number): b
 /**
  * Merge adjacent non-kanji segments into single segments for clean DOM rendering.
  */
-export function mergeNonKanjiSegments(segments: RubySegment[]): RubySegment[] {
+function mergeNonKanjiSegments(segments: RubySegment[]): RubySegment[] {
   const merged: RubySegment[] = [];
 
   for (const seg of segments) {
@@ -113,7 +113,7 @@ export function mergeNonKanjiSegments(segments: RubySegment[]): RubySegment[] {
  * Automatically annotate kanji words in Japanese text using the comprehensive built-in dictionary.
  * Used as an automatic fallback when no explicit reading string is provided for a question.
  */
-export function autoAnnotateFurigana(text: string, excludeKanji?: Set<string>): RubySegment[] {
+function autoAnnotateFurigana(text: string, excludeKanji?: Set<string>): RubySegment[] {
   if (!text) return [];
 
   const segments: RubySegment[] = [];
@@ -188,7 +188,7 @@ export function autoAnnotateFurigana(text: string, excludeKanji?: Set<string>): 
  * Align a Japanese text (with kanji) against its full-hiragana reading
  * to produce ruby segments with kanji → reading mappings.
  */
-export function alignKanjiReadings(
+function alignKanjiReadings(
   origJapanese: string,
   origReading: string,
   excludeKanji?: Set<string>

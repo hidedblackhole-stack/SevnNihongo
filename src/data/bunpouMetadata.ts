@@ -12,7 +12,7 @@ export interface BunpouMetadata {
  * Curated metadata dictionary for JLPT N3 grammar items,
  * matching official textbook and exam functional categories.
  */
-export const CURATED_BUNPOU_METADATA: Record<string, BunpouMetadata> = {
+const CURATED_BUNPOU_METADATA: Record<string, BunpouMetadata> = {
   // ── Week 1 Day 3 Grammar 1: 女みたいだ ──
   w1d3g1: {
     functions: ['推測 (dugaan)', '比喩 (perumpamaan)', '類似 (kemiripan)'],
@@ -520,7 +520,7 @@ const CATEGORY_MAP: Record<string, WeekDayFunctionMapping> = {
  * Returns full metadata for any BunpouItem, combining curated data
  * and intelligent curriculum mapping.
  */
-export function getMetadataForBunpou(item: BunpouItem): BunpouMetadata {
+function getMetadataForBunpou(item: BunpouItem): BunpouMetadata {
   if (CURATED_BUNPOU_METADATA[item.id]) {
     return CURATED_BUNPOU_METADATA[item.id];
   }
