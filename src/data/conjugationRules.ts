@@ -1,4 +1,6 @@
-import { Question } from '../types/content';
+import { Question, KotobaItem } from '../types/content';
+import { conjugateVerb } from '../engine/morphology/inflectionEngine';
+import { fisherYatesShuffle } from '../utils/smartRandomizer';
 
 export type VerbGroup = 'godan' | 'ichidan' | 'irregular';
 
@@ -13,6 +15,10 @@ export interface VerbForms {
   causative: string;  // 使役形 (menyuruh/mengizinkan)
   ba: string;         // ば形 (jika/pengandaian)
   volitional: string; // 意向形 (mari/hendak)
+  causative_passive?: string; // 使役受身形 (terpaksa/disuruh)
+  tai?: string;               // たい形 (keinginan/mau)
+  tara?: string;              // たら形 (kondisional/kalau)
+  imperative?: string;        // 命令形 (perintah)
 }
 
 export interface VerbItem {
@@ -109,6 +115,10 @@ function computeVerbFormsReadings(verb: { kanji: string; reading: string; forms:
     causative: getConjugatedFormReading(verb, verb.forms.causative),
     ba: getConjugatedFormReading(verb, verb.forms.ba),
     volitional: getConjugatedFormReading(verb, verb.forms.volitional),
+    causative_passive: verb.forms.causative_passive ? getConjugatedFormReading(verb, verb.forms.causative_passive) : undefined,
+    tai: verb.forms.tai ? getConjugatedFormReading(verb, verb.forms.tai) : undefined,
+    tara: verb.forms.tara ? getConjugatedFormReading(verb, verb.forms.tara) : undefined,
+    imperative: verb.forms.imperative ? getConjugatedFormReading(verb, verb.forms.imperative) : undefined,
   };
 }
 
@@ -592,6 +602,120 @@ export const CONJUGATION_FORMS_INFO: ConjugationFormInfo[] = [
       { dictionary: '食べる (taberu)', conjugated: '食べさせる (tabesaseru)', meaning: 'Menyuapi / memberi makan' },
     ],
   },
+  {
+    id: 'ba',
+    name: 'Bentuk Pengandaian [~ba]',
+    friendlyTarget: 'Bentuk Pengandaian [~ba]',
+    japaneseName: 'ば形 (Ba-kei)',
+    badge: 'ば形',
+    summary: 'Menyatakan prasyarat atau kondisi pengandaian ("jika / kalau..."). Fokus pada syarat mutlak.',
+    nuanceExplanation: 'Digunakan dalam peribahasa, instruksi resmi, dan hubungan sebab-akibat langsung.',
+    ruleExplanation: {
+      godan: 'Ubah vokal akhiran [u] menjadi baris [e], lalu tambahkan [ば].\nContoh: 飲む → 飲めば, 行く → 行けば',
+      ichidan: 'Buang akhiran [る], tambahkan [れば].\nContoh: 食べる → 食べれば, 見る → 見れば',
+      irregular: '• する → すれば\n• 来る (くる) → 来れば (くれば)',
+    },
+    sampleExamples: [
+      { dictionary: '飲む (nomu)', conjugated: '飲めば (nomeba)', meaning: 'Jika minum' },
+      { dictionary: '行く (iku)', conjugated: '行けば (ikeba)', meaning: 'Jika pergi' },
+      { dictionary: '食べる (taberu)', conjugated: '食べれば (tabereba)', meaning: 'Jika makan' },
+    ],
+  },
+  {
+    id: 'volitional',
+    name: 'Bentuk Ajakan / Niat [~ou/you]',
+    friendlyTarget: 'Bentuk Ajakan / Niat [~ou/you]',
+    japaneseName: '意向形 (Ikou-kei)',
+    badge: '意向形',
+    summary: 'Menyatakan ajakan informal ("Ayo...") atau niat/tekad kuat pribadi ("Saya akan...").',
+    nuanceExplanation: 'Merupakan bentuk kasual dari 〜ましょう. Sering disambung dengan と思う (berniat untuk...).',
+    ruleExplanation: {
+      godan: 'Ubah vokal akhiran [u] menjadi baris [o] panjang ([おう]).\nContoh: 飲む → 飲もう, 行く → 行こう',
+      ichidan: 'Buang akhiran [る], tambahkan [よう].\nContoh: 食べる → 食べよう, 起きる → 起きよう',
+      irregular: '• する → しよう\n• 来る (くる) → 来よう (こよう)',
+    },
+    sampleExamples: [
+      { dictionary: '話す (hanasu)', conjugated: '話そう (hanasou)', meaning: 'Ayo berbicara / Hendak bicara' },
+      { dictionary: '食べる (taberu)', conjugated: '食べよう (tabeyou)', meaning: 'Ayo makan / Hendak makan' },
+      { dictionary: '行く (iku)', conjugated: '行こう (ikou)', meaning: 'Ayo pergi / Hendak pergi' },
+    ],
+  },
+  {
+    id: 'causative_passive',
+    name: 'Bentuk Terpaksa / Kausatif-Pasif [~(sa)serareru]',
+    friendlyTarget: 'Bentuk Terpaksa / Kausatif-Pasif',
+    japaneseName: '使役受身形 (Shieki-ukemi)',
+    badge: '使役受身',
+    summary: 'Menyatakan terpaksa atau dibuat harus melakukan sesuatu di luar kehendak sendiri ("terpaksa...").',
+    nuanceExplanation: 'Kombinasi kausatif + pasif yang sangat bernuansa emosional/keluhan dalam percakapan nyata.',
+    ruleExplanation: {
+      godan: 'Ubah [u] menjadi [a] + せられる (sering disingkat menjadi 〜される).\nContoh: 待つ → 待たされる, 飲む → 飲まされる',
+      ichidan: 'Buang akhiran [る], tambahkan [させられる].\nContoh: 食べる → 食べさせられる',
+      irregular: '• する → させられる\n• 来る (くる) → 来させられる (こさせられる)',
+    },
+    sampleExamples: [
+      { dictionary: '待つ (matsu)', conjugated: '待たされる (matasareru)', meaning: 'Terpaksa menunggu' },
+      { dictionary: '飲む (nomu)', conjugated: '飲まされる (nomasareru)', meaning: 'Terpaksa minum' },
+      { dictionary: '食べる (taberu)', conjugated: '食べさせられる (tabesaserareru)', meaning: 'Dipaksa makan' },
+    ],
+  },
+  {
+    id: 'tai',
+    name: 'Bentuk Keinginan [~tai]',
+    friendlyTarget: 'Bentuk Keinginan [~tai]',
+    japaneseName: 'たい形 (Tai-kei)',
+    badge: 'たい形',
+    summary: 'Menyatakan keinginan subjektif pembicara ("ingin / mau melakukan..."). Berkonjugasi seperti kata sifat-i.',
+    nuanceExplanation: 'Khusus untuk keinginan diri sendiri atau pertanyaan langsung ke lawan bicara akrab.',
+    ruleExplanation: {
+      godan: 'Masu-stem (akar vokal [i]) + たい.\nContoh: 飲む → 飲みたい, 行く → 行きたい',
+      ichidan: 'Buang akhiran [る], tambahkan [たい].\nContoh: 食べる → 食べたい, 見る → 見たい',
+      irregular: '• する → したい\n• 来る (くる) → 来たい (きたい)',
+    },
+    sampleExamples: [
+      { dictionary: '飲む (nomu)', conjugated: '飲みたい (nomitai)', meaning: 'Ingin minum' },
+      { dictionary: '行く (iku)', conjugated: '行きたい (ikitai)', meaning: 'Ingin pergi' },
+      { dictionary: '見る (miru)', conjugated: '見たい (mitai)', meaning: 'Ingin melihat' },
+    ],
+  },
+  {
+    id: 'tara',
+    name: 'Bentuk Kondisional [~tara]',
+    friendlyTarget: 'Bentuk Kondisional [~tara]',
+    japaneseName: 'たら形 (Tara-kei)',
+    badge: 'たら形',
+    summary: 'Menyatakan urutan waktu ("setelah...") atau pengandaian santai ("kalau/jika...").',
+    nuanceExplanation: 'Paling umum dan serbaguna dalam percakapan sehari-hari dibanding ba atau to.',
+    ruleExplanation: {
+      godan: 'Bentuk lampau [た/だ] + ら.\nContoh: 飲む → 飲んだら, 行く → 行ったら',
+      ichidan: 'Bentuk lampau [た] + ら.\nContoh: 食べる → 食べたら, 見る → 見たら',
+      irregular: '• する → したら\n• 来る (くる) → 来たら (きたら)',
+    },
+    sampleExamples: [
+      { dictionary: '飲む (nomu)', conjugated: '飲んだら (nondara)', meaning: 'Kalau/setelah minum' },
+      { dictionary: '行く (iku)', conjugated: '行ったら (ittara)', meaning: 'Kalau/setelah pergi' },
+      { dictionary: '食べる (taberu)', conjugated: '食べたら (tabetara)', meaning: 'Kalau/setelah makan' },
+    ],
+  },
+  {
+    id: 'imperative',
+    name: 'Bentuk Perintah [Imperatif]',
+    friendlyTarget: 'Bentuk Perintah [Imperatif]',
+    japaneseName: '命令形 (Meirei-kei)',
+    badge: '命令形',
+    summary: 'Bentuk perintah langsung, tegas, atau darurat ("Lakukan!").',
+    nuanceExplanation: 'Bernuansa keras/kasar, digunakan di rambu lalu lintas darurat, militer, atau sorakan olahraga.',
+    ruleExplanation: {
+      godan: 'Ubah vokal akhiran [u] menjadi baris [e].\nContoh: 飲む → 飲め, 行く → 行け, 話す → 話せ',
+      ichidan: 'Buang akhiran [る], tambahkan [ろ].\nContoh: 食べる → 食べろ, 起きる → 起きろ',
+      irregular: '• する → しろ\n• 来る (くる) → 来い (こい)',
+    },
+    sampleExamples: [
+      { dictionary: '行く (iku)', conjugated: '行け (ike)', meaning: 'Pergilah!' },
+      { dictionary: '待つ (matsu)', conjugated: '待て (mate)', meaning: 'Tunggulah!' },
+      { dictionary: '食べる (taberu)', conjugated: '食べろ (tabero)', meaning: 'Makanlah!' },
+    ],
+  },
 ];
 
 /* ==========================================================================
@@ -736,51 +860,141 @@ export interface ConjugationDrillQuestion extends Question {
   };
 }
 
-export function generateConjugationQuestion(targetFormId?: string, targetVerb?: VerbItem): ConjugationDrillQuestion {
+/**
+ * Converts a raw KotobaItem from KOTOBA_DATABASE into a complete, conjugatable VerbItem.
+ * Uses the high-precision J-LIE morphological inflection engine to derive all 13 forms automatically.
+ */
+export function kotobaItemToVerbItem(item: KotobaItem): VerbItem | null {
+  if (!item || !item.word) return null;
+  const w = item.word.trim();
+  const r = (item.reading || w).trim();
+  try {
+    const res = conjugateVerb(w, r);
+    const grp: VerbGroup = res.group === 'suru' || res.group === 'kuru' ? 'irregular' : res.group;
+    return {
+      id: item.id,
+      kanji: w,
+      reading: r,
+      romaji: item.meaningEn || '',
+      meaningId: item.meaningId || '',
+      group: grp,
+      forms: {
+        dictionary: res.forms.jisho?.japanese || w,
+        masu: res.forms.masu?.japanese || '',
+        te: res.forms.te?.japanese || '',
+        ta: res.forms.ta?.japanese || '',
+        nai: res.forms.nai?.japanese || '',
+        potential: res.forms.potential?.japanese || '',
+        passive: res.forms.passive?.japanese || '',
+        causative: res.forms.causative?.japanese || '',
+        ba: res.forms.ba?.japanese || '',
+        volitional: res.forms.volitional?.japanese || '',
+        causative_passive: res.forms.causative_passive?.japanese,
+        tai: res.forms.tai?.japanese,
+        tara: res.forms.tara?.japanese,
+        imperative: res.forms.imperative?.japanese,
+      },
+      formsReadings: {
+        dictionary: res.forms.jisho?.reading || r,
+        masu: res.forms.masu?.reading || '',
+        te: res.forms.te?.reading || '',
+        ta: res.forms.ta?.reading || '',
+        nai: res.forms.nai?.reading || '',
+        potential: res.forms.potential?.reading || '',
+        passive: res.forms.passive?.reading || '',
+        causative: res.forms.causative?.reading || '',
+        ba: res.forms.ba?.reading || '',
+        volitional: res.forms.volitional?.reading || '',
+        causative_passive: res.forms.causative_passive?.reading,
+        tai: res.forms.tai?.reading,
+        tara: res.forms.tara?.reading,
+        imperative: res.forms.imperative?.reading,
+      },
+    };
+  } catch {
+    return null;
+  }
+}
+
+export function generateConjugationQuestion(
+  targetFormId?: string,
+  targetVerb?: VerbItem,
+  allowedFormIds?: string[]
+): ConjugationDrillQuestion {
   // 1. Pick a verb randomly or use targetVerb
   const verb = targetVerb || VERB_CONJUGATION_DATABASE[Math.floor(Math.random() * VERB_CONJUGATION_DATABASE.length)];
   
-  // 2. Pick target form
-  const availableForms = CONJUGATION_FORMS_INFO;
+  // 2. Pick target form from allowed forms or entire catalogue
+  let availableForms = CONJUGATION_FORMS_INFO;
+  if (allowedFormIds && allowedFormIds.length > 0) {
+    const filtered = CONJUGATION_FORMS_INFO.filter(f => allowedFormIds.includes(f.id));
+    if (filtered.length > 0) {
+      availableForms = filtered;
+    }
+  }
+
   const formInfo = targetFormId
     ? availableForms.find(f => f.id === targetFormId) || availableForms[0]
     : availableForms[Math.floor(Math.random() * availableForms.length)];
 
   const correctFormKey = formInfo.id as keyof VerbItem['forms'];
-  const correctAnswer = verb.forms[correctFormKey] || verb.forms.te;
+  const correctAnswer = verb.forms[correctFormKey] || verb.forms.te || verb.forms.dictionary;
 
-  // 3. Generate 3 smart distractors based on common conjugation errors
+  // 3. Generate 3 smart distractors based on morphological patterns
   const distractors: string[] = [];
 
-  // Distractor 1: Wrong group assumption (e.g. treating godan as ichidan or vice versa)
+  // Distractor 1: Wrong group assumption
   if (verb.group === 'godan') {
-    // Treating godan as ichidan: just drop ru/add form directly
     if (correctFormKey === 'te') distractors.push(verb.reading.slice(0, -1) + 'て');
     else if (correctFormKey === 'nai') distractors.push(verb.reading.slice(0, -1) + 'ない');
     else if (correctFormKey === 'potential') distractors.push(verb.reading.slice(0, -1) + 'られる');
+    else if (correctFormKey === 'passive') distractors.push(verb.reading.slice(0, -1) + 'られる');
+    else if (correctFormKey === 'causative') distractors.push(verb.reading.slice(0, -1) + 'させる');
+    else if (correctFormKey === 'ba') distractors.push(verb.reading.slice(0, -1) + 'れば');
+    else if (correctFormKey === 'volitional') distractors.push(verb.reading.slice(0, -1) + 'よう');
+    else if (correctFormKey === 'imperative') distractors.push(verb.reading.slice(0, -1) + 'ろ');
     else distractors.push(verb.reading.slice(0, -1) + 'た');
   } else if (verb.group === 'ichidan') {
-    // Treating ichidan as godan: e.g. tabette instead of tabete
     if (correctFormKey === 'te') distractors.push(verb.reading.slice(0, -1) + 'って');
     else if (correctFormKey === 'nai') distractors.push(verb.reading.slice(0, -1) + 'らない');
     else if (correctFormKey === 'potential') distractors.push(verb.reading.slice(0, -1) + 'れる');
+    else if (correctFormKey === 'passive') distractors.push(verb.reading.slice(0, -1) + 'れる');
+    else if (correctFormKey === 'causative') distractors.push(verb.reading.slice(0, -1) + 'せる');
+    else if (correctFormKey === 'ba') distractors.push(verb.reading.slice(0, -1) + 'えば');
+    else if (correctFormKey === 'volitional') distractors.push(verb.reading.slice(0, -1) + 'ろう');
+    else if (correctFormKey === 'imperative') distractors.push(verb.reading.slice(0, -1) + 'え');
     else distractors.push(verb.reading.slice(0, -1) + 'った');
   } else {
-    // Irregular errors (e.g. kurite instead of kite, surita instead of shita)
-    distractors.push(verb.reading + 'て');
+    // Irregular errors
+    if (correctFormKey === 'te') distractors.push(verb.reading + 'て');
+    else if (correctFormKey === 'nai') distractors.push(verb.reading + 'ない');
+    else distractors.push(verb.reading + 'た');
   }
 
-  // Distractor 2: Pick an adjacent real form of the same verb (e.g. masu form or ta form instead of te)
-  const otherKeys = (['masu', 'te', 'ta', 'nai', 'potential', 'passive', 'causative'] as (keyof VerbItem['forms'])[])
-    .filter(k => k !== correctFormKey);
-  const otherKey = otherKeys[Math.floor(Math.random() * otherKeys.length)];
-  distractors.push(verb.forms[otherKey]);
+  // Distractor 2: Pick an adjacent real form of the same verb
+  const otherKeys = (Object.keys(verb.forms) as (keyof VerbItem['forms'])[])
+    .filter(k => k !== correctFormKey && verb.forms[k]);
+  if (otherKeys.length > 0) {
+    const otherKey = otherKeys[Math.floor(Math.random() * otherKeys.length)];
+    const adjacent = verb.forms[otherKey];
+    if (adjacent && adjacent !== correctAnswer) {
+      distractors.push(adjacent);
+    }
+  }
 
-  // Distractor 3: Random misapplied ending
-  if (correctFormKey === 'te') {
+  // Distractor 3: Common misapplied suffix
+  if (correctFormKey === 'potential') {
+    distractors.push(verb.kanji + 'できる');
+  } else if (correctFormKey === 'passive') {
+    distractors.push(verb.reading.slice(0, -1) + 'される');
+  } else if (correctFormKey === 'causative_passive') {
+    distractors.push(verb.reading.slice(0, -1) + 'さられる');
+  } else if (correctFormKey === 'tai') {
+    distractors.push(verb.kanji + 'ほしい');
+  } else if (correctFormKey === 'volitional') {
+    distractors.push(verb.kanji + 'ましょう');
+  } else if (correctFormKey === 'te') {
     distractors.push(verb.reading.slice(0, -1) + 'いで');
-  } else if (correctFormKey === 'potential') {
-    distractors.push(verb.reading + 'できる');
   } else {
     distractors.push(verb.reading.slice(0, -1) + 'ます');
   }
@@ -793,8 +1007,8 @@ export function generateConjugationQuestion(targetFormId?: string, targetVerb?: 
     uniqueDistractors.push(`${verb.reading}（変化${uniqueDistractors.length + 1}）`);
   }
 
-  // Shuffle options
-  const allOptions = [correctAnswer, ...uniqueDistractors].sort(() => 0.5 - Math.random());
+  // Shuffle options using true Fisher-Yates
+  const allOptions = fisherYatesShuffle([correctAnswer, ...uniqueDistractors]);
   const correctIndex = allOptions.indexOf(correctAnswer);
 
   // Exact hiragana readings for all options
@@ -807,11 +1021,10 @@ export function generateConjugationQuestion(targetFormId?: string, targetVerb?: 
     : 'Golongan 3 (Irregular / 不規則動詞)';
 
   const targetLabel = formInfo.friendlyTarget || formInfo.name;
-
   const formDisplay = getTargetFormDisplay(formInfo.id);
 
   return {
-    id: `drill_${verb.id}_${formInfo.id}_${Date.now()}`,
+    id: `drill_${verb.id}_${formInfo.id}_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
     instruction: `次の動詞を「${formInfo.japaneseName}」に変えなさい。`,
     instructionId: `${verb.kanji} ＋ ${formDisplay.suffix}`,
     prompt: `${verb.kanji} ＋ ${formDisplay.suffix}`,
@@ -861,6 +1074,14 @@ export function getTargetFormDisplay(formId: string): { suffix: string; badge: s
       return { suffix: '〜(さ)せる', badge: '使役形', label: 'Menyuruh / Izin' };
     case 'ba':
       return { suffix: '〜ば', badge: 'ば形', label: 'Jika / Pengandaian' };
+    case 'causative_passive':
+      return { suffix: '〜(さ)せられる', badge: '使役受身', label: 'Terpaksa / Disuruh' };
+    case 'tai':
+      return { suffix: '〜たい', badge: 'たい形', label: 'Keinginan / Mau' };
+    case 'tara':
+      return { suffix: '〜たら', badge: 'たら形', label: 'Bila / Kalau' };
+    case 'imperative':
+      return { suffix: '〜ろ/え', badge: '命令形', label: 'Perintah (Imperatif)' };
     default:
       return { suffix: '〜' + formId, badge: `${formId}形`, label: formId };
   }
@@ -894,6 +1115,14 @@ export function getConjugatedMeaningId(baseMeaning: string, formId: string): str
       return 'Di-' + lower + ' (pasif)';
     case 'causative':
       return 'Menyuruh / Membuat ' + lower;
+    case 'causative_passive':
+      return 'Terpaksa / Dibuat ' + lower;
+    case 'tai':
+      return 'Ingin / Mau ' + lower;
+    case 'tara':
+      return 'Kalau / Setelah ' + lower;
+    case 'imperative':
+      return 'Lakukanlah! (Perintah): ' + clean;
     default:
       return clean;
   }

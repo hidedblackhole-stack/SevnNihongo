@@ -26,6 +26,18 @@ import tier8Img from '../../assets/avatars/tier-8.png';
 import tier9Img from '../../assets/avatars/tier-9.png';
 import tier10Img from '../../assets/avatars/tier-10.png';
 
+// Female tier avatars
+import femaleTier1Img from '../../assets/avatars/female/tier-1.png';
+import femaleTier2Img from '../../assets/avatars/female/tier-2.png';
+import femaleTier3Img from '../../assets/avatars/female/tier-3.png';
+import femaleTier4Img from '../../assets/avatars/female/tier-4.png';
+import femaleTier5Img from '../../assets/avatars/female/tier-5.png';
+import femaleTier6Img from '../../assets/avatars/female/tier-6.png';
+import femaleTier7Img from '../../assets/avatars/female/tier-7.png';
+import femaleTier8Img from '../../assets/avatars/female/tier-8.png';
+import femaleTier9Img from '../../assets/avatars/female/tier-9.png';
+import femaleTier10Img from '../../assets/avatars/female/tier-10.png';
+
 export const TIER_AVATAR_MAP: Record<number, string> = {
   1: tier1Img,
   2: tier2Img,
@@ -39,8 +51,24 @@ export const TIER_AVATAR_MAP: Record<number, string> = {
   10: tier10Img,
 };
 
+export const TIER_AVATAR_MALE_MAP = TIER_AVATAR_MAP;
+
+export const TIER_AVATAR_FEMALE_MAP: Record<number, string> = {
+  1: femaleTier1Img,
+  2: femaleTier2Img,
+  3: femaleTier3Img,
+  4: femaleTier4Img,
+  5: femaleTier5Img,
+  6: femaleTier6Img,
+  7: femaleTier7Img,
+  8: femaleTier8Img,
+  9: femaleTier9Img,
+  10: femaleTier10Img,
+};
+
 interface TierAvatarProps {
   tierIndex: number; // 0 to 9
+  gender?: 'male' | 'female';
   size?: 'sm' | 'md' | 'lg' | 'xl';
   onClick?: () => void;
   interactive?: boolean;
@@ -49,6 +77,7 @@ interface TierAvatarProps {
 
 export const TierAvatar: React.FC<TierAvatarProps> = ({
   tierIndex,
+  gender = 'male',
   size = 'lg',
   onClick,
   interactive = true,
@@ -77,7 +106,10 @@ export const TierAvatar: React.FC<TierAvatarProps> = ({
   const isMythic = tierNum >= 10;
 
   // Resolve image source: bundled asset first, then public path with BASE_URL
-  const avatarSrc = TIER_AVATAR_MAP[tierNum] || `${import.meta.env.BASE_URL}avatars/tier-${tierNum}.png`;
+  const avatarMap = gender === 'female' ? TIER_AVATAR_FEMALE_MAP : TIER_AVATAR_MALE_MAP;
+  const avatarSrc = avatarMap[tierNum] || (gender === 'female'
+    ? `${import.meta.env.BASE_URL}avatars/female/tier-${tierNum}.png`
+    : `${import.meta.env.BASE_URL}avatars/tier-${tierNum}.png`);
 
   const renderFallbackIcon = () => {
     const iconClass = "w-16 h-16 sm:w-20 sm:h-20 text-gold drop-shadow-[0_0_12px_rgba(251,191,36,0.5)]";

@@ -9,6 +9,7 @@ import { speakJapanese, playSound } from '../../utils/audio';
 import { RubyText } from './RubyText';
 import { UniversalFlashcard } from './UniversalFlashcard';
 import { KotobaDetailModal } from '../library/KotobaDetailModal';
+import { smartSample, fisherYatesShuffle } from '../../utils/smartRandomizer';
 
 interface KotobaModuleProps {
   kotobaIds: string[];
@@ -53,31 +54,38 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
     };
   }, []);
 
-  // Flashcard pool: 15 random items for casual browsing
+  // Flashcard pool: 15 items sampled with anti-repetition memory
   const items: KotobaItem[] = React.useMemo(() => {
     let validItems = (kotobaIds || []).map(id => KOTOBA_DATABASE[id]).filter(Boolean);
     if (validItems.length === 0) {
-      validItems = Object.values(KOTOBA_DATABASE).slice(0, 15);
+      validItems = Object.values(KOTOBA_DATABASE);
     }
-    const shuffled = [...validItems].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, 15);
+    return smartSample(validItems, 15, {
+      getId: it => it.id,
+      contextKey: 'kotoba_flashcards'
+    });
   }, [kotobaIds]);
 
-  // Quiz pool: 25 random items from FULL pool
+  // Quiz pool: 25 items sampled with anti-repetition memory
   const quizItems: KotobaItem[] = React.useMemo(() => {
     let validItems = (kotobaIds || []).map(id => KOTOBA_DATABASE[id]).filter(Boolean);
     if (validItems.length === 0) {
-      validItems = Object.values(KOTOBA_DATABASE).slice(0, 25);
+      validItems = Object.values(KOTOBA_DATABASE);
     }
-    const shuffled = [...validItems].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, 25);
-  }, [kotobaIds, isQuizActive]); // re-shuffle when quiz starts
+    return smartSample(validItems, 25, {
+      getId: it => it.id,
+      contextKey: 'kotoba_quiz'
+    });
+  }, [kotobaIds, isQuizActive]); // re-shuffle with fresh anti-repetition sample when quiz starts
 
-  // Exam pool: ALL items
+  // Exam pool: ALL items or 25 smart-sampled
   const examItems: KotobaItem[] = React.useMemo(() => {
     const validItems = (kotobaIds || []).map(id => KOTOBA_DATABASE[id]).filter(Boolean);
     if (validItems.length === 0) {
-      return Object.values(KOTOBA_DATABASE).slice(0, 25);
+      return smartSample(Object.values(KOTOBA_DATABASE), 25, {
+        getId: it => it.id,
+        contextKey: 'kotoba_exam'
+      });
     }
     return validItems;
   }, [kotobaIds]);
@@ -234,7 +242,7 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
         distractors.push(fallbacks[distractors.length] || 'たべる');
       }
 
-      const options = [correctAns, ...distractors].sort(() => 0.5 - Math.random());
+      const options = fisherYatesShuffle([correctAns, ...distractors]);
       const correctIndex = options.indexOf(correctAns);
 
       return {

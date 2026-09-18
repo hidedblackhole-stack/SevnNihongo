@@ -11,7 +11,7 @@ import {
 } from '../../lib/supabase';
 import { playSound } from '../../utils/audio';
 import { RPG_TIERS, getTierForExp } from '../../data/tiers';
-import { TIER_AVATAR_MAP } from '../avatar/TierAvatar';
+import { TIER_AVATAR_MAP, TIER_AVATAR_FEMALE_MAP } from '../avatar/TierAvatar';
 import { PlayerProfileModal } from './PlayerProfileModal';
 
 interface LeaderboardViewProps {
@@ -224,7 +224,9 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({ currentUserId,
                 // Dynamically reconcile tier with rebalanced EXP curve
                 const { tierIndex: computedTierIndex } = getTierForExp(expToDisplay);
                 const tier = RPG_TIERS[computedTierIndex];
-                const avatarThumbnail = TIER_AVATAR_MAP[tier?.tier || 1];
+                const userGender = (entry as any)?.character_gender || (entry as any)?.characterGender || 'male';
+                const avatarMap = userGender === 'female' ? TIER_AVATAR_FEMALE_MAP : TIER_AVATAR_MAP;
+                const avatarThumbnail = avatarMap[tier?.tier || 1];
                   
                 const levelToDisplay = activeTab === 'all-time'
                   ? (entry as LeaderboardEntry).level

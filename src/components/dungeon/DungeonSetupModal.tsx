@@ -16,6 +16,10 @@ import {
   AlertCircle,
   Coins,
   Lock,
+  Search,
+  SlidersHorizontal,
+  CheckSquare,
+  RotateCcw,
 } from 'lucide-react';
 import {
   DungeonType,
@@ -23,6 +27,7 @@ import {
   DungeonConfig,
   isDeckCompatibleWithDungeon,
 } from '../../utils/dungeonGenerator';
+import { CONJUGATION_FORMS_INFO } from '../../data/conjugationRules';
 import { UserDeck } from '../../types/rpg';
 import { ensureUserDecks } from '../../utils/decks';
 import { playSound } from '../../utils/audio';
@@ -163,6 +168,34 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
   const [extremeStageNumber, setExtremeStageNumber] = useState<number>(1);
   const [isRandomExtreme, setIsRandomExtreme] = useState<boolean>(false);
 
+  // Conjugation customization state
+  const [conjugationMode, setConjugationMode] = useState<'random' | 'custom'>('random');
+  const [selectedConjugationForms, setSelectedConjugationForms] = useState<string[]>([
+    'te', 'ta', 'nai', 'masu'
+  ]);
+  const [patternSearchQuery, setPatternSearchQuery] = useState('');
+
+  const toggleConjugationForm = (formId: string) => {
+    playSound('click', soundEnabled);
+    setSelectedConjugationForms(prev =>
+      prev.includes(formId) ? prev.filter(f => f !== formId) : [...prev, formId]
+    );
+  };
+
+  const filteredConjugationForms = useMemo(() => {
+    const q = patternSearchQuery.toLowerCase().trim();
+    if (!q) return CONJUGATION_FORMS_INFO;
+    return CONJUGATION_FORMS_INFO.filter(f => {
+      return (
+        f.name.toLowerCase().includes(q) ||
+        f.japaneseName.toLowerCase().includes(q) ||
+        f.badge.toLowerCase().includes(q) ||
+        f.summary.toLowerCase().includes(q) ||
+        f.id.toLowerCase().includes(q)
+      );
+    });
+  }, [patternSearchQuery]);
+
   if (!isOpen) return null;
   if (typeof document === 'undefined') return null;
 
@@ -176,6 +209,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
 
   const handleStart = () => {
     if (sourceType === 'deck' && !selectedDeckId) return;
+    if (dungeonType === 'conjugation' && conjugationMode === 'custom' && selectedConjugationForms.length === 0) return;
 
     playSound('attack', soundEnabled);
     const chosenDeck = compatibleDecks.find(d => d.deck.id === selectedDeckId)?.deck;
@@ -189,10 +223,14 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
       deckTitle: sourceType === 'deck' && chosenDeck ? chosenDeck.title : undefined,
       sourceType,
       stageNumber: dungeonType === 'extreme' && !isRandomExtreme ? extremeStageNumber : undefined,
+      conjugationMode: dungeonType === 'conjugation' ? conjugationMode : undefined,
+      selectedConjugationForms: dungeonType === 'conjugation' && conjugationMode === 'custom' ? selectedConjugationForms : undefined,
     });
   };
 
-  const isStartDisabled = sourceType === 'deck' && (!selectedDeckId || compatibleDecks.length === 0);
+  const isStartDisabled =
+    (sourceType === 'deck' && (!selectedDeckId || compatibleDecks.length === 0)) ||
+    (dungeonType === 'conjugation' && conjugationMode === 'custom' && selectedConjugationForms.length === 0);
 
   return createPortal(
     <motion.div
@@ -362,10 +400,167 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
               </div>
             ) : (
               <>
-                <div className="flex items-center justify-between">
+                {dungeonType === 'conjugation' && (
+                  /* ================= CONJUGATION MODE SWITCHER ================= */
+                  <div className="space-y-2.5 p-3 rounded-2xl bg-surface-inset border border-indigo/30 shadow-[inset_1.5px_1.5px_4px_var(--neu-d)] mb-2">
+                    <div className="flex items-center justify-between">
+                      <label className="text-xs font-bold uppercase tracking-wider text-indigo font-heading flex items-center gap-1.5">
+                        <SlidersHorizontal className="w-3.5 h-3.5 text-indigo" />
+                        <span>Mode Latihan Pola Konjugasi:</span>
+                      </label>
+                      <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-md bg-indigo/15 text-indigo border border-indigo/30">
+                        {conjugationMode === 'random' ? '🎲 Pola Kurikulum' : `🎯 Kustom (${selectedConjugationForms.length} Pola)`}
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 p-1 bg-surface-card/70 rounded-xl border border-border-subtle gap-1">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          playSound('click', soundEnabled);
+                          setConjugationMode('random');
+                        }}
+                        className={`py-2 px-2 rounded-lg text-xs font-heading font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer select-none ${
+                          conjugationMode === 'random'
+                            ? 'bg-indigo-deep text-gold border border-gold/40 shadow-sm font-black'
+                            : 'text-text-muted hover:text-text-primary hover:bg-surface-elevated/40'
+                        }`}
+                      >
+                        <Sparkles className="w-3.5 h-3.5" />
+                        <span>Pola Kurikulum / Deck</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          playSound('click', soundEnabled);
+                          setConjugationMode('custom');
+                        }}
+                        className={`py-2 px-2 rounded-lg text-xs font-heading font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer select-none ${
+                          conjugationMode === 'custom'
+                            ? 'bg-indigo-deep text-gold border border-gold/40 shadow-sm font-black'
+                            : 'text-text-muted hover:text-text-primary hover:bg-surface-elevated/40'
+                        }`}
+                      >
+                        <CheckSquare className="w-3.5 h-3.5 text-gold" />
+                        <span>Kustom Pola Tertentu</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* ================= CUSTOM PATTERNS PICKER (IF CUSTOM CONJUGATION) ================= */}
+                {dungeonType === 'conjugation' && conjugationMode === 'custom' && (
+                  <div className="space-y-2.5 p-3.5 rounded-2xl bg-surface-inset border border-border-subtle shadow-[inset_1.5px_1.5px_4px_var(--neu-d)] animate-fade-in">
+                    <div className="flex items-center justify-between gap-2 flex-wrap">
+                      <label className="text-xs font-bold uppercase tracking-wider text-text-primary font-heading flex items-center gap-1.5">
+                        <CheckSquare className="w-3.5 h-3.5 text-gold" />
+                        <span>Pilih Pola yang Ingin Dilatih:</span>
+                      </label>
+                      <div className="flex items-center gap-2 text-[11px]">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            playSound('click', soundEnabled);
+                            setSelectedConjugationForms(CONJUGATION_FORMS_INFO.map(f => f.id));
+                          }}
+                          className="font-heading font-bold text-teal hover:underline cursor-pointer"
+                        >
+                          Pilih Semua
+                        </button>
+                        <span className="text-border-subtle">|</span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            playSound('click', soundEnabled);
+                            setSelectedConjugationForms([]);
+                          }}
+                          className="font-heading font-bold text-rose-400 hover:underline cursor-pointer"
+                        >
+                          Reset
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Real-time Pattern Search Input */}
+                    <div className="relative">
+                      <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
+                      <input
+                        type="text"
+                        placeholder="Cari pola (contoh: te, lampau, pasif, nai, ます)..."
+                        value={patternSearchQuery}
+                        onChange={(e) => setPatternSearchQuery(e.target.value)}
+                        className="w-full bg-surface-card border border-border-subtle rounded-xl pl-9 pr-8 py-2 text-xs text-text-primary placeholder:text-text-muted focus:outline-none focus:border-gold/60 shadow-[inset_1px_1px_3px_var(--neu-d)]"
+                      />
+                      {patternSearchQuery && (
+                        <button
+                          type="button"
+                          onClick={() => setPatternSearchQuery('')}
+                          className="absolute right-2.5 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary text-xs"
+                        >
+                          ×
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Pattern Cards Grid */}
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-[220px] overflow-y-auto pr-1 scrollbar-thin">
+                      {filteredConjugationForms.map((form) => {
+                        const isSelected = selectedConjugationForms.includes(form.id);
+                        return (
+                          <button
+                            key={form.id}
+                            type="button"
+                            onClick={() => toggleConjugationForm(form.id)}
+                            className={`p-2.5 rounded-xl text-left transition-all border relative flex flex-col justify-between select-none cursor-pointer ${
+                              isSelected
+                                ? 'bg-gradient-to-b from-surface-elevated to-surface-card border-gold text-text-primary shadow-[0_0_10px_rgba(240,190,82,0.2)] ring-1 ring-gold/40'
+                                : 'bg-surface-card/60 hover:bg-surface-elevated/40 border-border-subtle text-text-muted hover:text-text-primary'
+                            }`}
+                          >
+                            <div className="flex items-center justify-between gap-1">
+                              <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded ${
+                                isSelected ? 'bg-gold/20 text-gold border border-gold/40' : 'bg-surface-inset text-text-muted border border-border-subtle'
+                              }`}>
+                                {form.badge}
+                              </span>
+                              <div className={`w-4 h-4 rounded flex items-center justify-center border transition-all ${
+                                isSelected ? 'bg-gold border-gold text-surface-base shadow-xs' : 'border-border-subtle bg-surface-inset'
+                              }`}>
+                                {isSelected && <Check className="w-2.5 h-2.5 stroke-[3]" />}
+                              </div>
+                            </div>
+                            <div className="mt-1.5 min-w-0">
+                              <div className={`text-xs font-heading font-bold truncate ${isSelected ? 'text-text-primary' : 'text-text-secondary'}`}>
+                                {form.name}
+                              </div>
+                              <div className="text-[10px] text-text-muted truncate mt-0.5 font-body" title={form.summary}>
+                                {form.summary}
+                              </div>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    {selectedConjugationForms.length === 0 && (
+                      <p className="text-[11px] text-rose-400 font-medium text-center pt-1 flex items-center justify-center gap-1">
+                        <AlertCircle className="w-3.5 h-3.5" />
+                        Pilih minimal 1 pola konjugasi untuk memulai latihan.
+                      </p>
+                    )}
+                  </div>
+                )}
+
+                {/* ================= SOURCE / LEVEL SELECTOR HEADER ================= */}
+                <div className="flex items-center justify-between pt-1">
                   <label className="text-xs font-bold uppercase tracking-wider text-text-muted font-heading flex items-center gap-1.5">
                     <Sparkles className="w-3.5 h-3.5 text-gold" />
-                    <span>1. Pilih Tingkat atau Kategori:</span>
+                    <span>
+                      {dungeonType === 'conjugation' && conjugationMode === 'custom'
+                        ? '1. Pilih Tingkat Kosakata yang Dilatih:'
+                        : '1. Pilih Tingkat atau Kategori:'}
+                    </span>
                   </label>
 
                   <span className="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-gold shadow-xs">
@@ -375,205 +570,209 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                   </span>
                 </div>
 
-            {/* Tactile Carved Groove Switcher Track */}
-            <div className="grid grid-cols-2 p-1.5 bg-surface-inset rounded-2xl border border-border-subtle shadow-[inset_2px_2px_6px_var(--neu-d),inset_-2px_-2px_6px_var(--neu-l)] gap-1.5">
-              <button
-                type="button"
-                onClick={() => {
-                  playSound('click', soundEnabled);
-                  setSourceType('preset');
-                }}
-                className={`py-2 px-3 rounded-xl text-xs font-heading font-bold transition-all flex items-center justify-center gap-2 select-none cursor-pointer ${
-                  sourceType === 'preset'
-                    ? 'bg-indigo-deep text-gold border border-gold/40 shadow-[2px_2px_6px_var(--neu-d),-1px_-1px_4px_var(--neu-l)] font-black'
-                    : 'text-text-muted hover:text-text-primary hover:bg-surface-card/30'
-                }`}
-              >
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>Kategori Kurikulum</span>
-              </button>
+                {/* Tactile Carved Groove Switcher Track */}
+                <div className="grid grid-cols-2 p-1.5 bg-surface-inset rounded-2xl border border-border-subtle shadow-[inset_2px_2px_6px_var(--neu-d),inset_-2px_-2px_6px_var(--neu-l)] gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      playSound('click', soundEnabled);
+                      setSourceType('preset');
+                    }}
+                    className={`py-2 px-3 rounded-xl text-xs font-heading font-bold transition-all flex items-center justify-center gap-2 select-none cursor-pointer ${
+                      sourceType === 'preset'
+                        ? 'bg-indigo-deep text-gold border border-gold/40 shadow-[2px_2px_6px_var(--neu-d),-1px_-1px_4px_var(--neu-l)] font-black'
+                        : 'text-text-muted hover:text-text-primary hover:bg-surface-card/30'
+                    }`}
+                  >
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>
+                      {dungeonType === 'conjugation' && conjugationMode === 'custom'
+                        ? 'Tingkat Kosakata'
+                        : 'Kategori Kurikulum'}
+                    </span>
+                  </button>
 
-              <button
-                type="button"
-                onClick={() => {
-                  playSound('click', soundEnabled);
-                  setSourceType('deck');
-                  if (!selectedDeckId && compatibleDecks.length > 0) {
-                    setSelectedDeckId(compatibleDecks[0].deck.id);
-                  }
-                }}
-                className={`py-2 px-3 rounded-xl text-xs font-heading font-bold transition-all flex items-center justify-center gap-2 select-none cursor-pointer ${
-                  sourceType === 'deck'
-                    ? 'bg-indigo-deep text-gold border border-gold/40 shadow-[2px_2px_6px_var(--neu-d),-1px_-1px_4px_var(--neu-l)] font-black'
-                    : 'text-text-muted hover:text-text-primary hover:bg-surface-card/30'
-                }`}
-              >
-                <BookOpen className="w-3.5 h-3.5" />
-                <span>Pilih Deck ({compatibleDecks.length})</span>
-              </button>
-            </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      playSound('click', soundEnabled);
+                      setSourceType('deck');
+                      if (!selectedDeckId && compatibleDecks.length > 0) {
+                        setSelectedDeckId(compatibleDecks[0].deck.id);
+                      }
+                    }}
+                    className={`py-2 px-3 rounded-xl text-xs font-heading font-bold transition-all flex items-center justify-center gap-2 select-none cursor-pointer ${
+                      sourceType === 'deck'
+                        ? 'bg-indigo-deep text-gold border border-gold/40 shadow-[2px_2px_6px_var(--neu-d),-1px_-1px_4px_var(--neu-l)] font-black'
+                        : 'text-text-muted hover:text-text-primary hover:bg-surface-card/30'
+                    }`}
+                  >
+                    <BookOpen className="w-3.5 h-3.5" />
+                    <span>Pilih Deck ({compatibleDecks.length})</span>
+                  </button>
+                </div>
 
-            {/* TAB VIEW A: SKEUOMORPHIC LEVEL PLAQUES */}
-            {sourceType === 'preset' && (
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 animate-fade-in pt-1">
-                {LEVEL_CATEGORY_OPTIONS.map((opt) => {
-                  const isSelected = selectedCategory === opt.id;
-                  return (
-                    <button
-                      key={opt.id}
-                      type="button"
-                      onClick={() => {
-                        playSound('click', soundEnabled);
-                        setSelectedCategory(opt.id);
-                      }}
-                      className={`p-2.5 sm:p-3 rounded-2xl text-left transition-all relative flex flex-col justify-between min-h-[74px] sm:min-h-[78px] select-none cursor-pointer overflow-hidden ${
-                        isSelected
-                          ? 'bg-gradient-to-b from-surface-elevated to-surface-card border-2 border-gold text-text-primary shadow-[0_0_14px_rgba(240,190,82,0.25),3px_3px_8px_var(--neu-d),-1px_-1px_4px_var(--neu-l)] ring-1 ring-gold/40'
-                          : 'bg-surface-inset hover:bg-surface-elevated/60 border border-border-subtle/80 shadow-[inset_1.5px_1.5px_4px_var(--neu-d),inset_-1px_-1px_3px_var(--neu-l)] hover:border-gold/30 hover:scale-[1.01]'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between gap-1.5 w-full min-w-0">
-                        <span className={`text-xs font-heading font-black tracking-wide truncate ${isSelected ? 'text-gold' : 'text-text-primary'}`}>
-                          {opt.label}
-                        </span>
-                        {isSelected ? (
-                          <div className="w-4 h-4 rounded-full bg-gold text-surface-base flex items-center justify-center shrink-0 shadow-xs">
-                            <Check className="w-2.5 h-2.5 stroke-[3]" />
-                          </div>
-                        ) : (
-                          <span className="text-[9px] font-mono text-text-muted font-bold px-1.5 py-0.5 rounded bg-surface-card/70 border border-border-subtle/50 shrink-0 whitespace-nowrap">
-                            {opt.jpBadge}
-                          </span>
-                        )}
-                      </div>
-                      <span className="text-[10px] text-text-muted truncate mt-1.5 font-body block" title={opt.desc}>
-                        {opt.desc}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            )}
-
-            {/* TAB VIEW B: SKEUOMORPHIC GRIMOIRE DECK CARDS */}
-            {sourceType === 'deck' && (
-              <div className="space-y-2.5 animate-fade-in pt-1">
-                {compatibleDecks.length > 0 ? (
-                  <div className="space-y-2.5 max-h-[230px] overflow-y-auto pr-1 scrollbar-thin">
-                    {compatibleDecks.map(({ deck, matchedCount }) => {
-                      const isSelected = selectedDeckId === deck.id;
+                {/* TAB VIEW A: SKEUOMORPHIC LEVEL PLAQUES */}
+                {sourceType === 'preset' && (
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 animate-fade-in pt-1">
+                    {LEVEL_CATEGORY_OPTIONS.map((opt) => {
+                      const isSelected = selectedCategory === opt.id;
                       return (
                         <button
-                          key={deck.id}
+                          key={opt.id}
                           type="button"
                           onClick={() => {
                             playSound('click', soundEnabled);
-                            setSelectedDeckId(deck.id);
+                            setSelectedCategory(opt.id);
                           }}
-                          className={`w-full p-3.5 rounded-2xl text-left transition-all flex items-center justify-between gap-3 select-none cursor-pointer ${
+                          className={`p-2.5 sm:p-3 rounded-2xl text-left transition-all relative flex flex-col justify-between min-h-[74px] sm:min-h-[78px] select-none cursor-pointer overflow-hidden ${
                             isSelected
-                              ? 'bg-gradient-to-b from-surface-elevated to-surface-card border-2 border-gold text-text-primary shadow-[0_0_14px_rgba(240,190,82,0.22),3px_3px_8px_var(--neu-d),-1px_-1px_4px_var(--neu-l)] ring-1 ring-gold/40'
-                              : 'bg-surface-inset hover:bg-surface-elevated/60 border border-border-subtle shadow-[inset_1.5px_1.5px_4px_var(--neu-d),inset_-1px_-1px_3px_var(--neu-l)] hover:border-gold/30 hover:scale-[1.005]'
+                              ? 'bg-gradient-to-b from-surface-elevated to-surface-card border-2 border-gold text-text-primary shadow-[0_0_14px_rgba(240,190,82,0.25),3px_3px_8px_var(--neu-d),-1px_-1px_4px_var(--neu-l)] ring-1 ring-gold/40'
+                              : 'bg-surface-inset hover:bg-surface-elevated/60 border border-border-subtle/80 shadow-[inset_1.5px_1.5px_4px_var(--neu-d),inset_-1px_-1px_3px_var(--neu-l)] hover:border-gold/30 hover:scale-[1.01]'
                           }`}
                         >
-                          <div className="flex items-center gap-3.5 min-w-0">
-                            {/* Grimoire Spine Emblem */}
-                            <div className="w-10 h-10 rounded-xl bg-surface-card border border-border-subtle flex items-center justify-center text-xl shrink-0 shadow-[inset_1px_1px_3px_var(--neu-d)]">
-                              {deck.coverIcon || '📖'}
-                            </div>
-                            <div className="min-w-0">
-                              <div className="flex items-center gap-2 flex-wrap">
-                                <span className={`text-xs font-heading font-black truncate ${isSelected ? 'text-gold' : 'text-text-primary'}`}>
-                                  {deck.title}
-                                </span>
-                                {deck.isDefault && (
-                                  <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-amber-500/20 text-gold border border-gold/40 font-bold font-mono">
-                                    Bookmark
-                                  </span>
-                                )}
-                              </div>
-                              <p className="text-[11px] text-text-muted truncate mt-0.5 font-body">
-                                {deck.description || 'Deck materi Buku Saku'}
-                              </p>
-                            </div>
-                          </div>
-
-                          <div className="flex items-center gap-2.5 shrink-0">
-                            <span className="text-[11px] font-mono font-bold px-2.5 py-1 rounded-xl bg-indigo/15 text-indigo border border-indigo/30 shadow-xs">
-                              {matchedCount} Materi
+                          <div className="flex items-center justify-between gap-1.5 w-full min-w-0">
+                            <span className={`text-xs font-heading font-black tracking-wide truncate ${isSelected ? 'text-gold' : 'text-text-primary'}`}>
+                              {opt.label}
                             </span>
-                            <div className={`w-5 h-5 rounded-full flex items-center justify-center border transition-all ${
-                              isSelected
-                                ? 'bg-gold border-gold text-surface-base shadow-sm'
-                                : 'border-border-subtle bg-surface-card'
-                            }`}>
-                              {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
-                            </div>
+                            {isSelected ? (
+                              <div className="w-4 h-4 rounded-full bg-gold text-surface-base flex items-center justify-center shrink-0 shadow-xs">
+                                <Check className="w-2.5 h-2.5 stroke-[3]" />
+                              </div>
+                            ) : (
+                              <span className="text-[9px] font-mono text-text-muted font-bold px-1.5 py-0.5 rounded bg-surface-card/70 border border-border-subtle/50 shrink-0 whitespace-nowrap">
+                                {opt.jpBadge}
+                              </span>
+                            )}
                           </div>
+                          <span className="text-[10px] text-text-muted truncate mt-1.5 font-body block" title={opt.desc}>
+                            {opt.desc}
+                          </span>
                         </button>
                       );
                     })}
+                  </div>
+                )}
 
-                    {/* Incompatible Decks Section */}
-                    {incompatibleDecks.length > 0 && (
-                      <div className="pt-2">
-                        <div className="text-[10px] font-bold uppercase tracking-wider text-text-muted font-heading mb-2 px-1 flex items-center gap-1.5">
-                          <Lock className="w-3 h-3 text-text-muted" />
-                          <span>Deck Tidak Kompatibel ({incompatibleDecks.length}):</span>
-                        </div>
-                        <div className="space-y-1.5">
-                          {incompatibleDecks.map(({ deck, reason }) => (
-                            <div
+                {/* TAB VIEW B: SKEUOMORPHIC GRIMOIRE DECK CARDS */}
+                {sourceType === 'deck' && (
+                  <div className="space-y-2.5 animate-fade-in pt-1">
+                    {compatibleDecks.length > 0 ? (
+                      <div className="space-y-2.5 max-h-[230px] overflow-y-auto pr-1 scrollbar-thin">
+                        {compatibleDecks.map(({ deck, matchedCount }) => {
+                          const isSelected = selectedDeckId === deck.id;
+                          return (
+                            <button
                               key={deck.id}
-                              className="p-2.5 rounded-xl border border-border-subtle/50 bg-surface-inset/40 opacity-55 flex items-center justify-between gap-3 text-text-muted cursor-not-allowed select-none shadow-[inset_1px_1px_3px_var(--neu-d)]"
-                              title={reason}
+                              type="button"
+                              onClick={() => {
+                                playSound('click', soundEnabled);
+                                setSelectedDeckId(deck.id);
+                              }}
+                              className={`w-full p-3.5 rounded-2xl text-left transition-all flex items-center justify-between gap-3 select-none cursor-pointer ${
+                                isSelected
+                                  ? 'bg-gradient-to-b from-surface-elevated to-surface-card border-2 border-gold text-text-primary shadow-[0_0_14px_rgba(240,190,82,0.22),3px_3px_8px_var(--neu-d),-1px_-1px_4px_var(--neu-l)] ring-1 ring-gold/40'
+                                  : 'bg-surface-inset hover:bg-surface-elevated/60 border border-border-subtle shadow-[inset_1.5px_1.5px_4px_var(--neu-d),inset_-1px_-1px_3px_var(--neu-l)] hover:border-gold/30 hover:scale-[1.005]'
+                              }`}
                             >
-                              <div className="flex items-center gap-2.5 min-w-0">
-                                <span className="text-base opacity-70">{deck.coverIcon || '📖'}</span>
-                                <span className="text-xs font-medium truncate text-text-secondary">{deck.title}</span>
+                              <div className="flex items-center gap-3.5 min-w-0">
+                                {/* Grimoire Spine Emblem */}
+                                <div className="w-10 h-10 rounded-xl bg-surface-card border border-border-subtle flex items-center justify-center text-xl shrink-0 shadow-[inset_1px_1px_3px_var(--neu-d)]">
+                                  {deck.coverIcon || '📖'}
+                                </div>
+                                <div className="min-w-0">
+                                  <div className="flex items-center gap-2 flex-wrap">
+                                    <span className={`text-xs font-heading font-black truncate ${isSelected ? 'text-gold' : 'text-text-primary'}`}>
+                                      {deck.title}
+                                    </span>
+                                    {deck.isDefault && (
+                                      <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-amber-500/20 text-gold border border-gold/40 font-bold font-mono">
+                                        Bookmark
+                                      </span>
+                                    )}
+                                  </div>
+                                  <p className="text-[11px] text-text-muted truncate mt-0.5 font-body">
+                                    {deck.description || 'Deck materi Buku Saku'}
+                                  </p>
+                                </div>
                               </div>
-                              <span className="text-[10px] text-rose-400 bg-rose-500/10 border border-rose-500/25 px-2 py-0.5 rounded-md shrink-0">
-                                {reason}
-                              </span>
+
+                              <div className="flex items-center gap-2.5 shrink-0">
+                                <span className="text-[11px] font-mono font-bold px-2.5 py-1 rounded-xl bg-indigo/15 text-indigo border border-indigo/30 shadow-xs">
+                                  {matchedCount} Materi
+                                </span>
+                                <div className={`w-5 h-5 rounded-full flex items-center justify-center border transition-all ${
+                                  isSelected
+                                    ? 'bg-gold border-gold text-surface-base shadow-sm'
+                                    : 'border-border-subtle bg-surface-card'
+                                }`}>
+                                  {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
+                                </div>
+                              </div>
+                            </button>
+                          );
+                        })}
+
+                        {/* Incompatible Decks Section */}
+                        {incompatibleDecks.length > 0 && (
+                          <div className="pt-2">
+                            <div className="text-[10px] font-bold uppercase tracking-wider text-text-muted font-heading mb-2 px-1 flex items-center gap-1.5">
+                              <Lock className="w-3 h-3 text-text-muted" />
+                              <span>Deck Tidak Kompatibel ({incompatibleDecks.length}):</span>
                             </div>
-                          ))}
+                            <div className="space-y-1.5">
+                              {incompatibleDecks.map(({ deck, reason }) => (
+                                <div
+                                  key={deck.id}
+                                  className="p-2.5 rounded-xl border border-border-subtle/50 bg-surface-inset/40 opacity-55 flex items-center justify-between gap-3 text-text-muted cursor-not-allowed select-none shadow-[inset_1px_1px_3px_var(--neu-d)]"
+                                  title={reason}
+                                >
+                                  <div className="flex items-center gap-2.5 min-w-0">
+                                    <span className="text-base opacity-70">{deck.coverIcon || '📖'}</span>
+                                    <span className="text-xs font-medium truncate text-text-secondary">{deck.title}</span>
+                                  </div>
+                                  <span className="text-[10px] text-rose-400 bg-rose-500/10 border border-rose-500/25 px-2 py-0.5 rounded-md shrink-0">
+                                    {reason}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      /* Empty state when no decks are compatible */
+                      <div className="p-5 rounded-2xl bg-surface-inset border border-border-subtle shadow-[inset_2px_2px_6px_var(--neu-d),inset_-2px_-2px_6px_var(--neu-l)] text-center space-y-3">
+                        <div className="w-11 h-11 rounded-2xl bg-amber-500/10 text-gold border border-amber-500/30 flex items-center justify-center mx-auto shadow-xs">
+                          <AlertCircle className="w-6 h-6" />
                         </div>
+                        <div>
+                          <p className="text-xs font-bold font-heading text-text-primary">
+                            Belum Ada Deck yang Kompatibel
+                          </p>
+                          <p className="text-[11px] text-text-secondary mt-1 max-w-sm mx-auto">
+                            {meta.requirementHint}. Silakan buat deck baru atau tambahkan materi tersebut ke Buku Saku kamu.
+                          </p>
+                        </div>
+                        {onNavigateTab && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              playSound('click', soundEnabled);
+                              onClose();
+                              onNavigateTab('deck');
+                            }}
+                            className="px-4 py-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-xs font-bold text-gold border border-gold/30 hover:border-gold/60 shadow-[2px_2px_6px_var(--neu-d)] transition-all inline-flex items-center gap-1.5 cursor-pointer"
+                          >
+                            <BookOpen className="w-3.5 h-3.5" />
+                            <span>Buka Buku Saku</span>
+                          </button>
+                        )}
                       </div>
                     )}
                   </div>
-                ) : (
-                  /* Empty state when no decks are compatible */
-                  <div className="p-5 rounded-2xl bg-surface-inset border border-border-subtle shadow-[inset_2px_2px_6px_var(--neu-d),inset_-2px_-2px_6px_var(--neu-l)] text-center space-y-3">
-                    <div className="w-11 h-11 rounded-2xl bg-amber-500/10 text-gold border border-amber-500/30 flex items-center justify-center mx-auto shadow-xs">
-                      <AlertCircle className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold font-heading text-text-primary">
-                        Belum Ada Deck yang Kompatibel
-                      </p>
-                      <p className="text-[11px] text-text-secondary mt-1 max-w-sm mx-auto">
-                        {meta.requirementHint}. Silakan buat deck baru atau tambahkan materi tersebut ke Buku Saku kamu.
-                      </p>
-                    </div>
-                    {onNavigateTab && (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          playSound('click', soundEnabled);
-                          onClose();
-                          onNavigateTab('deck');
-                        }}
-                        className="px-4 py-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-xs font-bold text-gold border border-gold/30 hover:border-gold/60 shadow-[2px_2px_6px_var(--neu-d)] transition-all inline-flex items-center gap-1.5 cursor-pointer"
-                      >
-                        <BookOpen className="w-3.5 h-3.5" />
-                        <span>Buka Buku Saku</span>
-                      </button>
-                    )}
-                  </div>
                 )}
-              </div>
-            )}
-            </>
+              </>
             )}
           </div>
 
@@ -725,7 +924,9 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
             <Swords className="w-4 h-4 text-gold shrink-0" />
             <span className="truncate">
               {isStartDisabled
-                ? 'Pilih Deck yang Sesuai'
+                ? (dungeonType === 'conjugation' && conjugationMode === 'custom' && selectedConjugationForms.length === 0
+                  ? 'Pilih Minimal 1 Pola'
+                  : 'Pilih Deck yang Sesuai')
                 : sourceType === 'deck'
                 ? 'Mulai dengan Deck Pilihan'
                 : 'Mulai Ekspedisi Dungeon'}

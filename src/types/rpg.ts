@@ -55,6 +55,7 @@ export interface PlayerStats {
   lastStudyDate?: string; // YYYY-MM-DD
   
   // Equipment & Customization
+  characterGender?: 'male' | 'female';
   equippedTitle?: string;
   avatar?: string;
   selectedSkinId?: string;

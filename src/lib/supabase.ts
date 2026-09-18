@@ -412,6 +412,7 @@ export async function loadGameFromCloud(): Promise<CloudSavePayload | null> {
           totalExp: lbData.total_exp || 0,
           playerName: lbData.player_name,
           avatar: lbData.avatar_url,
+          characterGender: lbData.character_gender || 'male',
           tierIndex: lbData.tier_index || 0,
           studyStats: {
             questions: { total: 0, uniqueIds: [] },

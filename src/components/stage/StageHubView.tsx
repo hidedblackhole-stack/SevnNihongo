@@ -18,6 +18,7 @@ import { DOKKAI_DATABASE } from '../../data/dokkai';
 import { CHOUKAI_DATABASE } from '../../data/choukai';
 import { getGranularStageProgress } from '../../utils/mastery';
 import { getSiblingStagesForStage } from '../../data/world/maps';
+import { fisherYatesShuffle } from '../../utils/smartRandomizer';
 
 interface StageHubViewProps {
   stage: Stage;
@@ -146,7 +147,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
         const kt = KOTOBA_DATABASE[id];
         if (kt) {
           const rawOpts = [kt.meaningId, 'Menunda pertemuan penting', 'Membuat hidangan tradisional', 'Membeli perbekalan'];
-          const shuffledOpts = [...rawOpts].sort(() => 0.5 - Math.random());
+          const shuffledOpts = fisherYatesShuffle(rawOpts);
           const correctIdx = shuffledOpts.indexOf(kt.meaningId);
           compiled.push({
             id: `boss_kt_${kt.id}`,

@@ -201,6 +201,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
               <div className="relative py-2">
                 <TierAvatar
                   tierIndex={tierIndex}
+                  gender={(player as any)?.character_gender || (player as any)?.characterGender || 'male'}
                   size="lg"
                   interactive={false}
                   showRankBadge={true}

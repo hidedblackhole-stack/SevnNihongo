@@ -48,6 +48,7 @@ const INITIAL_ITEM_MASTERY: Record<string, ItemMasteryRecord> = {};
 
 const DEFAULT_STATS: PlayerStats = {
   playerName: DEFAULT_NAMES[Math.floor(Math.random() * DEFAULT_NAMES.length)],
+  characterGender: 'male',
   level: 1,
   totalExp: 0,
   tierIndex: 0,
@@ -1482,6 +1483,7 @@ export default function App() {
           setIsRecallActive(true);
         }}
         onUpdateName={handleUpdateName}
+        onUpdateGender={(gender) => setStats(prev => ({ ...prev, characterGender: gender }))}
         onAscendTier={handleAscendTier}
       />
 

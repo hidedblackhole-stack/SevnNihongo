@@ -11,6 +11,7 @@ import { RubyText } from './RubyText';
 import { SakubunStudio } from './SakubunStudio';
 import { speakJapanese, playSound } from '../../utils/audio';
 import { splitSentenceForHighlight } from '../../utils/grammarHighlight';
+import { fisherYatesShuffle } from '../../utils/smartRandomizer';
 
 interface BunpouModuleProps {
   bunpouIds: string[];
@@ -77,7 +78,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
       .map(b => b.title.split(/[(（＋／]/)[0].trim().replace(/^[〜~]/, ''))
       .filter(t => t !== cleanedPattern && t.length > 0);
 
-    const shuffledDistractors = allTitles.sort(() => 0.5 - Math.random());
+    const shuffledDistractors = fisherYatesShuffle(allTitles);
     const examples = item.examples || [];
     
     const targetCount = 7;
@@ -102,7 +103,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
         shuffledDistractors[(i*3+2)%shuffledDistractors.length] || 'を'
       ];
       
-      const shuffledOptions = options.sort(() => 0.5 - Math.random());
+      const shuffledOptions = fisherYatesShuffle(options);
       const correctIndex = shuffledOptions.indexOf(correct);
 
       questions.push({

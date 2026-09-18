@@ -6,6 +6,7 @@ import { KANJI_DATABASE, STAGE_1_KANJI_QUIZ } from '../../data/kanji';
 import { QuizEngine } from './QuizEngine';
 import { playSound, speakJapanese } from '../../utils/audio';
 import { KanjiDetailCard } from './KanjiDetailCard';
+import { fisherYatesShuffle } from '../../utils/smartRandomizer';
 
 
 interface KanjiModuleProps {
@@ -71,9 +72,9 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
       let correctAns = '';
       let distractors: string[] = [];
       
-      const otherKanjis = Object.values(KANJI_DATABASE)
-        .filter(k => k.id !== item.id)
-        .sort(() => 0.5 - Math.random());
+      const otherKanjis = fisherYatesShuffle(
+        Object.values(KANJI_DATABASE).filter(k => k.id !== item.id)
+      );
 
       if (qType === 0) {
         instruction = '漢字の意味として最も適切なものを一つ選びなさい。';
@@ -96,7 +97,7 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
         distractors.push(['Melakukan kegiatan', 'Menyatakan keadaan', 'Sesuatu yang besar'][distractors.length]);
       }
 
-      const options = [correctAns, ...distractors].sort(() => 0.5 - Math.random());
+      const options = fisherYatesShuffle([correctAns, ...distractors]);
       const correctIndex = options.indexOf(correctAns);
 
       return {

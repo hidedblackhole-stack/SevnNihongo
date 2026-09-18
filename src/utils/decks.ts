@@ -3,6 +3,7 @@ import { KotobaItem, KanjiItem, BunpouItem } from '../types/content';
 import { KOTOBA_DATABASE } from '../data/kotoba';
 import { KANJI_DATABASE } from '../data/kanji';
 import { BUNPOU_DATABASE } from '../data/bunpou';
+import { fisherYatesShuffle } from './smartRandomizer';
 
 export const DEFAULT_BOOKMARK_DECK_ID = 'default_bookmark';
 
@@ -305,8 +306,7 @@ export function generatePresetDeckItems(options: GeneratePresetOptions): DeckIte
 
   const pickItems = <T>(arr: T[], n: number): T[] => {
     if (arr.length <= n) return [...arr];
-    const shuffled = [...arr].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, n);
+    return fisherYatesShuffle(arr).slice(0, n);
   };
 
   const results: DeckItemRef[] = [];

@@ -4,7 +4,14 @@ import { BUNPOU_DATABASE } from '../data/bunpou';
 import { ResolvedDeckItem, resolveDeckItem } from './decks';
 import { DeckItemRef, UserDeck } from '../types/rpg';
 import { generateSentenceExercise, SentencePracticeExercise, PATTERN_SCHEMAS } from '../engine';
-import { generateConjugationQuestion, ConjugationDrillQuestion, VERB_CONJUGATION_DATABASE } from '../data/conjugationRules';
+import {
+  generateConjugationQuestion,
+  ConjugationDrillQuestion,
+  VERB_CONJUGATION_DATABASE,
+  kotobaItemToVerbItem,
+  VerbItem
+} from '../data/conjugationRules';
+import { fisherYatesShuffle, smartSample } from './smartRandomizer';
 import { Question } from '../types/content';
 import kanjiQuestionsDb from '../data/db/kanji_questions.json';
 import bunpouQuestionsDb from '../data/db/bunpou_questions.json';
@@ -22,6 +29,9 @@ export interface DungeonConfig {
   deckTitle?: string;
   sourceType?: 'preset' | 'deck';
   stageNumber?: number; // 1 to 100 for extreme kanji
+  // Altar Konjugasi Customization
+  conjugationMode?: 'random' | 'custom';
+  selectedConjugationForms?: string[];
 }
 
 export interface DungeonPayload {
@@ -97,13 +107,25 @@ export function isDeckCompatibleWithDungeon(
     if (kotobaItems.length === 0) {
       return {
         isCompatible: false,
-        reason: 'Memerlukan materi kosakata (Kotoba)',
+        reason: 'Memerlukan materi kosakata kata kerja (Kotoba)',
+        matchedCount: 0,
+      };
+    }
+    const conjugatableCount = kotobaItems.filter(it => {
+      const k = KOTOBA_DATABASE[it.id];
+      return k && isConjugatableKotoba(k);
+    }).length;
+
+    if (conjugatableCount === 0) {
+      return {
+        isCompatible: false,
+        reason: 'Deck tidak memiliki kata kerja yang bisa dikonjugasi',
         matchedCount: 0,
       };
     }
     return {
       isCompatible: true,
-      matchedCount: kotobaItems.length,
+      matchedCount: conjugatableCount,
     };
   }
 
@@ -117,6 +139,37 @@ export function isDeckCompatibleWithDungeon(
   return { isCompatible: true, matchedCount: items.length };
 }
 
+const U_KANA_REGEX = /[うくぐすつぬぶむる]$/;
+const NON_VERB_WORDS = new Set([
+  '赤ん坊', 'お茶', 'ニュース', 'ペン', 'フォーク', 'フィルム', '黒', '台所', '花瓶', '葉書', '毎朝', '問題', '午後', '午前', '今晩', '昨夜', '今夜'
+]);
+
+export function isConjugatableKotoba(item: any): boolean {
+  if (!item || !item.word) return false;
+  const w = item.word.trim();
+  if (NON_VERB_WORDS.has(w)) return false;
+  const r = (item.reading || '').trim();
+  const m = (item.meaningId || '').toLowerCase();
+
+  // If already tagged verb
+  if (item.wordType === 'verb' && (U_KANA_REGEX.test(w) || U_KANA_REGEX.test(r))) {
+    if (!m.startsWith('bayi') && !m.startsWith('anak')) return true;
+  }
+
+  // Indonesian meaning verb prefixes / keywords:
+  const isVerbMeaning =
+    /^(mem|meng|men|me|ber|ter|di)[a-z]/i.test(item.meaningId || '') ||
+    /\b(pergi|makan|minum|tidur|bangun|datang|pulang|masuk|keluar|beli|jual|baca|tulis|lihat|dengar|bicara|tanya|jawab|jalan|lari|berenang|naik|turun|tunggu|pakai|buka|tutup|nyala|mati|taruh|ambil|cuci|buat|masak|bantu|potong|kirim|pinjam|kembali)\b/i.test(item.meaningId || '');
+
+  if (isVerbMeaning && (U_KANA_REGEX.test(w) || U_KANA_REGEX.test(r))) {
+    if (w.length <= 7 && !w.endsWith('こと') && !w.endsWith('もの') && !w.endsWith('さん') && !w.endsWith('じん')) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 const PM_KEYWORDS = ['medis', 'dokter', 'perawat', 'darurat', 'rumah sakit', 'kesehatan', 'obat', 'penyakit', 'darah', 'luka', 'pasien', 'klinik', 'ambulans'];
 
 function isPmKotoba(item: any): boolean {
@@ -128,8 +181,7 @@ function isPmKotoba(item: any): boolean {
 }
 
 function shuffleArray<T>(arr: T[]): T[] {
-  const copy = [...arr];
-  return copy.sort(() => 0.5 - Math.random());
+  return fisherYatesShuffle(arr);
 }
 
 export function generateDungeonSession(config: DungeonConfig, userDecks?: UserDeck[]): DungeonPayload {
@@ -374,31 +426,93 @@ export function generateDungeonSession(config: DungeonConfig, userDecks?: UserDe
   // ==================== D. CONJUGATION DOJO DUNGEON ====================
   else if (type === 'conjugation') {
     const questions: ConjugationDrillQuestion[] = [];
-    const forms = ['te', 'nai', 'ta', 'masu', 'potential', 'passive', 'causative', 'ba', 'volitional'];
+    const allForms = [
+      'te', 'ta', 'nai', 'masu', 'potential', 'passive', 'causative', 'causative_passive',
+      'ba', 'volitional', 'tai', 'tara', 'imperative'
+    ];
     
-    let allowedForms = forms;
-    let allowedVerbs = VERB_CONJUGATION_DATABASE;
-
-    if (selectedDeck) {
-      const kotobaRefs = selectedDeck.items.filter(it => it.category === 'kotoba');
-      const kotobaWords = new Set(kotobaRefs.map(k => KOTOBA_DATABASE[k.id]?.word).filter(Boolean));
-      const matched = VERB_CONJUGATION_DATABASE.filter(v => kotobaWords.has(v.kanji) || kotobaWords.has(v.reading));
-      if (matched.length > 0) {
-        allowedVerbs = matched;
-      }
+    let allowedForms = allForms;
+    if (config.conjugationMode === 'custom' && config.selectedConjugationForms && config.selectedConjugationForms.length > 0) {
+      allowedForms = config.selectedConjugationForms;
     } else {
       if (levelCategory === 'N5') {
         allowedForms = ['te', 'nai', 'ta', 'masu'];
       } else if (levelCategory === 'N4') {
-        allowedForms = ['te', 'nai', 'ta', 'masu', 'potential', 'volitional'];
+        allowedForms = ['te', 'nai', 'ta', 'masu', 'potential', 'volitional', 'ba', 'tai', 'tara'];
+      } else if (levelCategory === 'N3') {
+        allowedForms = ['te', 'nai', 'ta', 'masu', 'potential', 'passive', 'causative', 'ba', 'volitional', 'tai', 'tara', 'imperative'];
+      } else if (levelCategory === 'Kaigo' || levelCategory === 'PM' || levelCategory === 'SSW') {
+        allowedForms = ['te', 'nai', 'ta', 'masu', 'potential', 'passive', 'causative', 'ba', 'volitional', 'tai'];
       }
     }
 
-    for (let i = 0; i < count; i++) {
-      const randomForm = allowedForms[Math.floor(Math.random() * allowedForms.length)];
-      const randomVerb = allowedVerbs[Math.floor(Math.random() * allowedVerbs.length)];
+    // Build the eligible verb pool
+    let eligibleVerbs: VerbItem[] = [];
+
+    if (selectedDeck) {
+      const kotobaRefs = selectedDeck.items.filter(it => it.category === 'kotoba');
+      const verbCandidates: VerbItem[] = [];
+      kotobaRefs.forEach(ref => {
+        const kItem = KOTOBA_DATABASE[ref.id];
+        if (kItem && isConjugatableKotoba(kItem)) {
+          const v = kotobaItemToVerbItem(kItem);
+          if (v) verbCandidates.push(v);
+        }
+      });
+      if (verbCandidates.length > 0) {
+        eligibleVerbs = verbCandidates;
+      }
+    } else {
+      // 1. From matching kotoba in KOTOBA_DATABASE
+      const poolKotoba = matchingKotoba.length > 0 ? matchingKotoba : allKotoba;
+      const convertedVerbs: VerbItem[] = [];
+      poolKotoba.forEach(kItem => {
+        if (isConjugatableKotoba(kItem)) {
+          const v = kotobaItemToVerbItem(kItem);
+          if (v) convertedVerbs.push(v);
+        }
+      });
+
+      // 2. Also merge matching verbs from VERB_CONJUGATION_DATABASE
+      const matchingPresetVerbs = VERB_CONJUGATION_DATABASE.filter(v => {
+        if (levelCategory === 'all') return true;
+        if (levelCategory === 'N5' || levelCategory === 'N4') return true;
+        return false;
+      });
+
+      // Deduplicate by kanji
+      const seenKanji = new Set<string>();
+      const combined: VerbItem[] = [];
+      [...convertedVerbs, ...matchingPresetVerbs].forEach(v => {
+        if (!seenKanji.has(v.kanji)) {
+          seenKanji.add(v.kanji);
+          combined.push(v);
+        }
+      });
+
+      if (combined.length > 0) {
+        eligibleVerbs = combined;
+      }
+    }
+
+    if (eligibleVerbs.length === 0) {
+      eligibleVerbs = VERB_CONJUGATION_DATABASE;
+    }
+
+    // Sample verbs using smartSample (zero duplicates, persistent anti-repetition memory)
+    const sampledVerbs = smartSample(eligibleVerbs, count, {
+      getId: v => v.id || v.kanji,
+      contextKey: `dungeon_conjugation_${levelCategory}_${selectedDeck ? 'deck' : 'preset'}`,
+    });
+
+    // Evenly distribute target forms across questions
+    const shuffledForms = fisherYatesShuffle(allowedForms);
+
+    for (let i = 0; i < sampledVerbs.length; i++) {
+      const targetVerb = sampledVerbs[i];
+      const targetForm = shuffledForms[i % shuffledForms.length];
       try {
-        const q = generateConjugationQuestion(randomForm, randomVerb);
+        const q = generateConjugationQuestion(targetForm, targetVerb, allowedForms);
         if (q) {
           questions.push(q);
         }
@@ -407,7 +521,7 @@ export function generateDungeonSession(config: DungeonConfig, userDecks?: UserDe
       }
     }
 
-    payload.conjugationQuestions = questions.slice(0, count);
+    payload.conjugationQuestions = questions;
   }
 
   // ==================== E. RAPID QUIZ BATTLE DUNGEON ====================
@@ -461,9 +575,9 @@ export function generateDungeonSession(config: DungeonConfig, userDecks?: UserDe
         const item = KOTOBA_DATABASE[koRef.id];
         if (!item) return;
 
-        const distractors = allKotobaList
-          .filter(k => k.id !== item.id && k.meaningId && k.meaningId !== item.meaningId)
-          .sort(() => 0.5 - Math.random())
+        const distractors = fisherYatesShuffle(
+          allKotobaList.filter(k => k.id !== item.id && k.meaningId && k.meaningId !== item.meaningId)
+        )
           .slice(0, 3)
           .map(k => k.meaningId);
 

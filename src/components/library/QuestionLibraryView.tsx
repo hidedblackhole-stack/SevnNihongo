@@ -14,6 +14,7 @@ import { DOKKAI_DATABASE } from '../../data/dokkai';
 import { playSound, speakJapanese } from '../../utils/audio';
 import { RubyText } from '../learning/RubyText';
 import { calculateQuizReward } from '../../utils/rewards';
+import { smartSample } from '../../utils/smartRandomizer';
 
 const DungeonBattleModule = lazy(() => import('../dungeon/DungeonBattleModule').then(m => ({ default: m.DungeonBattleModule })));
 
@@ -325,7 +326,10 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
       pool = allQuestions;
     }
 
-    const shuffled = [...pool].sort(() => Math.random() - 0.5).slice(0, 10);
+    const shuffled = smartSample(pool, 10, {
+      getId: q => q.id,
+      contextKey: `question_library_drill_${level}_${section}`
+    });
     setDrillQuestions(shuffled);
     setDrillCurrentIndex(0);
     setDrillUserAnswers({});

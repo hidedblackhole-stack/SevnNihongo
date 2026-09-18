@@ -280,7 +280,74 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           </p>
         </div>
 
-        {/* 2. Avatar Picker */}
+        {/* 2. Tipe Karakter (Gender) */}
+        <div className="border-t border-border-subtle pt-4 space-y-3">
+          <label className="text-xs sm:text-sm font-bold text-text-primary font-heading block">
+            Tipe Karakter Petualang
+          </label>
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              onClick={() => {
+                playSound('click', stats.soundEnabled);
+                onUpdateSettings({ characterGender: 'male' });
+              }}
+              className={`p-3 rounded-2xl border-2 flex flex-col items-center text-center gap-2 transition-all ${
+                (stats.characterGender || 'male') === 'male'
+                  ? 'bg-blue-600/15 border-blue-500 shadow-md ring-2 ring-blue-500/20'
+                  : 'bg-surface-inset border-border-subtle hover:border-border-muted opacity-70 hover:opacity-100'
+              }`}
+            >
+              <span className="text-3xl">♂️</span>
+              <div>
+                <span className="text-xs sm:text-sm font-bold font-heading text-text-primary block">
+                  Pendekar Pria
+                </span>
+                <span className="text-[10px] text-text-muted font-body block mt-0.5">
+                  Petualang ksatria pemberani
+                </span>
+              </div>
+              {(stats.characterGender || 'male') === 'male' && (
+                <span className="px-2 py-0.5 rounded-full bg-blue-500 text-[10px] font-bold text-white shadow-xs">
+                  Aktif
+                </span>
+              )}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                playSound('click', stats.soundEnabled);
+                onUpdateSettings({ characterGender: 'female' });
+              }}
+              className={`p-3 rounded-2xl border-2 flex flex-col items-center text-center gap-2 transition-all ${
+                stats.characterGender === 'female'
+                  ? 'bg-rose-600/15 border-rose-500 shadow-md ring-2 ring-rose-500/20'
+                  : 'bg-surface-inset border-border-subtle hover:border-border-muted opacity-70 hover:opacity-100'
+              }`}
+            >
+              <span className="text-3xl">♀️</span>
+              <div>
+                <span className="text-xs sm:text-sm font-bold font-heading text-text-primary block">
+                  Pendekar Wanita
+                </span>
+                <span className="text-[10px] text-text-muted font-body block mt-0.5">
+                  Petualang jubah tangguh
+                </span>
+              </div>
+              {stats.characterGender === 'female' && (
+                <span className="px-2 py-0.5 rounded-full bg-rose-500 text-[10px] font-bold text-white shadow-xs">
+                  Aktif
+                </span>
+              )}
+            </button>
+          </div>
+          <p className="text-[10px] text-text-secondary">
+            *Visual sprite avatar di Beranda dan Lembar Status akan otomatis menyesuaikan tingkatan (Tier) petualang.
+          </p>
+        </div>
+
+        {/* 3. Avatar Picker */}
         <div className="border-t border-border-subtle pt-4 space-y-3">
           <label className="text-xs sm:text-sm font-bold text-text-primary font-heading block">
             Pilih Avatar (Tampil di Leaderboard)

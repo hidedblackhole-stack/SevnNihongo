@@ -23,6 +23,7 @@ import { getCanonicalGrammarTitle } from '../../utils/bunpouTitleUtils';
 import { splitSentenceForHighlight } from '../../utils/grammarHighlight';
 import { BUNPOU_DATABASE } from '../../data/bunpou';
 import { UserDeck } from '../../types/rpg';
+import { fisherYatesShuffle } from '../../utils/smartRandomizer';
 import { DeckBookmarkPicker } from '../deck/DeckBookmarkPicker';
 
 interface BunpouDetailModalProps {
@@ -73,12 +74,12 @@ function getRandomGrammarQuestion(item: BunpouItem): Question {
   const otherTitles = Object.values(BUNPOU_DATABASE)
     .map(b => b.title.split(/[(（＋／]/)[0].trim().replace(/^[〜~]/, ''))
     .filter(t => t !== cleanedPattern && t.length > 0);
-  const shuffledOther = otherTitles.sort(() => 0.5 - Math.random()).slice(0, 3);
+  const shuffledOther = fisherYatesShuffle(otherTitles).slice(0, 3);
   while (shuffledOther.length < 3) {
     shuffledOther.push(`〜${cleanedPattern}ない`);
   }
 
-  const allOptions = [cleanedPattern, ...shuffledOther].sort(() => 0.5 - Math.random());
+  const allOptions = fisherYatesShuffle([cleanedPattern, ...shuffledOther]);
   const correctIndex = allOptions.indexOf(cleanedPattern);
 
   return {

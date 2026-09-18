@@ -104,6 +104,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
           >
             <TierAvatar
               tierIndex={effectiveTierIndex ?? stats.tierIndex}
+              gender={stats.characterGender || 'male'}
               size="lg"
             />
           </motion.div>

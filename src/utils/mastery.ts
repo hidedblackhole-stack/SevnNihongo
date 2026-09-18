@@ -20,6 +20,7 @@ import { KANJI_DATABASE } from '../data/kanji';
 import { DOKKAI_DATABASE } from '../data/dokkai';
 import { CHOUKAI_DATABASE } from '../data/choukai';
 import { PlayerStats } from '../types/rpg';
+import { fisherYatesShuffle } from './smartRandomizer';
 
 // SRS Interval progression (in days)
 const SRS_INTERVALS_DAYS = [1, 2, 4, 7, 14, 30];
@@ -787,7 +788,7 @@ function generateAdaptiveQuestion(
           ? ex.japanese.slice(0, -1).split(/(?<=[はにをでが]|ました|られた|ておく|てしまう)/)
           : ex.japanese.split(/(?<=[はにをでが])/);
         const filteredWords = words.filter(w => w.length > 0);
-        const scrambled = [...filteredWords].sort(() => 0.5 - Math.random());
+        const scrambled = fisherYatesShuffle(filteredWords);
 
         return {
           id: `rc_lv5_${itemId}`,
@@ -875,7 +876,7 @@ function generateAdaptiveQuestion(
     if (kt) {
       if (level >= 4 && kt.exampleSentence) {
         const distractors = ['別の言葉', '関係ない名詞', '反対の意味の語'];
-        const options = [kt.word, ...distractors].sort(() => 0.5 - Math.random());
+        const options = fisherYatesShuffle([kt.word, ...distractors]);
         const correctIndex = options.indexOf(kt.word);
         return {
           id: `rc_lv4_${kt.id}`,
@@ -892,7 +893,7 @@ function generateAdaptiveQuestion(
         'Menyimpan barang untuk persiapan masa depan',
         'Menolak tawaran secara halus'
       ];
-      const options = [kt.meaningId, ...distractors].sort(() => 0.5 - Math.random());
+      const options = fisherYatesShuffle([kt.meaningId, ...distractors]);
       const correctIndex = options.indexOf(kt.meaningId);
       return {
         id: `rc_lv1_${kt.id}`,

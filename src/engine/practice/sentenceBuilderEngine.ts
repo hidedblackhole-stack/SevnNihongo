@@ -11,6 +11,7 @@ import { synthesizeSentence, SynthesizeOptions, NATURAL_PAIRS } from '../synthes
 import { PATTERN_SCHEMAS } from '../syntax/patternSchemas';
 import { conjugateVerb } from '../morphology/inflectionEngine';
 import * as wanakana from 'wanakana';
+import { fisherYatesShuffle } from '../../utils/smartRandomizer';
 
 export interface ExerciseOptions extends Partial<SynthesizeOptions> {
   patternId?: string;
@@ -128,7 +129,7 @@ export function generateSentenceExercise(options: ExerciseOptions = {}): Sentenc
   }
 
   // 6. Shuffle available tiles for practice
-  const shuffledTiles = [...tiles].sort(() => Math.random() - 0.5);
+  const shuffledTiles = fisherYatesShuffle(tiles);
 
   return {
     id: `exercise_${schema.id}_${Date.now()}`,

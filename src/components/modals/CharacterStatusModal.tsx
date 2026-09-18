@@ -35,6 +35,7 @@ interface CharacterStatusModalProps {
   onRecoverHp?: () => void;
   onStartRecall?: () => void;
   onUpdateName?: (newName: string) => void;
+  onUpdateGender?: (gender: 'male' | 'female') => void;
   onAscendTier?: (targetTierIndex: number, targetJlpt: string | null) => void;
 }
 
@@ -43,6 +44,7 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
   onClose,
   stats,
   stageProgress: _stageProgress = {},
+  onUpdateGender,
   onAscendTier,
 }) => {
   useEffect(() => {
@@ -123,7 +125,46 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
             
             {/* 1. IDENTITY & TOTAL STUDY EXP */}
             <div className="flex flex-col items-center text-center space-y-3 p-4 rounded-3xl bg-surface-inset border border-border-subtle shadow-inner">
-              <TierAvatar tierIndex={effectiveTierIndex ?? stats.tierIndex} size="lg" />
+              <TierAvatar
+                tierIndex={effectiveTierIndex ?? stats.tierIndex}
+                gender={stats.characterGender || 'male'}
+                size="lg"
+              />
+
+              {/* Character Gender Selector */}
+              <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-surface-card border border-border-subtle shadow-sm">
+                <button
+                  type="button"
+                  onClick={() => {
+                    playSound('click', stats.soundEnabled);
+                    onUpdateGender?.('male');
+                  }}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold font-heading flex items-center gap-1.5 transition-all ${
+                    (stats.characterGender || 'male') === 'male'
+                      ? 'bg-blue-600/20 text-blue-400 border border-blue-500/40 shadow-sm'
+                      : 'text-text-muted hover:text-text-primary hover:bg-surface-elevated/40'
+                  }`}
+                >
+                  <span>♂️</span>
+                  <span>Pendekar Pria</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    playSound('click', stats.soundEnabled);
+                    onUpdateGender?.('female');
+                  }}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold font-heading flex items-center gap-1.5 transition-all ${
+                    stats.characterGender === 'female'
+                      ? 'bg-rose-600/20 text-rose-400 border border-rose-500/40 shadow-sm'
+                      : 'text-text-muted hover:text-text-primary hover:bg-surface-elevated/40'
+                  }`}
+                >
+                  <span>♀️</span>
+                  <span>Pendekar Wanita</span>
+                </button>
+              </div>
+
               <div>
                 <div className="flex items-center justify-center gap-2">
                   <h3 className="text-xl sm:text-2xl font-bold text-text-primary font-heading">

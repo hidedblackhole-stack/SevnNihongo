@@ -9,6 +9,7 @@ import { RubyText } from '../learning/RubyText';
 import { KOTOBA_DATABASE } from '../../data/kotoba';
 import { KotobaWritingPractice } from '../learning/KotobaWritingPractice';
 import { parseReadingVariations } from '../../utils/readingHighlightUtils';
+import { fisherYatesShuffle } from '../../utils/smartRandomizer';
 
 import { UserDeck } from '../../types/rpg';
 import { DeckBookmarkPicker } from '../deck/DeckBookmarkPicker';
@@ -122,7 +123,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
     );
     
     // Shuffle and pick 5
-    return related.sort(() => 0.5 - Math.random()).slice(0, 5);
+    return fisherYatesShuffle(related).slice(0, 5);
   }, [item]);
 
   if (!isOpen || !item) return null;
