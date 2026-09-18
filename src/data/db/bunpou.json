@@ -13214,23 +13214,35 @@
   },
   {
     "id": "bp_n4_189",
-    "title": "んだけど・んですが",
-    "formula": "Verb／い-adjective［plain form］＋ んだけど／んですが / な-adjective／Noun ＋ な ＋ んだけど／んですが",
-    "meaning_en": "explanatory setup ＋ but; a soft lead-in",
-    "meaning_id": "Pengaturan penjelasan ＋ tetapi; petunjuk yang lembut",
-    "explanation_note": "This joins the explanatory んだ／んです with けど／が ('but'). It sets up background — 'the thing is…' — and then trails off into a request, question, or contrast. Often the 'but' is not really adversative; it just softens the approach: すみません、道に迷ったんですが… ('Excuse me, I've gotten lost, and…'). んですが is polite, んだけど casual.",
+    "title": "〜んですが・〜んだけど",
+    "formula": "Verb／い-adjective［plain form］＋ んですが / な-adjective／Noun ＋ な ＋ んですが",
+    "meaning_en": "explanatory setup ＋ but; a soft lead-in for requests/questions",
+    "meaning_id": "Membuka percakapan atau menjelaskan situasi sebelum meminta sesuatu (lebih halus & sopan)",
+    "explanation_note": "Digunakan untuk membuka percakapan atau menjelaskan situasi sebelum meminta sesuatu (biasanya berupa pertanyaan atau permohonan). Terdengar jauh lebih halus jika dibandingkan meminta sesuatu secara langsung to the point. 「〜んですが」 untuk ragam sopan/formal, sedangkan 「〜んだけど」 untuk situasi santai/akrab.",
     "examples": [
       {
-        "jp": "あのう、ちょっと聞きたいことがあるんですが。",
-        "en": "Um, there's something I'd like to ask you...",
-        "id": "Contoh penggunaan pola 「んだけど・んですが」.",
-        "reading": "あのう、ちょっと聞ききたいことがあるんですが。"
+        "jp": "ちょっとお願いがあるんですが、今お時間いいですか。",
+        "en": "I have a small favor to ask, do you have a moment right now?",
+        "id": "Saya ada sedikit permintaan, apakah sekarang ada waktu?",
+        "reading": "ちょっとお願ねがいがあるんですが、今いまお時間じかんいいですか。"
       },
       {
-        "jp": "頭が痛いんだけど、少し休んでもいい？",
-        "en": "I've got a headache — is it okay if I rest a little?",
-        "id": "Contoh penggunaan pola 「んだけど・んですが」.",
-        "reading": "頭あたまが痛いたいんだけど、少すこし休やすんでもいい？"
+        "jp": "すみません、駅へ行きたいんですが、道を教えていただけますか。",
+        "en": "Excuse me, I'd like to go to the station, could you please tell me the way?",
+        "id": "Permisi, saya ingin pergi ke stasiun, boleh tolong kasih tahu jalan (ke sana)?",
+        "reading": "すみません、駅えきへ行いきたいんですが、道みちを教おしえていただけますか。"
+      },
+      {
+        "jp": "この携帯を買いたいんですが、他の色はありますか。",
+        "en": "I would like to buy this mobile phone, do you have other colors?",
+        "id": "Saya ingin membeli ponsel ini, apakah ada warna lain?",
+        "reading": "この携帯けいたいを買かいたいんですが、他ほかの色いろはありますか。"
+      },
+      {
+        "jp": "バスに乗りたいんですが、どのバスに乗ればいいですか。",
+        "en": "I want to ride the bus, which bus should I take?",
+        "id": "Saya ingin naik bus, sebaiknya naik bus yang mana?",
+        "reading": "バスに乗のりたいんですが、どのバスに乗のればいいですか。"
       }
     ],
     "question_ids": [
@@ -13240,7 +13252,7 @@
     "level": "N4",
     "baseLevel": "N4",
     "questions_status": "generated",
-    "version": 1,
+    "version": 2,
     "status": "published"
   },
   {

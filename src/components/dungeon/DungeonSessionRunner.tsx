@@ -24,6 +24,7 @@ import { JapaneseImeInput } from '../common/JapaneseImeInput';
 import { RubyText } from '../learning/RubyText';
 import { getKanjiBaseExp, getKotobaBaseExp, getBunpouBaseExp } from '../../utils/rewards';
 import { ResolvedDeckItem } from '../../utils/decks';
+import { getTargetFormDisplay, getConjugatedMeaningId } from '../../data/conjugationRules';
 
 // Dynamic micro-multiplier for flashcard flips: Base EXP * 0.005
 const FLASHCARD_FLIP_MULTIPLIER = 0.005;
@@ -137,12 +138,11 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
         confetti({ particleCount: 90, spread: 80, origin: { y: 0.6 } });
       } catch {}
 
-      if (onRewardPlayer) {
-        onRewardPlayer(nextExp, nextGold);
-      }
       if (onCompleteStudyItem) {
-        const modId = config.type === 'writing' ? 'kanji' : (config.type === 'sakubun' ? 'bunpou' : 'kotoba');
+        const modId = config.type === 'writing' || config.type === 'extreme' ? 'kanji' : (config.type === 'sakubun' ? 'bunpou' : 'kotoba');
         onCompleteStudyItem(modId, nextExp, nextGold, `dungeon_${config.type}_${Date.now()}`, nextCorrect, totalFloors);
+      } else if (onRewardPlayer) {
+        onRewardPlayer(nextExp, nextGold);
       }
 
       setIsVictory(true);
@@ -197,6 +197,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                   {config.type === 'sakubun' && '🧩 Kuil Tata Bahasa'}
                   {config.type === 'conjugation' && '⚡ Altar Konjugasi'}
                   {config.type === 'quiz' && '🎯 Arena Kuis Cepat'}
+                  {config.type === 'extreme' && (config.stageNumber ? `🔥 Kanji Extreme (Stage ${config.stageNumber})` : '🔥 Gerbang Kanji Extreme')}
                 </span>
                 <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-surface-card text-indigo border border-border-subtle font-bold max-w-[150px] truncate">
                   {config.deckTitle ? `📖 ${config.deckTitle}` : config.levelCategory}
@@ -652,36 +653,53 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                   const q = payload.conjugationQuestions[currentFloorIndex];
                   if (!q) return null;
 
+                  const formId = q.targetForm?.id || '';
+                  const formDisplay = getTargetFormDisplay(formId);
+                  const baseMeaning = q.targetVerb?.meaningId || (q as any).meaning || '';
+                  const conjugatedResultMeaning = getConjugatedMeaningId(baseMeaning, formId);
+
                   return (
                     <div className="space-y-4">
-                      <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle text-center space-y-2">
-                        <span className="text-[10px] font-mono text-gold uppercase font-bold tracking-wider">
-                          Ubah kata ke {q.targetForm?.name || (q as any).targetFormName || 'Bentuk Tertentu'}:
-                        </span>
-                        <div className="flex items-center justify-center gap-2 pt-1 pb-0.5">
-                          <h3 className="text-2xl sm:text-3xl font-black text-text-primary font-jp">
-                            <RubyText
-                              japanese={q.targetVerb?.kanji || (q as any).dictionaryWord || q.prompt}
-                              reading={q.targetVerb?.reading || (q as any).reading || q.ruby}
-                              showFurigana={true}
-                              className="text-2xl sm:text-3xl font-black text-text-primary font-jp"
-                            />
-                          </h3>
+                      {/* Big Display: Kotoba + Tujuan Konjugasi */}
+                      <div className="p-5 sm:p-6 rounded-3xl bg-surface-inset border border-border-subtle text-center space-y-2 shadow-inner">
+                        <div className="flex items-center justify-center gap-3 flex-wrap">
+                          <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-center">
+                            <h3 className="text-3xl sm:text-4xl font-black text-text-primary font-jp">
+                              <RubyText
+                                japanese={q.targetVerb?.kanji || (q as any).dictionaryWord || q.prompt}
+                                reading={q.targetVerb?.reading || (q as any).reading || q.ruby}
+                                showFurigana={true}
+                                className="text-3xl sm:text-4xl font-black text-text-primary font-jp"
+                              />
+                            </h3>
+                            <span className="text-text-muted font-mono text-xl sm:text-2xl font-bold select-none">＋</span>
+                            <span className="text-gold font-jp font-black text-3xl sm:text-4xl drop-shadow-sm">
+                              {formDisplay.suffix}
+                            </span>
+                            <span className="px-2.5 py-0.5 rounded-lg bg-gold/15 text-gold border border-gold/30 text-xs font-mono font-bold">
+                              {formDisplay.badge}
+                            </span>
+                          </div>
+
                           <button
                             type="button"
                             onClick={() => {
                               const textToSpeak = q.targetVerb?.reading || q.targetVerb?.kanji || (q as any).dictionaryWord || '';
                               if (textToSpeak) speakJapanese(textToSpeak);
                             }}
-                            className="p-1.5 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-gold border border-border-subtle transition-colors shadow-2xs cursor-pointer"
-                            title="Dengarkan pelafalan"
+                            className="p-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-gold border border-border-subtle transition-colors shadow-2xs cursor-pointer shrink-0"
+                            title="Dengarkan pelafalan kata dasar"
                           >
                             <Volume2 className="w-4 h-4" />
                           </button>
                         </div>
-                        <p className="text-xs text-text-muted">
-                          {q.targetVerb?.meaningId || (q as any).meaning || ''}
-                        </p>
+
+                        {/* Terjemah kotoba dasar */}
+                        {baseMeaning && (
+                          <p className="text-xs sm:text-sm text-text-muted font-medium pt-1">
+                            {baseMeaning}
+                          </p>
+                        )}
                       </div>
 
                       {/* 4 Choices */}
@@ -717,26 +735,59 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                                   className="font-jp font-bold text-sm"
                                 />
                               </span>
-                              {isAnswerChecked && isCorrect && <CheckCircle2 className="w-4 h-4 text-emerald-400" />}
-                              {isAnswerChecked && isSelected && !isCorrect && <XCircle className="w-4 h-4 text-rose-400" />}
+                              {isAnswerChecked && isCorrect && <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />}
+                              {isAnswerChecked && isSelected && !isCorrect && <XCircle className="w-4 h-4 text-rose-400 shrink-0" />}
                             </button>
                           );
                         })}
                       </div>
 
-                      {/* Explanation & Next Floor */}
+                      {/* Explanation & Next Floor with Post-Answer Result Translation */}
                       {isAnswerChecked && (
-                        <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-between gap-3">
-                          <p className="text-xs text-text-secondary line-clamp-2">
+                        <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-2.5 animate-fade-in">
+                          <div className="flex items-center justify-between gap-3 flex-wrap">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <span className="font-jp font-bold text-sm sm:text-base text-emerald-400">
+                                <RubyText
+                                  japanese={q.options[q.correctIndex]}
+                                  reading={q.optionsRuby?.[q.correctIndex]}
+                                  showFurigana={true}
+                                  className="font-jp font-bold text-sm sm:text-base text-emerald-400"
+                                />
+                              </span>
+                              {conjugatedResultMeaning && (
+                                <>
+                                  <span className="text-xs text-text-muted select-none">➔</span>
+                                  <span className="text-xs sm:text-sm font-bold text-emerald-300">
+                                    "{conjugatedResultMeaning}"
+                                  </span>
+                                </>
+                              )}
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  const textToSpeak = q.optionsRuby?.[q.correctIndex] || q.options[q.correctIndex] || '';
+                                  if (textToSpeak) speakJapanese(textToSpeak);
+                                }}
+                                className="p-1 rounded-lg bg-surface-card hover:bg-surface-elevated text-text-muted hover:text-emerald-400 transition-colors shrink-0"
+                                title="Dengarkan pelafalan hasil konjugasi"
+                              >
+                                <Volume2 className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+
+                            <button
+                              type="button"
+                              onClick={() => advanceToNextFloor(selectedAnswerIndex === q.correctIndex, 20, 10)}
+                              className="btn-skeuo-indigo px-5 py-2 text-xs shadow-sm active:scale-95 transition-all shrink-0 ml-auto"
+                            >
+                              <span className="whitespace-nowrap">Lantai Berikutnya →</span>
+                            </button>
+                          </div>
+
+                          <p className="text-xs text-text-secondary leading-relaxed border-t border-border-subtle/50 pt-2">
                             {q.explanation}
                           </p>
-                          <button
-                            type="button"
-                            onClick={() => advanceToNextFloor(selectedAnswerIndex === q.correctIndex, 20, 10)}
-                            className="btn-skeuo-indigo px-5 py-2 text-xs shadow-sm active:scale-95 transition-all shrink-0"
-                          >
-                            <span className="whitespace-nowrap">Lantai Berikutnya →</span>
-                          </button>
                         </div>
                       )}
                     </div>
@@ -744,8 +795,8 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                 })()
               )}
 
-              {/* TYPE 5: QUIZ DUNGEON */}
-              {config.type === 'quiz' && payload.quizQuestions && (
+              {/* TYPE 5: QUIZ & KANJI EXTREME DUNGEON */}
+              {(config.type === 'quiz' || config.type === 'extreme') && payload.quizQuestions && (
                 (() => {
                   const q = payload.quizQuestions[currentFloorIndex];
                   if (!q) return null;

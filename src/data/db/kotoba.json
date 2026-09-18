@@ -203506,5 +203506,1056 @@
     },
     "definitionId": "Listrik tersedia.",
     "meaningJaId": "Listrik tersedia."
+  },
+  "kotoba_ssw_001": {
+    "id": "kotoba_ssw_001",
+    "word": "特定技能",
+    "reading": "とくていぎのう",
+    "romaji": "tokutei ginou",
+    "meaningId": "SSW — Status tinggal untuk bekerja di Jepang di bidang tertentu, misalnya perawatan lansia, makanan, pertanian, konstruksi, atau perhotelan.",
+    "meaningEn": "Specified Skilled Worker",
+    "definitionId": "Status tinggal untuk bekerja di Jepang di bidang tertentu, misalnya perawatan lansia, makanan, pertanian, konstruksi, atau perhotelan. Kamu bekerja sebagai pekerja penuh, bukan peserta pelatihan.\n\nKenapa penting\n              Ini jalur paling banyak dipakai orang Indonesia sekarang. Syarat utamanya lulus tes bahasa (JFT-Basic atau JLPT N4) dan tes keahlian bidang.\nTanda bahaya\n              Agen yang menjanjikan SSW tanpa tes bahasa dan tes keahlian hampir pasti bohong, karena dua tes itu syarat dari pemerintah Jepang.\nSering disalahpahami\n              Sering dikira sama dengan pemagangan. Beda: SSW gajinya setara pekerja Jepang dan boleh pindah perusahaan di bidang yang sama.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "SSW (Specified Skilled Worker)",
+      "特定技能を取得する (memperoleh SSW)",
+      "特定技能の申請 (pengajuan SSW)"
+    ],
+    "exampleSentence": {
+      "japanese": "特定技能の手続きを確認します。",
+      "reading": "とくていぎのうのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan SSW."
+    },
+    "meaningJa": "Specified Skilled Worker",
+    "kanjiComponents": [
+      "特",
+      "定",
+      "技",
+      "能"
+    ]
+  },
+  "kotoba_ssw_002": {
+    "id": "kotoba_ssw_002",
+    "word": "特定技能",
+    "reading": "とくていぎのう",
+    "romaji": "tokutei ginou",
+    "meaningId": "Nama Jepang dari SSW.",
+    "meaningEn": "Tokutei Ginou",
+    "definitionId": "Nama Jepang dari SSW. Ada dua tingkat: Tokutei Ginou 1 (paling umum, maksimal 5 tahun) dan Tokutei Ginou 2 (bisa diperpanjang terus dan boleh membawa keluarga).\n\nKenapa penting\n              Kalau kamu baca lowongan berbahasa Jepang, istilah yang muncul adalah 特定技能, bukan SSW. Keduanya barang yang sama.\nTanda bahaya\n              Kalau ada yang menawarkan langsung Tokutei Ginou 2 untuk pemula, itu tidak wajar. Tingkat 2 umumnya dicapai setelah pengalaman kerja dan ujian lanjutan.\nSering disalahpahami\n              Banyak yang menganggap semua SSW bisa bawa keluarga. Hanya tingkat 2 yang bisa, dan bidangnya masih terbatas.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "特定技能 (Tokutei Ginou)",
+      "特定技能を取得する (memperoleh 特定技能)",
+      "特定技能の申請 (pengajuan 特定技能)"
+    ],
+    "exampleSentence": {
+      "japanese": "特定技能の手続きを確認します。",
+      "reading": "とくていぎのうのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan 特定技能."
+    },
+    "meaningJa": "Tokutei Ginou",
+    "kanjiComponents": [
+      "特",
+      "定",
+      "技",
+      "能"
+    ]
+  },
+  "kotoba_ssw_003": {
+    "id": "kotoba_ssw_003",
+    "word": "技能実習生",
+    "reading": "ぎのうじっしゅうせい",
+    "romaji": "ginou jisshuusei",
+    "meaningId": "Ginou Jisshuusei — Program pemagangan teknis.",
+    "meaningEn": "Technical Intern Training Program",
+    "definitionId": "Program pemagangan teknis. Statusnya peserta pelatihan, bukan pekerja biasa, dan biasanya tidak bisa pindah tempat kerja.\n\nKenapa penting\n              Sering dipakai bergantian dengan SSW oleh agen, padahal hak dan kebebasannya berbeda jauh. Kamu harus tahu kamu mendaftar yang mana.\nTanda bahaya\n              Pastikan tertulis jelas di kontrak kamu masuk sebagai 特定技能 atau 技能実習. Jangan mau kalau agen mengaburkan bagian ini.\nSering disalahpahami\n              Dikira jalur yang sama dengan SSW hanya beda nama. Beda: pemagangan lebih terikat, dan pindah perusahaan sangat sulit.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "Ginou Jisshuusei (Technical Intern Training Program)",
+      "技能実習生を取得する (memperoleh Ginou Jisshuusei)",
+      "技能実習生の申請 (pengajuan Ginou Jisshuusei)"
+    ],
+    "exampleSentence": {
+      "japanese": "技能実習生の手続きを確認します。",
+      "reading": "ぎのうじっしゅうせいのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan Ginou Jisshuusei."
+    },
+    "meaningJa": "Technical Intern Training Program",
+    "kanjiComponents": [
+      "技",
+      "能",
+      "実",
+      "習",
+      "生"
+    ]
+  },
+  "kotoba_ssw_004": {
+    "id": "kotoba_ssw_004",
+    "word": "留学生",
+    "reading": "りゅうがくせい",
+    "romaji": "ryuugakusei",
+    "meaningId": "Ryuugakusei — Status pelajar, untuk yang masuk lewat sekolah bahasa atau kampus.",
+    "meaningEn": "Student Visa Holder",
+    "definitionId": "Status pelajar, untuk yang masuk lewat sekolah bahasa atau kampus. Boleh kerja sambilan maksimal 28 jam per minggu dengan izin khusus.\n\nKenapa penting\n              Jalur ini butuh bukti keuangan dan biaya sekolah, tapi memberi kesempatan lanjut kuliah atau kerja penuh setelah lulus.\nTanda bahaya\n              Agen yang menjanjikan kerja penuh dengan visa pelajar sedang mengajak kamu melanggar aturan, dan yang kena sanksi adalah kamu.\nSering disalahpahami\n              Dikira bisa kerja penuh sambil sekolah. Melebihi 28 jam per minggu adalah pelanggaran yang bisa membatalkan izin tinggal.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "Ryuugakusei (Student Visa Holder)",
+      "留学生を取得する (memperoleh Ryuugakusei)",
+      "留学生の申請 (pengajuan Ryuugakusei)"
+    ],
+    "exampleSentence": {
+      "japanese": "留学生の手続きを確認します。",
+      "reading": "りゅうがくせいのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan Ryuugakusei."
+    },
+    "meaningJa": "Student Visa Holder",
+    "kanjiComponents": [
+      "留",
+      "学",
+      "生"
+    ]
+  },
+  "kotoba_ssw_005": {
+    "id": "kotoba_ssw_005",
+    "word": "在留カード",
+    "reading": "ざいりゅうかーど",
+    "romaji": "zairyuu kaado",
+    "meaningId": "Zairyuu Card — Kartu identitas resmi orang asing di Jepang.",
+    "meaningEn": "Residence Card",
+    "definitionId": "Kartu identitas resmi orang asing di Jepang. Berisi status tinggal, masa berlaku, dan apakah kamu diizinkan bekerja.\n\nKenapa penting\n              Wajib dibawa setiap saat. Dipakai untuk buka rekening bank, daftar ponsel, sewa apartemen, sampai urusan klinik.\nTanda bahaya\n              Jangan pernah menyerahkan kartu ini untuk disimpan perusahaan atau agen. Menahan dokumen identitas pekerja adalah praktik yang melanggar aturan.\nSering disalahpahami\n              Dianggap sama dengan visa. Visa itu izin masuk di paspor, zairyuu card adalah izin tinggal setelah kamu di dalam Jepang.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "Zairyuu Card (Residence Card)",
+      "在留カードを取得する (memperoleh Zairyuu Card)",
+      "在留カードの申請 (pengajuan Zairyuu Card)"
+    ],
+    "exampleSentence": {
+      "japanese": "在留カードの手続きを確認します。",
+      "reading": "ざいりゅうかーどのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan Zairyuu Card."
+    },
+    "meaningJa": "Residence Card",
+    "kanjiComponents": [
+      "在",
+      "留"
+    ]
+  },
+  "kotoba_ssw_006": {
+    "id": "kotoba_ssw_006",
+    "word": "国際交流基金日本語基礎テスト",
+    "reading": "こくさいこうりゅうききんにほんごきそてすと",
+    "romaji": "kokusai kouryuu kikin nihongo kiso tesuto",
+    "meaningId": "JFT-Basic — Tes bahasa Jepang untuk situasi kerja sehari-hari.",
+    "meaningEn": "Japan Foundation Test for Basic Japanese",
+    "definitionId": "Tes bahasa Jepang untuk situasi kerja sehari-hari. Hasilnya lulus atau tidak lulus, setara kemampuan dasar percakapan kerja.\n\nKenapa penting\n              Ini tes bahasa yang paling sering dipakai sebagai syarat SSW, dan bisa diambil beberapa kali dalam setahun lewat Prometric.\nTanda bahaya\n              Pendaftaran resmi lewat Prometric dan dibayar sendiri. Agen tidak berhak menambah biaya jasa besar di atas biaya ujian.\nSering disalahpahami\n              Dikira bisa menggantikan JLPT untuk semua keperluan. Untuk sekolah dan beberapa perusahaan, yang diminta tetap JLPT.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "JFT-Basic (Japan Foundation Test for Basic Japanese)",
+      "国際交流基金日本語基礎テストを取得する (memperoleh JFT-Basic)",
+      "国際交流基金日本語基礎テストの申請 (pengajuan JFT-Basic)"
+    ],
+    "exampleSentence": {
+      "japanese": "国際交流基金日本語基礎テストの手続きを確認します。",
+      "reading": "こくさいこうりゅうききんにほんごきそてすとのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan JFT-Basic."
+    },
+    "meaningJa": "Japan Foundation Test for Basic Japanese",
+    "kanjiComponents": [
+      "国",
+      "際",
+      "交",
+      "流",
+      "基",
+      "金",
+      "日",
+      "本",
+      "語",
+      "礎"
+    ]
+  },
+  "kotoba_ssw_007": {
+    "id": "kotoba_ssw_007",
+    "word": "日本語能力試験",
+    "reading": "にほんごのうりょくしけん",
+    "romaji": "nihongo nouryoku shiken",
+    "meaningId": "JLPT — Ujian kemampuan bahasa Jepang bertingkat, dari N5 (paling dasar) sampai N1 (paling tinggi).",
+    "meaningEn": "Japanese Language Proficiency Test",
+    "definitionId": "Ujian kemampuan bahasa Jepang bertingkat, dari N5 (paling dasar) sampai N1 (paling tinggi). Menguji membaca dan mendengar, tanpa tes berbicara.\n\nKenapa penting\n              N4 bisa dipakai sebagai syarat bahasa SSW menggantikan JFT-Basic. N5 biasanya cukup untuk masuk sekolah bahasa.\nTanda bahaya\n              JLPT hanya diadakan dua kali setahun di Indonesia. Kalau ada yang menawarkan ujian di luar jadwal resmi, itu bukan JLPT.\nSering disalahpahami\n              Banyak yang mengira JLPT menguji kemampuan berbicara. Tidak ada bagian berbicara, jadi lulus N4 belum berarti lancar mengobrol.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "JLPT (Japanese Language Proficiency Test)",
+      "日本語能力試験を取得する (memperoleh JLPT)",
+      "日本語能力試験の申請 (pengajuan JLPT)"
+    ],
+    "exampleSentence": {
+      "japanese": "日本語能力試験の手続きを確認します。",
+      "reading": "にほんごのうりょくしけんのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan JLPT."
+    },
+    "meaningJa": "Japanese Language Proficiency Test",
+    "kanjiComponents": [
+      "日",
+      "本",
+      "語",
+      "能",
+      "力",
+      "試",
+      "験"
+    ]
+  },
+  "kotoba_ssw_008": {
+    "id": "kotoba_ssw_008",
+    "word": "技能評価試験",
+    "reading": "ぎのうひょうかしけん",
+    "romaji": "ginou hyouka shiken",
+    "meaningId": "Ujian Keahlian — Tes kemampuan sesuai bidang kerja yang kamu pilih, misalnya perawatan lansia, pengolahan makanan, atau perhotelan.",
+    "meaningEn": "Skills Evaluation Test",
+    "definitionId": "Tes kemampuan sesuai bidang kerja yang kamu pilih, misalnya perawatan lansia, pengolahan makanan, atau perhotelan.\n\nKenapa penting\n              Untuk SSW kamu butuh dua kelulusan: tes bahasa dan tes keahlian bidang ini. Satu saja tidak cukup.\nTanda bahaya\n              Materi dan jadwal ujian keahlian diumumkan resmi per bidang. Hati-hati dengan yang menjual bocoran soal.\nSering disalahpahami\n              Dikira otomatis lulus kalau sudah punya pengalaman kerja di bidang yang sama di Indonesia. Tetap harus ikut ujiannya.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "Ujian Keahlian (Skills Evaluation Test)",
+      "技能評価試験を取得する (memperoleh Ujian Keahlian)",
+      "技能評価試験の申請 (pengajuan Ujian Keahlian)"
+    ],
+    "exampleSentence": {
+      "japanese": "技能評価試験の手続きを確認します。",
+      "reading": "ぎのうひょうかしけんのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan Ujian Keahlian."
+    },
+    "meaningJa": "Skills Evaluation Test",
+    "kanjiComponents": [
+      "技",
+      "能",
+      "評",
+      "価",
+      "試",
+      "験"
+    ]
+  },
+  "kotoba_ssw_009": {
+    "id": "kotoba_ssw_009",
+    "word": "日本留学試験",
+    "reading": "にほんりゅうがくしけん",
+    "romaji": "nihon ryuugaku shiken",
+    "meaningId": "EJU — Ujian masuk untuk calon mahasiswa asing di universitas Jepang.",
+    "meaningEn": "Examination for Japanese University Admission",
+    "definitionId": "Ujian masuk untuk calon mahasiswa asing di universitas Jepang. Selain bahasa Jepang, ada mata uji seperti matematika dan sains sesuai jurusan.\n\nKenapa penting\n              Hanya perlu kalau tujuanmu kuliah S1 di Jepang. Untuk jalur kerja, ujian ini tidak dibutuhkan.\nTanda bahaya\n              Kalau tujuanmu kerja tapi agen menyuruh ikut EJU, tanyakan alasannya. Biaya dan waktu belajarnya sia-sia untuk jalur kerja.\nSering disalahpahami\n              Dikira syarat semua jalur ke Jepang. Ini khusus jalur kuliah, bukan jalur kerja.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "EJU (Examination for Japanese University Admission)",
+      "日本留学試験を取得する (memperoleh EJU)",
+      "日本留学試験の申請 (pengajuan EJU)"
+    ],
+    "exampleSentence": {
+      "japanese": "日本留学試験の手続きを確認します。",
+      "reading": "にほんりゅうがくしけんのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan EJU."
+    },
+    "meaningJa": "Examination for Japanese University Admission",
+    "kanjiComponents": [
+      "日",
+      "本",
+      "留",
+      "学",
+      "試",
+      "験"
+    ]
+  },
+  "kotoba_ssw_010": {
+    "id": "kotoba_ssw_010",
+    "word": "在留資格認定証明書",
+    "reading": "ざいりゅうしかくにんていしょうめいしょ",
+    "romaji": "zairyuu shikaku nintei shoumeisho",
+    "meaningId": "COE — Surat keterangan dari Imigrasi Jepang bahwa kamu memenuhi syarat untuk status tinggal tertentu.",
+    "meaningEn": "Certificate of Eligibility",
+    "definitionId": "Surat keterangan dari Imigrasi Jepang bahwa kamu memenuhi syarat untuk status tinggal tertentu. Diajukan dari dalam Jepang oleh perusahaan atau sekolah yang menerimamu.\n\nKenapa penting\n              Tanpa COE, kedutaan tidak akan memproses visa kerja atau visa pelajar. Ini pintu pertama sebelum visa.\nTanda bahaya\n              Yang mengajukan COE adalah perusahaan atau sekolah, bukan kamu, dan pengajuannya tidak dibebankan ke pelamar. Kalau ada yang menagih biaya COE ke kamu, tanyakan dasarnya.\nSering disalahpahami\n              Dikira COE sama dengan visa. COE adalah bukti kelayakan, visa adalah izin masuknya yang ditempel di paspor.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "COE (Certificate of Eligibility)",
+      "在留資格認定証明書を取得する (memperoleh COE)",
+      "在留資格認定証明書の申請 (pengajuan COE)"
+    ],
+    "exampleSentence": {
+      "japanese": "在留資格認定証明書の手続きを確認します。",
+      "reading": "ざいりゅうしかくにんていしょうめいしょのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan COE."
+    },
+    "meaningJa": "Certificate of Eligibility",
+    "kanjiComponents": [
+      "在",
+      "留",
+      "資",
+      "格",
+      "認",
+      "定",
+      "証",
+      "明",
+      "書"
+    ]
+  },
+  "kotoba_ssw_011": {
+    "id": "kotoba_ssw_011",
+    "word": "海外労働者カード",
+    "reading": "かいがいろうどうしゃかーど",
+    "romaji": "kaigai roudousha kaado",
+    "meaningId": "EKTLN — Kartu digital dari pemerintah Indonesia sebagai bukti kamu tercatat resmi sebagai pekerja migran.",
+    "meaningEn": "Elektronik Kartu Tenaga Kerja Luar Negeri",
+    "definitionId": "Kartu digital dari pemerintah Indonesia sebagai bukti kamu tercatat resmi sebagai pekerja migran. Menggantikan KTKN kartu fisik yang lama.\n\nKenapa penting\n              Ini yang membuat keberangkatanmu tercatat negara, sehingga kamu bisa dibantu kalau ada masalah di Jepang.\nTanda bahaya\n              Tarifnya mengikuti ketentuan resmi PNBP dan selalu ada kuitansi. Minta bukti pembayaran resmi, jangan bayar tunai tanpa tanda terima.\nSering disalahpahami\n              Dianggap formalitas yang bisa dilewati kalau agen bilang tidak perlu. Berangkat tanpa pencatatan resmi membuatmu masuk kategori pekerja tidak berdokumen.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "EKTLN (Elektronik Kartu Tenaga Kerja Luar Negeri)",
+      "海外労働者カードを取得する (memperoleh EKTLN)",
+      "海外労働者カードの申請 (pengajuan EKTLN)"
+    ],
+    "exampleSentence": {
+      "japanese": "海外労働者カードの手続きを確認します。",
+      "reading": "かいがいろうどうしゃかーどのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan EKTLN."
+    },
+    "meaningJa": "Elektronik Kartu Tenaga Kerja Luar Negeri",
+    "kanjiComponents": [
+      "海",
+      "外",
+      "労",
+      "働",
+      "者"
+    ]
+  },
+  "kotoba_ssw_012": {
+    "id": "kotoba_ssw_012",
+    "word": "パスポート",
+    "reading": "ぱすぽーと",
+    "romaji": "pasupooto",
+    "meaningId": "Paspor — Dokumen perjalanan yang wajib dimiliki.",
+    "meaningEn": "Paspor Republik Indonesia",
+    "definitionId": "Dokumen perjalanan yang wajib dimiliki. Untuk bekerja, sisa masa berlaku sebaiknya masih panjang, biasanya minimal 18 bulan.\n\nKenapa penting\n              Nama di paspor jadi acuan semua dokumen lain. Beda satu huruf saja bisa menghambat pengajuan COE dan visa.\nTanda bahaya\n              Paspor adalah milikmu. Perusahaan atau agen tidak berhak menyimpan atau menahan paspormu dengan alasan apa pun.\nSering disalahpahami\n              Dikira boleh mengubah nama panggilan supaya lebih mudah dibaca orang Jepang. Semua dokumen harus persis sama dengan paspor.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "Paspor (Paspor Republik Indonesia)",
+      "パスポートを取得する (memperoleh Paspor)",
+      "パスポートの申請 (pengajuan Paspor)"
+    ],
+    "exampleSentence": {
+      "japanese": "パスポートの手続きを確認します。",
+      "reading": "ぱすぽーとのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan Paspor."
+    },
+    "meaningJa": "Paspor Republik Indonesia",
+    "kanjiComponents": []
+  },
+  "kotoba_ssw_013": {
+    "id": "kotoba_ssw_013",
+    "word": "査証",
+    "reading": "さしょう",
+    "romaji": "sashou",
+    "meaningId": "Visa — Izin masuk Jepang yang ditempel di paspor, diterbitkan kedutaan atau konsulat setelah COE kamu terbit.",
+    "meaningEn": "Visa Kerja atau Visa Pelajar",
+    "definitionId": "Izin masuk Jepang yang ditempel di paspor, diterbitkan kedutaan atau konsulat setelah COE kamu terbit.\n\nKenapa penting\n              Ini langkah terakhir sebelum bisa terbang. Prosesnya biasanya beberapa hari kerja setelah dokumen lengkap.\nTanda bahaya\n              Biaya visa dibayar di kedutaan sesuai tarif resmi. Layanan titip dokumen yang menagih jauh di atas tarif itu perlu kamu pertanyakan.\nSering disalahpahami\n              Dikira bisa diurus lebih dulu sebelum ada COE atau tempat kerja. Urutannya tidak bisa dibalik.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "Visa (Visa Kerja atau Visa Pelajar)",
+      "査証を取得する (memperoleh Visa)",
+      "査証の申請 (pengajuan Visa)"
+    ],
+    "exampleSentence": {
+      "japanese": "査証の手続きを確認します。",
+      "reading": "さしょうのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan Visa."
+    },
+    "meaningJa": "Visa Kerja atau Visa Pelajar",
+    "kanjiComponents": [
+      "査",
+      "証"
+    ]
+  },
+  "kotoba_ssw_014": {
+    "id": "kotoba_ssw_014",
+    "word": "健康診断",
+    "reading": "けんこうしんだん",
+    "romaji": "kenkou shindan",
+    "meaningId": "MCU — Pemeriksaan kesehatan menyeluruh sebagai syarat kerja, mencakup rontgen, darah, dan pemeriksaan umum.",
+    "meaningEn": "Medical Check Up",
+    "definitionId": "Pemeriksaan kesehatan menyeluruh sebagai syarat kerja, mencakup rontgen, darah, dan pemeriksaan umum.\n\nKenapa penting\n              Perusahaan Jepang butuh kepastian kamu sehat untuk pekerjaan yang sering butuh fisik kuat atau kerja bergilir.\nTanda bahaya\n              Kalau ada yang menawarkan memalsukan hasil MCU, tolak. Ketahuan berarti kontrak dibatalkan dan namamu masuk catatan buruk.\nSering disalahpahami\n              Dikira bisa diakali dengan surat sehat biasa dari klinik. MCU dilakukan di fasilitas yang ditunjuk dengan format hasil tertentu.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "MCU (Medical Check Up)",
+      "健康診断を取得する (memperoleh MCU)",
+      "健康診断の申請 (pengajuan MCU)"
+    ],
+    "exampleSentence": {
+      "japanese": "健康診断の手続きを確認します。",
+      "reading": "けんこうしんだんのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan MCU."
+    },
+    "meaningJa": "Medical Check Up",
+    "kanjiComponents": [
+      "健",
+      "康",
+      "診",
+      "断"
+    ]
+  },
+  "kotoba_ssw_015": {
+    "id": "kotoba_ssw_015",
+    "word": "経費支弁書",
+    "reading": "けいひしべんしょ",
+    "romaji": "keihi shiben sho",
+    "meaningId": "Bukti Keuangan — Dokumen yang menunjukkan ada dana cukup untuk biaya hidup dan sekolah, biasanya berupa rekening penjamin beserta surat pernyataan.",
+    "meaningEn": "Bukti Kemampuan Membiayai",
+    "definitionId": "Dokumen yang menunjukkan ada dana cukup untuk biaya hidup dan sekolah, biasanya berupa rekening penjamin beserta surat pernyataan.\n\nKenapa penting\n              Wajib untuk jalur sekolah atau kuliah. Imigrasi ingin memastikan kamu tidak kesulitan biaya di tengah masa studi.\nTanda bahaya\n              Jangan pernah memindahkan dana bukti keuangan ke rekening perorangan milik agen. Uang itu tidak perlu berpindah tangan.\nSering disalahpahami\n              Dikira uangnya harus diserahkan ke agen. Dana ini tetap di rekening penjamin, hanya ditunjukkan sebagai bukti.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "Bukti Keuangan (Bukti Kemampuan Membiayai)",
+      "経費支弁書を取得する (memperoleh Bukti Keuangan)",
+      "経費支弁書の申請 (pengajuan Bukti Keuangan)"
+    ],
+    "exampleSentence": {
+      "japanese": "経費支弁書の手続きを確認します。",
+      "reading": "けいひしべんしょのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan Bukti Keuangan."
+    },
+    "meaningJa": "Bukti Kemampuan Membiayai",
+    "kanjiComponents": [
+      "経",
+      "費",
+      "支",
+      "弁",
+      "書"
+    ]
+  },
+  "kotoba_ssw_016": {
+    "id": "kotoba_ssw_016",
+    "word": "研修機関",
+    "reading": "けんしゅうきかん",
+    "romaji": "kenshuu kikan",
+    "meaningId": "LPK — Tempat kursus bahasa dan pelatihan keterampilan di Indonesia sebelum berangkat.",
+    "meaningEn": "Lembaga Pelatihan Kerja",
+    "definitionId": "Tempat kursus bahasa dan pelatihan keterampilan di Indonesia sebelum berangkat. Beberapa juga membantu proses penempatan.\n\nKenapa penting\n              Banyak calon pekerja mulai dari LPK. Kualitasnya sangat beragam, jadi memilih dengan teliti itu penting.\nTanda bahaya\n              Tanyakan nomor izin resminya dan cek. LPK yang menahan ijazah atau meminta uang besar di awal dengan janji pasti berangkat adalah tanda bahaya.\nSering disalahpahami\n              Dikira semua LPK otomatis punya izin mengirim pekerja ke luar negeri. Mengirim pekerja butuh izin terpisah sebagai P3MI.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "LPK (Lembaga Pelatihan Kerja)",
+      "研修機関を取得する (memperoleh LPK)",
+      "研修機関の申請 (pengajuan LPK)"
+    ],
+    "exampleSentence": {
+      "japanese": "研修機関の手続きを確認します。",
+      "reading": "けんしゅうきかんのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan LPK."
+    },
+    "meaningJa": "Lembaga Pelatihan Kerja",
+    "kanjiComponents": [
+      "研",
+      "修",
+      "機",
+      "関"
+    ]
+  },
+  "kotoba_ssw_017": {
+    "id": "kotoba_ssw_017",
+    "word": "送り出し機関",
+    "reading": "おくりだしきかん",
+    "romaji": "okuridashi kikan",
+    "meaningId": "P3MI — Perusahaan berizin resmi dari pemerintah Indonesia untuk menempatkan pekerja ke luar negeri.",
+    "meaningEn": "Perusahaan Penempatan Pekerja Migran Indonesia",
+    "definitionId": "Perusahaan berizin resmi dari pemerintah Indonesia untuk menempatkan pekerja ke luar negeri. Dulu dikenal sebagai PPTKIS.\n\nKenapa penting\n              Hanya lembaga berizin yang boleh memproses penempatanmu. Ini pelindung utamamu dari penempatan ilegal.\nTanda bahaya\n              Minta nomor izin P3MI dan pastikan namanya tercatat resmi. Berangkat lewat perantara tanpa izin membuatmu tidak terlindungi hukum.\nSering disalahpahami\n              Dikira sama dengan LPK. LPK melatih, P3MI yang berwenang menempatkan.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "P3MI (Perusahaan Penempatan Pekerja Migran Indonesia)",
+      "送り出し機関を取得する (memperoleh P3MI)",
+      "送り出し機関の申請 (pengajuan P3MI)"
+    ],
+    "exampleSentence": {
+      "japanese": "送り出し機関の手続きを確認します。",
+      "reading": "おくりだしきかんのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan P3MI."
+    },
+    "meaningJa": "Perusahaan Penempatan Pekerja Migran Indonesia",
+    "kanjiComponents": [
+      "送",
+      "出",
+      "機",
+      "関"
+    ]
+  },
+  "kotoba_ssw_018": {
+    "id": "kotoba_ssw_018",
+    "word": "送出機関",
+    "reading": "おくりだしきかん",
+    "romaji": "okuridashi kikan",
+    "meaningId": "SO — Istilah untuk lembaga pengirim dari negara asal yang bekerja sama dengan pihak penerima di Jepang.",
+    "meaningEn": "Sending Organization",
+    "definitionId": "Istilah untuk lembaga pengirim dari negara asal yang bekerja sama dengan pihak penerima di Jepang.\n\nKenapa penting\n              Sering muncul di dokumen dan percakapan agen. Fungsinya mirip P3MI dari sisi mitra Jepang.\nTanda bahaya\n              SO tidak berhak memungut biaya penempatan di luar ketentuan. Catat setiap pembayaran dan mintalah kuitansi.\nSering disalahpahami\n              Dikira pihak yang menentukan gajimu. Gaji ditentukan perusahaan penerima di Jepang sesuai aturan upah setempat.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "SO (Sending Organization)",
+      "送出機関を取得する (memperoleh SO)",
+      "送出機関の申請 (pengajuan SO)"
+    ],
+    "exampleSentence": {
+      "japanese": "送出機関の手続きを確認します。",
+      "reading": "おくりだしきかんのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan SO."
+    },
+    "meaningJa": "Sending Organization",
+    "kanjiComponents": [
+      "送",
+      "出",
+      "機",
+      "関"
+    ]
+  },
+  "kotoba_ssw_019": {
+    "id": "kotoba_ssw_019",
+    "word": "監理団体",
+    "reading": "かんりだんたい",
+    "romaji": "kanri dantai",
+    "meaningId": "Kumiai — Organisasi di Jepang yang mengawasi pelaksanaan program pemagangan dan menjadi penghubung dengan perusahaan penerima.",
+    "meaningEn": "Supervising Organization",
+    "definitionId": "Organisasi di Jepang yang mengawasi pelaksanaan program pemagangan dan menjadi penghubung dengan perusahaan penerima.\n\nKenapa penting\n              Kalau kamu masuk lewat pemagangan, kumiai adalah pihak yang bisa kamu hubungi saat ada masalah di tempat kerja.\nTanda bahaya\n              Catat kontak kumiai sebelum berangkat. Kalau perusahaan melarangmu menghubungi mereka, itu tanda ada yang tidak benar.\nSering disalahpahami\n              Dikira majikanmu. Kumiai mengawasi, perusahaan penerima yang mempekerjakanmu.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "Kumiai (Supervising Organization)",
+      "監理団体を取得する (memperoleh Kumiai)",
+      "監理団体の申請 (pengajuan Kumiai)"
+    ],
+    "exampleSentence": {
+      "japanese": "監理団体の手続きを確認します。",
+      "reading": "かんりだんたいのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan Kumiai."
+    },
+    "meaningJa": "Supervising Organization",
+    "kanjiComponents": [
+      "監",
+      "理",
+      "団",
+      "体"
+    ]
+  },
+  "kotoba_ssw_020": {
+    "id": "kotoba_ssw_020",
+    "word": "ハローワーク",
+    "reading": "はろーわーく",
+    "romaji": "haroo waaku",
+    "meaningId": "Hello Work — Kantor tenaga kerja resmi milik pemerintah Jepang.",
+    "meaningEn": "Japan Public Employment Security Office",
+    "definitionId": "Kantor tenaga kerja resmi milik pemerintah Jepang. Menyediakan informasi lowongan dan konsultasi kerja secara gratis.\n\nKenapa penting\n              Setelah di Jepang, ini tempat resmi mencari lowongan tanpa perantara berbayar.\nTanda bahaya\n              Layanannya gratis. Kalau ada yang menawarkan akses Hello Work dengan bayaran, itu tidak perlu.\nSering disalahpahami\n              Dikira hanya untuk warga Jepang. Pekerja asing dengan izin kerja juga bisa memakai layanannya.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "Hello Work (Japan Public Employment Security Office)",
+      "ハローワークを取得する (memperoleh Hello Work)",
+      "ハローワークの申請 (pengajuan Hello Work)"
+    ],
+    "exampleSentence": {
+      "japanese": "ハローワークの手続きを確認します。",
+      "reading": "はろーわーくのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan Hello Work."
+    },
+    "meaningJa": "Japan Public Employment Security Office",
+    "kanjiComponents": []
+  },
+  "kotoba_ssw_021": {
+    "id": "kotoba_ssw_021",
+    "word": "市役所",
+    "reading": "しやくしょ",
+    "romaji": "shiyakusho",
+    "meaningId": "Ward Office — Kantor administrasi setempat untuk lapor alamat, daftar asuransi kesehatan, dan urusan pajak.",
+    "meaningEn": "Kantor Pemerintah Kota atau Distrik",
+    "definitionId": "Kantor administrasi setempat untuk lapor alamat, daftar asuransi kesehatan, dan urusan pajak.\n\nKenapa penting\n              Kamu wajib lapor alamat ke sini dalam waktu dua minggu setelah tiba, kalau tidak izin tinggalmu bisa bermasalah.\nTanda bahaya\n              Layanan di ward office tidak berbayar selain biaya administrasi resmi. Tidak perlu perantara untuk lapor alamat.\nSering disalahpahami\n              Dikira urusan ini diurus perusahaan semua. Beberapa hal harus kamu datangi sendiri dengan zairyuu card.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "Ward Office (Kantor Pemerintah Kota atau Distrik)",
+      "市役所を取得する (memperoleh Ward Office)",
+      "市役所の申請 (pengajuan Ward Office)"
+    ],
+    "exampleSentence": {
+      "japanese": "市役所の手続きを確認します。",
+      "reading": "しやくしょのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan Ward Office."
+    },
+    "meaningJa": "Kantor Pemerintah Kota atau Distrik",
+    "kanjiComponents": [
+      "市",
+      "役",
+      "所"
+    ]
+  },
+  "kotoba_ssw_022": {
+    "id": "kotoba_ssw_022",
+    "word": "給料",
+    "reading": "きゅうりょう",
+    "romaji": "kyuuryou",
+    "meaningId": "Kyuuryou — Gaji.",
+    "meaningEn": "Gaji",
+    "definitionId": "Gaji. Di lowongan biasanya ditulis sebagai gaji kotor per bulan, sebelum potongan.\n\nKenapa penting\n              Angka yang kamu terima di rekening selalu lebih kecil dari angka di lowongan karena ada pajak dan asuransi.\nTanda bahaya\n              Minta rincian perkiraan gaji bersih sebelum tanda tangan kontrak, termasuk potongan tempat tinggal kalau ada.\nSering disalahpahami\n              Angka di lowongan dikira uang bersih yang masuk. Selisihnya bisa 15 sampai 25 persen.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "Kyuuryou (Gaji)",
+      "給料を取得する (memperoleh Kyuuryou)",
+      "給料の申請 (pengajuan Kyuuryou)"
+    ],
+    "exampleSentence": {
+      "japanese": "給料の手続きを確認します。",
+      "reading": "きゅうりょうのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan Kyuuryou."
+    },
+    "meaningJa": "Gaji",
+    "kanjiComponents": [
+      "給",
+      "料"
+    ]
+  },
+  "kotoba_ssw_023": {
+    "id": "kotoba_ssw_023",
+    "word": "手取り",
+    "reading": "てどり",
+    "romaji": "tedori",
+    "meaningId": "Tedori — Uang yang benar-benar kamu terima setelah semua potongan pajak, asuransi, dan biaya asrama.",
+    "meaningEn": "Gaji Bersih",
+    "definitionId": "Uang yang benar-benar kamu terima setelah semua potongan pajak, asuransi, dan biaya asrama.\n\nKenapa penting\n              Ini angka yang menentukan berapa yang bisa kamu kirim ke keluarga. Tanyakan angka ini, bukan hanya gaji kotor.\nTanda bahaya\n              Kalau perusahaan menolak menjelaskan rincian potongan, itu tanda kamu perlu lebih hati-hati.\nSering disalahpahami\n              Tidak ditanyakan sama sekali saat wawancara karena dianggap tidak sopan. Menanyakan ini wajar dan justru menunjukkan kamu realistis.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "Tedori (Gaji Bersih)",
+      "手取りを取得する (memperoleh Tedori)",
+      "手取りの申請 (pengajuan Tedori)"
+    ],
+    "exampleSentence": {
+      "japanese": "手取りの手続きを確認します。",
+      "reading": "てどりのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan Tedori."
+    },
+    "meaningJa": "Gaji Bersih",
+    "kanjiComponents": [
+      "手",
+      "取"
+    ]
+  },
+  "kotoba_ssw_024": {
+    "id": "kotoba_ssw_024",
+    "word": "社会保険",
+    "reading": "しゃかいほけん",
+    "romaji": "shakai hoken",
+    "meaningId": "Shakai Hoken — Paket asuransi kesehatan dan pensiun yang dipotong otomatis dari gaji.",
+    "meaningEn": "Asuransi Sosial",
+    "definitionId": "Paket asuransi kesehatan dan pensiun yang dipotong otomatis dari gaji. Termasuk asuransi kesehatan dan dana pensiun.\n\nKenapa penting\n              Wajib dan bukan pungutan liar. Dengan ini biaya ke rumah sakit hanya sekitar 30 persen dari total.\nTanda bahaya\n              Uang pensiun yang sudah kamu setor bisa diklaim sebagian saat pulang permanen lewat lump-sum withdrawal. Simpan semua slip gajimu.\nSering disalahpahami\n              Dikira potongan sepihak dari perusahaan. Ini kewajiban yang diatur negara, dan perusahaan ikut menanggung sebagian.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "Shakai Hoken (Asuransi Sosial)",
+      "社会保険を取得する (memperoleh Shakai Hoken)",
+      "社会保険の申請 (pengajuan Shakai Hoken)"
+    ],
+    "exampleSentence": {
+      "japanese": "社会保険の手続きを確認します。",
+      "reading": "しゃかいほけんのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan Shakai Hoken."
+    },
+    "meaningJa": "Asuransi Sosial",
+    "kanjiComponents": [
+      "社",
+      "会",
+      "保",
+      "険"
+    ]
+  },
+  "kotoba_ssw_025": {
+    "id": "kotoba_ssw_025",
+    "word": "残業",
+    "reading": "ざんぎょう",
+    "romaji": "zangyou",
+    "meaningId": "Zangyou — Jam kerja di luar jam normal, dengan upah tambahan yang persentasenya diatur undang-undang.",
+    "meaningEn": "Kerja Lembur",
+    "definitionId": "Jam kerja di luar jam normal, dengan upah tambahan yang persentasenya diatur undang-undang.\n\nKenapa penting\n              Lembur sah selama dibayar sesuai aturan dan tidak dipaksa berlebihan. Ini sering jadi sumber tambahan penghasilan.\nTanda bahaya\n              Lembur tanpa bayaran tambahan adalah pelanggaran. Catat jam kerjamu sendiri sebagai pegangan.\nSering disalahpahami\n              Dikira semua lembur dibayar sama dengan jam biasa. Ada tambahan minimal 25 persen, lebih tinggi untuk malam dan hari libur.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "Zangyou (Kerja Lembur)",
+      "残業を取得する (memperoleh Zangyou)",
+      "残業の申請 (pengajuan Zangyou)"
+    ],
+    "exampleSentence": {
+      "japanese": "残業の手続きを確認します。",
+      "reading": "ざんぎょうのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan Zangyou."
+    },
+    "meaningJa": "Kerja Lembur",
+    "kanjiComponents": [
+      "残",
+      "業"
+    ]
+  },
+  "kotoba_ssw_026": {
+    "id": "kotoba_ssw_026",
+    "word": "報告",
+    "reading": "ほうこく",
+    "romaji": "houkoku",
+    "meaningId": "Houkoku — Kebiasaan melaporkan hasil kerja, masalah, dan kesalahan kepada atasan secepat mungkin.",
+    "meaningEn": "Melapor",
+    "definitionId": "Kebiasaan melaporkan hasil kerja, masalah, dan kesalahan kepada atasan secepat mungkin.\n\nKenapa penting\n              Di tempat kerja Jepang, menutupi masalah dianggap jauh lebih buruk daripada membuat kesalahan itu sendiri.\nTanda bahaya\n              Kalau ada kesalahan kerja, laporkan hari itu juga. Menunda satu hari bisa mengubah masalah kecil menjadi besar.\nSering disalahpahami\n              Dikira menunjukkan kamu tidak mampu. Justru sebaliknya, tidak melapor yang membuatmu dinilai tidak bisa dipercaya.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "Houkoku (Melapor)",
+      "報告を取得する (memperoleh Houkoku)",
+      "報告の申請 (pengajuan Houkoku)"
+    ],
+    "exampleSentence": {
+      "japanese": "報告の手続きを確認します。",
+      "reading": "ほうこくのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan Houkoku."
+    },
+    "meaningJa": "Melapor",
+    "kanjiComponents": [
+      "報",
+      "告"
+    ]
+  },
+  "kotoba_ssw_027": {
+    "id": "kotoba_ssw_027",
+    "word": "年金",
+    "reading": "ねんきん",
+    "romaji": "nenkin",
+    "meaningId": "Nenkin — Iuran pensiun yang dipotong dari gaji setiap bulan.",
+    "meaningEn": "Dana Pensiun",
+    "definitionId": "Iuran pensiun yang dipotong dari gaji setiap bulan.\n\nKenapa penting\n              Kalau kamu pulang permanen, sebagian iuran bisa diklaim kembali. Ini uang yang sering terlupakan oleh pekerja yang pulang.\nTanda bahaya\n              Klaim ada batas waktunya setelah kamu meninggalkan Jepang. Jangan buang buku pensiun dan slip gaji.\nSering disalahpahami\n              Dianggap hilang begitu saja saat pulang. Ada mekanisme klaim yang bisa diajukan setelah keluar dari Jepang.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "Nenkin (Dana Pensiun)",
+      "年金を取得する (memperoleh Nenkin)",
+      "年金の申請 (pengajuan Nenkin)"
+    ],
+    "exampleSentence": {
+      "japanese": "年金の手続きを確認します。",
+      "reading": "ねんきんのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan Nenkin."
+    },
+    "meaningJa": "Dana Pensiun",
+    "kanjiComponents": [
+      "年",
+      "金"
+    ]
+  },
+  "kotoba_ssw_028": {
+    "id": "kotoba_ssw_028",
+    "word": "紹介手数料",
+    "reading": "しょうかいてすうりょう",
+    "romaji": "shoukai tesuuryou",
+    "meaningId": "Biaya Penempatan — Biaya jasa penempatan kerja.",
+    "meaningEn": "Placement Fee",
+    "definitionId": "Biaya jasa penempatan kerja. Untuk jalur SSW, biaya penempatan tidak boleh dibebankan kepada pekerja.\n\nKenapa penting\n              Ini pungutan paling sering dipakai untuk memeras calon pekerja, kadang sampai puluhan juta rupiah.\nTanda bahaya\n              Yang wajar kamu bayar sendiri adalah paspor, MCU, ujian, dan pencatatan resmi. Kalau ada tagihan puluhan juta untuk jaminan berangkat, itu tanda bahaya besar.\nSering disalahpahami\n              Dikira wajar karena semua orang membayarnya. Banyak yang membayar bukan berarti itu sah.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "Biaya Penempatan (Placement Fee)",
+      "紹介手数料を取得する (memperoleh Biaya Penempatan)",
+      "紹介手数料の申請 (pengajuan Biaya Penempatan)"
+    ],
+    "exampleSentence": {
+      "japanese": "紹介手数料の手続きを確認します。",
+      "reading": "しょうかいてすうりょうのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan Biaya Penempatan."
+    },
+    "meaningJa": "Placement Fee",
+    "kanjiComponents": [
+      "紹",
+      "介",
+      "手",
+      "数",
+      "料"
+    ]
+  },
+  "kotoba_ssw_029": {
+    "id": "kotoba_ssw_029",
+    "word": "書類の預かり",
+    "reading": "しょるいのあずかり",
+    "romaji": "shorui no azukari",
+    "meaningId": "Penahanan Dokumen — Praktik menyimpan paspor, ijazah, atau zairyuu card milikmu sebagai jaminan agar kamu tidak berhenti kerja.",
+    "meaningEn": "Penahanan Paspor atau Ijazah",
+    "definitionId": "Praktik menyimpan paspor, ijazah, atau zairyuu card milikmu sebagai jaminan agar kamu tidak berhenti kerja.\n\nKenapa penting\n              Ini salah satu tanda kerja paksa yang paling jelas dan dilarang, baik di Indonesia maupun di Jepang.\nTanda bahaya\n              Jangan serahkan dokumen asli untuk disimpan. Kalau sudah tertahan, minta kembali secara tertulis dan hubungi lembaga pengawas.\nSering disalahpahami\n              Diterima karena dianggap prosedur biasa selama pelatihan. Tidak ada aturan yang mewajibkan dokumen pribadimu ditahan.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "Penahanan Dokumen (Penahanan Paspor atau Ijazah)",
+      "書類の預かりを取得する (memperoleh Penahanan Dokumen)",
+      "書類の預かりの申請 (pengajuan Penahanan Dokumen)"
+    ],
+    "exampleSentence": {
+      "japanese": "書類の預かりの手続きを確認します。",
+      "reading": "しょるいのあずかりのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan Penahanan Dokumen."
+    },
+    "meaningJa": "Penahanan Paspor atau Ijazah",
+    "kanjiComponents": [
+      "書",
+      "類",
+      "預"
+    ]
+  },
+  "kotoba_ssw_030": {
+    "id": "kotoba_ssw_030",
+    "word": "白紙契約",
+    "reading": "はくしけいやく",
+    "romaji": "hakushi keiyaku",
+    "meaningId": "Kontrak Kosong — Kontrak yang diminta kamu tanda tangani padahal isinya belum lengkap, atau seluruhnya berbahasa Jepang tanpa terjemahan.",
+    "meaningEn": "Kontrak Tanpa Rincian",
+    "definitionId": "Kontrak yang diminta kamu tanda tangani padahal isinya belum lengkap, atau seluruhnya berbahasa Jepang tanpa terjemahan.\n\nKenapa penting\n              Kamu berhak tahu isi kontrak dalam bahasa yang kamu pahami sebelum tanda tangan.\nTanda bahaya\n              Minta salinan kontrak dengan terjemahan, dan pastikan gaji, jam kerja, potongan, dan alamat tempat kerja tertulis jelas sebelum tanda tangan.\nSering disalahpahami\n              Ditandatangani karena takut kehilangan kesempatan. Kontrak yang tidak kamu pahami bisa memuat potongan yang tidak kamu setujui.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "Kontrak Kosong (Kontrak Tanpa Rincian)",
+      "白紙契約を取得する (memperoleh Kontrak Kosong)",
+      "白紙契約の申請 (pengajuan Kontrak Kosong)"
+    ],
+    "exampleSentence": {
+      "japanese": "白紙契約の手続きを確認します。",
+      "reading": "はくしけいやくのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan Kontrak Kosong."
+    },
+    "meaningJa": "Kontrak Tanpa Rincian",
+    "kanjiComponents": [
+      "白",
+      "紙",
+      "契",
+      "約"
+    ]
+  },
+  "kotoba_ssw_031": {
+    "id": "kotoba_ssw_031",
+    "word": "確実合格の宣伝",
+    "reading": "かくじつごうかくのせんでん",
+    "romaji": "kakujitsu goukaku no senden",
+    "meaningId": "Janji Pasti Lolos — Klaim bahwa kamu pasti berangkat atau pasti lulus ujian tanpa perlu tes bahasa dan tes keahlian.",
+    "meaningEn": "Jaminan Lolos Tanpa Ujian",
+    "definitionId": "Klaim bahwa kamu pasti berangkat atau pasti lulus ujian tanpa perlu tes bahasa dan tes keahlian.\n\nKenapa penting\n              Syarat ujian SSW ditetapkan pemerintah Jepang, jadi tidak ada pihak yang bisa menjaminnya.\nTanda bahaya\n              Kalimat pasti berangkat, tanpa tes, atau bayar dulu supaya diprioritaskan adalah tiga tanda bahaya yang paling sering muncul.\nSering disalahpahami\n              Dipercaya karena disertai foto keberangkatan orang lain. Foto dan testimoni sangat mudah dibuat.",
+    "jlpt": "SSW",
+    "wordType": "noun",
+    "tags": [
+      "SSW",
+      "Kerja",
+      "Keberangkatan"
+    ],
+    "unitName": "Istilah Kerja & Keberangkatan SSW",
+    "collocations": [
+      "Janji Pasti Lolos (Jaminan Lolos Tanpa Ujian)",
+      "確実合格の宣伝を取得する (memperoleh Janji Pasti Lolos)",
+      "確実合格の宣伝の申請 (pengajuan Janji Pasti Lolos)"
+    ],
+    "exampleSentence": {
+      "japanese": "確実合格の宣伝の手続きを確認します。",
+      "reading": "かくじつごうかくのせんでんのてつづきをかくにんします。",
+      "meaningId": "Mengonfirmasi prosedur pengurusan Janji Pasti Lolos."
+    },
+    "meaningJa": "Jaminan Lolos Tanpa Ujian",
+    "kanjiComponents": [
+      "確",
+      "実",
+      "合",
+      "格",
+      "宣",
+      "伝"
+    ]
   }
 }

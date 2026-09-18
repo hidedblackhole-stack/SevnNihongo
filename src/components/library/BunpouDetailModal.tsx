@@ -15,6 +15,8 @@ import {
 } from 'lucide-react';
 import { BunpouItem, Question, ItemMasteryRecord } from '../../types/content';
 import { FormulaDisplay } from '../learning/FormulaDisplay';
+import { GrammarChecklist } from '../learning/GrammarChecklist';
+import { GrammarFormulaBox } from '../learning/GrammarFormulaBox';
 import { RubyText } from '../learning/RubyText';
 import { speakJapanese, playSound } from '../../utils/audio';
 import { getCanonicalGrammarTitle } from '../../utils/bunpouTitleUtils';
@@ -389,11 +391,23 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
         ) : (
           /* ================= MODE MATERI DETAIL (DEFAULT) ================= */
           <div className="p-4 sm:p-6 space-y-4 overflow-y-auto scrollbar-thin flex-1">
+            {/* 1. EDUCATIONAL FUNCTION CHECKLIST (Matching slide ✅ points) */}
+            <GrammarChecklist item={item} />
+
+            {/* 2. BRACKETED FORMULA BOX (Matching slide green bracket grouping) */}
+            <div className="space-y-1.5">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-text-muted font-heading flex items-center justify-between">
+                <span>📐 Rumus Sambungan Kata (接続)</span>
+                <span className="text-[10px] text-emerald-400 font-mono font-bold">K. Kerja / Sifat / Benda</span>
+              </h4>
+              <GrammarFormulaBox item={item} />
+            </div>
+
             {/* Explanation */}
             <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-1.5">
               <h4 className="text-xs font-bold uppercase tracking-wider text-text-muted flex items-center gap-1.5 font-heading">
                 <HelpCircle className="w-3.5 h-3.5 text-gold" />
-                Penjelasan Pola
+                Catatan Penjelasan Detail
               </h4>
               <p className="text-xs sm:text-sm text-text-primary leading-relaxed whitespace-pre-line">
                 {item.explanation}
@@ -423,17 +437,6 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                 )}
               </div>
             )}
-
-            {/* Formula Block */}
-            <div className="space-y-1.5">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-text-muted font-heading">
-                📐 Rumus Pembentukan (Formula)
-              </h4>
-              <FormulaDisplay
-                formula={item.formula}
-                item={item}
-              />
-            </div>
 
             {/* Sub Formulas */}
             {subBranches.length > 0 && (
@@ -536,14 +539,15 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                       key={i}
                       className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle flex items-start justify-between gap-3"
                     >
-                      <div className="space-y-1 flex-1">
-                        <p className="text-sm sm:text-base font-bold text-text-primary flex flex-wrap items-baseline gap-0.5">
+                      <div className="space-y-1.5 flex-1">
+                        <p className="text-sm sm:text-base font-bold text-text-primary flex flex-wrap items-baseline gap-1">
+                          <span className="text-emerald-500 font-bold select-none mr-0.5">•</span>
                           {segments.map((seg, segIdx) => {
                             if (seg.isHighlight) {
                               return (
                                 <span
                                   key={segIdx}
-                                  className="formula-highlight text-red-700 dark:text-amber-300 font-extrabold"
+                                  className="formula-highlight text-emerald-400 dark:text-emerald-300 font-black px-1.5 py-0.5 rounded-md bg-emerald-500/15 border border-emerald-500/30 shadow-xs"
                                   title="Pola Rumus Tata Bahasa"
                                 >
                                   <RubyText
@@ -562,7 +566,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                             );
                           })}
                         </p>
-                        <p className="text-xs text-text-secondary">
+                        <p className="text-xs sm:text-sm text-text-secondary font-medium pl-2.5 border-l-2 border-emerald-500/40 mt-1">
                           {example.meaningId}
                         </p>
                       </div>

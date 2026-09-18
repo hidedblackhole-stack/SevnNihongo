@@ -358,6 +358,8 @@ export interface TryOutQuestion {
   correctIndex: number; // 0-based
   ruby?: string;
   passage?: string; // For Dokkai
+  audio?: string; // For Choukai voice/TTS
+  explanation?: string;
 }
 
 export interface TryOutSection {
@@ -370,10 +372,12 @@ export interface TryOutSection {
 export interface TryOutData {
   id: string;
   title: string;
-  level?: 'N1' | 'N2' | 'N3' | 'N4' | 'N5';
+  level?: 'N1' | 'N2' | 'N3' | 'N4' | 'N5' | 'JFT';
   code?: string;
   year?: number;
   month?: number;
+  passingScore?: number;
+  maxScore?: number;
   sections: {
     mojiGoi: TryOutSection;
     bunpouDokkai: TryOutSection;

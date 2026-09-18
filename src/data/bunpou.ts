@@ -68,12 +68,20 @@ export const BUNPOU_DATABASE: Record<string, BunpouItem> = {};
   const questions = questionsByMaterial.get(item.id) || [];
   
   // Format examples with canonical readings
-  const examples = (item.examples || []).map(ex => ({
-    japanese: ex.jp,
-    reading: ex.reading || sentenceReadingMap.get(ex.jp) || ex.jp,
-    meaningId: ex.id || ex.en || 'Contoh kalimat.',
-    meaningEn: ex.en || ex.id
-  }));
+  const examples = (item.examples || []).map(ex => {
+    let cleanMeaningId = ex.id;
+    const isPlaceholder = !cleanMeaningId || cleanMeaningId.startsWith('Contoh penggunaan pola');
+    if (isPlaceholder && ex.en) {
+      cleanMeaningId = ex.en;
+    }
+
+    return {
+      japanese: ex.jp,
+      reading: ex.reading || sentenceReadingMap.get(ex.jp) || ex.jp,
+      meaningId: cleanMeaningId || ex.en || 'Contoh kalimat.',
+      meaningEn: ex.en || ex.id
+    };
+  });
 
   // Determine level from ID (e.g. bp_n5_004 -> N5)
   // For legacy N3 items (e.g. w1d1g1), default to N3

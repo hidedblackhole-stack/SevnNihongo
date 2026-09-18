@@ -8,10 +8,11 @@ import n3_002 from './n3_002.json';
 import n4_001 from './n4_001.json';
 import n4_002 from './n4_002.json';
 import n5_001 from './n5_001.json';
+import jft_001 from './jft_001.json';
 
 export interface TryOutMeta {
   id: string;
-  level: 'N1' | 'N2' | 'N3' | 'N4' | 'N5';
+  level: 'N1' | 'N2' | 'N3' | 'N4' | 'N5' | 'JFT';
   title: string;
   code: string; // '001', '002', etc. (future packages continue: 003, 004, ...)
   totalQuestions: number;
@@ -90,6 +91,14 @@ export const ALL_TRYOUTS: TryOutMeta[] = [
     code: '001',
     totalQuestions: n1_001.sections.mojiGoi.questions.length + n1_001.sections.bunpouDokkai.questions.length,
     data: n1_001 as unknown as TryOutData
+  },
+  {
+    id: 'jft_001',
+    level: 'JFT',
+    title: 'Simulasi JFT-Basic — Paket Resmi A2',
+    code: 'JFT',
+    totalQuestions: jft_001.sections.mojiGoi.questions.length + jft_001.sections.bunpouDokkai.questions.length + jft_001.sections.choukai.questions.length,
+    data: jft_001 as unknown as TryOutData
   }
 ];
 

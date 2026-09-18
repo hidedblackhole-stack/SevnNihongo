@@ -49,16 +49,30 @@ export class ErrorBoundary extends React.Component<Props, State> {
           
           <div className="flex flex-wrap items-center justify-center gap-3">
             <button 
-              className="px-5 py-2.5 bg-red-800 rounded-xl hover:bg-red-700 text-xs sm:text-sm font-bold text-white transition-all shadow-lg active:scale-95 cursor-pointer"
+              className="px-5 py-2.5 bg-emerald-800 hover:bg-emerald-700 rounded-xl text-xs sm:text-sm font-bold text-white transition-all shadow-lg active:scale-95 cursor-pointer"
               onClick={() => this.setState({ hasError: false, error: null, errorInfo: null })}
             >
               Coba Pulihkan
             </button>
             <button 
-              className="px-5 py-2.5 bg-zinc-800 rounded-xl hover:bg-zinc-700 text-xs sm:text-sm font-bold text-white transition-all shadow-lg active:scale-95 border border-zinc-600 cursor-pointer"
-              onClick={() => { window.location.href = '/'; }}
+              className="px-5 py-2.5 bg-red-800 rounded-xl hover:bg-red-700 text-xs sm:text-sm font-bold text-white transition-all shadow-lg active:scale-95 cursor-pointer"
+              onClick={() => {
+                if (typeof (window as any).__sevnForceReload === 'function') {
+                  (window as any).__sevnForceReload();
+                  return;
+                }
+                if ('serviceWorker' in navigator) {
+                  navigator.serviceWorker.getRegistrations().then(regs => {
+                    regs.forEach(r => r.unregister());
+                  });
+                }
+                if ('caches' in window) {
+                  caches.keys().then(keys => keys.forEach(k => caches.delete(k)));
+                }
+                window.location.reload();
+              }}
             >
-              Muat Ulang Halaman
+              🔄 Bersihkan Cache & Muat Ulang
             </button>
           </div>
         </div>

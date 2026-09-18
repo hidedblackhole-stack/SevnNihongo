@@ -518,7 +518,7 @@ export default function App() {
 
   // Sync to Cloud Save (debounced 3s to avoid excessive requests)
   useEffect(() => {
-    if (!isAuthenticated || !stats.userId) return;
+    if (!stats.userId) return;
 
     const timerId = setTimeout(async () => {
       try {
@@ -583,7 +583,7 @@ export default function App() {
         totalExp: newTotalExp,
       });
 
-      return {
+      const updated = {
         ...prev,
         totalExp: newTotalExp,
         tierIndex: Math.max(0, effectiveTierIndex),
@@ -591,6 +591,13 @@ export default function App() {
         gatedReason: gatedReason,
         gold: Math.max(0, prev.gold + goldGained),
       };
+
+      // Immediately sync to Supabase Leaderboard without waiting for 3s debounce
+      if (updated.userId) {
+        upsertLeaderboard(updated).catch(e => console.warn('Instant leaderboard sync warning:', e));
+      }
+
+      return updated;
     });
   };
 
@@ -1350,6 +1357,7 @@ export default function App() {
                   currentUserId={stats.userId!}
                   soundEnabled={stats.soundEnabled}
                   onOpenStatusModal={() => setIsStatusModalOpen(true)}
+                  isActive={activeTab === 'leaderboard'}
                 />
               )}
             </div>

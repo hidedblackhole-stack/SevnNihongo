@@ -61,8 +61,16 @@ self.addEventListener('fetch', (event) => {
   ) {
     return;
   }
-
   const url = new URL(request.url);
+  if (
+    url.hostname === 'localhost' ||
+    url.hostname === '127.0.0.1' ||
+    url.port === '3000' ||
+    url.pathname.includes('/@vite') ||
+    url.pathname.includes('/node_modules/')
+  ) {
+    return;
+  }
   const isHtml =
     request.mode === 'navigate' ||
     (request.headers.get('accept') && request.headers.get('accept').includes('text/html')) ||

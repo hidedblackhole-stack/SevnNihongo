@@ -21,6 +21,7 @@ const LEVEL_OPTIONS = [
   { value: 'N2', label: 'N2' },
   { value: 'N1', label: 'N1' },
   { value: 'Kaigo', label: '🩺 Kaigo (Caregiver)' },
+  { value: 'SSW', label: '💼 SSW & Istilah Kerja' },
 ];
 
 const LEVEL_BADGE_STYLE: Record<string, string> = {
@@ -30,6 +31,7 @@ const LEVEL_BADGE_STYLE: Record<string, string> = {
   N2: 'border-border-subtle text-text-primary bg-surface-inset shadow-sm',
   N1: 'border-border-subtle text-text-primary bg-surface-inset shadow-sm',
   Kaigo: 'border-emerald-500/40 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 shadow-sm font-bold',
+  SSW: 'border-amber-500/40 text-amber-600 dark:text-amber-400 bg-amber-500/10 shadow-sm font-bold',
 };
 
 export type PriorityTier = 'all' | 'essential' | 'important' | 'supplementary';
@@ -115,15 +117,19 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
       item,
       searchStr: `${item.word || ''} ${item.reading || ''} ${item.meaningId || ''} ${item.meaningJa || ''} ${item.unitName || ''}`.toLowerCase(),
       isKaigo: Boolean(item.tags?.includes('Kaigo')),
+      isSSW: Boolean(item.tags?.includes('SSW') || item.jlpt === 'SSW'),
       priorityTier: getKotobaPriority(item).tier,
     }));
   }, [allKotoba]);
 
   const levelCounts = useMemo(() => {
-    const counts: Record<string, number> = { all: allKotoba.length, N5: 0, N4: 0, N3: 0, N2: 0, N1: 0, Kaigo: 0 };
+    const counts: Record<string, number> = { all: allKotoba.length, N5: 0, N4: 0, N3: 0, N2: 0, N1: 0, Kaigo: 0, SSW: 0 };
     for (const item of allKotoba) {
       if (item.tags?.includes('Kaigo')) {
         counts.Kaigo++;
+      }
+      if (item.tags?.includes('SSW') || item.jlpt === 'SSW') {
+        counts.SSW++;
       }
       if (item.jlpt && counts[item.jlpt] !== undefined) {
         counts[item.jlpt]++;
@@ -160,6 +166,8 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
       if (levelFilter !== 'all') {
         if (levelFilter === 'Kaigo') {
           if (!entry.isKaigo) continue;
+        } else if (levelFilter === 'SSW') {
+          if (!entry.isSSW) continue;
         } else if (item.jlpt !== levelFilter) {
           continue;
         }

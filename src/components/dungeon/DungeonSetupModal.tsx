@@ -94,6 +94,15 @@ const DUNGEON_META: Record<
     themeColor: 'border-emerald-500/40 text-emerald-400',
     glowColor: 'rgba(79, 174, 134, 0.25)',
   },
+  extreme: {
+    title: 'Dungeon Gerbang Kanji Extreme',
+    jpTitle: '極・漢字の百連試練 (100 Extreme Stages)',
+    subtitle: 'Tantangan 3.000 soal tebak Onyomi & Kunyomi dari 100 stage bertingkat',
+    iconEmoji: '🔥',
+    requirementHint: 'Tersedia 100 stage penuh terstruktur (30 soal per stage)',
+    themeColor: 'border-rose-500/40 text-rose-400',
+    glowColor: 'rgba(244, 63, 94, 0.25)',
+  },
 };
 
 const LEVEL_CATEGORY_OPTIONS: {
@@ -111,6 +120,7 @@ const LEVEL_CATEGORY_OPTIONS: {
   { id: 'N1', label: 'JLPT N1', jpBadge: '達人', desc: 'Tingkat Mahir', badge: 'Ahli' },
   { id: 'Kaigo', label: 'Kaigo', jpBadge: '介護', desc: 'Keperawatan', badge: 'Profesi' },
   { id: 'PM', label: 'PM Medis', jpBadge: '医療', desc: 'Kesehatan', badge: 'Kesehatan' },
+  { id: 'SSW', label: 'SSW Kerja', jpBadge: '特技', desc: 'Kerja SSW', badge: 'Kerja SSW' },
 ];
 
 const FLOOR_COUNT_OPTIONS = [
@@ -150,6 +160,8 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
   const [selectedDeckId, setSelectedDeckId] = useState<string | null>(() => compatibleDecks[0]?.deck.id || null);
   const [selectedFloorCount, setSelectedFloorCount] = useState<number>(10);
   const [mode, setMode] = useState<'standard' | 'survival'>('standard');
+  const [extremeStageNumber, setExtremeStageNumber] = useState<number>(1);
+  const [isRandomExtreme, setIsRandomExtreme] = useState<boolean>(false);
 
   if (!isOpen) return null;
   if (typeof document === 'undefined') return null;
@@ -176,6 +188,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
       deckId: sourceType === 'deck' && selectedDeckId ? selectedDeckId : undefined,
       deckTitle: sourceType === 'deck' && chosenDeck ? chosenDeck.title : undefined,
       sourceType,
+      stageNumber: dungeonType === 'extreme' && !isRandomExtreme ? extremeStageNumber : undefined,
     });
   };
 
@@ -257,20 +270,110 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
 
         {/* ================= SCROLLABLE SETUP CONTENT ================= */}
         <div className="relative z-10 p-4 sm:p-6 space-y-6 overflow-y-auto scrollbar-thin flex-1">
-          {/* SECTION 1: MATERI TANTANGAN (PRESET VS DECK) */}
+          {/* SECTION 1: MATERI TANTANGAN (PRESET VS DECK VS EXTREME STAGES) */}
           <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <label className="text-xs font-bold uppercase tracking-wider text-text-muted font-heading flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-gold" />
-                <span>1. Pilih Tingkat atau Kategori:</span>
-              </label>
+            {dungeonType === 'extreme' ? (
+              <div className="space-y-3 p-4 rounded-2xl bg-surface-inset border border-rose-500/30">
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-bold uppercase tracking-wider text-rose-400 font-heading flex items-center gap-1.5">
+                    <Flame className="w-3.5 h-3.5 text-rose-400" />
+                    <span>Pilih Stage Kanji Extreme (1 - 100):</span>
+                  </label>
+                  <span className="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-lg bg-rose-500/15 border border-rose-500/30 text-rose-300">
+                    {isRandomExtreme ? 'Mode Acak Campuran' : `Stage ${extremeStageNumber}`}
+                  </span>
+                </div>
 
-              <span className="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-gold shadow-xs">
-                {sourceType === 'preset'
-                  ? LEVEL_CATEGORY_OPTIONS.find(c => c.id === selectedCategory)?.badge
-                  : `${compatibleDecks.length} Deck Kompatibel`}
-              </span>
-            </div>
+                {/* Quick Stage Shortcuts */}
+                <div className="grid grid-cols-4 sm:grid-cols-7 gap-1.5">
+                  {[1, 10, 25, 50, 75, 100].map((stg) => (
+                    <button
+                      key={stg}
+                      type="button"
+                      onClick={() => {
+                        playSound('click', soundEnabled);
+                        setIsRandomExtreme(false);
+                        setExtremeStageNumber(stg);
+                      }}
+                      className={`py-1.5 px-2 rounded-xl text-xs font-mono font-bold transition-all text-center cursor-pointer border ${
+                        !isRandomExtreme && extremeStageNumber === stg
+                          ? 'bg-rose-500 text-white border-rose-400 shadow-md font-black'
+                          : 'bg-surface-card border-border-subtle text-text-secondary hover:text-text-primary'
+                      }`}
+                    >
+                      Stg {stg}
+                    </button>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      playSound('click', soundEnabled);
+                      setIsRandomExtreme(true);
+                    }}
+                    className={`py-1.5 px-2 rounded-xl text-xs font-heading font-bold transition-all text-center cursor-pointer border col-span-2 sm:col-span-1 ${
+                      isRandomExtreme
+                        ? 'bg-rose-500 text-white border-rose-400 shadow-md font-black'
+                        : 'bg-surface-card border-border-subtle text-text-secondary hover:text-text-primary'
+                    }`}
+                  >
+                    🎲 Acak
+                  </button>
+                </div>
+
+                {/* Numeric Stage Stepper / Slider */}
+                {!isRandomExtreme && (
+                  <div className="space-y-2 pt-1">
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="range"
+                        min="1"
+                        max="100"
+                        value={extremeStageNumber}
+                        onChange={(e) => setExtremeStageNumber(parseInt(e.target.value, 10))}
+                        className="flex-1 accent-rose-500 cursor-pointer"
+                      />
+                      <div className="flex items-center gap-1 shrink-0">
+                        <button
+                          type="button"
+                          disabled={extremeStageNumber <= 1}
+                          onClick={() => setExtremeStageNumber(p => Math.max(1, p - 1))}
+                          className="w-7 h-7 rounded-lg bg-surface-card border border-border-subtle text-text-primary font-bold disabled:opacity-30 cursor-pointer"
+                        >
+                          -
+                        </button>
+                        <span className="w-10 text-center font-mono font-black text-sm text-gold">
+                          {extremeStageNumber}
+                        </span>
+                        <button
+                          type="button"
+                          disabled={extremeStageNumber >= 100}
+                          onClick={() => setExtremeStageNumber(p => Math.min(100, p + 1))}
+                          className="w-7 h-7 rounded-lg bg-surface-card border border-border-subtle text-text-primary font-bold disabled:opacity-30 cursor-pointer"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                    <p className="text-[11px] text-text-muted">
+                      💡 Setiap stage berisi 30 soal tebak Onyomi & Kunyomi bergradasi tingkat kesulitan.
+                    </p>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <>
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-bold uppercase tracking-wider text-text-muted font-heading flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-gold" />
+                    <span>1. Pilih Tingkat atau Kategori:</span>
+                  </label>
+
+                  <span className="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-gold shadow-xs">
+                    {sourceType === 'preset'
+                      ? LEVEL_CATEGORY_OPTIONS.find(c => c.id === selectedCategory)?.badge
+                      : `${compatibleDecks.length} Deck Kompatibel`}
+                  </span>
+                </div>
 
             {/* Tactile Carved Groove Switcher Track */}
             <div className="grid grid-cols-2 p-1.5 bg-surface-inset rounded-2xl border border-border-subtle shadow-[inset_2px_2px_6px_var(--neu-d),inset_-2px_-2px_6px_var(--neu-l)] gap-1.5">
@@ -469,6 +572,8 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                   </div>
                 )}
               </div>
+            )}
+            </>
             )}
           </div>
 

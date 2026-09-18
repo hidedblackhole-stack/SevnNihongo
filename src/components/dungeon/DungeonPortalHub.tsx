@@ -100,6 +100,19 @@ const DUNGEON_GATES: DungeonGateInfo[] = [
     expPerQuestion: 20,
     goldPerQuestion: 10,
   },
+  {
+    type: 'extreme',
+    title: 'Dungeon Gerbang Kanji Extreme',
+    jpTitle: '極・漢字の百連試練 (100 Extreme Stages)',
+    badge: '100 Stage (3.000 Soal)',
+    badgeColor: 'bg-rose-500/15 text-rose-400 border-rose-500/30',
+    accentColor: 'hover:border-rose-500/50',
+    icon: Flame,
+    description: 'Uji ketahanan mental dan kecepatan membaca 3.000 soal tebak Onyomi & Kunyomi bergradasi 100 stage.',
+    tags: ['3.000 Soal', '100 Stage', 'Onyomi & Kunyomi', 'Refleks Cepat'],
+    expPerQuestion: 25,
+    goldPerQuestion: 15,
+  },
 ];
 
 export const DungeonPortalHub: React.FC<DungeonPortalHubProps> = ({

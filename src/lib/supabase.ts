@@ -206,15 +206,15 @@ export async function upsertLeaderboard(stats: PlayerStats) {
 }
 
 /**
- * Fetch top 100 players from the All-Time leaderboard.
+ * Fetch players from the All-Time leaderboard (default limit: 100).
  */
-export async function getLeaderboard(): Promise<LeaderboardEntry[]> {
+export async function getLeaderboard(limit = 100): Promise<LeaderboardEntry[]> {
   try {
     const { data, error } = await supabase
       .from('leaderboard')
       .select('*')
       .order('total_exp', { ascending: false })
-      .limit(100);
+      .limit(limit);
 
     if (error) {
       console.error('Error fetching leaderboard:', error);
@@ -228,17 +228,69 @@ export async function getLeaderboard(): Promise<LeaderboardEntry[]> {
   }
 }
 
+export interface UserRankInfo {
+  entry: LeaderboardEntry;
+  rank: number;
+  totalPlayers: number;
+  cutoffExpTop100: number;
+}
+
+/**
+ * Fetch user's exact rank and leaderboard entry across all players in the database.
+ */
+export async function getUserLeaderboardRank(userId: string): Promise<UserRankInfo | null> {
+  if (!userId) return null;
+  try {
+    const { data: userEntry, error } = await supabase
+      .from('leaderboard')
+      .select('*')
+      .eq('user_id', userId)
+      .maybeSingle();
+
+    if (error || !userEntry) return null;
+
+    // Count how many players have higher EXP
+    const { count: higherCount } = await supabase
+      .from('leaderboard')
+      .select('*', { count: 'exact', head: true })
+      .gt('total_exp', userEntry.total_exp);
+
+    // Get total count of players
+    const { count: totalCount } = await supabase
+      .from('leaderboard')
+      .select('*', { count: 'exact', head: true });
+
+    // Get 100th player's EXP for cutoff reference
+    const { data: rank100Data } = await supabase
+      .from('leaderboard')
+      .select('total_exp')
+      .order('total_exp', { ascending: false })
+      .range(99, 99)
+      .maybeSingle();
+
+    return {
+      entry: userEntry as LeaderboardEntry,
+      rank: (higherCount ?? 0) + 1,
+      totalPlayers: totalCount ?? 100,
+      cutoffExpTop100: rank100Data?.total_exp ?? 0,
+    };
+  } catch (err) {
+    console.warn('Failed to calculate user rank:', err);
+    return null;
+  }
+}
+
 /**
  * Fetch top 100 players from the Weekly Arena leaderboard.
  */
-export async function getWeeklyLeaderboard(weekId: string): Promise<WeeklyLeaderboardEntry[]> {
+export async function getWeeklyLeaderboard(weekId: string, limit = 100): Promise<WeeklyLeaderboardEntry[]> {
   try {
     const { data, error } = await supabase
       .from('weekly_scores')
       .select('*')
       .eq('week_id', weekId)
       .order('score', { ascending: false })
-      .limit(100);
+      .limit(limit);
 
     if (error) {
       console.error('Error fetching weekly leaderboard:', error);
@@ -271,7 +323,13 @@ export async function saveGameToCloud(saveData: CloudSavePayload): Promise<boole
   try {
     const { data: { user }, error } = await supabase.auth.getUser();
     const targetUser = user || (await getSession())?.user;
-    if (error || !targetUser) return false;
+    if (error || !targetUser) {
+      // Even if unauthenticated/guest, sync the public leaderboard record
+      if (saveData.stats?.userId && (saveData.stats.level || saveData.stats.totalExp)) {
+        await upsertLeaderboard(saveData.stats as PlayerStats);
+      }
+      return false;
+    }
 
     // 1. Save full game state to user_metadata
     const { error: updateError } = await supabase.auth.updateUser({

@@ -5,7 +5,7 @@ import {
   Volume2, Trophy, Award, BookOpen, Layers 
 } from 'lucide-react';
 import { TryOutData } from '../../types/content';
-import { playSound } from '../../utils/audio';
+import { playSound, speakJapanese } from '../../utils/audio';
 import { ALL_TRYOUTS, DEFAULT_TRYOUT } from '../../data/tryouts';
 
 interface DungeonBattleModuleProps {
@@ -53,6 +53,13 @@ const LEVEL_COLORS: Record<string, { bg: string; text: string; border: string; g
     glow: 'shadow-teal/20', 
     badge: 'bg-teal text-white font-bold' 
   },
+  JFT: { 
+    bg: 'bg-amber-500/10', 
+    text: 'text-amber-400', 
+    border: 'border-amber-500/40', 
+    glow: 'shadow-amber-500/20', 
+    badge: 'bg-amber-500 text-surface-ground font-bold' 
+  },
 };
 
 export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
@@ -62,7 +69,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
   soundEnabled = true,
 }) => {
   const [activeTryOut, setActiveTryOut] = useState<TryOutData>(tryOutData || DEFAULT_TRYOUT);
-  const [selectedLevelFilter, setSelectedLevelFilter] = useState<'ALL' | 'N1' | 'N2' | 'N3' | 'N4' | 'N5'>('ALL');
+  const [selectedLevelFilter, setSelectedLevelFilter] = useState<'ALL' | 'N1' | 'N2' | 'N3' | 'N4' | 'N5' | 'JFT'>('ALL');
   const [currentStep, setCurrentStep] = useState<StepKey>('intro');
   const [nextSectionKey, setNextSectionKey] = useState<StepKey | null>(null);
   
@@ -231,7 +238,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
 
     const activeMeta = ALL_TRYOUTS.find(t => t.id === activeTryOut.id) || {
       id: activeTryOut.id,
-      level: (activeTryOut.level || 'N3') as 'N1' | 'N2' | 'N3' | 'N4' | 'N5',
+      level: (activeTryOut.level || 'N3') as 'N1' | 'N2' | 'N3' | 'N4' | 'N5' | 'JFT',
       title: activeTryOut.title,
       year: activeTryOut.year || 2023,
       totalQuestions: (activeTryOut.sections.mojiGoi?.questions.length || 0) + (activeTryOut.sections.bunpouDokkai?.questions.length || 0)
@@ -262,7 +269,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
                 <span>JLPT Dungeon Boss — Tryout Resmi</span>
               </h2>
               <p className="text-xs text-text-secondary">
-                Simulasi Ujian JLPT Asli (N1 — N5) Terstandar & Dinilai Otomatis
+                Simulasi Ujian JLPT & JFT-Basic Terstandar & Dinilai Otomatis
               </p>
             </div>
           </div>
@@ -274,7 +281,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
 
         {/* Level Tabs */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1 custom-scrollbar">
-          {(['ALL', 'N5', 'N4', 'N3', 'N2', 'N1'] as const).map((lvl) => {
+          {(['ALL', 'N5', 'N4', 'N3', 'N2', 'N1', 'JFT'] as const).map((lvl) => {
             const isSelected = selectedLevelFilter === lvl;
             const count = lvl === 'ALL' 
               ? ALL_TRYOUTS.length 
@@ -671,9 +678,23 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
                     {q.instruction && (
                       <span className="text-xs font-bold text-text-muted font-jp mb-1">{q.instruction}</span>
                     )}
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center gap-2">
                       <span className="font-bold text-gold font-mono">Soal {idx + 1}</span>
+                      {(q as any).audio && (
+                        <button
+                          type="button"
+                          onClick={() => speakJapanese((q as any).audio)}
+                          className="px-3 py-1 rounded-lg bg-surface-card hover:bg-surface-elevated text-gold border border-gold/30 hover:border-gold text-xs font-bold font-mono flex items-center gap-1.5 transition-all shadow-xs active:scale-95 cursor-pointer"
+                          title="Putar audio soal percakapan"
+                        >
+                          <Volume2 className="w-3.5 h-3.5" />
+                          <span>Dengarkan Soal {idx + 1}</span>
+                        </button>
+                      )}
                     </div>
+                    {q.prompt && q.prompt !== q.instruction && (
+                      <p className="text-sm text-text-primary font-medium">{q.prompt}</p>
+                    )}
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {q.options.map((opt, optIdx) => {

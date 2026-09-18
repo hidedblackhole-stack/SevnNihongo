@@ -15,6 +15,8 @@ import {
   VERB_CONJUGATION_DATABASE,
   generateConjugationQuestion,
   ConjugationDrillQuestion,
+  getTargetFormDisplay,
+  getConjugatedMeaningId,
 } from '../../data/conjugationRules';
 import { speakJapanese, playSound } from '../../utils/audio';
 import { RubyText } from '../learning/RubyText';
@@ -179,64 +181,61 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
             </div>
           </div>
 
-          {/* Question Box */}
-          <div className="space-y-4 text-center py-6 bg-surface-inset/60 rounded-2xl border border-border-subtle p-5">
-            <div className="flex items-center justify-center gap-3 py-1">
-              <div className="text-2xl sm:text-4xl font-black text-text-primary flex items-center justify-center gap-2 flex-wrap">
-                <span className="inline-flex items-center">
-                  <span className="text-text-muted select-none">「</span>
-                  {currentQuestion.targetVerb ? (
-                    <RubyText
-                      japanese={currentQuestion.targetVerb.kanji}
-                      reading={currentQuestion.targetVerb.reading}
-                      className="text-2xl sm:text-4xl font-black text-gold drop-shadow-sm font-jp"
-                    />
-                  ) : (
-                    <RubyText
-                      japanese={currentQuestion.prompt}
-                      reading={currentQuestion.ruby}
-                      className="text-2xl sm:text-4xl font-black text-gold drop-shadow-sm font-jp"
-                    />
-                  )}
-                  <span className="text-text-muted select-none">」</span>
-                </span>
-                <span className="text-text-muted mx-1 select-none">➔</span>
-                <span className="text-indigo">【 ？ 】</span>
-              </div>
+          {/* Big Question Box: Kotoba + Tujuan Konjugasi */}
+          {(() => {
+            const formId = currentQuestion.targetForm?.id || '';
+            const formDisplay = getTargetFormDisplay(formId);
+            const baseMeaning = currentQuestion.targetVerb?.meaningId || '';
 
-              <button
-                type="button"
-                onClick={() => speakJapanese(currentQuestion.targetVerb?.reading || currentQuestion.ruby || '')}
-                className="p-2.5 rounded-xl bg-surface-card hover:bg-surface-elevated text-gold border border-border-subtle transition-colors shadow-sm"
-                title="Dengarkan pelafalan"
-              >
-                <Volume2 className="w-5 h-5" />
-              </button>
-            </div>
+            return (
+              <div className="p-5 sm:p-7 rounded-3xl bg-surface-inset border border-border-subtle text-center space-y-2 shadow-inner">
+                <div className="flex items-center justify-center gap-3 flex-wrap">
+                  <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-center">
+                    <h3 className="text-3xl sm:text-4xl font-black text-text-primary font-jp">
+                      {currentQuestion.targetVerb ? (
+                        <RubyText
+                          japanese={currentQuestion.targetVerb.kanji}
+                          reading={currentQuestion.targetVerb.reading}
+                          showFurigana={true}
+                          className="text-3xl sm:text-4xl font-black text-text-primary font-jp"
+                        />
+                      ) : (
+                        <RubyText
+                          japanese={currentQuestion.prompt}
+                          reading={currentQuestion.ruby}
+                          showFurigana={true}
+                          className="text-3xl sm:text-4xl font-black text-text-primary font-jp"
+                        />
+                      )}
+                    </h3>
+                    <span className="text-text-muted font-mono text-xl sm:text-2xl font-bold select-none">＋</span>
+                    <span className="text-gold font-jp font-black text-3xl sm:text-4xl drop-shadow-sm">
+                      {formDisplay.suffix}
+                    </span>
+                    <span className="px-2.5 py-0.5 rounded-lg bg-gold/15 text-gold border border-gold/30 text-xs font-mono font-bold">
+                      {formDisplay.badge}
+                    </span>
+                  </div>
 
-            <div className="text-xs text-text-muted font-mono flex items-center justify-center gap-2 flex-wrap pt-1">
-              <span className="flex items-center gap-1">
-                <span>Kata:</span>
-                {currentQuestion.targetVerb ? (
-                  <RubyText
-                    japanese={currentQuestion.targetVerb.kanji}
-                    reading={currentQuestion.targetVerb.reading}
-                    className="font-bold text-text-primary font-jp"
-                  />
-                ) : (
-                  <span>{currentQuestion.ruby}</span>
+                  <button
+                    type="button"
+                    onClick={() => speakJapanese(currentQuestion.targetVerb?.reading || currentQuestion.ruby || '')}
+                    className="p-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-gold border border-border-subtle transition-colors shadow-2xs cursor-pointer shrink-0"
+                    title="Dengarkan pelafalan kata dasar"
+                  >
+                    <Volume2 className="w-4 h-4" />
+                  </button>
+                </div>
+
+                {/* Terjemah kotoba dasar sebelum menjawab */}
+                {baseMeaning && (
+                  <p className="text-xs sm:text-sm text-text-muted font-medium pt-1">
+                    {baseMeaning}
+                  </p>
                 )}
-                {currentQuestion.targetVerb && <span className="text-text-secondary">({currentQuestion.targetVerb.meaningId})</span>}
-              </span>
-              <span className="text-text-muted">•</span>
-              <span className="flex items-center gap-1">
-                <span>Target ke:</span>
-                <span className="px-2 py-0.5 rounded-md bg-indigo/15 text-indigo font-bold border border-indigo/30">
-                  {currentQuestion.targetForm?.friendlyTarget || currentQuestion.targetForm?.name}
-                </span>
-              </span>
-            </div>
-          </div>
+              </div>
+            );
+          })()}
 
           {/* Options Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -294,20 +293,20 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              className={`p-4 rounded-2xl border space-y-3 ${
+              className={`p-4 sm:p-5 rounded-2xl border space-y-3.5 ${
                 selectedAnswerIndex === currentQuestion.correctIndex
                   ? 'bg-emerald-500/10 border-emerald-500/30'
                   : 'bg-rose-500/10 border-rose-500/30'
               }`}
             >
-              <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center justify-between gap-3 flex-wrap">
                 <div className="flex items-center gap-2">
                   {selectedAnswerIndex === currentQuestion.correctIndex ? (
                     <CheckCircle2 className="w-5 h-5 text-emerald-400" />
                   ) : (
                     <XCircle className="w-5 h-5 text-rose-400" />
                   )}
-                  <span className="font-heading font-bold text-sm">
+                  <span className="font-heading font-bold text-sm sm:text-base">
                     {selectedAnswerIndex === currentQuestion.correctIndex ? 'Tepat Sekali! (+15 EXP)' : 'Kurang Tepat!'}
                   </span>
                 </div>
@@ -315,14 +314,60 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
                 <button
                   type="button"
                   onClick={handleNextQuestion}
-                  className="btn-skeuo-indigo py-2 px-4 text-xs shadow-sm active:scale-95 transition-all"
+                  className="btn-skeuo-indigo py-2 px-4 text-xs shadow-sm active:scale-95 transition-all flex items-center gap-1.5"
                 >
                   <span className="whitespace-nowrap font-bold">Soal Berikutnya</span>
                   <ArrowRight className="w-3.5 h-3.5 shrink-0" />
                 </button>
               </div>
 
-              <p className="text-xs text-text-secondary leading-relaxed">
+              {/* Terjemahan Hasil Konjugasi (muncul setelah menjawab) */}
+              {(() => {
+                const formId = currentQuestion.targetForm?.id || '';
+                const baseMeaning = currentQuestion.targetVerb?.meaningId || '';
+                const conjugatedResultMeaning = getConjugatedMeaningId(baseMeaning, formId);
+                const correctOption = currentQuestion.options[currentQuestion.correctIndex];
+                const correctRuby = currentQuestion.optionsRuby?.[currentQuestion.correctIndex];
+
+                return (
+                  <div className="p-3.5 rounded-xl bg-surface-card border border-border-subtle flex items-center justify-between gap-3 flex-wrap">
+                    <div className="flex items-center gap-2.5 flex-wrap">
+                      <span className="text-xs text-text-muted font-bold">Hasil:</span>
+                      <span className="font-jp font-bold text-sm sm:text-base text-emerald-400">
+                        {correctRuby ? (
+                          <RubyText
+                            japanese={correctOption}
+                            reading={correctRuby}
+                            showFurigana={true}
+                            className="font-jp font-bold text-sm sm:text-base text-emerald-400"
+                          />
+                        ) : (
+                          correctOption
+                        )}
+                      </span>
+                      {conjugatedResultMeaning && (
+                        <>
+                          <span className="text-xs text-text-muted select-none">➔</span>
+                          <span className="text-xs sm:text-sm font-bold text-emerald-300">
+                            "{conjugatedResultMeaning}"
+                          </span>
+                        </>
+                      )}
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => speakJapanese(correctRuby || correctOption)}
+                      className="p-1.5 rounded-lg bg-surface-inset hover:bg-surface-elevated text-text-muted hover:text-emerald-400 transition-colors shrink-0"
+                      title="Dengarkan pelafalan hasil konjugasi"
+                    >
+                      <Volume2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                );
+              })()}
+
+              <p className="text-xs sm:text-sm text-text-secondary leading-relaxed">
                 {currentQuestion.explanation}
               </p>
             </motion.div>

@@ -22,7 +22,7 @@ export type JlptSection = 'all' | 'mojiGoi' | 'bunpou' | 'dokkai' | 'choukai' | 
 export interface UnifiedQuestionItem {
   id: string;
   section: 'mojiGoi' | 'bunpou' | 'dokkai' | 'choukai';
-  level: 'N5' | 'N4' | 'N3' | 'N2' | 'N1';
+  level: 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'JFT';
   sourceTitle: string;
   instruction?: string;
   prompt: string;
@@ -50,6 +50,7 @@ const LEVEL_OPTIONS = [
   { value: 'N3', label: 'N3' },
   { value: 'N2', label: 'N2' },
   { value: 'N1', label: 'N1' },
+  { value: 'JFT', label: 'JFT-Basic' },
 ];
 
 const SECTION_BADGE_STYLE: Record<string, { bg: string; text: string; label: string }> = {
@@ -66,6 +67,7 @@ const LEVEL_COLORS: Record<string, { bg: string; text: string; border: string }>
   N3: { bg: 'bg-gold/15', text: 'text-gold', border: 'border-gold/30' },
   N4: { bg: 'bg-emerald-500/15', text: 'text-emerald-400', border: 'border-emerald-500/30' },
   N5: { bg: 'bg-cyan-500/15', text: 'text-cyan-400', border: 'border-cyan-500/30' },
+  JFT: { bg: 'bg-amber-500/15', text: 'text-amber-400', border: 'border-amber-500/30' },
 };
 
 interface QuestionLibraryViewProps {

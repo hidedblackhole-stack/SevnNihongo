@@ -5,6 +5,8 @@ import { BUNPOU_DATABASE, BUNPOU_MIXED_DATABASE } from '../../data/bunpou';
 import { getSubBranchesForBunpou } from '../../data/bunpouSubKnowledge';
 import { QuizEngine } from './QuizEngine';
 import { FormulaDisplay } from './FormulaDisplay';
+import { GrammarChecklist } from './GrammarChecklist';
+import { GrammarFormulaBox } from './GrammarFormulaBox';
 import { RubyText } from './RubyText';
 import { SakubunStudio } from './SakubunStudio';
 import { speakJapanese, playSound } from '../../utils/audio';
@@ -281,11 +283,23 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
               </p>
             </div>
 
-            {/* Explanation */}
+            {/* 1. EDUCATIONAL FUNCTION CHECKLIST */}
+            <GrammarChecklist item={currentBunpou} />
+
+            {/* 2. BRACKETED FORMULA BOX (Matching slide green bracket grouping) */}
+            <div className="space-y-1.5">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-text-muted font-heading flex items-center justify-between">
+                <span>📐 Rumus Sambungan Kata (接続)</span>
+                <span className="text-[10px] text-emerald-400 font-mono font-bold">K. Kerja / Sifat / Benda</span>
+              </h4>
+              <GrammarFormulaBox item={currentBunpou} />
+            </div>
+
+            {/* Explanation Detail */}
             <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-2">
               <h4 className="text-xs font-bold uppercase tracking-wider text-text-secondary flex items-center gap-1.5 font-heading">
                 <HelpCircle className="w-3.5 h-3.5 text-gold" />
-                Penjelasan Pola
+                Catatan Penjelasan Detail
               </h4>
               <p className="text-xs sm:text-sm text-text-primary leading-relaxed whitespace-pre-line">
                 {currentBunpou.explanation}
@@ -319,14 +333,6 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
                 )}
               </div>
             )}
-
-            {/* Formula / Rumus */}
-            <div className="p-4 rounded-2xl bg-surface-inset border border-gold/40 space-y-2">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-gold font-heading">
-                📐 Rumus Pembentukan (Formula)
-              </h4>
-              <FormulaDisplay formula={currentBunpou.formula} item={currentBunpou} />
-            </div>
 
             {/* Cabang Rumus & Kondisi Penggunaan (Sub-Rumus) */}
             {subBranches && subBranches.length > 0 && (
@@ -515,14 +521,15 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
                     key={i}
                     className="p-4 rounded-2xl panel border border-border-subtle flex items-start justify-between gap-3 hover:border-gold/40 transition-colors"
                   >
-                    <div className="space-y-1 flex-1">
-                      <p className="text-sm sm:text-base font-bold text-text-primary flex flex-wrap items-baseline gap-0.5">
+                    <div className="space-y-1.5 flex-1">
+                      <p className="text-sm sm:text-base font-bold text-text-primary flex flex-wrap items-baseline gap-1">
+                        <span className="text-emerald-500 font-bold select-none mr-0.5">•</span>
                         {splitSentenceForHighlight(example.japanese, currentBunpou).map((seg, segIdx) => {
                           if (seg.isHighlight) {
                             return (
                               <span
                                 key={segIdx}
-                                className="formula-highlight text-red-700 dark:text-amber-300 font-extrabold"
+                                className="formula-highlight text-emerald-400 dark:text-emerald-300 font-black px-1.5 py-0.5 rounded-md bg-emerald-500/15 border border-emerald-500/30 shadow-xs"
                                 title="Pola Rumus Tata Bahasa"
                               >
                                 <RubyText
@@ -541,7 +548,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
                           );
                         })}
                       </p>
-                      <p className="text-xs text-text-secondary">
+                      <p className="text-xs sm:text-sm text-text-secondary font-medium pl-2.5 border-l-2 border-emerald-500/40 mt-1">
                         {example.meaningId}
                       </p>
                     </div>

@@ -808,13 +808,15 @@ export function generateConjugationQuestion(targetFormId?: string, targetVerb?: 
 
   const targetLabel = formInfo.friendlyTarget || formInfo.name;
 
+  const formDisplay = getTargetFormDisplay(formInfo.id);
+
   return {
     id: `drill_${verb.id}_${formInfo.id}_${Date.now()}`,
     instruction: `次の動詞を「${formInfo.japaneseName}」に変えなさい。`,
-    instructionId: `Ubah kata kerja 「${verb.kanji}」 (${verb.reading} - ${verb.meaningId}) ke ${targetLabel}!`,
-    prompt: `「${verb.kanji}」 ➔ 【 ？ 】`,
-    ruby: `「${verb.reading}」 ➔ 【 ？ 】`,
-    translation: `Kata: ${verb.kanji} (${verb.meaningId}) • Target ke: ${targetLabel}`,
+    instructionId: `${verb.kanji} ＋ ${formDisplay.suffix}`,
+    prompt: `${verb.kanji} ＋ ${formDisplay.suffix}`,
+    ruby: `${verb.reading} ＋ ${formDisplay.suffix}`,
+    translation: verb.meaningId,
     options: allOptions,
     optionsRuby: allOptionsRuby,
     correctIndex,
@@ -834,3 +836,66 @@ export function generateConjugationQuestion(targetFormId?: string, targetVerb?: 
     },
   };
 }
+
+/**
+ * Helper to get clean target conjugation suffix and badge
+ * Example: 'ta' -> { suffix: '〜た', badge: 'た形', label: 'Bentuk Lampau' }
+ */
+export function getTargetFormDisplay(formId: string): { suffix: string; badge: string; label: string } {
+  switch (formId) {
+    case 'te':
+      return { suffix: '〜て', badge: 'て形', label: 'Bentuk Sambung' };
+    case 'ta':
+      return { suffix: '〜た', badge: 'た形', label: 'Bentuk Lampau' };
+    case 'nai':
+      return { suffix: '〜ない', badge: 'ない形', label: 'Bentuk Negatif' };
+    case 'masu':
+      return { suffix: '〜ます', badge: 'ます形', label: 'Bentuk Sopan' };
+    case 'potential':
+      return { suffix: '〜(ら)れる', badge: '可能形', label: 'Bisa / Dapat' };
+    case 'volitional':
+      return { suffix: '〜(よ)う', badge: '意向形', label: 'Ajakan / Niat' };
+    case 'passive':
+      return { suffix: '〜(ら)れる', badge: '受身形', label: 'Bentuk Pasif' };
+    case 'causative':
+      return { suffix: '〜(さ)せる', badge: '使役形', label: 'Menyuruh / Izin' };
+    case 'ba':
+      return { suffix: '〜ば', badge: 'ば形', label: 'Jika / Pengandaian' };
+    default:
+      return { suffix: '〜' + formId, badge: `${formId}形`, label: formId };
+  }
+}
+
+/**
+ * Helper to get conjugated meaning in Indonesian for post-answer display
+ * Example: ('Mati / Meninggal', 'ta') -> 'Sudah / Telah mati / meninggal'
+ */
+export function getConjugatedMeaningId(baseMeaning: string, formId: string): string {
+  if (!baseMeaning) return '';
+  const clean = baseMeaning.trim();
+  const lower = clean.toLowerCase();
+
+  switch (formId) {
+    case 'ta':
+      return 'Sudah / Telah ' + lower;
+    case 'nai':
+      return 'Tidak ' + lower;
+    case 'masu':
+      return clean + ' (sopan)';
+    case 'te':
+      return clean + ' lalu... / Sedang ' + lower;
+    case 'potential':
+      return 'Bisa / Dapat ' + lower;
+    case 'volitional':
+      return 'Ayo / Mari ' + lower;
+    case 'ba':
+      return 'Jika / Kalau ' + lower;
+    case 'passive':
+      return 'Di-' + lower + ' (pasif)';
+    case 'causative':
+      return 'Menyuruh / Membuat ' + lower;
+    default:
+      return clean;
+  }
+}
+

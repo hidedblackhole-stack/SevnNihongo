@@ -8,18 +8,20 @@ import { generateConjugationQuestion, ConjugationDrillQuestion, VERB_CONJUGATION
 import { Question } from '../types/content';
 import kanjiQuestionsDb from '../data/db/kanji_questions.json';
 import bunpouQuestionsDb from '../data/db/bunpou_questions.json';
+import kanjiExtremeStagesDb from '../data/db/kanji_extreme_100_stages.json';
 
-export type DungeonType = 'writing' | 'flashcard' | 'sakubun' | 'conjugation' | 'quiz';
-export type DungeonLevelCategory = 'all' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'Kaigo' | 'PM';
+export type DungeonType = 'writing' | 'flashcard' | 'sakubun' | 'conjugation' | 'quiz' | 'extreme';
+export type DungeonLevelCategory = 'all' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'Kaigo' | 'PM' | 'SSW';
 
 export interface DungeonConfig {
   type: DungeonType;
   levelCategory: DungeonLevelCategory;
-  floorCount: number; // e.g. 5, 10, 15, 20
+  floorCount: number; // e.g. 5, 10, 15, 20, 30
   mode: 'standard' | 'survival';
   deckId?: string;
   deckTitle?: string;
   sourceType?: 'preset' | 'deck';
+  stageNumber?: number; // 1 to 100 for extreme kanji
 }
 
 export interface DungeonPayload {
@@ -145,6 +147,9 @@ export function generateDungeonSession(config: DungeonConfig, userDecks?: UserDe
     if (levelCategory === 'Kaigo') {
       return Boolean(item.tags?.includes('Kaigo') || (item.unitName && item.unitName.includes('Kaigo')));
     }
+    if (levelCategory === 'SSW') {
+      return Boolean(item.tags?.includes('SSW') || item.jlpt === 'SSW');
+    }
     if (levelCategory === 'PM') {
       return isPmKotoba(item);
     }
@@ -158,7 +163,7 @@ export function generateDungeonSession(config: DungeonConfig, userDecks?: UserDe
     if (!item || !item.character || seenKanji.has(item.character)) return false;
     seenKanji.add(item.character);
     if (levelCategory === 'all') return true;
-    if (levelCategory === 'Kaigo' || levelCategory === 'PM') {
+    if (levelCategory === 'Kaigo' || levelCategory === 'PM' || levelCategory === 'SSW') {
       return matchingKotoba.some(k => k.kanjiComponents?.includes(item.character));
     }
     return item.jlpt === levelCategory;
@@ -539,6 +544,53 @@ export function generateDungeonSession(config: DungeonConfig, userDecks?: UserDe
     }
 
     payload.quizQuestions = picked.slice(0, count);
+  }
+
+  // ==================== F. KANJI EXTREME DUNGEON ====================
+  else if (type === 'extreme') {
+    const stages = (kanjiExtremeStagesDb as any[]) || [];
+    let poolQuestions: Question[] = [];
+
+    if (config.stageNumber && config.stageNumber >= 1 && config.stageNumber <= stages.length) {
+      const targetStage = stages[config.stageNumber - 1];
+      if (targetStage && targetStage.questions) {
+        poolQuestions = targetStage.questions.map((q: any) => ({
+          id: q.id,
+          instruction: q.instruction || `${q.hint} dari Kanji berikut:`,
+          prompt: q.prompt || q.kanji,
+          options: q.options || [],
+          correctIndex: q.correctIndex ?? 0,
+          explanation: q.explanation || `Jawaban yang tepat: ${q.correctAnswer || q.options?.[q.correctIndex]}`,
+          category: 'kanji',
+          difficulty: q.jlpt || 'N5',
+        }));
+      }
+    } else {
+      stages.forEach(stg => {
+        if (stg.questions) {
+          stg.questions.forEach((q: any) => {
+            poolQuestions.push({
+              id: q.id,
+              instruction: q.instruction || `${q.hint} dari Kanji berikut:`,
+              prompt: q.prompt || q.kanji,
+              options: q.options || [],
+              correctIndex: q.correctIndex ?? 0,
+              explanation: q.explanation || `Jawaban yang tepat: ${q.correctAnswer || q.options?.[q.correctIndex]}`,
+              category: 'kanji',
+              difficulty: q.jlpt || 'N5',
+            });
+          });
+        }
+      });
+    }
+
+    if (config.stageNumber) {
+      // In stage mode, use the questions in order or limited by count
+      payload.quizQuestions = poolQuestions.slice(0, count);
+    } else {
+      const shuffled = shuffleArray(poolQuestions);
+      payload.quizQuestions = shuffled.slice(0, count);
+    }
   }
 
   return payload;
