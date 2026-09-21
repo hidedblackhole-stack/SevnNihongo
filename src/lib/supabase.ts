@@ -142,7 +142,8 @@ export async function sendScoreEvent(eventType: 'quiz_answer' | 'kanji_write', r
     const userId = stats.userId;
     if (!userId) return;
 
-    const effectiveTierIndex = getTierForExp(stats.totalExp || 0).tierIndex;
+    const rawExp = Number(stats.totalExp) || 0;
+    const effectiveTierIndex = Math.round(getTierForExp(Math.round(rawExp)).tierIndex || 0);
 
     const { error } = await supabase.rpc('submit_score_event', {
       p_user_id: userId,
@@ -179,21 +180,22 @@ export async function upsertLeaderboard(stats: PlayerStats) {
   if (!stats.userId) return;
   
   try {
-    const effectiveTierIndex = getTierForExp(stats.totalExp || 0).tierIndex;
+    const roundedExp = Math.round(Number(stats.totalExp) || 0);
+    const effectiveTierIndex = Math.round(getTierForExp(roundedExp).tierIndex || 0);
 
     const { error } = await supabase
       .from('leaderboard')
       .upsert({
         user_id: stats.userId,
         player_name: stats.playerName || 'Unknown Player',
-        level: stats.level,
-        total_exp: stats.totalExp,
+        level: Math.round(Number(stats.level) || 1),
+        total_exp: roundedExp,
         tier_index: effectiveTierIndex,
         avatar_url: stats.avatar || null,
-        stat_tryout: stats.studyStats?.tryOuts?.total || 0,
-        stat_flashcard: stats.studyStats?.flashcards?.total || 0,
-        stat_kanji: stats.studyStats?.kanjiWriting?.total || 0,
-        stat_boss: stats.studyStats?.bossBattles?.total || 0,
+        stat_tryout: Math.round(Number(stats.studyStats?.tryOuts?.total) || 0),
+        stat_flashcard: Math.round(Number(stats.studyStats?.flashcards?.total) || 0),
+        stat_kanji: Math.round(Number(stats.studyStats?.kanjiWriting?.total) || 0),
+        stat_boss: Math.round(Number(stats.studyStats?.bossBattles?.total) || 0),
         last_updated: new Date().toISOString()
       }, { onConflict: 'user_id' });
 

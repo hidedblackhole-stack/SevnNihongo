@@ -65256,5 +65256,974 @@
     "unicode": "U+30F2",
     "version": 1,
     "status": "published"
+  },
+  "kana_hira_ga": {
+    "id": "kana_hira_ga",
+    "character": "が",
+    "onyomi": [
+      "GA"
+    ],
+    "kunyomi": [
+      "ga"
+    ],
+    "strokeCount": 5,
+    "radical": "Hiragana",
+    "meaningId": "Huruf Hiragana 「が」 (ga)",
+    "meaningEn": "Hiragana letter が (ga)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+304C",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_hira_gi": {
+    "id": "kana_hira_gi",
+    "character": "ぎ",
+    "onyomi": [
+      "GI"
+    ],
+    "kunyomi": [
+      "gi"
+    ],
+    "strokeCount": 6,
+    "radical": "Hiragana",
+    "meaningId": "Huruf Hiragana 「ぎ」 (gi)",
+    "meaningEn": "Hiragana letter ぎ (gi)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+304E",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_hira_gu": {
+    "id": "kana_hira_gu",
+    "character": "ぐ",
+    "onyomi": [
+      "GU"
+    ],
+    "kunyomi": [
+      "gu"
+    ],
+    "strokeCount": 3,
+    "radical": "Hiragana",
+    "meaningId": "Huruf Hiragana 「ぐ」 (gu)",
+    "meaningEn": "Hiragana letter ぐ (gu)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+3050",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_hira_ge": {
+    "id": "kana_hira_ge",
+    "character": "げ",
+    "onyomi": [
+      "GE"
+    ],
+    "kunyomi": [
+      "ge"
+    ],
+    "strokeCount": 5,
+    "radical": "Hiragana",
+    "meaningId": "Huruf Hiragana 「げ」 (ge)",
+    "meaningEn": "Hiragana letter げ (ge)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+3052",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_hira_go": {
+    "id": "kana_hira_go",
+    "character": "ご",
+    "onyomi": [
+      "GO"
+    ],
+    "kunyomi": [
+      "go"
+    ],
+    "strokeCount": 4,
+    "radical": "Hiragana",
+    "meaningId": "Huruf Hiragana 「ご」 (go)",
+    "meaningEn": "Hiragana letter ご (go)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+3054",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_hira_za": {
+    "id": "kana_hira_za",
+    "character": "ざ",
+    "onyomi": [
+      "ZA"
+    ],
+    "kunyomi": [
+      "za"
+    ],
+    "strokeCount": 5,
+    "radical": "Hiragana",
+    "meaningId": "Huruf Hiragana 「ざ」 (za)",
+    "meaningEn": "Hiragana letter ざ (za)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+3056",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_hira_ji": {
+    "id": "kana_hira_ji",
+    "character": "じ",
+    "onyomi": [
+      "JI"
+    ],
+    "kunyomi": [
+      "ji"
+    ],
+    "strokeCount": 3,
+    "radical": "Hiragana",
+    "meaningId": "Huruf Hiragana 「じ」 (ji)",
+    "meaningEn": "Hiragana letter じ (ji)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+3058",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_hira_zu": {
+    "id": "kana_hira_zu",
+    "character": "ず",
+    "onyomi": [
+      "ZU"
+    ],
+    "kunyomi": [
+      "zu"
+    ],
+    "strokeCount": 4,
+    "radical": "Hiragana",
+    "meaningId": "Huruf Hiragana 「ず」 (zu)",
+    "meaningEn": "Hiragana letter ず (zu)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+305A",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_hira_ze": {
+    "id": "kana_hira_ze",
+    "character": "ぜ",
+    "onyomi": [
+      "ZE"
+    ],
+    "kunyomi": [
+      "ze"
+    ],
+    "strokeCount": 5,
+    "radical": "Hiragana",
+    "meaningId": "Huruf Hiragana 「ぜ」 (ze)",
+    "meaningEn": "Hiragana letter ぜ (ze)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+305C",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_hira_zo": {
+    "id": "kana_hira_zo",
+    "character": "ぞ",
+    "onyomi": [
+      "ZO"
+    ],
+    "kunyomi": [
+      "zo"
+    ],
+    "strokeCount": 3,
+    "radical": "Hiragana",
+    "meaningId": "Huruf Hiragana 「ぞ」 (zo)",
+    "meaningEn": "Hiragana letter ぞ (zo)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+305E",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_hira_da": {
+    "id": "kana_hira_da",
+    "character": "だ",
+    "onyomi": [
+      "DA"
+    ],
+    "kunyomi": [
+      "da"
+    ],
+    "strokeCount": 6,
+    "radical": "Hiragana",
+    "meaningId": "Huruf Hiragana 「だ」 (da)",
+    "meaningEn": "Hiragana letter だ (da)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+3060",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_hira_dji": {
+    "id": "kana_hira_dji",
+    "character": "ぢ",
+    "onyomi": [
+      "JI"
+    ],
+    "kunyomi": [
+      "ji"
+    ],
+    "strokeCount": 4,
+    "radical": "Hiragana",
+    "meaningId": "Huruf Hiragana 「ぢ」 (ji)",
+    "meaningEn": "Hiragana letter ぢ (ji)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+3062",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_hira_dzu": {
+    "id": "kana_hira_dzu",
+    "character": "づ",
+    "onyomi": [
+      "ZU"
+    ],
+    "kunyomi": [
+      "zu"
+    ],
+    "strokeCount": 3,
+    "radical": "Hiragana",
+    "meaningId": "Huruf Hiragana 「づ」 (zu)",
+    "meaningEn": "Hiragana letter づ (zu)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+3065",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_hira_de": {
+    "id": "kana_hira_de",
+    "character": "で",
+    "onyomi": [
+      "DE"
+    ],
+    "kunyomi": [
+      "de"
+    ],
+    "strokeCount": 3,
+    "radical": "Hiragana",
+    "meaningId": "Huruf Hiragana 「で」 (de)",
+    "meaningEn": "Hiragana letter で (de)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+3067",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_hira_do": {
+    "id": "kana_hira_do",
+    "character": "ど",
+    "onyomi": [
+      "DO"
+    ],
+    "kunyomi": [
+      "do"
+    ],
+    "strokeCount": 4,
+    "radical": "Hiragana",
+    "meaningId": "Huruf Hiragana 「ど」 (do)",
+    "meaningEn": "Hiragana letter ど (do)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+3069",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_hira_ba": {
+    "id": "kana_hira_ba",
+    "character": "ば",
+    "onyomi": [
+      "BA"
+    ],
+    "kunyomi": [
+      "ba"
+    ],
+    "strokeCount": 5,
+    "radical": "Hiragana",
+    "meaningId": "Huruf Hiragana 「ば」 (ba)",
+    "meaningEn": "Hiragana letter ば (ba)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+3070",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_hira_bi": {
+    "id": "kana_hira_bi",
+    "character": "び",
+    "onyomi": [
+      "BI"
+    ],
+    "kunyomi": [
+      "bi"
+    ],
+    "strokeCount": 3,
+    "radical": "Hiragana",
+    "meaningId": "Huruf Hiragana 「び」 (bi)",
+    "meaningEn": "Hiragana letter び (bi)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+3073",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_hira_bu": {
+    "id": "kana_hira_bu",
+    "character": "ぶ",
+    "onyomi": [
+      "BU"
+    ],
+    "kunyomi": [
+      "bu"
+    ],
+    "strokeCount": 6,
+    "radical": "Hiragana",
+    "meaningId": "Huruf Hiragana 「ぶ」 (bu)",
+    "meaningEn": "Hiragana letter ぶ (bu)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+3076",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_hira_be": {
+    "id": "kana_hira_be",
+    "character": "べ",
+    "onyomi": [
+      "BE"
+    ],
+    "kunyomi": [
+      "be"
+    ],
+    "strokeCount": 3,
+    "radical": "Hiragana",
+    "meaningId": "Huruf Hiragana 「べ」 (be)",
+    "meaningEn": "Hiragana letter べ (be)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+3079",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_hira_bo": {
+    "id": "kana_hira_bo",
+    "character": "ぼ",
+    "onyomi": [
+      "BO"
+    ],
+    "kunyomi": [
+      "bo"
+    ],
+    "strokeCount": 6,
+    "radical": "Hiragana",
+    "meaningId": "Huruf Hiragana 「ぼ」 (bo)",
+    "meaningEn": "Hiragana letter ぼ (bo)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+307C",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_hira_pa": {
+    "id": "kana_hira_pa",
+    "character": "ぱ",
+    "onyomi": [
+      "PA"
+    ],
+    "kunyomi": [
+      "pa"
+    ],
+    "strokeCount": 4,
+    "radical": "Hiragana",
+    "meaningId": "Huruf Hiragana 「ぱ」 (pa)",
+    "meaningEn": "Hiragana letter ぱ (pa)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+3071",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_hira_pi": {
+    "id": "kana_hira_pi",
+    "character": "ぴ",
+    "onyomi": [
+      "PI"
+    ],
+    "kunyomi": [
+      "pi"
+    ],
+    "strokeCount": 2,
+    "radical": "Hiragana",
+    "meaningId": "Huruf Hiragana 「ぴ」 (pi)",
+    "meaningEn": "Hiragana letter ぴ (pi)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+3074",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_hira_pu": {
+    "id": "kana_hira_pu",
+    "character": "ぷ",
+    "onyomi": [
+      "PU"
+    ],
+    "kunyomi": [
+      "pu"
+    ],
+    "strokeCount": 5,
+    "radical": "Hiragana",
+    "meaningId": "Huruf Hiragana 「ぷ」 (pu)",
+    "meaningEn": "Hiragana letter ぷ (pu)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+3077",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_hira_pe": {
+    "id": "kana_hira_pe",
+    "character": "ぺ",
+    "onyomi": [
+      "PE"
+    ],
+    "kunyomi": [
+      "pe"
+    ],
+    "strokeCount": 2,
+    "radical": "Hiragana",
+    "meaningId": "Huruf Hiragana 「ぺ」 (pe)",
+    "meaningEn": "Hiragana letter ぺ (pe)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+307A",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_hira_po": {
+    "id": "kana_hira_po",
+    "character": "ぽ",
+    "onyomi": [
+      "PO"
+    ],
+    "kunyomi": [
+      "po"
+    ],
+    "strokeCount": 5,
+    "radical": "Hiragana",
+    "meaningId": "Huruf Hiragana 「ぽ」 (po)",
+    "meaningEn": "Hiragana letter ぽ (po)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+307D",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_kata_ga": {
+    "id": "kana_kata_ga",
+    "character": "ガ",
+    "onyomi": [
+      "GA"
+    ],
+    "kunyomi": [
+      "ga"
+    ],
+    "strokeCount": 4,
+    "radical": "Katakana",
+    "meaningId": "Huruf Katakana 「ガ」 (ga)",
+    "meaningEn": "Katakana letter ガ (ga)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+30AC",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_kata_gi": {
+    "id": "kana_kata_gi",
+    "character": "ギ",
+    "onyomi": [
+      "GI"
+    ],
+    "kunyomi": [
+      "gi"
+    ],
+    "strokeCount": 5,
+    "radical": "Katakana",
+    "meaningId": "Huruf Katakana 「ギ」 (gi)",
+    "meaningEn": "Katakana letter ギ (gi)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+30AE",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_kata_gu": {
+    "id": "kana_kata_gu",
+    "character": "グ",
+    "onyomi": [
+      "GU"
+    ],
+    "kunyomi": [
+      "gu"
+    ],
+    "strokeCount": 4,
+    "radical": "Katakana",
+    "meaningId": "Huruf Katakana 「グ」 (gu)",
+    "meaningEn": "Katakana letter グ (gu)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+30B0",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_kata_ge": {
+    "id": "kana_kata_ge",
+    "character": "ゲ",
+    "onyomi": [
+      "GE"
+    ],
+    "kunyomi": [
+      "ge"
+    ],
+    "strokeCount": 5,
+    "radical": "Katakana",
+    "meaningId": "Huruf Katakana 「ゲ」 (ge)",
+    "meaningEn": "Katakana letter ゲ (ge)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+30B2",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_kata_go": {
+    "id": "kana_kata_go",
+    "character": "ゴ",
+    "onyomi": [
+      "GO"
+    ],
+    "kunyomi": [
+      "go"
+    ],
+    "strokeCount": 4,
+    "radical": "Katakana",
+    "meaningId": "Huruf Katakana 「ゴ」 (go)",
+    "meaningEn": "Katakana letter ゴ (go)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+30B4",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_kata_za": {
+    "id": "kana_kata_za",
+    "character": "ザ",
+    "onyomi": [
+      "ZA"
+    ],
+    "kunyomi": [
+      "za"
+    ],
+    "strokeCount": 5,
+    "radical": "Katakana",
+    "meaningId": "Huruf Katakana 「ザ」 (za)",
+    "meaningEn": "Katakana letter ザ (za)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+30B6",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_kata_ji": {
+    "id": "kana_kata_ji",
+    "character": "ジ",
+    "onyomi": [
+      "JI"
+    ],
+    "kunyomi": [
+      "ji"
+    ],
+    "strokeCount": 5,
+    "radical": "Katakana",
+    "meaningId": "Huruf Katakana 「ジ」 (ji)",
+    "meaningEn": "Katakana letter ジ (ji)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+30B8",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_kata_zu": {
+    "id": "kana_kata_zu",
+    "character": "ズ",
+    "onyomi": [
+      "ZU"
+    ],
+    "kunyomi": [
+      "zu"
+    ],
+    "strokeCount": 4,
+    "radical": "Katakana",
+    "meaningId": "Huruf Katakana 「ズ」 (zu)",
+    "meaningEn": "Katakana letter ズ (zu)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+30BA",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_kata_ze": {
+    "id": "kana_kata_ze",
+    "character": "ゼ",
+    "onyomi": [
+      "ZE"
+    ],
+    "kunyomi": [
+      "ze"
+    ],
+    "strokeCount": 4,
+    "radical": "Katakana",
+    "meaningId": "Huruf Katakana 「ゼ」 (ze)",
+    "meaningEn": "Katakana letter ゼ (ze)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+30BC",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_kata_zo": {
+    "id": "kana_kata_zo",
+    "character": "ゾ",
+    "onyomi": [
+      "ZO"
+    ],
+    "kunyomi": [
+      "zo"
+    ],
+    "strokeCount": 4,
+    "radical": "Katakana",
+    "meaningId": "Huruf Katakana 「ゾ」 (zo)",
+    "meaningEn": "Katakana letter ゾ (zo)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+30BE",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_kata_da": {
+    "id": "kana_kata_da",
+    "character": "ダ",
+    "onyomi": [
+      "DA"
+    ],
+    "kunyomi": [
+      "da"
+    ],
+    "strokeCount": 5,
+    "radical": "Katakana",
+    "meaningId": "Huruf Katakana 「ダ」 (da)",
+    "meaningEn": "Katakana letter ダ (da)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+30C0",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_kata_dji": {
+    "id": "kana_kata_dji",
+    "character": "ヂ",
+    "onyomi": [
+      "JI"
+    ],
+    "kunyomi": [
+      "ji"
+    ],
+    "strokeCount": 5,
+    "radical": "Katakana",
+    "meaningId": "Huruf Katakana 「ヂ」 (ji)",
+    "meaningEn": "Katakana letter ヂ (ji)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+30C2",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_kata_dzu": {
+    "id": "kana_kata_dzu",
+    "character": "ヅ",
+    "onyomi": [
+      "ZU"
+    ],
+    "kunyomi": [
+      "zu"
+    ],
+    "strokeCount": 5,
+    "radical": "Katakana",
+    "meaningId": "Huruf Katakana 「ヅ」 (zu)",
+    "meaningEn": "Katakana letter ヅ (zu)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+30C5",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_kata_de": {
+    "id": "kana_kata_de",
+    "character": "デ",
+    "onyomi": [
+      "DE"
+    ],
+    "kunyomi": [
+      "de"
+    ],
+    "strokeCount": 5,
+    "radical": "Katakana",
+    "meaningId": "Huruf Katakana 「デ」 (de)",
+    "meaningEn": "Katakana letter デ (de)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+30C7",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_kata_do": {
+    "id": "kana_kata_do",
+    "character": "ド",
+    "onyomi": [
+      "DO"
+    ],
+    "kunyomi": [
+      "do"
+    ],
+    "strokeCount": 4,
+    "radical": "Katakana",
+    "meaningId": "Huruf Katakana 「ド」 (do)",
+    "meaningEn": "Katakana letter ド (do)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+30C9",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_kata_ba": {
+    "id": "kana_kata_ba",
+    "character": "バ",
+    "onyomi": [
+      "BA"
+    ],
+    "kunyomi": [
+      "ba"
+    ],
+    "strokeCount": 4,
+    "radical": "Katakana",
+    "meaningId": "Huruf Katakana 「バ」 (ba)",
+    "meaningEn": "Katakana letter バ (ba)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+30D0",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_kata_bi": {
+    "id": "kana_kata_bi",
+    "character": "ビ",
+    "onyomi": [
+      "BI"
+    ],
+    "kunyomi": [
+      "bi"
+    ],
+    "strokeCount": 4,
+    "radical": "Katakana",
+    "meaningId": "Huruf Katakana 「ビ」 (bi)",
+    "meaningEn": "Katakana letter ビ (bi)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+30D3",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_kata_bu": {
+    "id": "kana_kata_bu",
+    "character": "ブ",
+    "onyomi": [
+      "BU"
+    ],
+    "kunyomi": [
+      "bu"
+    ],
+    "strokeCount": 3,
+    "radical": "Katakana",
+    "meaningId": "Huruf Katakana 「ブ」 (bu)",
+    "meaningEn": "Katakana letter ブ (bu)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+30D6",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_kata_be": {
+    "id": "kana_kata_be",
+    "character": "ベ",
+    "onyomi": [
+      "BE"
+    ],
+    "kunyomi": [
+      "be"
+    ],
+    "strokeCount": 3,
+    "radical": "Katakana",
+    "meaningId": "Huruf Katakana 「ベ」 (be)",
+    "meaningEn": "Katakana letter ベ (be)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+30D9",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_kata_bo": {
+    "id": "kana_kata_bo",
+    "character": "ボ",
+    "onyomi": [
+      "BO"
+    ],
+    "kunyomi": [
+      "bo"
+    ],
+    "strokeCount": 6,
+    "radical": "Katakana",
+    "meaningId": "Huruf Katakana 「ボ」 (bo)",
+    "meaningEn": "Katakana letter ボ (bo)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+30DC",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_kata_pa": {
+    "id": "kana_kata_pa",
+    "character": "パ",
+    "onyomi": [
+      "PA"
+    ],
+    "kunyomi": [
+      "pa"
+    ],
+    "strokeCount": 3,
+    "radical": "Katakana",
+    "meaningId": "Huruf Katakana 「パ」 (pa)",
+    "meaningEn": "Katakana letter パ (pa)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+30D1",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_kata_pi": {
+    "id": "kana_kata_pi",
+    "character": "ピ",
+    "onyomi": [
+      "PI"
+    ],
+    "kunyomi": [
+      "pi"
+    ],
+    "strokeCount": 3,
+    "radical": "Katakana",
+    "meaningId": "Huruf Katakana 「ピ」 (pi)",
+    "meaningEn": "Katakana letter ピ (pi)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+30D4",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_kata_pu": {
+    "id": "kana_kata_pu",
+    "character": "プ",
+    "onyomi": [
+      "PU"
+    ],
+    "kunyomi": [
+      "pu"
+    ],
+    "strokeCount": 2,
+    "radical": "Katakana",
+    "meaningId": "Huruf Katakana 「プ」 (pu)",
+    "meaningEn": "Katakana letter プ (pu)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+30D7",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_kata_pe": {
+    "id": "kana_kata_pe",
+    "character": "ペ",
+    "onyomi": [
+      "PE"
+    ],
+    "kunyomi": [
+      "pe"
+    ],
+    "strokeCount": 2,
+    "radical": "Katakana",
+    "meaningId": "Huruf Katakana 「ペ」 (pe)",
+    "meaningEn": "Katakana letter ペ (pe)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+30DA",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_kata_po": {
+    "id": "kana_kata_po",
+    "character": "ポ",
+    "onyomi": [
+      "PO"
+    ],
+    "kunyomi": [
+      "po"
+    ],
+    "strokeCount": 5,
+    "radical": "Katakana",
+    "meaningId": "Huruf Katakana 「ポ」 (po)",
+    "meaningEn": "Katakana letter ポ (po)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+30DD",
+    "version": 1,
+    "status": "published"
+  },
+  "kana_kata_vu": {
+    "id": "kana_kata_vu",
+    "character": "ヴ",
+    "onyomi": [
+      "VU"
+    ],
+    "kunyomi": [
+      "vu"
+    ],
+    "strokeCount": 4,
+    "radical": "Katakana",
+    "meaningId": "Huruf Katakana 「ヴ」 (vu)",
+    "meaningEn": "Katakana letter ヴ (vu)",
+    "jlpt": "KANA",
+    "relatedWords": [],
+    "unicode": "U+30F4",
+    "version": 1,
+    "status": "published"
   }
 }

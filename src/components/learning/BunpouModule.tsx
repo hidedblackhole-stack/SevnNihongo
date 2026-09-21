@@ -260,27 +260,34 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
             {/* Title, Level, Functions & Meaning */}
             <div className="space-y-2">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded-lg bg-surface-inset text-gold text-xs font-mono font-bold border border-gold/30">
+                <span className="px-2.5 py-0.5 rounded-lg bg-surface-inset text-amber-900 dark:text-gold text-xs font-mono font-bold border border-amber-600/30 dark:border-gold/30">
                   {currentBunpou.baseLevel ? `Fondasi ${currentBunpou.baseLevel}` : `Level ${currentBunpou.level}`}
                 </span>
                 {currentBunpou.functions && currentBunpou.functions.map((fn, idx) => (
-                  <span key={idx} className="px-2 py-0.5 rounded-lg bg-surface-inset text-text-secondary text-[11px] font-jp font-semibold border border-border-subtle">
+                  <span key={idx} className="px-2 py-0.5 rounded-lg bg-surface-inset text-text-primary text-[11px] font-jp font-semibold border border-border-subtle">
                     {fn}
                   </span>
                 ))}
               </div>
 
-              <div className="space-y-0.5">
-                <span className="text-xs text-gold font-mono font-bold">
-                  {currentBunpou.reading}
-                </span>
-                <h3 className="text-xl sm:text-2xl font-bold text-text-primary font-jp">
-                  {currentBunpou.title}
+              <div className="space-y-1">
+                {currentBunpou.formula && (
+                  <div className="text-xs text-text-secondary font-mono font-medium">
+                    Rumus: <span className="font-jp text-text-primary font-bold">{currentBunpou.formula}</span>
+                  </div>
+                )}
+                <h3 className="text-2xl sm:text-3xl font-black text-text-primary font-jp flex items-center gap-2">
+                  <RubyText
+                    japanese={currentBunpou.title}
+                    reading={currentBunpou.reading?.includes('かた') ? currentBunpou.reading : (currentBunpou.title === '〜方' ? '〜かた' : currentBunpou.reading)}
+                    showFurigana={true}
+                  />
                 </h3>
               </div>
 
-              <p className="text-xs sm:text-sm font-semibold text-gold">
-                Arti / Makna: {currentBunpou.meaningId}
+              <p className="text-xs sm:text-sm font-medium text-text-primary">
+                <strong className="text-amber-900 dark:text-gold font-bold">Arti / Makna: </strong>
+                <span>{currentBunpou.meaningId}</span>
               </p>
             </div>
 
@@ -289,9 +296,9 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
 
             {/* 2. BRACKETED FORMULA BOX (Matching slide green bracket grouping) */}
             <div className="space-y-1.5">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-text-muted font-heading flex items-center justify-between">
+              <h4 className="text-xs font-black uppercase tracking-wider text-text-primary font-heading flex items-center justify-between">
                 <span>📐 Rumus Sambungan Kata (接続)</span>
-                <span className="text-[10px] text-emerald-400 font-mono font-bold">K. Kerja / Sifat / Benda</span>
+                <span className="text-[11px] text-emerald-800 dark:text-emerald-300 font-mono font-black tracking-wide">K. Kerja / Sifat / Benda</span>
               </h4>
               <GrammarFormulaBox item={currentBunpou} />
             </div>

@@ -38,8 +38,9 @@ interface CustomWorldViewProps {
     score?: number,
     total?: number
   ) => void;
-  onReconfigure: () => void;
+  onReconfigure?: () => void;
   onBack: () => void;
+  isTemplate?: boolean;
   soundEnabled?: boolean;
   playerMp?: number;
   playerMaxMp?: number;
@@ -63,6 +64,7 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
   onCompleteStudyItem,
   onReconfigure,
   onBack,
+  isTemplate = false,
   soundEnabled = true,
   playerMp = 100,
   playerMaxMp = 100,
@@ -104,25 +106,24 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
     score?: number,
     total?: number
   ) => {
-    if (!activeCustomStage) return;
-
     if (onCompleteStudyItem) {
       onCompleteStudyItem(moduleId, expGained, goldGained, itemId, score, total);
     }
-    if (onRewardPlayer && (expGained > 0 || goldGained > 0)) {
+    if (onRewardPlayer) {
       onRewardPlayer(expGained, goldGained);
     }
+
+    if (!activeCustomStage) return;
 
     const currentStageId = activeCustomStage.id;
     const stageIndex = curriculum.stages.findIndex(s => s.id === currentStageId);
     const existingProg = progress.stages[currentStageId] || { status: 'current' };
+    const currentClearedModules = existingProg.clearedModules || [];
+    const updatedClearedModules = currentClearedModules.includes(moduleId)
+      ? currentClearedModules
+      : [...currentClearedModules, moduleId];
 
-    const clearedModules = existingProg.clearedModules || [];
-    const updatedClearedModules = clearedModules.includes(moduleId)
-      ? clearedModules
-      : [...clearedModules, moduleId];
-
-    // Determine expected modules for this custom stage based on its items
+    // Determine if stage is considered cleared
     const hasBunpou = activeCustomStage.items.some(i => i.type === 'bunpou');
     const hasKotoba = activeCustomStage.items.some(i => i.type === 'kotoba');
     const hasKanji = activeCustomStage.items.some(i => i.type === 'kanji');
@@ -204,8 +205,8 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
           onHpDamage={onHpDamage}
           onGameOver={onGameOver}
           onStartRemediationRecall={onStartRemediationRecall}
-          soundEnabled={soundEnabled}
           furiganaEnabled={furiganaEnabled}
+          soundEnabled={soundEnabled}
         />
       </div>
     );
@@ -213,26 +214,26 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
 
   // STANDARD ROADMAP VIEW
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-6 pb-20 sm:pb-12 animate-fade-in px-2 sm:px-0">
-      {/* 1. TOP NAVIGATION & WORLD HEADER */}
-      <div className="panel p-4 sm:p-6 rounded-2xl sm:rounded-3xl shadow-md border border-border-subtle bg-surface-card space-y-4">
+    <div className="space-y-6 animate-fade-in">
+      {/* 1. HEADER BANNER */}
+      <div className="panel p-5 sm:p-6 rounded-3xl space-y-4 border border-border-subtle shadow-sm">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3.5">
+          <div className="flex items-center gap-3">
             <button
               type="button"
               onClick={() => {
                 playSound('click', soundEnabled);
                 onBack();
               }}
-              className="p-2.5 rounded-2xl bg-surface-inset border border-border-subtle text-text-secondary hover:text-text-primary hover:bg-surface-elevated transition-colors shrink-0"
-              title="Kembali ke Buku Saku"
+              className="p-2.5 rounded-xl border border-border-subtle bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-colors"
+              title="Kembali"
             >
               <ArrowLeft className="w-5 h-5" />
             </button>
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-md bg-indigo/15 text-indigo border border-indigo/30 uppercase">
-                  Custom World
+                  {isTemplate ? 'Template World' : 'Custom World'}
                 </span>
                 <span className="text-xs text-text-secondary font-mono">
                   {totalStages} Stage Terjadwal
@@ -244,17 +245,19 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={() => {
-              playSound('click', soundEnabled);
-              onReconfigure();
-            }}
-            className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold border border-border-subtle bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-indigo transition-all self-stretch sm:self-auto justify-center"
-          >
-            <Sliders className="w-3.5 h-3.5" />
-            <span>Atur Ulang Stage</span>
-          </button>
+          {!isTemplate && onReconfigure && (
+            <button
+              type="button"
+              onClick={() => {
+                playSound('click', soundEnabled);
+                onReconfigure();
+              }}
+              className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold border border-border-subtle bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-indigo transition-all self-stretch sm:self-auto justify-center"
+            >
+              <Sliders className="w-3.5 h-3.5" />
+              <span>Atur Ulang Stage</span>
+            </button>
+          )}
         </div>
 
         {/* Progress Bar & Quick Stats */}

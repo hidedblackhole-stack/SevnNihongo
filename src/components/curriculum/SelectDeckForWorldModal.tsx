@@ -159,8 +159,9 @@ export const SelectDeckForWorldModal: React.FC<SelectDeckForWorldModalProps> = (
                                 {deck.title}
                               </h4>
                               {hasCurriculum && (
-                                <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-bold">
-                                  🗺️ World Siap
+                                <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 font-bold inline-flex items-center gap-1">
+                                  <Compass className="w-3 h-3" />
+                                  <span>World Siap</span>
                                 </span>
                               )}
                               {deck.level && (

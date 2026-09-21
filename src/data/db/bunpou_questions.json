@@ -14697,6 +14697,7 @@
     "material_id": "bp_n5_014",
     "type": "recognition",
     "prompt": "Apa arti dan fungsi utama dari pola tata bahasa 「〜方」?",
+    "ruby": "Apa arti dan fungsi utama dari pola tata bahasa 「〜かた」?",
     "options": [
       "Sudah; tidak lagi",
       "Cara melakukan; bagaimana cara ~",
@@ -14704,13 +14705,14 @@
       "Pertukaran partikel が dan の dalam anak kalimat"
     ],
     "correct_answer": 1,
-    "explanation": "Pola 「〜方」 digunakan untuk: Cara melakukan; bagaimana cara ~. Rumus: Verb［stem］＋ 方"
+    "explanation": "Pola 「〜方（かた）」 digunakan untuk: Cara melakukan; bagaimana cara ~. Rumus: Verb［stem］＋ 方"
   },
   {
     "id": "bp_n5_014_q2",
     "material_id": "bp_n5_014",
     "type": "fill_blank",
     "prompt": "文の適切な形を選びなさい：「この機械の使い方を教えてください。（　）」",
+    "ruby": "ぶんのてきせつなかたちをえらびなさい：「このきかいのつかいかたをおしえてください。（　）」",
     "options": [
       "あげる",
       "い形容詞＋名詞",
@@ -14718,7 +14720,7 @@
       "一番"
     ],
     "correct_answer": 2,
-    "explanation": "Jawaban tepat adalah 「〜方」. Pola ini menyatakan: Cara melakukan; bagaimana cara ~."
+    "explanation": "Jawaban tepat adalah 「〜方（かた）」. Pola ini menyatakan: Cara melakukan; bagaimana cara ~."
   },
   {
     "id": "bp_n5_015_q1",

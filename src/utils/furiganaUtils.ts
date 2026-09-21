@@ -19,7 +19,7 @@ const furiganaDict: FuriganaDict = furiganaDictRaw as FuriganaDict;
 /**
  * Check if a character is a CJK Unified Ideograph (kanji) or ideographic iteration mark.
  */
-function isKanji(char: string): boolean {
+export function isKanji(char: string): boolean {
   if (!char) return false;
   const code = char.charCodeAt(0);
   return (
@@ -125,6 +125,26 @@ function autoAnnotateFurigana(text: string, excludeKanji?: Set<string>): RubySeg
     .sort((a, b) => b.length - a.length);
 
   while (i < text.length) {
+    // 1. Suffix pattern 〜方 / ～方 / ~方 (way of doing, e.g. 〜方) is always 'かた'
+    if (text.startsWith('〜方', i) || text.startsWith('～方', i) || text.startsWith('~方', i)) {
+      segments.push({ text: text[i], isKanji: false });
+      segments.push({ text: '方', ruby: 'かた', isKanji: true });
+      i += 2;
+      continue;
+    }
+
+    // 2. Verb stem + 方 (e.g. 使い方, 書き方, 作り方, やり方, 食べ方, 教え方, 行き方, 読み方) or suffix 〜方
+    // When 方 is preceded by '〜'/'～'/'~' or hiragana other than 'の' (which is usually noun modifier の方 / hou),
+    // it functions as the action-method nominalizer suffix 'かた' (kata).
+    if (text[i] === '方') {
+      const prev = i > 0 ? text[i - 1] : '';
+      if (prev === '〜' || prev === '～' || prev === '~' || (isHiragana(prev) && prev !== 'の' && prev !== '之')) {
+        segments.push({ text: '方', ruby: 'かた', isKanji: true });
+        i++;
+        continue;
+      }
+    }
+
     // Check if substring matches known compound word
     let wordMatch: string | null = null;
     for (const w of matchedWords) {
@@ -172,6 +192,7 @@ function autoAnnotateFurigana(text: string, excludeKanji?: Set<string>): RubySeg
     // Collect continuous non-kanji text
     let nonKanji = '';
     while (i < text.length && !isKanji(text[i])) {
+      if (text.startsWith('〜方', i) || text.startsWith('～方', i) || text.startsWith('~方', i)) break;
       if (matchedWords.some(w => text.startsWith(w, i))) break;
       nonKanji += text[i];
       i++;

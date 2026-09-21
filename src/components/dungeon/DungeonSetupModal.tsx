@@ -25,6 +25,7 @@ import {
   DungeonType,
   DungeonLevelCategory,
   DungeonConfig,
+  FlashcardMaterialType,
   isDeckCompatibleWithDungeon,
 } from '../../utils/dungeonGenerator';
 import { CONJUGATION_FORMS_INFO } from '../../data/conjugationRules';
@@ -108,6 +109,24 @@ const DUNGEON_META: Record<
     themeColor: 'border-rose-500/40 text-rose-400',
     glowColor: 'rgba(244, 63, 94, 0.25)',
   },
+  sentence_creation: {
+    title: 'Dungeon Kreasi Kalimat Pola',
+    jpTitle: '文法創作の道場 (Sentence Construction Drill)',
+    subtitle: 'Rangkai kalimat bebas bahasa Jepang menggunakan pola tata bahasa yang ditentukan',
+    iconEmoji: '📜',
+    requirementHint: 'Memerlukan materi pola tata bahasa (Bunpou)',
+    themeColor: 'border-violet-500/40 text-violet-400',
+    glowColor: 'rgba(139, 92, 246, 0.25)',
+  },
+  blackboard: {
+    title: 'Dungeon Papan Tulis Pola',
+    jpTitle: '黒板の実験室 (Pattern Blackboard Playground)',
+    subtitle: 'Laboratorium visual bebas mengamati hasil transformasi kata dengan aneka pola kalimat',
+    iconEmoji: '🏫',
+    requirementHint: 'Mendukung kata kerja (Kotoba) dan pola kalimat (Bunpou)',
+    themeColor: 'border-teal/40 text-teal',
+    glowColor: 'rgba(38, 166, 154, 0.25)',
+  },
 };
 
 const LEVEL_CATEGORY_OPTIONS: {
@@ -146,16 +165,43 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
 }) => {
   const allDecks = useMemo(() => ensureUserDecks(userDecks), [userDecks]);
 
+  // Flashcard material customization state (Kotoba, Kanji, Bunpou / Pola)
+  const [selectedFlashcardTypes, setSelectedFlashcardTypes] = useState<FlashcardMaterialType[]>([
+    'kotoba', 'kanji', 'bunpou'
+  ]);
+
+  const toggleFlashcardType = (type: FlashcardMaterialType) => {
+    playSound('click', soundEnabled);
+    setSelectedFlashcardTypes(prev =>
+      prev.includes(type) ? prev.filter(t => t !== type) : [...prev, type]
+    );
+  };
+
   // Evaluate compatibility of each deck for this dungeonType
   const evaluatedDecks = useMemo(() => {
     return allDecks.map(deck => {
       const compat = isDeckCompatibleWithDungeon(deck, dungeonType);
+      let matchedCount = compat.matchedCount;
+      let isCompatible = compat.isCompatible;
+      let reason = compat.reason;
+
+      if (dungeonType === 'flashcard') {
+        const filteredCount = deck.items.filter(it => selectedFlashcardTypes.includes(it.category as any)).length;
+        matchedCount = filteredCount;
+        isCompatible = filteredCount > 0;
+        if (filteredCount === 0) {
+          reason = `Deck tidak memiliki materi ${selectedFlashcardTypes.map(t => t === 'kotoba' ? 'Kosakata' : t === 'kanji' ? 'Kanji' : 'Tata Bahasa').join('/')}`;
+        }
+      }
+
       return {
         deck,
-        ...compat,
+        isCompatible,
+        matchedCount,
+        reason,
       };
     });
-  }, [allDecks, dungeonType]);
+  }, [allDecks, dungeonType, selectedFlashcardTypes]);
 
   const compatibleDecks = useMemo(() => evaluatedDecks.filter(d => d.isCompatible), [evaluatedDecks]);
   const incompatibleDecks = useMemo(() => evaluatedDecks.filter(d => !d.isCompatible), [evaluatedDecks]);
@@ -165,6 +211,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
   const [selectedDeckId, setSelectedDeckId] = useState<string | null>(() => compatibleDecks[0]?.deck.id || null);
   const [selectedFloorCount, setSelectedFloorCount] = useState<number>(10);
   const [mode, setMode] = useState<'standard' | 'survival'>('standard');
+  const [survivalSeconds, setSurvivalSeconds] = useState<number>(30);
   const [extremeStageNumber, setExtremeStageNumber] = useState<number>(1);
   const [isRandomExtreme, setIsRandomExtreme] = useState<boolean>(false);
 
@@ -209,6 +256,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
 
   const handleStart = () => {
     if (sourceType === 'deck' && !selectedDeckId) return;
+    if (dungeonType === 'flashcard' && selectedFlashcardTypes.length === 0) return;
     if (dungeonType === 'conjugation' && conjugationMode === 'custom' && selectedConjugationForms.length === 0) return;
 
     playSound('attack', soundEnabled);
@@ -219,10 +267,12 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
       levelCategory: selectedCategory,
       floorCount: selectedFloorCount,
       mode,
+      survivalTimeLimit: mode === 'survival' ? survivalSeconds : undefined,
       deckId: sourceType === 'deck' && selectedDeckId ? selectedDeckId : undefined,
       deckTitle: sourceType === 'deck' && chosenDeck ? chosenDeck.title : undefined,
       sourceType,
       stageNumber: dungeonType === 'extreme' && !isRandomExtreme ? extremeStageNumber : undefined,
+      flashcardMaterialTypes: dungeonType === 'flashcard' ? selectedFlashcardTypes : undefined,
       conjugationMode: dungeonType === 'conjugation' ? conjugationMode : undefined,
       selectedConjugationForms: dungeonType === 'conjugation' && conjugationMode === 'custom' ? selectedConjugationForms : undefined,
     });
@@ -230,6 +280,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
 
   const isStartDisabled =
     (sourceType === 'deck' && (!selectedDeckId || compatibleDecks.length === 0)) ||
+    (dungeonType === 'flashcard' && selectedFlashcardTypes.length === 0) ||
     (dungeonType === 'conjugation' && conjugationMode === 'custom' && selectedConjugationForms.length === 0);
 
   return createPortal(
@@ -400,6 +451,189 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
               </div>
             ) : (
               <>
+                {/* ================= FLASHCARD MATERIAL CUSTOMIZATION ================= */}
+                {dungeonType === 'flashcard' && (
+                  <div className="space-y-2.5 p-3.5 rounded-2xl bg-surface-inset border border-teal/35 shadow-[inset_1.5px_1.5px_4px_var(--neu-d)] mb-3 animate-fade-in">
+                    <div className="flex items-center justify-between gap-2 flex-wrap">
+                      <label className="text-xs font-bold uppercase tracking-wider text-teal font-heading flex items-center gap-1.5">
+                        <SlidersHorizontal className="w-3.5 h-3.5 text-teal" />
+                        <span>Kustomisasi Tipe Materi Flashcard:</span>
+                      </label>
+
+                      <div className="flex items-center gap-2">
+                        <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-md border ${
+                          selectedFlashcardTypes.length === 3
+                            ? 'bg-teal/15 text-teal border-teal/30'
+                            : selectedFlashcardTypes.length > 0
+                            ? 'bg-amber-500/15 text-gold border-amber-500/30'
+                            : 'bg-rose-500/15 text-rose-400 border-rose-500/30'
+                        }`}>
+                          {selectedFlashcardTypes.length === 3
+                            ? 'Semua Tipe (3/3)'
+                            : selectedFlashcardTypes.length > 0
+                            ? `${selectedFlashcardTypes.length} Tipe Aktif`
+                            : '0 Tipe Dipilih'}
+                        </span>
+
+                        {selectedFlashcardTypes.length < 3 && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              playSound('click', soundEnabled);
+                              setSelectedFlashcardTypes(['kotoba', 'kanji', 'bunpou']);
+                            }}
+                            className="text-[11px] font-heading font-bold text-teal hover:underline cursor-pointer"
+                          >
+                            Pilih Semua
+                          </button>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* 3 Checkable Material Cards */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                      {/* 1. KOTOBA */}
+                      {(() => {
+                        const isSelected = selectedFlashcardTypes.includes('kotoba');
+                        return (
+                          <button
+                            type="button"
+                            onClick={() => toggleFlashcardType('kotoba')}
+                            className={`p-3 rounded-2xl text-left transition-all border relative flex flex-col justify-between select-none cursor-pointer overflow-hidden ${
+                              isSelected
+                                ? 'bg-gradient-to-b from-surface-elevated to-surface-card border-2 border-teal text-text-primary shadow-[0_0_12px_rgba(38,166,154,0.22),2px_2px_6px_var(--neu-d),-1px_-1px_3px_var(--neu-l)] ring-1 ring-teal/30'
+                                : 'bg-surface-card/60 hover:bg-surface-elevated/40 border-border-subtle text-text-muted hover:text-text-primary'
+                            }`}
+                          >
+                            <div className="flex items-center justify-between gap-2">
+                              <div className="flex items-center gap-2">
+                                <span className={`w-6 h-6 rounded-lg font-serif font-black text-xs flex items-center justify-center border shadow-xs ${
+                                  isSelected
+                                    ? 'bg-teal/20 border-teal/40 text-teal'
+                                    : 'bg-surface-inset border-border-subtle text-text-muted'
+                                }`}>
+                                  語
+                                </span>
+                                <span className={`text-xs font-heading font-black tracking-wide ${isSelected ? 'text-teal' : 'text-text-primary'}`}>
+                                  Kotoba
+                                </span>
+                              </div>
+                              <div className={`w-4 h-4 rounded flex items-center justify-center border transition-all ${
+                                isSelected ? 'bg-teal border-teal text-surface-base shadow-xs' : 'border-border-subtle bg-surface-inset'
+                              }`}>
+                                {isSelected && <Check className="w-2.5 h-2.5 stroke-[3]" />}
+                              </div>
+                            </div>
+                            <div className="mt-2 min-w-0">
+                              <div className={`text-[11px] font-heading font-bold ${isSelected ? 'text-text-primary' : 'text-text-secondary'}`}>
+                                Kosakata
+                              </div>
+                              <div className="text-[10px] text-text-muted truncate mt-0.5 font-body">
+                                Arti, bacaan & audio
+                              </div>
+                            </div>
+                          </button>
+                        );
+                      })()}
+
+                      {/* 2. KANJI */}
+                      {(() => {
+                        const isSelected = selectedFlashcardTypes.includes('kanji');
+                        return (
+                          <button
+                            type="button"
+                            onClick={() => toggleFlashcardType('kanji')}
+                            className={`p-3 rounded-2xl text-left transition-all border relative flex flex-col justify-between select-none cursor-pointer overflow-hidden ${
+                              isSelected
+                                ? 'bg-gradient-to-b from-surface-elevated to-surface-card border-2 border-gold text-text-primary shadow-[0_0_12px_rgba(240,190,82,0.22),2px_2px_6px_var(--neu-d),-1px_-1px_3px_var(--neu-l)] ring-1 ring-gold/30'
+                                : 'bg-surface-card/60 hover:bg-surface-elevated/40 border-border-subtle text-text-muted hover:text-text-primary'
+                            }`}
+                          >
+                            <div className="flex items-center justify-between gap-2">
+                              <div className="flex items-center gap-2">
+                                <span className={`w-6 h-6 rounded-lg font-serif font-black text-xs flex items-center justify-center border shadow-xs ${
+                                  isSelected
+                                    ? 'bg-gold/20 border-gold/40 text-gold'
+                                    : 'bg-surface-inset border-border-subtle text-text-muted'
+                                }`}>
+                                  字
+                                </span>
+                                <span className={`text-xs font-heading font-black tracking-wide ${isSelected ? 'text-gold' : 'text-text-primary'}`}>
+                                  Kanji
+                                </span>
+                              </div>
+                              <div className={`w-4 h-4 rounded flex items-center justify-center border transition-all ${
+                                isSelected ? 'bg-gold border-gold text-surface-base shadow-xs' : 'border-border-subtle bg-surface-inset'
+                              }`}>
+                                {isSelected && <Check className="w-2.5 h-2.5 stroke-[3]" />}
+                              </div>
+                            </div>
+                            <div className="mt-2 min-w-0">
+                              <div className={`text-[11px] font-heading font-bold ${isSelected ? 'text-text-primary' : 'text-text-secondary'}`}>
+                                Aksara Kanji
+                              </div>
+                              <div className="text-[10px] text-text-muted truncate mt-0.5 font-body">
+                                Onyomi, Kunyomi & makna
+                              </div>
+                            </div>
+                          </button>
+                        );
+                      })()}
+
+                      {/* 3. POLA (BUNPOU) */}
+                      {(() => {
+                        const isSelected = selectedFlashcardTypes.includes('bunpou');
+                        return (
+                          <button
+                            type="button"
+                            onClick={() => toggleFlashcardType('bunpou')}
+                            className={`p-3 rounded-2xl text-left transition-all border relative flex flex-col justify-between select-none cursor-pointer overflow-hidden ${
+                              isSelected
+                                ? 'bg-gradient-to-b from-surface-elevated to-surface-card border-2 border-indigo text-text-primary shadow-[0_0_12px_rgba(111,147,207,0.25),2px_2px_6px_var(--neu-d),-1px_-1px_3px_var(--neu-l)] ring-1 ring-indigo/30'
+                                : 'bg-surface-card/60 hover:bg-surface-elevated/40 border-border-subtle text-text-muted hover:text-text-primary'
+                            }`}
+                          >
+                            <div className="flex items-center justify-between gap-2">
+                              <div className="flex items-center gap-2">
+                                <span className={`w-6 h-6 rounded-lg font-serif font-black text-xs flex items-center justify-center border shadow-xs ${
+                                  isSelected
+                                    ? 'bg-indigo/20 border-indigo/40 text-indigo'
+                                    : 'bg-surface-inset border-border-subtle text-text-muted'
+                                }`}>
+                                  文
+                                </span>
+                                <span className={`text-xs font-heading font-black tracking-wide ${isSelected ? 'text-indigo' : 'text-text-primary'}`}>
+                                  Pola Kalimat
+                                </span>
+                              </div>
+                              <div className={`w-4 h-4 rounded flex items-center justify-center border transition-all ${
+                                isSelected ? 'bg-indigo border-indigo text-surface-base shadow-xs' : 'border-border-subtle bg-surface-inset'
+                              }`}>
+                                {isSelected && <Check className="w-2.5 h-2.5 stroke-[3]" />}
+                              </div>
+                            </div>
+                            <div className="mt-2 min-w-0">
+                              <div className={`text-[11px] font-heading font-bold ${isSelected ? 'text-text-primary' : 'text-text-secondary'}`}>
+                                Tata Bahasa (Bunpou)
+                              </div>
+                              <div className="text-[10px] text-text-muted truncate mt-0.5 font-body">
+                                Formula pola & contoh kalimat
+                              </div>
+                            </div>
+                          </button>
+                        );
+                      })()}
+                    </div>
+
+                    {selectedFlashcardTypes.length === 0 && (
+                      <p className="text-[11px] text-rose-400 font-medium text-center pt-1 flex items-center justify-center gap-1 animate-fade-in">
+                        <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                        <span>Pilih minimal 1 tipe materi (Kotoba, Kanji, atau Pola) untuk memulai drill flashcard.</span>
+                      </p>
+                    )}
+                  </div>
+                )}
+
                 {dungeonType === 'conjugation' && (
                   /* ================= CONJUGATION MODE SWITCHER ================= */
                   <div className="space-y-2.5 p-3 rounded-2xl bg-surface-inset border border-indigo/30 shadow-[inset_1.5px_1.5px_4px_var(--neu-d)] mb-2">
@@ -872,6 +1106,89 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                 </div>
               </button>
             </div>
+
+            {/* Sub-panel Pilihan Durasi Timer Mode Survival */}
+            {mode === 'survival' && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="p-3.5 rounded-2xl bg-surface-inset border border-rose-500/30 space-y-2.5 shadow-inner mt-2.5"
+              >
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-heading font-bold text-rose-400 flex items-center gap-1.5">
+                    <Clock className="w-3.5 h-3.5" />
+                    <span>Batas Waktu Per Soal:</span>
+                  </span>
+                  <span className="font-mono font-black text-rose-300 text-xs sm:text-sm bg-rose-500/15 px-2.5 py-0.5 rounded-lg border border-rose-500/30">
+                    ⏱️ {survivalSeconds} Detik
+                  </span>
+                </div>
+
+                {/* Preset Pill Buttons */}
+                <div className="grid grid-cols-5 gap-1.5">
+                  {[
+                    { sec: 15, label: '15s', desc: 'Kilat' },
+                    { sec: 30, label: '30s', desc: 'Standar' },
+                    { sec: 45, label: '45s', desc: 'Sedang' },
+                    { sec: 60, label: '60s', desc: '1 Mnt' },
+                    { sec: 90, label: '90s', desc: 'Santai' },
+                  ].map(preset => {
+                    const isSelected = survivalSeconds === preset.sec;
+                    return (
+                      <button
+                        key={preset.sec}
+                        type="button"
+                        onClick={() => {
+                          playSound('click', soundEnabled);
+                          setSurvivalSeconds(preset.sec);
+                        }}
+                        className={`py-2 px-1 rounded-xl text-center transition-all cursor-pointer select-none ${
+                          isSelected
+                            ? 'bg-rose-500 text-white font-bold shadow-md shadow-rose-500/30 scale-[1.03]'
+                            : 'bg-surface-card hover:bg-surface-elevated text-text-secondary border border-border-subtle hover:text-text-primary'
+                        }`}
+                      >
+                        <span className="block text-xs font-mono font-bold">{preset.label}</span>
+                        <span className={`block text-[9px] ${isSelected ? 'text-white/80' : 'text-text-muted'}`}>
+                          {preset.desc}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Stepper for custom seconds */}
+                <div className="flex items-center justify-between pt-1 border-t border-border-subtle/50 text-[11px] text-text-muted">
+                  <span>Atur bebas durasi:</span>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        playSound('click', soundEnabled);
+                        setSurvivalSeconds(prev => Math.max(5, prev - 5));
+                      }}
+                      className="w-7 h-7 rounded-lg bg-surface-card hover:bg-surface-elevated text-text-primary border border-border-subtle font-mono font-bold flex items-center justify-center cursor-pointer shadow-2xs active:scale-95"
+                    >
+                      -5s
+                    </button>
+                    <span className="font-mono font-bold text-text-primary min-w-[42px] text-center">
+                      {survivalSeconds}s
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        playSound('click', soundEnabled);
+                        setSurvivalSeconds(prev => Math.min(180, prev + 5));
+                      }}
+                      className="w-7 h-7 rounded-lg bg-surface-card hover:bg-surface-elevated text-text-primary border border-border-subtle font-mono font-bold flex items-center justify-center cursor-pointer shadow-2xs active:scale-95"
+                    >
+                      +5s
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            )}
           </div>
 
           {/* SECTION 4: CARVED TREASURE REWARD PLAQUE */}
@@ -924,7 +1241,9 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
             <Swords className="w-4 h-4 text-gold shrink-0" />
             <span className="truncate">
               {isStartDisabled
-                ? (dungeonType === 'conjugation' && conjugationMode === 'custom' && selectedConjugationForms.length === 0
+                ? (dungeonType === 'flashcard' && selectedFlashcardTypes.length === 0
+                  ? 'Pilih Minimal 1 Tipe Materi'
+                  : dungeonType === 'conjugation' && conjugationMode === 'custom' && selectedConjugationForms.length === 0
                   ? 'Pilih Minimal 1 Pola'
                   : 'Pilih Deck yang Sesuai')
                 : sourceType === 'deck'

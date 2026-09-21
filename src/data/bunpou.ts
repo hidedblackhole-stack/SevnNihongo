@@ -94,7 +94,7 @@ export const BUNPOU_DATABASE: Record<string, BunpouItem> = {};
   const bunpouItem: BunpouItem = {
     id: item.id,
     title: item.title,
-    reading: item.formula || '文法パターン',
+    reading: (item as any).reading || (item.title === '〜方' ? '〜かた' : (item.formula || '文法パターン')),
     meaningId: item.meaning_id || `Tata bahasa ${detectedLevel}`,
     meaningEn: item.meaning_en || `${detectedLevel} Grammar Pattern`,
     level: detectedLevel,

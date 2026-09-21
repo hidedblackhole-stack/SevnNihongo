@@ -254,7 +254,11 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
             ) : (
               <>
                 <h2 className="text-xl sm:text-2xl font-black text-text-primary font-heading tracking-wide">
-                  {getCanonicalGrammarTitle(item)}
+                  <RubyText
+                    japanese={getCanonicalGrammarTitle(item)}
+                    reading={item.reading?.includes('かた') ? item.reading : (item.title === '〜方' ? '〜かた' : item.reading)}
+                    showFurigana={true}
+                  />
                 </h2>
                 <p className="text-xs sm:text-sm font-semibold text-text-secondary">
                   {item.meaningId}
@@ -397,9 +401,9 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
 
             {/* 2. BRACKETED FORMULA BOX (Matching slide green bracket grouping) */}
             <div className="space-y-1.5">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-text-muted font-heading flex items-center justify-between">
+              <h4 className="text-xs font-black uppercase tracking-wider text-text-primary font-heading flex items-center justify-between">
                 <span>📐 Rumus Sambungan Kata (接続)</span>
-                <span className="text-[10px] text-emerald-400 font-mono font-bold">K. Kerja / Sifat / Benda</span>
+                <span className="text-[11px] text-emerald-800 dark:text-emerald-300 font-mono font-black tracking-wide">K. Kerja / Sifat / Benda</span>
               </h4>
               <GrammarFormulaBox item={item} />
             </div>

@@ -48,6 +48,7 @@ import { CreateDeckModal } from './CreateDeckModal';
 import { DeckAddItemModal } from './DeckAddItemModal';
 import { DeckFlashcardRunner } from './DeckFlashcardRunner';
 import { DeckWritingRunner } from './DeckWritingRunner';
+import { DeckDetailView } from './DeckDetailView';
 import { UniversalEntityModal } from '../modals/UniversalEntityModal';
 import { KotobaDetailModal } from '../library/KotobaDetailModal';
 import { KanjiDetailModal } from '../library/KanjiDetailModal';
@@ -423,13 +424,18 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
                     {/* Top Row: Icon, Badge, and Quick Actions */}
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex items-center gap-2.5">
-                        <span className="text-2xl sm:text-3xl p-2 rounded-2xl bg-surface-inset border border-border-subtle group-hover:scale-110 transition-transform">
-                          {deck.coverIcon || (isDefault ? '🔖' : '📖')}
-                        </span>
+                        <div className="w-10 h-10 rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-center group-hover:scale-105 transition-transform shadow-inner shrink-0">
+                          {isDefault ? (
+                            <Bookmark className="w-5 h-5 text-gold" />
+                          ) : (
+                            <BookOpen className="w-5 h-5 text-text-secondary" />
+                          )}
+                        </div>
                         <div>
                           {isDefault ? (
                             <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider font-mono text-gold bg-gold/10 px-2 py-0.5 rounded-md border border-gold/30">
-                              ⭐ Bookmark Utama
+                              <Bookmark className="w-3 h-3 text-gold" />
+                              <span>Bookmark Utama</span>
                             </span>
                           ) : (
                             <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider font-mono text-text-secondary bg-surface-inset px-2 py-0.5 rounded-md border border-border-subtle">
@@ -438,7 +444,8 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
                           )}
                           {curriculums[deck.id] && (
                             <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider font-mono text-indigo bg-indigo/10 px-2 py-0.5 rounded-md border border-indigo/30">
-                              🗺️ World
+                              <Compass className="w-3 h-3 text-indigo" />
+                              <span>World</span>
                             </span>
                           )}
                         </div>
@@ -501,360 +508,52 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
             })}
           </div>
         </div>
-      ) : (
-        /* ================= DECK DETAIL VIEW ================= */
-        <div className="space-y-5">
-          {/* Back & Breadcrumb Bar */}
-          <div className="flex items-center justify-between flex-wrap gap-2">
-            <button
-              onClick={() => {
-                setSelectedDeckId(null);
-                setDeckSearch('');
-                playSound('click', soundEnabled);
-              }}
-              className="px-3.5 py-2 rounded-xl text-xs font-bold font-heading text-text-secondary hover:text-text-primary bg-surface-card border border-border-subtle hover:border-border-primary flex items-center gap-2 transition-all"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Kembali ke Daftar Buku Saku</span>
-            </button>
-
-            {activeDeck && !activeDeck.isDefault && (
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => {
-                    setEditingDeck(activeDeck);
-                    setIsCreateModalOpen(true);
-                    playSound('click', soundEnabled);
-                  }}
-                  className="px-3 py-1.5 rounded-xl text-xs font-bold text-text-secondary hover:text-text-primary bg-surface-card border border-border-subtle hover:border-border-primary flex items-center gap-1.5 transition-colors"
-                >
-                  <Edit2 className="w-3.5 h-3.5" />
-                  <span>Edit Info Deck</span>
-                </button>
-                <button
-                  onClick={() => handleDeleteDeck(activeDeck.id)}
-                  className="px-3 py-1.5 rounded-xl text-xs font-bold text-wine-accent hover:bg-surface-inset border border-wine-accent/30 flex items-center gap-1.5 transition-colors"
-                >
-                  <Trash2 className="w-3.5 h-3.5" />
-                  <span>Hapus</span>
-                </button>
-              </div>
-            )}
-          </div>
-
-          {/* Deck Header Banner */}
-          <div className="panel p-5 sm:p-6 rounded-3xl border border-border-subtle space-y-4">
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-              <div className="flex items-start gap-3.5">
-                <span className="text-3xl sm:text-4xl p-2.5 rounded-2xl bg-surface-inset border border-border-subtle shrink-0">
-                  {activeDeck.coverIcon || '📖'}
-                </span>
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    {activeDeck.isDefault ? (
-                      <span className="text-[10px] font-bold uppercase tracking-wider font-mono text-gold bg-gold/10 px-2 py-0.5 rounded-md border border-gold/30">
-                        ⭐ Bookmark Utama
-                      </span>
-                    ) : (
-                      <span className="text-[10px] font-bold uppercase tracking-wider font-mono text-text-secondary bg-surface-inset px-2 py-0.5 rounded-md border border-border-subtle">
-                        Tipe: {activeDeck.type}
-                      </span>
-                    )}
-                    <span className="text-[10px] font-mono text-text-muted">
-                      {resolvedItems.length} item materi tersimpan
-                    </span>
-                  </div>
-                  <h2 className="text-xl sm:text-2xl font-bold font-heading text-text-primary">
-                    {activeDeck.title}
-                  </h2>
-                  <p className="text-xs sm:text-sm text-text-secondary">
-                    {activeDeck.description || 'Koleksi catatan materi pilihan untuk dipelajari intensif.'}
-                  </p>
-                </div>
-              </div>
-
-              {/* Action Buttons: Practice Launchers & Add Material */}
-              <div className="flex items-center gap-2 flex-wrap w-full md:w-auto justify-start md:justify-end">
-                {/* Custom World / Curriculum Button */}
-                <button
-                  disabled={resolvedItems.length === 0}
-                  onClick={() => {
-                    playSound('click', soundEnabled);
-                    if (curriculums[activeDeck.id]) {
-                      setActiveWorldDeckId(activeDeck.id);
-                    } else {
-                      setIsCurriculumConfigOpen(true);
-                    }
-                  }}
-                  className={`px-4 py-2.5 rounded-2xl font-sans font-bold text-xs flex items-center gap-2 transition-all ${
-                    resolvedItems.length === 0
-                      ? 'opacity-40 cursor-not-allowed bg-surface-inset text-text-muted border border-border-subtle'
-                      : 'btn-skeuo-indigo shadow-md hover:scale-[1.02]'
-                  }`}
-                  title="Jadikan deck ini kurikulum petualangan stage bergaya World"
-                >
-                  <Compass className="w-3.5 h-3.5 text-gold shrink-0" />
-                  <span className="whitespace-nowrap">{curriculums[activeDeck.id] ? 'Petualangan World' : 'Rancang World Stage'}</span>
-                </button>
-
-                {/* Flashcard Button */}
-                <button
-                  disabled={resolvedItems.length === 0}
-                  onClick={() => {
-                    setActiveRunner('flashcard');
-                    playSound('click', soundEnabled);
-                  }}
-                  className={`px-4 py-2.5 rounded-2xl font-heading font-bold text-xs flex items-center gap-2 transition-all ${
-                    resolvedItems.length === 0
-                      ? 'opacity-40 cursor-not-allowed bg-surface-inset text-text-muted border border-border-subtle'
-                      : 'bg-surface-elevated text-text-primary border border-border-primary shadow-sm hover:scale-105'
-                  }`}
-                >
-                  <Play className="w-3.5 h-3.5 text-gold fill-gold" />
-                  <span>Mulai Flashcard</span>
-                </button>
-
-                {/* Writing Button */}
-                <button
-                  disabled={writableCount === 0}
-                  onClick={() => {
-                    setActiveRunner('writing');
-                    playSound('click', soundEnabled);
-                  }}
-                  className={`px-4 py-2.5 rounded-2xl font-heading font-bold text-xs flex items-center gap-2 transition-all ${
-                    writableCount === 0
-                      ? 'opacity-40 cursor-not-allowed bg-surface-inset text-text-muted border border-border-subtle'
-                      : 'bg-surface-elevated text-text-primary border border-border-primary shadow-sm hover:scale-105'
-                  }`}
-                >
-                  <PenTool className="w-3.5 h-3.5 text-indigo" />
-                  <span>Latihan Menulis ({writableCount})</span>
-                </button>
-
-                {/* Add Material Button */}
-                <button
-                  onClick={() => {
-                    setIsAddItemModalOpen(true);
-                    playSound('click', soundEnabled);
-                  }}
-                  className="px-4 py-2.5 rounded-2xl bg-surface-inset hover:bg-surface-elevated text-text-primary font-heading font-bold text-xs border border-border-subtle hover:border-border-primary flex items-center gap-2 transition-all"
-                >
-                  <Plus className="w-3.5 h-3.5 text-gold" />
-                  <span>+ Cari Materi</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Secondary Toolbar: Preset & Tools */}
-            <div className="pt-3 border-t border-border-subtle flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              {/* Category Filter Tabs */}
-              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-thin">
-                {[
-                  { id: 'all', label: `Semua (${resolvedItems.length})` },
-                  { id: 'kotoba', label: `Kosakata (${resolvedItems.filter(i => i.category === 'kotoba').length})` },
-                  { id: 'kanji', label: `Kanji (${resolvedItems.filter(i => i.category === 'kanji').length})` },
-                  { id: 'bunpou', label: `Tata Bahasa (${resolvedItems.filter(i => i.category === 'bunpou').length})` },
-                ].map((c) => {
-                  const isSelected = categoryFilter === c.id;
-                  return (
-                    <button
-                      key={c.id}
-                      onClick={() => {
-                        setCategoryFilter(c.id as any);
-                        playSound('click', soundEnabled);
-                      }}
-                      className={`px-2.5 py-1 rounded-xl text-xs font-bold font-mono whitespace-nowrap transition-all border shrink-0 ${
-                        isSelected
-                          ? 'bg-surface-elevated text-text-primary border-border-primary shadow-sm font-black'
-                          : 'bg-surface-inset text-text-secondary border-border-subtle hover:text-text-primary'
-                      }`}
-                    >
-                      {c.label}
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Quick Actions Group */}
-              <div className="flex items-center gap-2 flex-wrap">
-                {/* In-deck search input */}
-                <div className="relative flex-1 sm:w-48">
-                  <Search className="w-3.5 h-3.5 text-text-muted absolute left-2.5 top-1/2 -translate-y-1/2" />
-                  <input
-                    type="text"
-                    value={deckSearch}
-                    onChange={(e) => setDeckSearch(e.target.value)}
-                    placeholder="Cari di deck..."
-                    className="w-full pl-8 pr-2.5 py-1 text-xs rounded-xl bg-surface-inset border border-border-subtle text-text-primary focus:outline-none focus:border-border-primary"
-                  />
-                </div>
-
-                {/* Quick Preset Generator Button */}
-                <button
-                  onClick={() => {
-                    setIsQuickPresetModalOpen(true);
-                    playSound('click', soundEnabled);
-                  }}
-                  className="px-2.5 py-1 rounded-xl text-xs font-bold text-text-secondary hover:text-text-primary bg-surface-inset hover:bg-surface-elevated border border-border-subtle flex items-center gap-1.5 transition-colors"
-                  title="Isi Cepat Berdasarkan Level JLPT"
-                >
-                  <Sparkles className="w-3.5 h-3.5 text-gold" />
-                  <span>Isi Preset JLPT</span>
-                </button>
-
-                {/* Import Bookmarks Button (only for non-default decks) */}
-                {!activeDeck.isDefault && (
-                  <button
-                    onClick={handleImportBookmarks}
-                    className="px-2.5 py-1 rounded-xl text-xs font-bold text-text-secondary hover:text-text-primary bg-surface-inset hover:bg-surface-elevated border border-border-subtle flex items-center gap-1.5 transition-colors"
-                    title="Salin materi dari Buku Saku Bookmark ke deck ini"
-                  >
-                    <Bookmark className="w-3.5 h-3.5 text-gold" />
-                    <span>Impor Bookmark</span>
-                  </button>
-                )}
-
-                {/* Clear Deck Button */}
-                {resolvedItems.length > 0 && (
-                  <button
-                    onClick={handleClearDeck}
-                    className="p-1 rounded-xl text-text-muted hover:text-wine-accent hover:bg-surface-inset border border-transparent hover:border-border-subtle transition-colors"
-                    title="Kosongkan semua materi dari deck ini"
-                  >
-                    <Trash2 className="w-3.5 h-3.5" />
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Items List inside Deck */}
-          {displayedItems.length === 0 ? (
-            <div className="panel p-8 sm:p-12 rounded-3xl border border-border-subtle text-center space-y-5">
-              <div className="w-14 h-14 rounded-2xl bg-surface-inset text-gold border border-border-subtle flex items-center justify-center mx-auto shadow-inner">
-                <BookOpen className="w-7 h-7" />
-              </div>
-              <div className="space-y-1">
-                <h3 className="text-base sm:text-lg font-heading font-bold text-text-primary">
-                  {resolvedItems.length === 0 ? 'Buku Saku Ini Masih Kosong' : 'Tidak Ada Materi Yang Cocok'}
-                </h3>
-                <p className="text-xs text-text-secondary max-w-md mx-auto">
-                  {resolvedItems.length === 0
-                    ? 'Pilih salah satu opsi di bawah untuk mengisi deck ini secara instan atau cari materi favoritmu.'
-                    : 'Coba ubah kata kunci pencarian atau ganti filter kategori di atas.'}
-                </p>
-              </div>
-
-              {resolvedItems.length === 0 ? (
-                <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-                  <button
-                    onClick={() => {
-                      setIsQuickPresetModalOpen(true);
-                      playSound('click', soundEnabled);
-                    }}
-                    className="px-4 py-2.5 rounded-2xl font-heading font-bold text-xs bg-surface-elevated text-text-primary border border-border-primary shadow-sm hover:scale-105 inline-flex items-center gap-2 transition-all"
-                  >
-                    <Sparkles className="w-4 h-4 text-gold" />
-                    <span>⚡ Isi Cepat Otomatis (Preset Level)</span>
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      setIsAddItemModalOpen(true);
-                      playSound('click', soundEnabled);
-                    }}
-                    className="px-4 py-2.5 rounded-2xl font-heading font-bold text-xs bg-surface-inset hover:bg-surface-elevated text-text-primary border border-border-subtle inline-flex items-center gap-2 transition-all"
-                  >
-                    <Plus className="w-4 h-4 text-gold" />
-                    <span>+ Cari Materi di Perpustakaan</span>
-                  </button>
-
-                  {!activeDeck.isDefault && (
-                    <button
-                      onClick={handleImportBookmarks}
-                      className="px-4 py-2.5 rounded-2xl font-heading font-bold text-xs bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-text-primary border border-border-subtle inline-flex items-center gap-2 transition-all"
-                    >
-                      <Bookmark className="w-4 h-4 text-gold" />
-                      <span>🔖 Impor dari Bookmark</span>
-                    </button>
-                  )}
-                </div>
-              ) : (
-                <button
-                  onClick={() => {
-                    setDeckSearch('');
-                    setCategoryFilter('all');
-                  }}
-                  className="px-4 py-2 rounded-xl text-xs font-bold bg-surface-inset hover:bg-surface-elevated text-text-primary border border-border-subtle transition-colors"
-                >
-                  Reset Pencarian & Filter
-                </button>
-              )}
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4">
-              {displayedItems.map((item) => {
-                return (
-                  <div
-                    key={`${item.category}:${item.ref.id}`}
-                    onClick={() => {
-                      playSound('click', soundEnabled);
-                      setInspectedEntity(item);
-                    }}
-                    className="panel p-4 sm:p-5 rounded-2xl border border-border-subtle hover:border-border-primary hover:border-gold/40 cursor-pointer transition-all flex items-start justify-between gap-3 group shadow-sm"
-                  >
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-1.5 mb-1.5 flex-wrap">
-                        <span className="px-2 py-0.5 rounded-lg text-[10px] font-mono font-bold uppercase border border-border-subtle bg-surface-inset text-text-secondary">
-                          {item.category}
-                        </span>
-                        <span className="px-2 py-0.5 rounded-lg text-[10px] font-mono font-bold border border-border-subtle bg-surface-inset text-text-primary">
-                          {item.level}
-                        </span>
-                        {item.displayReading && (
-                          <span className="text-xs font-mono text-wine-accent font-bold truncate max-w-[200px]">
-                            {item.displayReading}
-                          </span>
-                        )}
-                      </div>
-
-                      <h4 className="font-bold text-base sm:text-lg font-jp text-text-primary group-hover:text-gold transition-colors">
-                        {item.displayTitle}
-                      </h4>
-                      <p className="text-xs text-text-secondary mt-0.5 line-clamp-2">
-                        {item.displayMeaning}
-                      </p>
-                    </div>
-
-                    {/* Action buttons */}
-                    <div className="flex items-center gap-1.5 shrink-0 pt-1" onClick={e => e.stopPropagation()}>
-                      <button
-                        onClick={() => {
-                          playSound('click', soundEnabled);
-                          setInspectedEntity(item);
-                        }}
-                        className="px-2.5 py-1.5 rounded-xl bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-text-primary text-xs font-bold border border-border-subtle transition-colors"
-                        title="Lihat Detail Lengkap"
-                      >
-                        Detail
-                      </button>
-
-                      <button
-                        onClick={() => handleRemoveItem(item.ref.id, item.category)}
-                        className="p-1.5 rounded-xl text-text-muted hover:text-wine-accent hover:bg-surface-inset transition-colors"
-                        title="Hapus dari deck ini"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-
-        </div>
-      )}
+      ) : activeDeck ? (
+        <DeckDetailView
+          deck={activeDeck}
+          isTemplate={false}
+          onBack={() => {
+            setSelectedDeckId(null);
+            setDeckSearch('');
+            playSound('click', soundEnabled);
+          }}
+          onPlayWorld={() => {
+            playSound('click', soundEnabled);
+            if (curriculums[activeDeck.id]) {
+              setActiveWorldDeckId(activeDeck.id);
+            } else {
+              setIsCurriculumConfigOpen(true);
+            }
+          }}
+          onEditDeck={(d) => {
+            setEditingDeck(d);
+            setIsCreateModalOpen(true);
+            playSound('click', soundEnabled);
+          }}
+          onDeleteDeck={handleDeleteDeck}
+          onOpenAddItemModal={() => {
+            setIsAddItemModalOpen(true);
+            playSound('click', soundEnabled);
+          }}
+          onOpenQuickPresetModal={() => {
+            setIsQuickPresetModalOpen(true);
+            playSound('click', soundEnabled);
+          }}
+          onImportBookmarks={handleImportBookmarks}
+          onRemoveItemFromDeck={handleRemoveItem}
+          onClearDeck={handleClearDeck}
+          onToggleBookmark={(id, cat) => {
+            const { userDecks: updated } = toggleBookmarkItem(decks, id, cat);
+            onUpdateDecks(updated);
+          }}
+          soundEnabled={soundEnabled}
+          userDecks={decks}
+          itemMastery={itemMastery}
+          furiganaEnabled={furiganaEnabled}
+          onRewardPlayer={onRewardPlayer}
+          onCompleteStudyItem={onCompleteStudyItem}
+        />
+      ) : null}
 
       {/* Modals */}
       <CreateDeckModal
@@ -916,7 +615,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
                           : 'bg-surface-inset text-text-muted border-border-subtle'
                       }`}
                     >
-                      {lvl === 'all' ? 'Semua' : lvl === 'Kaigo' ? '🩺 Kaigo' : lvl}
+                      {lvl === 'all' ? 'Semua' : lvl}
                     </button>
                   ))}
                 </div>

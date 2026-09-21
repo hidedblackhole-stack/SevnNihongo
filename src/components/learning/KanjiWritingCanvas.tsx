@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useMemo } from 'react';
-import { RotateCcw, Check, PlayCircle, Eye, EyeOff, Loader2, Clock, Sparkles, Volume2, Navigation } from 'lucide-react';
+import { RotateCcw, Check, PlayCircle, Eye, EyeOff, Loader2, Clock, Sparkles, Volume2 } from 'lucide-react';
 import HanziWriter from 'hanzi-writer';
 import { playSound, speakJapanese } from '../../utils/audio';
 import { sendScoreEvent } from '../../lib/supabase';
@@ -41,42 +41,75 @@ const HANDAKUTEN_KANA_SET = new Set([
  * and allows smooth, frustration-free writing of the maru ring.
  */
 function attachMaruHandler(writerInstance: any, char: string) {
-  const quiz = writerInstance?._quiz;
-  if (!quiz) return;
+  if (!writerInstance) return;
   if (!HANDAKUTEN_KANA_SET.has(char)) return;
 
-  const originalEndUserStroke = quiz.endUserStroke.bind(quiz);
+  const patchQuiz = (quiz: any) => {
+    if (!quiz || quiz._hasMaruPatched) return;
+    quiz._hasMaruPatched = true;
 
-  quiz.endUserStroke = function (this: any) {
-    if (!this._userStroke) return;
-    const currentStrokeIdx = this._currentStrokeIndex;
-    const isLastStroke = currentStrokeIdx === this._character.strokes.length - 1;
+    const originalEndUserStroke = quiz.endUserStroke.bind(quiz);
 
-    if (isLastStroke) {
-      const userPts = this._userStroke.points;
-      if (userPts && userPts.length > 0) {
-        if (userPts.length === 1) {
-          userPts.push({ x: userPts[0].x + 1, y: userPts[0].y + 1 });
-        }
+    quiz.endUserStroke = function (this: any) {
+      if (!this._userStroke) return;
+      const currentStrokeIdx = this._currentStrokeIndex;
+      const isLastStroke = currentStrokeIdx === this._character.strokes.length - 1;
 
-        const sum = userPts.reduce((acc: { x: number; y: number }, pt: { x: number; y: number }) => ({ x: acc.x + pt.x, y: acc.y + pt.y }), { x: 0, y: 0 });
-        const centroid = { x: sum.x / userPts.length, y: sum.y / userPts.length };
-        const distToMaru = Math.hypot(centroid.x - 875, centroid.y - 750);
+      if (isLastStroke) {
+        const userPts = this._userStroke.points;
+        if (userPts && userPts.length > 0) {
+          // If single point (quick touch/circle tap), add a synthetic micro-offset point so HanziWriter doesn't discard it
+          if (userPts.length === 1) {
+            userPts.push({ x: userPts[0].x + 1, y: userPts[0].y + 1 });
+          }
 
-        // Handakuten Maru (circle ゜) generous hit tolerance:
-        // In 1024x1024 Makemeahanzi grid, Maru is centered at (875, 750).
-        // Accept any circular gesture, loop, or touch within radius 260 or in the top-right quadrant (x >= 650, y >= 520)
-        if (distToMaru <= 260 || (centroid.x >= 650 && centroid.y >= 520)) {
-          this._mistakesOnStroke = 999;
-          this._options.markStrokeCorrectAfterMisses = 1;
-          const res = originalEndUserStroke();
-          return res;
+          const sum = userPts.reduce(
+            (acc: { x: number; y: number }, pt: { x: number; y: number }) => ({ x: acc.x + pt.x, y: acc.y + pt.y }),
+            { x: 0, y: 0 }
+          );
+          const centroid = { x: sum.x / userPts.length, y: sum.y / userPts.length };
+          const distToMaru = Math.hypot(centroid.x - 875, centroid.y - 750);
+
+          // Handakuten Maru (circle ゜) generous hit tolerance:
+          // In 1024x1024 Makemeahanzi grid, Maru is centered at (875, 750) with radius ~50.
+          // Accept any circular gesture, loop, or touch within radius 320 or in the top-right quadrant (x >= 600, y >= 460)
+          if (distToMaru <= 320 || (centroid.x >= 600 && centroid.y >= 460)) {
+            this._options.markStrokeCorrectAfterMisses = 1;
+            this._mistakesOnStroke = 1;
+            return originalEndUserStroke();
+          }
         }
       }
-    }
 
-    return originalEndUserStroke();
+      return originalEndUserStroke();
+    };
   };
+
+  // If quiz is already instantiated, patch immediately
+  if (writerInstance._quiz) {
+    patchQuiz(writerInstance._quiz);
+  }
+
+  // Hook writerInstance.quiz so whenever quiz starts or restarts asynchronously, the patch is re-applied
+  if (!writerInstance._quizHooked) {
+    writerInstance._quizHooked = true;
+    const origQuiz = writerInstance.quiz.bind(writerInstance);
+    writerInstance.quiz = function (...args: any[]) {
+      const res = origQuiz(...args);
+      if (res && typeof res.then === 'function') {
+        return res.then((quizResult: any) => {
+          if (writerInstance._quiz) {
+            patchQuiz(writerInstance._quiz);
+          }
+          return quizResult;
+        });
+      }
+      if (writerInstance._quiz) {
+        patchQuiz(writerInstance._quiz);
+      }
+      return res;
+    };
+  }
 }
 
 function transformSmallKanaData(charData: any) {
@@ -246,7 +279,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
   relatedWords,
   showStopwatch = true,
   showPromptHeader = true,
-  showDirectionGuide = true,
+  showDirectionGuide: _showDirectionGuide = true,
   className = '',
 }) => {
   const kanjiChar = rawKanjiChar || character || '';
@@ -315,30 +348,11 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
   const [currentSheet, setCurrentSheet] = useState(1);
   const [completedSheets, setCompletedSheets] = useState<number[]>([]);
   const [showGuide, setShowGuide] = useState(false);
-  const [showDirection, setShowDirection] = useState(showDirectionGuide);
-  const [characterMedians, setCharacterMedians] = useState<number[][][]>([]);
   const [isQuizComplete, setIsQuizComplete] = useState(false);
   const [mistakesCount, setMistakesCount] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [canvasSize, setCanvasSize] = useState(320);
-
-  // Coordinate mapper from 1024x1024 HanziWriter coordinates to canvas pixel space
-  const getCanvasPoint = (hx: number, hy: number) => {
-    const padding = 15;
-    const effectiveWidth = canvasSize - 2 * padding;
-    const effectiveHeight = canvasSize - 2 * padding;
-    const scale = Math.min(effectiveWidth / 1024, effectiveHeight / 1024);
-    const xCenteringBuffer = padding + (effectiveWidth - scale * 1024) / 2;
-    const yCenteringBuffer = padding + (effectiveHeight - scale * 1024) / 2;
-    const xOffset = xCenteringBuffer;
-    const yOffset = 124 * scale + yCenteringBuffer;
-
-    return {
-      x: xOffset + hx * scale,
-      y: canvasSize - yOffset - hy * scale,
-    };
-  };
 
   // Performance factors for dynamic EXP
   const [watermarkEverUsed, setWatermarkEverUsed] = useState(false);
@@ -363,7 +377,6 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     setAnimationCount(0);
     setLastReward(null);
     setCurrentStrokeIndex(0);
-    setCharacterMedians([]);
   }, [kanjiChar]);
 
   // Timer interval
@@ -519,16 +532,9 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
         leniency: effectiveLeniency,
         averageDistanceThreshold: effectiveDistanceThreshold,
         charDataLoader: (char, onComplete, onError) => {
-          const updateMedians = (data: any) => {
-            if (data && Array.isArray(data.medians)) {
-              setCharacterMedians(data.medians);
-            }
-          };
-
           if (strokeDataCache.has(char)) {
             setIsLoading(false);
             const data = strokeDataCache.get(char);
-            updateMedians(data);
             onComplete(data);
             return;
           }
@@ -542,7 +548,6 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
             const finalData = processData(KANA_STROKE_DICT[char]);
             strokeDataCache.set(char, finalData);
             setIsLoading(false);
-            updateMedians(finalData);
             onComplete(finalData);
             return;
           }
@@ -557,7 +562,6 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
               const finalData = processData(data);
               strokeDataCache.set(char, finalData);
               setIsLoading(false);
-              updateMedians(finalData);
               onComplete(finalData);
             })
             .catch(err => {
@@ -575,10 +579,6 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
       writer.getCharacterData().then(charData => {
         if (charData && Array.isArray(charData.strokes)) {
           setTotalCharStrokes(charData.strokes.length);
-        }
-        const cData = charData as any;
-        if (cData && Array.isArray(cData.medians)) {
-          setCharacterMedians(cData.medians);
         }
       }).catch(() => {});
 
@@ -623,7 +623,9 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     setIsQuizComplete(false);
 
     try {
-      writerRef.current.quiz({
+      attachMaruHandler(writerRef.current, kanjiChar);
+
+      const quizPromise = writerRef.current.quiz({
         leniency: effectiveLeniency,
         averageDistanceThreshold: effectiveDistanceThreshold,
         quizStartStrokeNum: startStroke,
@@ -669,7 +671,11 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
         }
       });
 
-      attachMaruHandler(writerRef.current, kanjiChar);
+      if (quizPromise && typeof quizPromise.then === 'function') {
+        quizPromise.then(() => {
+          attachMaruHandler(writerRef.current, kanjiChar);
+        });
+      }
     } catch {
       // ignore
     }
@@ -1054,20 +1060,6 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
         <div className="flex items-center gap-1.5">
           <button
             type="button"
-            onClick={() => setShowDirection(!showDirection)}
-            className={`px-2.5 py-1 rounded-full text-[10px] font-bold transition-all flex items-center gap-1 shadow-sm select-none ${
-              showDirection
-                ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 hover:bg-emerald-500/30'
-                : 'bg-surface-inset text-text-muted border border-border-subtle hover:bg-surface-elevated'
-            }`}
-            title="Tampilkan / Sembunyikan panduan arah & titik awal goresan"
-          >
-            <Navigation className={`w-3.5 h-3.5 ${showDirection ? 'text-emerald-400' : 'text-text-muted'}`} />
-            <span>{showDirection ? 'Arah ON' : 'Arah OFF'}</span>
-          </button>
-
-          <button
-            type="button"
             onClick={() => setShowGuide(!showGuide)}
             className={`px-2.5 py-1 rounded-full text-[10px] font-bold transition-all flex items-center gap-1.5 shadow-sm select-none ${
               showGuide
@@ -1096,160 +1088,6 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
             ref={writerContainerRef}
             className={`absolute inset-0 w-full h-full z-10 transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
           />
-        )}
-
-        {/* Stroke Direction & Start Point Guide Overlay */}
-        {hasStrokeData && showDirection && !isQuizComplete && !isLoading && characterMedians.length > 0 && (
-          <svg
-            className="absolute inset-0 w-full h-full pointer-events-none z-20"
-            viewBox={`0 0 ${canvasSize} ${canvasSize}`}
-            width={canvasSize}
-            height={canvasSize}
-          >
-            <defs>
-              <filter id="emerald-glow" x="-40%" y="-40%" width="180%" height="180%">
-                <feGaussianBlur stdDeviation="2.5" result="blur" />
-                <feComposite in="SourceGraphic" in2="blur" operator="over" />
-              </filter>
-            </defs>
-
-            {/* Upcoming stroke subtle start markers when watermark guide is active */}
-            {showGuide && characterMedians.map((m, sIdx) => {
-              if (sIdx <= currentStrokeIndex || !m || m.length === 0) return null;
-              const pt = getCanvasPoint(m[0][0], m[0][1]);
-              return (
-                <g key={`future-stroke-${sIdx}`} opacity="0.65">
-                  <circle cx={pt.x} cy={pt.y} r="7.5" fill="rgba(30, 41, 59, 0.75)" stroke="rgba(255, 255, 255, 0.5)" strokeWidth="1" />
-                  <text x={pt.x} y={pt.y} textAnchor="middle" dominantBaseline="central" fontSize="8" fontWeight="bold" fill="#cbd5e1">
-                    {sIdx + 1}
-                  </text>
-                </g>
-              );
-            })}
-
-            {/* Active Stroke Direction, Path & Start Point */}
-            {(() => {
-              const activeMedian = characterMedians[currentStrokeIndex];
-              if (!activeMedian || activeMedian.length === 0) return null;
-              const pts = activeMedian.map(([hx, hy]) => getCanvasPoint(hx, hy));
-              const p0 = pts[0];
-              const pLast = pts[pts.length - 1];
-              const isLoop = pts.length >= 4 && Math.hypot(p0.x - pLast.x, p0.y - pLast.y) < 18;
-
-              if (isLoop) {
-                const minX = Math.min(...pts.map(p => p.x));
-                const maxX = Math.max(...pts.map(p => p.x));
-                const minY = Math.min(...pts.map(p => p.y));
-                const maxY = Math.max(...pts.map(p => p.y));
-                const loopCx = (minX + maxX) / 2;
-                const loopCy = (minY + maxY) / 2;
-                const loopR = Math.max(12, (maxX - minX) / 2);
-                const leftPt = { x: loopCx - loopR, y: loopCy };
-
-                return (
-                  <g key={`active-stroke-${currentStrokeIndex}`}>
-                    {/* Pulsing circular dashed guide */}
-                    <circle
-                      cx={loopCx}
-                      cy={loopCy}
-                      r={loopR}
-                      fill="none"
-                      stroke="#10b981"
-                      strokeWidth="2.5"
-                      strokeDasharray="5 3"
-                      className="animate-pulse"
-                      opacity="0.8"
-                      filter="url(#emerald-glow)"
-                    />
-                    {/* Circular direction chevron */}
-                    <polygon
-                      points="-3,-4 4,0 -3,4"
-                      fill="#10b981"
-                      transform={`translate(${leftPt.x.toFixed(1)},${leftPt.y.toFixed(1)}) rotate(90) scale(1.35)`}
-                      filter="url(#emerald-glow)"
-                    />
-                    {/* Start Point Ripple */}
-                    <circle cx={p0.x} cy={p0.y} r="14" fill="rgba(16, 185, 129, 0.35)" className="animate-ping" />
-                    {/* Start Point Badge */}
-                    <circle cx={p0.x} cy={p0.y} r="9.5" fill="#10b981" stroke="#ffffff" strokeWidth="2" />
-                    <text x={p0.x} y={p0.y} textAnchor="middle" dominantBaseline="central" fontSize="10" fontWeight="900" fill="#ffffff">
-                      {currentStrokeIndex + 1}
-                    </text>
-                  </g>
-                );
-              }
-
-              // Standard open stroke
-              const pathD = pts.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
-
-              // Arrow head on first segment
-              let arrowElement = null;
-              if (pts.length >= 2) {
-                const p1 = pts[1];
-                const segLen = Math.hypot(p1.x - p0.x, p1.y - p0.y);
-                const t = Math.min(0.7, Math.max(0.25, 24 / (segLen || 1)));
-                const ax = p0.x + (p1.x - p0.x) * t;
-                const ay = p0.y + (p1.y - p0.y) * t;
-                const angle = Math.atan2(p1.y - p0.y, p1.x - p0.x) * (180 / Math.PI);
-
-                arrowElement = (
-                  <polygon
-                    points="-4,-4 5,0 -4,4"
-                    fill="#10b981"
-                    transform={`translate(${ax.toFixed(1)},${ay.toFixed(1)}) rotate(${angle.toFixed(1)}) scale(1.35)`}
-                    filter="url(#emerald-glow)"
-                  />
-                );
-              }
-
-              // Second arrow on multi-segment strokes (e.g. へ sweep)
-              let secondArrow = null;
-              if (pts.length >= 4) {
-                const pA = pts[pts.length - 2];
-                const pB = pts[pts.length - 1];
-                const bx = (pA.x + pB.x) / 2;
-                const by = (pA.y + pB.y) / 2;
-                const angleB = Math.atan2(pB.y - pA.y, pB.x - pA.x) * (180 / Math.PI);
-                secondArrow = (
-                  <polygon
-                    points="-4,-4 5,0 -4,4"
-                    fill="#10b981"
-                    transform={`translate(${bx.toFixed(1)},${by.toFixed(1)}) rotate(${angleB.toFixed(1)}) scale(1.35)`}
-                    filter="url(#emerald-glow)"
-                  />
-                );
-              }
-
-              return (
-                <g key={`active-stroke-${currentStrokeIndex}`}>
-                  {/* Glowing dashed stroke guide path */}
-                  <path
-                    d={pathD}
-                    fill="none"
-                    stroke="#10b981"
-                    strokeWidth="3"
-                    strokeDasharray="6 4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    opacity="0.8"
-                    className="animate-pulse"
-                    filter="url(#emerald-glow)"
-                  />
-                  {/* Direction Arrows */}
-                  {arrowElement}
-                  {secondArrow}
-
-                  {/* Start Point Ripple */}
-                  <circle cx={p0.x} cy={p0.y} r="14" fill="rgba(16, 185, 129, 0.4)" className="animate-ping" />
-                  {/* Start Point Badge */}
-                  <circle cx={p0.x} cy={p0.y} r="10" fill="#10b981" stroke="#ffffff" strokeWidth="2" />
-                  <text x={p0.x} y={p0.y} textAnchor="middle" dominantBaseline="central" fontSize="10" fontWeight="900" fill="#ffffff">
-                    {currentStrokeIndex + 1}
-                  </text>
-                </g>
-              );
-            })()}
-          </svg>
         )}
 
         {/* Fallback Canvas for Non-CJK/Kana Characters */}
@@ -1288,22 +1126,6 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
           </div>
         )}
       </div>
-
-      {/* Direction Guidance Toast/Pill */}
-      {showDirection && !isQuizComplete && totalCharStrokes > 0 && (
-        <div className="flex items-center justify-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-[11px] font-medium shadow-sm select-none">
-          <Navigation className="w-3 h-3 text-emerald-400 animate-pulse shrink-0" />
-          <span>
-            {(() => {
-              const isMaru = HANDAKUTEN_KANA_SET.has(kanjiChar) && currentStrokeIndex === totalCharStrokes - 1;
-              if (isMaru) {
-                return `Goresan #${currentStrokeIndex + 1}: Gambar lingkaran Maru (゜) di area hijau ②`;
-              }
-              return `Goresan #${currentStrokeIndex + 1}: Mulai dari titik hijau ① lalu tarik sesuai arah panah`;
-            })()}
-          </span>
-        </div>
-      )}
 
       {/* Action Controls: 2 Balanced Rows (Never wraps text on any device) */}
       <div className="flex flex-col w-full max-w-[340px] sm:max-w-[360px] gap-2.5">

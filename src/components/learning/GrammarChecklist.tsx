@@ -90,14 +90,14 @@ export const GrammarChecklist: React.FC<GrammarChecklistProps> = ({ item, classN
     return parts.map((part, idx) => {
       if (part.startsWith('**') && part.endsWith('**')) {
         return (
-          <strong key={idx} className="font-bold text-emerald-300 dark:text-emerald-300 text-text-primary">
+          <strong key={idx} className="font-bold text-emerald-950 dark:text-emerald-300">
             {part.slice(2, -2)}
           </strong>
         );
       }
       if (part.startsWith('*') && part.endsWith('*')) {
         return (
-          <em key={idx} className="italic text-text-secondary">
+          <em key={idx} className="italic text-emerald-900/90 dark:text-text-secondary">
             {part.slice(1, -1)}
           </em>
         );
@@ -108,11 +108,11 @@ export const GrammarChecklist: React.FC<GrammarChecklistProps> = ({ item, classN
 
   return (
     <div
-      className={`p-3.5 sm:p-4 rounded-2xl bg-emerald-950/20 border border-emerald-500/30 space-y-2.5 shadow-xs ${className}`}
+      className={`p-3.5 sm:p-4 rounded-2xl bg-emerald-50/80 dark:bg-emerald-950/30 border-2 border-emerald-600/30 dark:border-emerald-500/30 space-y-2.5 shadow-xs ${className}`}
     >
-      <div className="flex items-center gap-2 pb-1.5 border-b border-emerald-500/20">
-        <Sparkles className="w-4 h-4 text-emerald-400 shrink-0" />
-        <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-400 font-heading">
+      <div className="flex items-center gap-2 pb-1.5 border-b border-emerald-600/20 dark:border-emerald-500/20">
+        <Sparkles className="w-4 h-4 text-emerald-800 dark:text-emerald-400 shrink-0" />
+        <span className="text-[11px] font-extrabold uppercase tracking-wider text-emerald-950 dark:text-emerald-300 font-heading">
           Fungsi & Situasi Penggunaan (使い分け)
         </span>
       </div>
@@ -121,12 +121,12 @@ export const GrammarChecklist: React.FC<GrammarChecklistProps> = ({ item, classN
         {checkpoints.map((cp, idx) => (
           <div key={idx} className="flex items-start gap-2.5">
             {cp.type === 'note' ? (
-              <div className="w-4 h-4 mt-0.5 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center shrink-0 text-[10px] font-bold font-mono">
+              <div className="w-4 h-4 mt-0.5 rounded-full bg-amber-100 dark:bg-amber-500/20 text-amber-900 dark:text-amber-400 border border-amber-400/50 dark:border-amber-500/30 flex items-center justify-center shrink-0 text-[10px] font-bold font-mono">
                 💡
               </div>
             ) : (
-              <div className="w-4 h-4 mt-0.5 rounded-md bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center shrink-0">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+              <div className="w-4 h-4 mt-0.5 rounded-md bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-400 border border-emerald-400/50 dark:border-emerald-500/30 flex items-center justify-center shrink-0">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-800 dark:text-emerald-400" />
               </div>
             )}
             <p className="text-xs sm:text-sm text-text-primary leading-relaxed font-body flex-1">

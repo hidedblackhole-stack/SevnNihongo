@@ -176,9 +176,9 @@ export const GrammarFormulaBox: React.FC<GrammarFormulaBoxProps> = ({ item, clas
       )}
 
       {/* Main Slide-Style Formula Card */}
-      <div className="relative rounded-2xl p-4 sm:p-5 bg-gradient-to-br from-emerald-950/80 via-emerald-900/60 to-emerald-950/90 border-2 border-emerald-500/50 shadow-lg text-white select-none overflow-hidden">
+      <div className="relative rounded-2xl p-4 sm:p-5 bg-emerald-50/90 dark:bg-gradient-to-br dark:from-emerald-950/80 dark:via-emerald-900/60 dark:to-emerald-950/90 border-2 border-emerald-600/40 dark:border-emerald-500/50 shadow-md text-emerald-950 dark:text-white select-none overflow-hidden">
         {/* Subtle decorative background watermark */}
-        <div className="absolute right-3 top-2 text-emerald-500/10 font-black font-jp text-5xl pointer-events-none">
+        <div className="absolute right-3 top-2 text-emerald-900/10 dark:text-emerald-500/10 font-black font-jp text-5xl pointer-events-none">
           接続
         </div>
 
@@ -187,10 +187,10 @@ export const GrammarFormulaBox: React.FC<GrammarFormulaBoxProps> = ({ item, clas
           <div className="space-y-2 w-full sm:w-auto">
             {currentGroup.rows.map((row, rIdx) => (
               <div key={rIdx} className="flex items-center gap-2.5 font-mono text-xs sm:text-sm">
-                <span className="w-24 sm:w-28 font-bold text-amber-300 dark:text-yellow-300 font-heading shrink-0 flex items-center gap-1">
+                <span className="w-24 sm:w-28 font-black text-emerald-950 dark:text-amber-300 font-heading shrink-0 flex items-center gap-1">
                   <span>{row.partOfSpeech}</span>
                 </span>
-                <span className="text-emerald-200/90 font-medium px-2 py-0.5 rounded-md bg-emerald-950/60 border border-emerald-500/30">
+                <span className="text-emerald-950 dark:text-emerald-100 font-black px-2.5 py-1 rounded-lg bg-white dark:bg-emerald-950/80 border-2 border-emerald-600/30 dark:border-emerald-500/40 shadow-xs">
                   {row.formHint}
                 </span>
               </div>
@@ -199,17 +199,17 @@ export const GrammarFormulaBox: React.FC<GrammarFormulaBoxProps> = ({ item, clas
 
           {/* Center: Visual Connecting Bracket */}
           <div className="hidden sm:flex items-center justify-center px-1">
-            <div className="w-3 h-28 border-r-2 border-t-2 border-b-2 border-emerald-400/80 rounded-r-lg" />
+            <div className="w-3.5 h-28 border-r-2 border-t-2 border-b-2 border-emerald-700 dark:border-emerald-400 rounded-r-lg" />
           </div>
 
           {/* Right: Suffix tokens (e.g. んですが、 / のですが、) */}
-          <div className="flex flex-col sm:items-start justify-center gap-1.5 pl-0 sm:pl-2 w-full sm:w-auto border-t sm:border-t-0 border-emerald-500/30 pt-3 sm:pt-0">
+          <div className="flex flex-col sm:items-start justify-center gap-1.5 pl-0 sm:pl-2 w-full sm:w-auto border-t sm:border-t-0 border-emerald-600/30 dark:border-emerald-500/30 pt-3 sm:pt-0">
             {currentGroup.sharedSuffix.map((suf, sIdx) => (
               <div
                 key={sIdx}
-                className="px-3.5 py-1.5 rounded-xl bg-emerald-500/20 border border-emerald-400/50 text-white font-jp font-extrabold text-base sm:text-lg tracking-wide shadow-xs flex items-center gap-2"
+                className="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 dark:bg-emerald-500/25 border-2 border-emerald-800 dark:border-emerald-400/60 text-white dark:text-emerald-100 font-jp font-extrabold text-base sm:text-lg tracking-wide shadow-xs flex items-center gap-2"
               >
-                <span className="text-emerald-400 font-bold text-xs sm:text-sm font-mono">+</span>
+                <span className="text-emerald-200 dark:text-emerald-300 font-bold text-xs sm:text-sm font-mono">+</span>
                 <span>{suf}</span>
               </div>
             ))}
@@ -217,9 +217,14 @@ export const GrammarFormulaBox: React.FC<GrammarFormulaBoxProps> = ({ item, clas
         </div>
 
         {/* Bottom Hint */}
-        <div className="mt-3 pt-2.5 border-t border-emerald-500/30 flex items-center justify-between text-[11px] text-emerald-200/80 font-medium">
-          <span>💡 Sambungkan kata depan dalam bentuk di atas dengan akhiran pola</span>
-          <span className="hidden sm:inline font-mono">Standar JLPT / JFT</span>
+        <div className="mt-3 pt-2.5 border-t border-emerald-600/20 dark:border-emerald-500/30 flex items-center justify-between text-xs text-emerald-950 dark:text-emerald-200/90 font-bold">
+          <span className="flex items-center gap-1.5">
+            <span>💡</span>
+            <span>Sambungkan kata depan dalam bentuk di atas dengan akhiran pola</span>
+          </span>
+          <span className="hidden sm:inline font-mono text-[11px] text-emerald-800 dark:text-emerald-300 font-bold">
+            Standar JLPT / JFT
+          </span>
         </div>
       </div>
 

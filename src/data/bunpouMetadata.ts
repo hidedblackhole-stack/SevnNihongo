@@ -561,7 +561,11 @@ function getMetadataForBunpou(item: BunpouItem): BunpouMetadata {
     derivedFunctions = ['使役・使役受身 (Bentuk Kausatif & Paksaan)'];
     derivedNuance = 'Menunjukkan instruksi, membiarkan, atau menyuruh pihak lain melakukan aksi.';
     derivedKeywords = ['使役', '指示', 'させる'];
-  } else if (/から|ので|ため|reason|cause|sebab|karena|alasan/i.test(title + ' ' + meaning)) {
+  } else if (/方|kata|cara|metode|how to|way of|prosedur|手段/i.test(title + ' ' + meaning)) {
+    derivedFunctions = ['方法・手段 (Cara & Metode)'];
+    derivedNuance = 'Menunjukkan tata cara, metode, atau prosedur dalam melakukan suatu aktivitas (contoh: 使い方 = cara menggunakan, 作り方 = cara membuat).';
+    derivedKeywords = ['方法', 'やり方', '手順'];
+  } else if (/から|ので|ため|\b(reason|cause)\b|sebab|karena|alasan/i.test(title + ' ' + meaning)) {
     derivedFunctions = ['原因・理由 (Sebab-Akibat & Alasan)'];
     derivedNuance = 'Menjelaskan faktor penyebab, alasan logis, atau motif di balik suatu peristiwa.';
     derivedKeywords = ['理由', '原因', 'わけ'];

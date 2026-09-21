@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useDeferredValue } from 'react';
 import { AnimatePresence } from 'motion/react';
-import { Search, Volume2, Filter, ChevronDown, Bookmark, Languages, X } from 'lucide-react';
+import { Search, Volume2, Filter, ChevronDown, Bookmark, Languages, X, Trash2 } from 'lucide-react';
 import { BookIcon } from '../ui/EngravingIcons';
 import { KOTOBA_DATABASE } from '../../data/kotoba';
 import { playSound, speakJapanese } from '../../utils/audio';
@@ -20,8 +20,8 @@ const LEVEL_OPTIONS = [
   { value: 'N3', label: 'N3' },
   { value: 'N2', label: 'N2' },
   { value: 'N1', label: 'N1' },
-  { value: 'Kaigo', label: '🩺 Kaigo (Caregiver)' },
-  { value: 'SSW', label: '💼 SSW & Istilah Kerja' },
+  { value: 'Kaigo', label: 'Kaigo (Caregiver)' },
+  { value: 'SSW', label: 'SSW & Istilah Kerja' },
 ];
 
 const LEVEL_BADGE_STYLE: Record<string, string> = {
@@ -66,10 +66,13 @@ function getKotobaPriority(item: KotobaItem): { tier: 'essential' | 'important' 
 }
 
 interface KotobaLibraryViewProps {
+  items?: KotobaItem[];
+  hideHeader?: boolean;
   soundEnabled?: boolean;
   itemMastery?: Record<string, ItemMasteryRecord>;
   userDecks?: UserDeck[];
   onToggleBookmark?: (id: string, category: 'kotoba', notes?: string, targetDeckId?: string) => void;
+  onRemoveItem?: (id: string, category: 'kotoba') => void;
   onRewardPlayer?: (exp: number, gold: number) => void;
   onRecordStudy?: (category: 'flashcards', id: string, count?: number) => void;
   onRecordInteraction?: (
@@ -90,10 +93,13 @@ interface KotobaLibraryViewProps {
 }
 
 export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
+  items,
+  hideHeader = false,
   soundEnabled = true,
   itemMastery,
   userDecks,
   onToggleBookmark,
+  onRemoveItem,
   onRewardPlayer,
   onRecordStudy,
   onRecordInteraction,
@@ -109,7 +115,10 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<KotobaItem | null>(null);
 
-  const allKotoba = useMemo(() => Object.values(KOTOBA_DATABASE), []);
+  const allKotoba = useMemo(() => {
+    if (items) return items;
+    return Object.values(KOTOBA_DATABASE);
+  }, [items]);
 
   // Pre-index Kotoba once: pre-lowercases and caches search strings for 8,500+ items (reduces search time from ~1000ms to ~1ms)
   const searchIndex = useMemo(() => {
@@ -226,25 +235,27 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
   return (
     <div className="w-full max-w-5xl mx-auto space-y-6 animate-fade-in pb-10">
       {/* Header Banner */}
-      <div className="panel p-4 sm:p-5 rounded-3xl border border-border-subtle shadow-sm flex items-center justify-between gap-4">
-        <div className="flex items-center gap-3.5">
-          <div className="w-12 h-12 rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-center text-text-primary shrink-0 shadow-inner">
-            <BookIcon className="w-6 h-6 text-text-primary" />
+      {!hideHeader && (
+        <div className="panel p-4 sm:p-5 rounded-3xl border border-border-subtle shadow-sm flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5">
+            <div className="w-12 h-12 rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-center text-text-primary shrink-0 shadow-inner">
+              <BookIcon className="w-6 h-6 text-text-primary" />
+            </div>
+            <div>
+              <h1 className="text-xl sm:text-2xl font-bold text-text-primary tracking-wide font-heading">
+                Kamus Kosakata (Kotoba)
+              </h1>
+              <p className="text-xs sm:text-sm text-text-secondary font-medium">
+                Koleksi {allKotoba.length.toLocaleString()} entri kamus otentik N5〜N1 dengan tanda frekuensi ujian.
+              </p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-xl sm:text-2xl font-bold text-text-primary tracking-wide font-heading">
-              Kamus Kosakata (Kotoba)
-            </h1>
-            <p className="text-xs sm:text-sm text-text-secondary font-medium">
-              Koleksi {allKotoba.length.toLocaleString()} entri kamus otentik N5〜N1 dengan tanda frekuensi ujian.
-            </p>
-          </div>
-        </div>
 
-        <div className="hidden md:flex items-center gap-2 pr-3 text-xs font-mono text-text-secondary bg-surface-inset px-3 py-1.5 rounded-xl border border-border-subtle">
-          <span>{allKotoba.length.toLocaleString()} Entri</span>
+          <div className="hidden md:flex items-center gap-2 pr-3 text-xs font-mono text-text-secondary bg-surface-inset px-3 py-1.5 rounded-xl border border-border-subtle">
+            <span>{allKotoba.length.toLocaleString()} Entri</span>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Filters and Search */}
       <div className="flex flex-col sm:flex-row gap-3">
@@ -491,6 +502,19 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
                     </p>
                   </div>
                   <div className="flex items-center gap-1.5 shrink-0">
+                    {onRemoveItem && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onRemoveItem(item.id, 'kotoba');
+                          playSound('click', soundEnabled);
+                        }}
+                        className="p-2.5 rounded-xl bg-surface-inset text-text-muted hover:text-wine-accent hover:bg-surface-elevated transition-colors border border-border-subtle"
+                        title="Hapus dari deck ini"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    )}
                     {onToggleBookmark && (
                       <button
                         onClick={(e) => {

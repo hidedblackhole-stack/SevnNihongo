@@ -13,7 +13,15 @@ import {
   Swords,
   Layers,
   PenTool,
-  BookOpen
+  BookOpen,
+  Sparkles,
+  ChevronDown,
+  ChevronUp,
+  Plus,
+  ScrollText,
+  Lightbulb,
+  Send,
+  Clock
 } from 'lucide-react';
 import { DungeonPayload, DungeonConfig } from '../../utils/dungeonGenerator';
 import { playSound, speakJapanese } from '../../utils/audio';
@@ -23,11 +31,77 @@ import { SentenceTile, validateSentenceSubmission, validateSentenceTextSubmissio
 import { JapaneseImeInput } from '../common/JapaneseImeInput';
 import { RubyText } from '../learning/RubyText';
 import { getKanjiBaseExp, getKotobaBaseExp, getBunpouBaseExp } from '../../utils/rewards';
-import { ResolvedDeckItem } from '../../utils/decks';
+import { ResolvedDeckItem, toggleBookmarkItem } from '../../utils/decks';
 import { getTargetFormDisplay, getConjugatedMeaningId } from '../../data/conjugationRules';
+import { BunpouItem } from '../../types/content';
+import { BlackboardPlaygroundModule } from './BlackboardPlaygroundModule';
+import { UserDeck } from '../../types/rpg';
 
 // Dynamic micro-multiplier for flashcard flips: Base EXP * 0.005
 const FLASHCARD_FLIP_MULTIPLIER = 0.005;
+
+function cleanPatternToken(s: string): string {
+  return s
+    .replace(/^[\s~〜・＋\+→\-\*]+/g, '')
+    .replace(/[\s~〜・＋\+→\-\*]+$/g, '')
+    .replace(/^[VNAいな\d\s\-]+/i, '')
+    .replace(/\[[^\]]*\]/g, '')
+    .replace(/［[^］]*］/g, '')
+    .trim();
+}
+
+function getBunpouPatternKeywords(item: BunpouItem): string[] {
+  const keywords = new Set<string>();
+  const title = item.title || '';
+  const formula = item.formula || '';
+
+  // 1. Clean title prefix
+  const cleanTitle = title.split(/[（\(]/)[0].replace(/^[~〜]/, '').trim();
+  if (cleanTitle.length >= 2) keywords.add(cleanTitle);
+
+  // 2. Parentheses contents in title
+  const parenMatches = title.match(/[\(（]([^\)）]+)[\)）]/g) || [];
+  parenMatches.forEach(pm => {
+    const inner = pm.slice(1, -1);
+    inner.split(/[\/\+＋／、]+/).forEach(tok => {
+      const c = cleanPatternToken(tok);
+      if (c.length >= 2 && /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/.test(c)) {
+        keywords.add(c);
+      }
+    });
+  });
+
+  // 3. From formula
+  if (formula) {
+    const fParts = formula.split(/[\+＋／\/、\s]+/);
+    fParts.forEach(p => {
+      const c = cleanPatternToken(p);
+      if (c.length >= 2 && /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/.test(c)) {
+        keywords.add(c);
+      }
+    });
+  }
+
+  // 4. Common phonetic / conjugation variations
+  Array.from(keywords).forEach(kw => {
+    if (kw.startsWith('て')) keywords.add('で' + kw.slice(1));
+    if (kw.startsWith('た')) keywords.add('だ' + kw.slice(1));
+    if (kw.endsWith('たい')) keywords.add(kw.slice(0, -2) + 'たく');
+    if (kw.endsWith('ている')) {
+      keywords.add(kw.slice(0, -2) + 'てる');
+      keywords.add(kw.slice(0, -3) + 'でいる');
+      keywords.add(kw.slice(0, -3) + 'でる');
+    }
+  });
+
+  return Array.from(keywords).filter(k => k.length >= 2);
+}
+
+function getPrimaryPatternInsert(item: BunpouItem): string {
+  const title = item.title || '';
+  const main = title.split(/[（\(]/)[0].replace(/^[~〜]/, '').trim();
+  return main || title;
+}
 
 function getResolvedItemBaseExp(it: ResolvedDeckItem): number {
   if (it.category === 'kanji' && it.kanji) return getKanjiBaseExp(it.kanji);
@@ -51,6 +125,8 @@ interface DungeonSessionRunnerProps {
     interactionTypeOverride?: 'writing' | 'flashcard' | 'quiz'
   ) => void;
   soundEnabled?: boolean;
+  userDecks?: UserDeck[];
+  onUpdateDecks?: (decks: UserDeck[]) => void;
 }
 
 export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
@@ -60,15 +136,34 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
   onRewardPlayer,
   onCompleteStudyItem,
   soundEnabled = true,
+  userDecks,
+  onUpdateDecks,
 }) => {
   const { config } = payload;
-  const totalFloors = config.floorCount;
+  const availableCount = React.useMemo(() => {
+    if (config.type === 'writing') return payload.writingItems?.length ?? config.floorCount;
+    if (config.type === 'flashcard') return payload.flashcardItems?.length ?? config.floorCount;
+    if (config.type === 'sakubun') return payload.sakubunExercises?.length ?? config.floorCount;
+    if (config.type === 'conjugation') return payload.conjugationQuestions?.length ?? config.floorCount;
+    if (config.type === 'quiz' || config.type === 'extreme') return payload.quizQuestions?.length ?? config.floorCount;
+    if (config.type === 'sentence_creation') return payload.sentenceCreationItems?.length ?? config.floorCount;
+    if (config.type === 'blackboard') return 1;
+    return config.floorCount;
+  }, [config.type, config.floorCount, payload]);
+
+  const totalFloors = Math.max(1, Math.min(config.floorCount, availableCount));
 
   const [currentFloorIndex, setCurrentFloorIndex] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const [accumulatedExp, setAccumulatedExp] = useState(0);
   const [accumulatedGold, setAccumulatedGold] = useState(0);
   const [isVictory, setIsVictory] = useState(false);
+
+  // Survival Mode Timer State
+  const isSurvivalMode = config.mode === 'survival';
+  const survivalTimeLimit = config.survivalTimeLimit || 30;
+  const [timeLeft, setTimeLeft] = useState<number>(survivalTimeLimit);
+  const [isTimeUp, setIsTimeUp] = useState<boolean>(false);
 
   // Sub-exercise state for Flashcard
   const [isFlashcardFlipped, setIsFlashcardFlipped] = useState(false);
@@ -105,6 +200,54 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
   const [sakubunAvailableTiles, setSakubunAvailableTiles] = useState<SentenceTile[]>([]);
   const [sakubunFeedback, setSakubunFeedback] = useState<ValidationFeedback | null>(null);
 
+  // Sub-exercise state for Sentence Creation (Kreasi Kalimat)
+  const [creationTypedText, setCreationTypedText] = useState<string>('');
+  const [showCreationExamples, setShowCreationExamples] = useState<boolean>(false);
+  const [creationFeedback, setCreationFeedback] = useState<{
+    isValid: boolean;
+    message: string;
+    matchedKeyword?: string;
+  } | null>(null);
+
+  const handleCheckCreation = (item: BunpouItem) => {
+    const trimmed = creationTypedText.trim();
+    if (!trimmed) return;
+
+    const hasJapanese = /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/.test(trimmed);
+    if (!hasJapanese || trimmed.length < 3) {
+      playSound('wrong', soundEnabled);
+      setCreationFeedback({
+        isValid: false,
+        message: 'Mohon tulis kalimat dalam aksara Jepang (Hiragana/Katakana/Kanji) minimal 3 karakter.',
+      });
+      return;
+    }
+
+    const keywords = getBunpouPatternKeywords(item);
+    const primary = getPrimaryPatternInsert(item);
+    if (!keywords.includes(primary) && primary.length >= 2) {
+      keywords.push(primary);
+    }
+
+    const matched = keywords.find(kw => trimmed.includes(kw));
+
+    if (matched) {
+      playSound('correct', soundEnabled);
+      setCreationFeedback({
+        isValid: true,
+        message: `Luar biasa! Pola 「${matched}」 berhasil diterapkan dalam kalimatmu.`,
+        matchedKeyword: matched,
+      });
+    } else {
+      playSound('wrong', soundEnabled);
+      setCreationFeedback({
+        isValid: false,
+        message: `Pola 「${primary}」 belum terdeteksi pada kalimatmu. Pastikan kalimat mengandung bentuk tersebut.`,
+        matchedKeyword: primary,
+      });
+    }
+  };
+
   // Initialize Sakubun tiles when floor changes
   useEffect(() => {
     if (config.type === 'sakubun' && payload.sakubunExercises && payload.sakubunExercises[currentFloorIndex]) {
@@ -119,7 +262,74 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
     setFlashcardExpPopup(null);
     setSelectedAnswerIndex(null);
     setIsAnswerChecked(false);
-  }, [currentFloorIndex, config.type, payload.sakubunExercises]);
+    setCreationTypedText('');
+    setShowCreationExamples(false);
+    setCreationFeedback(null);
+    setTimeLeft(survivalTimeLimit);
+    setIsTimeUp(false);
+  }, [currentFloorIndex, config.type, payload.sakubunExercises, survivalTimeLimit]);
+
+  const handleTimeUp = () => {
+    setIsTimeUp(true);
+    playSound('wrong', soundEnabled);
+
+    if (config.type === 'quiz' || config.type === 'extreme' || config.type === 'conjugation') {
+      setIsAnswerChecked(true);
+      setSelectedAnswerIndex(-1);
+    } else if (config.type === 'flashcard') {
+      setIsFlashcardFlipped(true);
+    } else if (config.type === 'sakubun') {
+      setSakubunFeedback({
+        isCorrect: false,
+        score: 0,
+        submittedSentence: '',
+        targetSentence: '',
+        detailedFeedback: 'Waktu Habis! ⏱️ Kamu kehabisan waktu untuk menyusun kalimat di lantai ini.',
+        pedagogicalAdvice: 'Tingkatkan kecepatan refleks pada latihan berikutnya.',
+      });
+    } else if (config.type === 'sentence_creation') {
+      setCreationFeedback({
+        isValid: false,
+        message: 'Waktu Habis! ⏱️ Kamu kehabisan waktu untuk menulis kalimat pola di lantai ini.',
+      });
+    }
+  };
+
+  // Countdown timer effect for Survival Mode
+  useEffect(() => {
+    if (!isSurvivalMode || isVictory || isTimeUp) return;
+
+    const isFloorResolved =
+      isAnswerChecked ||
+      (config.type === 'flashcard' && isFlashcardFlipped) ||
+      (config.type === 'sakubun' && (sakubunFeedback?.isCorrect ?? false)) ||
+      (config.type === 'sentence_creation' && (creationFeedback?.isValid ?? false));
+
+    if (isFloorResolved) return;
+
+    const timer = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          handleTimeUp();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [
+    isSurvivalMode,
+    isVictory,
+    isTimeUp,
+    isAnswerChecked,
+    isFlashcardFlipped,
+    sakubunFeedback,
+    creationFeedback,
+    currentFloorIndex,
+    config.type
+  ]);
 
   // Next Floor or Finish Dungeon
   const advanceToNextFloor = (isCorrectAnswer: boolean, expAward = 20, goldAward = 10) => {
@@ -139,7 +349,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
       } catch {}
 
       if (onCompleteStudyItem) {
-        const modId = config.type === 'writing' || config.type === 'extreme' ? 'kanji' : (config.type === 'sakubun' ? 'bunpou' : 'kotoba');
+        const modId = config.type === 'writing' || config.type === 'extreme' ? 'kanji' : (config.type === 'sakubun' || config.type === 'sentence_creation' ? 'bunpou' : 'kotoba');
         onCompleteStudyItem(modId, nextExp, nextGold, `dungeon_${config.type}_${Date.now()}`, nextCorrect, totalFloors);
       } else if (onRewardPlayer) {
         onRewardPlayer(nextExp, nextGold);
@@ -171,6 +381,25 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
     rankColor = 'text-text-muted border-border-subtle bg-surface-inset';
   }
 
+  const renderFallbackMissingItem = () => (
+    <div className="p-8 text-center space-y-4 my-auto bg-surface-inset/60 rounded-3xl border border-border-subtle">
+      <div className="w-12 h-12 mx-auto rounded-2xl bg-surface-card border border-border-subtle flex items-center justify-center text-text-muted shadow-xs">
+        <Sparkles className="w-6 h-6 text-gold" />
+      </div>
+      <div className="space-y-1">
+        <h4 className="text-base font-bold text-text-primary">Materi Selesai untuk Lantai Ini</h4>
+        <p className="text-xs text-text-secondary">Lanjutkan ekspedisi ke lantai berikutnya.</p>
+      </div>
+      <button
+        type="button"
+        onClick={() => advanceToNextFloor(true, 15, 8)}
+        className="btn-skeuo-indigo px-6 py-2.5 text-xs shadow-md transition-all active:scale-95 cursor-pointer"
+      >
+        Lantai Berikutnya →
+      </button>
+    </div>
+  );
+
   return createPortal(
     <motion.div
       key="dungeon-runner-container"
@@ -179,7 +408,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <div className="panel panel-stitched relative w-full max-w-2xl max-h-[94vh] flex flex-col border border-border-subtle rounded-3xl shadow-2xl overflow-hidden bg-surface-card animate-scale-up">
+      <div className={`panel panel-stitched relative w-full ${config.type === 'blackboard' ? 'max-w-5xl' : 'max-w-2xl'} max-h-[94vh] flex flex-col border border-border-subtle rounded-3xl shadow-2xl overflow-hidden bg-surface-card animate-scale-up`}>
         {/* Subtle Washi Texture Overlay */}
         <div className="skeuo-grain" />
         
@@ -198,19 +427,44 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                   {config.type === 'conjugation' && '⚡ Altar Konjugasi'}
                   {config.type === 'quiz' && '🎯 Arena Kuis Cepat'}
                   {config.type === 'extreme' && (config.stageNumber ? `🔥 Kanji Extreme (Stage ${config.stageNumber})` : '🔥 Gerbang Kanji Extreme')}
+                  {config.type === 'sentence_creation' && '📜 Kreasi Pola Kalimat'}
+                  {config.type === 'blackboard' && '🏫 Papan Tulis Pola'}
                 </span>
                 <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-surface-card text-indigo border border-border-subtle font-bold max-w-[150px] truncate">
                   {config.deckTitle ? `📖 ${config.deckTitle}` : config.levelCategory}
                 </span>
               </div>
               <span className="text-[10px] text-text-secondary font-mono">
-                Lantai {Math.min(currentFloorIndex + 1, totalFloors)} / {totalFloors}
+                {config.type === 'blackboard'
+                  ? 'Playground Bebas'
+                  : `Lantai ${Math.min(currentFloorIndex + 1, totalFloors)} / ${totalFloors}`}
               </span>
             </div>
           </div>
 
-          {/* Progress Bar & Rewards Counter */}
-          <div className="flex items-center gap-3">
+          {/* Progress Bar & Rewards Counter + Survival Countdown Badge */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            {isSurvivalMode && (
+              <div
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-xl font-mono font-black text-xs border transition-all select-none ${
+                  timeLeft <= 5
+                    ? 'bg-rose-500/25 text-rose-400 border-rose-500/60 animate-pulse scale-105 shadow-[0_0_12px_rgba(244,63,94,0.35)]'
+                    : timeLeft <= 10
+                    ? 'bg-amber-500/15 text-amber-400 border-amber-500/40'
+                    : 'bg-surface-card text-rose-400 border-rose-500/30 shadow-2xs'
+                }`}
+                title={`Sisa waktu: ${timeLeft} detik`}
+              >
+                <Clock className={`w-3.5 h-3.5 ${timeLeft <= 5 && !isTimeUp ? 'animate-spin' : ''}`} />
+                <span>00:{timeLeft < 10 ? `0${timeLeft}` : timeLeft}</span>
+                {isTimeUp && (
+                  <span className="text-[10px] text-rose-400 uppercase font-black tracking-wider hidden sm:inline ml-0.5">
+                    HABIS
+                  </span>
+                )}
+              </div>
+            )}
+
             <div className="hidden sm:flex items-center gap-2 text-xs font-mono font-bold">
               <span className="text-indigo">+{Number(accumulatedExp.toFixed(2))} EXP</span>
               <span className="text-gold">+{accumulatedGold} G</span>
@@ -222,7 +476,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                 playSound('click', soundEnabled);
                 onClose();
               }}
-              className="p-1.5 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-colors border border-border-subtle"
+              className="p-1.5 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-colors border border-border-subtle cursor-pointer"
               title="Kabur dari Dungeon"
             >
               <X className="w-4 h-4" />
@@ -231,14 +485,32 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
         </div>
 
         {/* Floor Progress Bar Line */}
-        <div className="w-full bg-surface-inset h-1 overflow-hidden shrink-0">
-          <motion.div
-            className="bg-indigo h-full"
-            initial={{ width: 0 }}
-            animate={{ width: `${((currentFloorIndex + 1) / totalFloors) * 100}%` }}
-            transition={{ duration: 0.3 }}
-          />
-        </div>
+        {config.type !== 'blackboard' && (
+          <div className="w-full bg-surface-inset h-1 overflow-hidden shrink-0">
+            <motion.div
+              className="bg-indigo h-full"
+              initial={{ width: 0 }}
+              animate={{ width: `${((currentFloorIndex + 1) / totalFloors) * 100}%` }}
+              transition={{ duration: 0.3 }}
+            />
+          </div>
+        )}
+
+        {/* Survival Countdown Linear Bar */}
+        {isSurvivalMode && (
+          <div className="w-full bg-surface-inset/70 h-1 overflow-hidden shrink-0">
+            <div
+              className={`h-full transition-all duration-1000 ${
+                timeLeft <= 5
+                  ? 'bg-rose-500 animate-pulse'
+                  : timeLeft <= 10
+                  ? 'bg-amber-400'
+                  : 'bg-rose-400'
+              }`}
+              style={{ width: `${Math.max(0, Math.min(100, (timeLeft / survivalTimeLimit) * 100))}%` }}
+            />
+          </div>
+        )}
 
         {/* MAIN BODY: ACTIVE FLOOR CONTENT OR VICTORY SCREEN */}
         <div className="p-4 sm:p-6 overflow-y-auto scrollbar-thin flex-1 flex flex-col justify-between">
@@ -320,18 +592,35 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
               {config.type === 'writing' && payload.writingItems && (
                 (() => {
                   const it = payload.writingItems[currentFloorIndex];
-                  if (!it) return null;
+                  if (!it) return renderFallbackMissingItem();
 
                   return (
-                    <div className="panel p-4 sm:p-5 rounded-3xl border border-border-subtle shadow-lg">
-                      <UniversalWritingCard
-                        item={it}
-                        soundEnabled={soundEnabled}
-                        totalSheets={1}
-                        onFinish={(score, reward) => {
-                          advanceToNextFloor(score >= 60, reward?.expGained ?? 25, reward?.goldGained ?? 12);
-                        }}
-                      />
+                    <div className="space-y-3">
+                      {isSurvivalMode && isTimeUp && (
+                        <div className="p-3.5 rounded-2xl bg-rose-500/15 border border-rose-500/30 flex items-center justify-between gap-3 animate-fade-in">
+                          <div className="flex items-center gap-2 text-rose-400 font-bold text-xs sm:text-sm">
+                            <Clock className="w-4 h-4 shrink-0" />
+                            <span>Waktu Habis! Kamu kehabisan waktu di lantai ini.</span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => advanceToNextFloor(false, 10, 5)}
+                            className="btn-skeuo-indigo px-4 py-1.5 text-xs shadow-xs cursor-pointer"
+                          >
+                            Lantai Berikutnya →
+                          </button>
+                        </div>
+                      )}
+                      <div className="panel p-4 sm:p-5 rounded-3xl border border-border-subtle shadow-lg">
+                        <UniversalWritingCard
+                          item={it}
+                          soundEnabled={soundEnabled}
+                          totalSheets={1}
+                          onFinish={(score, reward) => {
+                            advanceToNextFloor(score >= 60, reward?.expGained ?? 25, reward?.goldGained ?? 12);
+                          }}
+                        />
+                      </div>
                     </div>
                   );
                 })()
@@ -341,7 +630,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
               {config.type === 'flashcard' && payload.flashcardItems && (
                 (() => {
                   const it = payload.flashcardItems[currentFloorIndex];
-                  if (!it) return null;
+                  if (!it) return renderFallbackMissingItem();
 
                   const jp = it.kotoba?.word || it.kanji?.character || it.bunpou?.title || it.displayTitle || '';
 
@@ -407,6 +696,14 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                           <ChevronRight className="w-4 h-4 shrink-0" />
                         </button>
                       </div>
+
+                      {/* Survival Timeout Notice for Flashcard */}
+                      {isSurvivalMode && isTimeUp && (
+                        <div className="p-2.5 rounded-2xl bg-rose-500/15 border border-rose-500/30 flex items-center justify-center gap-1.5 text-rose-400 font-bold text-xs animate-fade-in max-w-md mx-auto w-full">
+                          <Clock className="w-3.5 h-3.5 shrink-0" />
+                          <span>Waktu Habis! Kartu dibalik otomatis. Periksa arti lalu lanjutkan.</span>
+                        </div>
+                      )}
                     </div>
                   );
                 })()
@@ -416,7 +713,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
               {config.type === 'sakubun' && payload.sakubunExercises && (
                 (() => {
                   const ex = payload.sakubunExercises[currentFloorIndex];
-                  if (!ex) return null;
+                  if (!ex) return renderFallbackMissingItem();
 
                   const handleSelectTile = (tile: SentenceTile) => {
                     playSound('click', soundEnabled);
@@ -651,7 +948,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
               {config.type === 'conjugation' && payload.conjugationQuestions && (
                 (() => {
                   const q = payload.conjugationQuestions[currentFloorIndex];
-                  if (!q) return null;
+                  if (!q) return renderFallbackMissingItem();
 
                   const formId = q.targetForm?.id || '';
                   const formDisplay = getTargetFormDisplay(formId);
@@ -745,6 +1042,12 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                       {/* Explanation & Next Floor with Post-Answer Result Translation */}
                       {isAnswerChecked && (
                         <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-2.5 animate-fade-in">
+                          {isSurvivalMode && isTimeUp && selectedAnswerIndex === -1 && (
+                            <div className="flex items-center gap-1.5 text-xs font-bold text-rose-400 border-b border-rose-500/20 pb-2">
+                              <Clock className="w-4 h-4 shrink-0" />
+                              <span>Waktu Habis! Kamu tidak sempat memilih bentuk konjugasi di lantai ini.</span>
+                            </div>
+                          )}
                           <div className="flex items-center justify-between gap-3 flex-wrap">
                             <div className="flex items-center gap-2 flex-wrap">
                               <span className="font-jp font-bold text-sm sm:text-base text-emerald-400">
@@ -799,7 +1102,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
               {(config.type === 'quiz' || config.type === 'extreme') && payload.quizQuestions && (
                 (() => {
                   const q = payload.quizQuestions[currentFloorIndex];
-                  if (!q) return null;
+                  if (!q) return renderFallbackMissingItem();
 
                   return (
                     <div className="space-y-4">
@@ -862,22 +1165,384 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
 
                       {/* Explanation & Next Floor */}
                       {isAnswerChecked && (
-                        <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-between gap-3">
-                          <p className="text-xs text-text-secondary line-clamp-2">
-                            {q.explanation}
-                          </p>
+                        <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle flex flex-col gap-2 animate-fade-in">
+                          {isSurvivalMode && isTimeUp && selectedAnswerIndex === -1 && (
+                            <div className="flex items-center gap-1.5 text-xs font-bold text-rose-400 border-b border-rose-500/20 pb-1.5">
+                              <Clock className="w-4 h-4 shrink-0" />
+                              <span>Waktu Habis! Kamu tidak sempat memilih jawaban sebelum waktu habis.</span>
+                            </div>
+                          )}
+                          <div className="flex items-center justify-between gap-3">
+                            <p className="text-xs text-text-secondary line-clamp-2">
+                              {q.explanation}
+                            </p>
+                            <button
+                              type="button"
+                              onClick={() => advanceToNextFloor(selectedAnswerIndex === q.correctIndex, 15, 8)}
+                              className="btn-skeuo-indigo px-5 py-2 text-xs shadow-sm active:scale-95 transition-all shrink-0"
+                            >
+                              <span className="whitespace-nowrap">Lantai Berikutnya →</span>
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()
+              )}
+
+              {/* TYPE 6: SENTENCE CREATION (KREASI KALIMAT) DUNGEON */}
+              {config.type === 'sentence_creation' && payload.sentenceCreationItems && (
+                (() => {
+                  const item = payload.sentenceCreationItems[currentFloorIndex];
+                  if (!item) return renderFallbackMissingItem();
+
+                  const primaryInsert = getPrimaryPatternInsert(item);
+
+                  // Build context words for IME candidates
+                  const contextWords: string[] = [primaryInsert];
+                  if (item.examples) {
+                    item.examples.forEach(ex => {
+                      const parts = ex.japanese.split(/[、。！？\s]+/);
+                      parts.forEach(p => {
+                        if (p.trim().length >= 2) contextWords.push(p.trim());
+                      });
+                    });
+                  }
+
+                  const handleInsertText = (textToInsert: string) => {
+                    playSound('click', soundEnabled);
+                    setCreationTypedText(prev => prev + textToInsert);
+                    if (creationFeedback) setCreationFeedback(null);
+                  };
+
+                  return (
+                    <div className="space-y-4">
+                      {/* Top Header Card: Pattern Display, Formula, Meaning, Explanation */}
+                      <div className="p-4 sm:p-5 rounded-3xl bg-surface-inset border border-border-subtle space-y-3 shadow-inner">
+                        <div className="flex items-start justify-between gap-3 flex-wrap">
+                          <div className="space-y-1">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-violet-500/15 text-violet-400 border border-violet-500/30">
+                                {item.level || config.levelCategory || 'Tata Bahasa'}
+                              </span>
+                              <span className="text-[10px] font-mono text-text-muted uppercase">
+                                Pola Target
+                              </span>
+                            </div>
+
+                            {/* Large Pattern Name with Ruby Furigana */}
+                            <div className="flex items-center gap-2 pt-0.5">
+                              <h3 className="text-2xl sm:text-3xl font-black text-text-primary font-jp leading-tight">
+                                <RubyText
+                                  japanese={item.title}
+                                  reading={item.reading}
+                                  showFurigana={true}
+                                  className="text-2xl sm:text-3xl font-black text-text-primary font-jp"
+                                />
+                              </h3>
+                              <button
+                                type="button"
+                                onClick={() => speakJapanese(primaryInsert || item.title)}
+                                className="p-1.5 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-gold border border-border-subtle transition-colors shadow-2xs cursor-pointer shrink-0"
+                                title="Dengarkan pelafalan pola"
+                              >
+                                <Volume2 className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* Quick Insert Pattern Chip in Header */}
                           <button
                             type="button"
-                            onClick={() => advanceToNextFloor(selectedAnswerIndex === q.correctIndex, 15, 8)}
-                            className="btn-skeuo-indigo px-5 py-2 text-xs shadow-sm active:scale-95 transition-all shrink-0"
+                            onClick={() => handleInsertText(primaryInsert)}
+                            className="px-3 py-1.5 rounded-xl bg-violet-500/15 hover:bg-violet-500/25 text-violet-800 dark:text-violet-300 border border-violet-500/40 text-xs font-bold font-jp shadow-xs transition-all active:scale-95 cursor-pointer flex items-center gap-1.5 shrink-0"
+                            title="Sisipkan pola ini ke kolom tulis"
                           >
-                            <span className="whitespace-nowrap">Lantai Berikutnya →</span>
+                            <Plus className="w-3.5 h-3.5" />
+                            <span>Sisipkan 「{primaryInsert}」</span>
+                          </button>
+                        </div>
+
+                        {/* Formula Badge / Rumus */}
+                        {item.formula && (
+                          <div className="p-2.5 rounded-2xl bg-surface-card border border-border-subtle flex items-center gap-2 text-xs font-mono text-text-primary overflow-x-auto">
+                            <span className="px-1.5 py-0.5 rounded bg-surface-inset text-amber-800 dark:text-gold font-bold text-[10px] shrink-0">
+                              Rumus
+                            </span>
+                            <span className="text-text-secondary font-medium whitespace-nowrap sm:whitespace-normal font-jp">
+                              {item.formula}
+                            </span>
+                          </div>
+                        )}
+
+                        {/* Meaning (Arti Indonesia) */}
+                        <div className="space-y-1">
+                          <div className="text-[10px] font-mono text-text-secondary uppercase font-semibold">
+                            Arti Pola:
+                          </div>
+                          <div className="text-sm sm:text-base font-bold text-text-primary">
+                            "{item.meaningId || item.meaningEn}"
+                          </div>
+                        </div>
+
+                        {/* Explanation (Penjelasan Kaidah & Nuansa) */}
+                        {item.explanation && (
+                          <div className="text-xs text-text-secondary leading-relaxed border-t border-border-subtle/60 pt-2 font-body">
+                            <span className="font-bold text-text-primary">Penjelasan: </span>
+                            {item.explanation}
+                          </div>
+                        )}
+
+                        {/* Collapsible Authentic Examples Accordion */}
+                        {item.examples && item.examples.length > 0 && (
+                          <div className="border-t border-border-subtle/60 pt-2">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                playSound('click', soundEnabled);
+                                setShowCreationExamples(prev => !prev);
+                              }}
+                              className="flex items-center justify-between w-full text-xs font-heading font-bold text-text-secondary hover:text-gold transition-colors py-1 cursor-pointer"
+                            >
+                              <span className="flex items-center gap-1.5">
+                                <Lightbulb className="w-3.5 h-3.5 text-amber-700 dark:text-gold" />
+                                <span>{showCreationExamples ? 'Sembunyikan Contoh Kalimat' : 'Lihat Contoh Kalimat Bantuan'}</span>
+                                <span className="text-[10px] font-mono text-text-muted">({item.examples.length})</span>
+                              </span>
+                              {showCreationExamples ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                            </button>
+
+                            <AnimatePresence>
+                              {showCreationExamples && (
+                                <motion.div
+                                  initial={{ opacity: 0, height: 0 }}
+                                  animate={{ opacity: 1, height: 'auto' }}
+                                  exit={{ opacity: 0, height: 0 }}
+                                  className="space-y-2 pt-2 overflow-hidden"
+                                >
+                                  {item.examples.slice(0, 2).map((ex, exIdx) => (
+                                    <div
+                                      key={exIdx}
+                                      className="p-3 rounded-2xl bg-surface-card border border-border-subtle space-y-1 text-xs"
+                                    >
+                                      <div className="flex items-center justify-between gap-2">
+                                        <span className="font-bold font-jp text-text-primary text-sm">
+                                          <RubyText
+                                            japanese={ex.japanese}
+                                            reading={ex.reading}
+                                            showFurigana={true}
+                                            className="font-bold font-jp text-text-primary text-sm"
+                                          />
+                                        </span>
+                                        <button
+                                          type="button"
+                                          onClick={() => speakJapanese(ex.reading || ex.japanese)}
+                                          className="p-1 rounded-lg bg-surface-inset hover:bg-surface-elevated text-text-muted hover:text-gold transition-colors shrink-0"
+                                          title="Dengarkan pelafalan contoh"
+                                        >
+                                          <Volume2 className="w-3.5 h-3.5" />
+                                        </button>
+                                      </div>
+                                      {ex.meaningId && (
+                                        <div className="text-text-secondary font-medium italic text-[11px]">
+                                          {ex.meaningId}
+                                        </div>
+                                      )}
+                                    </div>
+                                  ))}
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Writing Area: Japanese IME Input & Quick Chips */}
+                      <div className="space-y-2.5">
+                        <div className="flex items-center justify-between text-xs px-1">
+                          <span className="font-heading font-bold text-text-primary flex items-center gap-1.5">
+                            <ScrollText className="w-4 h-4 text-violet-400" />
+                            <span>Tulis Kalimat Bahasa Jepangmu:</span>
+                          </span>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] font-mono text-text-muted">
+                              {creationTypedText.length} karakter
+                            </span>
+                            {creationTypedText && (
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  playSound('click', soundEnabled);
+                                  setCreationTypedText('');
+                                  if (creationFeedback) setCreationFeedback(null);
+                                }}
+                                className="text-[11px] font-bold text-text-muted hover:text-rose-400 transition-colors cursor-pointer"
+                              >
+                                Hapus
+                              </button>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Interactive Japanese IME Input Field */}
+                        <JapaneseImeInput
+                          value={creationTypedText}
+                          onChange={(val) => {
+                            setCreationTypedText(val);
+                            if (creationFeedback) setCreationFeedback(null);
+                          }}
+                          onSubmit={() => handleCheckCreation(item)}
+                          placeholder={`Ketik kalimat lengkap yang memuat 「${primaryInsert}」...`}
+                          contextWords={contextWords}
+                          soundEnabled={soundEnabled}
+                          autoFocus
+                        />
+
+                        {/* Vocabulary Assist Palette */}
+                        {item.examples && item.examples.length > 0 && (
+                          <div className="p-2.5 rounded-2xl bg-surface-inset/70 border border-border-subtle/80 space-y-1.5">
+                            <div className="text-[10px] font-mono text-text-muted px-0.5 flex items-center justify-between">
+                              <span>Kata Bantuan (klik untuk menyisipkan):</span>
+                              <span className="text-[9px] text-text-muted hidden sm:inline">Romaji otomatis terkonversi ke Kana/Kanji</span>
+                            </div>
+                            <div className="flex flex-wrap gap-1.5">
+                              <button
+                                type="button"
+                                onClick={() => handleInsertText(primaryInsert)}
+                                className="px-2.5 py-1 rounded-xl bg-violet-500/20 text-violet-300 hover:bg-violet-500/30 border border-violet-500/40 text-xs font-bold font-jp shadow-2xs transition-all active:scale-95 cursor-pointer"
+                              >
+                                ＋ {primaryInsert}
+                              </button>
+                              {item.examples[0]?.japanese.split(/[、。！？\s]+/).filter(w => w.length >= 2).slice(0, 5).map((w, wIdx) => (
+                                <button
+                                  key={wIdx}
+                                  type="button"
+                                  onClick={() => handleInsertText(w)}
+                                  className="px-2 py-1 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-primary border border-border-subtle text-xs font-jp font-medium shadow-2xs hover:border-gold/40 transition-all active:scale-95 cursor-pointer"
+                                >
+                                  {w}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Validation Feedback & Floor Progression */}
+                      {creationFeedback ? (
+                        <div
+                          className={`p-4 rounded-2xl border space-y-3 animate-fade-in ${
+                            creationFeedback.isValid
+                              ? 'bg-emerald-500/10 border-emerald-500/40'
+                              : 'bg-rose-500/10 border-rose-500/40'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between gap-2 flex-wrap">
+                            <div className="flex items-center gap-2">
+                              {creationFeedback.isValid ? (
+                                <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
+                              ) : (
+                                <XCircle className="w-5 h-5 text-rose-400 shrink-0" />
+                              )}
+                              <span className={`text-xs sm:text-sm font-bold font-heading ${creationFeedback.isValid ? 'text-emerald-300' : 'text-rose-300'}`}>
+                                {creationFeedback.message}
+                              </span>
+                            </div>
+
+                            {/* Floor Progression Buttons */}
+                            <div className="flex items-center gap-2 ml-auto">
+                              {creationFeedback.isValid ? (
+                                <button
+                                  type="button"
+                                  onClick={() => advanceToNextFloor(true, 35, 18)}
+                                  className="btn-skeuo-indigo px-5 py-2 text-xs shadow-md active:scale-95 transition-all cursor-pointer flex items-center gap-1.5"
+                                >
+                                  <span>{currentFloorIndex + 1 >= totalFloors ? 'Selesaikan Dungeon 🏆' : 'Lantai Berikutnya →'}</span>
+                                </button>
+                              ) : (
+                                <>
+                                  <button
+                                    type="button"
+                                    onClick={() => setCreationFeedback(null)}
+                                    className="px-3 py-1.5 rounded-xl bg-surface-card hover:bg-surface-elevated border border-border-subtle text-text-primary text-xs font-bold cursor-pointer"
+                                  >
+                                    Coba Edit
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => advanceToNextFloor(false, 10, 5)}
+                                    className="px-3.5 py-1.5 rounded-xl bg-surface-inset border border-border-subtle text-text-secondary hover:text-text-primary text-xs font-bold cursor-pointer"
+                                    title="Lewati lantai ini dengan skor percobaan"
+                                  >
+                                    Lewati →
+                                  </button>
+                                </>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Read User's sentence back to them via TTS */}
+                          {creationFeedback.isValid && (
+                            <div className="p-3 rounded-2xl bg-surface-card/80 border border-emerald-500/30 flex items-center justify-between gap-3">
+                              <div className="space-y-0.5">
+                                <div className="text-[10px] font-mono text-emerald-400/80 font-bold uppercase">
+                                  Kalimat Kreasimu:
+                                </div>
+                                <div className="text-base font-black font-jp text-text-primary">
+                                  {creationTypedText}
+                                </div>
+                              </div>
+
+                              <button
+                                type="button"
+                                onClick={() => speakJapanese(creationTypedText)}
+                                className="p-2.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 transition-colors shrink-0 shadow-xs cursor-pointer flex items-center gap-1.5 text-xs font-bold"
+                                title="Dengarkan pelafalan kalimat kreasimu"
+                              >
+                                <Volume2 className="w-4 h-4" />
+                                <span className="hidden sm:inline">Dengarkan</span>
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        /* Check Button */
+                        <div className="flex justify-center pt-2">
+                          <button
+                            type="button"
+                            disabled={creationTypedText.trim().length === 0}
+                            onClick={() => handleCheckCreation(item)}
+                            className="btn-skeuo-indigo px-8 py-2.5 disabled:opacity-40 text-xs shadow-md active:scale-95 transition-all cursor-pointer flex items-center gap-2"
+                          >
+                            <Send className="w-4 h-4" />
+                            <span className="whitespace-nowrap font-heading font-bold">Periksa Kalimat</span>
                           </button>
                         </div>
                       )}
                     </div>
                   );
                 })()
+              )}
+
+              {/* TYPE 7: BLACKBOARD PATTERN PLAYGROUND */}
+              {config.type === 'blackboard' && payload.blackboardVerbs && (
+                <BlackboardPlaygroundModule
+                  verbs={payload.blackboardVerbs}
+                  patterns={payload.blackboardPatterns}
+                  levelCategory={config.levelCategory}
+                  soundEnabled={soundEnabled}
+                  userDecks={userDecks}
+                  onSaveToDeck={(verb) => {
+                    if (onUpdateDecks) {
+                      const res = toggleBookmarkItem(userDecks, verb.id || verb.kanji, 'kotoba');
+                      onUpdateDecks(res.userDecks);
+                    }
+                  }}
+                  onFinishSession={(exploredCount) => {
+                    advanceToNextFloor(true, Math.max(20, exploredCount * 15), Math.max(10, exploredCount * 8));
+                  }}
+                />
               )}
 
             </div>

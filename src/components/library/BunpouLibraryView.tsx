@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { AnimatePresence } from 'motion/react';
-import { Search, Filter, ChevronDown, Bookmark, LayoutGrid, List, BookOpen, Zap, Languages, X } from 'lucide-react';
+import { Search, Filter, ChevronDown, Bookmark, LayoutGrid, List, BookOpen, Zap, Languages, X, Trash2 } from 'lucide-react';
 import { ScrollIcon } from '../ui/EngravingIcons';
 import { BUNPOU_DATABASE } from '../../data/bunpou';
 import { ALL_GRAMMAR_FUNCTION_CATEGORIES } from '../../data/bunpouMetadata';
@@ -24,10 +24,13 @@ const LEVEL_OPTIONS = [
 ];
 
 interface BunpouLibraryViewProps {
+  items?: BunpouItem[];
+  hideHeader?: boolean;
   soundEnabled?: boolean;
   itemMastery?: Record<string, ItemMasteryRecord>;
   userDecks?: UserDeck[];
   onToggleBookmark?: (id: string, category: 'bunpou', notes?: string, targetDeckId?: string) => void;
+  onRemoveItem?: (id: string, category: 'bunpou') => void;
   onRewardPlayer?: (exp: number, gold: number) => void;
   onRecordInteraction?: (
     itemId: string,
@@ -41,15 +44,19 @@ interface BunpouLibraryViewProps {
     goldGained: number,
     itemId?: string,
     score?: number,
-    total?: number
+    total?: number,
+    interactionType?: 'writing' | 'flashcard' | 'quiz'
   ) => void;
 }
 
 export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
+  items,
+  hideHeader = false,
   soundEnabled = true,
   itemMastery,
   userDecks,
   onToggleBookmark,
+  onRemoveItem,
   onRewardPlayer,
   onRecordInteraction,
   onCompleteStudyItem,
@@ -80,7 +87,10 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
     }
   };
 
-  const allBunpou = useMemo(() => Object.values(BUNPOU_DATABASE), []);
+  const allBunpou = useMemo(() => {
+    if (items) return items;
+    return Object.values(BUNPOU_DATABASE);
+  }, [items]);
 
   const levelCounts = useMemo(() => {
     const counts: Record<string, number> = { all: allBunpou.length, N5: 0, N4: 0, N3: 0, N2: 0, N1: 0 };
@@ -125,25 +135,27 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
   return (
     <div className="w-full max-w-5xl mx-auto space-y-6 animate-fade-in pb-10">
       {/* Header Banner */}
-      <div className="panel p-4 sm:p-5 rounded-3xl border border-border-subtle shadow-sm flex items-center justify-between gap-4">
-        <div className="flex items-center gap-3.5">
-          <div className="w-12 h-12 rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-center text-text-primary shrink-0 shadow-inner">
-            <ScrollIcon className="w-6 h-6 text-text-primary" />
+      {!hideHeader && (
+        <div className="panel p-4 sm:p-5 rounded-3xl border border-border-subtle shadow-sm flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5">
+            <div className="w-12 h-12 rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-center text-text-primary shrink-0 shadow-inner">
+              <ScrollIcon className="w-6 h-6 text-text-primary" />
+            </div>
+            <div>
+              <h1 className="text-xl sm:text-2xl font-bold text-text-primary tracking-wide font-heading">
+                Kamus Tata Bahasa (Bunpou)
+              </h1>
+              <p className="text-xs sm:text-sm text-text-secondary font-medium">
+                Kamus {allBunpou.length.toLocaleString()} pola tata bahasa JLPT (N5〜N1) terstruktur berdasarkan fungsi, rumus, dan nuansa.
+              </p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-xl sm:text-2xl font-bold text-text-primary tracking-wide font-heading">
-              Kamus Tata Bahasa (Bunpou)
-            </h1>
-            <p className="text-xs sm:text-sm text-text-secondary font-medium">
-              Kamus {allBunpou.length.toLocaleString()} pola tata bahasa JLPT (N5〜N1) terstruktur berdasarkan fungsi, rumus, dan nuansa.
-            </p>
-          </div>
-        </div>
 
-        <div className="hidden md:flex items-center gap-2 pr-3 text-xs font-mono text-text-secondary bg-surface-inset px-3 py-1.5 rounded-xl border border-border-subtle">
-          <span>{allBunpou.length.toLocaleString()} Pola</span>
+          <div className="hidden md:flex items-center gap-2 pr-3 text-xs font-mono text-text-secondary bg-surface-inset px-3 py-1.5 rounded-xl border border-border-subtle">
+            <span>{allBunpou.length.toLocaleString()} Pola</span>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Sub-Section Switcher: Kamus Pola Kalimat vs Perubahan Bentuk Kata */}
       <div className="flex items-center gap-2 p-1.5 bg-surface-card border border-border-subtle rounded-2xl">
@@ -160,7 +172,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
           }`}
         >
           <BookOpen className="w-4 h-4 text-indigo" />
-          <span>📖 Kamus Pola Kalimat ({allBunpou.length.toLocaleString()})</span>
+          <span>Kamus Pola Kalimat ({allBunpou.length.toLocaleString()})</span>
         </button>
 
         <button
@@ -176,7 +188,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
           }`}
         >
           <Zap className="w-4 h-4 text-amber-500" />
-          <span>⚡ Perubahan Bentuk Kata (Konjugasi)</span>
+          <span>Perubahan Bentuk Kata (Konjugasi)</span>
           <span className="hidden sm:inline-block text-[10px] uppercase tracking-wider bg-surface-inset text-amber-500 border border-border-subtle px-1.5 py-0.5 rounded font-mono font-bold">
             Dojo & Latihan
           </span>
@@ -400,8 +412,22 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
                   </div>
                 </div>
 
-                {/* Right: Bookmark + Arrow */}
+                {/* Right: Remove + Bookmark + Arrow */}
                 <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+                  {onRemoveItem && (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onRemoveItem(item.id, 'bunpou');
+                        playSound('click', soundEnabled);
+                      }}
+                      className="p-1.5 rounded-lg border border-border-subtle bg-surface-inset text-text-muted hover:text-wine-accent transition-all shrink-0"
+                      title="Hapus dari deck ini"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  )}
                   {onToggleBookmark && (
                     <button
                       type="button"
@@ -443,30 +469,46 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
                 }}
                 className="panel flex flex-col justify-between p-4 sm:p-5 group shadow-sm hover:shadow-md transition-all cursor-pointer rounded-2xl border border-border-subtle hover:border-indigo/40 space-y-3.5"
               >
-                {/* Top row: Level Badge + Bookmark */}
+                {/* Top row: Level Badge + Actions */}
                 <div className="flex items-center justify-between gap-2">
                   <span className="px-2.5 py-1 rounded-xl bg-surface-inset text-indigo text-xs font-mono font-bold border border-indigo/20 shadow-sm">
                     {item.baseLevel ? `Level ${item.baseLevel}` : `Level ${item.level}`}
                   </span>
 
-                  {onToggleBookmark && (
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onToggleBookmark(item.id, 'bunpou');
-                        playSound('click', soundEnabled);
-                      }}
-                      className={`p-1.5 rounded-lg border transition-all shrink-0 ${
-                        isItemBookmarked(userDecks, item.id, 'bunpou')
-                          ? 'bg-surface-elevated text-gold border-gold/40 ring-1 ring-gold/30'
-                          : 'bg-surface-inset text-text-muted hover:text-gold border-border-subtle'
-                      }`}
-                      title={isItemBookmarked(userDecks, item.id, 'bunpou') ? 'Tersimpan di Buku Saku' : 'Simpan ke Buku Saku'}
-                    >
-                      <Bookmark className={`w-3.5 h-3.5 ${isItemBookmarked(userDecks, item.id, 'bunpou') ? 'fill-gold text-gold' : ''}`} />
-                    </button>
-                  )}
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    {onRemoveItem && (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onRemoveItem(item.id, 'bunpou');
+                          playSound('click', soundEnabled);
+                        }}
+                        className="p-1.5 rounded-lg border border-border-subtle bg-surface-inset text-text-muted hover:text-wine-accent transition-all shrink-0"
+                        title="Hapus dari deck ini"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    )}
+                    {onToggleBookmark && (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onToggleBookmark(item.id, 'bunpou');
+                          playSound('click', soundEnabled);
+                        }}
+                        className={`p-1.5 rounded-lg border transition-all shrink-0 ${
+                          isItemBookmarked(userDecks, item.id, 'bunpou')
+                            ? 'bg-surface-elevated text-gold border-gold/40 ring-1 ring-gold/30'
+                            : 'bg-surface-inset text-text-muted hover:text-gold border-border-subtle'
+                        }`}
+                        title={isItemBookmarked(userDecks, item.id, 'bunpou') ? 'Tersimpan di Buku Saku' : 'Simpan ke Buku Saku'}
+                      >
+                        <Bookmark className={`w-3.5 h-3.5 ${isItemBookmarked(userDecks, item.id, 'bunpou') ? 'fill-gold text-gold' : ''}`} />
+                      </button>
+                    )}
+                  </div>
                 </div>
 
                 {/* Main: Clean Title & Meaning */}

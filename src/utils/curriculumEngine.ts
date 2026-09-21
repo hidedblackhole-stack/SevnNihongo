@@ -214,6 +214,36 @@ export function generateCurriculum(deck: UserDeck, rawConfig: CurriculumConfig):
   };
 }
 
+export const DEFAULT_TEMPLATE_CURRICULUM_CONFIG: CurriculumConfig = {
+  stageCount: 8,
+  includeTypes: ['kanji', 'kotoba', 'bunpou'],
+  kanjiSettings: {
+    writeMode: true,
+    canvasPerKanji: 1,
+    flashcard: true,
+    quiz: true,
+  },
+  kotobaSettings: {
+    flashcard: true,
+    quiz: true,
+  },
+  polaSettings: {
+    study: true,
+    quiz: true,
+  },
+};
+
+export function getOrCreateCurriculumForDeck(deck: UserDeck, customConfig?: CurriculumConfig): CustomCurriculum {
+  const allCurriculums = loadAllCustomCurriculums();
+  if (allCurriculums[deck.id]) {
+    return allCurriculums[deck.id];
+  }
+  const config = customConfig || DEFAULT_TEMPLATE_CURRICULUM_CONFIG;
+  const generated = generateCurriculum(deck, config);
+  saveCustomCurriculum(generated);
+  return generated;
+}
+
 /**
  * Adapts a CustomStage into the standard Stage object expected by StageHubView.
  * Provides 100% feature and visual parity with standard RPG story stages.

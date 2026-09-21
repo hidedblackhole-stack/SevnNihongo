@@ -15,24 +15,240 @@ import { playSound, speakJapanese } from '../../utils/audio';
 import { RubyText } from '../learning/RubyText';
 import { calculateQuizReward } from '../../utils/rewards';
 import { smartSample } from '../../utils/smartRandomizer';
+import furiganaDictRaw from '../../data/furiganaDictionary.json';
+import { isKanji } from '../../utils/furiganaUtils';
 
 const DungeonBattleModule = lazy(() => import('../dungeon/DungeonBattleModule').then(m => ({ default: m.DungeonBattleModule })));
 
 export type JlptSection = 'all' | 'mojiGoi' | 'bunpou' | 'dokkai' | 'choukai' | 'tryout';
 
+export type QuestionSubCategory = 
+  | 'all'
+  | 'kanji_reading'    // 漢字読み (Cara Baca Kanji)
+  | 'kanji_writing'    // 表記 (Penulisan Aksara)
+  | 'vocab_context'    // 文脈規定 (Konteks Kosakata)
+  | 'synonym'          // 言い換え (Sinonim / Semakna)
+  | 'vocab_usage'      // 用法 (Penggunaan Kata)
+  | 'grammar_form'     // 文法形式 (Pola & Konjugasi)
+  | 'sentence_star'    // 文の組み立て (Susun Kalimat ★)
+  | 'dokkai_reading'   // 読解 (Wacana Bacaan)
+  | 'choukai_audio';   // 聴解 (Dialog Menyimak)
+
 export interface UnifiedQuestionItem {
   id: string;
   section: 'mojiGoi' | 'bunpou' | 'dokkai' | 'choukai';
+  subCategory: QuestionSubCategory;
   level: 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'JFT';
   sourceTitle: string;
   instruction?: string;
   prompt: string;
   ruby?: string;
+  targetWord?: string;
   passage?: string;
   audioText?: string;
   options: string[];
   correctIndex: number;
   explanation?: string;
+}
+
+export const SUBCATEGORY_CONFIG: Record<
+  QuestionSubCategory,
+  { label: string; jp: string; section: JlptSection; color: string; bg: string }
+> = {
+  all: { label: 'Semua Format', jp: '全て', section: 'all', color: 'text-text-primary', bg: 'bg-surface-inset border-border-subtle' },
+  kanji_reading: { label: 'Cara Baca Kanji', jp: '漢字読み', section: 'mojiGoi', color: 'text-indigo dark:text-indigo-soft', bg: 'bg-indigo/15 border-indigo/30' },
+  kanji_writing: { label: 'Penulisan Aksara', jp: '表記', section: 'mojiGoi', color: 'text-blue-500 dark:text-blue-400', bg: 'bg-blue-500/15 border-blue-500/30' },
+  vocab_context: { label: 'Konteks Kosakata', jp: '文脈規定', section: 'mojiGoi', color: 'text-emerald-500 dark:text-emerald-400', bg: 'bg-emerald-500/15 border-emerald-500/30' },
+  synonym: { label: 'Sinonim / Semakna', jp: '言い換え', section: 'mojiGoi', color: 'text-teal-500 dark:text-teal-400', bg: 'bg-teal-500/15 border-teal-500/30' },
+  vocab_usage: { label: 'Penggunaan Kata', jp: '用法', section: 'mojiGoi', color: 'text-amber-500 dark:text-amber-400', bg: 'bg-amber-500/15 border-amber-500/30' },
+  grammar_form: { label: 'Pola & Konjugasi', jp: '文法形式', section: 'bunpou', color: 'text-purple-500 dark:text-purple-400', bg: 'bg-purple-500/15 border-purple-500/30' },
+  sentence_star: { label: 'Susun Kalimat (★)', jp: '文の組み立て', section: 'bunpou', color: 'text-gold dark:text-gold', bg: 'bg-gold/15 border-gold/30' },
+  dokkai_reading: { label: 'Wacana Bacaan', jp: '読解', section: 'dokkai', color: 'text-rose-500 dark:text-rose-400', bg: 'bg-rose-500/15 border-rose-500/30' },
+  choukai_audio: { label: 'Dialog Menyimak', jp: '聴解', section: 'choukai', color: 'text-cyan-500 dark:text-cyan-400', bg: 'bg-cyan-500/15 border-cyan-500/30' },
+};
+
+export function detectQuestionSubCategory(
+  section: 'mojiGoi' | 'bunpou' | 'dokkai' | 'choukai',
+  instruction: string = '',
+  prompt: string = '',
+  passage?: string
+): QuestionSubCategory {
+  if (passage || section === 'dokkai') return 'dokkai_reading';
+  if (section === 'choukai') return 'choukai_audio';
+
+  const ins = instruction.toLowerCase();
+  const p = prompt.toLowerCase();
+
+  // Check for Star sentence
+  if (p.includes('★') || p.includes('⭐') || ins.includes('★') || ins.includes('星') || ins.includes('並び替え') || ins.includes('組み立て')) {
+    return 'sentence_star';
+  }
+
+  if (section === 'bunpou') {
+    return 'grammar_form';
+  }
+
+  if (section === 'mojiGoi') {
+    if (
+      ins.includes('読み方') || 
+      ins.includes('よみかた') || 
+      ins.includes('ひらがなで') || 
+      ins.includes('読み') ||
+      p.includes('cara baca')
+    ) {
+      return 'kanji_reading';
+    }
+    if (ins.includes('漢字で書く') || ins.includes('表記') || ins.includes('どう書きますか') || p.includes('tulis') || p.includes('tulisan')) {
+      return 'kanji_writing';
+    }
+    if (ins.includes('意味が最も近い') || ins.includes('言い換え') || ins.includes('同じ意味') || ins.includes('類義') || ins.includes('sinonim')) {
+      return 'synonym';
+    }
+    if (ins.includes('使い方') || ins.includes('用法') || ins.includes('penggunaan')) {
+      return 'vocab_usage';
+    }
+    return 'vocab_context';
+  }
+
+  return 'vocab_context';
+}
+
+/**
+ * Automatically detects the tested word/kanji in reading questions.
+ * In JLPT "漢字読み" (Cara Baca Kanji), the word being tested should NOT have ruby displayed on it,
+ * and should be styled with a distinct, high-contrast visual accent so users can clearly see what word they are reading.
+ */
+export function getQuestionTargetWord(q: {
+  subCategory?: string;
+  instruction?: string;
+  prompt: string;
+  options?: string[];
+  correctIndex?: number;
+}): string | undefined {
+  if (!q.prompt) return undefined;
+
+  // 1. Check for explicit bracketed or underlined tokens in prompt: (関係), （関係）, 【関係】, [関係], <u>関係</u>, _関係_, etc.
+  const bracketMatches = q.prompt.match(/[\(（【\[〔〈《<u>_＿]([^\)）】\]〕〉》<>\s_＿]+)[\)）】\]〕〉》<\/u>_＿]/g);
+  if (bracketMatches) {
+    for (const match of bracketMatches) {
+      const inner = match.replace(/[\(（【\[〔〈《<u>_＿\)）】\]〕〉》<\/u>]/g, '').trim();
+      if (inner && Array.from(inner).some(c => isKanji(c))) {
+        return inner;
+      }
+    }
+  }
+
+  // 2. Only proceed if it is a kanji reading question or asks for yomikata/hiragana
+  const isReadingQuestion = 
+    q.subCategory === 'kanji_reading' ||
+    (q.instruction && (
+      q.instruction.includes('読み方') || 
+      q.instruction.includes('よみかた') || 
+      q.instruction.includes('ひらがなで') || 
+      q.instruction.includes('読み') ||
+      q.instruction.toLowerCase().includes('cara baca')
+    )) ||
+    (q.prompt && (
+      q.prompt.includes('読み方') ||
+      q.prompt.toLowerCase().includes('cara baca')
+    ));
+
+  if (!isReadingQuestion || !q.options || q.options.length === 0) {
+    return undefined;
+  }
+
+  // Strip romaji e.g. "かんけい (kankei)" -> "かんけい", trim whitespace
+  const cleanOptions = q.options.map(opt => 
+    opt.replace(/\s*[\(（][^)]*[\)）]/g, '').trim()
+  ).filter(Boolean);
+
+  if (cleanOptions.length === 0) return undefined;
+
+  const dictWords = furiganaDictRaw.words as Record<string, string>;
+  const dictKanji = furiganaDictRaw.kanji as Record<string, string>;
+
+  // A. Check compound words from dictionary that exist in prompt (longer matches first)
+  const candidateWords = Object.keys(dictWords)
+    .filter(w => q.prompt.includes(w) && Array.from(w).some(c => isKanji(c)))
+    .sort((a, b) => b.length - a.length);
+
+  const correctOpt = cleanOptions[q.correctIndex ?? 0];
+
+  // Priority 1: Dictionary compound whose reading exactly matches correct option
+  if (correctOpt) {
+    for (const w of candidateWords) {
+      if (dictWords[w] === correctOpt) {
+        return w;
+      }
+    }
+  }
+
+  // Priority 2: Dictionary compound whose reading matches any candidate option
+  for (const w of candidateWords) {
+    const reading = dictWords[w];
+    if (cleanOptions.includes(reading)) {
+      return w;
+    }
+  }
+
+  // Priority 3: Verb/Adjective okurigana match
+  // e.g. prompt has "着きました", candidate option is "つきました", dictionary has "着く" -> "つく"
+  for (const opt of cleanOptions) {
+    for (const w of candidateWords) {
+      const reading = dictWords[w];
+      if (w.length >= 2 && reading.length >= 2) {
+        const kanjiStem = w.slice(0, -1);
+        const readingStem = reading.slice(0, -1);
+        if (q.prompt.includes(kanjiStem) && opt.startsWith(readingStem)) {
+          const okurigana = opt.slice(readingStem.length);
+          const surfaceCandidate = kanjiStem + okurigana;
+          if (q.prompt.includes(surfaceCandidate)) {
+            return surfaceCandidate;
+          }
+          return kanjiStem;
+        }
+      }
+    }
+  }
+
+  // B. Single kanji character match against dictionary
+  const singleKanjisInPrompt = Array.from(q.prompt).filter(c => isKanji(c));
+  if (correctOpt) {
+    for (const k of singleKanjisInPrompt) {
+      if (dictKanji[k] === correctOpt) {
+        return k;
+      }
+    }
+  }
+  for (const k of singleKanjisInPrompt) {
+    const reading = dictKanji[k];
+    if (reading && cleanOptions.includes(reading)) {
+      return k;
+    }
+  }
+
+  // C. Okurigana match with single kanji (e.g. prompt "着きました", opt "つきました", dictKanji['着'] === 'つ')
+  for (const opt of cleanOptions) {
+    for (const k of singleKanjisInPrompt) {
+      const reading = dictKanji[k];
+      if (reading && opt.startsWith(reading)) {
+        const okurigana = opt.slice(reading.length);
+        const surfaceCandidate = k + okurigana;
+        if (q.prompt.includes(surfaceCandidate)) {
+          return surfaceCandidate;
+        }
+        return k;
+      }
+    }
+  }
+
+  // D. Fallback: If prompt contains only 1 contiguous kanji sequence
+  const kanjiSequences = q.prompt.match(/[\u4e00-\u9faf\u3400-\u4dbf々〆]+/g) || [];
+  if (kanjiSequences.length === 1) {
+    return kanjiSequences[0];
+  }
+
+  return undefined;
 }
 
 const SECTION_TABS: { value: JlptSection; label: string; jp: string; icon: React.FC<{ className?: string }> }[] = [
@@ -93,6 +309,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
 }) => {
   const [activeSection, setActiveSection] = useState<JlptSection>('all');
   const [levelFilter, setLevelFilter] = useState<string>('all');
+  const [selectedSubCategory, setSelectedSubCategory] = useState<QuestionSubCategory>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [visibleCount, setVisibleCount] = useState(30);
 
@@ -123,17 +340,27 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
       // Moji Goi
       if (data?.sections?.mojiGoi?.questions) {
         data.sections.mojiGoi.questions.forEach((q, idx) => {
+          const subCat = detectQuestionSubCategory('mojiGoi', q.instruction, q.prompt);
+          const targetWord = getQuestionTargetWord({
+            subCategory: subCat,
+            instruction: q.instruction,
+            prompt: q.prompt,
+            options: q.options || [],
+            correctIndex: q.correctIndex !== undefined ? q.correctIndex : 0,
+          });
           list.push({
             id: `to_${tryout.id}_mg_${q.id || idx}`,
             section: 'mojiGoi',
+            subCategory: subCat,
             level: lvl,
             sourceTitle: source,
             instruction: q.instruction || 'Pilih jawaban yang paling tepat untuk melengkapi atau mengartikan kalimat.',
             prompt: q.prompt,
             ruby: q.ruby,
+            targetWord,
             options: q.options || [],
             correctIndex: q.correctIndex !== undefined ? q.correctIndex : 0,
-            explanation: `Latihan Simulasi ${lvl}. Pilihan jawaban yang tepat adalah nomor ${(q.correctIndex || 0) + 1}: "${(q.options || [])[q.correctIndex || 0]}".`
+            explanation: `Latihan Evaluasi ${lvl}. Pilihan jawaban yang tepat adalah nomor ${(q.correctIndex || 0) + 1}: "${(q.options || [])[q.correctIndex || 0]}".`
           });
         });
       }
@@ -142,18 +369,29 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
       if (data?.sections?.bunpouDokkai?.questions) {
         data.sections.bunpouDokkai.questions.forEach((q, idx) => {
           const isDokkai = Boolean(q.passage) || (q.instruction && q.instruction.includes('文章'));
+          const sec = isDokkai ? 'dokkai' : 'bunpou';
+          const subCat = isDokkai ? 'dokkai_reading' : detectQuestionSubCategory('bunpou', q.instruction, q.prompt, q.passage);
+          const targetWord = getQuestionTargetWord({
+            subCategory: subCat,
+            instruction: q.instruction,
+            prompt: q.prompt,
+            options: q.options || [],
+            correctIndex: q.correctIndex !== undefined ? q.correctIndex : 0,
+          });
           list.push({
             id: `to_${tryout.id}_bd_${q.id || idx}`,
-            section: isDokkai ? 'dokkai' : 'bunpou',
+            section: sec,
+            subCategory: subCat,
             level: lvl,
             sourceTitle: source,
             instruction: q.instruction || (isDokkai ? 'Bacalah teks wacana berikut lalu jawablah pertanyaannya.' : 'Pilih pola tata bahasa yang paling sesuai.'),
             prompt: q.prompt,
             ruby: q.ruby,
+            targetWord,
             passage: q.passage,
             options: q.options || [],
             correctIndex: q.correctIndex !== undefined ? q.correctIndex : 0,
-            explanation: `Latihan Simulasi ${lvl}. Kunci jawaban yang tepat adalah opsi ke-${(q.correctIndex || 0) + 1}: "${(q.options || [])[q.correctIndex || 0]}".`
+            explanation: `Latihan Evaluasi ${lvl}. Kunci jawaban yang tepat adalah opsi ke-${(q.correctIndex || 0) + 1}: "${(q.options || [])[q.correctIndex || 0]}".`
           });
         });
       }
@@ -164,6 +402,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
           list.push({
             id: `to_${tryout.id}_ck_${q.id || idx}`,
             section: 'choukai',
+            subCategory: 'choukai_audio',
             level: lvl,
             sourceTitle: source,
             instruction: q.instruction || 'Dengarkan percakapan berikut lalu pilih jawaban yang tepat.',
@@ -184,6 +423,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
         list.push({
           id: `db_ck_${ck.id}_${q.id || qIdx}`,
           section: 'choukai',
+          subCategory: 'choukai_audio',
           level: lvl,
           sourceTitle: ck.title,
           instruction: `Percakapan: ${ck.dialogueSpeaker || 'Pelafalan Penutur Asli'}`,
@@ -203,6 +443,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
         list.push({
           id: `db_dk_${dk.id}_${q.id || qIdx}`,
           section: 'dokkai',
+          subCategory: 'dokkai_reading',
           level: lvl,
           sourceTitle: dk.title,
           instruction: 'Bacalah teks wacana berikut:',
@@ -217,15 +458,24 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
 
     // 4. Sample slice from Kanji Questions (Moji/Goi)
     if (Array.isArray(kanjiQuestionsDb)) {
-      kanjiQuestionsDb.slice(0, 80).forEach((kq) => {
+      kanjiQuestionsDb.slice(0, 100).forEach((kq) => {
+        const targetWord = getQuestionTargetWord({
+          subCategory: 'kanji_reading',
+          instruction: 'Pilihlah cara baca (yomikata) atau kanji yang tepat:',
+          prompt: kq.prompt,
+          options: kq.options || [],
+          correctIndex: kq.correct_index !== undefined ? kq.correct_index : 0,
+        });
         list.push({
           id: `kq_${kq.id}`,
           section: 'mojiGoi',
+          subCategory: 'kanji_reading',
           level: 'N3',
-          sourceTitle: 'Bank Soal Kanji Resmi',
+          sourceTitle: 'Bank Soal Aksara Kanji',
           instruction: 'Pilihlah cara baca (yomikata) atau kanji yang tepat:',
           prompt: kq.prompt,
           ruby: (kq as any).ruby,
+          targetWord,
           options: kq.options || [],
           correctIndex: kq.correct_index !== undefined ? kq.correct_index : 0,
           explanation: kq.explanation || 'Perhatikan bentuk kanji dan kaidah pembacaan onyomi/kunyomi.'
@@ -235,15 +485,24 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
 
     // 5. Sample slice from Bunpou Questions (Grammar)
     if (Array.isArray(bunpouQuestionsDb)) {
-      bunpouQuestionsDb.slice(0, 80).forEach((bq) => {
+      bunpouQuestionsDb.slice(0, 100).forEach((bq) => {
+        const targetWord = getQuestionTargetWord({
+          subCategory: 'grammar_form',
+          instruction: 'Lengkapi kalimat berikut dengan pola tata bahasa yang tepat:',
+          prompt: bq.prompt,
+          options: bq.options || [],
+          correctIndex: bq.correct_answer !== undefined ? bq.correct_answer : 0,
+        });
         list.push({
           id: `bq_${bq.id}`,
           section: 'bunpou',
+          subCategory: 'grammar_form',
           level: 'N3',
-          sourceTitle: 'Bank Soal Tata Bahasa Resmi',
+          sourceTitle: 'Bank Soal Tata Bahasa',
           instruction: 'Lengkapi kalimat berikut dengan pola tata bahasa yang tepat:',
           prompt: bq.prompt,
           ruby: bq.ruby,
+          targetWord,
           options: bq.options || [],
           correctIndex: bq.correct_answer !== undefined ? bq.correct_answer : 0,
           explanation: bq.explanation || 'Sesuaikan bentuk sambungan part of speech dengan makna kalimat.'
@@ -271,12 +530,55 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
   }, [allQuestions]);
 
   const countsByLevel = useMemo(() => {
-    const counts: Record<string, number> = { all: allQuestions.length, N5: 0, N4: 0, N3: 0, N2: 0, N1: 0 };
+    const counts: Record<string, number> = { all: allQuestions.length, N5: 0, N4: 0, N3: 0, N2: 0, N1: 0, JFT: 0 };
     for (const q of allQuestions) {
       if (counts[q.level] !== undefined) counts[q.level]++;
     }
     return counts;
   }, [allQuestions]);
+
+  // Sub-Category Counts (dynamic based on active section & level)
+  const countsBySubCategory = useMemo(() => {
+    const counts: Record<string, number> = { all: 0 };
+    for (const q of allQuestions) {
+      const matchSec = activeSection === 'all' || activeSection === 'tryout' || q.section === activeSection;
+      const matchLvl = levelFilter === 'all' || q.level === levelFilter;
+      if (matchSec && matchLvl) {
+        counts.all = (counts.all || 0) + 1;
+        counts[q.subCategory] = (counts[q.subCategory] || 0) + 1;
+      }
+    }
+    return counts;
+  }, [allQuestions, activeSection, levelFilter]);
+
+  // Available SubCategories for current section
+  const availableSubCategories = useMemo(() => {
+    if (activeSection === 'tryout') return [];
+    if (activeSection === 'mojiGoi') {
+      return ['all', 'kanji_reading', 'kanji_writing', 'vocab_context', 'synonym', 'vocab_usage'] as QuestionSubCategory[];
+    }
+    if (activeSection === 'bunpou') {
+      return ['all', 'grammar_form', 'sentence_star'] as QuestionSubCategory[];
+    }
+    if (activeSection === 'dokkai') {
+      return ['all', 'dokkai_reading'] as QuestionSubCategory[];
+    }
+    if (activeSection === 'choukai') {
+      return ['all', 'choukai_audio'] as QuestionSubCategory[];
+    }
+    return [
+      'all',
+      'kanji_reading',
+      'kanji_writing',
+      'vocab_context',
+      'synonym',
+      'vocab_usage',
+      'grammar_form',
+      'sentence_star',
+      'dokkai_reading',
+      'choukai_audio',
+    ] as QuestionSubCategory[];
+  }, [activeSection]);
 
   // Filtering for Explorer
   const filteredQuestions = useMemo(() => {
@@ -289,7 +591,10 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
       // 2. Level Filter
       if (levelFilter !== 'all' && q.level !== levelFilter) return false;
 
-      // 3. Search Query
+      // 3. SubCategory Filter
+      if (selectedSubCategory !== 'all' && q.subCategory !== selectedSubCategory) return false;
+
+      // 4. Search Query
       if (!searchQuery.trim()) return true;
       const query = searchQuery.toLowerCase().trim();
 
@@ -301,7 +606,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
         q.options.some((opt) => opt.toLowerCase().includes(query))
       );
     });
-  }, [allQuestions, activeSection, levelFilter, searchQuery]);
+  }, [allQuestions, activeSection, levelFilter, selectedSubCategory, searchQuery]);
 
   // Filtered Tryouts for Tryout tab & Hero Section
   const filteredTryouts = useMemo(() => {
@@ -312,12 +617,25 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
   const displayedQuestions = filteredQuestions.slice(0, visibleCount);
 
   // --- LATIHAN HARIAN (10 SOAL DRILL) LOGIC ---
-  const handleStartDrill = (section: JlptSection = activeSection, level: string = levelFilter) => {
+  const handleStartDrill = (
+    section: JlptSection = activeSection,
+    level: string = levelFilter,
+    subCat: QuestionSubCategory = selectedSubCategory
+  ) => {
     let pool = allQuestions.filter((q) => {
       const matchSec = (section === 'all' || section === 'tryout') ? true : q.section === section;
       const matchLvl = level === 'all' ? true : q.level === level;
-      return matchSec && matchLvl;
+      const matchSub = subCat === 'all' ? true : q.subCategory === subCat;
+      return matchSec && matchLvl && matchSub;
     });
+
+    if (pool.length < 10) {
+      pool = allQuestions.filter((q) => {
+        const matchSec = (section === 'all' || section === 'tryout') ? true : q.section === section;
+        const matchLvl = level === 'all' ? true : q.level === level;
+        return matchSec && matchLvl;
+      });
+    }
 
     if (pool.length < 10) {
       pool = allQuestions.filter((q) => (level === 'all' ? true : q.level === level));
@@ -560,7 +878,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
                     </div>
 
                     <div className="text-xs sm:text-sm font-jp text-text-primary font-medium">
-                      <RubyText text={q.prompt} ruby={q.ruby} />
+                      <RubyText text={q.prompt} ruby={q.ruby} targetWord={q.targetWord} />
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-jp pt-1">
@@ -700,7 +1018,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
 
             {/* Prompt */}
             <div className="text-base sm:text-lg font-medium text-text-primary font-jp leading-relaxed py-2">
-              <RubyText text={currentQ.prompt} ruby={currentQ.ruby} />
+              <RubyText text={currentQ.prompt} ruby={currentQ.ruby} targetWord={currentQ.targetWord} />
             </div>
 
             {/* 4 Options Grid */}
@@ -804,6 +1122,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
                 key={tab.value}
                 onClick={() => {
                   setActiveSection(tab.value);
+                  setSelectedSubCategory('all');
                   setVisibleCount(30);
                   playSound('click', soundEnabled);
                 }}
@@ -850,6 +1169,43 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
             </button>
           ))}
         </div>
+
+        {/* Sub-Category Format Quick Badges (When not in Tryout) */}
+        {activeSection !== 'tryout' && availableSubCategories.length > 1 && (
+          <div className="flex items-center gap-1.5 overflow-x-auto pt-2 no-scrollbar border-t border-border-subtle/40">
+            <span className="text-[11px] font-mono font-bold text-text-muted uppercase shrink-0 mr-1 flex items-center gap-1">
+              <Compass className="w-3.5 h-3.5 text-gold" />
+              Tipe Soal:
+            </span>
+            {availableSubCategories.map((subCat) => {
+              const meta = SUBCATEGORY_CONFIG[subCat];
+              const isSubActive = selectedSubCategory === subCat;
+              const count = countsBySubCategory[subCat] || 0;
+
+              return (
+                <button
+                  key={subCat}
+                  onClick={() => {
+                    setSelectedSubCategory(subCat);
+                    setVisibleCount(30);
+                    playSound('click', soundEnabled);
+                  }}
+                  className={`px-3 py-1 rounded-lg text-xs font-medium shrink-0 flex items-center gap-1.5 transition-all ${
+                    isSubActive
+                      ? 'bg-surface-inset border border-border-subtle text-text-primary font-bold shadow-sm ring-1 ring-gold/40'
+                      : 'text-text-muted hover:text-text-primary hover:bg-surface-inset/60 border border-transparent'
+                  }`}
+                >
+                  <span>{meta.label}</span>
+                  <span className="font-jp text-[10px] opacity-65">({meta.jp})</span>
+                  <span className="font-mono text-[10px] opacity-60">
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {/* Hero Action Modes Grid (Latihan Harian 10 Soal + Simulasi Ujian Nyata) */}
@@ -1043,15 +1399,20 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
                     key={q.id}
                     className="panel p-5 sm:p-6 rounded-2xl border border-border-subtle shadow-sm space-y-4 hover:border-border-muted transition-colors"
                   >
-                    {/* Header: Section Badge, Level Badge & Number */}
+                    {/* Header: Level Badge, Section Badge, Sub-Category Badge & Number */}
                     <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border-subtle pb-3 text-xs">
-                      <div className="flex items-center gap-2">
-                        <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold border ${badgeMeta.bg} ${badgeMeta.text}`}>
-                          {badgeMeta.label}
-                        </span>
+                      <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                         <span className="px-2 py-0.5 rounded bg-surface-inset font-bold text-text-primary border border-border-subtle text-[11px] font-mono">
                           {q.level}
                         </span>
+                        <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold border ${badgeMeta.bg} ${badgeMeta.text}`}>
+                          {badgeMeta.label}
+                        </span>
+                        {q.subCategory && q.subCategory !== 'all' && SUBCATEGORY_CONFIG[q.subCategory] && (
+                          <span className={`px-2.5 py-0.5 rounded-full text-[10.5px] font-mono font-bold border ${SUBCATEGORY_CONFIG[q.subCategory].bg} ${SUBCATEGORY_CONFIG[q.subCategory].color}`}>
+                            {SUBCATEGORY_CONFIG[q.subCategory].jp} · {SUBCATEGORY_CONFIG[q.subCategory].label}
+                          </span>
+                        )}
                       </div>
                       <span className="text-[10px] font-mono text-text-muted">
                         No. {qIndex + 1}
@@ -1093,7 +1454,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
 
                     {/* Prompt Text */}
                     <div className="text-sm sm:text-base font-medium text-text-primary font-jp leading-relaxed">
-                      <RubyText text={q.prompt} ruby={q.ruby} />
+                      <RubyText text={q.prompt} ruby={q.ruby} targetWord={q.targetWord} />
                     </div>
 
                     {/* Multiple Choice Options Grid */}

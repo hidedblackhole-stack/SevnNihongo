@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useDeferredValue } from 'react';
-import { Search, Filter, ChevronDown, BookOpen, Bookmark, Languages, X } from 'lucide-react';
+import { Search, Filter, ChevronDown, BookOpen, Bookmark, Languages, X, Trash2, LayoutGrid, Table } from 'lucide-react';
 import { KANJI_DATABASE } from '../../data/kanji';
 import { KanjiItem, ItemMasteryRecord } from '../../types/content';
 import { KanjiDetailModal } from './KanjiDetailModal';
@@ -10,7 +10,9 @@ import { convertRomajiToKana, createJapaneseQueryMatcher } from '../../utils/ime
 
 const SUUJI_CHARACTERS = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '百', '千', '万', '零'];
 
+// Canonical Japanese Gojuuon Textbook Order
 const HIRAGANA_ORDER = [
+  // Seion Dasar (46)
   'あ','い','う','え','お',
   'か','き','く','け','こ',
   'さ','し','す','せ','そ',
@@ -20,10 +22,18 @@ const HIRAGANA_ORDER = [
   'ま','み','む','め','も',
   'や','ゆ','よ',
   'ら','り','る','れ','ろ',
-  'わ','を','ん'
+  'わ','を','ん',
+  // Dakuon (Tengteng - 20)
+  'が','ぎ','ぐ','げ','ご',
+  'ざ','じ','ず','ぜ','ぞ',
+  'だ','ぢ','づ','で','ど',
+  'ば','び','ぶ','べ','ぼ',
+  // Handakuon (Maru - 5)
+  'ぱ','ぴ','ぷ','ぺ','ぽ'
 ];
 
 const KATAKANA_ORDER = [
+  // Seion Dasar (46)
   'ア','イ','ウ','エ','オ',
   'カ','キ','ク','ケ','コ',
   'サ','シ','ス','セ','ソ',
@@ -33,7 +43,76 @@ const KATAKANA_ORDER = [
   'マ','ミ','ム','メ','モ',
   'ヤ','ユ','ヨ',
   'ラ','リ','ル','レ','ロ',
-  'ワ','ヲ','ン'
+  'ワ','ヲ','ン',
+  // Dakuon (Tengteng - 20)
+  'ガ','ギ','グ','ゲ','ゴ',
+  'ザ','ジ','ズ','ゼ','ゾ',
+  'ダ','ヂ','ヅ','デ','ド',
+  'バ','ビ','ブ','ベ','ボ',
+  // Handakuon (Maru - 5)
+  'パ','ピ','プ','ペ','ポ',
+  // Vu (1)
+  'ヴ'
+];
+
+const DAKUON_HANDAKUON_CHARS = new Set([
+  'が','ぎ','ぐ','げ','ご','ざ','じ','ず','ぜ','ぞ','だ','ぢ','づ','で','ど','ば','び','ぶ','べ','ぼ','ぱ','ぴ','ぷ','ぺ','ぽ',
+  'ガ','ギ','グ','ゲ','ゴ','ザ','ジ','ズ','ゼ','ゾ','ダ','ヂ','ヅ','デ','ド','バ','ビ','ブ','ベ','ボ','パ','ピ','プ','ペ','ポ','ヴ'
+]);
+
+export interface GojuuonRowDef {
+  id: string;
+  title: string;
+  soundGroup: string;
+  group: 'hira_seion' | 'hira_dakuon' | 'kata_seion' | 'kata_dakuon' | 'suuji';
+  slots: (string | null)[];
+  notes?: Record<number, string>;
+}
+
+export const GOJUUON_ROWS: GojuuonRowDef[] = [
+  // --- HIRAGANA SEION (46 aksara dalam 10 baris 5-kolom baku) ---
+  { id: 'h_a', title: 'Baris A (あ行)', soundGroup: 'Vokal Dasar (a · i · u · e · o)', group: 'hira_seion', slots: ['あ', 'い', 'う', 'え', 'お'] },
+  { id: 'h_ka', title: 'Baris Ka (か行)', soundGroup: 'Konsonan k-', group: 'hira_seion', slots: ['か', 'き', 'く', 'け', 'こ'] },
+  { id: 'h_sa', title: 'Baris Sa (さ行)', soundGroup: 'Konsonan s-', group: 'hira_seion', slots: ['さ', 'し', 'す', 'せ', 'そ'] },
+  { id: 'h_ta', title: 'Baris Ta (た行)', soundGroup: 'Konsonan t-', group: 'hira_seion', slots: ['た', 'ち', 'つ', 'て', 'と'] },
+  { id: 'h_na', title: 'Baris Na (な行)', soundGroup: 'Konsonan n-', group: 'hira_seion', slots: ['な', 'に', 'ぬ', 'ね', 'の'] },
+  { id: 'h_ha', title: 'Baris Ha (は行)', soundGroup: 'Konsonan h-', group: 'hira_seion', slots: ['は', 'ひ', 'ふ', 'へ', 'ほ'] },
+  { id: 'h_ma', title: 'Baris Ma (ま行)', soundGroup: 'Konsonan m-', group: 'hira_seion', slots: ['ま', 'み', 'む', 'め', 'も'] },
+  { id: 'h_ya', title: 'Baris Ya (や行)', soundGroup: 'Semivokal y-', group: 'hira_seion', slots: ['や', null, 'ゆ', null, 'よ'], notes: { 1: '(い)', 3: '(え)' } },
+  { id: 'h_ra', title: 'Baris Ra (ら行)', soundGroup: 'Konsonan r-', group: 'hira_seion', slots: ['ら', 'り', 'る', 'れ', 'ろ'] },
+  { id: 'h_wa', title: 'Baris Wa & N (わ行・撥音)', soundGroup: 'wa · wo · n', group: 'hira_seion', slots: ['わ', null, 'を', null, 'ん'], notes: { 1: '—', 3: '—' } },
+
+  // --- HIRAGANA DAKUON (20) & HANDAKUON (5) ---
+  { id: 'h_ga', title: 'Baris Ga (が行)', soundGroup: 'Tengteng g-', group: 'hira_dakuon', slots: ['が', 'ぎ', 'ぐ', 'げ', 'ご'] },
+  { id: 'h_za', title: 'Baris Za (ざ行)', soundGroup: 'Tengteng z-', group: 'hira_dakuon', slots: ['ざ', 'じ', 'ず', 'ぜ', 'ぞ'] },
+  { id: 'h_da', title: 'Baris Da (だ行)', soundGroup: 'Tengteng d-', group: 'hira_dakuon', slots: ['だ', 'ぢ', 'づ', 'で', 'ど'] },
+  { id: 'h_ba', title: 'Baris Ba (ば行)', soundGroup: 'Tengteng b-', group: 'hira_dakuon', slots: ['ば', 'び', 'ぶ', 'べ', 'ぼ'] },
+  { id: 'h_pa', title: 'Baris Pa (ぱ行)', soundGroup: 'Maru p-', group: 'hira_dakuon', slots: ['ぱ', 'ぴ', 'ぷ', 'ぺ', 'ぽ'] },
+
+  // --- KATAKANA SEION (46 aksara dalam 10 baris 5-kolom baku) ---
+  { id: 'k_a', title: 'Baris A (ア行)', soundGroup: 'Vokal Dasar (a · i · u · e · o)', group: 'kata_seion', slots: ['ア', 'イ', 'ウ', 'エ', 'オ'] },
+  { id: 'k_ka', title: 'Baris Ka (カ行)', soundGroup: 'Konsonan k-', group: 'kata_seion', slots: ['カ', 'キ', 'ク', 'ケ', 'コ'] },
+  { id: 'k_sa', title: 'Baris Sa (サ行)', soundGroup: 'Konsonan s-', group: 'kata_seion', slots: ['サ', 'シ', 'ス', 'セ', 'ソ'] },
+  { id: 'k_ta', title: 'Baris Ta (タ行)', soundGroup: 'Konsonan t-', group: 'kata_seion', slots: ['タ', 'チ', 'ツ', 'テ', 'ト'] },
+  { id: 'k_na', title: 'Baris Na (ナ行)', soundGroup: 'Konsonan n-', group: 'kata_seion', slots: ['ナ', 'ニ', 'ヌ', 'ネ', 'ノ'] },
+  { id: 'k_ha', title: 'Baris Ha (ハ行)', soundGroup: 'Konsonan h-', group: 'kata_seion', slots: ['ハ', 'ヒ', 'フ', 'ヘ', 'ホ'] },
+  { id: 'k_ma', title: 'Baris Ma (マ行)', soundGroup: 'Konsonan m-', group: 'kata_seion', slots: ['マ', 'ミ', 'ム', 'メ', 'モ'] },
+  { id: 'k_ya', title: 'Baris Ya (ヤ行)', soundGroup: 'Semivokal y-', group: 'kata_seion', slots: ['ヤ', null, 'ユ', null, 'ヨ'], notes: { 1: '(イ)', 3: '(エ)' } },
+  { id: 'k_ra', title: 'Baris Ra (ラ行)', soundGroup: 'Konsonan r-', group: 'kata_seion', slots: ['ラ', 'リ', 'ル', 'レ', 'ロ'] },
+  { id: 'k_wa', title: 'Baris Wa & N (ワ行・撥音)', soundGroup: 'wa · wo · n', group: 'kata_seion', slots: ['ワ', null, 'ヲ', null, 'ン'], notes: { 1: '—', 3: '—' } },
+
+  // --- KATAKANA DAKUON (20), HANDAKUON (5) & VU (1) ---
+  { id: 'k_ga', title: 'Baris Ga (ガ行)', soundGroup: 'Tengteng g-', group: 'kata_dakuon', slots: ['ガ', 'ギ', 'グ', 'ゲ', 'ゴ'] },
+  { id: 'k_za', title: 'Baris Za (ザ行)', soundGroup: 'Tengteng z-', group: 'kata_dakuon', slots: ['ザ', 'ジ', 'ズ', 'ゼ', 'ゾ'] },
+  { id: 'k_da', title: 'Baris Da (ダ行)', soundGroup: 'Tengteng d-', group: 'kata_dakuon', slots: ['ダ', 'ヂ', 'ヅ', 'デ', 'ド'] },
+  { id: 'k_ba', title: 'Baris Ba (バ行)', soundGroup: 'Tengteng b-', group: 'kata_dakuon', slots: ['バ', 'ビ', 'ブ', 'ベ', 'ボ'] },
+  { id: 'k_pa', title: 'Baris Pa (パ行)', soundGroup: 'Maru p-', group: 'kata_dakuon', slots: ['パ', 'ピ', 'プ', 'ペ', 'ポ'] },
+  { id: 'k_vu', title: 'Baris Vu (ヴ)', soundGroup: 'Katakana Khusus v-', group: 'kata_dakuon', slots: [null, null, 'ヴ', null, null], notes: { 0: '—', 1: '—', 3: '—', 4: '—' } },
+
+  // --- SUUJI (14) ---
+  { id: 's_1_5', title: 'Angka Suuji 1 - 5', soundGroup: 'Satuan 1〜5', group: 'suuji', slots: ['一', '二', '三', '四', '五'] },
+  { id: 's_6_10', title: 'Angka Suuji 6 - 10', soundGroup: 'Satuan 6〜10', group: 'suuji', slots: ['六', '七', '八', '九', '十'] },
+  { id: 's_units', title: 'Angka Satuan Besar & Nol', soundGroup: 'Ratus, Ribu, Puluh Ribu, Nol', group: 'suuji', slots: ['百', '千', '万', '零', null], notes: { 4: '—' } },
 ];
 
 const getKanaRowLabel = (char: string): string => {
@@ -47,9 +126,14 @@ const getKanaRowLabel = (char: string): string => {
   if (['や','ゆ','よ','ヤ','ユ','ヨ'].includes(char)) return 'Baris Ya (y-)';
   if (['ら','り','る','れ','ろ','ラ','リ','ル','レ','ロ'].includes(char)) return 'Baris Ra (r-)';
   if (['わ','を','ん','ワ','ヲ','ン'].includes(char)) return 'Baris Wa (w-/n)';
+  if (['が','ぎ','ぐ','げ','ご','ガ','ギ','グ','ゲ','ゴ'].includes(char)) return 'Baris Ga (Tengteng g-)';
+  if (['ざ','じ','ず','ぜ','ぞ','ザ','ジ','ズ','ゼ','ゾ'].includes(char)) return 'Baris Za (Tengteng z-)';
+  if (['だ','ぢ','づ','で','ど','ダ','ヂ','ヅ','デ','ド'].includes(char)) return 'Baris Da (Tengteng d-)';
+  if (['ば','び','ぶ','べ','ぼ','バ','ビ','ブ','ベ','ボ'].includes(char)) return 'Baris Ba (Tengteng b-)';
+  if (['ぱ','ぴ','ぷ','ぺ','ぽ','パ','ピ','プ','ペ','ポ'].includes(char)) return 'Baris Pa (Maru p-)';
+  if (char === 'ヴ') return 'Baris Vu (Katakana v-)';
   return 'Aksara Kana';
 };
-
 
 const LEVEL_OPTIONS = [
   { value: 'all', label: 'Semua Aksara' },
@@ -62,17 +146,24 @@ const LEVEL_OPTIONS = [
 ];
 
 const KANA_CATEGORIES = [
-  { value: 'all', label: 'Semua (Kana & Angka)' },
-  { value: 'hiragana', label: 'Hiragana (46)' },
-  { value: 'katakana', label: 'Katakana (46)' },
-  { value: 'suuji', label: 'Angka (14)' },
+  { value: 'all', label: 'Semua Kana & Angka', shortLabel: 'Semua' },
+  { value: 'hiragana', label: 'Hiragana Semua', shortLabel: 'Hiragana' },
+  { value: 'hiragana_seion', label: 'Hiragana Dasar', shortLabel: 'Hira Dasar' },
+  { value: 'hiragana_dakuon', label: 'Hiragana Tengteng/Maru', shortLabel: 'Hira Tengteng/Maru' },
+  { value: 'katakana', label: 'Katakana Semua', shortLabel: 'Katakana' },
+  { value: 'katakana_seion', label: 'Katakana Dasar', shortLabel: 'Kata Dasar' },
+  { value: 'katakana_dakuon', label: 'Katakana Tengteng/Maru', shortLabel: 'Kata Tengteng/Maru' },
+  { value: 'suuji', label: 'Angka Suuji', shortLabel: 'Angka' },
 ];
 
 interface KanjiLibraryViewProps {
+  items?: KanjiItem[];
+  hideHeader?: boolean;
   soundEnabled?: boolean;
   itemMastery?: Record<string, ItemMasteryRecord>;
   userDecks?: UserDeck[];
   onToggleBookmark?: (id: string, category: 'kanji', notes?: string, targetDeckId?: string) => void;
+  onRemoveItem?: (id: string, category: 'kanji') => void;
   onRewardPlayer?: (exp: number, gold: number) => void;
   onRecordStudy?: (category: 'kanjiWriting', id: string, count?: number) => void;
   onRecordInteraction?: (
@@ -92,10 +183,13 @@ interface KanjiLibraryViewProps {
 }
 
 export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
+  items,
+  hideHeader = false,
   soundEnabled = true,
   itemMastery,
   userDecks,
   onToggleBookmark,
+  onRemoveItem,
   onRewardPlayer,
   onRecordStudy,
   onRecordInteraction,
@@ -104,16 +198,50 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
   const deferredQuery = useDeferredValue(searchQuery);
   const [imeActive, setImeActive] = useState(true);
-  const [visibleCount, setVisibleCount] = useState(48);
-  const [levelFilter, setLevelFilter] = useState<string>('all');
-  const [kanaCategory, setKanaCategory] = useState<'all' | 'hiragana' | 'katakana' | 'suuji'>('all');
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedKanji, setSelectedKanji] = useState<KanjiItem | null>(null);
+  const [visibleCount, setVisibleCount] = useState(200);
+  const [viewMode, setViewMode] = useState<'gojuuon' | 'grid'>('gojuuon');
 
   const suujiSet = useMemo(() => new Set(SUUJI_CHARACTERS), []);
 
+  // Detect if provided items are exclusively or predominantly Kana
+  const isDeckKanaOnly = useMemo(() => {
+    if (!items || items.length === 0) return false;
+    return items.every(
+      k =>
+        k.jlpt === 'KANA' ||
+        k.radical === 'Hiragana' ||
+        k.radical === 'Katakana' ||
+        HIRAGANA_ORDER.includes(k.character) ||
+        KATAKANA_ORDER.includes(k.character) ||
+        suujiSet.has(k.character)
+    );
+  }, [items, suujiSet]);
+
+  const [levelFilter, setLevelFilter] = useState<string>(() => {
+    if (items && items.length > 0) {
+      const isKana = items.every(
+        k =>
+          k.jlpt === 'KANA' ||
+          k.radical === 'Hiragana' ||
+          k.radical === 'Katakana' ||
+          HIRAGANA_ORDER.includes(k.character) ||
+          KATAKANA_ORDER.includes(k.character) ||
+          SUUJI_CHARACTERS.includes(k.character)
+      );
+      if (isKana) return 'KANA';
+    }
+    return 'all';
+  });
+
+  const [kanaCategory, setKanaCategory] = useState<
+    'all' | 'hiragana' | 'hiragana_seion' | 'hiragana_dakuon' | 'katakana' | 'katakana_seion' | 'katakana_dakuon' | 'suuji'
+  >('all');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedKanji, setSelectedKanji] = useState<KanjiItem | null>(null);
+
   // De-duplicate kanji database (since it has both id and character keys)
   const allKanji = useMemo(() => {
+    if (items) return items;
     const seen = new Set<string>();
     const list: KanjiItem[] = [];
     for (const item of Object.values(KANJI_DATABASE)) {
@@ -123,16 +251,28 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
       }
     }
     return list;
-  }, []);
+  }, [items]);
 
-  // Pre-index Kanji for sub-millisecond search across all 2,300 items
+  // Fast character lookup map for rendering Gojuuon table slots
+  const kanjiByCharMap = useMemo(() => {
+    const map = new Map<string, KanjiItem>();
+    for (const item of allKanji) {
+      if (item && item.character && !map.has(item.character)) {
+        map.set(item.character, item);
+      }
+    }
+    return map;
+  }, [allKanji]);
+
+  // Pre-index Kanji for sub-millisecond search across all items
   const kanjiSearchIndex = useMemo(() => {
     return allKanji.map(item => ({
       item,
       searchStr: `${item.character} ${item.meaningId || ''} ${item.meaningEn || ''} ${item.radical || ''} ${item.radicalName || ''} ${(item.onyomi || []).join(' ')} ${(item.kunyomi || []).join(' ')}`.toLowerCase(),
-      isHiragana: HIRAGANA_ORDER.includes(item.character),
-      isKatakana: KATAKANA_ORDER.includes(item.character),
+      isHiragana: HIRAGANA_ORDER.includes(item.character) || item.radical === 'Hiragana',
+      isKatakana: KATAKANA_ORDER.includes(item.character) || item.radical === 'Katakana',
       isSuuji: suujiSet.has(item.character),
+      isDakuon: DAKUON_HANDAKUON_CHARS.has(item.character),
       jlpt: item.jlpt || 'N3',
     }));
   }, [allKanji, suujiSet]);
@@ -147,18 +287,31 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
       N2: 0,
       N1: 0,
       kana_hiragana: 0,
+      kana_hiragana_seion: 0,
+      kana_hiragana_dakuon: 0,
       kana_katakana: 0,
+      kana_katakana_seion: 0,
+      kana_katakana_dakuon: 0,
       kana_suuji: 0,
     };
 
     for (const item of allKanji) {
       const lvl = item.jlpt || 'N3';
-      const isHira = item.radical === 'Hiragana' || (lvl === 'KANA' && item.character >= 'ぁ' && item.character <= 'ん');
-      const isKata = item.radical === 'Katakana' || (lvl === 'KANA' && item.character >= 'ァ' && item.character <= 'ン');
+      const isHira = HIRAGANA_ORDER.includes(item.character) || item.radical === 'Hiragana';
+      const isKata = KATAKANA_ORDER.includes(item.character) || item.radical === 'Katakana';
       const isNum = suujiSet.has(item.character);
+      const isDakuon = DAKUON_HANDAKUON_CHARS.has(item.character);
 
-      if (isHira) counts.kana_hiragana++;
-      if (isKata) counts.kana_katakana++;
+      if (isHira) {
+        counts.kana_hiragana++;
+        if (isDakuon) counts.kana_hiragana_dakuon++;
+        else counts.kana_hiragana_seion++;
+      }
+      if (isKata) {
+        counts.kana_katakana++;
+        if (isDakuon) counts.kana_katakana_dakuon++;
+        else counts.kana_katakana_seion++;
+      }
       if (isNum) counts.kana_suuji++;
 
       if (isHira || isKata || isNum) {
@@ -184,10 +337,14 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
       const item = entry.item;
 
       // 1. Level Filter
-      if (levelFilter === 'KANA') {
+      if (levelFilter === 'KANA' || isDeckKanaOnly) {
         if (!entry.isHiragana && !entry.isKatakana && !entry.isSuuji) continue;
         if (kanaCategory === 'hiragana' && !entry.isHiragana) continue;
+        if (kanaCategory === 'hiragana_seion' && (!entry.isHiragana || entry.isDakuon)) continue;
+        if (kanaCategory === 'hiragana_dakuon' && (!entry.isHiragana || !entry.isDakuon)) continue;
         if (kanaCategory === 'katakana' && !entry.isKatakana) continue;
+        if (kanaCategory === 'katakana_seion' && (!entry.isKatakana || entry.isDakuon)) continue;
+        if (kanaCategory === 'katakana_dakuon' && (!entry.isKatakana || !entry.isDakuon)) continue;
         if (kanaCategory === 'suuji' && !entry.isSuuji) continue;
       } else if (levelFilter !== 'all') {
         if (entry.jlpt !== levelFilter) continue;
@@ -201,23 +358,24 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
       filtered.push(item);
     }
 
-    // Sort KANA neatly by official order
-    if (levelFilter === 'KANA') {
-      const getKanaRank = (item: KanjiItem) => {
-        const char = item.character;
-        const hIdx = HIRAGANA_ORDER.indexOf(char);
-        if (hIdx !== -1) return 100 + hIdx;
-        const kIdx = KATAKANA_ORDER.indexOf(char);
-        if (kIdx !== -1) return 200 + kIdx;
-        const sIdx = SUUJI_CHARACTERS.indexOf(char);
-        if (sIdx !== -1) return 300 + sIdx;
-        return 999;
-      };
+    // Always sort KANA in canonical Japanese textbook order (Gojuuon)
+    const getKanaRank = (item: KanjiItem) => {
+      const char = item.character;
+      const hIdx = HIRAGANA_ORDER.indexOf(char);
+      if (hIdx !== -1) return 100 + hIdx;
+      const kIdx = KATAKANA_ORDER.indexOf(char);
+      if (kIdx !== -1) return 200 + kIdx;
+      const sIdx = SUUJI_CHARACTERS.indexOf(char);
+      if (sIdx !== -1) return 300 + sIdx;
+      return 999;
+    };
+
+    if (levelFilter === 'KANA' || isDeckKanaOnly) {
       return [...filtered].sort((a, b) => getKanaRank(a) - getKanaRank(b));
     }
 
     return filtered;
-  }, [kanjiSearchIndex, levelFilter, kanaCategory, deferredQuery]);
+  }, [kanjiSearchIndex, levelFilter, kanaCategory, deferredQuery, isDeckKanaOnly]);
 
   const displayedKanji = filteredKanji.slice(0, visibleCount);
 
@@ -234,7 +392,7 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
   const handleNextKanji = () => {
     if (hasNext) {
       if (selectedIndex + 1 >= visibleCount) {
-        setVisibleCount(prev => Math.min(prev + 48, filteredKanji.length));
+        setVisibleCount(prev => Math.min(prev + 50, filteredKanji.length));
       }
       setSelectedKanji(filteredKanji[selectedIndex + 1]);
     }
@@ -245,6 +403,28 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
       setSelectedKanji(filteredKanji[selectedIndex - 1]);
     }
   };
+
+  const isKanaMode = levelFilter === 'KANA' || isDeckKanaOnly;
+  const isSearchActive = Boolean(searchQuery.trim());
+
+  // Filter Gojuuon rows based on selected subcategory and available characters in deck
+  const activeGojuuonRows = useMemo(() => {
+    const charSet = new Set(filteredKanji.map(k => k.character));
+
+    return GOJUUON_ROWS.filter(row => {
+      // Subcategory filter
+      if (kanaCategory === 'hiragana' && row.group !== 'hira_seion' && row.group !== 'hira_dakuon') return false;
+      if (kanaCategory === 'hiragana_seion' && row.group !== 'hira_seion') return false;
+      if (kanaCategory === 'hiragana_dakuon' && row.group !== 'hira_dakuon') return false;
+      if (kanaCategory === 'katakana' && row.group !== 'kata_seion' && row.group !== 'kata_dakuon') return false;
+      if (kanaCategory === 'katakana_seion' && row.group !== 'kata_seion') return false;
+      if (kanaCategory === 'katakana_dakuon' && row.group !== 'kata_dakuon') return false;
+      if (kanaCategory === 'suuji' && row.group !== 'suuji') return false;
+
+      // Only display rows that have at least one character present in current filtered items
+      return row.slots.some(ch => ch && charSet.has(ch));
+    });
+  }, [kanaCategory, filteredKanji]);
 
   return (
     <div className="space-y-6">
@@ -261,7 +441,7 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
                 const raw = e.target.value;
                 const converted = imeActive ? convertRomajiToKana(raw) : raw;
                 setSearchQuery(converted);
-                setVisibleCount(48);
+                setVisibleCount(100);
               }}
               placeholder={imeActive ? "Cari kanji/kana (ketik romaji otomatis jadi kana)..." : "Cari kanji, kana, angka, arti, onyomi, kunyomi..."}
               className="w-full pl-10 pr-20 py-2.5 rounded-xl bg-surface-inset border border-border-subtle text-text-primary placeholder:text-text-muted text-sm font-medium focus:outline-hidden focus:border-border-muted font-jp"
@@ -302,7 +482,7 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
           <div className="relative shrink-0">
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="w-full md:w-auto px-4 py-2.5 rounded-xl bg-surface-inset border border-border-subtle text-text-primary text-sm font-bold flex items-center justify-between gap-3 hover:border-border-muted transition-colors"
+              className="w-full md:w-auto px-4 py-2.5 rounded-xl bg-surface-inset border border-border-subtle text-text-primary text-sm font-bold flex items-center justify-between gap-3 hover:border-border-muted transition-colors cursor-pointer"
             >
               <span className="flex items-center gap-2">
                 <Filter className="w-4 h-4 text-text-muted" />
@@ -319,10 +499,10 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
                     onClick={() => {
                       setLevelFilter(opt.value);
                       setIsDropdownOpen(false);
-                      setVisibleCount(48);
+                      setVisibleCount(200);
                       playSound('click', soundEnabled);
                     }}
-                    className={`w-full px-3 py-2 text-left text-xs font-medium flex items-center justify-between transition-colors ${
+                    className={`w-full px-3 py-2 text-left text-xs font-medium flex items-center justify-between transition-colors cursor-pointer ${
                       levelFilter === opt.value
                         ? 'bg-surface-inset font-bold text-wine-accent'
                         : 'text-text-secondary hover:text-text-primary hover:bg-surface-inset/60'
@@ -346,10 +526,10 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
               key={opt.value}
               onClick={() => {
                 setLevelFilter(opt.value);
-                setVisibleCount(48);
+                setVisibleCount(200);
                 playSound('click', soundEnabled);
               }}
-              className={`px-3 py-1.5 rounded-xl text-xs font-medium shrink-0 flex items-center gap-1.5 transition-all ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-medium shrink-0 flex items-center gap-1.5 transition-all cursor-pointer ${
                 levelFilter === opt.value
                   ? 'bg-surface-inset border border-wine-accent/40 text-wine-accent font-bold shadow-sm'
                   : 'text-text-muted hover:text-text-primary hover:bg-surface-inset/60 border border-transparent'
@@ -364,41 +544,89 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
         </div>
 
         {/* Subcategory Filter Tabs when KANA is selected */}
-        {levelFilter === 'KANA' && (
-          <div className="flex items-center gap-2 pt-2 border-t border-border-subtle overflow-x-auto no-scrollbar">
-            <span className="text-[11px] font-bold text-text-muted uppercase font-mono shrink-0">
-              Kategori KANA:
-            </span>
-            {KANA_CATEGORIES.map((cat) => {
-              const count =
-                cat.value === 'all'
-                  ? levelCounts.KANA
-                  : cat.value === 'hiragana'
+        {isKanaMode && (
+          <div className="flex items-center justify-between gap-2 pt-2.5 border-t border-border-subtle overflow-x-auto no-scrollbar">
+            <div className="flex items-center gap-1.5 shrink-0">
+              <span className="text-[11px] font-bold text-text-muted uppercase font-mono shrink-0 mr-1">
+                Kategori KANA:
+              </span>
+              {KANA_CATEGORIES.map((cat) => {
+                const count =
+                  cat.value === 'all'
+                    ? levelCounts.KANA
+                    : cat.value === 'hiragana'
                     ? levelCounts.kana_hiragana
+                    : cat.value === 'hiragana_seion'
+                    ? levelCounts.kana_hiragana_seion
+                    : cat.value === 'hiragana_dakuon'
+                    ? levelCounts.kana_hiragana_dakuon
                     : cat.value === 'katakana'
-                      ? levelCounts.kana_katakana
-                      : levelCounts.kana_suuji;
-              return (
+                    ? levelCounts.kana_katakana
+                    : cat.value === 'katakana_seion'
+                    ? levelCounts.kana_katakana_seion
+                    : cat.value === 'katakana_dakuon'
+                    ? levelCounts.kana_katakana_dakuon
+                    : levelCounts.kana_suuji;
+                return (
+                  <button
+                    key={cat.value}
+                    onClick={() => {
+                      setKanaCategory(cat.value as any);
+                      setVisibleCount(200);
+                      playSound('click', soundEnabled);
+                    }}
+                    className={`px-3 py-1 rounded-xl text-xs font-medium shrink-0 flex items-center gap-1.5 transition-all cursor-pointer ${
+                      kanaCategory === cat.value
+                        ? 'bg-wine-accent text-white font-bold shadow-sm'
+                        : 'bg-surface-inset text-text-secondary hover:text-text-primary border border-border-subtle'
+                    }`}
+                  >
+                    <span>{cat.shortLabel}</span>
+                    <span className="font-mono text-[10px] opacity-80">
+                      ({count})
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Layout Toggle for Kana: Bagan 5 Kolom vs Grid Kartu */}
+            {!isSearchActive && (
+              <div className="flex items-center gap-1 shrink-0 p-1 bg-surface-inset rounded-xl border border-border-subtle">
                 <button
-                  key={cat.value}
+                  type="button"
                   onClick={() => {
-                    setKanaCategory(cat.value as any);
-                    setVisibleCount(48);
+                    setViewMode('gojuuon');
                     playSound('click', soundEnabled);
                   }}
-                  className={`px-3 py-1 rounded-xl text-xs font-medium shrink-0 flex items-center gap-1.5 transition-all ${
-                    kanaCategory === cat.value
-                      ? 'bg-wine-accent text-white font-bold shadow-sm'
-                      : 'bg-surface-inset text-text-secondary hover:text-text-primary border border-border-subtle'
+                  className={`px-2.5 py-1 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-all cursor-pointer ${
+                    viewMode === 'gojuuon'
+                      ? 'bg-surface-card text-wine-accent font-bold shadow-xs border border-border-subtle'
+                      : 'text-text-muted hover:text-text-primary'
                   }`}
+                  title="Tampilan Tabel Buku Teks 5 Baris (Gojuon-zu)"
                 >
-                  <span>{cat.label.split(' ')[0]}</span>
-                  <span className="font-mono text-[10px] opacity-80">
-                    ({count})
-                  </span>
+                  <Table className="w-3.5 h-3.5 text-gold" />
+                  <span className="hidden sm:inline">Bagan 5 Kolom</span>
                 </button>
-              );
-            })}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setViewMode('grid');
+                    playSound('click', soundEnabled);
+                  }}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-all cursor-pointer ${
+                    viewMode === 'grid'
+                      ? 'bg-surface-card text-wine-accent font-bold shadow-xs border border-border-subtle'
+                      : 'text-text-muted hover:text-text-primary'
+                  }`}
+                  title="Tampilan Grid Kartu Bebas"
+                >
+                  <LayoutGrid className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Grid Kartu</span>
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -413,100 +641,135 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
         )}
       </div>
 
-      {/* Kanji & Kana Cards Grid */}
+      {/* CONTENT AREA */}
       {displayedKanji.length > 0 ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
-          {displayedKanji.map((item) => {
-            const isHira = item.radical === 'Hiragana' || (item.jlpt === 'KANA' && item.character >= 'ぁ' && item.character <= 'ん');
-            const isKata = item.radical === 'Katakana' || (item.jlpt === 'KANA' && item.character >= 'ァ' && item.character <= 'ン');
-            const isNum = suujiSet.has(item.character);
-
-            const badgeLabel = isHira ? 'Hiragana' : isKata ? 'Katakana' : isNum ? 'Angka' : item.jlpt || 'N3';
-            const badgeColor = isHira
-              ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
-              : isKata
-                ? 'bg-sky-500/15 text-sky-600 dark:text-sky-400 border-sky-500/30'
-                : isNum
-                  ? 'bg-indigo/15 text-indigo dark:text-indigo-soft border-indigo/30'
-                  : 'bg-surface-inset text-text-primary border-border-subtle';
-
-            return (
-              <div
-                key={item.character}
-                onClick={() => {
-                  setSelectedKanji(item);
-                  playSound('click', soundEnabled);
-                }}
-                className="group panel p-3.5 sm:p-4 rounded-2xl border border-border-subtle hover:border-border-muted transition-all cursor-pointer flex flex-col items-center justify-between text-center space-y-3 hover:shadow-md hover:-translate-y-0.5"
-              >
-                {/* Top Badges */}
-                <div className="w-full flex items-center justify-between text-[10px] font-mono text-text-muted gap-1">
-                  <div className="flex items-center gap-1 shrink-0 overflow-hidden">
-                    <span className={`px-1.5 py-0.5 rounded-md font-bold border text-[9.5px] tracking-wide whitespace-nowrap shrink-0 leading-none ${badgeColor}`}>
-                      {badgeLabel}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1.5 shrink-0">
-                    <span className="whitespace-nowrap">{item.strokeCount}画</span>
-                    {onToggleBookmark && (
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onToggleBookmark(item.id || item.character, 'kanji');
-                          playSound('click', soundEnabled);
-                        }}
-                        className={`p-1 rounded-md border transition-all ${
-                          isItemBookmarked(userDecks, item.id || item.character, 'kanji')
-                            ? 'bg-surface-elevated text-gold border-gold/40 ring-1 ring-gold/30'
-                            : 'bg-surface-inset text-text-muted hover:text-gold border-border-subtle'
-                        }`}
-                        title={isItemBookmarked(userDecks, item.id || item.character, 'kanji') ? 'Tersimpan di Buku Saku' : 'Simpan ke Buku Saku'}
-                      >
-                        <Bookmark className={`w-3.5 h-3.5 ${isItemBookmarked(userDecks, item.id || item.character, 'kanji') ? 'fill-gold text-gold' : ''}`} />
-                      </button>
-                    )}
-                  </div>
-                </div>
-
-                {/* Giant Character Frame */}
-                <div className="w-16 h-16 rounded-2xl bg-surface-inset flex items-center justify-center border border-border-subtle group-hover:border-wine-accent/40 transition-colors">
-                  <span className="text-4xl font-jp font-bold text-text-primary select-none group-hover:scale-105 transition-transform">
-                    {item.character}
-                  </span>
-                </div>
-
-                {/* Meaning & Readings */}
-                <div className="w-full space-y-0.5">
-                  <h4
-                    className="text-xs font-bold text-text-primary truncate font-heading"
-                    title={item.meaningId}
-                  >
-                    {isHira || isKata
-                      ? `Huruf 「${item.character}」`
-                      : item.meaningId}
-                  </h4>
-                  <div className="text-[11px] text-text-muted font-mono truncate">
-                    {isHira || isKata
-                      ? `Romaji: ${(item.kunyomi?.[0] || item.onyomi?.[0] || '-').toLowerCase()}`
-                      : (item.onyomi?.[0] ? item.onyomi[0].split(' ')[0] : item.kunyomi?.[0]?.split(' ')[0] || '-')}
-                  </div>
-                </div>
-
-                {/* Category / Radical Tag */}
-                <span className="text-[9.5px] text-text-secondary font-medium px-2 py-0.5 rounded-md bg-surface-inset/70 border border-border-subtle truncate max-w-full whitespace-nowrap">
-                  {isHira || isKata
-                    ? getKanaRowLabel(item.character)
-                    : isNum
-                      ? 'Angka / Sūji'
-                      : (item.radical && !item.radical.includes('Lihat') && item.radical.trim() !== ''
-                          ? `Radikal: ${item.radical}`
-                          : `Kanji ${item.jlpt || ''}`.trim())}
+        isKanaMode && !isSearchActive && viewMode === 'gojuuon' ? (
+          /* ========================================================================= */
+          /* MODE 1: BAGAN 5 KOLOM (GOJUUON-ZU) - PERSIS SEPERTI DI BUKU TEKS JEPANG */
+          /* ========================================================================= */
+          <div className="space-y-6">
+            {/* Vowel Column Header Guide */}
+            <div className="rounded-2xl bg-surface-inset/80 border border-border-subtle p-3 shadow-inner">
+              <div className="flex items-center justify-between pb-2 mb-2 border-b border-border-subtle text-[11px] font-mono text-text-muted">
+                <span className="font-bold flex items-center gap-1.5 text-text-secondary">
+                  <Table className="w-3.5 h-3.5 text-gold" />
+                  Panduan 5 Kolom Vokal (五十音図 - Gojūon-zu)
                 </span>
+                <span className="hidden sm:inline text-text-muted">Tersusun rapi 5 vokal per baris: a · i · u · e · o</span>
               </div>
-            );
-          })}
-        </div>
+              <div className="grid grid-cols-5 gap-2 sm:gap-3.5 text-center">
+                <div className="py-1.5 px-1 rounded-xl bg-surface-card border border-border-subtle shadow-xs">
+                  <span className="text-[9px] sm:text-[10px] font-mono uppercase text-text-muted block">Kolom 1 (-a)</span>
+                  <span className="text-xs sm:text-sm font-jp font-bold text-wine-accent">あ段 / A</span>
+                </div>
+                <div className="py-1.5 px-1 rounded-xl bg-surface-card border border-border-subtle shadow-xs">
+                  <span className="text-[9px] sm:text-[10px] font-mono uppercase text-text-muted block">Kolom 2 (-i)</span>
+                  <span className="text-xs sm:text-sm font-jp font-bold text-wine-accent">い段 / I</span>
+                </div>
+                <div className="py-1.5 px-1 rounded-xl bg-surface-card border border-border-subtle shadow-xs">
+                  <span className="text-[9px] sm:text-[10px] font-mono uppercase text-text-muted block">Kolom 3 (-u)</span>
+                  <span className="text-xs sm:text-sm font-jp font-bold text-wine-accent">う段 / U</span>
+                </div>
+                <div className="py-1.5 px-1 rounded-xl bg-surface-card border border-border-subtle shadow-xs">
+                  <span className="text-[9px] sm:text-[10px] font-mono uppercase text-text-muted block">Kolom 4 (-e)</span>
+                  <span className="text-xs sm:text-sm font-jp font-bold text-wine-accent">え段 / E</span>
+                </div>
+                <div className="py-1.5 px-1 rounded-xl bg-surface-card border border-border-subtle shadow-xs">
+                  <span className="text-[9px] sm:text-[10px] font-mono uppercase text-text-muted block">Kolom 5 (-o)</span>
+                  <span className="text-xs sm:text-sm font-jp font-bold text-wine-accent">お段 / O</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Gojuuon Rows Container */}
+            <div className="space-y-5">
+              {activeGojuuonRows.map((row) => (
+                <div key={row.id} className="space-y-2">
+                  <div className="flex items-center justify-between px-1">
+                    <div className="flex items-center gap-2">
+                      <h4 className="text-xs sm:text-sm font-heading font-bold text-text-primary">
+                        {row.title}
+                      </h4>
+                      <span className="text-[10px] font-mono text-text-secondary bg-surface-inset px-2 py-0.5 rounded-md border border-border-subtle">
+                        {row.soundGroup}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Exactly 5 Slots per Row */}
+                  <div className="grid grid-cols-5 gap-2 sm:gap-3.5">
+                    {row.slots.map((char, slotIdx) => {
+                      if (!char) {
+                        return (
+                          <div
+                            key={`empty-${slotIdx}`}
+                            className="panel p-2 sm:p-3 rounded-xl sm:rounded-2xl border border-dashed border-border-subtle/50 flex flex-col items-center justify-center text-center opacity-40 select-none min-h-[95px] sm:min-h-[145px] bg-surface-card/40"
+                          >
+                            <span className="text-xs sm:text-sm font-jp text-text-muted font-bold">
+                              {row.notes?.[slotIdx] || '—'}
+                            </span>
+                            <span className="text-[8px] sm:text-[9.5px] text-text-muted font-mono mt-0.5">
+                              kosong
+                            </span>
+                          </div>
+                        );
+                      }
+
+                      const item = kanjiByCharMap.get(char);
+                      if (!item) {
+                        return (
+                          <div
+                            key={`missing-${char}`}
+                            className="panel p-2 sm:p-3 rounded-xl sm:rounded-2xl border border-border-subtle/40 flex flex-col items-center justify-center text-center opacity-30 min-h-[95px] sm:min-h-[145px]"
+                          >
+                            <span className="font-jp text-xl text-text-muted">{char}</span>
+                          </div>
+                        );
+                      }
+
+                      return (
+                        <KanjiCardItem
+                          key={item.character}
+                          item={item}
+                          soundEnabled={soundEnabled}
+                          userDecks={userDecks}
+                          onToggleBookmark={onToggleBookmark}
+                          onRemoveItem={onRemoveItem}
+                          onSelect={setSelectedKanji}
+                          compact
+                        />
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          /* ========================================================================= */
+          /* MODE 2: RESPONSIVE CARDS GRID (5-KOLOM UNTUK KANA, STANDARD UNTUK KANJI) */
+          /* ========================================================================= */
+          <div
+            className={
+              isKanaMode
+                ? 'grid grid-cols-5 gap-2 sm:gap-3.5'
+                : 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4'
+            }
+          >
+            {displayedKanji.map((item) => (
+              <KanjiCardItem
+                key={item.character}
+                item={item}
+                soundEnabled={soundEnabled}
+                userDecks={userDecks}
+                onToggleBookmark={onToggleBookmark}
+                onRemoveItem={onRemoveItem}
+                onSelect={setSelectedKanji}
+                compact={isKanaMode}
+              />
+            ))}
+          </div>
+        )
       ) : (
         <div className="p-12 text-center panel rounded-2xl border border-border-subtle space-y-3">
           <BookOpen className="w-10 h-10 text-text-muted mx-auto opacity-50" />
@@ -515,15 +778,15 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
         </div>
       )}
 
-      {/* Load More Button */}
-      {visibleCount < filteredKanji.length && (
+      {/* Load More Button for Non-Kana Large Datasets */}
+      {!isKanaMode && visibleCount < filteredKanji.length && (
         <div className="text-center pt-4">
           <button
             onClick={() => {
               setVisibleCount(prev => prev + 48);
               playSound('click', soundEnabled);
             }}
-            className="px-6 py-2.5 rounded-2xl bg-surface-inset border border-border-subtle hover:border-border-muted text-xs font-bold font-mono uppercase tracking-wider text-text-primary hover:shadow-sm transition-all"
+            className="px-6 py-2.5 rounded-2xl bg-surface-inset border border-border-subtle hover:border-border-muted text-xs font-bold font-mono uppercase tracking-wider text-text-primary hover:shadow-sm transition-all cursor-pointer"
           >
             Muat Lebih Banyak ({filteredKanji.length - visibleCount} Tersisa)
           </button>
@@ -561,6 +824,147 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
         hasNext={hasNext}
         hasPrev={hasPrev}
       />
+    </div>
+  );
+};
+
+// ==============================================================================
+// REUSABLE KANJI / KANA CARD ITEM
+// ==============================================================================
+const KanjiCardItem: React.FC<{
+  item: KanjiItem;
+  soundEnabled: boolean;
+  userDecks?: UserDeck[];
+  onToggleBookmark?: (id: string, category: 'kanji', notes?: string, targetDeckId?: string) => void;
+  onRemoveItem?: (id: string, category: 'kanji') => void;
+  onSelect: (item: KanjiItem) => void;
+  compact?: boolean;
+}> = ({
+  item,
+  soundEnabled,
+  userDecks,
+  onToggleBookmark,
+  onRemoveItem,
+  onSelect,
+  compact = false,
+}) => {
+  const isHira = item.radical === 'Hiragana' || (item.jlpt === 'KANA' && item.character >= 'ぁ' && item.character <= 'ん');
+  const isKata = item.radical === 'Katakana' || (item.jlpt === 'KANA' && item.character >= 'ァ' && item.character <= 'ン');
+  const isNum = SUUJI_CHARACTERS.includes(item.character);
+
+  const isKana = isHira || isKata;
+
+  const badgeLabel = isHira ? 'Hiragana' : isKata ? 'Katakana' : isNum ? 'Angka' : item.jlpt || 'N3';
+  const badgeColor = isHira
+    ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
+    : isKata
+      ? 'bg-sky-500/15 text-sky-600 dark:text-sky-400 border-sky-500/30'
+      : isNum
+        ? 'bg-indigo/15 text-indigo dark:text-indigo-soft border-indigo/30'
+        : 'bg-surface-inset text-text-primary border-border-subtle';
+
+  return (
+    <div
+      onClick={() => {
+        onSelect(item);
+        playSound('click', soundEnabled);
+      }}
+      className={`group panel rounded-xl sm:rounded-2xl border border-border-subtle hover:border-border-muted transition-all cursor-pointer flex flex-col items-center justify-between text-center hover:shadow-md hover:-translate-y-0.5 select-none ${
+        compact ? 'p-2 sm:p-3 space-y-1.5 sm:space-y-2' : 'p-3.5 sm:p-4 space-y-2.5 sm:space-y-3'
+      }`}
+    >
+      {/* Top Badges */}
+      <div className="w-full flex items-center justify-between text-[9px] sm:text-[10px] font-mono text-text-muted gap-1 min-h-[18px]">
+        {!isKana ? (
+          <span className={`px-1 sm:px-1.5 py-0.5 rounded font-bold border text-[8px] sm:text-[9.5px] tracking-wide whitespace-nowrap leading-none ${badgeColor}`}>
+            {badgeLabel}
+          </span>
+        ) : (
+          <span className="text-[8px] sm:text-[9.5px] font-mono text-text-muted/70 whitespace-nowrap">
+            {item.strokeCount}画
+          </span>
+        )}
+        <div className="flex items-center gap-1 shrink-0">
+          {!isKana && (
+            <span className="whitespace-nowrap text-[8.5px] sm:text-[10px]">{item.strokeCount}画</span>
+          )}
+          {onRemoveItem && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onRemoveItem(item.id || item.character, 'kanji');
+                playSound('click', soundEnabled);
+              }}
+              className="p-0.5 sm:p-1 rounded border border-border-subtle bg-surface-inset text-text-muted hover:text-wine-accent transition-all cursor-pointer"
+              title="Hapus dari deck ini"
+            >
+              <Trash2 className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+            </button>
+          )}
+          {onToggleBookmark && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggleBookmark(item.id || item.character, 'kanji');
+                playSound('click', soundEnabled);
+              }}
+              className={`p-0.5 sm:p-1 rounded border transition-all cursor-pointer ${
+                isItemBookmarked(userDecks, item.id || item.character, 'kanji')
+                  ? 'bg-surface-elevated text-gold border-gold/40 ring-1 ring-gold/30'
+                  : 'bg-surface-inset text-text-muted hover:text-gold border-border-subtle'
+              }`}
+              title={isItemBookmarked(userDecks, item.id || item.character, 'kanji') ? 'Tersimpan di Buku Saku' : 'Simpan ke Buku Saku'}
+            >
+              <Bookmark className={`w-3 h-3 sm:w-3.5 sm:h-3.5 ${isItemBookmarked(userDecks, item.id || item.character, 'kanji') ? 'fill-gold text-gold' : ''}`} />
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Glyph Box */}
+      <div className={`rounded-xl sm:rounded-2xl bg-surface-inset flex items-center justify-center border border-border-subtle group-hover:border-wine-accent/40 transition-colors shadow-inner ${
+        compact ? 'w-10 h-10 sm:w-14 sm:h-14' : 'w-14 h-14 sm:w-16 sm:h-16'
+      }`}>
+        <span className={`font-jp font-bold text-text-primary select-none group-hover:scale-105 transition-transform ${
+          compact ? 'text-2xl sm:text-3xl' : 'text-3xl sm:text-4xl'
+        }`}>
+          {item.character}
+        </span>
+      </div>
+
+      {/* Meaning & Readings */}
+      <div className="w-full space-y-0.5">
+        {isKana ? (
+          <div className="text-[11px] sm:text-xs font-mono font-bold text-text-primary truncate">
+            {(item.kunyomi?.[0] || item.onyomi?.[0] || '-').toLowerCase()}
+          </div>
+        ) : (
+          <>
+            <h4
+              className="text-[10.5px] sm:text-xs font-bold text-text-primary truncate font-heading"
+              title={item.meaningId}
+            >
+              {item.meaningId}
+            </h4>
+            <div className="text-[9.5px] sm:text-[11px] text-text-muted font-mono font-bold truncate">
+              {item.onyomi?.[0] ? item.onyomi[0].split(' ')[0] : item.kunyomi?.[0]?.split(' ')[0] || '-'}
+            </div>
+          </>
+        )}
+      </div>
+
+      {/* Row / Radical label */}
+      <span className="hidden sm:inline-block text-[8.5px] sm:text-[9.5px] text-text-secondary font-medium px-1.5 py-0.5 rounded-md bg-surface-inset/70 border border-border-subtle truncate max-w-full whitespace-nowrap">
+        {isHira || isKata
+          ? getKanaRowLabel(item.character)
+          : isNum
+            ? 'Angka / Sūji'
+            : (item.radical && !item.radical.includes('Lihat') && item.radical.trim() !== ''
+                ? `Radikal: ${item.radical}`
+                : `Kanji ${item.jlpt || ''}`.trim())}
+      </span>
     </div>
   );
 };

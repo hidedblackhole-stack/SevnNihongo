@@ -116,6 +116,10 @@ export default function App() {
         return {
           ...DEFAULT_STATS,
           ...parsed,
+          totalExp: Math.round(Number(parsed.totalExp) || 0),
+          level: Math.round(Number(parsed.level) || 1),
+          gold: Math.round(Number(parsed.gold) || 0),
+          gems: Math.round(Number(parsed.gems) || 0),
           playerName: loadedName,
           itemMastery: loadedMastery,
           recallQueue: (() => {
@@ -578,7 +582,7 @@ export default function App() {
   // Give EXP & Gold reward directly (pure base EXP, respects JLPT Ascension gates)
   const handleRewardPlayer = (expGained: number, goldGained: number = 0) => {
     setStats(prev => {
-      const newTotalExp = Math.max(0, prev.totalExp + expGained);
+      const newTotalExp = Math.round(Math.max(0, (prev.totalExp || 0) + expGained));
       const { effectiveTierIndex, isGated, gatedReason } = getEffectiveTier({
         ...prev,
         totalExp: newTotalExp,
@@ -590,7 +594,7 @@ export default function App() {
         tierIndex: Math.max(0, effectiveTierIndex),
         tierPromotionGated: isGated,
         gatedReason: gatedReason,
-        gold: Math.max(0, prev.gold + goldGained),
+        gold: Math.round(Math.max(0, (prev.gold || 0) + goldGained)),
       };
 
       // Immediately sync to Supabase Leaderboard without waiting for 3s debounce
@@ -1048,10 +1052,10 @@ export default function App() {
       // Max stats
       setStats(prev => {
         const expGained = 1000000;
-        const newTotalExp = prev.totalExp + expGained;
+        const newTotalExp = Math.round((prev.totalExp || 0) + expGained);
         const { tierIndex } = getTierForExp(newTotalExp);
         const levelInfo = getLevelInfo(newTotalExp);
-        const newLevel = levelInfo.level;
+        const newLevel = Math.round(levelInfo.level);
         
         const updated = {
           ...prev,

@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
+@variant dark (&:where(.dark, .dark *));
 
 /* ==========================================================================
    SEVNQUEST — DESIGN SYSTEM
@@ -124,14 +124,14 @@ html.theme-light,
   --stitch: var(--thread);
 
   /* Ochre Amber Gold (Refined for crisp contrast without muddy brown) */
-  --gold-base: #a6731e;
-  --gold-highlight: #c48e35;
-  --gold-shadow: #6b4708;
+  --gold-base: #8c580f;
+  --gold-highlight: #a66a15;
+  --gold-shadow: #5c3805;
   --gold: var(--gold-base);
   --gold-soft: var(--gold-highlight);
-  --color-gold-base: #8c6019;
-  --color-gold-highlight: #a6731e;
-  --color-gold-shadow: #5c3e0a;
+  --color-gold-base: #8c580f;
+  --color-gold-highlight: #a66a15;
+  --color-gold-shadow: #5c3805;
   --color-furigana: #3f3a32;
 
   /* Sumi Charcoal Typography (High Contrast WCAG AA) */
@@ -206,70 +206,70 @@ html.theme-light,
   --color-amber-900: #78350f;
   --color-amber-950: #451a03;
 
-  --color-emerald-950: #e2f1e9;
-  --color-emerald-900: #cbe5d7;
-  --color-emerald-800: #458263;
-  --color-emerald-700: #3c7a5c;
-  --color-emerald-600: #31684c;
-  --color-emerald-500: #3c7a5c;
-  --color-emerald-400: #2a5840;
+  --color-emerald-950: #022c22;
+  --color-emerald-900: #064e3b;
+  --color-emerald-800: #065f46;
+  --color-emerald-700: #047857;
+  --color-emerald-600: #059669;
+  --color-emerald-500: #10b981;
+  --color-emerald-400: #1e7a54;
   --color-emerald-300: #204531;
-  --color-emerald-200: #204531;
+  --color-emerald-200: #a7f3d0;
   --color-emerald-100: #e2f1e9;
 
-  --color-red-950: #fbeae9;
-  --color-red-900: #f5d4d2;
-  --color-red-800: #b7282e;
-  --color-red-700: #9e1f24;
-  --color-red-600: #b7282e;
-  --color-red-500: #b7282e;
-  --color-red-400: #83161a;
+  --color-red-950: #450a0a;
+  --color-red-900: #7f1d1d;
+  --color-red-800: #991b1b;
+  --color-red-700: #b91c1c;
+  --color-red-600: #dc2626;
+  --color-red-500: #ef4444;
+  --color-red-400: #b7282e;
   --color-red-300: #83161a;
-  --color-red-200: #83161a;
+  --color-red-200: #fecaca;
   --color-red-100: #fbeae9;
 
-  --color-rose-950: #fbeae9;
-  --color-rose-900: #f5d4d2;
-  --color-rose-800: #b7282e;
-  --color-rose-700: #9e1f24;
-  --color-rose-600: #b7282e;
-  --color-rose-500: #b7282e;
-  --color-rose-400: #83161a;
+  --color-rose-950: #4c0519;
+  --color-rose-900: #881337;
+  --color-rose-800: #9f1239;
+  --color-rose-700: #be123c;
+  --color-rose-600: #e11d48;
+  --color-rose-500: #f43f5e;
+  --color-rose-400: #b7282e;
   --color-rose-300: #83161a;
-  --color-rose-200: #83161a;
+  --color-rose-200: #fecdd3;
   --color-rose-100: #fbeae9;
 
-  --color-blue-950: #eaf0f7;
-  --color-blue-900: #d4e1f0;
-  --color-blue-800: #2f4d78;
-  --color-blue-700: #243c5e;
-  --color-blue-600: #2f4d78;
-  --color-blue-500: #2f4d78;
+  --color-blue-950: #082f49;
+  --color-blue-900: #0c4a6e;
+  --color-blue-800: #075985;
+  --color-blue-700: #0369a1;
+  --color-blue-600: #0284c7;
+  --color-blue-500: #0ea5e9;
   --color-blue-400: #1b2e49;
   --color-blue-300: #142134;
-  --color-blue-200: #142134;
+  --color-blue-200: #bae6fd;
   --color-blue-100: #eaf0f7;
 
-  --color-sky-950: #eaf0f7;
-  --color-sky-900: #d4e1f0;
-  --color-sky-800: #2f4d78;
-  --color-sky-700: #243c5e;
-  --color-sky-600: #2f4d78;
-  --color-sky-500: #2f4d78;
+  --color-sky-950: #082f49;
+  --color-sky-900: #0c4a6e;
+  --color-sky-800: #075985;
+  --color-sky-700: #0369a1;
+  --color-sky-600: #0284c7;
+  --color-sky-500: #0ea5e9;
   --color-sky-400: #1b2e49;
   --color-sky-300: #142134;
-  --color-sky-200: #142134;
+  --color-sky-200: #bae6fd;
   --color-sky-100: #eaf0f7;
 
-  --color-purple-950: #f2eefa;
-  --color-purple-900: #e1daf4;
-  --color-purple-800: #662d8f;
-  --color-purple-700: #522175;
-  --color-purple-600: #662d8f;
-  --color-purple-500: #662d8f;
+  --color-purple-950: #2e1065;
+  --color-purple-900: #4c1d95;
+  --color-purple-800: #5b21b6;
+  --color-purple-700: #6d28d9;
+  --color-purple-600: #7c3aed;
+  --color-purple-500: #8b5cf6;
   --color-purple-400: #3f165c;
   --color-purple-300: #2f0e47;
-  --color-purple-200: #2f0e47;
+  --color-purple-200: #ddd6fe;
   --color-purple-100: #f2eefa;
 }
 
@@ -580,6 +580,387 @@ html.theme-light,
     box-shadow:
       inset 1.5px 1.5px 3.5px var(--neu-d),
       inset -1.5px -1.5px 3.5px var(--neu-l);
+  }
+
+  /* ==========================================================================
+     SKEUOMORPHIC JAPANESE ADVENTURE NOTEBOOK (Deck Template Cards & Object UI)
+     ========================================================================== */
+
+  /* Raised Paper Notebook Card: Tangible thick washi stationery on desk */
+  .notebook-adventure-card {
+    border-radius: 24px;
+    padding: 22px 24px;
+    position: relative;
+    border: 1px solid rgba(140, 125, 95, 0.35);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 260px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  html.theme-light .notebook-adventure-card,
+  .theme-light .notebook-adventure-card {
+    background: #f7f3ea;
+    box-shadow:
+      0 1.5px 0 rgba(255, 255, 255, 0.95) inset,
+      inset 0 0 20px rgba(60, 48, 25, 0.035),
+      8px 10px 18px rgba(50, 40, 25, 0.12),
+      2px 4px 6px rgba(50, 40, 25, 0.05),
+      -4px -4px 10px rgba(255, 255, 255, 0.85);
+  }
+
+  html.theme-light .notebook-adventure-card:hover,
+  .theme-light .notebook-adventure-card:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 1.5px 0 rgba(255, 255, 255, 1) inset,
+      inset 0 0 24px rgba(60, 48, 25, 0.045),
+      10px 14px 24px rgba(50, 40, 25, 0.14),
+      3px 5px 8px rgba(50, 40, 25, 0.07),
+      -4px -4px 12px rgba(255, 255, 255, 0.95);
+  }
+
+  html:not(.theme-light) .notebook-adventure-card,
+  .dark .notebook-adventure-card {
+    background: #1c212c;
+    border-color: rgba(111, 147, 207, 0.22);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.08) inset,
+      inset 0 0 20px rgba(0, 0, 0, 0.4),
+      8px 10px 24px rgba(0, 0, 0, 0.55),
+      -4px -4px 10px rgba(255, 255, 255, 0.02);
+  }
+
+  /* Subtle fibrous paper texture overlay */
+  .notebook-adventure-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    background-image: radial-gradient(rgba(140, 120, 85, 0.05) 1px, transparent 0);
+    background-size: 14px 14px;
+    pointer-events: none;
+    opacity: 0.75;
+  }
+
+  /* Sashiko stitched inner frame */
+  .notebook-adventure-card::after {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 1px dashed rgba(94, 86, 64, 0.28);
+    border-radius: 17px;
+    pointer-events: none;
+  }
+  html:not(.theme-light) .notebook-adventure-card::after,
+  .dark .notebook-adventure-card::after {
+    border-color: rgba(151, 181, 224, 0.22);
+  }
+
+  /* Object UI Inventory Slot (Kotoba 📜, Kanji 🪨, Bunpou 📘) */
+  .notebook-object-slot {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 12px;
+    border-radius: 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    user-select: none;
+    letter-spacing: 0.02em;
+    transition: all 0.15s ease;
+  }
+
+  html.theme-light .notebook-object-slot,
+  .theme-light .notebook-object-slot {
+    background: #ede8dc;
+    color: #383226;
+    border: 1px solid rgba(135, 120, 95, 0.35);
+    box-shadow:
+      inset 1.5px 1.5px 3px rgba(60, 48, 30, 0.14),
+      0 1px 0 rgba(255, 255, 255, 0.85);
+  }
+
+  html:not(.theme-light) .notebook-object-slot,
+  .dark .notebook-object-slot {
+    background: #151821;
+    color: #c2c9d8;
+    border: 1px solid rgba(111, 147, 207, 0.22);
+    box-shadow:
+      inset 1.5px 1.5px 3px rgba(0, 0, 0, 0.5),
+      0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  /* Level Hanko Stamped Tag */
+  .notebook-level-stamp {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+  }
+
+  html.theme-light .notebook-level-stamp,
+  .theme-light .notebook-level-stamp {
+    background: #eae5d7;
+    color: #383226;
+    border: 1px solid rgba(135, 120, 95, 0.38);
+    box-shadow:
+      inset 1px 1px 2px rgba(60, 48, 30, 0.12),
+      0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+
+  html:not(.theme-light) .notebook-level-stamp,
+  .dark .notebook-level-stamp {
+    background: #171b24;
+    color: #e2e8f0;
+    border: 1px solid rgba(111, 147, 207, 0.25);
+    box-shadow:
+      inset 1px 1px 2px rgba(0, 0, 0, 0.4),
+      0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  /* Meteran Alat Tulis (Ruler Gauge Progress Bar) */
+  .notebook-ruler-track {
+    width: 100%;
+    height: 10px;
+    border-radius: 9999px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  html.theme-light .notebook-ruler-track,
+  .theme-light .notebook-ruler-track {
+    background: #e3ded2;
+    border: 1px solid rgba(130, 115, 90, 0.42);
+    box-shadow:
+      inset 1.5px 1.5px 3.5px rgba(50, 40, 25, 0.22),
+      inset -1px -1px 2px rgba(255, 255, 255, 0.7);
+  }
+
+  html:not(.theme-light) .notebook-ruler-track,
+  .dark .notebook-ruler-track {
+    background: #141720;
+    border: 1px solid rgba(111, 147, 207, 0.25);
+    box-shadow:
+      inset 1.5px 1.5px 3.5px rgba(0, 0, 0, 0.6),
+      inset -1px -1px 2px rgba(255, 255, 255, 0.04);
+  }
+
+  .notebook-ruler-fill {
+    height: 100%;
+    border-radius: 9999px;
+    transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  html.theme-light .notebook-ruler-fill,
+  .theme-light .notebook-ruler-fill {
+    background: linear-gradient(180deg, #9e6d22 0%, #764f13 100%);
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.45),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.25);
+  }
+
+  html:not(.theme-light) .notebook-ruler-fill,
+  .dark .notebook-ruler-fill {
+    background: linear-gradient(180deg, #f0be52 0%, #c4962c 100%);
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+
+  /* Physical Retro Game Key: Masuk World */
+  .btn-physical-primary {
+    font-family: var(--font-body);
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 13px;
+    cursor: pointer;
+    user-select: none;
+    transform: translateY(0);
+    transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.08s ease;
+    text-decoration: none;
+  }
+
+  html.theme-light .btn-physical-primary,
+  .theme-light .btn-physical-primary {
+    background: linear-gradient(180deg, #2a4168 0%, #1e304e 100%);
+    color: #f7f5ed;
+    border: 1px solid #16243b;
+    box-shadow:
+      0 4px 0 #111a2a,
+      0 6px 12px rgba(30, 20, 10, 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  }
+
+  html.theme-light .btn-physical-primary:hover,
+  .theme-light .btn-physical-primary:hover {
+    background: linear-gradient(180deg, #324e7a 0%, #223758 100%);
+    filter: brightness(1.03);
+  }
+
+  html.theme-light .btn-physical-primary:active,
+  .theme-light .btn-physical-primary:active {
+    transform: translateY(3px);
+    box-shadow:
+      0 1px 0 #111a2a,
+      0 2px 4px rgba(30, 20, 10, 0.14),
+      inset 0 1px 2px rgba(0, 0, 0, 0.25);
+  }
+
+  html:not(.theme-light) .btn-physical-primary,
+  .dark .btn-physical-primary {
+    background: linear-gradient(180deg, #3d5885 0%, #253959 100%);
+    color: #ffffff;
+    border: 1px solid #1b2940;
+    box-shadow:
+      0 4px 0 #121c2c,
+      0 6px 12px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  }
+  html:not(.theme-light) .btn-physical-primary:active,
+  .dark .btn-physical-primary:active {
+    transform: translateY(3px);
+    box-shadow:
+      0 1px 0 #121c2c,
+      0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Physical Retro Game Key: Salin ke Buku Saku */
+  .btn-physical-secondary {
+    font-family: var(--font-body);
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 8px 14px;
+    border-radius: 13px;
+    cursor: pointer;
+    user-select: none;
+    transform: translateY(0);
+    transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.15s ease;
+    text-decoration: none;
+  }
+
+  html.theme-light .btn-physical-secondary,
+  .theme-light .btn-physical-secondary {
+    background: linear-gradient(180deg, #faf7f0 0%, #ede6d8 100%);
+    color: #3b3528;
+    border: 1px solid #bbb19e;
+    box-shadow:
+      0 3px 0 #9c927f,
+      0 5px 8px rgba(45, 35, 20, 0.10),
+      inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  }
+
+  html.theme-light .btn-physical-secondary:hover,
+  .theme-light .btn-physical-secondary:hover {
+    background: linear-gradient(180deg, #ffffff 0%, #f2ede1 100%);
+  }
+
+  html.theme-light .btn-physical-secondary:active,
+  .theme-light .btn-physical-secondary:active {
+    transform: translateY(2px);
+    box-shadow:
+      0 1px 0 #9c927f,
+      0 2px 4px rgba(45, 35, 20, 0.10),
+      inset 0 1px 2px rgba(0, 0, 0, 0.12);
+  }
+
+  html:not(.theme-light) .btn-physical-secondary,
+  .dark .btn-physical-secondary {
+    background: linear-gradient(180deg, #242a36 0%, #1a1e27 100%);
+    color: #d1d8e6;
+    border: 1px solid #363d4e;
+    box-shadow:
+      0 3px 0 #101319,
+      0 5px 8px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  html:not(.theme-light) .btn-physical-secondary:active,
+  .dark .btn-physical-secondary:active {
+    transform: translateY(2px);
+    box-shadow:
+      0 1px 0 #101319,
+      0 2px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Notebook Filter Tabs (Physical Stationery Index Tabs) */
+  .notebook-filter-tab {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.12s ease;
+  }
+
+  html.theme-light .notebook-filter-tab,
+  .theme-light .notebook-filter-tab {
+    background: #ede8dc;
+    color: #5c5344;
+    border: 1px solid rgba(135, 120, 95, 0.35);
+    box-shadow:
+      0 2px 0 #baa992,
+      0 3px 6px rgba(50, 40, 25, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  }
+
+  html.theme-light .notebook-filter-tab:hover,
+  .theme-light .notebook-filter-tab:hover {
+    color: #262420;
+    background: #f5f0e4;
+  }
+
+  html.theme-light .notebook-filter-tab.active,
+  .theme-light .notebook-filter-tab.active {
+    background: #ded7c6;
+    color: #1f1d19;
+    border-color: rgba(115, 100, 75, 0.55);
+    transform: translateY(2px);
+    box-shadow:
+      inset 1.5px 1.5px 3px rgba(60, 48, 30, 0.22),
+      0 1px 0 rgba(255, 255, 255, 0.85);
+  }
+
+  html:not(.theme-light) .notebook-filter-tab,
+  .dark .notebook-filter-tab {
+    background: #191e28;
+    color: #94a3b8;
+    border: 1px solid rgba(111, 147, 207, 0.22);
+    box-shadow:
+      0 2px 0 #0f131a,
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  html:not(.theme-light) .notebook-filter-tab.active,
+  .dark .notebook-filter-tab.active {
+    background: #11141c;
+    color: #f1f5f9;
+    border-color: rgba(111, 147, 207, 0.4);
+    transform: translateY(2px);
+    box-shadow:
+      inset 1.5px 1.5px 3px rgba(0, 0, 0, 0.5),
+      0 1px 0 rgba(255, 255, 255, 0.05);
   }
 
   .btn-cta {

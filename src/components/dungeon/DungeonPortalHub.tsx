@@ -10,7 +10,9 @@ import {
   ChevronRight,
   Flame,
   Trophy,
-  Compass
+  Compass,
+  ScrollText,
+  Presentation
 } from 'lucide-react';
 import { DungeonType } from '../../utils/dungeonGenerator';
 import { playSound } from '../../utils/audio';
@@ -112,6 +114,32 @@ const DUNGEON_GATES: DungeonGateInfo[] = [
     tags: ['3.000 Soal', '100 Stage', 'Onyomi & Kunyomi', 'Refleks Cepat'],
     expPerQuestion: 25,
     goldPerQuestion: 15,
+  },
+  {
+    type: 'sentence_creation',
+    title: 'Dungeon Kreasi Kalimat Pola',
+    jpTitle: '文法創作の道場 (Grammar Sentence Construction)',
+    badge: 'Kreasi Bebas',
+    badgeColor: 'bg-violet-500/15 text-violet-400 border-violet-500/30',
+    accentColor: 'hover:border-violet-500/50',
+    icon: ScrollText,
+    description: 'Latih kemampuan merangkai kalimat bebas bahasa Jepang. Amati pola tata bahasa, arti, dan rumus di atas, lalu tulis kalimat lengkapmu.',
+    tags: ['Pola Kalimat', 'Kreasi Bebas', 'Ketik Kalimat', 'Tata Bahasa'],
+    expPerQuestion: 35,
+    goldPerQuestion: 18,
+  },
+  {
+    type: 'blackboard',
+    title: 'Dungeon Papan Tulis Pola',
+    jpTitle: '黒板の実験室 (Pattern Blackboard Playground)',
+    badge: 'Playground Bebas',
+    badgeColor: 'bg-teal/15 text-teal border-teal/30',
+    accentColor: 'hover:border-teal/50',
+    icon: Presentation,
+    description: 'Laboratorium visual bebas! Amati langsung bagaimana kosakata bertransformasi saat disandingkan dengan aneka pola kalimat di papan tulis interaktif.',
+    tags: ['Papan Tulis', 'Hasil Pola', 'Dekonstruksi Rumus', 'Bebas Eksplorasi'],
+    expPerQuestion: 15,
+    goldPerQuestion: 8,
   },
 ];
 

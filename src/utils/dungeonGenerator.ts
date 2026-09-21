@@ -12,13 +12,14 @@ import {
   VerbItem
 } from '../data/conjugationRules';
 import { fisherYatesShuffle, smartSample } from './smartRandomizer';
-import { Question } from '../types/content';
+import { Question, BunpouItem } from '../types/content';
 import kanjiQuestionsDb from '../data/db/kanji_questions.json';
 import bunpouQuestionsDb from '../data/db/bunpou_questions.json';
 import kanjiExtremeStagesDb from '../data/db/kanji_extreme_100_stages.json';
 
-export type DungeonType = 'writing' | 'flashcard' | 'sakubun' | 'conjugation' | 'quiz' | 'extreme';
+export type DungeonType = 'writing' | 'flashcard' | 'sakubun' | 'conjugation' | 'quiz' | 'extreme' | 'sentence_creation' | 'blackboard';
 export type DungeonLevelCategory = 'all' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'Kaigo' | 'PM' | 'SSW';
+export type FlashcardMaterialType = 'kanji' | 'kotoba' | 'bunpou';
 
 export interface DungeonConfig {
   type: DungeonType;
@@ -29,9 +30,12 @@ export interface DungeonConfig {
   deckTitle?: string;
   sourceType?: 'preset' | 'deck';
   stageNumber?: number; // 1 to 100 for extreme kanji
+  // Flashcard Material Customization (Kotoba, Kanji, Bunpou / Pola)
+  flashcardMaterialTypes?: FlashcardMaterialType[];
   // Altar Konjugasi Customization
   conjugationMode?: 'random' | 'custom';
   selectedConjugationForms?: string[];
+  survivalTimeLimit?: number; // seconds per floor/question, e.g. 15, 30, 45, 60
 }
 
 export interface DungeonPayload {
@@ -41,6 +45,9 @@ export interface DungeonPayload {
   sakubunExercises?: SentencePracticeExercise[];
   conjugationQuestions?: ConjugationDrillQuestion[];
   quizQuestions?: Question[];
+  sentenceCreationItems?: BunpouItem[];
+  blackboardVerbs?: VerbItem[];
+  blackboardPatterns?: import('../engine/types').GrammarPatternSchema[];
 }
 
 export interface DeckDungeonCompatibility {
@@ -133,6 +140,41 @@ export function isDeckCompatibleWithDungeon(
     return {
       isCompatible: true,
       matchedCount: items.length,
+    };
+  }
+
+  if (dungeonType === 'sentence_creation') {
+    const bunpouItems = items.filter(it => it.category === 'bunpou');
+    if (bunpouItems.length === 0) {
+      return {
+        isCompatible: false,
+        reason: 'Memerlukan materi pola tata bahasa (Bunpou)',
+        matchedCount: 0,
+      };
+    }
+    return {
+      isCompatible: true,
+      matchedCount: bunpouItems.length,
+    };
+  }
+
+  if (dungeonType === 'blackboard') {
+    const kotobaItems = items.filter(it => it.category === 'kotoba');
+    const conjugatableCount = kotobaItems.filter(it => {
+      const k = KOTOBA_DATABASE[it.id];
+      return k && isConjugatableKotoba(k);
+    }).length;
+
+    if (conjugatableCount === 0) {
+      return {
+        isCompatible: false,
+        reason: 'Deck tidak memiliki kata kerja yang bisa diubah dengan pola kalimat',
+        matchedCount: 0,
+      };
+    }
+    return {
+      isCompatible: true,
+      matchedCount: conjugatableCount,
     };
   }
 
@@ -300,8 +342,18 @@ export function generateDungeonSession(config: DungeonConfig, userDecks?: UserDe
 
   // ==================== B. FLASHCARD DUNGEON ====================
   else if (type === 'flashcard') {
+    const selectedTypes: FlashcardMaterialType[] =
+      config.flashcardMaterialTypes && config.flashcardMaterialTypes.length > 0
+        ? config.flashcardMaterialTypes
+        : ['kotoba', 'kanji', 'bunpou'];
+
+    const includeKotoba = selectedTypes.includes('kotoba');
+    const includeKanji = selectedTypes.includes('kanji');
+    const includeBunpou = selectedTypes.includes('bunpou');
+
     if (selectedDeck) {
-      let resolved = selectedDeck.items
+      const filteredRefs = selectedDeck.items.filter(it => selectedTypes.includes(it.category as any));
+      let resolved = filteredRefs
         .map(ref => resolveDeckItem(ref))
         .filter((it): it is ResolvedDeckItem => it !== null);
 
@@ -316,39 +368,73 @@ export function generateDungeonSession(config: DungeonConfig, userDecks?: UserDe
       }
     }
 
-    // Default Preset Generation
+    // Default Preset Generation based on selectedTypes
     const poolKotoba = matchingKotoba.length > 0 ? matchingKotoba : allKotoba;
     const poolKanji = matchingKanji.length > 0 ? matchingKanji : allKanji;
     const poolBunpou = matchingBunpou.length > 0 ? matchingBunpou : allBunpou;
 
-    const kotobaRefs: DeckItemRef[] = shuffleArray(poolKotoba).slice(0, Math.ceil(count * 0.6)).map(k => ({
-      id: k.id,
-      category: 'kotoba',
-      addedAt: new Date().toISOString()
-    }));
+    const numTypes = selectedTypes.length;
+    let kotobaCount = 0;
+    let kanjiCount = 0;
+    let bunpouCount = 0;
 
-    const kanjiRefs: DeckItemRef[] = shuffleArray(poolKanji).slice(0, Math.ceil(count * 0.25)).map(k => ({
-      id: k.id || k.character,
-      category: 'kanji',
-      addedAt: new Date().toISOString()
-    }));
+    if (numTypes === 1) {
+      if (includeKotoba) kotobaCount = count;
+      if (includeKanji) kanjiCount = count;
+      if (includeBunpou) bunpouCount = count;
+    } else if (numTypes === 2) {
+      const half = Math.ceil(count / 2);
+      const remaining = Math.max(0, count - half);
+      if (includeKotoba && includeKanji) {
+        kotobaCount = half;
+        kanjiCount = remaining;
+      } else if (includeKotoba && includeBunpou) {
+        kotobaCount = half;
+        bunpouCount = remaining;
+      } else if (includeKanji && includeBunpou) {
+        kanjiCount = half;
+        bunpouCount = remaining;
+      }
+    } else {
+      // All 3 selected
+      kotobaCount = Math.ceil(count * 0.45);
+      kanjiCount = Math.ceil(count * 0.35);
+      bunpouCount = Math.max(1, count - (kotobaCount + kanjiCount));
+    }
 
-    const bunpouRefs: DeckItemRef[] = shuffleArray(poolBunpou).slice(0, count - (kotobaRefs.length + kanjiRefs.length)).map(b => ({
-      id: b.id,
-      category: 'bunpou',
-      addedAt: new Date().toISOString()
-    }));
+    const kotobaRefs: DeckItemRef[] = includeKotoba
+      ? shuffleArray(poolKotoba).slice(0, kotobaCount).map(k => ({
+          id: k.id,
+          category: 'kotoba',
+          addedAt: new Date().toISOString()
+        }))
+      : [];
+
+    const kanjiRefs: DeckItemRef[] = includeKanji
+      ? shuffleArray(poolKanji).slice(0, kanjiCount).map(k => ({
+          id: k.id || k.character,
+          category: 'kanji',
+          addedAt: new Date().toISOString()
+        }))
+      : [];
+
+    const bunpouRefs: DeckItemRef[] = includeBunpou
+      ? shuffleArray(poolBunpou).slice(0, bunpouCount).map(b => ({
+          id: b.id,
+          category: 'bunpou',
+          addedAt: new Date().toISOString()
+        }))
+      : [];
 
     const combined = shuffleArray([...kotobaRefs, ...kanjiRefs, ...bunpouRefs]);
     let resolved = combined.map(ref => resolveDeckItem(ref)).filter((it): it is ResolvedDeckItem => it !== null);
 
-    if (resolved.length < count) {
-      const moreKotoba = shuffleArray(allKotoba).map(k => resolveDeckItem({
-        id: k.id,
-        category: 'kotoba',
-        addedAt: new Date().toISOString()
-      })).filter((it): it is ResolvedDeckItem => it !== null);
-      resolved.push(...moreKotoba);
+    // Fallback padding if not enough items in requested category
+    if (resolved.length < count && resolved.length > 0) {
+      const needed = count - resolved.length;
+      for (let i = 0; i < needed; i++) {
+        resolved.push(resolved[i % resolved.length]);
+      }
     }
 
     payload.flashcardItems = resolved.slice(0, count);
@@ -705,6 +791,108 @@ export function generateDungeonSession(config: DungeonConfig, userDecks?: UserDe
       const shuffled = shuffleArray(poolQuestions);
       payload.quizQuestions = shuffled.slice(0, count);
     }
+  }
+
+  // ==================== G. SENTENCE CREATION (KREASI KALIMAT) DUNGEON ====================
+  else if (type === 'sentence_creation') {
+    if (selectedDeck) {
+      const bunpouRefs = selectedDeck.items.filter(it => it.category === 'bunpou');
+      const items: BunpouItem[] = [];
+      bunpouRefs.forEach(ref => {
+        const item = BUNPOU_DATABASE[ref.id];
+        if (item) items.push(item);
+      });
+
+      if (items.length > 0) {
+        const shuffled = shuffleArray(items);
+        const picked: BunpouItem[] = [];
+        for (let i = 0; i < count; i++) {
+          picked.push(shuffled[i % shuffled.length]);
+        }
+        payload.sentenceCreationItems = picked;
+        return payload;
+      }
+    }
+
+    // Default Preset Generation
+    const pool = matchingBunpou.length > 0 ? matchingBunpou : allBunpou;
+    const sampled = smartSample(pool, count, {
+      getId: b => b.id,
+      contextKey: `dungeon_sentence_creation_${levelCategory}`,
+    });
+
+    // Fallback padding if sampled count is less than requested floor count
+    if (sampled.length < count && pool.length > 0) {
+      const shuffledFallback = shuffleArray(pool);
+      while (sampled.length < count) {
+        sampled.push(shuffledFallback[sampled.length % shuffledFallback.length]);
+      }
+    }
+
+    payload.sentenceCreationItems = sampled.slice(0, count);
+  }
+
+  // ==================== H. BLACKBOARD PATTERN PLAYGROUND ====================
+  else if (type === 'blackboard') {
+    let eligibleVerbs: VerbItem[] = [];
+
+    if (selectedDeck) {
+      const kotobaRefs = selectedDeck.items.filter(it => it.category === 'kotoba');
+      const verbCandidates: VerbItem[] = [];
+      kotobaRefs.forEach(ref => {
+        const kItem = KOTOBA_DATABASE[ref.id];
+        if (kItem && isConjugatableKotoba(kItem)) {
+          const v = kotobaItemToVerbItem(kItem);
+          if (v) verbCandidates.push(v);
+        }
+      });
+      if (verbCandidates.length > 0) {
+        eligibleVerbs = verbCandidates;
+      }
+    } else {
+      const poolKotoba = matchingKotoba.length > 0 ? matchingKotoba : allKotoba;
+      const convertedVerbs: VerbItem[] = [];
+      poolKotoba.forEach(kItem => {
+        if (isConjugatableKotoba(kItem)) {
+          const v = kotobaItemToVerbItem(kItem);
+          if (v) convertedVerbs.push(v);
+        }
+      });
+
+      const matchingPresetVerbs = VERB_CONJUGATION_DATABASE.filter(v => {
+        if (levelCategory === 'all') return true;
+        if (levelCategory === 'N5' || levelCategory === 'N4') return true;
+        return false;
+      });
+
+      const seenKanji = new Set<string>();
+      const combined: VerbItem[] = [];
+      [...convertedVerbs, ...matchingPresetVerbs].forEach(v => {
+        if (!seenKanji.has(v.kanji)) {
+          seenKanji.add(v.kanji);
+          combined.push(v);
+        }
+      });
+
+      if (combined.length > 0) {
+        eligibleVerbs = combined;
+      }
+    }
+
+    if (eligibleVerbs.length === 0) {
+      eligibleVerbs = VERB_CONJUGATION_DATABASE;
+    }
+
+    const sampledVerbs = smartSample(eligibleVerbs, Math.max(count, 12), {
+      getId: v => v.id || v.kanji,
+      contextKey: `dungeon_blackboard_${levelCategory}_${selectedDeck ? 'deck' : 'preset'}`,
+    });
+
+    // Provide sampled verbs first for varied initial presentation, followed by all remaining eligible verbs from the Library
+    const sampledSet = new Set(sampledVerbs.map(v => v.kanji));
+    const remainingVerbs = eligibleVerbs.filter(v => !sampledSet.has(v.kanji));
+    payload.blackboardVerbs = [...sampledVerbs, ...remainingVerbs];
+    payload.blackboardPatterns = Object.values(PATTERN_SCHEMAS);
   }
 
   return payload;
