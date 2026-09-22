@@ -222,18 +222,50 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
         ) : (
           /* Active Writing Canvas */
           <div className="w-full space-y-3">
-            {/* Render Canvas using Unified UniversalWritingCard */}
+            {/* Render Canvas using Unified UniversalWritingCard with Library-matched Card Framing */}
             {currentItem && (
-              <div className="w-full flex justify-center">
-                <UniversalWritingCard
-                  item={currentItem}
-                  soundEnabled={soundEnabled}
-                  showStopwatch={true}
-                  totalSheets={1}
-                  onFinish={(_score, reward) => {
-                    handleNextItem(reward?.expGained, reward?.goldGained);
-                  }}
-                />
+              <div className="panel p-4 sm:p-5 rounded-3xl border border-border-subtle bg-surface-card shadow-xl max-w-md w-full mx-auto space-y-3">
+                {/* Meta Bar matching Library view */}
+                {(() => {
+                  const trait = asWritable(currentItem);
+                  const isKana = trait?.level === 'KANA' || (trait?.character && trait.character.charCodeAt(0) >= 0x3040 && trait.character.charCodeAt(0) <= 0x30ff);
+                  return (
+                    <div className="flex items-center justify-between gap-2 flex-wrap border-b border-border-subtle/60 pb-2.5 px-0.5">
+                      <div className="flex items-center gap-1.5 flex-wrap text-xs">
+                        <span className={`px-2.5 py-0.5 rounded-full font-mono font-bold uppercase tracking-wider text-[10px] border ${
+                          isKana
+                            ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
+                            : 'bg-surface-inset text-wine-accent border-wine-accent/30'
+                        }`}>
+                          {isKana ? 'Aksara Kana' : `${trait?.level || 'N5'} Kanji`}
+                        </span>
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-surface-inset border border-border-subtle text-text-secondary">
+                          {trait?.strokeCount || 1} Goresan
+                        </span>
+                        {trait?.sourceItem?.radical && (
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-jp bg-surface-inset border border-border-subtle text-text-muted">
+                            {isKana ? 'Kategori: ' : '部首: '}{trait.sourceItem.radical}
+                          </span>
+                        )}
+                      </div>
+                      <span className="text-[11px] font-mono text-gold font-bold">
+                        {currentIndex + 1} / {writableItems.length}
+                      </span>
+                    </div>
+                  );
+                })()}
+
+                <div className="w-full flex justify-center">
+                  <UniversalWritingCard
+                    item={currentItem}
+                    soundEnabled={soundEnabled}
+                    showStopwatch={true}
+                    totalSheets={1}
+                    onFinish={(_score, reward) => {
+                      handleNextItem(reward?.expGained, reward?.goldGained);
+                    }}
+                  />
+                </div>
               </div>
             )}
 
