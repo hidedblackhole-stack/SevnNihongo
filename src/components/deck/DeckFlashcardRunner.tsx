@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { X, RotateCcw, RotateCw, ArrowRight, ArrowLeft, Trophy, Check } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { UserDeck } from '../../types/rpg';
@@ -8,6 +8,9 @@ import { ResolvedDeckItem, resolveDeckItem } from '../../utils/decks';
 import { playSound } from '../../utils/audio';
 import { UniversalFlashcard } from '../learning/UniversalFlashcard';
 import { getKanjiBaseExp, getKotobaBaseExp, getBunpouBaseExp, calculateFlashcardReward } from '../../utils/rewards';
+
+// Dynamic micro-multiplier for flashcard flips: Base EXP * 0.005
+const FLASHCARD_FLIP_MULTIPLIER = 0.005;
 
 interface DeckFlashcardRunnerProps {
   deck: UserDeck;
@@ -19,7 +22,8 @@ interface DeckFlashcardRunnerProps {
     goldGained: number,
     itemId?: string,
     score?: number,
-    total?: number
+    total?: number,
+    interactionType?: 'writing' | 'flashcard' | 'quiz'
   ) => void;
   soundEnabled?: boolean;
 }
@@ -53,6 +57,7 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
   const [queue, setQueue] = useState<ResolvedDeckItem[]>(filteredItems);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
+  const [flashcardExpPopup, setFlashcardExpPopup] = useState<number | null>(null);
   const [isCompleted, setIsCompleted] = useState(false);
   const [accumulatedExp, setAccumulatedExp] = useState(0);
   const [accumulatedGold, setAccumulatedGold] = useState(0);
@@ -78,9 +83,39 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
 
   const currentItem = queue[currentIndex];
 
+  const handleCardFlip = () => {
+    playSound('click', soundEnabled);
+    const willFlipToBack = !isFlipped;
+    setIsFlipped(prev => !prev);
+
+    if (willFlipToBack && currentItem) {
+      let baseExp = 15;
+      if (currentItem.category === 'kanji' && currentItem.kanji) {
+        baseExp = getKanjiBaseExp(currentItem.kanji);
+      } else if (currentItem.category === 'kotoba' && currentItem.kotoba) {
+        baseExp = getKotobaBaseExp(currentItem.kotoba);
+      } else if (currentItem.category === 'bunpou' && currentItem.bunpou) {
+        baseExp = getBunpouBaseExp(currentItem.bunpou);
+      }
+      const flipExp = Math.max(0.01, Number((baseExp * FLASHCARD_FLIP_MULTIPLIER).toFixed(2)));
+      setAccumulatedExp(prev => Number((prev + flipExp).toFixed(2)));
+      setFlashcardExpPopup(flipExp);
+
+      if (onCompleteStudyItem) {
+        const mod = currentItem.category === 'kanji' ? 'kanji' : (currentItem.category === 'bunpou' ? 'bunpou' : 'kotoba');
+        onCompleteStudyItem(mod, flipExp, 0, currentItem.ref.id, 1, 1, 'flashcard');
+      }
+
+      setTimeout(() => {
+        setFlashcardExpPopup(null);
+      }, 800);
+    }
+  };
+
   const handleNext = () => {
     playSound('click', soundEnabled);
     setIsFlipped(false);
+    setFlashcardExpPopup(null);
 
     // Calculate dynamic flashcard reward for current item based on its Base EXP
     let baseExp = 15;
@@ -297,14 +332,31 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
               <span className="font-mono text-gold font-bold">Total: {queue.length}</span>
             </div>
 
-            {/* Interactive 3D Flip Card */}
+            {/* Interactive 3D Flip Card with Floating EXP Popup */}
             {currentItem && (
-              <UniversalFlashcard
-                item={currentItem}
-                isFlipped={isFlipped}
-                onFlip={() => setIsFlipped(prev => !prev)}
-                soundEnabled={soundEnabled}
-              />
+              <div className="relative w-full">
+                <AnimatePresence>
+                  {flashcardExpPopup !== null && (
+                    <motion.div
+                      key={`deck-exp-popup-${Date.now()}`}
+                      initial={{ opacity: 0, y: 0, scale: 0.7 }}
+                      animate={{ opacity: 1, y: -36, scale: 1.1 }}
+                      exit={{ opacity: 0, y: -50 }}
+                      transition={{ duration: 0.5, ease: 'easeOut' }}
+                      className="absolute top-3 right-3 sm:top-6 sm:right-6 z-50 text-emerald-400 font-mono font-black text-sm sm:text-base drop-shadow-md pointer-events-none flex items-center gap-1 bg-surface-card/90 px-2.5 py-1 rounded-full border border-emerald-500/40 backdrop-blur-xs shadow-lg"
+                    >
+                      +{flashcardExpPopup} EXP
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                <UniversalFlashcard
+                  item={currentItem}
+                  isFlipped={isFlipped}
+                  onFlip={handleCardFlip}
+                  soundEnabled={soundEnabled}
+                />
+              </div>
             )}
 
             {/* Bottom Card Controls */}
@@ -320,10 +372,7 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
                 </button>
 
                 <button
-                  onClick={() => {
-                    setIsFlipped(prev => !prev);
-                    playSound('click', soundEnabled);
-                  }}
+                  onClick={handleCardFlip}
                   className="flex-1 py-3 px-3 sm:px-4 rounded-2xl bg-surface-inset hover:bg-surface-elevated border border-border-subtle text-text-primary font-heading font-bold text-xs flex items-center justify-center gap-1.5 sm:gap-2 transition-all shadow-sm"
                 >
                   <RotateCw className="w-3.5 h-3.5 text-gold" />
