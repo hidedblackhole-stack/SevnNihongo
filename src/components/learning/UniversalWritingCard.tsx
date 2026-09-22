@@ -1,5 +1,5 @@
-import React from 'react';
-import { KanjiWritingCanvas } from './KanjiWritingCanvas';
+import React, { useEffect } from 'react';
+import { KanjiWritingCanvas, preloadStrokeData } from './KanjiWritingCanvas';
 import { KotobaWritingPractice } from './KotobaWritingPractice';
 import { ResolvedDeckItem } from '../../utils/decks';
 import { KanjiItem, KotobaItem } from '../../types/content';
@@ -43,6 +43,13 @@ export const UniversalWritingCard: React.FC<UniversalWritingCardProps> = ({
   className = '',
 }) => {
   const writableTrait = asWritable(item);
+
+  // Preload stroke data immediately
+  useEffect(() => {
+    if (writableTrait?.character) {
+      preloadStrokeData(writableTrait.character);
+    }
+  }, [writableTrait?.character]);
 
   // If item cannot be written, provide a safe fallback or return null
   if (!writableTrait) {

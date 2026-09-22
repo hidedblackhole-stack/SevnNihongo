@@ -168,67 +168,145 @@ function transformSmallKanaData(charData: any) {
 const strokeDataCache = new Map<string, any>();
 const activeFetches = new Map<string, Promise<any>>();
 
-export const preloadStrokeData = (word: string) => {
-  const chars = Array.from(new Set(word.split('')));
-  chars.forEach(char => {
-    if (strokeDataCache.has(char) || activeFetches.has(char)) return;
+export const getCachedStrokeData = (char: string): any | null => {
+  if (!char) return null;
+  if (strokeDataCache.has(char)) {
+    return strokeDataCache.get(char);
+  }
+  if (KANA_STROKE_DICT[char]) {
+    const data = isSmallKana(char)
+      ? transformSmallKanaData(KANA_STROKE_DICT[char])
+      : KANA_STROKE_DICT[char];
+    strokeDataCache.set(char, data);
+    return data;
+  }
+  try {
+    const raw = localStorage.getItem(`nq_stroke_${char}`);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && Array.isArray(parsed.strokes)) {
+        strokeDataCache.set(char, parsed);
+        return parsed;
+      }
+    }
+  } catch {
+    // Ignore storage parse error
+  }
+  return null;
+};
 
-    // Check embedded Kana stroke dictionary first (instant 0ms, zero network)
-    if (KANA_STROKE_DICT[char]) {
-      const data = isSmallKana(char)
-        ? transformSmallKanaData(KANA_STROKE_DICT[char])
-        : KANA_STROKE_DICT[char];
-      strokeDataCache.set(char, data);
-      return;
+const saveStrokeDataToCache = (char: string, data: any) => {
+  if (!char || !data) return;
+  strokeDataCache.set(char, data);
+  try {
+    localStorage.setItem(`nq_stroke_${char}`, JSON.stringify(data));
+  } catch {
+    // Silently ignore if localStorage is full or disabled
+  }
+};
+
+async function fetchWithTimeout(url: string, timeoutMs = 3000): Promise<any> {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetch(url, { signal: controller.signal });
+    clearTimeout(id);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const contentType = res.headers.get('content-type') || '';
+    if (contentType && !contentType.includes('json')) {
+      throw new Error(`Invalid content-type: ${contentType}`);
+    }
+    const data = await res.json();
+    if (!data || !Array.isArray(data.strokes)) throw new Error('Invalid stroke data');
+    return data;
+  } catch (err) {
+    clearTimeout(id);
+    throw err;
+  }
+}
+
+async function fetchFastest(urls: string[], timeoutMs = 3000): Promise<any> {
+  return Promise.any(urls.map(url => fetchWithTimeout(url, timeoutMs)));
+}
+
+export const fetchSingleCharStrokeData = async (char: string): Promise<any> => {
+  const cached = getCachedStrokeData(char);
+  if (cached) return cached;
+
+  if (activeFetches.has(char)) {
+    return activeFetches.get(char)!;
+  }
+
+  const code = char.charCodeAt(0);
+  const isKana = (code >= 0x3040 && code <= 0x30ff) || (code >= 0x31f0 && code <= 0x31ff);
+  const encoded = encodeURIComponent(char);
+  const hex = code.toString(16).toLowerCase();
+
+  const fetchPromise = (async () => {
+    let rawData: any = null;
+
+    if (isKana) {
+      // 1. Try local kana files first
+      try {
+        rawData = await fetchWithTimeout(`/data/kana-strokes/${encoded}.json`, 1500);
+      } catch {
+        try {
+          rawData = await fetchWithTimeout(`/data/kana-strokes/${hex}.json`, 1500);
+        } catch {
+          // Local kana not found, fallback to fast CDN
+          rawData = await fetchFastest([
+            `https://unpkg.com/hanzi-writer-data-jp@0.0.1/${encoded}.json`,
+            `https://cdn.jsdelivr.net/npm/hanzi-writer-data-jp@0.0.1/${encoded}.json`,
+            `https://fastly.jsdelivr.net/npm/hanzi-writer-data-jp@0.0.1/${encoded}.json`
+          ], 3000);
+        }
+      }
+    } else {
+      // Kanji: NEVER fetch local /data/kana-strokes/! Race top CDN mirrors in parallel
+      const primaryMirrors = [
+        `https://unpkg.com/hanzi-writer-data-jp@0.0.1/${encoded}.json`,
+        `https://cdn.jsdelivr.net/npm/hanzi-writer-data-jp@0.0.1/${encoded}.json`,
+        `https://fastly.jsdelivr.net/npm/hanzi-writer-data-jp@0.0.1/${encoded}.json`
+      ];
+
+      try {
+        rawData = await fetchFastest(primaryMirrors, 3000);
+      } catch {
+        // Fallback to secondary general HanziWriter data
+        const fallbackMirrors = [
+          `https://unpkg.com/hanzi-writer-data@2.0.1/${encoded}.json`,
+          `https://cdn.jsdelivr.net/npm/hanzi-writer-data@2.0.1/${encoded}.json`,
+          `https://fastly.jsdelivr.net/npm/hanzi-writer-data@2.0.1/${encoded}.json`
+        ];
+        try {
+          rawData = await fetchFastest(fallbackMirrors, 3500);
+        } catch {
+          // Final fallback to Youyin repository
+          rawData = await fetchWithTimeout(
+            `https://cdn.jsdelivr.net/gh/MadLadSquad/hanzi-writer-data-youyin/data/${encoded}.json`,
+            4000
+          );
+        }
+      }
     }
 
-    const encoded = encodeURIComponent(char);
-    const hex = char.charCodeAt(0).toString(16).toLowerCase();
-    const isKana = char.charCodeAt(0) >= 0x3040 && char.charCodeAt(0) <= 0x30ff;
-
-    const fetchPromise = fetch(`/data/kana-strokes/${encoded}.json`)
-      .then(res => {
-        if (!res.ok) return fetch(`/data/kana-strokes/${hex}.json`);
-        return res;
-      })
-      .then(res => {
-        if (!res.ok) throw new Error('Local Kana Not Found');
-        return res.json();
-      })
-      .catch(() => fetch(`https://cdn.jsdelivr.net/npm/hanzi-writer-data-jp@0/${encoded}.json`)
-        .then(res => {
-          if (!res.ok) throw new Error('JP Not Found');
-          return res.json();
-        })
-      )
-      .catch(() => fetch(`https://cdn.jsdelivr.net/npm/hanzi-writer-data@2.0.1/${encoded}.json`)
-        .then(res => {
-          if (!res.ok) throw new Error('Data Not Found');
-          return res.json();
-        })
-      )
-      .catch(() => {
-        // Never use Youyin for Kana characters (to prevent corrupt Chinese stroke counts)
-        if (isKana) throw new Error('Kana data not available in Chinese database');
-        return fetch(`https://cdn.jsdelivr.net/gh/MadLadSquad/hanzi-writer-data-youyin/data/${encoded}.json`)
-          .then(res => {
-            if (!res.ok) throw new Error('Youyin Not Found');
-            return res.json();
-          });
-      })
-      .then(data => {
-        const finalData = isSmallKana(char) ? transformSmallKanaData(data) : data;
-        strokeDataCache.set(char, finalData);
-        activeFetches.delete(char);
-        return finalData;
-      })
-      .catch(err => {
-        activeFetches.delete(char);
-        throw err;
-      });
-
-    activeFetches.set(char, fetchPromise);
+    const finalData = isSmallKana(char) ? transformSmallKanaData(rawData) : rawData;
+    saveStrokeDataToCache(char, finalData);
+    activeFetches.delete(char);
+    return finalData;
+  })().catch(err => {
+    activeFetches.delete(char);
+    throw err;
   });
+
+  activeFetches.set(char, fetchPromise);
+  return fetchPromise;
+};
+
+export const preloadStrokeData = (word: string): Promise<any[]> => {
+  if (!word) return Promise.resolve([]);
+  const chars = Array.from(new Set(word.split('')));
+  return Promise.all(chars.map(c => fetchSingleCharStrokeData(c).catch(() => null)));
 };
 
 export interface KanjiWritingCanvasProps {
@@ -385,7 +463,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
   const [isQuizComplete, setIsQuizComplete] = useState(false);
   const [mistakesCount, setMistakesCount] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(() => !getCachedStrokeData(kanjiChar));
   const [canvasSize, setCanvasSize] = useState(320);
 
   // Performance factors for dynamic EXP
@@ -545,7 +623,8 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     if (canvasSize === 0) return;
 
     writerContainerRef.current.innerHTML = '';
-    setIsLoading(true);
+    const initialCached = getCachedStrokeData(kanjiChar);
+    setIsLoading(!initialCached);
     setHasStrokeData(true);
     let isCancelled = false;
 
@@ -566,37 +645,18 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
         leniency: effectiveLeniency,
         averageDistanceThreshold: effectiveDistanceThreshold,
         charDataLoader: (char, onComplete, onError) => {
-          if (strokeDataCache.has(char)) {
+          const cached = getCachedStrokeData(char);
+          if (cached) {
             setIsLoading(false);
-            const data = strokeDataCache.get(char);
-            onComplete(data);
+            onComplete(cached);
             return;
           }
 
-          const processData = (rawData: any) => {
-            if (!rawData) return rawData;
-            return isSmallKana(char) ? transformSmallKanaData(rawData) : rawData;
-          };
-
-          if (KANA_STROKE_DICT[char]) {
-            const finalData = processData(KANA_STROKE_DICT[char]);
-            strokeDataCache.set(char, finalData);
-            setIsLoading(false);
-            onComplete(finalData);
-            return;
-          }
-
-          if (!activeFetches.has(char)) {
-            preloadStrokeData(char);
-          }
-
-          activeFetches.get(char)!
+          fetchSingleCharStrokeData(char)
             .then(data => {
               if (isCancelled) return;
-              const finalData = processData(data);
-              strokeDataCache.set(char, finalData);
               setIsLoading(false);
-              onComplete(finalData);
+              onComplete(data);
             })
             .catch(err => {
               if (isCancelled) return;

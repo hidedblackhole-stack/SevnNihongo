@@ -35,7 +35,7 @@ import {
 import { playSound, speakJapanese } from '../../utils/audio';
 import { RubyText } from '../learning/RubyText';
 import { FormulaDisplay } from '../learning/FormulaDisplay';
-import { KanjiWritingCanvas } from '../learning/KanjiWritingCanvas';
+import { KanjiWritingCanvas, preloadStrokeData } from '../learning/KanjiWritingCanvas';
 import { KotobaWritingPractice } from '../learning/KotobaWritingPractice';
 import { parseReadingVariations } from '../../utils/readingHighlightUtils';
 
@@ -148,6 +148,18 @@ export const UniversalEntityModal: React.FC<UniversalEntityModalProps> = ({
   const grammarTrait: GrammarFormulaTrait | null = useMemo(() => asGrammarFormula(targetItem), [targetItem]);
   const relationalTrait: RelationalTrait | null = useMemo(() => asRelational(targetItem), [targetItem]);
   const quizTrait: QuizTrait | null = useMemo(() => asQuiz(targetItem), [targetItem]);
+
+  // Proactively preload stroke data in the background as soon as modal opens
+  useEffect(() => {
+    if (!isOpen) return;
+    if (writableTrait?.character) {
+      preloadStrokeData(writableTrait.character);
+    } else if (unified?.category === 'kanji' && unified.title) {
+      preloadStrokeData(unified.title);
+    } else if (unified?.category === 'kotoba' && (unified.title || unified.kotoba?.word)) {
+      preloadStrokeData(unified.title || unified.kotoba?.word || '');
+    }
+  }, [isOpen, writableTrait?.character, unified]);
 
   // Knowledge Graph nodes
   const relatedNodes = useMemo(() => {

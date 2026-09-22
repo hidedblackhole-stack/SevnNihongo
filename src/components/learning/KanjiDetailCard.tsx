@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Edit3, Volume2, ArrowLeft, HelpCircle } from 'lucide-react';
 import { KanjiItem, ItemMasteryRecord } from '../../types/content';
-import { KanjiWritingCanvas } from './KanjiWritingCanvas';
+import { KanjiWritingCanvas, preloadStrokeData } from './KanjiWritingCanvas';
 import { RubyText } from './RubyText';
 import { ErrorBoundary } from '../ErrorBoundary';
 import { speakJapanese, playSound } from '../../utils/audio';
@@ -34,6 +34,13 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
   showQuestions = true,
 }) => {
   const [detailSubTab, setDetailSubTab] = useState<'detail' | 'writing'>(initialTab);
+
+  // Preload stroke data in the background immediately
+  useEffect(() => {
+    if (item?.character) {
+      preloadStrokeData(item.character);
+    }
+  }, [item?.character]);
 
   const isHiragana = item.radical === 'Hiragana' || (item.jlpt === 'KANA' && item.character >= 'ぁ' && item.character <= 'ん');
   const isKatakana = item.radical === 'Katakana' || (item.jlpt === 'KANA' && item.character >= 'ァ' && item.character <= 'ン');
