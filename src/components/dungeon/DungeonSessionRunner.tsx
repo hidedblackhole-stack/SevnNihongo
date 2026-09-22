@@ -616,6 +616,11 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                           item={it}
                           soundEnabled={soundEnabled}
                           totalSheets={1}
+                          nextButtonLabel={
+                            currentFloorIndex === payload.floors.length - 1
+                              ? 'Selesaikan Dungeon'
+                              : 'Lantai Berikutnya →'
+                          }
                           onFinish={(score, reward) => {
                             advanceToNextFloor(score >= 60, reward?.expGained ?? 25, reward?.goldGained ?? 12);
                           }}

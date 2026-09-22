@@ -400,8 +400,13 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
               relatedWords={item.relatedWords}
               soundEnabled={soundEnabled}
               level={item.jlpt}
+              nextButtonLabel="Kembali ke Detail Kanji"
+              onCancel={() => setDetailSubTab('detail')}
               onCompleteSheet={onCompleteSheet}
-              onFinish={onFinish}
+              onFinish={(reward) => {
+                onFinish?.(reward);
+                setDetailSubTab('detail');
+              }}
             />
           </ErrorBoundary>
         </div>

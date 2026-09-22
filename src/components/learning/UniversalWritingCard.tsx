@@ -31,6 +31,8 @@ export interface UniversalWritingCardProps {
   soundEnabled?: boolean;
   totalSheets?: number;
   showStopwatch?: boolean;
+  nextButtonLabel?: string;
+  onCancel?: () => void;
   className?: string;
 }
 
@@ -40,6 +42,8 @@ export const UniversalWritingCard: React.FC<UniversalWritingCardProps> = ({
   soundEnabled = true,
   totalSheets = 1,
   showStopwatch = true,
+  nextButtonLabel,
+  onCancel,
   className = '',
 }) => {
   const writableTrait = asWritable(item);
@@ -75,13 +79,14 @@ export const UniversalWritingCard: React.FC<UniversalWritingCardProps> = ({
           soundEnabled={soundEnabled}
           totalSheets={totalSheets}
           showStopwatch={showStopwatch}
-          onCompleteSheet={(_sheet, score, reward) => {
-            if (totalSheets === 1) {
-              onFinish(score, reward);
-            }
+          nextButtonLabel={nextButtonLabel}
+          onCancel={onCancel}
+          onCompleteSheet={(_sheet, _score, _reward) => {
+            // Sheet completion recorded; do NOT auto-advance before user reviews explanation
           }}
           onFinish={(reward) => {
-            onFinish(100, reward);
+            const score = reward?.accuracyScore ?? 100;
+            onFinish(score, reward);
           }}
         />
       </div>
@@ -112,6 +117,8 @@ export const UniversalWritingCard: React.FC<UniversalWritingCardProps> = ({
       <KotobaWritingPractice
         kotoba={kotobaItem}
         soundEnabled={soundEnabled}
+        nextButtonLabel={nextButtonLabel}
+        onCancel={onCancel}
         onFinishWord={(score, reward) => {
           onFinish(score, reward);
         }}

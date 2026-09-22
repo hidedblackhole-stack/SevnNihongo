@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect, useMemo } from 'react';
-import { RotateCcw, Check, PlayCircle, Eye, EyeOff, Loader2, Clock, Sparkles, Volume2 } from 'lucide-react';
+import { RotateCcw, Check, PlayCircle, Eye, EyeOff, Loader2, Clock, Sparkles, Volume2, ArrowRight, BookOpen } from 'lucide-react';
+import { motion } from 'motion/react';
 import HanziWriter from 'hanzi-writer';
 import { playSound, speakJapanese } from '../../utils/audio';
 import { sendScoreEvent } from '../../lib/supabase';
@@ -8,6 +9,7 @@ import { getKanjiBaseExp, calculateWritingReward, WritingRewardResult } from '..
 import { KANJI_DATABASE } from '../../data/kanji';
 import { KanjiItem } from '../../types/content';
 import { getHighlightedYomikata } from '../../utils/readingHighlightUtils';
+import { RubyText } from './RubyText';
 
 const SMALL_KANA_SET = new Set([
   // Hiragana sutegana
@@ -333,6 +335,9 @@ export interface KanjiWritingCanvasProps {
   showPromptHeader?: boolean; // Complete prompt header with readings & audio (default: true)
   showDirectionGuide?: boolean; // Show stroke direction guide (default: true)
   onReady?: () => void; // Triggered when stroke data is ready and canvas is interactive
+  showCompletionDetail?: boolean; // When true, shows detail review card on complete instead of immediate onFinish (default: !autoAdvance)
+  nextButtonLabel?: string; // Custom label for next button on detail review card
+  onCancel?: () => void; // Optional cancel/back callback (e.g. return to library overview)
   className?: string;
 }
 
@@ -386,11 +391,17 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
   showPromptHeader = true,
   showDirectionGuide: _showDirectionGuide = true,
   onReady,
+  showCompletionDetail,
+  nextButtonLabel,
+  onCancel,
   className = '',
 }) => {
   const kanjiChar = rawKanjiChar || character || '';
   const isKana = kanjiChar.length > 0 && kanjiChar.charCodeAt(0) >= 0x3040 && kanjiChar.charCodeAt(0) <= 0x30ff;
+  const isHiragana = kanjiChar.length > 0 && kanjiChar.charCodeAt(0) >= 0x3040 && kanjiChar.charCodeAt(0) <= 0x309f;
+  const isKatakana = kanjiChar.length > 0 && kanjiChar.charCodeAt(0) >= 0x30a0 && kanjiChar.charCodeAt(0) <= 0x30ff;
   const isSmall = isSmallKana(kanjiChar);
+  const effectiveShowCompletionDetail = showCompletionDetail ?? !autoAdvance;
 
   // Database lookup fallback for complete character metadata
   const dbItem = useMemo(() => {
@@ -480,6 +491,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
   // Stopwatch State per Canvas Sheet (1 canvas = 1 sheet)
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const [showDetailReview, setShowDetailReview] = useState(false);
 
   // Reset timer & sheet state whenever the character changes
   useEffect(() => {
@@ -491,6 +503,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     setAnimationCount(0);
     setLastReward(null);
     setCurrentStrokeIndex(0);
+    setShowDetailReview(false);
   }, [kanjiChar]);
 
   // Timer interval - strictly runs only when character is ready and not yet completed
@@ -547,7 +560,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     hasRewardedRef.current = {};
   }, [kanjiChar]);
 
-  // Auto-advance logic
+  // Auto-advance logic (sub-character in Kotoba practice)
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (isQuizComplete && autoAdvance) {
@@ -557,6 +570,17 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     }
     return () => clearTimeout(timer);
   }, [isQuizComplete, autoAdvance]);
+
+  // Auto-transition to detail review upon completing strokes (matching Kotoba writing flow)
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (isQuizComplete && effectiveShowCompletionDetail && !autoAdvance && !showDetailReview) {
+      timer = setTimeout(() => {
+        setShowDetailReview(true);
+      }, 700);
+    }
+    return () => clearTimeout(timer);
+  }, [isQuizComplete, effectiveShowCompletionDetail, autoAdvance, showDetailReview]);
 
   // Measure container size dynamically with ResizeObserver
   useEffect(() => {
@@ -854,6 +878,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
 
   const clearCanvas = () => {
     playSound('click', soundEnabled);
+    setShowDetailReview(false);
     hasRewardedRef.current[currentSheet] = false;
     setCompletedSheets(prev => prev.filter(s => s !== currentSheet));
     setCurrentStrokeIndex(0);
@@ -884,7 +909,12 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     if (completedSheets.includes(currentSheet) && currentSheet >= totalSheets) {
       playSound('fanfare', soundEnabled);
       setIsTimerRunning(false);
-      onFinish?.(lastReward || undefined);
+      if (effectiveShowCompletionDetail) {
+        setShowDetailReview(true);
+      } else {
+        onFinish?.(lastReward || undefined);
+        onComplete?.();
+      }
       return;
     }
 
@@ -954,8 +984,19 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
       // Finished all sheets (or single sheet in sandbox mode)
       playSound('fanfare', soundEnabled);
       setIsTimerRunning(false);
-      onFinish?.(lastReward || undefined);
+      if (effectiveShowCompletionDetail) {
+        setShowDetailReview(true);
+      } else {
+        onFinish?.(lastReward || undefined);
+        onComplete?.();
+      }
     }
+  };
+
+  const handleProceedNext = () => {
+    playSound('click', soundEnabled);
+    onFinish?.(lastReward || undefined);
+    onComplete?.();
   };
 
   // Fallback drawing handlers (only active when CDN has no stroke order data, e.g. rare characters/kana)
@@ -995,6 +1036,240 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
   const stopFallbackDraw = () => {
     isDrawingFallbackRef.current = false;
   };
+
+  if (showDetailReview) {
+    return (
+      <div className={`w-full max-w-lg mx-auto flex flex-col items-center animate-fade-in ${className}`}>
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+          className="w-full space-y-4 sm:space-y-5 text-left panel p-4 sm:p-6 rounded-3xl border border-border-subtle bg-surface-card shadow-xl"
+        >
+          {/* Top Meta Bar */}
+          <div className="flex items-center justify-between gap-2 flex-wrap pb-2 border-b border-border-subtle text-xs font-mono">
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+              <span className={`px-2.5 py-0.5 rounded-lg border font-bold ${
+                isHiragana
+                  ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
+                  : isKatakana
+                    ? 'bg-sky-500/15 text-sky-600 dark:text-sky-400 border-sky-500/30'
+                    : 'bg-surface-inset text-wine-accent border-wine-accent/30'
+              }`}>
+                {isHiragana ? 'Hiragana' : isKatakana ? 'Katakana' : `JLPT ${level || promptKanjiItem.jlpt || 'N5'} Kanji`}
+              </span>
+              <span className="px-2.5 py-0.5 rounded-lg bg-surface-inset text-text-secondary border border-border-subtle font-medium">
+                {totalCharStrokes || strokeCount || 1} Goresan
+              </span>
+              {promptKanjiItem.radical && (
+                <span className="px-2 py-0.5 rounded-lg bg-surface-inset text-text-muted border border-border-subtle font-jp text-[11px]">
+                  {isKana ? 'Kategori: ' : '部首: '}{promptKanjiItem.radical}
+                </span>
+              )}
+            </div>
+
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="px-2.5 py-0.5 rounded-lg bg-surface-inset text-gold font-bold border border-border-subtle flex items-center gap-1.5 shadow-sm" title="Waktu Menulis">
+                <Clock className="w-3.5 h-3.5 text-gold" />
+                <span>{formatTime(elapsedSeconds)}</span>
+              </span>
+              {lastReward && (
+                <span className="px-2.5 py-0.5 rounded-lg bg-amber-500/15 text-amber-500 font-bold border border-amber-500/30 flex items-center gap-1 shadow-sm">
+                  <Sparkles className="w-3 h-3 text-amber-500" />
+                  <span>+{lastReward.expGained} EXP</span>
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* Hero Section: Giant Character & Readings */}
+          <div className="flex flex-col sm:flex-row items-center gap-4 py-1">
+            {/* Hanko Motif Giant Character Frame */}
+            <div className="relative group w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-surface-inset border-2 border-wine-accent/40 flex items-center justify-center text-5xl sm:text-6xl font-bold text-wine-accent font-jp shadow-inner shrink-0 select-none">
+              {kanjiChar}
+              <button
+                type="button"
+                onClick={() => {
+                  const toSpeak = cleanKunyomiList[0] || cleanOnyomiList[0] || kanjiChar;
+                  speakJapanese(toSpeak);
+                  playSound('click', soundEnabled);
+                }}
+                className="absolute -bottom-2 -right-2 p-2 rounded-full bg-surface-card border border-border-subtle text-text-muted hover:text-wine-accent shadow-md transition-all cursor-pointer"
+                title="Dengar pelafalan"
+              >
+                <Volume2 className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Readings list */}
+            <div className="flex-1 w-full space-y-2 text-center sm:text-left">
+              {isKana ? (
+                <div className="space-y-1">
+                  <span className="text-[11px] font-bold text-text-muted uppercase tracking-wider font-mono">
+                    Pelafalan Romaji & Suara
+                  </span>
+                  <div className="flex items-center justify-center sm:justify-start gap-2">
+                    <span className="text-xl font-bold font-mono text-text-primary px-3 py-1 rounded-xl bg-surface-inset border border-border-subtle">
+                      {effectiveRomaji}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        speakJapanese(kanjiChar);
+                        playSound('click', soundEnabled);
+                      }}
+                      className="px-3 py-1.5 rounded-xl bg-wine-accent/15 text-wine-accent border border-wine-accent/30 font-bold hover:bg-wine-accent/25 flex items-center gap-1.5 text-xs font-mono transition-colors"
+                    >
+                      <Volume2 className="w-3.5 h-3.5" />
+                      <span>Putar Audio</span>
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-left">
+                  {/* Onyomi */}
+                  <div className="p-2.5 rounded-xl bg-surface-inset border border-border-subtle space-y-1">
+                    <span className="text-[10px] font-bold text-wine-accent uppercase tracking-wider font-mono block">
+                      音読み (Onyomi)
+                    </span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {cleanOnyomiList.length > 0 ? (
+                        cleanOnyomiList.map((on, i) => (
+                          <button
+                            key={i}
+                            type="button"
+                            onClick={() => {
+                              speakJapanese(on.split(' ')[0]);
+                              playSound('click', soundEnabled);
+                            }}
+                            className="px-2 py-0.5 rounded-lg bg-surface-card text-wine-accent border border-wine-accent/20 font-bold hover:border-wine-accent/50 flex items-center gap-1 text-xs font-jp transition-colors cursor-pointer"
+                            title="Klik untuk mendengar"
+                          >
+                            <span>{on}</span>
+                            <Volume2 className="w-3 h-3 text-wine-accent/60" />
+                          </button>
+                        ))
+                      ) : (
+                        <span className="text-text-muted text-xs italic">-</span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Kunyomi */}
+                  <div className="p-2.5 rounded-xl bg-surface-inset border border-border-subtle space-y-1">
+                    <span className="text-[10px] font-bold text-state-success uppercase tracking-wider font-mono block">
+                      訓読み (Kunyomi)
+                    </span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {cleanKunyomiList.length > 0 ? (
+                        cleanKunyomiList.map((kun, i) => (
+                          <button
+                            key={i}
+                            type="button"
+                            onClick={() => {
+                              speakJapanese(kun.replace(/[.-]/g, ''));
+                              playSound('click', soundEnabled);
+                            }}
+                            className="px-2 py-0.5 rounded-lg bg-surface-card text-state-success border border-state-success/20 font-bold hover:border-state-success/50 flex items-center gap-1 text-xs font-jp transition-colors cursor-pointer"
+                            title="Klik untuk mendengar"
+                          >
+                            <span>{kun}</span>
+                            <Volume2 className="w-3 h-3 text-state-success/60" />
+                          </button>
+                        ))
+                      ) : (
+                        <span className="text-text-muted text-xs italic">-</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Meaning Description Box */}
+          <div className="space-y-1 bg-surface-inset p-3.5 rounded-2xl border border-border-subtle shadow-inner">
+            <h3 className="text-base sm:text-lg font-bold font-heading text-text-primary">
+              {effectiveMeaning || 'Karakter Jepang'}
+            </h3>
+            {dbItem?.meaningEn && (
+              <p className="text-xs text-text-secondary">
+                English: {dbItem.meaningEn}
+                {dbItem.radicalName ? ` • Radikal: ${dbItem.radicalName}` : ''}
+              </p>
+            )}
+          </div>
+
+          {/* Related Words / Kosakata Terkait */}
+          {effectiveRelatedWords && effectiveRelatedWords.length > 0 && (
+            <div className="space-y-2">
+              <h4 className="text-xs font-bold text-text-muted uppercase tracking-wider flex items-center gap-1.5">
+                <BookOpen className="w-3.5 h-3.5 text-wine-accent" /> Contoh Kosakata Terkait
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                {effectiveRelatedWords.slice(0, 4).map((rw, i) => (
+                  <div
+                    key={i}
+                    onClick={() => {
+                      speakJapanese(rw.word);
+                      playSound('click', soundEnabled);
+                    }}
+                    className="p-2.5 rounded-xl bg-surface-inset hover:bg-surface-elevated border border-border-subtle hover:border-wine-accent/40 transition-all cursor-pointer flex items-center justify-between gap-2 shadow-xs group"
+                    title="Klik untuk mendengar pelafalan"
+                  >
+                    <div className="space-y-0.5 min-w-0">
+                      <div className="font-bold font-jp text-sm text-text-primary flex items-center gap-1">
+                        <RubyText japanese={rw.word} reading={rw.reading} showFurigana={true} />
+                      </div>
+                      <p className="text-[11px] text-text-secondary truncate">
+                        {rw.meaningId}
+                      </p>
+                    </div>
+                    <Volume2 className="w-3.5 h-3.5 text-text-muted group-hover:text-wine-accent shrink-0 transition-colors" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Action Buttons: Ulangi Menulis & Lanjut ke Kanji Berikutnya */}
+          <div className="flex flex-col sm:flex-row gap-3 pt-2 w-full">
+            <button
+              type="button"
+              onClick={clearCanvas}
+              className="flex-1 py-3 px-4 rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 bg-surface-inset hover:bg-surface-elevated text-text-primary border border-border-subtle transition-all active:scale-95 shadow-sm cursor-pointer"
+            >
+              <RotateCcw className="w-4 h-4 text-wine-accent" />
+              <span>Ulangi Menulis</span>
+            </button>
+            <button
+              type="button"
+              onClick={handleProceedNext}
+              className="flex-1 btn btn-cta py-3 px-4 rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-md active:scale-95 cursor-pointer"
+            >
+              <span>{nextButtonLabel || (isKana ? 'Lanjut ke Aksara Berikutnya' : 'Lanjut ke Kanji Berikutnya')}</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+
+          {onCancel && (
+            <div className="text-center pt-1">
+              <button
+                type="button"
+                onClick={() => {
+                  playSound('click', soundEnabled);
+                  onCancel();
+                }}
+                className="text-xs text-text-muted hover:text-text-primary underline underline-offset-2 font-bold transition-colors cursor-pointer"
+              >
+                Kembali ke Detail Materi
+              </button>
+            </div>
+          )}
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div className={`flex flex-col items-center w-full max-w-md mx-auto space-y-2 sm:space-y-3 ${className}`}>

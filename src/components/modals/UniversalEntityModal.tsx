@@ -569,8 +569,11 @@ export const UniversalEntityModal: React.FC<UniversalEntityModalProps> = ({
                     soundEnabled={soundEnabled}
                     totalSheets={1}
                     showStopwatch={true}
+                    nextButtonLabel="Kembali ke Detail Materi"
+                    onCancel={() => setActiveTab('overview')}
                     onFinish={reward => {
                       if (onRewardPlayer) onRewardPlayer(reward?.expGained || 25, reward?.goldGained || 10);
+                      setActiveTab('overview');
                     }}
                   />
                 </div>
@@ -590,6 +593,8 @@ export const UniversalEntityModal: React.FC<UniversalEntityModalProps> = ({
                     }
                   }
                   soundEnabled={soundEnabled}
+                  nextButtonLabel="Kembali ke Detail Materi"
+                  onCancel={() => setActiveTab('overview')}
                   onCompleteWord={(score, reward) => {
                     const exp = reward?.expGained || 20;
                     const gold = reward?.goldGained || 10;
@@ -607,6 +612,7 @@ export const UniversalEntityModal: React.FC<UniversalEntityModalProps> = ({
                     } else if (onRewardPlayer) {
                       onRewardPlayer(exp, gold);
                     }
+                    setActiveTab('overview');
                   }}
                 />
               )}

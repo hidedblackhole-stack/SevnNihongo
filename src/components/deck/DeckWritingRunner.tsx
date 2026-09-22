@@ -261,6 +261,11 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
                     soundEnabled={soundEnabled}
                     showStopwatch={true}
                     totalSheets={1}
+                    nextButtonLabel={
+                      currentIndex + 1 === writableItems.length
+                        ? 'Selesaikan Drill'
+                        : 'Lanjut ke Materi Berikutnya'
+                    }
                     onFinish={(_score, reward) => {
                       handleNextItem(reward?.expGained, reward?.goldGained);
                     }}
