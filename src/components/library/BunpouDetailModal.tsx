@@ -227,7 +227,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
 
               {/* Plain Meaning */}
               <p className="text-xs sm:text-sm font-semibold text-text-secondary leading-relaxed max-w-xl">
-                {item.meaningId || item.meaning}
+                {item.meaningId || (item as any).meaning}
               </p>
             </div>
 
@@ -237,7 +237,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                 itemId={item.id}
                 category="bunpou"
                 itemTitle={item.title}
-                itemSubtitle={item.meaningId || item.meaning}
+                itemSubtitle={item.meaningId || (item as any).meaning}
                 userDecks={userDecks}
                 onToggleDeckItem={onToggleDeckItem}
                 isDefaultBookmarked={isBookmarked}

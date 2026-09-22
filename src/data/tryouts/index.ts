@@ -9,6 +9,8 @@ import n4_001 from './n4_001.json';
 import n4_002 from './n4_002.json';
 import n5_001 from './n5_001.json';
 import jft_001 from './jft_001.json';
+import { OFFICIAL_TRYOUTS } from './official';
+
 
 export interface TryOutMeta {
   id: string;
@@ -99,8 +101,10 @@ export const ALL_TRYOUTS: TryOutMeta[] = [
     code: 'JFT',
     totalQuestions: jft_001.sections.mojiGoi.questions.length + jft_001.sections.bunpouDokkai.questions.length + jft_001.sections.choukai.questions.length,
     data: jft_001 as unknown as TryOutData
-  }
+  },
+  ...OFFICIAL_TRYOUTS
 ];
 
 
 export const DEFAULT_TRYOUT = (ALL_TRYOUTS.find(t => t.id === 'n3_002') || ALL_TRYOUTS[0]).data;
+

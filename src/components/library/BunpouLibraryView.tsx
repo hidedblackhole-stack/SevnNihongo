@@ -437,7 +437,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
                       itemId={item.id}
                       category="bunpou"
                       itemTitle={item.title}
-                      itemSubtitle={item.meaning}
+                      itemSubtitle={item.meaningId || (item as any).meaning}
                       userDecks={userDecks}
                       onToggleBookmark={onToggleBookmark}
                       onUpdateDecks={onUpdateDecks}
@@ -496,7 +496,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
                         itemId={item.id}
                         category="bunpou"
                         itemTitle={item.title}
-                        itemSubtitle={item.meaningId || item.meaning}
+                        itemSubtitle={item.meaningId || (item as any).meaning}
                         userDecks={userDecks}
                         onToggleBookmark={onToggleBookmark}
                         onUpdateDecks={onUpdateDecks}
@@ -513,7 +513,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
                     {patternTitle}
                   </h3>
                   <p className="text-xs sm:text-sm text-text-secondary font-medium leading-relaxed line-clamp-2">
-                    {item.meaningId || item.meaning}
+                    {item.meaningId || (item as any).meaning}
                   </p>
                 </div>
 

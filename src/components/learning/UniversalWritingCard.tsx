@@ -85,7 +85,7 @@ export const UniversalWritingCard: React.FC<UniversalWritingCardProps> = ({
             // Sheet completion recorded; do NOT auto-advance before user reviews explanation
           }}
           onFinish={(reward) => {
-            const score = reward?.accuracyScore ?? 100;
+            const score = (reward as any)?.accuracyScore ?? 100;
             onFinish(score, reward);
           }}
         />

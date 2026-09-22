@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Bookmark, Check, Plus, X } from 'lucide-react';
-import { UserDeck, DeckItemCategory } from '../../types/rpg';
+import { UserDeck, DeckItemCategory, DeckType } from '../../types/rpg';
 import { playSound } from '../../utils/audio';
 import { DEFAULT_BOOKMARK_DECK_ID, ensureUserDecks, createCustomDeck } from '../../utils/decks';
 
@@ -79,7 +79,7 @@ export const DeckBookmarkPicker: React.FC<DeckBookmarkPickerProps> = ({
     if (!newDeckTitle.trim() || !onUpdateDecks) return;
 
     playSound('click', soundEnabled);
-    const deckType = category === 'kotoba' ? 'vocabulary' : category === 'kanji' ? 'kanji' : category === 'bunpou' ? 'grammar' : 'mixed';
+    const deckType: DeckType = category === 'kotoba' ? 'kotoba' : category === 'kanji' ? 'kanji' : category === 'bunpou' ? 'bunpou' : 'mixed';
     const { userDecks: updatedDecks } = createCustomDeck(userDecks, {
       title: newDeckTitle.trim(),
       type: deckType,

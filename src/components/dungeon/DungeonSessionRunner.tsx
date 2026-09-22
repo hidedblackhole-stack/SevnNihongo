@@ -617,7 +617,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                           soundEnabled={soundEnabled}
                           totalSheets={1}
                           nextButtonLabel={
-                            currentFloorIndex === payload.floors.length - 1
+                            currentFloorIndex === (payload.writingItems?.length ?? 1) - 1
                               ? 'Selesaikan Dungeon'
                               : 'Lantai Berikutnya →'
                           }

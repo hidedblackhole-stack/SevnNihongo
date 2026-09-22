@@ -916,7 +916,7 @@ const KanjiCardItem: React.FC<{
               itemId={item.id || item.character}
               category="kanji"
               itemTitle={item.character}
-              itemSubtitle={item.meaning || (isNum ? 'Angka Suuji' : isKana ? 'Aksara Kana' : item.jlpt)}
+              itemSubtitle={item.meaningId || (item as any).meaning || (isNum ? 'Angka Suuji' : isKana ? 'Aksara Kana' : item.jlpt)}
               userDecks={userDecks}
               onToggleBookmark={onToggleBookmark}
               onUpdateDecks={onUpdateDecks}
