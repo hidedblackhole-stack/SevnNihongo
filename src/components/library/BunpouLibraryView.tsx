@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { AnimatePresence } from 'motion/react';
-import { Search, Filter, ChevronDown, Bookmark, LayoutGrid, List, BookOpen, Zap, Languages, X, Trash2 } from 'lucide-react';
+import { Search, Filter, ChevronDown, Bookmark, LayoutGrid, List, BookOpen, Zap, Languages, X, Trash2, ChevronRight } from 'lucide-react';
 import { ScrollIcon } from '../ui/EngravingIcons';
 import { BUNPOU_DATABASE } from '../../data/bunpou';
 import { ALL_GRAMMAR_FUNCTION_CATEGORIES } from '../../data/bunpouMetadata';
@@ -14,6 +14,7 @@ import { getCanonicalGrammarTitle } from '../../utils/bunpouTitleUtils';
 import { matchBunpouItem } from '../../utils/bunpouSearchUtils';
 import { convertRomajiToKana } from '../../utils/imeEngine';
 import { DeckBookmarkPicker } from '../deck/DeckBookmarkPicker';
+import { getBunpouCategoryTags } from '../../utils/bunpouSkillAdapter';
 
 const LEVEL_OPTIONS = [
   { value: 'all', label: 'Semua Level' },
@@ -457,6 +458,8 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4">
           {displayedBunpou.map((item) => {
             const patternTitle = getCanonicalGrammarTitle(item);
+            const categoryTags = getBunpouCategoryTags(item);
+            const levelLabel = item.baseLevel ? `Level ${item.baseLevel}` : `Level ${item.level}`;
 
             return (
               <div
@@ -469,8 +472,8 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
               >
                 {/* Top row: Level Badge + Actions */}
                 <div className="flex items-center justify-between gap-2">
-                  <span className="px-2.5 py-1 rounded-xl bg-surface-inset text-indigo text-xs font-mono font-bold border border-indigo/20 shadow-sm">
-                    {item.baseLevel ? `Level ${item.baseLevel}` : `Level ${item.level}`}
+                  <span className="px-2.5 py-1 rounded-xl bg-surface-inset text-indigo text-xs font-mono font-bold border border-indigo/20 shadow-xs">
+                    {levelLabel}
                   </span>
 
                   <div className="flex items-center gap-1.5 shrink-0">
@@ -482,7 +485,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
                           onRemoveItem(item.id, 'bunpou');
                           playSound('click', soundEnabled);
                         }}
-                        className="p-1.5 rounded-lg border border-border-subtle bg-surface-inset text-text-muted hover:text-wine-accent transition-all shrink-0"
+                        className="p-1.5 rounded-lg border border-border-subtle bg-surface-inset text-text-muted hover:text-wine-accent transition-all shrink-0 cursor-pointer"
                         title="Hapus dari deck ini"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
@@ -493,7 +496,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
                         itemId={item.id}
                         category="bunpou"
                         itemTitle={item.title}
-                        itemSubtitle={item.meaning}
+                        itemSubtitle={item.meaningId || item.meaning}
                         userDecks={userDecks}
                         onToggleBookmark={onToggleBookmark}
                         onUpdateDecks={onUpdateDecks}
@@ -505,23 +508,33 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
                 </div>
 
                 {/* Main: Clean Title & Meaning */}
-                <div className="space-y-1.5 py-0.5">
-                  <h3 className="text-xl sm:text-2xl font-bold text-text-primary font-heading group-hover:text-indigo transition-colors leading-snug font-jp">
+                <div className="space-y-1.5 py-0.5 min-w-0">
+                  <h3 className="text-xl sm:text-2xl font-bold text-text-primary font-heading group-hover:text-indigo transition-colors leading-snug font-jp truncate">
                     {patternTitle}
                   </h3>
                   <p className="text-xs sm:text-sm text-text-secondary font-medium leading-relaxed line-clamp-2">
-                    {item.meaning}
+                    {item.meaningId || item.meaning}
                   </p>
                 </div>
 
-                {/* Bottom: Structure snippet badge */}
-                {item.structure && (
-                  <div className="pt-2 border-t border-border-subtle/50 flex items-center justify-between text-[11px] text-text-muted">
-                    <span className="font-mono truncate bg-surface-inset px-2 py-0.5 rounded border border-border-subtle max-w-full">
-                      {item.structure}
-                    </span>
+                {/* Tags & Action Row */}
+                <div className="pt-2.5 border-t border-border-subtle/60 flex items-center justify-between gap-2">
+                  <div className="flex flex-wrap items-center gap-1.5 min-w-0">
+                    {categoryTags.map((tag, tIdx) => (
+                      <span
+                        key={tIdx}
+                        className="text-[10px] sm:text-[11px] font-mono font-semibold px-2 py-0.5 rounded-lg bg-surface-inset text-text-muted border border-border-subtle/80"
+                      >
+                        {tag}
+                      </span>
+                    ))}
                   </div>
-                )}
+
+                  <div className="flex items-center gap-1 text-xs font-bold text-indigo group-hover:translate-x-0.5 transition-transform shrink-0 font-heading">
+                    <span>Pelajari Skill</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </div>
+                </div>
               </div>
             );
           })}

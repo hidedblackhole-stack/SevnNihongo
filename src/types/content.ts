@@ -130,6 +130,65 @@ export interface GrammarComparison {
   difference: string;
 }
 
+export interface GrammarSkillConcept {
+  summary: string;
+  beforeState?: string; // e.g. "Dulu: Belum bisa / Tidak dilakukan ❌"
+  afterState?: string;  // e.g. "Sekarang: Menjadi bisa / Mulai terbiasa ✅"
+  keyTakeaway?: string;
+}
+
+export interface GrammarSkillFunction {
+  number: number;
+  label: string;
+  description: string;
+  miniExample?: {
+    japanese: string;
+    reading?: string;
+    meaningId: string;
+  };
+}
+
+export interface GrammarSkillFormulaStep {
+  title: string;
+  breakdown: string[]; // e.g. ["V Potensial", "+", "ようになる"]
+  progression?: string[]; // e.g. ["話す", "話せる", "話せるようになる"]
+  note?: string;
+}
+
+export interface GrammarSkillWordIdentity {
+  typeCategory: string; // e.g. "意志動詞 (Kehendak)", "無意志動詞", "Potential Form"
+  tagColor?: 'emerald' | 'sky' | 'purple' | 'amber' | 'indigo' | 'rose';
+  icon?: string;
+  examples: string[];
+  functionEffect: string;
+}
+
+export interface GrammarSkillNuance {
+  contrastA: string;
+  meaningA: string;
+  contrastB: string;
+  meaningB: string;
+  explanation?: string;
+}
+
+export interface TieredExampleSentence {
+  tier: 'basic' | 'daily' | 'natural';
+  tierLabel: string;
+  japanese: string;
+  reading: string;
+  meaningId: string;
+}
+
+export interface GrammarSkillNodes {
+  concept: GrammarSkillConcept;
+  functions: GrammarSkillFunction[];
+  formulas: GrammarSkillFormulaStep[];
+  wordIdentities: GrammarSkillWordIdentity[];
+  nuances: GrammarSkillNuance[];
+  examples: TieredExampleSentence[];
+  trainingQuestions: Question[];
+}
+
 export interface BunpouItem {
   id: string;
   title: string;
@@ -147,6 +206,9 @@ export interface BunpouItem {
   relatedKeywords?: string[]; // e.g. ["推測", "似ている", "まるで"]
   baseLevel?: 'N5' | 'N4' | 'N3' | 'N2';
   comparisonNotes?: GrammarComparison[];
+  tags?: string[];
+  categoryType?: string; // e.g. "Change Pattern", "Desire Pattern", "Passive Pattern"
+  skillNodes?: GrammarSkillNodes;
 }
 
 export interface BunpouMixedSet {
