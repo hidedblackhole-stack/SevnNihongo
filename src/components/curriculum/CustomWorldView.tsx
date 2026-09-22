@@ -318,7 +318,7 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
                   !isLocked ? 'cursor-pointer' : ''
                 } ${
                   isCurrent
-                    ? 'border-indigo shadow-md shadow-indigo/10 bg-surface-card ring-1 ring-indigo/40'
+                    ? 'border border-border-muted shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_4px_12px_rgba(0,0,0,0.35)] bg-surface-elevated'
                     : isCompleted
                     ? 'border-emerald-500/30 bg-surface-card/90'
                     : 'border-border-subtle bg-surface-inset/60 opacity-60'
@@ -333,8 +333,8 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
                         isCompleted
                           ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/40'
                           : isCurrent
-                          ? 'bg-indigo text-white border-indigo shadow-indigo/30'
-                          : 'bg-surface-inset text-text-secondary border-border-subtle'
+                          ? 'bg-indigo text-white border-indigo/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_2px_6px_rgba(0,0,0,0.3)]'
+                          : 'bg-surface-inset text-text-secondary border-border-subtle shadow-[inset_1px_1px_3px_var(--neu-d)]'
                       }`}
                     >
                       {isCompleted ? (

@@ -345,7 +345,7 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
                           isAlreadyInDeck
                             ? 'border-border-subtle opacity-65 cursor-default'
                             : isSelected
-                            ? 'bg-surface-elevated border-border-primary ring-1 ring-gold/40 cursor-pointer'
+                            ? 'bg-surface-elevated border border-gold/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_8px_rgba(0,0,0,0.3)] cursor-pointer'
                             : 'border-border-subtle hover:border-border-primary cursor-pointer'
                         }`}
                       >

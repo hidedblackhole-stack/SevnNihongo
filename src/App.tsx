@@ -1190,7 +1190,7 @@ export default function App() {
             <div
               className={`py-1.5 px-3 rounded-xl bg-surface-inset border text-xs font-mono font-bold flex items-center gap-1.5 shadow-inner transition-all select-none ${
                 isTimerActive
-                  ? 'border-gold/50 text-gold ring-1 ring-gold/20'
+                  ? 'border-gold/50 text-gold'
                   : 'border-border-subtle text-text-secondary'
               }`}
               title={`Waktu Belajar Hari Ini: ${formatDetailedStudyTime(activeTodayStudySeconds)}${

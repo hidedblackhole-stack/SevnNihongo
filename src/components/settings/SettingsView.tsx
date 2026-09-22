@@ -292,10 +292,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 playSound('click', stats.soundEnabled);
                 onUpdateSettings({ characterGender: 'male' });
               }}
-              className={`p-3 rounded-2xl border-2 flex flex-col items-center text-center gap-2 transition-all ${
+              className={`p-3.5 rounded-2xl border flex flex-col items-center text-center gap-2 transition-all ${
                 (stats.characterGender || 'male') === 'male'
-                  ? 'bg-blue-600/15 border-blue-500 shadow-md ring-2 ring-blue-500/20'
-                  : 'bg-surface-inset border-border-subtle hover:border-border-muted opacity-70 hover:opacity-100'
+                  ? 'bg-surface-elevated border-gold/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_4px_12px_rgba(0,0,0,0.35)]'
+                  : 'bg-surface-inset border-border-subtle shadow-[inset_1px_1px_3px_var(--neu-d)] hover:border-border-muted opacity-75 hover:opacity-100'
               }`}
             >
               <span className="text-3xl">♂️</span>
@@ -308,7 +308,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 </span>
               </div>
               {(stats.characterGender || 'male') === 'male' && (
-                <span className="px-2 py-0.5 rounded-full bg-blue-500 text-[10px] font-bold text-white shadow-xs">
+                <span className="px-2 py-0.5 rounded-full bg-gold/20 border border-gold/50 text-[10px] font-bold text-gold shadow-xs">
                   Aktif
                 </span>
               )}
@@ -320,10 +320,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 playSound('click', stats.soundEnabled);
                 onUpdateSettings({ characterGender: 'female' });
               }}
-              className={`p-3 rounded-2xl border-2 flex flex-col items-center text-center gap-2 transition-all ${
+              className={`p-3.5 rounded-2xl border flex flex-col items-center text-center gap-2 transition-all ${
                 stats.characterGender === 'female'
-                  ? 'bg-rose-600/15 border-rose-500 shadow-md ring-2 ring-rose-500/20'
-                  : 'bg-surface-inset border-border-subtle hover:border-border-muted opacity-70 hover:opacity-100'
+                  ? 'bg-surface-elevated border-gold/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_4px_12px_rgba(0,0,0,0.35)]'
+                  : 'bg-surface-inset border-border-subtle shadow-[inset_1px_1px_3px_var(--neu-d)] hover:border-border-muted opacity-75 hover:opacity-100'
               }`}
             >
               <span className="text-3xl">♀️</span>
@@ -336,7 +336,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 </span>
               </div>
               {stats.characterGender === 'female' && (
-                <span className="px-2 py-0.5 rounded-full bg-rose-500 text-[10px] font-bold text-white shadow-xs">
+                <span className="px-2 py-0.5 rounded-full bg-gold/20 border border-gold/50 text-[10px] font-bold text-gold shadow-xs">
                   Aktif
                 </span>
               )}
@@ -360,10 +360,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                   playSound('click', true);
                   onUpdateSettings({ avatar: emoji });
                 }}
-                className={`w-12 h-12 flex items-center justify-center text-2xl rounded-xl border-2 transition-all ${
+                className={`w-12 h-12 flex items-center justify-center text-2xl rounded-xl border transition-all ${
                   stats.avatar === emoji || (!stats.avatar && emoji === '🦊')
-                    ? 'bg-surface-elevated border-indigo scale-110 shadow-md ring-2 ring-indigo/30'
-                    : 'bg-surface-inset border-border-subtle hover:border-indigo/50 opacity-60 hover:opacity-100'
+                    ? 'bg-surface-elevated border-gold/50 scale-105 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_4px_10px_rgba(0,0,0,0.35)]'
+                    : 'bg-surface-inset border-border-subtle shadow-[inset_1px_1px_3px_var(--neu-d)] hover:border-border-muted opacity-70 hover:opacity-100'
                 }`}
               >
                 {emoji}

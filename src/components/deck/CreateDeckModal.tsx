@@ -321,7 +321,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                     }}
                     className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl text-base sm:text-lg flex items-center justify-center transition-all border ${
                       coverIcon === icon
-                        ? 'bg-surface-elevated border-border-primary ring-2 ring-gold/40 scale-105'
+                        ? 'bg-surface-elevated border border-gold/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_2px_8px_rgba(0,0,0,0.35)] scale-105'
                         : 'bg-surface-inset border-border-subtle hover:bg-surface-elevated'
                     }`}
                   >
@@ -349,12 +349,12 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                       }}
                       className={`p-2.5 rounded-xl text-left border transition-all ${
                         isSelected
-                          ? 'bg-surface-elevated border-border-primary ring-1 ring-gold/30'
+                          ? 'bg-surface-elevated border border-border-muted shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_8px_rgba(0,0,0,0.3)]'
                           : 'bg-surface-inset border-border-subtle hover:bg-surface-card'
                       }`}
                     >
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-heading font-bold text-text-primary">
+                        <span className={`text-xs font-heading font-bold ${isSelected ? 'text-gold' : 'text-text-primary'}`}>
                           {dt.label}
                         </span>
                         {isSelected && <Check className="w-3.5 h-3.5 text-gold" />}

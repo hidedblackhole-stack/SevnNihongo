@@ -176,7 +176,7 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
             }}
             className={`btn btn-pill ${
               activeTab === 'list' && !selectedKanjiId
-                ? 'ring-1 ring-wine-accent/50 text-wine-accent'
+                ? 'bg-surface-elevated text-wine-accent font-bold border border-border-muted shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_4px_rgba(0,0,0,0.2)]'
                 : 'opacity-70 hover:opacity-100'
             }`}
           >

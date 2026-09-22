@@ -386,8 +386,8 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                       }}
                       className={`py-1.5 px-2 rounded-xl text-xs font-mono font-bold transition-all text-center cursor-pointer border ${
                         !isRandomExtreme && extremeStageNumber === stg
-                          ? 'bg-rose-500 text-white border-rose-400 shadow-md font-black'
-                          : 'bg-surface-card border-border-subtle text-text-secondary hover:text-text-primary'
+                          ? 'bg-surface-elevated text-gold border border-gold/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_2px_6px_rgba(0,0,0,0.3)] font-black'
+                          : 'bg-surface-inset border-border-subtle/60 text-text-secondary hover:text-text-primary shadow-[inset_1px_1px_3px_var(--neu-d)]'
                       }`}
                     >
                       Stg {stg}
@@ -401,8 +401,8 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                     }}
                     className={`py-1.5 px-2 rounded-xl text-xs font-heading font-bold transition-all text-center cursor-pointer border col-span-2 sm:col-span-1 ${
                       isRandomExtreme
-                        ? 'bg-rose-500 text-white border-rose-400 shadow-md font-black'
-                        : 'bg-surface-card border-border-subtle text-text-secondary hover:text-text-primary'
+                        ? 'bg-surface-elevated text-gold border border-gold/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_2px_6px_rgba(0,0,0,0.3)] font-black'
+                        : 'bg-surface-inset border-border-subtle/60 text-text-secondary hover:text-text-primary shadow-[inset_1px_1px_3px_var(--neu-d)]'
                     }`}
                   >
                     🎲 Acak
@@ -501,15 +501,15 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                             onClick={() => toggleFlashcardType('kotoba')}
                             className={`p-3 rounded-2xl text-left transition-all border relative flex flex-col justify-between select-none cursor-pointer overflow-hidden ${
                               isSelected
-                                ? 'bg-gradient-to-b from-surface-elevated to-surface-card border-2 border-teal text-text-primary shadow-[0_0_12px_rgba(38,166,154,0.22),2px_2px_6px_var(--neu-d),-1px_-1px_3px_var(--neu-l)] ring-1 ring-teal/30'
-                                : 'bg-surface-card/60 hover:bg-surface-elevated/40 border-border-subtle text-text-muted hover:text-text-primary'
+                                ? 'bg-surface-elevated border border-border-muted text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_4px_10px_rgba(0,0,0,0.35)]'
+                                : 'bg-surface-inset hover:bg-surface-card/60 border border-border-subtle/60 shadow-[inset_1px_1px_3px_var(--neu-d)] text-text-muted hover:text-text-primary'
                             }`}
                           >
                             <div className="flex items-center justify-between gap-2">
                               <div className="flex items-center gap-2">
                                 <span className={`w-6 h-6 rounded-lg font-serif font-black text-xs flex items-center justify-center border shadow-xs ${
                                   isSelected
-                                    ? 'bg-teal/20 border-teal/40 text-teal'
+                                    ? 'bg-teal/15 border-teal/30 text-teal'
                                     : 'bg-surface-inset border-border-subtle text-text-muted'
                                 }`}>
                                   語
@@ -518,8 +518,8 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                                   Kotoba
                                 </span>
                               </div>
-                              <div className={`w-4 h-4 rounded flex items-center justify-center border transition-all ${
-                                isSelected ? 'bg-teal border-teal text-surface-base shadow-xs' : 'border-border-subtle bg-surface-inset'
+                              <div className={`w-4 h-4 rounded-full flex items-center justify-center border transition-all ${
+                                isSelected ? 'bg-teal/20 border-teal/50 text-teal shadow-xs' : 'border-border-subtle bg-surface-inset text-transparent'
                               }`}>
                                 {isSelected && <Check className="w-2.5 h-2.5 stroke-[3]" />}
                               </div>
@@ -545,15 +545,15 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                             onClick={() => toggleFlashcardType('kanji')}
                             className={`p-3 rounded-2xl text-left transition-all border relative flex flex-col justify-between select-none cursor-pointer overflow-hidden ${
                               isSelected
-                                ? 'bg-gradient-to-b from-surface-elevated to-surface-card border-2 border-gold text-text-primary shadow-[0_0_12px_rgba(240,190,82,0.22),2px_2px_6px_var(--neu-d),-1px_-1px_3px_var(--neu-l)] ring-1 ring-gold/30'
-                                : 'bg-surface-card/60 hover:bg-surface-elevated/40 border-border-subtle text-text-muted hover:text-text-primary'
+                                ? 'bg-surface-elevated border border-border-muted text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_4px_10px_rgba(0,0,0,0.35)]'
+                                : 'bg-surface-inset hover:bg-surface-card/60 border border-border-subtle/60 shadow-[inset_1px_1px_3px_var(--neu-d)] text-text-muted hover:text-text-primary'
                             }`}
                           >
                             <div className="flex items-center justify-between gap-2">
                               <div className="flex items-center gap-2">
                                 <span className={`w-6 h-6 rounded-lg font-serif font-black text-xs flex items-center justify-center border shadow-xs ${
                                   isSelected
-                                    ? 'bg-gold/20 border-gold/40 text-gold'
+                                    ? 'bg-gold/15 border-gold/30 text-gold'
                                     : 'bg-surface-inset border-border-subtle text-text-muted'
                                 }`}>
                                   字
@@ -562,8 +562,8 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                                   Kanji
                                 </span>
                               </div>
-                              <div className={`w-4 h-4 rounded flex items-center justify-center border transition-all ${
-                                isSelected ? 'bg-gold border-gold text-surface-base shadow-xs' : 'border-border-subtle bg-surface-inset'
+                              <div className={`w-4 h-4 rounded-full flex items-center justify-center border transition-all ${
+                                isSelected ? 'bg-gold/20 border-gold/50 text-gold shadow-xs' : 'border-border-subtle bg-surface-inset text-transparent'
                               }`}>
                                 {isSelected && <Check className="w-2.5 h-2.5 stroke-[3]" />}
                               </div>
@@ -589,15 +589,15 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                             onClick={() => toggleFlashcardType('bunpou')}
                             className={`p-3 rounded-2xl text-left transition-all border relative flex flex-col justify-between select-none cursor-pointer overflow-hidden ${
                               isSelected
-                                ? 'bg-gradient-to-b from-surface-elevated to-surface-card border-2 border-indigo text-text-primary shadow-[0_0_12px_rgba(111,147,207,0.25),2px_2px_6px_var(--neu-d),-1px_-1px_3px_var(--neu-l)] ring-1 ring-indigo/30'
-                                : 'bg-surface-card/60 hover:bg-surface-elevated/40 border-border-subtle text-text-muted hover:text-text-primary'
+                                ? 'bg-surface-elevated border border-border-muted text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_4px_10px_rgba(0,0,0,0.35)]'
+                                : 'bg-surface-inset hover:bg-surface-card/60 border border-border-subtle/60 shadow-[inset_1px_1px_3px_var(--neu-d)] text-text-muted hover:text-text-primary'
                             }`}
                           >
                             <div className="flex items-center justify-between gap-2">
                               <div className="flex items-center gap-2">
                                 <span className={`w-6 h-6 rounded-lg font-serif font-black text-xs flex items-center justify-center border shadow-xs ${
                                   isSelected
-                                    ? 'bg-indigo/20 border-indigo/40 text-indigo'
+                                    ? 'bg-indigo/15 border-indigo/30 text-indigo'
                                     : 'bg-surface-inset border-border-subtle text-text-muted'
                                 }`}>
                                   文
@@ -606,8 +606,8 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                                   Pola Kalimat
                                 </span>
                               </div>
-                              <div className={`w-4 h-4 rounded flex items-center justify-center border transition-all ${
-                                isSelected ? 'bg-indigo border-indigo text-surface-base shadow-xs' : 'border-border-subtle bg-surface-inset'
+                              <div className={`w-4 h-4 rounded-full flex items-center justify-center border transition-all ${
+                                isSelected ? 'bg-indigo/20 border-indigo/50 text-indigo shadow-xs' : 'border-border-subtle bg-surface-inset text-transparent'
                               }`}>
                                 {isSelected && <Check className="w-2.5 h-2.5 stroke-[3]" />}
                               </div>
@@ -748,18 +748,18 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                             onClick={() => toggleConjugationForm(form.id)}
                             className={`p-2.5 rounded-xl text-left transition-all border relative flex flex-col justify-between select-none cursor-pointer ${
                               isSelected
-                                ? 'bg-gradient-to-b from-surface-elevated to-surface-card border-gold text-text-primary shadow-[0_0_10px_rgba(240,190,82,0.2)] ring-1 ring-gold/40'
-                                : 'bg-surface-card/60 hover:bg-surface-elevated/40 border-border-subtle text-text-muted hover:text-text-primary'
+                                ? 'bg-surface-elevated border border-gold/30 text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_3px_8px_rgba(0,0,0,0.35)]'
+                                : 'bg-surface-inset hover:bg-surface-card/60 border border-border-subtle/60 shadow-[inset_1px_1px_3px_var(--neu-d)] text-text-muted hover:text-text-primary'
                             }`}
                           >
                             <div className="flex items-center justify-between gap-1">
                               <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded ${
-                                isSelected ? 'bg-gold/20 text-gold border border-gold/40' : 'bg-surface-inset text-text-muted border border-border-subtle'
+                                isSelected ? 'bg-gold/15 text-gold border border-gold/30' : 'bg-surface-inset text-text-muted border border-border-subtle'
                               }`}>
                                 {form.badge}
                               </span>
-                              <div className={`w-4 h-4 rounded flex items-center justify-center border transition-all ${
-                                isSelected ? 'bg-gold border-gold text-surface-base shadow-xs' : 'border-border-subtle bg-surface-inset'
+                              <div className={`w-4 h-4 rounded-full flex items-center justify-center border transition-all ${
+                                isSelected ? 'bg-gold/20 border-gold/50 text-gold shadow-xs' : 'border-border-subtle bg-surface-inset text-transparent'
                               }`}>
                                 {isSelected && <Check className="w-2.5 h-2.5 stroke-[3]" />}
                               </div>
@@ -814,11 +814,11 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                     }}
                     className={`py-2 px-3 rounded-xl text-xs font-heading font-bold transition-all flex items-center justify-center gap-2 select-none cursor-pointer ${
                       sourceType === 'preset'
-                        ? 'bg-indigo-deep text-gold border border-gold/40 shadow-[2px_2px_6px_var(--neu-d),-1px_-1px_4px_var(--neu-l)] font-black'
+                        ? 'bg-surface-elevated text-text-primary border border-border-muted shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_6px_rgba(0,0,0,0.3)] font-black'
                         : 'text-text-muted hover:text-text-primary hover:bg-surface-card/30'
                     }`}
                   >
-                    <Sparkles className="w-3.5 h-3.5" />
+                    <Sparkles className="w-3.5 h-3.5 text-gold" />
                     <span>
                       {dungeonType === 'conjugation' && conjugationMode === 'custom'
                         ? 'Tingkat Kosakata'
@@ -837,11 +837,11 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                     }}
                     className={`py-2 px-3 rounded-xl text-xs font-heading font-bold transition-all flex items-center justify-center gap-2 select-none cursor-pointer ${
                       sourceType === 'deck'
-                        ? 'bg-indigo-deep text-gold border border-gold/40 shadow-[2px_2px_6px_var(--neu-d),-1px_-1px_4px_var(--neu-l)] font-black'
+                        ? 'bg-surface-elevated text-text-primary border border-border-muted shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_6px_rgba(0,0,0,0.3)] font-black'
                         : 'text-text-muted hover:text-text-primary hover:bg-surface-card/30'
                     }`}
                   >
-                    <BookOpen className="w-3.5 h-3.5" />
+                    <BookOpen className="w-3.5 h-3.5 text-text-muted" />
                     <span>Pilih Deck ({compatibleDecks.length})</span>
                   </button>
                 </div>
@@ -861,8 +861,8 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                           }}
                           className={`p-2.5 sm:p-3 rounded-2xl text-left transition-all relative flex flex-col justify-between min-h-[74px] sm:min-h-[78px] select-none cursor-pointer overflow-hidden ${
                             isSelected
-                              ? 'bg-gradient-to-b from-surface-elevated to-surface-card border-2 border-gold text-text-primary shadow-[0_0_14px_rgba(240,190,82,0.25),3px_3px_8px_var(--neu-d),-1px_-1px_4px_var(--neu-l)] ring-1 ring-gold/40'
-                              : 'bg-surface-inset hover:bg-surface-elevated/60 border border-border-subtle/80 shadow-[inset_1.5px_1.5px_4px_var(--neu-d),inset_-1px_-1px_3px_var(--neu-l)] hover:border-gold/30 hover:scale-[1.01]'
+                              ? 'bg-surface-elevated border border-gold/30 text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_4px_12px_rgba(0,0,0,0.4)]'
+                              : 'bg-surface-inset hover:bg-surface-card/60 border border-border-subtle/60 shadow-[inset_1px_1px_3px_var(--neu-d)] hover:border-border-muted'
                           }`}
                         >
                           <div className="flex items-center justify-between gap-1.5 w-full min-w-0">
@@ -870,7 +870,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                               {opt.label}
                             </span>
                             {isSelected ? (
-                              <div className="w-4 h-4 rounded-full bg-gold text-surface-base flex items-center justify-center shrink-0 shadow-xs">
+                              <div className="w-4 h-4 rounded-full bg-gold/20 border border-gold/50 text-gold flex items-center justify-center shrink-0 shadow-xs">
                                 <Check className="w-2.5 h-2.5 stroke-[3]" />
                               </div>
                             ) : (
@@ -905,8 +905,8 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                               }}
                               className={`w-full p-3.5 rounded-2xl text-left transition-all flex items-center justify-between gap-3 select-none cursor-pointer ${
                                 isSelected
-                                  ? 'bg-gradient-to-b from-surface-elevated to-surface-card border-2 border-gold text-text-primary shadow-[0_0_14px_rgba(240,190,82,0.22),3px_3px_8px_var(--neu-d),-1px_-1px_4px_var(--neu-l)] ring-1 ring-gold/40'
-                                  : 'bg-surface-inset hover:bg-surface-elevated/60 border border-border-subtle shadow-[inset_1.5px_1.5px_4px_var(--neu-d),inset_-1px_-1px_3px_var(--neu-l)] hover:border-gold/30 hover:scale-[1.005]'
+                                  ? 'bg-surface-elevated border border-gold/30 text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_4px_12px_rgba(0,0,0,0.4)]'
+                                  : 'bg-surface-inset hover:bg-surface-card/60 border border-border-subtle/60 shadow-[inset_1px_1px_3px_var(--neu-d)] hover:border-border-muted'
                               }`}
                             >
                               <div className="flex items-center gap-3.5 min-w-0">
@@ -934,8 +934,8 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                                 </span>
                                 <div className={`w-5 h-5 rounded-full flex items-center justify-center border transition-all ${
                                   isSelected
-                                    ? 'bg-gold border-gold text-surface-base shadow-sm'
-                                    : 'border-border-subtle bg-surface-card'
+                                    ? 'bg-gold/20 border-gold/50 text-gold shadow-xs'
+                                    : 'border-border-subtle bg-surface-card text-transparent'
                                 }`}>
                                   {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
                                 </div>
@@ -1027,8 +1027,8 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                     }}
                     className={`py-3 px-2 rounded-2xl text-center transition-all select-none cursor-pointer ${
                       isSelected
-                        ? 'bg-gradient-to-b from-gold/25 to-gold/10 border-2 border-gold text-gold shadow-[0_0_14px_rgba(240,190,82,0.25),2px_2px_8px_var(--neu-d),-1px_-1px_4px_var(--neu-l)] ring-1 ring-gold/40'
-                        : 'bg-surface-inset hover:bg-surface-elevated/60 border border-border-subtle shadow-[inset_1.5px_1.5px_4px_var(--neu-d),inset_-1px_-1px_3px_var(--neu-l)] hover:border-gold/30 hover:scale-[1.01]'
+                        ? 'bg-surface-elevated border border-gold/35 text-gold shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_4px_12px_rgba(0,0,0,0.4)]'
+                        : 'bg-surface-inset hover:bg-surface-card/60 border border-border-subtle/60 shadow-[inset_1px_1px_3px_var(--neu-d)] hover:border-border-muted'
                     }`}
                   >
                     <span className={`block text-xs sm:text-sm font-heading font-black tracking-wide ${isSelected ? 'text-gold' : 'text-text-primary'}`}>
@@ -1059,12 +1059,12 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                 }}
                 className={`p-3.5 rounded-2xl border text-left flex items-start gap-3 transition-all select-none cursor-pointer ${
                   mode === 'standard'
-                    ? 'bg-gradient-to-b from-surface-elevated to-surface-card border-2 border-teal text-text-primary shadow-[0_0_14px_rgba(38,166,154,0.25),3px_3px_8px_var(--neu-d),-1px_-1px_4px_var(--neu-l)] ring-1 ring-teal/40'
-                    : 'bg-surface-inset hover:bg-surface-elevated/50 border border-border-subtle shadow-[inset_1.5px_1.5px_4px_var(--neu-d),inset_-1px_-1px_3px_var(--neu-l)]'
+                    ? 'bg-surface-elevated border border-border-muted text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_4px_12px_rgba(0,0,0,0.4)]'
+                    : 'bg-surface-inset hover:bg-surface-card/60 border border-border-subtle/60 shadow-[inset_1px_1px_3px_var(--neu-d)]'
                 }`}
               >
                 {/* Sunken Coin Slot Icon */}
-                <div className="w-9 h-9 rounded-xl bg-surface-inset border border-teal/40 flex items-center justify-center shrink-0 text-teal shadow-[inset_1.5px_1.5px_3px_var(--neu-d)]">
+                <div className="w-9 h-9 rounded-xl bg-surface-inset border border-border-subtle flex items-center justify-center shrink-0 text-teal shadow-[inset_1.5px_1.5px_3px_var(--neu-d)]">
                   <Shield className="w-4 h-4" />
                 </div>
                 <div className="min-w-0">
@@ -1085,12 +1085,12 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                 }}
                 className={`p-3.5 rounded-2xl border text-left flex items-start gap-3 transition-all select-none cursor-pointer ${
                   mode === 'survival'
-                    ? 'bg-gradient-to-b from-surface-elevated to-surface-card border-2 border-rose-500 text-text-primary shadow-[0_0_14px_rgba(244,63,94,0.25),3px_3px_8px_var(--neu-d),-1px_-1px_4px_var(--neu-l)] ring-1 ring-rose-500/40'
-                    : 'bg-surface-inset hover:bg-surface-elevated/50 border border-border-subtle shadow-[inset_1.5px_1.5px_4px_var(--neu-d),inset_-1px_-1px_3px_var(--neu-l)]'
+                    ? 'bg-surface-elevated border border-border-muted text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_4px_12px_rgba(0,0,0,0.4)]'
+                    : 'bg-surface-inset hover:bg-surface-card/60 border border-border-subtle/60 shadow-[inset_1px_1px_3px_var(--neu-d)]'
                 }`}
               >
                 {/* Sunken Coin Slot Icon */}
-                <div className="w-9 h-9 rounded-xl bg-surface-inset border border-rose-500/40 flex items-center justify-center shrink-0 text-rose-400 shadow-[inset_1.5px_1.5px_3px_var(--neu-d)]">
+                <div className="w-9 h-9 rounded-xl bg-surface-inset border border-border-subtle flex items-center justify-center shrink-0 text-rose-400 shadow-[inset_1.5px_1.5px_3px_var(--neu-d)]">
                   <Clock className="w-4 h-4" />
                 </div>
                 <div className="min-w-0">

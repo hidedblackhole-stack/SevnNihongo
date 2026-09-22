@@ -1192,7 +1192,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
                   }}
                   className={`px-3 py-1 rounded-lg text-xs font-medium shrink-0 flex items-center gap-1.5 transition-all ${
                     isSubActive
-                      ? 'bg-surface-inset border border-border-subtle text-text-primary font-bold shadow-sm ring-1 ring-gold/40'
+                      ? 'bg-surface-elevated border border-border-muted text-gold font-bold shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_4px_rgba(0,0,0,0.25)]'
                       : 'text-text-muted hover:text-text-primary hover:bg-surface-inset/60 border border-transparent'
                   }`}
                 >

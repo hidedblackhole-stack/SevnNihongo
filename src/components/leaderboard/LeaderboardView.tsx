@@ -252,7 +252,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
   };
 
   const getRankStyle = (index: number) => {
-    if (index === 0) return 'panel border-2 border-gold shadow-md text-text-primary';
+    if (index === 0) return 'panel border border-gold/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_4px_12px_rgba(0,0,0,0.3)] text-text-primary';
     if (index === 1) return 'panel border border-border-primary shadow-sm text-text-primary';
     if (index === 2) return 'panel border border-border-subtle shadow-sm text-text-primary';
     return 'panel border border-border-subtle/50 shadow-sm text-text-primary';
@@ -406,7 +406,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
                   <div
                     key={entry.user_id}
                     onClick={() => handleSelectPlayer(entry, index)}
-                    className={`flex items-center gap-3 p-3 sm:px-4 rounded-2xl transition-all border shadow-sm cursor-pointer hover:scale-[1.01] active:scale-[0.99] ${getRankStyle(index)} ${isMe ? 'ring-2 ring-amber-500/50 scale-[1.01]' : ''}`}
+                    className={`flex items-center gap-3 p-3 sm:px-4 rounded-2xl transition-all border shadow-sm cursor-pointer hover:scale-[1.01] active:scale-[0.99] ${getRankStyle(index)} ${isMe ? 'border-gold/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_4px_12px_rgba(0,0,0,0.35)] scale-[1.01]' : ''}`}
                     title="Klik untuk melihat profil karakter petualang"
                   >
                     {/* Rank */}
@@ -510,7 +510,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
             onClick={() => {
               handleSelectPlayer(myRankInfo.entry, myRankInfo.rank - 1);
             }}
-            className="p-3 sm:px-4 rounded-2xl bg-surface-elevated/95 backdrop-blur-md border-2 border-amber-500/80 shadow-2xl flex items-center justify-between gap-3 cursor-pointer hover:border-amber-400 transition-all hover:scale-[1.01] active:scale-[0.99] ring-2 ring-amber-500/30"
+            className="p-3 sm:px-4 rounded-2xl bg-surface-elevated/95 backdrop-blur-md border border-gold/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_8px_24px_rgba(0,0,0,0.45)] flex items-center justify-between gap-3 cursor-pointer hover:border-gold/60 transition-all hover:scale-[1.01] active:scale-[0.99]"
             title="Klik untuk melihat detail profil petualang kamu"
           >
             {/* Rank badge */}

@@ -1194,7 +1194,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
           {/* Hero Section: Giant Character & Readings */}
           <div className="flex flex-col sm:flex-row items-center gap-4 py-1">
             {/* Hanko Motif Giant Character Frame */}
-            <div className="relative group w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-surface-inset border-2 border-wine-accent/40 flex items-center justify-center text-5xl sm:text-6xl font-bold text-wine-accent font-jp shadow-inner shrink-0 select-none">
+            <div className="relative group w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-surface-inset border border-wine-accent/40 flex items-center justify-center text-5xl sm:text-6xl font-bold text-wine-accent font-jp shadow-inner shrink-0 select-none">
               {kanjiChar}
               <button
                 type="button"
@@ -1512,7 +1512,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                   }}
                   className={`py-1 rounded-lg text-xs font-bold transition-all ${
                     isCurrent
-                      ? 'bg-wine-accent text-white shadow-md ring-2 ring-wine-accent/50 font-black scale-105'
+                      ? 'bg-wine-accent text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_3px_6px_rgba(0,0,0,0.3)] border border-wine-accent/60 font-black scale-105'
                       : isCompleted
                         ? 'bg-wine-accent/20 text-wine-accent border border-wine-accent/40 font-bold'
                         : 'bg-surface-inset text-text-muted hover:bg-surface-elevated'

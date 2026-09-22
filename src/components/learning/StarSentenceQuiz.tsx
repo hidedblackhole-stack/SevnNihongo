@@ -199,13 +199,13 @@ export const StarSentenceQuiz: React.FC<StarSentenceQuizProps> = ({
                             ? isFilled && slot.originalIndex === question.correctIndex
                               ? 'bg-state-success/20 text-state-success border-state-success'
                               : 'bg-wine-accent/20 text-wine-accent border-wine-accent'
-                            : 'bg-gold/15 text-gold border-gold/70 shadow-gold/20 ring-2 ring-gold/40'
+                            : 'bg-surface-elevated text-gold border-gold/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_6px_rgba(0,0,0,0.25)]'
                           : submitted
                             ? 'bg-surface-inset text-text-secondary border-border-subtle'
-                            : 'bg-surface-card text-text-primary border-border-subtle hover:border-indigo/40'
+                            : 'bg-surface-card text-text-primary border-border-subtle hover:border-border-muted'
                         : isStarSlot
-                          ? 'border-2 border-dashed border-gold/60 bg-gold/10 text-gold'
-                          : 'border-2 border-dashed border-border-subtle bg-surface-inset text-text-muted'
+                          ? 'border border-dashed border-gold/50 bg-gold/5 text-gold shadow-[inset_1px_1px_3px_var(--neu-d)]'
+                          : 'border border-dashed border-border-subtle bg-surface-inset text-text-muted shadow-[inset_1px_1px_3px_var(--neu-d)]'
                     }`}
                   >
                     {isFilled ? (

@@ -784,8 +784,8 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
                 }}
                 className={`p-2.5 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between space-y-1.5 ${
                   item.isActive
-                    ? 'bg-teal/15 border-teal text-text-primary shadow-md ring-2 ring-teal/30'
-                    : 'bg-surface-inset border-border-subtle hover:bg-surface-elevated text-text-secondary hover:text-text-primary'
+                    ? 'bg-surface-elevated border-teal/40 text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_8px_rgba(0,0,0,0.3)]'
+                    : 'bg-surface-inset border-border-subtle shadow-[inset_1px_1px_3px_var(--neu-d)] hover:bg-surface-elevated text-text-secondary hover:text-text-primary'
                 }`}
               >
                 <div className="flex items-start justify-between gap-1">

@@ -190,10 +190,10 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
               return (
                 <div key={i} className="flex flex-col items-center gap-2">
                   <div 
-                    className={`w-12 h-12 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center border-2 transition-all relative
-                      ${isDone ? 'bg-indigo/15 border-indigo/50 shadow-md' : 
-                        isActive ? 'bg-surface-elevated border-indigo ring-2 ring-indigo/25 shadow-md' : 
-                        'bg-surface-inset border-border-subtle'}
+                    className={`w-12 h-12 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center border transition-all relative
+                      ${isDone ? 'bg-indigo/15 border-indigo/40 shadow-sm' : 
+                        isActive ? 'bg-surface-elevated border-border-muted shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_2px_8px_rgba(0,0,0,0.3)]' : 
+                        'bg-surface-inset border-border-subtle shadow-[inset_1px_1px_3px_var(--neu-d)]'}
                     `}
                   >
                     <AnimatePresence>
@@ -295,8 +295,8 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
                       }}
                       className={`px-2.5 py-1 rounded-xl text-xs font-bold font-jp border transition-all flex items-center gap-1.5 ${
                         selectedReadingIdx === i
-                          ? 'bg-amber-500/20 text-amber-600 dark:text-amber-300 border-amber-500/50 shadow-xs ring-1 ring-amber-500/30 font-black'
-                          : 'bg-surface-inset text-text-secondary border-border-subtle hover:border-amber-500/30 hover:text-text-primary'
+                          ? 'bg-surface-elevated text-gold border-gold/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_4px_rgba(0,0,0,0.25)] font-black'
+                          : 'bg-surface-inset text-text-secondary border-border-subtle hover:border-border-muted hover:text-text-primary'
                       }`}
                       title={`Putar pelafalan #${i + 1}: ${v}`}
                     >

@@ -639,7 +639,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
             playSound('attack', soundEnabled);
             setActiveModule('boss');
           }}
-          className="rpg-card p-5 sm:p-6 border-2 border-wine-accent cursor-pointer text-center space-y-3 shadow-xl group transition-all"
+          className="rpg-card p-5 sm:p-6 border border-wine-accent/40 cursor-pointer text-center space-y-3 shadow-xl group transition-all"
         >
           <div className="p-3 inline-flex rounded-full bg-wine/30 border border-wine-accent text-wine-accent">
             <Swords className="w-7 h-7 animate-pulse" />
@@ -800,7 +800,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
                     }}
                     className={`w-full text-left p-3 rounded-xl border flex items-center justify-between gap-3 transition-all cursor-pointer ${
                       isCurrent
-                        ? 'bg-gold/15 border-gold/60 text-gold shadow-sm ring-1 ring-gold/30'
+                        ? 'bg-surface-elevated border-gold/40 text-gold shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_6px_rgba(0,0,0,0.25)]'
                         : 'bg-surface-card hover:bg-surface-elevated border-border-subtle text-text-primary'
                     }`}
                   >

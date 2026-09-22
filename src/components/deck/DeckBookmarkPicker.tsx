@@ -111,12 +111,12 @@ export const DeckBookmarkPicker: React.FC<DeckBookmarkPickerProps> = ({
         className={className || (compact
           ? `p-1 sm:p-1.5 rounded-lg border transition-all cursor-pointer ${
               isInAnyDeck
-                ? 'bg-surface-elevated text-gold border-gold/40 ring-1 ring-gold/30 shadow-xs'
+                ? 'bg-surface-elevated text-gold border-gold/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_6px_rgba(0,0,0,0.3)]'
                 : 'bg-surface-inset text-text-muted hover:text-gold border-border-subtle'
             }`
           : `p-2 rounded-xl border flex items-center gap-1.5 transition-all cursor-pointer ${
               isInAnyDeck
-                ? 'bg-surface-elevated text-gold border-gold/40 ring-1 ring-gold/30'
+                ? 'bg-surface-elevated text-gold border-gold/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_6px_rgba(0,0,0,0.3)]'
                 : 'bg-surface-card border-border-subtle text-text-muted hover:text-gold'
             }`
         )}
@@ -197,8 +197,8 @@ export const DeckBookmarkPicker: React.FC<DeckBookmarkPickerProps> = ({
                     onClick={() => handleToggle(deck)}
                     className={`p-3 rounded-2xl border flex items-center justify-between gap-3 cursor-pointer transition-all select-none ${
                       isIncluded
-                        ? 'bg-gold/10 border-gold/50 shadow-sm ring-1 ring-gold/30'
-                        : 'bg-surface-inset/80 border-border-subtle hover:border-border-primary hover:bg-surface-card text-text-secondary'
+                        ? 'bg-surface-elevated border border-gold/35 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_8px_rgba(0,0,0,0.3)]'
+                        : 'bg-surface-inset/80 border-border-subtle hover:border-border-muted hover:bg-surface-card text-text-secondary'
                     }`}
                   >
                     <div className="flex items-center gap-3 min-w-0">

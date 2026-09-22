@@ -246,7 +246,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
     const diagnostic = generateBossBattleDiagnostic(pillarResults, missedItemIds);
 
     return (
-      <div className="w-full max-w-lg mx-auto p-5 sm:p-7 panel border-2 border-gold/50 text-center space-y-5 shadow-2xl">
+      <div className="w-full max-w-lg mx-auto p-5 sm:p-7 panel border border-gold/40 text-center space-y-5 shadow-2xl">
         <div className="p-3.5 inline-flex rounded-full bg-surface-inset border border-gold/50 text-gold shadow-xl animate-bounce">
           <Trophy className="w-10 h-10" />
         </div>
@@ -345,7 +345,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
   return (
     <div className="w-full max-w-2xl mx-auto space-y-4 pb-6">
       {/* Boss Arena Banner & Status */}
-      <div className="relative p-5 sm:p-6 panel border-2 border-wine-accent/40 text-center shadow-xl overflow-hidden">
+      <div className="relative p-5 sm:p-6 panel border border-wine-accent/40 text-center shadow-xl overflow-hidden">
         <div className="flex items-center justify-between gap-2 mb-2">
           <span className="text-[11px] font-bold text-wine-accent bg-surface-inset px-2.5 py-0.5 rounded-full border border-wine-accent/30 font-heading flex items-center gap-1">
             <Flame className="w-3 h-3 text-wine-accent" />
@@ -366,7 +366,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
           transition={{ duration: isBossHurt ? 0.3 : 2, repeat: isBossHurt ? 0 : Infinity }}
           className="relative inline-block my-2"
         >
-          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border-2 border-wine-accent/50 bg-surface-inset flex items-center justify-center text-4xl sm:text-5xl shadow-lg">
+          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border border-wine-accent/40 bg-surface-inset flex items-center justify-center text-4xl sm:text-5xl shadow-lg">
             👹
           </div>
 

@@ -287,7 +287,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
           {/* ------------------------------------------------------ */}
           {/* CARD 1: INTI POLA — "Apa maksudnya?" (WAJIB PAHAM)     */}
           {/* ------------------------------------------------------ */}
-          <div ref={node1Ref} className="panel p-5 sm:p-6 rounded-3xl bg-surface-card border-2 border-indigo/40 shadow-md space-y-4">
+          <div ref={node1Ref} className="panel p-5 sm:p-6 rounded-3xl bg-surface-card border border-indigo/30 shadow-md space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-indigo font-bold text-xs uppercase tracking-wider font-heading">
                 <Lightbulb className="w-4 h-4 text-indigo" />
@@ -662,7 +662,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
           {/* ------------------------------------------------------ */}
           {/* CARD 7: COBA KUIS — "Tes pemahamanmu!" (WAJIB PAHAM)   */}
           {/* ------------------------------------------------------ */}
-          <div ref={node7Ref} className="panel p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-surface-elevated via-surface-card to-surface-card border-2 border-gold/40 shadow-lg space-y-4">
+          <div ref={node7Ref} className="panel p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-surface-elevated via-surface-card to-surface-card border border-gold/30 shadow-lg space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-gold font-bold text-xs uppercase tracking-wider font-heading">
                 <Flame className="w-4 h-4 text-gold" />
@@ -693,13 +693,13 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                     const isCorrect = isAnswerChecked && oIdx === activeQuestion.correctIndex;
                     const isWrong = isAnswerChecked && isSelected && !isCorrect;
 
-                    let btnStyle = 'bg-surface-inset hover:bg-surface-card border-border-subtle text-text-primary';
+                    let btnStyle = 'bg-surface-inset hover:bg-surface-card border-border-subtle text-text-primary shadow-[inset_1px_1px_3px_var(--neu-d)]';
                     if (isCorrect) {
-                      btnStyle = 'bg-emerald-500/20 border-emerald-500 text-emerald-300 ring-2 ring-emerald-500/30';
+                      btnStyle = 'bg-emerald-500/20 border-emerald-500/60 text-emerald-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_2px_4px_rgba(0,0,0,0.2)]';
                     } else if (isWrong) {
-                      btnStyle = 'bg-rose-500/20 border-rose-500 text-rose-300 ring-2 ring-rose-500/30';
+                      btnStyle = 'bg-rose-500/20 border-rose-500/60 text-rose-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_2px_4px_rgba(0,0,0,0.2)]';
                     } else if (isSelected) {
-                      btnStyle = 'bg-indigo/20 border-indigo text-indigo';
+                      btnStyle = 'bg-surface-elevated border-border-muted text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_6px_rgba(0,0,0,0.25)]';
                     }
 
                     return (

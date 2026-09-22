@@ -318,8 +318,8 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                             }}
                             className={`px-3 py-1.5 rounded-xl text-xs font-bold font-jp border transition-all flex items-center gap-1.5 ${
                               isSelected
-                                ? 'bg-amber-500/20 text-amber-600 dark:text-amber-300 border-amber-500/50 shadow-sm ring-1 ring-amber-500/30 font-black'
-                                : 'bg-surface-inset text-text-secondary border-border-subtle hover:border-amber-500/30 hover:text-text-primary'
+                                ? 'bg-surface-elevated text-gold border-gold/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_4px_rgba(0,0,0,0.25)] font-black'
+                                : 'bg-surface-inset text-text-secondary border-border-subtle hover:border-border-muted hover:text-text-primary'
                             }`}
                             title={`Pilih bacaan #${idx + 1} (${v}) & putar suara`}
                           >

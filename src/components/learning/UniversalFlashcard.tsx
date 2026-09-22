@@ -159,7 +159,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
 
               {/* Giant Kanji Center */}
               <div className="text-center space-y-2 my-auto">
-                <div className="w-24 h-24 sm:w-28 sm:h-28 mx-auto rounded-3xl bg-surface-inset border-2 border-wine-accent/40 flex items-center justify-center text-6xl sm:text-7xl font-bold text-wine-accent font-jp shadow-inner select-none group-hover:scale-105 transition-transform">
+                <div className="w-24 h-24 sm:w-28 sm:h-28 mx-auto rounded-3xl bg-surface-inset border border-wine-accent/40 flex items-center justify-center text-6xl sm:text-7xl font-bold text-wine-accent font-jp shadow-inner select-none group-hover:scale-105 transition-transform">
                   {norm.kanji?.character || norm.displayTitle}
                 </div>
                 <p className="text-xs font-mono text-text-secondary pt-1">

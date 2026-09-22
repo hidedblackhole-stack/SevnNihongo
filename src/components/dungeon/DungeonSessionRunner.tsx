@@ -519,7 +519,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
             /* ================= VICTORY SCREEN ================= */
             <div className="text-center space-y-6 my-auto py-6 animate-fade-in">
               <div className="relative inline-block">
-                <div className="w-20 h-20 mx-auto rounded-3xl bg-gold/15 border-2 border-gold/40 flex items-center justify-center text-gold shadow-xl">
+                <div className="w-20 h-20 mx-auto rounded-3xl bg-gold/15 border border-gold/40 flex items-center justify-center text-gold shadow-xl">
                   <Trophy className="w-10 h-10" />
                 </div>
                 <div className={`absolute -bottom-2 -right-2 px-3 py-0.5 rounded-xl border font-mono font-black text-sm shadow-md ${rankColor}`}>

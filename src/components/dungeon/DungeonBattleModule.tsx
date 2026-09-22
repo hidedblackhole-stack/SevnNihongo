@@ -328,8 +328,8 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
                 }}
                 className={`panel p-4 rounded-2xl cursor-pointer transition-all border relative flex flex-col justify-between ${
                   isChosen
-                    ? `${color.border} ring-2 ring-crimson/50 shadow-xl ${color.glow}`
-                    : 'hover:border-crimson/50'
+                    ? 'border-gold/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_4px_14px_rgba(0,0,0,0.4)] bg-surface-elevated'
+                    : 'border-border-subtle hover:border-border-muted'
                 }`}
               >
                 {/* Level badge + Package Code */}

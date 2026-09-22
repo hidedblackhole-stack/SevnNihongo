@@ -115,7 +115,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
             }}
             className={`btn btn-pill text-xs ${
               detailSubTab === 'detail'
-                ? 'ring-1 ring-wine-accent/50 text-wine-accent font-bold'
+                ? 'bg-surface-elevated text-wine-accent font-bold border border-border-muted shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_4px_rgba(0,0,0,0.2)]'
                 : 'opacity-70 hover:opacity-100'
             }`}
           >
@@ -128,7 +128,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
             }}
             className={`btn btn-pill text-xs flex items-center gap-1 ${
               detailSubTab === 'writing'
-                ? 'ring-1 ring-wine-accent/50 text-wine-accent font-bold'
+                ? 'bg-surface-elevated text-wine-accent font-bold border border-border-muted shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_4px_rgba(0,0,0,0.2)]'
                 : 'opacity-70 hover:opacity-100'
             }`}
           >
@@ -144,7 +144,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
           {/* Giant Character & Hero Section */}
           <div className="flex flex-col sm:flex-row items-center gap-6 pb-4 border-b border-border-subtle">
             {/* Giant Kanji Character Frame - Hanko Red stamp motif */}
-            <div className="relative group w-32 h-32 rounded-3xl bg-surface-inset border-2 border-wine-accent/40 flex items-center justify-center text-7xl font-bold text-wine-accent font-jp shadow-inner shrink-0 select-none">
+            <div className="relative group w-32 h-32 rounded-3xl bg-surface-inset border border-wine-accent/40 flex items-center justify-center text-7xl font-bold text-wine-accent font-jp shadow-inner shrink-0 select-none">
               {item.character}
               <button
                 onClick={() => {

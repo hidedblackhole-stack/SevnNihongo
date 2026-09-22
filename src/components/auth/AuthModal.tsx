@@ -146,7 +146,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-surface-inset border border-border-subtle rounded-xl py-3 pl-10 pr-4 text-xs sm:text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/30 transition-all shadow-[inset_1.5px_1.5px_4px_var(--neu-d)]"
+                  className="w-full bg-surface-inset border border-border-subtle rounded-xl py-3 pl-10 pr-4 text-xs sm:text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-gold/60 transition-all shadow-[inset_1.5px_1.5px_4px_var(--neu-d)]"
                   placeholder="nama@gmail.com"
                   required
                 />
@@ -161,7 +161,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-surface-inset border border-border-subtle rounded-xl py-3 pl-10 pr-4 text-xs sm:text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/30 transition-all shadow-[inset_1.5px_1.5px_4px_var(--neu-d)]"
+                  className="w-full bg-surface-inset border border-border-subtle rounded-xl py-3 pl-10 pr-4 text-xs sm:text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-gold/60 transition-all shadow-[inset_1.5px_1.5px_4px_var(--neu-d)]"
                   placeholder="Minimal 6 karakter"
                   required
                   minLength={6}
