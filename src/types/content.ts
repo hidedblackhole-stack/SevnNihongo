@@ -134,6 +134,12 @@ export interface GrammarSkillConcept {
   summary: string;
   beforeState?: string; // e.g. "Dulu: Belum bisa / Tidak dilakukan ❌"
   afterState?: string;  // e.g. "Sekarang: Menjadi bisa / Mulai terbiasa ✅"
+  starterExample?: {
+    japanese: string;
+    reading?: string;
+    meaningId: string;
+    contrastNote?: string; // e.g. "Dulu tidak bisa bahasa Jepang, sekarang bisa."
+  };
   keyTakeaway?: string;
 }
 

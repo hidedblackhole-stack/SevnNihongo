@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import {
   X,
   Volume2,
@@ -9,12 +9,11 @@ import {
   CheckCircle2,
   XCircle,
   RotateCcw,
-  BookOpen,
+  ArrowDown,
   ArrowRight,
-  Zap,
-  Layers,
-  HelpCircle,
-  Award,
+  Lightbulb,
+  AlertTriangle,
+  Flame,
 } from 'lucide-react';
 import { BunpouItem, Question, ItemMasteryRecord } from '../../types/content';
 import { RubyText } from '../learning/RubyText';
@@ -65,7 +64,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
   onRecordInteraction,
   onCompleteStudyItem,
 }) => {
-  // Extract intelligent 7-node skill architecture
+  // Extract human-centered learning flow
   const skillNodes = getGrammarSkillNodes(item);
   const patternTitle = getCanonicalGrammarTitle(item);
   const categoryTags = getBunpouCategoryTags(item);
@@ -81,7 +80,15 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
   const node7Ref = useRef<HTMLDivElement>(null);
 
   const nodeRefs = [node1Ref, node2Ref, node3Ref, node4Ref, node5Ref, node6Ref, node7Ref];
-  const nodeNames = ['Konsep', 'Fungsi', 'Rumus', 'Kata', 'Nuansa', 'Contoh', 'Quest'];
+  const stepItems = [
+    { label: '① Inti', essential: true },
+    { label: '② Fungsi', essential: true },
+    { label: '③ Rumus', essential: true },
+    { label: '④ Kata Cocok', essential: false },
+    { label: '⑤ Perbedaan', essential: false },
+    { label: '⑥ Contoh', essential: true },
+    { label: '⑦ Kuis', essential: true },
+  ];
 
   const scrollToNode = (index: number) => {
     playSound('click', soundEnabled);
@@ -91,7 +98,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
     }
   };
 
-  // Node 7: Training Quest States
+  // Node 7: Training Quiz States
   const questions = skillNodes.trainingQuestions || [];
   const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);
   const activeQuestion: Question | undefined = questions[currentQuestionIdx] || questions[0];
@@ -163,7 +170,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
         }}
       />
 
-      {/* Modal Skill Container */}
+      {/* Modal Dialog */}
       <motion.div
         initial={{ scale: 0.95, opacity: 0, y: 15 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -173,18 +180,23 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
         onClick={(e) => e.stopPropagation()}
       >
         {/* ======================================================== */}
-        {/* 1. HEADER IDENTITY                                       */}
+        {/* HEADER IDENTITY: BERSIH & RAMAH PEMULA                   */}
         {/* ======================================================== */}
         <div className="p-4 sm:p-6 border-b border-border-subtle shrink-0 bg-surface-elevated/95 relative overflow-hidden">
-          {/* Ambient Glow */}
+          {/* Subtle Ambient Glow */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-indigo/10 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative z-10 flex items-start justify-between gap-4">
             <div className="space-y-2 min-w-0 flex-1">
-              {/* Top Meta Badges */}
+              {/* Badges */}
               <div className="flex flex-wrap items-center gap-2">
                 <span className="px-2.5 py-0.5 rounded-lg bg-indigo/15 text-indigo text-xs font-mono font-bold border border-indigo/30 shadow-xs">
                   {levelLabel}
+                </span>
+
+                <span className="px-2 py-0.5 rounded-lg bg-surface-card text-gold text-xs font-mono font-bold border border-gold/30 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3 text-gold" />
+                  <span>Grammar Skill</span>
                 </span>
 
                 {categoryTags.map((tag, tIdx) => (
@@ -195,16 +207,9 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                     {tag}
                   </span>
                 ))}
-
-                {masteryRecord && (
-                  <span className="px-2 py-0.5 rounded-lg bg-surface-card text-gold text-xs font-mono font-bold border border-gold/30 flex items-center gap-1">
-                    <Sparkles className="w-3 h-3 text-gold" />
-                    <span>Lv.{masteryRecord.masteryLevel || 1}</span>
-                  </span>
-                )}
               </div>
 
-              {/* Title & Reading */}
+              {/* Pattern Title */}
               <div className="flex items-center gap-3">
                 <h1 className="text-2xl sm:text-3xl font-black text-text-primary font-heading tracking-wide font-jp truncate">
                   {patternTitle}
@@ -220,7 +225,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                 </button>
               </div>
 
-              {/* Main Essence Meaning */}
+              {/* Plain Meaning */}
               <p className="text-xs sm:text-sm font-semibold text-text-secondary leading-relaxed max-w-xl">
                 {item.meaningId || item.meaning}
               </p>
@@ -252,113 +257,152 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
             </div>
           </div>
 
-          {/* Stepper / Quick Navigation Bar */}
-          <div className="pt-4 mt-2 border-t border-border-subtle/70 flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
-            {nodeNames.map((name, nIdx) => (
+          {/* Quick Flow Stepper */}
+          <div className="pt-3.5 mt-2 border-t border-border-subtle/70 flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+            {stepItems.map((step, sIdx) => (
               <button
-                key={nIdx}
+                key={sIdx}
                 type="button"
-                onClick={() => scrollToNode(nIdx)}
-                className="px-2.5 py-1 rounded-xl text-[11px] font-bold font-sans transition-all whitespace-nowrap shrink-0 bg-surface-card hover:bg-surface-inset border border-border-subtle text-text-secondary hover:text-indigo flex items-center gap-1.5 cursor-pointer shadow-xs active:scale-95"
+                onClick={() => scrollToNode(sIdx)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold font-sans transition-all whitespace-nowrap shrink-0 flex items-center gap-1.5 cursor-pointer shadow-xs active:scale-95 ${
+                  step.essential
+                    ? 'bg-surface-card hover:bg-surface-inset border border-border-subtle text-text-primary hover:text-indigo'
+                    : 'bg-surface-inset/60 hover:bg-surface-card border border-border-subtle/60 text-text-muted hover:text-text-secondary'
+                }`}
               >
-                <span className="w-4 h-4 rounded-md bg-surface-inset text-text-muted text-[10px] font-mono flex items-center justify-center font-bold">
-                  {nIdx + 1}
-                </span>
-                <span>{name}</span>
+                <span>{step.label}</span>
+                {step.essential && (
+                  <span className="w-1.5 h-1.5 rounded-full bg-gold shrink-0" title="Wajib Paham" />
+                )}
               </button>
             ))}
           </div>
         </div>
 
         {/* ======================================================== */}
-        {/* 2. SCROLLABLE LEARNING NODES (7 KARTU)                   */}
+        {/* LEARNING FLOW: 7 KARTU BELAJAR MANUSIAWI                 */}
         {/* ======================================================== */}
         <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 scrollbar-thin">
 
           {/* ------------------------------------------------------ */}
-          {/* NODE 1: CONCEPT (KONSEP DASAR)                         */}
+          {/* CARD 1: INTI POLA — "Apa maksudnya?" (WAJIB PAHAM)     */}
           {/* ------------------------------------------------------ */}
-          <div ref={node1Ref} className="panel p-5 sm:p-6 rounded-3xl bg-surface-card border border-border-subtle shadow-sm space-y-4">
+          <div ref={node1Ref} className="panel p-5 sm:p-6 rounded-3xl bg-surface-card border-2 border-indigo/40 shadow-md space-y-4">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-indigo font-bold text-xs uppercase tracking-wider font-mono">
-                <span className="w-6 h-6 rounded-lg bg-indigo/15 text-indigo flex items-center justify-center font-bold text-xs">
-                  1
-                </span>
-                <span>Node 01: Konsep Dasar (基本概念)</span>
+              <div className="flex items-center gap-2 text-indigo font-bold text-xs uppercase tracking-wider font-heading">
+                <Lightbulb className="w-4 h-4 text-indigo" />
+                <span>① Inti Pola: "Apa maksudnya?"</span>
               </div>
-              <span className="text-[11px] text-text-muted font-sans font-medium">Esensi Pola</span>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-indigo/15 text-indigo border border-indigo/30">
+                Wajib Paham ★★★★★
+              </span>
             </div>
 
-            {/* Core Explanation */}
-            <p className="text-sm text-text-primary leading-relaxed font-medium">
-              {skillNodes.concept.summary}
-            </p>
+            {/* Direct Essence Statement */}
+            <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-2">
+              <div className="flex items-baseline gap-2">
+                <span className="text-xl sm:text-2xl font-black text-text-primary font-jp">
+                  {patternTitle}
+                </span>
+                <span className="text-sm font-bold text-indigo">
+                  =
+                </span>
+                <span className="text-sm sm:text-base font-bold text-gold">
+                  {skillNodes.concept.summary}
+                </span>
+              </div>
 
-            {/* Visual Contrast: Dulu vs Sekarang */}
-            {(skillNodes.concept.beforeState || skillNodes.concept.afterState) && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-                <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle space-y-1">
-                  <div className="flex items-center gap-1.5 text-xs font-bold text-wine-accent font-heading">
-                    <XCircle className="w-4 h-4" />
-                    <span>Kondisi Semula (Sebelumnya)</span>
+              {/* Status Before -> After */}
+              {(skillNodes.concept.beforeState || skillNodes.concept.afterState) && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2 border-t border-border-subtle/70">
+                  <div className="flex items-center gap-2 text-xs font-semibold text-text-muted">
+                    <span>{skillNodes.concept.beforeState || 'Dulu: ❌ Belum terjadi'}</span>
                   </div>
-                  <p className="text-xs text-text-secondary font-medium leading-relaxed">
-                    {skillNodes.concept.beforeState || 'Keadaan lama yang belum berubah.'}
-                  </p>
+                  <div className="flex items-center gap-2 text-xs font-bold text-emerald-400">
+                    <span>{skillNodes.concept.afterState || 'Sekarang: ✅ Menjadi terwujud'}</span>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Instant Concrete "Rasa" Example */}
+            {skillNodes.concept.starterExample && (
+              <div className="p-4 rounded-2xl bg-gold/10 border border-gold/30 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold uppercase tracking-wider text-gold font-heading flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>Contoh Rasa Kalimat:</span>
+                  </span>
+
+                  <button
+                    type="button"
+                    onClick={() => speakJapanese(skillNodes.concept.starterExample!.japanese)}
+                    className="p-1 rounded-lg text-gold hover:bg-gold/20 transition-colors cursor-pointer"
+                    title="Dengarkan pelafalan"
+                  >
+                    <Volume2 className="w-4 h-4" />
+                  </button>
                 </div>
 
-                <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 space-y-1">
-                  <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-400 font-heading">
-                    <CheckCircle2 className="w-4 h-4" />
-                    <span>Kondisi Terkini (Sekarang)</span>
-                  </div>
-                  <p className="text-xs text-text-primary font-medium leading-relaxed">
-                    {skillNodes.concept.afterState || 'Telah bergeser menjadi keadaan baru.'}
+                <p className="text-base sm:text-lg font-bold text-text-primary font-jp">
+                  <RubyText
+                    japanese={skillNodes.concept.starterExample.japanese}
+                    reading={skillNodes.concept.starterExample.reading}
+                    showFurigana={true}
+                  />
+                </p>
+
+                <p className="text-xs sm:text-sm text-text-secondary font-semibold">
+                  {skillNodes.concept.starterExample.meaningId}
+                </p>
+
+                {skillNodes.concept.starterExample.contrastNote && (
+                  <p className="text-xs text-gold/90 font-medium italic border-t border-gold/20 pt-1.5">
+                    💡 {skillNodes.concept.starterExample.contrastNote}
                   </p>
-                </div>
+                )}
               </div>
             )}
 
             {skillNodes.concept.keyTakeaway && (
-              <div className="p-3 rounded-2xl bg-surface-inset border border-border-subtle/80 flex items-start gap-2.5">
-                <Zap className="w-4 h-4 text-gold shrink-0 mt-0.5" />
-                <p className="text-xs text-text-secondary font-medium leading-relaxed">
-                  <strong className="text-text-primary">Poin Utama:</strong> {skillNodes.concept.keyTakeaway}
-                </p>
-              </div>
+              <p className="text-xs text-text-muted pl-1">
+                📌 {skillNodes.concept.keyTakeaway}
+              </p>
             )}
           </div>
 
           {/* ------------------------------------------------------ */}
-          {/* NODE 2: FUNCTION (FUNGSI PENGGUNAAN)                   */}
+          {/* CARD 2: FUNGSI — "Dipakai kapan?" (WAJIB PAHAM)         */}
           {/* ------------------------------------------------------ */}
           <div ref={node2Ref} className="panel p-5 sm:p-6 rounded-3xl bg-surface-card border border-border-subtle shadow-sm space-y-4">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-indigo font-bold text-xs uppercase tracking-wider font-mono">
-                <span className="w-6 h-6 rounded-lg bg-indigo/15 text-indigo flex items-center justify-center font-bold text-xs">
+              <div className="flex items-center gap-2 text-indigo font-bold text-xs uppercase tracking-wider font-heading">
+                <span className="w-5 h-5 rounded-lg bg-indigo/15 text-indigo flex items-center justify-center font-bold text-xs">
                   2
                 </span>
-                <span>Node 02: Fungsi Penggunaan (主な用法)</span>
+                <span>② Fungsi: "Dipakai kapan?"</span>
               </div>
-              <span className="text-[11px] text-text-muted font-sans font-medium">Kapan Digunakan</span>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-indigo/15 text-indigo border border-indigo/30">
+                Wajib Paham ★★★★★
+              </span>
             </div>
 
             <div className="space-y-3">
               {skillNodes.functions.map((fn, fIdx) => (
                 <div
                   key={fIdx}
-                  className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-2.5"
+                  className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-2"
                 >
                   <div className="flex items-center gap-2">
                     <span className="w-5 h-5 rounded-full bg-gold/20 text-gold font-bold text-xs flex items-center justify-center">
                       {fn.number}
                     </span>
-                    <h3 className="text-sm font-bold text-text-primary font-heading">
+                    <h3 className="text-sm sm:text-base font-bold text-text-primary font-heading">
                       {fn.label}
                     </h3>
                   </div>
 
-                  <p className="text-xs text-text-secondary leading-relaxed font-medium pl-7">
+                  <p className="text-xs text-text-secondary leading-relaxed pl-7">
                     {fn.description}
                   </p>
 
@@ -388,17 +432,19 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
           </div>
 
           {/* ------------------------------------------------------ */}
-          {/* NODE 3: FORMULA (STRUKTUR RUMUS)                       */}
+          {/* CARD 3: RUMUS — "Cara membuatnya" (WAJIB PAHAM)         */}
           {/* ------------------------------------------------------ */}
           <div ref={node3Ref} className="panel p-5 sm:p-6 rounded-3xl bg-surface-card border border-border-subtle shadow-sm space-y-4">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-indigo font-bold text-xs uppercase tracking-wider font-mono">
-                <span className="w-6 h-6 rounded-lg bg-indigo/15 text-indigo flex items-center justify-center font-bold text-xs">
+              <div className="flex items-center gap-2 text-indigo font-bold text-xs uppercase tracking-wider font-heading">
+                <span className="w-5 h-5 rounded-lg bg-indigo/15 text-indigo flex items-center justify-center font-bold text-xs">
                   3
                 </span>
-                <span>Node 03: Struktur Rumus (接続と文法公式)</span>
+                <span>③ Rumus: "Cara membuatnya"</span>
               </div>
-              <span className="text-[11px] text-text-muted font-sans font-medium">Formula Teknis</span>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-indigo/15 text-indigo border border-indigo/30">
+                Wajib Paham ★★★★★
+              </span>
             </div>
 
             <div className="space-y-3.5">
@@ -423,13 +469,13 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                     ))}
                   </div>
 
-                  {/* Step Progression (e.g. 話す -> 話せる -> 話せるようになる) */}
+                  {/* Step Progression (e.g. 話す ↓ 話せる ↓ 話せるようになる) */}
                   {form.progression && form.progression.length > 0 && (
-                    <div className="p-3 rounded-xl bg-surface-card/60 border border-border-subtle flex flex-wrap items-center gap-2 text-xs font-mono">
+                    <div className="p-3 rounded-xl bg-surface-card border border-border-subtle flex flex-wrap items-center gap-2 text-xs font-mono">
                       {form.progression.map((step, sIdx) => (
                         <React.Fragment key={sIdx}>
                           {sIdx > 0 && <ArrowRight className="w-3.5 h-3.5 text-text-muted" />}
-                          <span className={`px-2 py-1 rounded-lg ${sIdx === form.progression!.length - 1 ? 'bg-gold/20 text-gold border border-gold/30 font-bold' : 'bg-surface-inset text-text-secondary'}`}>
+                          <span className={`px-2.5 py-1 rounded-lg ${sIdx === form.progression!.length - 1 ? 'bg-gold/20 text-gold border border-gold/30 font-bold' : 'bg-surface-inset text-text-secondary font-medium'}`}>
                             {step}
                           </span>
                         </React.Fragment>
@@ -438,7 +484,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                   )}
 
                   {form.note && (
-                    <p className="text-[11px] text-text-muted leading-relaxed italic">
+                    <p className="text-[11px] text-text-muted leading-relaxed">
                       💡 {form.note}
                     </p>
                   )}
@@ -448,22 +494,20 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
           </div>
 
           {/* ------------------------------------------------------ */}
-          {/* NODE 4: WORD IDENTITY (IDENTITAS KATA)                 */}
+          {/* CARD 4: KATA COCOK — "Kata apa yang bisa masuk?" (PELENGKAP) */}
           {/* ------------------------------------------------------ */}
-          <div ref={node4Ref} className="panel p-5 sm:p-6 rounded-3xl bg-surface-card border border-border-subtle shadow-sm space-y-4">
+          <div ref={node4Ref} className="panel p-5 sm:p-6 rounded-3xl bg-surface-card border border-border-subtle/80 shadow-xs space-y-4">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-indigo font-bold text-xs uppercase tracking-wider font-mono">
-                <span className="w-6 h-6 rounded-lg bg-indigo/15 text-indigo flex items-center justify-center font-bold text-xs">
+              <div className="flex items-center gap-2 text-text-secondary font-bold text-xs uppercase tracking-wider font-heading">
+                <span className="w-5 h-5 rounded-lg bg-surface-inset text-text-secondary flex items-center justify-center font-bold text-xs">
                   4
                 </span>
-                <span>Node 04: Identitas Kata (品詞と動詞の性質)</span>
+                <span>④ Kata Cocok: "Kata apa yang bisa masuk?"</span>
               </div>
-              <span className="text-[11px] text-text-muted font-sans font-medium">Kompatibilitas Kata</span>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-surface-inset text-text-muted border border-border-subtle">
+                Pelengkap ★★★
+              </span>
             </div>
-
-            <p className="text-xs text-text-secondary leading-relaxed">
-              Pola ini memiliki efek makna berbeda tergantung pada kelompok atau jenis kata yang bersambung:
-            </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {skillNodes.wordIdentities.map((identity, iIdx) => (
@@ -488,7 +532,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                     {identity.examples.map((ex, exIdx) => (
                       <span
                         key={exIdx}
-                        className="px-2 py-0.5 rounded-lg bg-surface-card text-text-primary text-xs font-mono font-semibold border border-border-subtle"
+                        className="px-2.5 py-1 rounded-lg bg-surface-card text-text-primary text-xs font-mono font-semibold border border-border-subtle"
                       >
                         {ex}
                       </span>
@@ -500,17 +544,17 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
           </div>
 
           {/* ------------------------------------------------------ */}
-          {/* NODE 5: NUANCE (NUANSA & PERBEDAAN RASA BAHASA)        */}
+          {/* CARD 5: PERBEDAAN — "Jangan sampai tertukar!" (PELENGKAP) */}
           {/* ------------------------------------------------------ */}
-          <div ref={node5Ref} className="panel p-5 sm:p-6 rounded-3xl bg-surface-card border border-border-subtle shadow-sm space-y-4">
+          <div ref={node5Ref} className="panel p-5 sm:p-6 rounded-3xl bg-surface-card border border-border-subtle/80 shadow-xs space-y-4">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-indigo font-bold text-xs uppercase tracking-wider font-mono">
-                <span className="w-6 h-6 rounded-lg bg-indigo/15 text-indigo flex items-center justify-center font-bold text-xs">
-                  5
-                </span>
-                <span>Node 05: Nuansa & Rasa Bahasa (ニュアンスの差)</span>
+              <div className="flex items-center gap-2 text-amber-400 font-bold text-xs uppercase tracking-wider font-heading">
+                <AlertTriangle className="w-4 h-4 text-amber-400" />
+                <span>⑤ Perbedaan: "Jangan sampai tertukar!"</span>
               </div>
-              <span className="text-[11px] text-text-muted font-sans font-medium">Perbedaan Native</span>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-surface-inset text-text-muted border border-border-subtle">
+                Pelengkap ★★★
+              </span>
             </div>
 
             <div className="space-y-3">
@@ -550,17 +594,19 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
           </div>
 
           {/* ------------------------------------------------------ */}
-          {/* NODE 6: EXAMPLES (CONTOH BERJENJANG 3 TINGKAT)         */}
+          {/* CARD 6: CONTOH NYATA — "Lihat contoh bertingkat" (WAJIB) */}
           {/* ------------------------------------------------------ */}
           <div ref={node6Ref} className="panel p-5 sm:p-6 rounded-3xl bg-surface-card border border-border-subtle shadow-sm space-y-4">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-indigo font-bold text-xs uppercase tracking-wider font-mono">
-                <span className="w-6 h-6 rounded-lg bg-indigo/15 text-indigo flex items-center justify-center font-bold text-xs">
+              <div className="flex items-center gap-2 text-indigo font-bold text-xs uppercase tracking-wider font-heading">
+                <span className="w-5 h-5 rounded-lg bg-indigo/15 text-indigo flex items-center justify-center font-bold text-xs">
                   6
                 </span>
-                <span>Node 06: Contoh Kalimat Berjenjang (段階別例文)</span>
+                <span>⑥ Contoh Nyata: "Lihat contoh bertingkat"</span>
               </div>
-              <span className="text-[11px] text-text-muted font-sans font-medium">3 Tingkat Pemahaman</span>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-indigo/15 text-indigo border border-indigo/30">
+                Wajib Paham ★★★★★
+              </span>
             </div>
 
             <div className="space-y-3">
@@ -585,7 +631,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                     className={`p-4 rounded-2xl border ${tierColor} space-y-2`}
                   >
                     <div className="flex items-center justify-between gap-2">
-                      <span className={`px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider font-mono ${badgeColor}`}>
+                      <span className={`px-2.5 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider font-mono ${badgeColor}`}>
                         {ex.tierLabel}
                       </span>
 
@@ -614,17 +660,15 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
           </div>
 
           {/* ------------------------------------------------------ */}
-          {/* NODE 7: TRAINING QUEST (UJI PEMAHAMAN + REWARD EXP)     */}
+          {/* CARD 7: COBA KUIS — "Tes pemahamanmu!" (WAJIB PAHAM)   */}
           {/* ------------------------------------------------------ */}
-          <div ref={node7Ref} className="panel p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-surface-elevated via-surface-card to-surface-card border border-gold/30 shadow-md space-y-4">
+          <div ref={node7Ref} className="panel p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-surface-elevated via-surface-card to-surface-card border-2 border-gold/40 shadow-lg space-y-4">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-gold font-bold text-xs uppercase tracking-wider font-mono">
-                <span className="w-6 h-6 rounded-lg bg-gold/15 text-gold flex items-center justify-center font-bold text-xs">
-                  7
-                </span>
-                <span>Node 07: Training Quest (実践チャレンジ)</span>
+              <div className="flex items-center gap-2 text-gold font-bold text-xs uppercase tracking-wider font-heading">
+                <Flame className="w-4 h-4 text-gold" />
+                <span>⑦ Coba Kuis: "Tes pemahamanmu!"</span>
               </div>
-              <span className="px-2 py-0.5 rounded-lg bg-gold/15 text-gold text-[10px] font-bold font-mono border border-gold/30 flex items-center gap-1">
+              <span className="px-2.5 py-0.5 rounded-lg bg-gold/15 text-gold text-[10px] font-bold font-mono border border-gold/30 flex items-center gap-1">
                 <Sparkles className="w-3 h-3" />
                 <span>+15 EXP & +10 Gold</span>
               </span>
@@ -632,7 +676,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
 
             {activeQuestion ? (
               <div className="space-y-4">
-                {/* Prompt Card */}
+                {/* Question Prompt */}
                 <div className="p-4 sm:p-5 rounded-2xl bg-surface-inset border border-border-subtle space-y-2">
                   <p className="text-xs text-text-muted font-medium">
                     {activeQuestion.instructionId || activeQuestion.instruction || 'Pilihlah jawaban yang paling tepat:'}
@@ -642,7 +686,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                   </p>
                 </div>
 
-                {/* Answer Options Grid */}
+                {/* Option Buttons */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   {activeQuestion.options.map((opt, oIdx) => {
                     const isSelected = selectedAnswerIndex === oIdx;
@@ -674,7 +718,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                   })}
                 </div>
 
-                {/* Explanation & Reward Feedback */}
+                {/* Feedback & Reward */}
                 {isAnswerChecked && (
                   <div className="space-y-3 pt-2 animate-fade-in">
                     {selectedAnswerIndex === activeQuestion.correctIndex ? (
@@ -690,7 +734,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                     ) : (
                       <div className="p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/30 flex items-center gap-2 text-rose-400 font-bold text-xs sm:text-sm font-heading">
                         <XCircle className="w-5 h-5 shrink-0" />
-                        <span>Kurang Tepat. Simak penjelasan di bawah ini:</span>
+                        <span>Kurang Tepat. Simak penjelasan berikut:</span>
                       </div>
                     )}
 
@@ -719,7 +763,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                           onClick={handleNextQuestion}
                           className="btn-physical-primary text-xs py-2 px-3.5 rounded-xl flex items-center gap-1.5 cursor-pointer font-heading"
                         >
-                          <span>Tantangan Lain</span>
+                          <span>Soal Lain</span>
                           <ChevronRight className="w-3.5 h-3.5" />
                         </button>
                       )}
@@ -736,7 +780,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
 
         {/* Footer */}
         <div className="p-3 sm:p-4 border-t border-border-subtle bg-surface-inset flex items-center justify-between text-xs text-text-muted font-mono">
-          <span>7 Knowledge Nodes • SevnQuest Skill Tree</span>
+          <span>SevnQuest Learning Flow • 7 Cards</span>
           <button
             type="button"
             onClick={onClose}

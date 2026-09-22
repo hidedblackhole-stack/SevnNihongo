@@ -9,116 +9,115 @@ import {
   TieredExampleSentence,
   Question,
 } from '../types/content';
-import { fisherYatesShuffle } from './smartRandomizer';
 
 /**
  * Handcrafted 7-node skill profiles for signature grammar points
+ * (Written in simple, clear, human language for real learners)
  */
 const BESPOKE_SKILL_NODES: Record<string, Partial<GrammarSkillNodes>> = {
   // Signature N4: 〜ようになる
   'bp_n4_youni_naru': {
     concept: {
-      summary: 'Menyatakan terjadinya perubahan dari keadaan atau kebiasaan lama menjadi keadaan atau kebiasaan baru.',
-      beforeState: 'Dulu: Belum bisa / Tidak terbiasa ❌',
-      afterState: 'Sekarang: Menjadi bisa / Mulai terbiasa ✅',
-      keyTakeaway: 'Fokus pada proses perubahan bertahap seiring waktu atau latihan.',
+      summary: 'Dulu tidak → sekarang menjadi',
+      beforeState: 'Dulu: ❌ Tidak bisa / Belum biasa',
+      afterState: 'Sekarang: ✅ Menjadi bisa / Mulai terbiasa',
+      starterExample: {
+        japanese: '日本語が話せるようになった。',
+        reading: 'にほんごがはなせるようになった。',
+        meaningId: 'Sekarang sudah menjadi bisa berbicara bahasa Jepang.',
+        contrastNote: 'Dulu tidak bisa bahasa Jepang, sekarang bisa.',
+      },
+      keyTakeaway: 'Dipakai saat ada perubahan kemampuan diri atau kebiasaan baru yang mulai terbentuk.',
     },
     functions: [
       {
         number: 1,
-        label: 'Perubahan Kemampuan (能力の変化)',
-        description: 'Menyatakan bahwa seseorang yang tadinya tidak mampu melakukan sesuatu, kini telah memperoleh kemampuan tersebut.',
+        label: 'Menjadi Bisa (Kemampuan)',
+        description: 'Tadinya tidak mampu melakukan sesuatu, sekarang sudah bisa.',
         miniExample: {
-          japanese: '日本語が話せるようになった。',
-          reading: 'にほんごがはなせるようになった。',
-          meaningId: 'Sekarang sudah menjadi bisa berbicara bahasa Jepang.',
+          japanese: '読めるようになった。',
+          reading: 'よめるようになった。',
+          meaningId: 'Menjadi bisa membaca.',
         },
       },
       {
         number: 2,
-        label: 'Perubahan Kebiasaan (習慣の変化)',
-        description: 'Menyatakan bahwa suatu aktivitas baru kini mulai rutin dilakukan atau menjadi kebiasaan baru dalam keseharian.',
+        label: 'Mulai Kebiasaan (Rutinitas Baru)',
+        description: 'Tadinya tidak biasa dilakukan, sekarang mulai rutin dikerjakan.',
         miniExample: {
           japanese: '毎日勉強するようになった。',
           reading: 'まいにちべんきょうするようになった。',
-          meaningId: 'Sekarang mulai (terbiasa) belajar setiap hari.',
+          meaningId: 'Mulai belajar setiap hari.',
         },
       },
     ],
     formulas: [
       {
-        title: 'A. Perubahan Kemampuan (Bentuk Potensial)',
-        breakdown: ['Kata Kerja Potensial (V可能形)', '+', 'ようになる'],
+        title: 'A. Kemampuan (Bentuk Potensial)',
+        breakdown: ['Kata Kerja Potensial (V-bisa)', '+', 'ようになる'],
         progression: ['話す (Bicara)', '話せる (Bisa bicara)', '話せるようになる (Menjadi bisa bicara)'],
-        note: 'Gunakan bentuk potensial untuk menegaskan perolehan kapasitas atau skill baru.',
+        note: 'Ubah kata kerja ke bentuk potensial (bisa) dulu, lalu gabung dengan ようになる.',
       },
       {
-        title: 'B. Perubahan Kebiasaan (Bentuk Kamus)',
-        breakdown: ['Kata Kerja Kamus (V辞書形)', '+', 'ようになる'],
-        progression: ['走る (Lari)', '走るようになる (Mulai terbiasa lari)'],
-        note: 'Gunakan bentuk kamus untuk tindakan berulang yang dilakukan atas kehendak sendiri.',
+        title: 'B. Kebiasaan (Bentuk Kamus)',
+        breakdown: ['Kata Kerja Kamus (V-dasar)', '+', 'ようになる'],
+        progression: ['勉強する (Belajar)', '勉強するようになる (Mulai terbiasa belajar)'],
+        note: 'Gunakan bentuk kamus biasa untuk aksi yang sengaja dirutinkan.',
       },
     ],
     wordIdentities: [
       {
-        typeCategory: 'Potential Form (Bentuk Potensial)',
-        tagColor: 'purple',
-        icon: '🟣',
-        examples: ['話せる', '読める', '泳げる'],
-        functionEffect: 'Fungsi: Perubahan kapasitas atau kemampuan diri.',
-      },
-      {
-        typeCategory: '意志動詞 (Kata Kerja Kehendak)',
+        typeCategory: 'A. Tindakan Manusia (意志動詞)',
         tagColor: 'emerald',
         icon: '🟢',
-        examples: ['勉強する', '走る', '野菜を食べる'],
-        functionEffect: 'Fungsi: Perubahan kebiasaan atau pola rutinitas baru.',
+        examples: ['勉強する', '読む', '話す', '走る'],
+        functionEffect: '→ Menunjukkan perubahan kebiasaan atau rutinitas baru.',
       },
       {
-        typeCategory: '無意志動詞 (Kata Kerja Spontan / Keadaan)',
-        tagColor: 'sky',
-        icon: '🔵',
-        examples: ['分かる', '見える', '聞こえる'],
-        functionEffect: 'Fungsi: Perubahan kondisi persepsi tanpa perlu bentuk potensial.',
+        typeCategory: 'B. Kemampuan & Keadaan (無意志動詞 / Potensial)',
+        tagColor: 'purple',
+        icon: '🟣',
+        examples: ['分かる', '見える', '聞こえる', '話せる'],
+        functionEffect: '→ Menunjukkan perubahan kemampuan atau kondisi yang terjadi.',
       },
     ],
     nuances: [
       {
         contrastA: '話すようになった',
-        meaningA: 'Mulai berbicara (mengacu pada aksi/kebiasaan yang mulai dilakukan)',
+        meaningA: 'Mulai berbicara (fokus pada aksi/kebiasaan yang mulai dilakukan)',
         contrastB: '話せるようになった',
-        meaningB: 'Menjadi bisa berbicara (mengacu pada kemampuan berbahasa yang baru dikuasai)',
-        explanation: 'Perbedaan terletak pada apakah Anda menekankan aksi/kebiasaan (V-kamus) atau kemampuan internal (V-potensial).',
+        meaningB: 'Menjadi bisa berbicara (fokus pada kemampuan/kapasitas yang baru dikuasai)',
+        explanation: 'Jangan tertukar! Kalau ingin pamer kemampuan baru, gunakan bentuk potensial (話せる).',
       },
       {
         contrastA: '〜ようになる',
-        meaningA: 'Perubahan terjadi secara alami / berproses (Menjadi...)',
+        meaningA: 'Perubahan terjadi alami / berproses seiring waktu',
         contrastB: '〜ことにする',
-        meaningB: 'Keputusan tegas yang dibuat oleh diri sendiri secara sadar (Memutuskan untuk...)',
-        explanation: '〜ようになる lebih menyoroti hasil proses perubahan waktu ketimbang sekadar niat sepihak.',
+        meaningB: 'Keputusan sadar yang dibuat oleh diri sendiri seketika',
+        explanation: '〜ようになる menekankan hasil perubahan nyata, bukan sekadar niat di kepala.',
       },
     ],
     examples: [
       {
         tier: 'basic',
-        tierLabel: 'Level 1: Basic (Pondasi Konsep)',
-        japanese: '日本語が分かるようになった。',
-        reading: 'にほんごがわかるようになった。',
-        meaningId: 'Saya jadi paham bahasa Jepang.',
+        tierLabel: 'Level 1: Sederhana (Pondasi)',
+        japanese: '泳げるようになった。',
+        reading: 'およげるようになった。',
+        meaningId: 'Saya menjadi bisa berenang. (Dulu: ❌ tidak bisa → Sekarang: ✅ bisa)',
       },
       {
         tier: 'daily',
-        tierLabel: 'Level 2: Daily (Percakapan Sehari-hari)',
-        japanese: '毎朝走るようになった。',
-        reading: 'まいあさはしるようになった。',
-        meaningId: 'Saya mulai lari setiap pagi.',
+        tierLabel: 'Level 2: Sehari-hari (Percakapan)',
+        japanese: '毎日運動するようになった。',
+        reading: 'まいにちうんどうするようになった。',
+        meaningId: 'Saya mulai berolahraga setiap hari.',
       },
       {
         tier: 'natural',
-        tierLabel: 'Level 3: Natural (Ekspresi Alami Penutur Asli)',
-        japanese: '最近、健康のために早く寝るようになった。',
-        reading: 'さいきん、けんこうのために はやくねるようになった。',
-        meaningId: 'Akhir-akhir ini, demi kesehatan saya mulai terbiasa tidur lebih awal.',
+        tierLabel: 'Level 3: Alami (Ekspresi Wajar)',
+        japanese: '最近、早く寝るようになった。',
+        reading: 'さいきん、はやくねるようになった。',
+        meaningId: 'Akhir-akhir ini saya mulai terbiasa tidur lebih awal.',
       },
     ],
   },
@@ -126,26 +125,32 @@ const BESPOKE_SKILL_NODES: Record<string, Partial<GrammarSkillNodes>> = {
   // Signature N3: 〜みたいだ (w1d3g1)
   'w1d3g1': {
     concept: {
-      summary: 'Menyatakan perumpamaan (seperti/mirip) atau dugaan subjektif berdasarkan kesan langsung panca indra.',
-      beforeState: 'Fakta Sebenarnya: Bukan hal itu 👤',
-      afterState: 'Kesan / Tampang: Terlihat mirip sekali ✨',
-      keyTakeaway: 'Bernuansa santai (bahasa percakapan lisan) dan menyambung langsung ke kata benda tanpa partikel の.',
+      summary: 'Kelihatannya seperti... / Mirip dengan...',
+      beforeState: 'Fakta Aslinya: Bukan hal itu 👤',
+      afterState: 'Kesan Tampang: Terlihat mirip sekali ✨',
+      starterExample: {
+        japanese: '彼の話し方は、女みたいだ。',
+        reading: 'かれのはなしかたは、おんなみたいだ。',
+        meaningId: 'Cara bicaranya seperti perempuan.',
+        contrastNote: 'Padahal aslinya laki-laki, tapi gayanya mirip.',
+      },
+      keyTakeaway: 'Gunakan saat ingin mengibaratkan sesuatu atau menduga hal yang kamu lihat/rasakan seketika.',
     },
     functions: [
       {
         number: 1,
-        label: '比喩 (Perumpamaan)',
-        description: 'Mengibaratkan sesuatu dengan hal lain yang memiliki kemiripan fisik, sifat, atau perilaku.',
+        label: 'Perumpamaan (Mengibaratkan)',
+        description: 'Menyebut sesuatu mirip dengan hal lain karena sifat atau gayanya serupa.',
         miniExample: {
-          japanese: '彼の話し方は、女みたいだ。',
-          reading: 'かれのはなしかたは、おんなみたいだ。',
-          meaningId: 'Cara bicaranya seperti perempuan.',
+          japanese: '子供みたいだ。',
+          reading: 'こどもみたいだ。',
+          meaningId: 'Tingkahnya seperti anak kecil.',
         },
       },
       {
         number: 2,
-        label: '推測 (Dugaan Spontan)',
-        description: 'Menyimpulkan keadaan saat ini berdasarkan apa yang dilihat, didengar, atau dirasakan seketika.',
+        label: 'Dugaan Spontan',
+        description: 'Menduga keadaan dari apa yang dilihat atau dirasakan langsung saat itu juga.',
         miniExample: {
           japanese: '雨が降るみたいだ。',
           reading: 'あめがふるみたいだ。',
@@ -153,27 +158,66 @@ const BESPOKE_SKILL_NODES: Record<string, Partial<GrammarSkillNodes>> = {
         },
       },
     ],
+    formulas: [
+      {
+        title: 'Kata Benda Langsung Menempel',
+        breakdown: ['Kata Benda (N)', '+', 'みたいだ'],
+        progression: ['子供 (Anak)', '子供みたいだ (Seperti anak kecil)'],
+        note: 'Tidak perlu partikel の atau だ di tengahnya.',
+      },
+      {
+        title: 'Kata Kerja / Sifat Bentuk Biasa (Kasual)',
+        breakdown: ['Kata Kerja/Sifat (Bentuk Biasa)', '+', 'みたいだ'],
+        progression: ['降る (Turun)', '降るみたいだ (Sepertinya turun)'],
+        note: 'Gunakan bentuk biasa (普通形), bukan bentuk sopan (ます).',
+      },
+    ],
     wordIdentities: [
       {
-        typeCategory: 'Kata Benda (名詞)',
+        typeCategory: 'A. Kata Benda (名詞)',
         tagColor: 'emerald',
         icon: '🟢',
         examples: ['女', '子供', '夢', 'アニメ'],
-        functionEffect: 'Langsung menempel tanpa の (contoh: 子供みたいだ).',
+        functionEffect: '→ Langsung nempel tanpa の (contoh: 子供みたいだ).',
       },
       {
-        typeCategory: 'Kata Sifat-na (な形容詞)',
+        typeCategory: 'B. Kata Sifat & Kerja',
         tagColor: 'sky',
         icon: '🔵',
-        examples: ['静か', '元気', 'きれい'],
-        functionEffect: 'Langsung menempel tanpa だ (contoh: 静かみたいだ).',
+        examples: ['静か', '降る', '高い', '食べた'],
+        functionEffect: '→ Gunakan bentuk biasa tanpa embel-embel だ.',
+      },
+    ],
+    nuances: [
+      {
+        contrastA: '〜みたいだ',
+        meaningA: 'Santai & Lisan (bahasa percakapan sehari-hari)',
+        contrastB: '〜ようだ',
+        meaningB: 'Formal & Tertulis (memerlukan の untuk kata benda: 女のようだ)',
+        explanation: 'Di percakapan santai, orang Jepang hampir selalu memakai みたい dibanding ようだ.',
+      },
+    ],
+    examples: [
+      {
+        tier: 'basic',
+        tierLabel: 'Level 1: Sederhana (Pondasi)',
+        japanese: '彼の話し方は、女みたいだ。',
+        reading: 'かれのはなしかたは、おんなみたいだ。',
+        meaningId: 'Cara bicaranya seperti perempuan.',
       },
       {
-        typeCategory: 'Kata Kerja (動詞) & Sifat-i (い形容詞)',
-        tagColor: 'purple',
-        icon: '🟣',
-        examples: ['降る', '食べた', '高い', '痛い'],
-        functionEffect: 'Bentuk kasual biasa / 普通形 (contoh: 降るみたいだ, 高いみたいだ).',
+        tier: 'daily',
+        tierLabel: 'Level 2: Sehari-hari (Percakapan)',
+        japanese: '今日は春になったみたいに暖かい。',
+        reading: 'きょうははるになったみたいにあたたかい。',
+        meaningId: 'Hari ini hangat, rasanya seperti sudah musim semi.',
+      },
+      {
+        tier: 'natural',
+        tierLabel: 'Level 3: Alami (Ekspresi Wajar)',
+        japanese: '隣の部屋、だれもいないみたいだね。',
+        reading: 'となりのへや、だれもいないみたいだね。',
+        meaningId: 'Kamar sebelah sepertinya tidak ada orang ya.',
       },
     ],
   },
@@ -237,30 +281,41 @@ function generateFallbackConcept(item: BunpouItem): GrammarSkillConcept {
   const isCausative = item.meaningId.toLowerCase().includes('izin') || item.meaningId.toLowerCase().includes('menyuruh') || item.title.includes('させて');
   const isDugaan = item.meaningId.toLowerCase().includes('seperti') || item.meaningId.toLowerCase().includes('tampaknya') || item.meaningId.toLowerCase().includes('dugaan');
 
+  const firstEx = item.examples && item.examples[0];
+  const starterExample = firstEx ? {
+    japanese: firstEx.japanese,
+    reading: firstEx.reading,
+    meaningId: firstEx.meaningId,
+    contrastNote: `Penerapan langsung pola 「${item.title}」 dalam kalimat nyata.`,
+  } : undefined;
+
   if (isChange) {
     return {
       summary: explanation,
-      beforeState: 'Kondisi Semula: Belum terjadi / Masih kondisi lama ❌',
-      afterState: 'Kondisi Terkini: Telah bergeser menjadi keadaan baru ✅',
-      keyTakeaway: 'Pola ini menekankan transisi atau hasil proses perubahan.',
+      beforeState: 'Dulu: ❌ Keadaan lama / Belum terjadi',
+      afterState: 'Sekarang: ✅ Menjadi keadaan baru',
+      starterExample,
+      keyTakeaway: 'Pola ini dipakai saat ingin menegaskan adanya transisi atau perubahan nyata.',
     };
   }
 
   if (isPassive) {
     return {
       summary: explanation,
-      beforeState: 'Aksi Aktif: Pelaku melakukan tindakan 👤',
-      afterState: 'Posisi Pasif: Subjek menerima dampak atau merasa terganggu 🛡️',
-      keyTakeaway: 'Sudut pandang berpusat pada korban atau pihak yang merasakan akibat tindakan.',
+      beforeState: 'Aksi Aktif: Pelaku yang melakukan 👤',
+      afterState: 'Posisi Pasif: Subjek terkena dampak / merasa terganggu 🛡️',
+      starterExample,
+      keyTakeaway: 'Dipakai saat kamu ingin menyoroti perasaan atau posisi pihak yang terkena dampak tindakan orang lain.',
     };
   }
 
   if (isCausative) {
     return {
       summary: explanation,
-      beforeState: 'Kondisi Biasa: Menunggu keputusan pihak lain ⏳',
-      afterState: 'Tindakan: Meminta izin atau memperkenankan tindakan berlangsung 🤝',
-      keyTakeaway: 'Menunjukkan dinamika izin dan perkenan antarpihak secara sopan.',
+      beforeState: 'Menunggu Izin: Mengharapkan perkenan pihak lain ⏳',
+      afterState: 'Meminta Izin: Mengizinkan atau meminta agar boleh melakukan aksi 🤝',
+      starterExample,
+      keyTakeaway: 'Gunakan pola ini untuk meminta izin secara sopan tanpa terkesan memaksa.',
     };
   }
 
@@ -268,16 +323,18 @@ function generateFallbackConcept(item: BunpouItem): GrammarSkillConcept {
     return {
       summary: explanation,
       beforeState: 'Fakta Pasti: Belum dikonfirmasi 100% 🔍',
-      afterState: 'Kesan Sensorik: Dugaan kuat berdasarkan panca indra 💡',
-      keyTakeaway: 'Mengungkapkan penilaian atau perumpamaan dari pengamatan langsung pembicara.',
+      afterState: 'Kesan Tampang: Dugaan kuat dari apa yang dilihat / dirasa 💡',
+      starterExample,
+      keyTakeaway: 'Dipakai untuk mengungkapkan penilaian atau perumpamaan berdasarkan pengamatanmu sendiri.',
     };
   }
 
   return {
     summary: explanation,
-    beforeState: 'Sebelum Digunakan: Makna kata dasar 💬',
-    afterState: 'Setelah Digabung: Memperoleh fungsi tata bahasa khusus 🎯',
-    keyTakeaway: `Kuasai fungsi inti dari pola 「${item.title}」 dalam kalimat bahasa Jepang.`,
+    beforeState: 'Tanpa Pola Ini: Hanya kalimat fakta biasa 💬',
+    afterState: 'Dengan Pola Ini: Memiliki nuansa dan maksud khusus 🎯',
+    starterExample,
+    keyTakeaway: `Pola ini penting untuk membuat kalimatmu terdengar alami dan tepat sasaran.`,
   };
 }
 
@@ -289,7 +346,7 @@ function generateFallbackFunctions(item: BunpouItem): GrammarSkillFunction[] {
     return item.functions.map((fn, idx) => {
       const parts = fn.split(/[()（）]/).filter(p => p.trim());
       const label = parts[0]?.trim() || fn;
-      const desc = parts[1]?.trim() ? `Menyatakan ${parts[1].trim()}` : `Penggunaan pola untuk konteks ${label}`;
+      const desc = parts[1]?.trim() ? `Dipakai untuk ${parts[1].trim()}` : `Penggunaan untuk ${label}`;
       const matchingEx = item.examples && item.examples[idx] ? item.examples[idx] : item.examples?.[0];
 
       return {
@@ -309,7 +366,7 @@ function generateFallbackFunctions(item: BunpouItem): GrammarSkillFunction[] {
   if (item.subFormulas && item.subFormulas.length > 0) {
     return item.subFormulas.map((sub, idx) => ({
       number: idx + 1,
-      label: sub.token || `Penggunaan ${idx + 1}`,
+      label: sub.token || `Fungsi ${idx + 1}`,
       description: sub.meaning || sub.usageLocation || item.meaningId,
       miniExample: sub.examples && sub.examples[0] ? {
         japanese: sub.examples[0].japanese,
@@ -322,7 +379,7 @@ function generateFallbackFunctions(item: BunpouItem): GrammarSkillFunction[] {
   return [
     {
       number: 1,
-      label: 'Fungsi Utama (主要な用法)',
+      label: 'Fungsi Utama',
       description: item.meaningId,
       miniExample: item.examples && item.examples[0] ? {
         japanese: item.examples[0].japanese,
@@ -343,7 +400,7 @@ function generateFallbackFormulas(item: BunpouItem): GrammarSkillFormulaStep[] {
       return {
         title: sub.token || item.formula || item.title,
         breakdown: conditions.length > 0 ? conditions : [item.formula || item.title],
-        note: sub.usageLocation ? `Posisi: ${sub.usageLocation}` : undefined,
+        note: sub.usageLocation ? `Letak dalam kalimat: ${sub.usageLocation}` : undefined,
       };
     });
   }
@@ -355,7 +412,7 @@ function generateFallbackFormulas(item: BunpouItem): GrammarSkillFormulaStep[] {
     {
       title: `Rumus Pembentukan: ${item.title}`,
       breakdown: parts.length > 1 ? parts : [rawFormula],
-      note: 'Perhatikan konjugasi bentuk kata kerja/sifat yang bersambung dengan pola ini.',
+      note: 'Perhatikan bentuk kata sebelum menyambungkannya dengan pola ini.',
     }
   ];
 }
@@ -378,11 +435,11 @@ function generateFallbackWordIdentities(item: BunpouItem): GrammarSkillWordIdent
           const isAdj = cond.partOfSpeech.toLowerCase().includes('sifat') || cond.partOfSpeech.includes('A');
 
           result.push({
-            typeCategory: cond.partOfSpeech,
+            typeCategory: isVerb ? 'A. Kata Kerja (動詞)' : isNoun ? 'B. Kata Benda (名詞)' : 'C. Kata Sifat (形容詞)',
             tagColor: isVerb ? 'emerald' : isNoun ? 'sky' : isAdj ? 'amber' : 'purple',
             icon: isVerb ? '🟢' : isNoun ? '🔵' : isAdj ? '🟡' : '🟣',
             examples: cond.example ? [cond.example] : [cond.rule],
-            functionEffect: `Aturan: ${cond.rule}`,
+            functionEffect: `→ Aturan gabung: ${cond.rule}`,
           });
         }
       }
@@ -394,18 +451,18 @@ function generateFallbackWordIdentities(item: BunpouItem): GrammarSkillWordIdent
   // Generic fallback
   return [
     {
-      typeCategory: 'Kata Kerja (動詞 / Verba)',
+      typeCategory: 'A. Kata Kerja (動詞)',
       tagColor: 'emerald',
       icon: '🟢',
-      examples: ['行く', '食べる', 'する'],
-      functionEffect: 'Menyambung dengan bentuk kamus, bentuk-te, atau bentuk potensial sesuai aturan rumus.',
+      examples: ['行く (pergi)', '食べる (makan)', 'する (melakukan)'],
+      functionEffect: '→ Sambungkan sesuai bentuk yang diminta rumus (kamus / bentuk-te / dsb).',
     },
     {
-      typeCategory: 'Kata Benda & Sifat (名詞・形容詞)',
+      typeCategory: 'B. Kata Benda & Sifat (名詞・形容詞)',
       tagColor: 'sky',
       icon: '🔵',
-      examples: ['学生', '静か', '高い'],
-      functionEffect: 'Dapat memerlukan partikel penghubung seperti な atau の sesuai pola.',
+      examples: ['学生 (siswa)', '静か (tenang)', '高い (mahal)'],
+      functionEffect: '→ Perhatikan partikel penghubung seperti な atau の jika diperlukan.',
     }
   ];
 }
@@ -429,8 +486,8 @@ function generateFallbackNuances(item: BunpouItem): GrammarSkillNuance[] {
       {
         contrastA: item.title,
         meaningA: item.meaningId,
-        contrastB: 'Ragam Ungkapan Serupa',
-        meaningB: 'Perhatikan konteks formalitas dan nuansa perasaan pembicara.',
+        contrastB: 'Bentuk Biasa Tanpa Pola',
+        meaningB: 'Makna netral tanpa penekanan perasaan pembicara.',
         explanation: item.nuance,
       }
     ];
@@ -440,9 +497,9 @@ function generateFallbackNuances(item: BunpouItem): GrammarSkillNuance[] {
     {
       contrastA: item.title,
       meaningA: item.meaningId,
-      contrastB: 'Bentuk Kalimat Dasar',
-      meaningB: 'Pola ini memberikan warna ekspresi dan sudut pandang subjektif pada informasi.',
-      explanation: 'Gunakan pola ini untuk membuat ungkapan terdengar lebih alami bagi penutur asli Jepang.',
+      contrastB: 'Bentuk Kalimat Netral',
+      meaningB: 'Hanya menyatakan fakta tanpa rasa bahasa khusus.',
+      explanation: 'Gunakan pola ini saat ingin menyampaikan maksud dengan nuansa yang wajar didengar oleh orang Jepang.',
     }
   ];
 }
@@ -463,14 +520,14 @@ function generateFallbackExamples(item: BunpouItem): TieredExampleSentence[] {
 
   const tiers: ('basic' | 'daily' | 'natural')[] = ['basic', 'daily', 'natural'];
   const tierLabels = [
-    'Level 1: Basic (Pondasi Konsep)',
-    'Level 2: Daily (Percakapan Sehari-hari)',
-    'Level 3: Natural (Ekspresi Alami)',
+    'Level 1: Sederhana (Pondasi)',
+    'Level 2: Sehari-hari (Percakapan)',
+    'Level 3: Alami (Ekspresi Wajar)',
   ];
 
   return rawExamples.slice(0, 3).map((ex, idx) => ({
     tier: tiers[idx] || 'daily',
-    tierLabel: tierLabels[idx] || `Contoh ${idx + 1}`,
+    tierLabel: tierLabels[idx] || `Level ${idx + 1}`,
     japanese: ex.japanese,
     reading: ex.reading || ex.japanese,
     meaningId: ex.meaningId,
