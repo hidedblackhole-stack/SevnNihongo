@@ -13,7 +13,8 @@ import {
   BookmarkPlus,
   Eye,
   EyeOff,
-  Award
+  Award,
+  HelpCircle
 } from 'lucide-react';
 import { RubyText } from '../learning/RubyText';
 import { playSound, speakJapanese } from '../../utils/audio';
@@ -223,38 +224,6 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
     }
   };
 
-  // Quick Multi-Pattern Matrix for the currently active verb
-  const patternMatrix = useMemo(() => {
-    if (!activeVerb) return [];
-    const w = activeVerb.kanji;
-    const r = activeVerb.reading;
-    const conjResult = conjugateVerb(w, r);
-
-    return allPatterns.map(p => {
-      const reqForm = (p.requiredConjugation || 'jisho') as ConjugationForm;
-      const conjugated = conjResult.forms[reqForm] || conjResult.forms.jisho;
-      const fullJp = `${conjugated.japanese}${p.fixedSuffix || ''}`;
-      const fullRd = `${conjugated.reading}${p.fixedSuffix || ''}`;
-
-      const rawMeaning = getVerbMeaning(activeVerb);
-      let briefMeaning = p.meaningTemplateId
-        .replace('{predicate}', rawMeaning)
-        .replace('{object}', '')
-        .replace('di {location}', '')
-        .replace('{location}', '')
-        .replace(/\s+/g, ' ')
-        .trim();
-
-      return {
-        pattern: p,
-        fullJapanese: fullJp,
-        fullReading: fullRd,
-        meaning: briefMeaning,
-        isActive: p.id === activePatternId,
-      };
-    });
-  }, [activeVerb, allPatterns, activePatternId]);
-
   // Actions
   const handleNextVerb = () => {
     playSound('click', soundEnabled);
@@ -332,33 +301,33 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
   };
 
   return (
-    <div className="space-y-5 max-w-5xl mx-auto">
+    <div className="space-y-3 sm:space-y-4 max-w-4xl mx-auto px-1 sm:px-0">
       {/* ─────────────────────────────────────────────────────────────
-          1. TOP CONTROLS & STATUS BAR
+          1. TOP STATUS & COMPACT CONTROLS BAR (Mobile Optimized)
           ───────────────────────────────────────────────────────────── */}
-      <div className="panel p-3.5 sm:p-4 rounded-3xl border border-border-subtle bg-surface-card shadow-sm flex flex-wrap items-center justify-between gap-3">
-        {/* Left: Badge & Counter */}
-        <div className="flex items-center gap-2.5">
-          <div className="w-10 h-10 rounded-2xl bg-teal/15 text-teal border border-teal/30 flex items-center justify-center shrink-0 shadow-inner">
-            <BookOpen className="w-5 h-5" />
+      <div className="panel p-2.5 sm:p-3.5 rounded-2xl border border-border-subtle bg-surface-card shadow-xs flex flex-wrap items-center justify-between gap-2.5">
+        {/* Left: Title & Progress Counter */}
+        <div className="flex items-center gap-2.5 min-w-0">
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-indigo/15 text-indigo border border-indigo/30 flex items-center justify-center shrink-0 shadow-inner">
+            <BookOpen className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
           </div>
-          <div>
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="font-heading font-black text-sm sm:text-base text-text-primary tracking-wide">
-                黒板の実験室 · Kokuban Playground
+          <div className="min-w-0">
+            <div className="flex items-center gap-1.5 flex-wrap">
+              <span className="font-heading font-black text-xs sm:text-sm text-text-primary tracking-wide truncate">
+                文法実験室 · Altar Pola & Kata
               </span>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-teal/15 text-teal border border-teal/30">
-                Mode Eksplorasi Bebas
+              <span className="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-gold/15 text-gold border border-gold/30 shrink-0">
+                {levelCategory === 'all' ? 'Semua Level' : levelCategory.toUpperCase()}
               </span>
             </div>
-            <p className="text-xs text-text-muted">
-              Eksplorasi ke-{exploredCount} · Kosakata {currentVerbIndex + 1} dari {verbs.length}
+            <p className="text-[10.5px] sm:text-xs text-text-muted truncate">
+              Kosakata #{currentVerbIndex + 1} dari {verbs.length} · Dieksplorasi {exploredCount}x
             </p>
           </div>
         </div>
 
-        {/* Right: Quick Action Controls */}
-        <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+        {/* Right: Toggle Buttons & Harvest Finish */}
+        <div className="flex items-center gap-1.5 shrink-0 ml-auto">
           {/* Furigana Toggle */}
           <button
             type="button"
@@ -366,9 +335,9 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
               playSound('click', soundEnabled);
               setShowFurigana(prev => !prev);
             }}
-            className={`px-2.5 py-1.5 rounded-xl border text-xs font-mono font-semibold transition-all flex items-center gap-1.5 shadow-2xs ${
+            className={`px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-xl border text-[11px] font-mono font-semibold transition-all flex items-center gap-1 shadow-2xs ${
               showFurigana
-                ? 'bg-gold/15 text-gold border-gold/30'
+                ? 'bg-gold/15 text-gold border-gold/40 shadow-xs'
                 : 'bg-surface-inset text-text-muted border-border-subtle hover:text-text-primary'
             }`}
             title="Tampilkan / Sembunyikan Furigana"
@@ -384,9 +353,9 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
               playSound('click', soundEnabled);
               setShowRomaji(prev => !prev);
             }}
-            className={`px-2.5 py-1.5 rounded-xl border text-xs font-mono font-semibold transition-all shadow-2xs ${
+            className={`px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-xl border text-[11px] font-mono font-semibold transition-all shadow-2xs ${
               showRomaji
-                ? 'bg-indigo/15 text-indigo border-indigo/30'
+                ? 'bg-indigo/15 text-indigo border-indigo/40 shadow-xs'
                 : 'bg-surface-inset text-text-muted border-border-subtle hover:text-text-primary'
             }`}
             title="Tampilkan / Sembunyikan Romaji"
@@ -398,11 +367,11 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
           <button
             type="button"
             onClick={handleShuffleBoth}
-            className="btn-skeuo-gold px-3 py-1.5 text-xs flex items-center gap-1.5 shadow-sm active:scale-95 transition-all cursor-pointer"
+            className="btn-skeuo-gold px-2.5 py-1 sm:px-3 sm:py-1.5 text-[11px] sm:text-xs flex items-center gap-1 shadow-xs active:scale-95 transition-all cursor-pointer"
             title="Acak Kata Kerja & Pola Kalimat Sekaligus"
           >
             <Shuffle className="w-3.5 h-3.5" />
-            <span className="font-heading font-bold">Acak Keduanya</span>
+            <span>Acak</span>
           </button>
 
           {/* Finish / Harvest Button */}
@@ -413,168 +382,160 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
                 playSound('victory', soundEnabled);
                 onFinishSession(exploredCount);
               }}
-              className="btn-skeuo-indigo px-3.5 py-1.5 text-xs flex items-center gap-1.5 shadow-sm active:scale-95 transition-all cursor-pointer"
+              className="btn-skeuo-indigo px-3 py-1 sm:px-3.5 sm:py-1.5 text-[11px] sm:text-xs flex items-center gap-1.5 shadow-xs active:scale-95 transition-all cursor-pointer"
               title="Selesai belajar dan panen hadiah EXP"
             >
               <Award className="w-3.5 h-3.5 text-gold" />
-              <span className="font-heading font-bold">Selesai Belajar</span>
+              <span className="font-heading font-bold">Selesai</span>
             </button>
           )}
         </div>
       </div>
 
       {/* ─────────────────────────────────────────────────────────────
-          2. THE AUTHENTIC JAPANESE BLACKBOARD / WHITEBOARD CANVAS
+          2. THE AUTHENTIC JAPANESE RPG ALTAR / STUDY DESK (Skeuomorphic)
           ───────────────────────────────────────────────────────────── */}
-      <div className="relative rounded-3xl p-3 sm:p-4 bg-[#543d2b] dark:bg-[#2b1e16] border-4 border-[#73533a] dark:border-[#3d2a1f] shadow-2xl overflow-hidden">
-        {/* Wood Grain Outer Frame Highlights */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-black/30 pointer-events-none" />
-
-        {/* The Writing Slate Surface (Green Chalkboard in Dark Mode, Washi Board in Light Mode) */}
+      <div className="relative rounded-2xl sm:rounded-3xl p-2.5 sm:p-4 bg-surface-elevated border border-gold/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_6px_20px_rgba(0,0,0,0.4)] overflow-hidden">
+        {/* The Desk Surface (Sumi-e Charcoal Slate in Dark Mode, Antique Washi in Light Mode) */}
         <div
-          className="relative rounded-2xl p-5 sm:p-8 min-h-[380px] flex flex-col justify-between overflow-hidden shadow-inner border border-black/20
-            bg-[#fcfaf4] text-[#18181b] 
-            dark:bg-[#192c21] dark:text-[#f8fafc]
-            transition-colors duration-300"
+          className="relative rounded-xl sm:rounded-2xl p-3.5 sm:p-6 flex flex-col justify-between overflow-hidden bg-surface-inset border border-border-subtle shadow-[inset_1.5px_1.5px_6px_var(--neu-d)] transition-colors"
           style={{
-            backgroundImage: `radial-gradient(ellipse at 50% 30%, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0.18) 100%)`,
+            backgroundImage: `radial-gradient(ellipse at 50% 20%, rgba(217,119,6,0.05) 0%, transparent 80%)`,
           }}
         >
-          {/* Top Board Bar: Clean Japanese Slate Header & Shuffles */}
-          <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-black/10 dark:border-white/10">
-            {/* Left: Slate Title & Active Overview */}
-            <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-              <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-black/5 dark:bg-white/10 text-black/80 dark:text-white/90 border border-black/10 dark:border-white/15 flex items-center gap-1.5 shadow-2xs">
-                <span>🏫</span>
-                <span>黒板の実験室 (Blackboard)</span>
+          {/* Top Board Bar: Header & Shuffles */}
+          <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-border-subtle/70">
+            {/* Left: Active Indicators */}
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap text-xs font-mono">
+              <span className="font-bold text-text-muted flex items-center gap-1">
+                <span>Kata:</span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    playSound('click', soundEnabled);
+                    setShowVerbPicker(true);
+                  }}
+                  className="px-2 py-0.5 rounded-md bg-indigo/15 border border-indigo/40 text-indigo font-bold hover:bg-indigo/25 transition-all cursor-pointer flex items-center gap-1"
+                  title="Klik untuk memilih kata kerja lain"
+                >
+                  <span>{activeVerb.kanji}</span>
+                  <span className="text-[10px] opacity-70">({activeVerb.reading})</span>
+                </button>
               </span>
-              <span className="text-xs font-mono text-black/60 dark:text-white/60">
-                Kata: <b className="text-[#1e3a8a] dark:text-[#38bdf8] font-bold">{activeVerb.kanji}</b> · Pola: <b className="text-[#b91c1c] dark:text-[#fef08a] font-bold">{activePattern.pattern}</b>
+              <span className="text-text-muted">·</span>
+              <span className="font-bold text-text-muted flex items-center gap-1">
+                <span>Pola:</span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    playSound('click', soundEnabled);
+                    setShowPatternPicker(true);
+                  }}
+                  className="px-2 py-0.5 rounded-md bg-gold/15 border border-gold/40 text-gold font-bold hover:bg-gold/25 transition-all cursor-pointer flex items-center gap-1"
+                  title="Klik untuk memilih pola kalimat lain"
+                >
+                  <span>{activePattern.pattern}</span>
+                </button>
               </span>
             </div>
 
-            {/* Right: Quick Shuffle Buttons */}
-            <div className="flex items-center gap-2">
+            {/* Right: Mini Quick Shuffle Buttons */}
+            <div className="flex items-center gap-1.5 ml-auto">
               <button
                 type="button"
                 onClick={handleRandomVerb}
-                className="px-2.5 py-1 rounded-xl border border-black/15 dark:border-white/15 bg-white/60 dark:bg-white/10 hover:bg-white dark:hover:bg-white/20 text-xs font-mono font-medium transition-all text-black/80 dark:text-white/80 active:scale-95 flex items-center gap-1 cursor-pointer"
-                title="Acak Kata Kerja Dasar Saja"
+                className="px-2 py-1 rounded-lg border border-border-subtle bg-surface-card hover:bg-surface-elevated text-[11px] font-mono font-medium transition-all text-text-secondary hover:text-text-primary active:scale-95 flex items-center gap-1 cursor-pointer shadow-2xs"
+                title="Acak Kata Kerja Saja"
               >
-                <Shuffle className="w-3 h-3 text-[#1e3a8a] dark:text-[#38bdf8]" />
-                <span className="hidden sm:inline">Acak Kata</span>
+                <Shuffle className="w-3 h-3 text-indigo" />
+                <span className="text-[10.5px]">Acak Kata</span>
               </button>
 
               <button
                 type="button"
                 onClick={handleRandomPattern}
-                className="px-2.5 py-1 rounded-xl border border-black/15 dark:border-white/15 bg-white/60 dark:bg-white/10 hover:bg-white dark:hover:bg-white/20 text-xs font-mono font-medium transition-all text-black/80 dark:text-white/80 active:scale-95 flex items-center gap-1 cursor-pointer"
+                className="px-2 py-1 rounded-lg border border-border-subtle bg-surface-card hover:bg-surface-elevated text-[11px] font-mono font-medium transition-all text-text-secondary hover:text-text-primary active:scale-95 flex items-center gap-1 cursor-pointer shadow-2xs"
                 title="Acak Pola Kalimat Saja"
               >
-                <Shuffle className="w-3 h-3 text-[#b91c1c] dark:text-[#fef08a]" />
-                <span className="hidden sm:inline">Acak Pola</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={handleShuffleBoth}
-                className="px-3 py-1 rounded-xl border border-black/15 dark:border-white/15 bg-white/80 dark:bg-white/15 hover:bg-white dark:hover:bg-white/25 text-xs font-mono font-bold transition-all text-black dark:text-white active:scale-95 flex items-center gap-1 cursor-pointer shadow-2xs"
-                title="Acak Kata & Pola Bersamaan"
-              >
-                <Sparkles className="w-3 h-3 text-gold" />
-                <span className="hidden sm:inline">Acak Semua</span>
+                <Shuffle className="w-3 h-3 text-gold" />
+                <span className="text-[10.5px]">Acak Pola</span>
               </button>
             </div>
           </div>
 
           {/* ─────────────────────────────────────────────────────────────
-              CENTER HERO: THE TRANSFORMED RESULT ON THE BOARD
+              CENTER HERO: THE TRANSFORMED RESULT (Responsive & Tactile)
               ───────────────────────────────────────────────────────────── */}
-          <div className="py-8 sm:py-10 text-center space-y-4">
+          <div className="py-4 sm:py-7 text-center space-y-3">
             <AnimatePresence mode="wait">
               {transformation && (
                 <motion.div
                   key={`${activeVerb.kanji}_${activePattern.id}`}
-                  initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                  initial={{ opacity: 0, scale: 0.96, y: 8 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95, y: -10 }}
-                  transition={{ duration: 0.2 }}
-                  className="space-y-3"
+                  exit={{ opacity: 0, scale: 0.96, y: -8 }}
+                  transition={{ duration: 0.18 }}
+                  className="space-y-2.5"
                 >
                   {/* Badge: Level & Pattern Title */}
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-black/15 dark:border-white/20 bg-black/5 dark:bg-white/5 text-xs font-mono text-black/70 dark:text-white/80">
-                    <span className="font-bold text-[#b91c1c] dark:text-[#fef08a]">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gold/40 bg-gold/10 text-xs font-mono text-text-primary shadow-xs">
+                    <span className="font-mono font-black text-gold px-1.5 py-0.2 rounded bg-gold/20 whitespace-nowrap">
                       {activePattern.jlpt || 'N5'}
                     </span>
-                    <span>·</span>
-                    <span>{activePattern.title}</span>
+                    <span className="font-heading font-bold text-text-primary truncate max-w-[200px] sm:max-w-none">
+                      {activePattern.title}
+                    </span>
                   </div>
 
-                  {/* Giant Transformed Text with Color-Coded Clickable Segments */}
-                  <div className="flex items-center justify-center gap-2 sm:gap-3 pt-2">
-                    <div className="inline-flex items-center justify-center flex-wrap gap-x-1 select-none">
-                      {/* 1. KOTOBA (VERB STEM) SEGMENT - CLICKABLE */}
+                  {/* Transformed Word: Clickable Verb Stem & Pattern Suffix */}
+                  <div className="flex items-center justify-center gap-2 sm:gap-3 pt-1">
+                    <div className="inline-flex items-center justify-center flex-wrap gap-x-1.5 select-none max-w-full">
+                      {/* 1. KOTOBA (VERB STEM) - INTERACTIVE CLICKABLE */}
                       <button
                         type="button"
                         onClick={() => {
                           playSound('click', soundEnabled);
                           setShowVerbPicker(true);
                         }}
-                        className="relative group/verb inline-flex flex-col items-center cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 px-2.5 sm:px-3 py-1 -my-1 rounded-2xl border-2 border-dashed border-transparent hover:border-[#1e3a8a]/40 dark:hover:border-[#38bdf8]/50 hover:bg-[#1e3a8a]/10 dark:hover:bg-[#38bdf8]/15"
+                        className="group/verb inline-flex flex-col items-center cursor-pointer transition-all duration-150 hover:scale-105 active:scale-95 px-2 sm:px-3 py-1 -my-1 rounded-xl border border-transparent hover:border-indigo/40 hover:bg-indigo/10"
                         title={`Klik untuk mengganti kata kerja dasar (${activeVerb.kanji})`}
                       >
-                        {/* Hover hint badge */}
-                        <span className="absolute -top-8 opacity-0 group-hover/verb:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap text-[11px] font-mono font-bold px-2.5 py-1 rounded-xl bg-[#1e3a8a] text-white dark:bg-[#0284c7] dark:text-white shadow-lg z-30 flex items-center gap-1">
-                          <span>👆</span>
-                          <span>Ganti Kata ({activeVerb.kanji} - {getVerbMeaning(activeVerb)})</span>
-                        </span>
-
                         <RubyText
                           japanese={transformation.verbSegment.japanese}
                           reading={transformation.verbSegment.reading}
                           showFurigana={showFurigana}
-                          className="text-4xl sm:text-6xl md:text-7xl font-black font-jp tracking-tight text-[#1e3a8a] dark:text-[#38bdf8] drop-shadow-sm"
+                          className="text-3xl sm:text-5xl md:text-6xl font-black font-jp tracking-tight text-indigo drop-shadow-xs"
                         />
-
-                        {/* Interactive underline indicator */}
-                        <div className="flex items-center gap-1 mt-1">
-                          <span className="h-1 w-6 sm:w-10 rounded-full bg-[#1e3a8a]/40 dark:bg-[#38bdf8]/50 group-hover/verb:w-12 group-hover/verb:bg-[#1e3a8a] dark:group-hover/verb:bg-[#38bdf8] transition-all" />
-                          <span className="text-[10px] font-mono text-[#1e3a8a]/80 dark:text-[#38bdf8]/90 font-bold hidden sm:inline">
-                            Kata
-                          </span>
+                        <div className="flex items-center gap-1 mt-0.5 w-full justify-center">
+                          <span className="h-0.5 w-full rounded-full bg-indigo/40 group-hover/verb:bg-indigo transition-all" />
                         </div>
+                        <span className="text-[9.5px] font-mono text-indigo/80 font-bold mt-0.5">
+                          Kata (Ketuk)
+                        </span>
                       </button>
 
-                      {/* 2. POLA (PATTERN SUFFIX) SEGMENT - CLICKABLE */}
+                      {/* 2. POLA (PATTERN SUFFIX) - INTERACTIVE CLICKABLE */}
                       <button
                         type="button"
                         onClick={() => {
                           playSound('click', soundEnabled);
                           setShowPatternPicker(true);
                         }}
-                        className="relative group/pola inline-flex flex-col items-center cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 px-2.5 sm:px-3 py-1 -my-1 rounded-2xl border-2 border-dashed border-transparent hover:border-[#b91c1c]/40 dark:hover:border-[#fef08a]/50 hover:bg-[#b91c1c]/10 dark:hover:bg-[#fef08a]/15"
+                        className="group/pola inline-flex flex-col items-center cursor-pointer transition-all duration-150 hover:scale-105 active:scale-95 px-2 sm:px-3 py-1 -my-1 rounded-xl border border-transparent hover:border-gold/40 hover:bg-gold/10"
                         title={`Klik untuk mengganti pola kalimat (${activePattern.pattern})`}
                       >
-                        {/* Hover hint badge */}
-                        <span className="absolute -top-8 opacity-0 group-hover/pola:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap text-[11px] font-mono font-bold px-2.5 py-1 rounded-xl bg-[#b91c1c] text-white dark:bg-[#ca8a04] dark:text-black shadow-lg z-30 flex items-center gap-1">
-                          <span>👆</span>
-                          <span>Ganti Pola ({activePattern.pattern})</span>
-                        </span>
-
                         <RubyText
                           japanese={transformation.patternSegment.japanese}
                           reading={transformation.patternSegment.reading}
                           showFurigana={showFurigana}
-                          className="text-4xl sm:text-6xl md:text-7xl font-black font-jp tracking-tight text-[#b91c1c] dark:text-[#fef08a] drop-shadow-sm"
+                          className="text-3xl sm:text-5xl md:text-6xl font-black font-jp tracking-tight text-gold drop-shadow-xs"
                         />
-
-                        {/* Interactive underline indicator */}
-                        <div className="flex items-center gap-1 mt-1">
-                          <span className="h-1 w-6 sm:w-10 rounded-full bg-[#b91c1c]/40 dark:bg-[#fef08a]/50 group-hover/pola:w-12 group-hover/pola:bg-[#b91c1c] dark:group-hover/pola:bg-[#fef08a] transition-all" />
-                          <span className="text-[10px] font-mono text-[#b91c1c]/80 dark:text-[#fef08a]/90 font-bold hidden sm:inline">
-                            Pola
-                          </span>
+                        <div className="flex items-center gap-1 mt-0.5 w-full justify-center">
+                          <span className="h-0.5 w-full rounded-full bg-gold/40 group-hover/pola:bg-gold transition-all" />
                         </div>
+                        <span className="text-[9.5px] font-mono text-gold/80 font-bold mt-0.5">
+                          Pola (Ketuk)
+                        </span>
                       </button>
 
                       {/* Pronunciation Audio Button */}
@@ -582,31 +543,26 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
                         type="button"
                         onClick={() => handlePlayAudio(transformation.fullJapanese)}
                         disabled={isSpeaking}
-                        className="p-3 rounded-2xl border border-black/15 dark:border-white/20 bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/20 active:scale-90 transition-all text-black/80 dark:text-white shadow-md cursor-pointer shrink-0 ml-2"
+                        className="p-2.5 sm:p-3 rounded-xl sm:rounded-2xl border border-border-subtle bg-surface-card hover:bg-surface-elevated active:scale-90 transition-all text-text-primary shadow-xs cursor-pointer shrink-0 ml-1.5 sm:ml-2"
                         title="Dengarkan pelafalan hasil perubahan"
                       >
-                        <Volume2 className={`w-6 h-6 ${isSpeaking ? 'animate-bounce text-gold' : ''}`} />
+                        <Volume2 className={`w-5 h-5 sm:w-5.5 sm:h-5.5 ${isSpeaking ? 'animate-bounce text-gold' : 'text-text-secondary'}`} />
                       </button>
                     </div>
                   </div>
 
-                  {/* Micro Interaction Hint */}
-                  <p className="text-[11px] font-mono text-black/50 dark:text-white/50 pt-0.5">
-                    💡 Klik langsung <span className="font-bold text-[#1e3a8a] dark:text-[#38bdf8]">kata (biru/cyan)</span> atau <span className="font-bold text-[#b91c1c] dark:text-[#fef08a]">pola (merah/kuning)</span> di papan tulis untuk menggantinya.
-                  </p>
-
                   {/* Romaji & Meaning Output */}
-                  <div className="space-y-1 pt-1">
+                  <div className="space-y-1 pt-0.5">
                     {showRomaji && (
-                      <p className="text-sm sm:text-base font-mono font-medium text-black/60 dark:text-white/70">
-                        <span className="text-[#1e3a8a] dark:text-[#38bdf8] font-bold">{activeVerb.romaji}</span>
-                        {' '}+{' '}
-                        <span className="text-[#b91c1c] dark:text-[#fef08a] font-bold">{activePattern.pattern.replace('〜', '')}</span>
-                        {' '}➔ {transformation.fullReading}
+                      <p className="text-xs sm:text-sm font-mono font-medium text-text-muted">
+                        <span className="text-indigo font-bold">{activeVerb.romaji}</span>
+                        {' + '}
+                        <span className="text-gold font-bold">{activePattern.pattern.replace('〜', '')}</span>
+                        {' ➔ '}{transformation.fullReading}
                       </p>
                     )}
-                    <div className="inline-block px-4 py-1.5 rounded-2xl bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/15">
-                      <p className="text-base sm:text-xl font-bold text-[#b91c1c] dark:text-[#fef08a] font-heading">
+                    <div className="inline-block px-3.5 sm:px-4 py-1.5 rounded-xl bg-surface-card border border-border-subtle shadow-xs max-w-full">
+                      <p className="text-sm sm:text-base md:text-lg font-bold text-text-primary font-heading">
                         "{transformation.transformedMeaning}"
                       </p>
                     </div>
@@ -617,65 +573,57 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
           </div>
 
           {/* ─────────────────────────────────────────────────────────────
-              BOTTOM BOARD AREA: STEP-BY-STEP BREAKDOWN & CONTEXT SENTENCE
+              BOTTOM DESK AREA: FORMULA LOGIC & CONTEXT SENTENCE
               ───────────────────────────────────────────────────────────── */}
           {transformation && (
-            <div className="pt-4 border-t border-black/10 dark:border-white/10 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+            <div className="pt-3 border-t border-border-subtle/70 grid grid-cols-1 md:grid-cols-2 gap-2.5 text-xs font-mono">
               {/* Left Column: Logika Perubahan (Formula) */}
-              <div className="p-3.5 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 space-y-1.5">
-                <div className="flex items-center gap-1.5 font-bold text-black/80 dark:text-white/90">
-                  <Sparkles className="w-3.5 h-3.5 text-[#b91c1c] dark:text-[#fef08a]" />
-                  <span>Logika Perubahan Bentuk:</span>
+              <div className="p-2.5 sm:p-3 rounded-xl border border-border-subtle bg-surface-card/70 space-y-1 shadow-2xs">
+                <div className="flex items-center gap-1.5 font-bold text-text-primary">
+                  <Sparkles className="w-3.5 h-3.5 text-gold shrink-0" />
+                  <span>Logika Perubahan:</span>
                 </div>
-                <div className="text-black/70 dark:text-white/70 space-y-1">
+                <div className="text-text-secondary space-y-0.5 text-[11px] sm:text-xs">
                   <p>
-                    • <span className="font-bold text-black/90 dark:text-white">{activeVerb.kanji}</span> adalah{' '}
-                    <span className="text-[#1e3a8a] dark:text-[#86efac] font-bold">
-                      {transformation.groupExplanation}
-                    </span>
+                    • <span className="font-bold text-text-primary">{activeVerb.kanji}</span>:{' '}
+                    <span className="text-indigo font-bold">{transformation.groupExplanation}</span>
                   </p>
                   <p>
-                    • Diubah ke <span className="font-bold">{transformation.intermediateFormLabel}</span>: 「
-                    <span className="text-[#1e3a8a] dark:text-[#86efac] font-bold">
-                      {transformation.conjugatedStem}
-                    </span>
-                    」
+                    • Menjadi <span className="font-bold text-text-primary">{transformation.intermediateFormLabel}</span>: 「
+                    <span className="text-indigo font-bold">{transformation.conjugatedStem}</span>」
                   </p>
                   <p>
-                    • Disambung rumus 「
-                    <span className="text-[#b91c1c] dark:text-[#fef08a] font-bold">
-                      {transformation.suffix}
-                    </span>
-                    」 ➔ Hasil: 「<span className="font-bold">{transformation.fullJapanese}</span>」
+                    • Sambung rumus 「<span className="text-gold font-bold">{transformation.suffix}</span>」 ➔ 「
+                    <span className="font-bold text-text-primary">{transformation.fullJapanese}</span>」
                   </p>
                 </div>
               </div>
 
               {/* Right Column: Contoh Kalimat Alami (Context Sentence) */}
               {transformation.contextSentence && (
-                <div className="p-3.5 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 space-y-1.5">
-                  <div className="flex items-center justify-between gap-2 font-bold text-black/80 dark:text-white/90">
+                <div className="p-2.5 sm:p-3 rounded-xl border border-border-subtle bg-surface-card/70 space-y-1 shadow-2xs">
+                  <div className="flex items-center justify-between gap-1.5 font-bold text-text-primary">
                     <div className="flex items-center gap-1.5">
-                      <BookOpen className="w-3.5 h-3.5 text-[#1e3a8a] dark:text-[#86efac]" />
-                      <span>Contoh Kalimat Utuh:</span>
+                      <BookOpen className="w-3.5 h-3.5 text-indigo shrink-0" />
+                      <span>Contoh Kalimat:</span>
                     </div>
                     <button
                       type="button"
                       onClick={() => handlePlayAudio(transformation.contextSentence?.japanese || '')}
-                      className="p-1 rounded-md hover:bg-black/10 dark:hover:bg-white/10 text-black/70 dark:text-white transition-colors cursor-pointer"
+                      className="p-1 rounded-md hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-colors cursor-pointer"
                       title="Dengarkan kalimat"
                     >
                       <Volume2 className="w-3.5 h-3.5" />
                     </button>
                   </div>
-                  <div className="text-black/80 dark:text-white/80 space-y-0.5">
-                    <p className="font-jp text-sm font-semibold text-black dark:text-white">
+                  <div className="space-y-0.5 text-[11px] sm:text-xs">
+                    <p className="font-jp font-bold text-text-primary">
                       {transformation.contextSentence.japanese}
                     </p>
-                    <p className="text-[11px] text-black/60 dark:text-white/60">
+                    <p className="text-[10px] text-text-muted">
                       {transformation.contextSentence.reading}
                     </p>
-                    <p className="text-[11px] font-sans font-medium text-[#b91c1c] dark:text-[#fef08a]">
+                    <p className="text-[11px] text-gold font-medium italic">
                       "{transformation.contextSentence.meaningId}"
                     </p>
                   </div>
@@ -684,134 +632,86 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
             </div>
           )}
         </div>
-
-        {/* ─────────────────────────────────────────────────────────────
-            WOODEN CHALK TRAY AT THE BOTTOM (Skeuomorphic Chalk & Eraser)
-            ───────────────────────────────────────────────────────────── */}
-        <div className="mt-2 pt-2 border-t border-[#3d2a1f] flex items-center justify-between px-3 text-xs">
-          {/* Chalk pieces decoration */}
-          <div className="flex items-center gap-2">
-            <span className="w-8 h-2 rounded-full bg-white/90 shadow-sm inline-block" title="Kapur Putih" />
-            <span className="w-7 h-2 rounded-full bg-yellow-300 shadow-sm inline-block" title="Kapur Kuning" />
-            <span className="w-6 h-2 rounded-full bg-emerald-300 shadow-sm inline-block" title="Kapur Hijau" />
-            <span className="w-7 h-2 rounded-full bg-rose-300 shadow-sm inline-block" title="Kapur Merah Muda" />
-          </div>
-
-          {/* Blackboard Eraser (Kokuban Fuki) - Click for cute sound */}
-          <motion.button
-            whileTap={{ rotate: -5, scale: 0.95 }}
-            type="button"
-            onClick={() => {
-              playSound('click', soundEnabled);
-              setShowVerbPicker(false);
-              setShowPatternPicker(false);
-            }}
-            className="px-3 py-0.5 rounded-lg bg-[#3d2a1f] hover:bg-[#4a3427] border border-[#2b1e16] text-[#e0c4a8] text-[10px] font-mono flex items-center gap-1.5 shadow-sm active:scale-95 cursor-pointer"
-            title="Penghapus Papan Tulis (黒板拭き)"
-          >
-            <span>🧹 黒板拭き (Penghapus)</span>
-          </motion.button>
-        </div>
       </div>
 
       {/* ─────────────────────────────────────────────────────────────
-          3. NAVIGATION BAR (PREV / NEXT VERB & SAVE BUTTON)
+          3. NAVIGATION BAR (PREV / NEXT VERB & BOOKMARK) - 1 ROW MOBILE
           ───────────────────────────────────────────────────────────── */}
-      <div className="flex items-center justify-between gap-3">
+      <div className="flex items-center justify-between gap-2">
         <button
           type="button"
           onClick={handlePrevVerb}
-          className="btn-skeuo-indigo px-4 py-2 text-xs flex items-center gap-2 shadow-sm active:scale-95 transition-all cursor-pointer"
+          className="btn-skeuo-indigo px-3 py-2 text-xs flex items-center gap-1.5 shadow-xs active:scale-95 transition-all cursor-pointer flex-1 sm:flex-none justify-center"
         >
-          <ChevronLeft className="w-4 h-4" />
-          <span>Kosakata Sebelumnya</span>
+          <ChevronLeft className="w-4 h-4 shrink-0" />
+          <span className="truncate">Sebelumnya</span>
         </button>
 
-        <div className="flex items-center gap-2">
-          {onSaveToDeck && (
-            <button
-              type="button"
-              onClick={handleBookmark}
-              className={`px-3 py-2 rounded-2xl border text-xs font-heading font-bold flex items-center gap-1.5 shadow-sm transition-all active:scale-95 cursor-pointer ${
-                bookmarkSuccess
-                  ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40'
-                  : 'bg-surface-card hover:bg-surface-elevated text-text-primary border-border-subtle'
-              }`}
-            >
-              {bookmarkSuccess ? <Check className="w-4 h-4 text-emerald-400" /> : <BookmarkPlus className="w-4 h-4 text-gold" />}
-              <span>{bookmarkSuccess ? 'Tersimpan!' : 'Simpan ke Buku Saku'}</span>
-            </button>
-          )}
-        </div>
+        {onSaveToDeck && (
+          <button
+            type="button"
+            onClick={handleBookmark}
+            className={`px-3 py-2 rounded-xl border text-xs font-heading font-bold flex items-center gap-1.5 shadow-xs transition-all active:scale-95 cursor-pointer shrink-0 ${
+              bookmarkSuccess
+                ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40'
+                : 'bg-surface-card hover:bg-surface-elevated text-text-primary border-border-subtle'
+            }`}
+          >
+            {bookmarkSuccess ? <Check className="w-4 h-4 text-emerald-400" /> : <BookmarkPlus className="w-4 h-4 text-gold" />}
+            <span className="hidden sm:inline">{bookmarkSuccess ? 'Tersimpan!' : 'Buku Saku'}</span>
+          </button>
+        )}
 
         <button
           type="button"
           onClick={handleNextVerb}
-          className="btn-skeuo-indigo px-4 py-2 text-xs flex items-center gap-2 shadow-sm active:scale-95 transition-all cursor-pointer"
+          className="btn-skeuo-indigo px-3 py-2 text-xs flex items-center gap-1.5 shadow-xs active:scale-95 transition-all cursor-pointer flex-1 sm:flex-none justify-center"
         >
-          <span>Kosakata Berikutnya</span>
-          <ChevronRight className="w-4 h-4" />
+          <span className="truncate">Berikutnya</span>
+          <ChevronRight className="w-4 h-4 shrink-0" />
         </button>
       </div>
 
       {/* ─────────────────────────────────────────────────────────────
-          4. MULTI-PATTERN COMPARISON MATRIX (CHEAT SHEET TRAY)
+          4. INFORMATIVE NOTICE: KOTOBA & POLA BISA DIUBAH DENGAN KLIK
+          (Replaces the Bulky 300px Matrix Grid with a Sleek Notice)
           ───────────────────────────────────────────────────────────── */}
-      <div className="panel p-4 sm:p-5 rounded-3xl border border-border-subtle bg-surface-card space-y-3 shadow-md">
-        <div className="flex items-center justify-between gap-2 flex-wrap">
-          <div className="flex items-center gap-2">
-            <Layers className="w-4 h-4 text-gold" />
-            <h3 className="font-heading font-bold text-sm sm:text-base text-text-primary">
-              Bandingkan Semua Pola untuk 「{activeVerb.kanji}」
-            </h3>
+      <div className="panel p-3 sm:p-3.5 rounded-2xl border border-border-subtle bg-surface-card shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div className="flex items-start sm:items-center gap-2.5 min-w-0">
+          <div className="w-7 h-7 rounded-lg bg-gold/15 text-gold border border-gold/30 flex items-center justify-center shrink-0 shadow-inner mt-0.5 sm:mt-0">
+            <Sparkles className="w-3.5 h-3.5" />
           </div>
-          <span className="text-xs text-text-muted">
-            Klik salah satu kartu di bawah untuk langsung mengganti tampilan papan tulis:
-          </span>
+          <div className="text-xs">
+            <p className="font-heading font-bold text-text-primary flex items-center gap-1">
+              <span>Eksplorasi Interaktif Bebas</span>
+            </p>
+            <p className="text-text-muted text-[11px] leading-snug">
+              Ketuk langsung teks <span className="text-indigo font-bold underline cursor-pointer" onClick={() => setShowVerbPicker(true)}>Kata</span> atau <span className="text-gold font-bold underline cursor-pointer" onClick={() => setShowPatternPicker(true)}>Pola</span> di atas untuk mengganti ribuan variasi kata & tata bahasa.
+            </p>
+          </div>
         </div>
 
-        {/* Horizontal Scrolling or Grid of Pattern Cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5 max-h-[300px] overflow-y-auto pr-1">
-          {patternMatrix.map(item => {
-            return (
-              <motion.div
-                key={item.pattern.id}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={() => {
-                  playSound('click', soundEnabled);
-                  setActivePatternId(item.pattern.id);
-                }}
-                className={`p-2.5 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between space-y-1.5 ${
-                  item.isActive
-                    ? 'bg-surface-elevated border-teal/40 text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_8px_rgba(0,0,0,0.3)]'
-                    : 'bg-surface-inset border-border-subtle shadow-[inset_1px_1px_3px_var(--neu-d)] hover:bg-surface-elevated text-text-secondary hover:text-text-primary'
-                }`}
-              >
-                <div className="flex items-start justify-between gap-1">
-                  <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-surface-card border border-border-subtle text-text-muted">
-                    {item.pattern.pattern}
-                  </span>
-                  <span className="text-[9px] font-mono text-gold font-bold">
-                    {item.pattern.jlpt || 'N5'}
-                  </span>
-                </div>
-
-                <div>
-                  <h4 className="text-sm font-bold font-jp text-text-primary leading-tight">
-                    {item.fullJapanese}
-                  </h4>
-                  <p className="text-[10px] font-mono text-text-muted truncate">
-                    {item.fullReading}
-                  </p>
-                </div>
-
-                <p className="text-[10px] text-text-secondary line-clamp-1 border-t border-border-subtle/50 pt-1 font-sans">
-                  {item.meaning}
-                </p>
-              </motion.div>
-            );
-          })}
+        <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto justify-end">
+          <button
+            type="button"
+            onClick={() => {
+              playSound('click', soundEnabled);
+              setShowVerbPicker(true);
+            }}
+            className="flex-1 sm:flex-none px-3 py-1.5 rounded-xl border border-indigo/40 bg-indigo/10 hover:bg-indigo/20 text-indigo text-xs font-heading font-bold transition-all active:scale-95 shadow-2xs cursor-pointer"
+          >
+            📖 Pilih Kata
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              playSound('click', soundEnabled);
+              setShowPatternPicker(true);
+            }}
+            className="flex-1 sm:flex-none px-3 py-1.5 rounded-xl border border-gold/40 bg-gold/10 hover:bg-gold/20 text-gold text-xs font-heading font-bold transition-all active:scale-95 shadow-2xs cursor-pointer"
+          >
+            📑 Pilih Pola
+          </button>
         </div>
       </div>
 
@@ -820,18 +720,18 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
           ───────────────────────────────────────────────────────────── */}
       <AnimatePresence>
         {showVerbPicker && (
-          <div className="fixed inset-0 z-[90] flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+          <div className="fixed inset-0 z-[90] flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="panel p-5 rounded-3xl border border-border-subtle bg-surface-card w-full max-w-xl max-h-[85vh] flex flex-col space-y-4 shadow-2xl"
+              className="panel p-4 sm:p-5 rounded-2xl sm:rounded-3xl border border-border-subtle bg-surface-card w-full max-w-xl max-h-[85vh] flex flex-col space-y-3.5 shadow-2xl"
             >
               {/* Modal Header */}
-              <div className="flex items-center justify-between pb-3 border-b border-border-subtle">
+              <div className="flex items-center justify-between pb-2.5 border-b border-border-subtle">
                 <div className="flex items-center gap-2">
                   <BookOpen className="w-5 h-5 text-indigo" />
-                  <h3 className="font-heading font-black text-lg text-text-primary">
+                  <h3 className="font-heading font-black text-base sm:text-lg text-text-primary">
                     Pilih Kata Kerja (動詞)
                   </h3>
                 </div>
@@ -853,11 +753,11 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
                     value={verbSearchQuery}
                     onChange={e => setVerbSearchQuery(e.target.value)}
                     placeholder="Cari kanji, cara baca, romaji, atau arti..."
-                    className="w-full pl-10 pr-4 py-2 rounded-2xl bg-surface-inset border border-border-subtle text-xs text-text-primary placeholder:text-text-muted focus:outline-none focus:border-indigo"
+                    className="w-full pl-10 pr-4 py-2 rounded-xl bg-surface-inset border border-border-subtle text-xs text-text-primary placeholder:text-text-muted focus:outline-none focus:border-indigo"
                   />
                 </div>
 
-                <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
+                <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
                   {['all', 'N5', 'N4', 'N3', 'Kaigo'].map(lvl => (
                     <button
                       key={lvl}
@@ -876,7 +776,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
               </div>
 
               {/* Verbs List */}
-              <div className="overflow-y-auto space-y-1.5 max-h-[50vh] pr-1">
+              <div className="overflow-y-auto space-y-1.5 max-h-[48vh] pr-1 scrollbar-thin">
                 {filteredVerbs.length === 0 ? (
                   <p className="text-center py-8 text-xs text-text-muted">
                     Tidak ditemukan kosakata yang cocok.
@@ -895,18 +795,18 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
                             setShowVerbPicker(false);
                             setExploredCount(prev => prev + 1);
                           }}
-                          className={`p-3 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
+                          className={`p-2.5 sm:p-3 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
                             isSelected
-                              ? 'bg-indigo/15 border-indigo text-text-primary shadow-xs'
+                              ? 'bg-indigo/15 border-indigo/50 text-text-primary shadow-xs'
                               : 'bg-surface-inset border-border-subtle hover:bg-surface-elevated text-text-secondary hover:text-text-primary'
                           }`}
                         >
                           <div className="flex items-center gap-3">
-                            <span className="text-lg font-bold font-jp text-text-primary">
+                            <span className="text-base sm:text-lg font-bold font-jp text-text-primary">
                               {v.kanji}
                             </span>
                             <div>
-                              <p className="text-xs font-jp text-text-muted">{v.reading}</p>
+                              <p className="text-[11px] sm:text-xs font-jp text-text-muted">{v.reading}</p>
                               <p className="text-xs font-medium text-text-primary">{getVerbMeaning(v)}</p>
                             </div>
                           </div>
@@ -922,7 +822,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
                     })}
                     {filteredVerbs.length > 100 && (
                       <p className="text-center py-2 text-[11px] font-mono text-text-muted">
-                        Menampilkan 100 dari {filteredVerbs.length} kata pustaka (ketik di kolom cari untuk mempersempit).
+                        Menampilkan 100 dari {filteredVerbs.length} kata (ketik di kolom cari untuk mempersempit).
                       </p>
                     )}
                   </>
@@ -938,18 +838,18 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
           ───────────────────────────────────────────────────────────── */}
       <AnimatePresence>
         {showPatternPicker && (
-          <div className="fixed inset-0 z-[90] flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+          <div className="fixed inset-0 z-[90] flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="panel p-5 rounded-3xl border border-border-subtle bg-surface-card w-full max-w-xl max-h-[85vh] flex flex-col space-y-4 shadow-2xl"
+              className="panel p-4 sm:p-5 rounded-2xl sm:rounded-3xl border border-border-subtle bg-surface-card w-full max-w-xl max-h-[85vh] flex flex-col space-y-3.5 shadow-2xl"
             >
               {/* Modal Header */}
-              <div className="flex items-center justify-between pb-3 border-b border-border-subtle">
+              <div className="flex items-center justify-between pb-2.5 border-b border-border-subtle">
                 <div className="flex items-center gap-2">
                   <Layers className="w-5 h-5 text-gold" />
-                  <h3 className="font-heading font-black text-lg text-text-primary">
+                  <h3 className="font-heading font-black text-base sm:text-lg text-text-primary">
                     Pilih Pola Kalimat (文法パターン)
                   </h3>
                 </div>
@@ -963,7 +863,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
               </div>
 
               {/* Level Filter */}
-              <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
+              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
                 {['all', 'N5', 'N4', 'N3'].map(lvl => (
                   <button
                     key={lvl}
@@ -981,7 +881,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
               </div>
 
               {/* Patterns List */}
-              <div className="overflow-y-auto space-y-1.5 max-h-[50vh] pr-1">
+              <div className="overflow-y-auto space-y-1.5 max-h-[48vh] pr-1 scrollbar-thin">
                 {filteredPatterns.map(p => {
                   const isSelected = p.id === activePatternId;
                   return (
@@ -993,20 +893,20 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
                         setShowPatternPicker(false);
                         setExploredCount(prev => prev + 1);
                       }}
-                      className={`p-3 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
+                      className={`p-2.5 sm:p-3 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
                         isSelected
-                          ? 'bg-gold/15 border-gold text-text-primary shadow-xs'
+                          ? 'bg-gold/15 border-gold/50 text-text-primary shadow-xs'
                           : 'bg-surface-inset border-border-subtle hover:bg-surface-elevated text-text-secondary hover:text-text-primary'
                       }`}
                     >
-                      <div>
-                        <div className="flex items-center gap-2">
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
                           <span className="text-sm font-black font-jp text-gold">
                             {p.pattern}
                           </span>
                           <span className="text-xs font-bold text-text-primary">{p.title}</span>
                         </div>
-                        <p className="text-xs text-text-muted mt-0.5">
+                        <p className="text-[11px] sm:text-xs text-text-muted mt-0.5 line-clamp-1">
                           {p.nuanceExplanation || p.meaningTemplateId}
                         </p>
                       </div>
