@@ -310,8 +310,9 @@ function autoAnnotateFurigana(text: string, excludeKanji?: Set<string>): RubySeg
   let i = 0;
 
   // Filter dictionary words that actually appear in this text, sorted by length descending
+  // CRITICAL: Only match words containing at least one Kanji! Pure kana words never take furigana.
   const matchedWords = Object.keys(furiganaDict.words)
-    .filter(w => text.includes(w))
+    .filter(w => text.includes(w) && Array.from(w).some(c => isKanji(c)))
     .sort((a, b) => b.length - a.length);
 
   while (i < text.length) {
@@ -350,18 +351,24 @@ function autoAnnotateFurigana(text: string, excludeKanji?: Set<string>): RubySeg
 
     if (wordMatch) {
       let reading = furiganaDict.words[wordMatch];
+      const hasKanji = Array.from(wordMatch).some(c => isKanji(c));
+      const hasNonKanji = Array.from(wordMatch).some(c => !isKanji(c));
+      const readingHasKanji = reading ? Array.from(reading).some(c => isKanji(c)) : true;
+
       // If a single kanji matched as a word but is immediately followed by hiragana (okurigana),
       // prefer the verb/adjective stem kunyomi from kanji dictionary (e.g. 終わった -> お, 割った -> わ, 乾いた -> かわ)
       if (wordMatch.length === 1 && i + 1 < text.length && isHiragana(text[i + 1]) && furiganaDict.kanji[wordMatch]) {
         reading = furiganaDict.kanji[wordMatch];
         segments.push({ text: wordMatch, ruby: reading, isKanji: true });
-      } else if (Array.from(wordMatch).some(c => !isKanji(c))) {
+      } else if (hasKanji && hasNonKanji && !readingHasKanji) {
         // Word contains both kanji and okurigana (e.g. 飽きる, 食べる, 思い出す)
         // Align wordMatch against reading so only kanji characters receive ruby, leaving okurigana as plain text
         const subSegments = alignKanjiReadings(wordMatch, reading, excludeKanji);
         segments.push(...subSegments);
+      } else if (hasKanji) {
+        segments.push({ text: wordMatch, ruby: readingHasKanji ? undefined : reading, isKanji: true });
       } else {
-        segments.push({ text: wordMatch, ruby: reading, isKanji: true });
+        segments.push({ text: wordMatch, isKanji: false });
       }
       i += wordMatch.length;
       continue;
@@ -427,10 +434,11 @@ function alignKanjiReadings(
     return [{ text: origJapanese, isKanji: false }];
   }
 
-  // If reading itself contains kanji, cannot do 1-to-1 hiragana mapping, fall back to auto-annotation
+  // If reading itself contains kanji, cannot do 1-to-1 hiragana mapping.
+  // CRITICAL: Never call autoAnnotateFurigana recursively to prevent RangeError call stack overflow!
   const readingHasKanji = Array.from(reading).some(c => isKanji(c));
   if (readingHasKanji) {
-    return autoAnnotateFurigana(origJapanese, excludeKanji);
+    return [{ text: origJapanese, isKanji: false }];
   }
 
   const segments: RubySegment[] = [];
