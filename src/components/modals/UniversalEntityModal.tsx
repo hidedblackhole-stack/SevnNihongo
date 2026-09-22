@@ -536,8 +536,8 @@ export const UniversalEntityModal: React.FC<UniversalEntityModalProps> = ({
 
           {/* TAB 2: WRITING STUDIO */}
           {activeTab === 'writing' && writableTrait && (
-            <div className="space-y-4 animate-fade-in">
-              <div className="p-3 rounded-2xl bg-surface-inset border border-border-subtle text-xs text-text-secondary flex items-center justify-between">
+            <div className="space-y-2 sm:space-y-3 animate-fade-in">
+              <div className="hidden sm:flex p-2.5 rounded-xl bg-surface-inset border border-border-subtle text-xs text-text-secondary items-center justify-between">
                 <span>Latihan menulis interaktif dengan panduan arah goresan.</span>
                 <span className="font-mono font-bold text-gold">
                   {writableTrait.strokeCount} Goresan

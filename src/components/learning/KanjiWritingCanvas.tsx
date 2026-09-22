@@ -257,6 +257,32 @@ export interface KanjiWritingCanvasProps {
   className?: string;
 }
 
+/**
+ * Strips dictionary punctuation and redundant prefixes/suffixes from readings.
+ * Ensures clean, concise display (max 3 primary readings) on mobile without multi-line clutter.
+ */
+function cleanReadingsList(readings: string[]): string[] {
+  const result: string[] = [];
+  const seen = new Set<string>();
+
+  for (const r of readings) {
+    const cleaned = r.replace(/[.-]/g, '').trim();
+    if (!cleaned) continue;
+
+    const isPrefixed = r.startsWith('-');
+    if (!seen.has(cleaned)) {
+      seen.add(cleaned);
+      if (!isPrefixed) {
+        result.unshift(cleaned);
+      } else {
+        result.push(cleaned);
+      }
+    }
+  }
+
+  return result.slice(0, 3);
+}
+
 export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
   kanjiChar: rawKanjiChar,
   character,
@@ -264,7 +290,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
   totalSheets = 1,
   onCompleteSheet,
   onFinish,
-  onComplete: _onComplete,
+  onComplete,
   soundEnabled = true,
   autoAdvance = false,
   leniency,
@@ -304,6 +330,14 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     if (dbItem?.kunyomi) return Array.isArray(dbItem.kunyomi) ? dbItem.kunyomi : [dbItem.kunyomi];
     return [];
   }, [kunyomi, dbItem]);
+
+  const cleanOnyomiList = useMemo(() => {
+    return cleanReadingsList(onyomiList);
+  }, [onyomiList]);
+
+  const cleanKunyomiList = useMemo(() => {
+    return cleanReadingsList(kunyomiList);
+  }, [kunyomiList]);
 
   const effectiveRomaji = useMemo(() => {
     if (romaji) return romaji;
@@ -874,99 +908,97 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
   };
 
   return (
-    <div className={`flex flex-col items-center w-full max-w-md mx-auto space-y-4 ${className}`}>
-      {/* Complete Prompt & Yomikata Card Header (Unified Standard across Library, Dungeon & Decks) */}
+    <div className={`flex flex-col items-center w-full max-w-md mx-auto space-y-2 sm:space-y-3 ${className}`}>
+      {/* Compact Prompt & Yomikata Header */}
       {showPromptHeader && (
-        <div className="w-full max-w-[340px] sm:max-w-[360px] flex flex-col items-center space-y-3 mb-1 text-center">
-          {/* Highlighted Yomikata / Reading Header (Hidden Kanji to test recall in writing mode) */}
-          <div className="flex flex-wrap items-stretch justify-center gap-3 sm:gap-4 min-h-[52px] w-full">
-            {effectiveRelatedWords && effectiveRelatedWords.length > 0 ? (
-              effectiveRelatedWords.slice(0, 2).map((rw, i) => (
+        <div className="w-full max-w-[320px] sm:max-w-[340px] flex flex-col items-center space-y-1.5 text-center">
+          {/* Example Words: 2-column sleek grid on mobile, never stacks vertically into huge boxes */}
+          {effectiveRelatedWords && effectiveRelatedWords.length > 0 ? (
+            <div className={`w-full ${effectiveRelatedWords.length > 1 ? 'grid grid-cols-2 gap-2' : 'flex justify-center'}`}>
+              {effectiveRelatedWords.slice(0, 2).map((rw, i) => (
                 <div
                   key={i}
-                  className="flex flex-col items-center justify-between px-3.5 py-2.5 rounded-2xl bg-surface-inset hover:bg-surface-card border border-border-subtle hover:border-wine-accent/40 transition-all shadow-inner group cursor-pointer min-w-[135px] max-w-[220px]"
+                  className="flex flex-col items-center justify-center py-1.5 px-2.5 rounded-xl bg-surface-inset hover:bg-surface-card border border-border-subtle hover:border-wine-accent/40 transition-all shadow-inner group cursor-pointer w-full text-center"
                   onClick={() => speakJapanese(rw.word)}
                   title="Klik untuk mendengar audio kata ini"
                 >
-                  {/* Yomikata Reading with high-contrast target badge */}
-                  <div className="flex items-center justify-center gap-1.5 mb-1">
-                    <div className="text-xl sm:text-2xl font-bold font-jp">
+                  <div className="flex items-center justify-center gap-1 w-full">
+                    <div className="text-base sm:text-lg font-bold font-jp truncate">
                       {getHighlightedYomikata(rw.word, rw.reading, promptKanjiItem)}
                     </div>
-                    <Volume2 className="w-4 h-4 text-text-muted opacity-60 group-hover:text-wine-accent group-hover:scale-110 transition-all flex-shrink-0" />
+                    <Volume2 className="w-3.5 h-3.5 text-text-muted opacity-60 group-hover:text-wine-accent transition-all shrink-0" />
                   </div>
-
-                  {/* Indonesian meaning */}
-                  <span className="text-[11px] text-text-secondary text-center leading-tight line-clamp-2 mt-0.5 font-medium">
-                    {rw.meaningId}
-                  </span>
+                  {rw.meaningId && (
+                    <span className="text-[10px] text-text-secondary truncate w-full mt-0.5 font-medium">
+                      {rw.meaningId}
+                    </span>
+                  )}
                 </div>
-              ))
-            ) : (
-              <div
-                className="flex flex-col items-center justify-between px-4 py-2.5 rounded-2xl bg-surface-inset hover:bg-surface-card border border-border-subtle hover:border-wine-accent/40 transition-all shadow-inner group cursor-pointer w-full"
-                onClick={() =>
-                  speakJapanese(
-                    kunyomiList[0]?.replace(/[.-]/g, '') || onyomiList[0] || kanjiChar
-                  )
-                }
-                title="Klik untuk mendengar"
-              >
-                <div className="text-xl sm:text-2xl font-bold font-jp text-wine-accent drop-shadow-sm mb-1 flex items-center gap-1.5">
-                  <span>
-                    {kunyomiList[0]?.replace(/[.-]/g, '') ||
-                      onyomiList[0] ||
-                      reading ||
-                      kanjiChar}
-                  </span>
-                  <Volume2 className="w-4 h-4 text-text-muted opacity-60 group-hover:text-wine-accent transition-colors" />
-                </div>
-                {effectiveMeaning && (
-                  <span className="text-[11px] text-text-secondary mt-0.5 font-medium">{effectiveMeaning}</span>
-                )}
+              ))}
+            </div>
+          ) : (
+            <div
+              className="flex items-center justify-between px-3.5 py-1.5 rounded-xl bg-surface-inset hover:bg-surface-card border border-border-subtle hover:border-wine-accent/40 transition-all shadow-inner group cursor-pointer w-full"
+              onClick={() =>
+                speakJapanese(
+                  cleanKunyomiList[0] || cleanOnyomiList[0] || reading || kanjiChar
+                )
+              }
+              title="Klik untuk mendengar audio"
+            >
+              <div className="text-base sm:text-lg font-bold font-jp text-wine-accent flex items-center gap-1.5">
+                <span>
+                  {cleanKunyomiList[0] || cleanOnyomiList[0] || reading || kanjiChar}
+                </span>
+                <Volume2 className="w-3.5 h-3.5 text-text-muted opacity-60 group-hover:text-wine-accent transition-colors" />
               </div>
-            )}
-          </div>
+              {effectiveMeaning && (
+                <span className="text-xs text-text-secondary truncate font-medium max-w-[180px]">
+                  {effectiveMeaning}
+                </span>
+              )}
+            </div>
+          )}
 
-          {/* Readings (ON / KUN or ROMAJI) and Meaning Pill Badge */}
-          <div className="flex flex-col items-center justify-center gap-1.5 text-xs w-full">
+          {/* Clean, Unified Readings (ON/KUN) & Meaning in 1 Single Line */}
+          <div className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-xs w-full py-0.5">
             {isKana ? (
-              <div className="flex items-center gap-1.5">
-                <span className="text-text-muted font-bold bg-surface-inset px-2 py-0.5 rounded text-[10px] font-mono">
+              <div className="flex items-center gap-1">
+                <span className="text-text-muted font-bold bg-surface-inset px-1.5 py-0.5 rounded text-[9px] font-mono border border-border-subtle">
                   ROMAJI
                 </span>
-                <span className="text-wine-accent font-mono font-bold tracking-wider">
+                <span className="text-wine-accent font-mono font-bold text-xs tracking-wider">
                   {effectiveRomaji}
                 </span>
               </div>
             ) : (
               <>
-                {onyomiList.length > 0 && (
-                  <div className="flex flex-wrap items-center justify-center gap-1.5">
-                    <span className="text-text-muted font-bold bg-surface-inset px-1.5 py-0.5 rounded text-[10px]">
+                {cleanOnyomiList.length > 0 && (
+                  <div className="flex items-center gap-1">
+                    <span className="text-text-muted font-bold bg-surface-inset px-1.5 py-0.5 rounded text-[9px] font-mono border border-border-subtle">
                       ON
                     </span>
-                    <span className="text-wine-accent font-jp tracking-wider font-medium">
-                      {onyomiList.join(', ')}
+                    <span className="text-amber-400 font-jp tracking-wider font-semibold text-xs">
+                      {cleanOnyomiList.join(', ')}
                     </span>
                   </div>
                 )}
-                {kunyomiList.length > 0 && (
-                  <div className="flex flex-wrap items-center justify-center gap-1.5">
-                    <span className="text-text-muted font-bold bg-surface-inset px-1.5 py-0.5 rounded text-[10px]">
+                {cleanKunyomiList.length > 0 && (
+                  <div className="flex items-center gap-1">
+                    <span className="text-text-muted font-bold bg-surface-inset px-1.5 py-0.5 rounded text-[9px] font-mono border border-border-subtle">
                       KUN
                     </span>
-                    <span className="text-state-success font-jp tracking-wider font-medium">
-                      {kunyomiList.join(', ')}
+                    <span className="text-emerald-400 font-jp tracking-wider font-semibold text-xs">
+                      {cleanKunyomiList.join(', ')}
                     </span>
                   </div>
                 )}
+                {effectiveMeaning && (
+                  <span className="text-[11px] text-text-secondary font-medium truncate max-w-[240px]">
+                    • {effectiveMeaning}
+                  </span>
+                )}
               </>
-            )}
-            {effectiveMeaning && (
-              <div className="text-text-primary mt-2 font-medium px-3.5 py-1.5 bg-surface-inset rounded-xl border border-border-subtle shadow-sm text-center">
-                {effectiveMeaning}
-              </div>
             )}
           </div>
         </div>
@@ -974,12 +1006,12 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
 
       {/* Multi-Sheet Indicator Tabs (Only shown if totalSheets > 1) */}
       {totalSheets > 1 && (
-        <div className="w-full max-w-[340px] sm:max-w-[360px]">
-          <div className="flex items-center justify-between text-xs text-text-secondary mb-2">
-            <span className="font-bold text-text-primary font-heading">
-              Lembar Latihan Menulis (Sheet {currentSheet}/{totalSheets})
+        <div className="w-full max-w-[320px] sm:max-w-[340px]">
+          <div className="flex items-center justify-between text-xs text-text-secondary mb-1">
+            <span className="font-bold text-text-primary font-heading text-[11px]">
+              Sheet {currentSheet}/{totalSheets}
             </span>
-            <span className="font-mono">{completedSheets.length} / {totalSheets} Selesai</span>
+            <span className="font-mono text-[11px]">{completedSheets.length} / {totalSheets} Selesai</span>
           </div>
           <div
             className="grid gap-1.5"
@@ -1005,7 +1037,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                       playSound('click', soundEnabled);
                     }
                   }}
-                  className={`py-1.5 rounded-lg text-xs font-bold transition-all ${
+                  className={`py-1 rounded-lg text-xs font-bold transition-all ${
                     isCurrent
                       ? 'bg-wine-accent text-white shadow-md ring-2 ring-wine-accent/50 font-black scale-105'
                       : isCompleted
@@ -1022,7 +1054,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
       )}
 
       {/* Canvas Top Bar / Stopwatch, Mistakes & Watermark Guide Toggle */}
-      <div className="flex items-center justify-between w-full max-w-[340px] sm:max-w-[360px] px-1 text-xs">
+      <div className="flex items-center justify-between w-full max-w-[320px] sm:max-w-[340px] px-1 text-xs">
         <div className="flex items-center gap-1.5 flex-wrap">
           {showStopwatch && (
             <span
@@ -1039,7 +1071,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
           {isQuizComplete && lastReward ? (
             <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-gold border border-gold/40 flex items-center gap-1 font-mono animate-scale-up shadow-sm">
               <Sparkles className="w-3 h-3 text-gold" />
-              +{lastReward.expGained} EXP Belajar!
+              +{lastReward.expGained} EXP!
             </span>
           ) : totalCharStrokes > 0 && !isQuizComplete ? (
             <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-surface-inset border border-border-subtle text-text-primary">
@@ -1061,21 +1093,21 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
           <button
             type="button"
             onClick={() => setShowGuide(!showGuide)}
-            className={`px-2.5 py-1 rounded-full text-[10px] font-bold transition-all flex items-center gap-1.5 shadow-sm select-none ${
+            className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all flex items-center gap-1.5 shadow-sm select-none cursor-pointer ${
               showGuide
                 ? 'bg-wine-accent/20 text-wine-accent border border-wine-accent/40 hover:bg-wine-accent/30'
                 : 'bg-surface-inset text-text-muted border border-border-subtle hover:bg-surface-elevated'
             }`}
             title="Tampilkan / Sembunyikan garis panduan karakter"
           >
-            {showGuide ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
+            {showGuide ? <Eye className="w-3 h-3" /> : <EyeOff className="w-3 h-3" />}
             <span>{showGuide ? 'Watermark ON' : 'Watermark OFF'}</span>
           </button>
         </div>
       </div>
 
       {/* Interactive Writing Canvas with Japanese Grid */}
-      <div className="relative w-full aspect-square max-w-[340px] sm:max-w-[360px] rounded-3xl overflow-hidden border border-border-subtle shadow-2xl bg-surface-inset touch-none">
+      <div className="relative w-full aspect-square max-w-[320px] sm:max-w-[340px] rounded-3xl overflow-hidden border border-border-subtle shadow-2xl bg-surface-inset touch-none">
         {/* Background Grid Canvas */}
         <canvas
           ref={gridCanvasRef}
@@ -1127,63 +1159,54 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
         )}
       </div>
 
-      {/* Action Controls: 2 Balanced Rows (Never wraps text on any device) */}
-      <div className="flex flex-col w-full max-w-[340px] sm:max-w-[360px] gap-2.5">
-        {/* Row 1: Animasi & Ulangi in 2 equal, comfortable columns */}
-        <div className="grid grid-cols-2 gap-2.5 w-full">
-          <button
-            type="button"
-            onClick={animateOrder}
-            disabled={isAnimating || !hasStrokeData}
-            className="w-full py-2.5 px-3 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-primary text-xs font-bold flex items-center justify-center gap-1.5 transition-colors border border-border-subtle hover:border-wine-accent/40 disabled:opacity-50 whitespace-nowrap shadow-sm select-none active:scale-95"
-            title="Tampilkan animasi goresan"
-          >
-            <PlayCircle className="w-4 h-4 text-wine-accent shrink-0" />
-            <span className="whitespace-nowrap">Animasi</span>
-          </button>
+      {/* Action Controls: Compact Unified 3-Button Dock */}
+      <div className="grid grid-cols-3 gap-2 w-full max-w-[320px] sm:max-w-[340px]">
+        {/* Button 1: Animasi */}
+        <button
+          type="button"
+          onClick={animateOrder}
+          disabled={isAnimating || !hasStrokeData}
+          className="py-2.5 px-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-primary text-xs font-bold flex items-center justify-center gap-1.5 transition-all border border-border-subtle hover:border-wine-accent/40 disabled:opacity-50 whitespace-nowrap shadow-sm select-none active:scale-95 cursor-pointer"
+          title="Tampilkan animasi goresan"
+        >
+          <PlayCircle className="w-4 h-4 text-wine-accent shrink-0" />
+          <span>Animasi</span>
+        </button>
 
-          <button
-            type="button"
-            onClick={clearCanvas}
-            className="w-full py-2.5 px-3 rounded-xl bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-text-primary text-xs font-bold flex items-center justify-center gap-1.5 transition-colors border border-border-subtle whitespace-nowrap shadow-sm select-none active:scale-95"
-          >
-            <RotateCcw className="w-4 h-4 shrink-0" />
-            <span className="whitespace-nowrap">Ulangi</span>
-          </button>
-        </div>
+        {/* Button 2: Ulangi */}
+        <button
+          type="button"
+          onClick={clearCanvas}
+          className="py-2.5 px-2 rounded-xl bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-text-primary text-xs font-bold flex items-center justify-center gap-1.5 transition-all border border-border-subtle whitespace-nowrap shadow-sm select-none active:scale-95 cursor-pointer"
+          title="Bersihkan kanvas untuk menulis ulang"
+        >
+          <RotateCcw className="w-4 h-4 shrink-0" />
+          <span>Ulangi</span>
+        </button>
 
-        {/* Row 2: Simpan Sheet / Next / Selesai Primary CTA */}
-        {(!autoAdvance || !hasStrokeData) && (
-          <button
-            type="button"
-            onClick={completeCurrentSheet}
-            disabled={(!isQuizComplete && hasStrokeData) && !completedSheets.includes(currentSheet)}
-            className={`w-full py-3 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-md active:scale-95 select-none ${
-              isQuizComplete || completedSheets.includes(currentSheet) || !hasStrokeData
-                ? 'bg-wine-accent hover:opacity-95 text-white font-black shadow-lg shadow-wine-accent/25'
-                : 'bg-surface-inset text-text-muted cursor-not-allowed border border-border-subtle'
-            }`}
-          >
-            {completedSheets.includes(currentSheet) ? (
-              currentSheet >= totalSheets ? (
-                <>
-                  <Check className="w-4 h-4 text-surface-base stroke-[3]" />
-                  <span>{totalSheets > 1 ? `Selesai (${totalSheets}/${totalSheets})` : 'Selesai Menulis'}</span>
-                </>
-              ) : (
-                <>
-                  <Check className="w-4 h-4 text-surface-base stroke-[3]" />
-                  <span>Lanjut ke Sheet #{currentSheet + 1}</span>
-                </>
-              )
-            ) : (
-              <>
-                <Check className="w-4 h-4" />
-                <span>{totalSheets > 1 ? `Simpan Sheet #${currentSheet}` : 'Selesai Menulis'}</span>
-              </>
-            )}
-          </button>
-        )}
+        {/* Button 3: Selesai / Next Sheet */}
+        <button
+          type="button"
+          onClick={completeCurrentSheet}
+          disabled={(!isQuizComplete && hasStrokeData) && !completedSheets.includes(currentSheet)}
+          className={`py-2.5 px-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-md active:scale-95 select-none cursor-pointer ${
+            isQuizComplete || completedSheets.includes(currentSheet) || !hasStrokeData
+              ? 'bg-wine-accent hover:opacity-95 text-white font-black shadow-wine-accent/25'
+              : 'bg-surface-inset text-text-muted cursor-not-allowed border border-border-subtle'
+          }`}
+          title="Simpan dan selesaikan kanji ini"
+        >
+          <Check className="w-4 h-4 shrink-0 stroke-[3]" />
+          <span className="truncate">
+            {completedSheets.includes(currentSheet)
+              ? currentSheet >= totalSheets
+                ? 'Selesai'
+                : `Next #${currentSheet + 1}`
+              : totalSheets > 1
+                ? `#${currentSheet}`
+                : 'Selesai'}
+          </span>
+        </button>
       </div>
     </div>
   );
