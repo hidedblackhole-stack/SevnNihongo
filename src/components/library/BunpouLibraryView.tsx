@@ -13,6 +13,7 @@ import { isItemBookmarked } from '../../utils/decks';
 import { getCanonicalGrammarTitle } from '../../utils/bunpouTitleUtils';
 import { matchBunpouItem } from '../../utils/bunpouSearchUtils';
 import { convertRomajiToKana } from '../../utils/imeEngine';
+import { DeckBookmarkPicker } from '../deck/DeckBookmarkPicker';
 
 const LEVEL_OPTIONS = [
   { value: 'all', label: 'Semua Level' },
@@ -30,6 +31,7 @@ interface BunpouLibraryViewProps {
   itemMastery?: Record<string, ItemMasteryRecord>;
   userDecks?: UserDeck[];
   onToggleBookmark?: (id: string, category: 'bunpou', notes?: string, targetDeckId?: string) => void;
+  onUpdateDecks?: (decks: UserDeck[]) => void;
   onRemoveItem?: (id: string, category: 'bunpou') => void;
   onRewardPlayer?: (exp: number, gold: number) => void;
   onRecordInteraction?: (
@@ -56,6 +58,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
   itemMastery,
   userDecks,
   onToggleBookmark,
+  onUpdateDecks,
   onRemoveItem,
   onRewardPlayer,
   onRecordInteraction,
@@ -429,22 +432,17 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
                     </button>
                   )}
                   {onToggleBookmark && (
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onToggleBookmark(item.id, 'bunpou');
-                        playSound('click', soundEnabled);
-                      }}
-                      className={`p-1.5 rounded-lg border transition-all shrink-0 ${
-                        isItemBookmarked(userDecks, item.id, 'bunpou')
-                          ? 'bg-surface-elevated text-gold border-gold/40 ring-1 ring-gold/30'
-                          : 'bg-surface-inset text-text-muted hover:text-gold border-border-subtle'
-                      }`}
-                      title={isItemBookmarked(userDecks, item.id, 'bunpou') ? 'Tersimpan di Buku Saku' : 'Simpan ke Buku Saku'}
-                    >
-                      <Bookmark className={`w-3.5 h-3.5 ${isItemBookmarked(userDecks, item.id, 'bunpou') ? 'fill-gold text-gold' : ''}`} />
-                    </button>
+                    <DeckBookmarkPicker
+                      itemId={item.id}
+                      category="bunpou"
+                      itemTitle={item.title}
+                      itemSubtitle={item.meaning}
+                      userDecks={userDecks}
+                      onToggleBookmark={onToggleBookmark}
+                      onUpdateDecks={onUpdateDecks}
+                      soundEnabled={soundEnabled}
+                      compact
+                    />
                   )}
                   <span className="text-text-muted group-hover:text-indigo group-hover:translate-x-0.5 transition-all text-sm font-bold pl-0.5">
                     →
@@ -491,22 +489,17 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
                       </button>
                     )}
                     {onToggleBookmark && (
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onToggleBookmark(item.id, 'bunpou');
-                          playSound('click', soundEnabled);
-                        }}
-                        className={`p-1.5 rounded-lg border transition-all shrink-0 ${
-                          isItemBookmarked(userDecks, item.id, 'bunpou')
-                            ? 'bg-surface-elevated text-gold border-gold/40 ring-1 ring-gold/30'
-                            : 'bg-surface-inset text-text-muted hover:text-gold border-border-subtle'
-                        }`}
-                        title={isItemBookmarked(userDecks, item.id, 'bunpou') ? 'Tersimpan di Buku Saku' : 'Simpan ke Buku Saku'}
-                      >
-                        <Bookmark className={`w-3.5 h-3.5 ${isItemBookmarked(userDecks, item.id, 'bunpou') ? 'fill-gold text-gold' : ''}`} />
-                      </button>
+                      <DeckBookmarkPicker
+                        itemId={item.id}
+                        category="bunpou"
+                        itemTitle={item.title}
+                        itemSubtitle={item.meaning}
+                        userDecks={userDecks}
+                        onToggleBookmark={onToggleBookmark}
+                        onUpdateDecks={onUpdateDecks}
+                        soundEnabled={soundEnabled}
+                        compact
+                      />
                     )}
                   </div>
                 </div>
@@ -516,17 +509,19 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
                   <h3 className="text-xl sm:text-2xl font-bold text-text-primary font-heading group-hover:text-indigo transition-colors leading-snug font-jp">
                     {patternTitle}
                   </h3>
-                  <p className="text-xs sm:text-sm font-medium text-text-secondary line-clamp-2 leading-relaxed">
-                    {item.meaningId}
+                  <p className="text-xs sm:text-sm text-text-secondary font-medium leading-relaxed line-clamp-2">
+                    {item.meaning}
                   </p>
                 </div>
 
-                {/* Bottom: Action CTA */}
-                <div className="pt-2.5 border-t border-border-subtle flex items-center justify-end">
-                  <span className="text-xs font-bold text-indigo group-hover:text-indigo/80 group-hover:translate-x-0.5 transition-all flex items-center gap-1 font-heading">
-                    Lihat Detail & Rumus →
-                  </span>
-                </div>
+                {/* Bottom: Structure snippet badge */}
+                {item.structure && (
+                  <div className="pt-2 border-t border-border-subtle/50 flex items-center justify-between text-[11px] text-text-muted">
+                    <span className="font-mono truncate bg-surface-inset px-2 py-0.5 rounded border border-border-subtle max-w-full">
+                      {item.structure}
+                    </span>
+                  </div>
+                )}
               </div>
             );
           })}
@@ -568,6 +563,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
             onToggleBookmark={onToggleBookmark ? () => onToggleBookmark(selectedItem.id, 'bunpou') : undefined}
             userDecks={userDecks}
             onToggleDeckItem={onToggleBookmark && selectedItem ? (deckId) => onToggleBookmark(selectedItem.id, 'bunpou', undefined, deckId) : undefined}
+            onUpdateDecks={onUpdateDecks}
             onRewardPlayer={onRewardPlayer}
             onRecordInteraction={onRecordInteraction}
             onCompleteStudyItem={onCompleteStudyItem}

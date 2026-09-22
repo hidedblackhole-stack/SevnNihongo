@@ -29,6 +29,7 @@ interface LibraryViewProps {
   ) => void;
   userDecks?: UserDeck[];
   onToggleBookmark?: (id: string, category: DeckItemCategory, notes?: string, targetDeckId?: string) => void;
+  onUpdateDecks?: (decks: UserDeck[]) => void;
 }
 
 export type LibraryTab = 'kotoba' | 'kanji' | 'bunpou' | 'soal';
@@ -42,6 +43,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
   onCompleteStudyItem,
   userDecks,
   onToggleBookmark,
+  onUpdateDecks,
 }) => {
   const [libraryTab, setLibraryTab] = useState<LibraryTab>('kotoba');
 
@@ -150,6 +152,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
           itemMastery={itemMastery}
           userDecks={userDecks}
           onToggleBookmark={onToggleBookmark}
+          onUpdateDecks={onUpdateDecks}
           onRewardPlayer={onRewardPlayer}
           onRecordStudy={onRecordStudy as any}
           onRecordInteraction={onRecordInteraction}
@@ -162,6 +165,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
           itemMastery={itemMastery}
           userDecks={userDecks}
           onToggleBookmark={onToggleBookmark}
+          onUpdateDecks={onUpdateDecks}
           onRewardPlayer={onRewardPlayer}
           onRecordStudy={onRecordStudy as any}
           onRecordInteraction={onRecordInteraction}
@@ -174,6 +178,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
           itemMastery={itemMastery}
           userDecks={userDecks}
           onToggleBookmark={onToggleBookmark}
+          onUpdateDecks={onUpdateDecks}
           onRewardPlayer={onRewardPlayer}
           onRecordInteraction={onRecordInteraction}
           onCompleteStudyItem={onCompleteStudyItem}

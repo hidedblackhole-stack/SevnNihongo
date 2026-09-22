@@ -1,162 +1,309 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Bookmark, Check, ChevronDown, X } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import { Bookmark, Check, Plus, X } from 'lucide-react';
 import { UserDeck, DeckItemCategory } from '../../types/rpg';
 import { playSound } from '../../utils/audio';
-import { DEFAULT_BOOKMARK_DECK_ID } from '../../utils/decks';
+import { DEFAULT_BOOKMARK_DECK_ID, ensureUserDecks, createCustomDeck } from '../../utils/decks';
 
-interface DeckBookmarkPickerProps {
+export interface DeckBookmarkPickerProps {
   itemId: string;
   category: DeckItemCategory;
+  itemTitle?: string;
+  itemSubtitle?: string;
   userDecks?: UserDeck[];
   onToggleDeckItem?: (deckId: string) => void;
   isDefaultBookmarked?: boolean;
   onToggleDefaultBookmark?: () => void;
+  onToggleBookmark?: (id: string, category: DeckItemCategory, notes?: string, targetDeckId?: string) => void;
+  onUpdateDecks?: (decks: UserDeck[]) => void;
   soundEnabled?: boolean;
+  compact?: boolean;
+  className?: string;
 }
 
 export const DeckBookmarkPicker: React.FC<DeckBookmarkPickerProps> = ({
   itemId,
   category,
+  itemTitle,
+  itemSubtitle,
   userDecks,
   onToggleDeckItem,
   isDefaultBookmarked = false,
   onToggleDefaultBookmark,
+  onToggleBookmark,
+  onUpdateDecks,
   soundEnabled = true,
+  compact = false,
+  className = '',
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const popoverRef = useRef<HTMLDivElement>(null);
+  const [isCreatingNew, setIsCreatingNew] = useState(false);
+  const [newDeckTitle, setNewDeckTitle] = useState('');
 
-  // Close on outside click
+  // Close on Escape key
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (popoverRef.current && !popoverRef.current.contains(event.target as Node)) {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
         setIsOpen(false);
+        setIsCreatingNew(false);
       }
     };
     if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
+      window.addEventListener('keydown', handleKeyDown);
     }
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen]);
 
-  const customDecks = (userDecks || []).filter(d => !d.isDefault && d.id !== DEFAULT_BOOKMARK_DECK_ID);
-  const hasMultipleDecks = customDecks.length > 0;
+  const allDecks = ensureUserDecks(userDecks);
 
-  // Is this item in ANY deck?
-  const isInAnyDeck = (userDecks || []).some(d =>
-    d.items.some(it => it.id === itemId && it.category === category)
-  );
+  // Check if this item is in ANY deck
+  const isInAnyDeck = allDecks.some(deck =>
+    deck.items.some(it => it.id === itemId && it.category === category)
+  ) || isDefaultBookmarked;
 
-  // If there are no custom decks, simply use the 1-click default bookmark button
-  if (!hasMultipleDecks) {
-    if (!onToggleDefaultBookmark) return null;
-    return (
-      <button
-        type="button"
-        onClick={() => {
-          onToggleDefaultBookmark();
-          playSound('click', soundEnabled);
-        }}
-        className={`p-1.5 rounded-xl border transition-all ${
-          isDefaultBookmarked
-            ? 'bg-surface-elevated text-gold border-gold/40 ring-1 ring-gold/30'
-            : 'bg-surface-card border-border-subtle text-text-muted hover:text-gold'
-        }`}
-        title={isDefaultBookmarked ? 'Tersimpan di Buku Saku Bookmark' : 'Simpan ke Buku Saku Bookmark'}
-      >
-        <Bookmark className={`w-4 h-4 ${isDefaultBookmarked ? 'fill-gold text-gold' : ''}`} />
-      </button>
-    );
-  }
+  const handleToggle = (deck: UserDeck) => {
+    playSound('click', soundEnabled);
+    const isDefault = deck.isDefault || deck.id === DEFAULT_BOOKMARK_DECK_ID;
+
+    if (onToggleBookmark) {
+      onToggleBookmark(itemId, category, undefined, deck.id);
+    } else if (isDefault && onToggleDefaultBookmark) {
+      onToggleDefaultBookmark();
+    } else if (onToggleDeckItem) {
+      onToggleDeckItem(deck.id);
+    }
+  };
+
+  const handleCreateAndAddDeck = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newDeckTitle.trim() || !onUpdateDecks) return;
+
+    playSound('click', soundEnabled);
+    const deckType = category === 'kotoba' ? 'vocabulary' : category === 'kanji' ? 'kanji' : category === 'bunpou' ? 'grammar' : 'mixed';
+    const { userDecks: updatedDecks } = createCustomDeck(userDecks, {
+      title: newDeckTitle.trim(),
+      type: deckType,
+      coverIcon: category === 'kanji' ? '🈸' : category === 'kotoba' ? '📚' : '📜',
+      initialItems: [
+        {
+          id: itemId,
+          category,
+          addedAt: new Date().toISOString(),
+        }
+      ],
+    });
+
+    onUpdateDecks(updatedDecks);
+    setNewDeckTitle('');
+    setIsCreatingNew(false);
+  };
 
   return (
-    <div className="relative inline-block" ref={popoverRef}>
+    <>
+      {/* Trigger Button: Clean Bookmark Icon */}
       <button
         type="button"
-        onClick={() => {
-          setIsOpen(prev => !prev);
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsOpen(true);
           playSound('click', soundEnabled);
         }}
-        className={`px-2 py-1.5 rounded-xl border flex items-center gap-1 transition-all ${
-          isInAnyDeck
-            ? 'bg-surface-elevated text-gold border-gold/40 ring-1 ring-gold/30'
-            : 'bg-surface-card border-border-subtle text-text-muted hover:text-gold'
-        }`}
-        title="Atur simpan ke Buku Saku"
+        className={className || (compact
+          ? `p-1 sm:p-1.5 rounded-lg border transition-all cursor-pointer ${
+              isInAnyDeck
+                ? 'bg-surface-elevated text-gold border-gold/40 ring-1 ring-gold/30 shadow-xs'
+                : 'bg-surface-inset text-text-muted hover:text-gold border-border-subtle'
+            }`
+          : `p-2 rounded-xl border flex items-center gap-1.5 transition-all cursor-pointer ${
+              isInAnyDeck
+                ? 'bg-surface-elevated text-gold border-gold/40 ring-1 ring-gold/30'
+                : 'bg-surface-card border-border-subtle text-text-muted hover:text-gold'
+            }`
+        )}
+        title={isInAnyDeck ? 'Tersimpan di Buku Saku (Klik untuk atur)' : 'Simpan ke Buku Saku'}
+        aria-label="Atur Buku Saku"
       >
-        <Bookmark className={`w-4 h-4 ${isInAnyDeck ? 'fill-gold text-gold' : ''}`} />
-        <ChevronDown className="w-3 h-3 opacity-70" />
+        <Bookmark className={`${compact ? 'w-3.5 h-3.5' : 'w-4 h-4'} ${isInAnyDeck ? 'fill-gold text-gold' : ''}`} />
       </button>
 
-      {/* Popover Menu */}
-      {isOpen && (
-        <div className="absolute right-0 top-full mt-2 w-64 rounded-2xl bg-surface-elevated border border-border-primary shadow-2xl p-3 z-[90] space-y-2.5 animate-fade-in backdrop-blur-md">
-          <div className="flex items-center justify-between border-b border-border-subtle pb-2">
-            <span className="text-xs font-heading font-bold text-text-primary flex items-center gap-1.5">
-              <Bookmark className="w-3.5 h-3.5 text-gold" />
-              <span>Simpan ke Buku Saku</span>
-            </span>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="p-1 rounded-lg text-text-muted hover:text-text-primary"
-            >
-              <X className="w-3.5 h-3.5" />
-            </button>
-          </div>
+      {/* Deck Selection Modal / Bottom Sheet via Portal */}
+      {isOpen && typeof document !== 'undefined' && createPortal(
+        <div
+          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/65 backdrop-blur-sm animate-fade-in"
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsOpen(false);
+            setIsCreatingNew(false);
+          }}
+        >
+          <div
+            className="w-full sm:max-w-md bg-surface-elevated border border-border-primary rounded-t-3xl sm:rounded-3xl shadow-2xl p-5 sm:p-6 space-y-4 max-h-[85vh] sm:max-h-[80vh] flex flex-col overflow-hidden animate-slide-up"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Mobile Sheet Handle */}
+            <div className="w-12 h-1 bg-border-subtle rounded-full mx-auto sm:hidden -mt-1 mb-1" />
 
-          <div className="space-y-1.5 max-h-56 overflow-y-auto pr-1 scrollbar-thin">
-            {(userDecks || []).map((deck) => {
-              const isIncluded = deck.items.some(
-                it => it.id === itemId && it.category === category
-              );
-              const isDefault = deck.isDefault || deck.id === DEFAULT_BOOKMARK_DECK_ID;
+            {/* Header */}
+            <div className="flex items-start justify-between gap-3 border-b border-border-subtle pb-3">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="w-9 h-9 rounded-xl bg-gold/15 border border-gold/30 flex items-center justify-center text-gold shrink-0">
+                  <Bookmark className="w-5 h-5 fill-gold" />
+                </div>
+                <div className="min-w-0">
+                  <h3 className="text-base font-heading font-bold text-text-primary flex items-center gap-2 truncate">
+                    <span>Simpan ke Buku Saku</span>
+                  </h3>
+                  <p className="text-xs text-text-muted truncate">
+                    {itemTitle ? (
+                      <span className="font-semibold text-text-secondary">
+                        {itemTitle} {itemSubtitle ? `• ${itemSubtitle}` : ''}
+                      </span>
+                    ) : (
+                      'Pilih deck untuk menambahkan materi ini'
+                    )}
+                  </p>
+                </div>
+              </div>
 
-              return (
-                <div
-                  key={deck.id}
-                  onClick={() => {
-                    playSound('click', soundEnabled);
-                    if (isDefault && onToggleDefaultBookmark) {
-                      onToggleDefaultBookmark();
-                    } else if (onToggleDeckItem) {
-                      onToggleDeckItem(deck.id);
-                    }
-                  }}
-                  className={`p-2 rounded-xl border flex items-center justify-between gap-2 cursor-pointer transition-colors ${
-                    isIncluded
-                      ? 'bg-surface-card border-gold/40 text-gold'
-                      : 'bg-surface-inset border-border-subtle hover:border-border-primary text-text-secondary'
-                  }`}
-                >
-                  <div className="flex items-center gap-2 min-w-0">
-                    <span className="text-base">{deck.coverIcon || (isDefault ? '🔖' : '📖')}</span>
-                    <div className="min-w-0">
-                      <p className="text-xs font-heading font-bold text-text-primary truncate">
-                        {deck.title}
-                      </p>
-                      <p className="text-[10px] text-text-muted">
-                        {deck.items.length} materi
-                      </p>
-                    </div>
-                  </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsOpen(false);
+                  setIsCreatingNew(false);
+                  playSound('click', soundEnabled);
+                }}
+                className="p-1.5 rounded-xl text-text-muted hover:text-text-primary hover:bg-surface-inset transition-colors shrink-0 cursor-pointer"
+                title="Tutup"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
 
+            {/* Deck List Scroll Area */}
+            <div className="flex-1 overflow-y-auto pr-1 space-y-2.5 scrollbar-thin">
+              <p className="text-[11px] font-bold text-text-muted tracking-wider uppercase">
+                Daftar Buku Saku Kamu ({allDecks.length})
+              </p>
+
+              {allDecks.map((deck) => {
+                const isIncluded = deck.items.some(
+                  it => it.id === itemId && it.category === category
+                ) || (Boolean(deck.isDefault || deck.id === DEFAULT_BOOKMARK_DECK_ID) && isDefaultBookmarked);
+                const isDefault = deck.isDefault || deck.id === DEFAULT_BOOKMARK_DECK_ID;
+
+                return (
                   <div
-                    className={`w-4 h-4 rounded flex items-center justify-center border shrink-0 ${
+                    key={deck.id}
+                    onClick={() => handleToggle(deck)}
+                    className={`p-3 rounded-2xl border flex items-center justify-between gap-3 cursor-pointer transition-all select-none ${
                       isIncluded
-                        ? 'bg-gold border-gold text-surface-ground'
-                        : 'border-border-subtle bg-surface-card'
+                        ? 'bg-gold/10 border-gold/50 shadow-sm ring-1 ring-gold/30'
+                        : 'bg-surface-inset/80 border-border-subtle hover:border-border-primary hover:bg-surface-card text-text-secondary'
                     }`}
                   >
-                    {isIncluded && <Check className="w-3 h-3 stroke-[3]" />}
+                    <div className="flex items-center gap-3 min-w-0">
+                      <span className="text-2xl shrink-0">
+                        {deck.coverIcon || (isDefault ? '🔖' : '📖')}
+                      </span>
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-1.5">
+                          <p className={`text-sm font-heading font-bold truncate ${isIncluded ? 'text-gold' : 'text-text-primary'}`}>
+                            {deck.title}
+                          </p>
+                          {isDefault && (
+                            <span className="text-[9px] px-1.5 py-0.5 rounded bg-surface-card border border-border-subtle text-text-muted shrink-0">
+                              Utama
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-xs text-text-muted">
+                          {deck.items.length} materi tersimpan
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Checkbox indicator */}
+                    <div
+                      className={`w-6 h-6 rounded-lg flex items-center justify-center border shrink-0 transition-all ${
+                        isIncluded
+                          ? 'bg-gold border-gold text-surface-base shadow-xs scale-105'
+                          : 'border-border-muted bg-surface-card/60'
+                      }`}
+                    >
+                      {isIncluded && <Check className="w-4 h-4 stroke-[3]" />}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
+
+            {/* Create New Deck Section */}
+            {onUpdateDecks && (
+              <div className="pt-2 border-t border-border-subtle">
+                {!isCreatingNew ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsCreatingNew(true);
+                      playSound('click', soundEnabled);
+                    }}
+                    className="w-full py-2.5 px-3 rounded-xl border border-dashed border-border-muted hover:border-gold/50 text-text-secondary hover:text-gold text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer bg-surface-inset/50"
+                  >
+                    <Plus className="w-4 h-4" />
+                    <span>+ Buat Buku Saku Baru</span>
+                  </button>
+                ) : (
+                  <form onSubmit={handleCreateAndAddDeck} className="space-y-2">
+                    <p className="text-xs font-bold text-text-primary">Judul Buku Saku Baru:</p>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        autoFocus
+                        placeholder="Contoh: Kanji Sulit N5..."
+                        value={newDeckTitle}
+                        onChange={(e) => setNewDeckTitle(e.target.value)}
+                        className="flex-1 px-3 py-2 text-xs rounded-xl bg-surface-inset border border-border-subtle focus:border-gold focus:outline-hidden text-text-primary"
+                        maxLength={40}
+                      />
+                      <button
+                        type="submit"
+                        disabled={!newDeckTitle.trim()}
+                        className="px-3.5 py-2 text-xs font-bold rounded-xl bg-gold hover:bg-gold-bright text-surface-base disabled:opacity-40 transition-all cursor-pointer shrink-0"
+                      >
+                        Buat & Simpan
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsCreatingNew(false);
+                          setNewDeckTitle('');
+                        }}
+                        className="p-2 text-xs rounded-xl border border-border-subtle text-text-muted hover:text-text-primary"
+                      >
+                        Batal
+                      </button>
+                    </div>
+                  </form>
+                )}
+              </div>
+            )}
+
+            {/* Bottom Done Button */}
+            <button
+              type="button"
+              onClick={() => {
+                setIsOpen(false);
+                setIsCreatingNew(false);
+                playSound('click', soundEnabled);
+              }}
+              className="w-full py-3 rounded-2xl bg-surface-card hover:bg-surface-elevated text-text-primary border border-border-subtle font-heading font-bold text-xs tracking-wider transition-colors cursor-pointer"
+            >
+              Selesai
+            </button>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
-    </div>
+    </>
   );
 };

@@ -11,6 +11,7 @@ import { UserDeck } from '../../types/rpg';
 import { isItemBookmarked } from '../../utils/decks';
 import { convertRomajiToKana, createJapaneseQueryMatcher } from '../../utils/imeEngine';
 import { parseReadingVariations } from '../../utils/readingHighlightUtils';
+import { DeckBookmarkPicker } from '../deck/DeckBookmarkPicker';
 
 
 const LEVEL_OPTIONS = [
@@ -72,6 +73,7 @@ interface KotobaLibraryViewProps {
   itemMastery?: Record<string, ItemMasteryRecord>;
   userDecks?: UserDeck[];
   onToggleBookmark?: (id: string, category: 'kotoba', notes?: string, targetDeckId?: string) => void;
+  onUpdateDecks?: (decks: UserDeck[]) => void;
   onRemoveItem?: (id: string, category: 'kotoba') => void;
   onRewardPlayer?: (exp: number, gold: number) => void;
   onRecordStudy?: (category: 'flashcards', id: string, count?: number) => void;
@@ -99,6 +101,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
   itemMastery,
   userDecks,
   onToggleBookmark,
+  onUpdateDecks,
   onRemoveItem,
   onRewardPlayer,
   onRecordStudy,
@@ -516,21 +519,18 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
                       </button>
                     )}
                     {onToggleBookmark && (
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onToggleBookmark(item.id, 'kotoba');
-                          playSound('click', soundEnabled);
-                        }}
-                        className={`p-2.5 rounded-xl border transition-all ${
-                          isItemBookmarked(userDecks, item.id, 'kotoba')
-                            ? 'bg-surface-elevated text-gold border-gold/40 ring-1 ring-gold/30'
-                            : 'bg-surface-inset text-text-muted hover:text-gold border-border-subtle'
-                        }`}
-                        title={isItemBookmarked(userDecks, item.id, 'kotoba') ? 'Tersimpan di Buku Saku' : 'Simpan ke Buku Saku'}
-                      >
-                        <Bookmark className={`w-4 h-4 ${isItemBookmarked(userDecks, item.id, 'kotoba') ? 'fill-gold text-gold' : ''}`} />
-                      </button>
+                      <DeckBookmarkPicker
+                        itemId={item.id}
+                        category="kotoba"
+                        itemTitle={item.word}
+                        itemSubtitle={item.meaning}
+                        userDecks={userDecks}
+                        onToggleBookmark={onToggleBookmark}
+                        onUpdateDecks={onUpdateDecks}
+                        soundEnabled={soundEnabled}
+                        compact
+                        className="p-2.5 rounded-xl border transition-all cursor-pointer"
+                      />
                     )}
                     <button
                       onClick={(e) => {
@@ -581,6 +581,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
             onToggleBookmark={onToggleBookmark ? () => onToggleBookmark(selectedItem.id, 'kotoba') : undefined}
             userDecks={userDecks}
             onToggleDeckItem={onToggleBookmark ? (deckId) => onToggleBookmark(selectedItem.id, 'kotoba', undefined, deckId) : undefined}
+            onUpdateDecks={onUpdateDecks}
             onRewardPlayer={onRewardPlayer}
             onRecordStudy={onRecordStudy}
             onRecordInteraction={onRecordInteraction}

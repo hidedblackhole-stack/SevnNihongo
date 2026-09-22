@@ -19,6 +19,7 @@ interface KanjiDetailModalProps {
   onToggleBookmark?: () => void;
   userDecks?: UserDeck[];
   onToggleDeckItem?: (deckId: string) => void;
+  onUpdateDecks?: (decks: UserDeck[]) => void;
   onNext?: () => void;
   onPrev?: () => void;
   hasNext?: boolean;
@@ -36,6 +37,7 @@ export const KanjiDetailModal: React.FC<KanjiDetailModalProps> = ({
   onToggleBookmark,
   userDecks,
   onToggleDeckItem,
+  onUpdateDecks,
   onNext,
   onPrev,
   hasNext = false,
@@ -112,10 +114,13 @@ export const KanjiDetailModal: React.FC<KanjiDetailModalProps> = ({
               <DeckBookmarkPicker
                 itemId={item.id || item.character}
                 category="kanji"
+                itemTitle={item.character}
+                itemSubtitle={item.meaning}
                 userDecks={userDecks}
                 onToggleDeckItem={onToggleDeckItem}
                 isDefaultBookmarked={isBookmarked}
                 onToggleDefaultBookmark={onToggleBookmark}
+                onUpdateDecks={onUpdateDecks}
                 soundEnabled={soundEnabled}
               />
               <button

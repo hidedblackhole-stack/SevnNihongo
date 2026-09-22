@@ -35,6 +35,7 @@ interface BunpouDetailModalProps {
   onToggleBookmark?: () => void;
   userDecks?: UserDeck[];
   onToggleDeckItem?: (deckId: string) => void;
+  onUpdateDecks?: (decks: UserDeck[]) => void;
   onRewardPlayer?: (exp: number, gold: number) => void;
   onRecordInteraction?: (
     itemId: string,
@@ -126,6 +127,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
   onToggleBookmark,
   userDecks,
   onToggleDeckItem,
+  onUpdateDecks,
   onRewardPlayer,
   onRecordInteraction,
   onCompleteStudyItem,
@@ -271,10 +273,13 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
             <DeckBookmarkPicker
               itemId={item.id}
               category="bunpou"
+              itemTitle={item.title}
+              itemSubtitle={item.meaning}
               userDecks={userDecks}
               onToggleDeckItem={onToggleDeckItem}
               isDefaultBookmarked={isBookmarked}
               onToggleDefaultBookmark={onToggleBookmark}
+              onUpdateDecks={onUpdateDecks}
               soundEnabled={soundEnabled}
             />
             <button

@@ -7,6 +7,7 @@ import { playSound } from '../../utils/audio';
 import { UserDeck } from '../../types/rpg';
 import { isItemBookmarked } from '../../utils/decks';
 import { convertRomajiToKana, createJapaneseQueryMatcher } from '../../utils/imeEngine';
+import { DeckBookmarkPicker } from '../deck/DeckBookmarkPicker';
 
 const SUUJI_CHARACTERS = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '百', '千', '万', '零'];
 
@@ -163,6 +164,7 @@ interface KanjiLibraryViewProps {
   itemMastery?: Record<string, ItemMasteryRecord>;
   userDecks?: UserDeck[];
   onToggleBookmark?: (id: string, category: 'kanji', notes?: string, targetDeckId?: string) => void;
+  onUpdateDecks?: (decks: UserDeck[]) => void;
   onRemoveItem?: (id: string, category: 'kanji') => void;
   onRewardPlayer?: (exp: number, gold: number) => void;
   onRecordStudy?: (category: 'kanjiWriting', id: string, count?: number) => void;
@@ -189,6 +191,7 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
   itemMastery,
   userDecks,
   onToggleBookmark,
+  onUpdateDecks,
   onRemoveItem,
   onRewardPlayer,
   onRecordStudy,
@@ -734,6 +737,7 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
                           soundEnabled={soundEnabled}
                           userDecks={userDecks}
                           onToggleBookmark={onToggleBookmark}
+                          onUpdateDecks={onUpdateDecks}
                           onRemoveItem={onRemoveItem}
                           onSelect={setSelectedKanji}
                           compact
@@ -763,6 +767,7 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
                 soundEnabled={soundEnabled}
                 userDecks={userDecks}
                 onToggleBookmark={onToggleBookmark}
+                onUpdateDecks={onUpdateDecks}
                 onRemoveItem={onRemoveItem}
                 onSelect={setSelectedKanji}
                 compact={isKanaMode}
@@ -804,6 +809,7 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
         onToggleBookmark={onToggleBookmark && selectedKanji ? () => onToggleBookmark(selectedKanji.id || selectedKanji.character, 'kanji') : undefined}
         userDecks={userDecks}
         onToggleDeckItem={onToggleBookmark && selectedKanji ? (deckId) => onToggleBookmark(selectedKanji.id || selectedKanji.character, 'kanji', undefined, deckId) : undefined}
+        onUpdateDecks={onUpdateDecks}
         onCompleteSheet={(_sheet, score, reward) => {
           if (!selectedKanji) return;
           const exp = reward?.expGained ?? 15;
@@ -836,6 +842,7 @@ const KanjiCardItem: React.FC<{
   soundEnabled: boolean;
   userDecks?: UserDeck[];
   onToggleBookmark?: (id: string, category: 'kanji', notes?: string, targetDeckId?: string) => void;
+  onUpdateDecks?: (decks: UserDeck[]) => void;
   onRemoveItem?: (id: string, category: 'kanji') => void;
   onSelect: (item: KanjiItem) => void;
   compact?: boolean;
@@ -844,6 +851,7 @@ const KanjiCardItem: React.FC<{
   soundEnabled,
   userDecks,
   onToggleBookmark,
+  onUpdateDecks,
   onRemoveItem,
   onSelect,
   compact = false,
@@ -853,6 +861,7 @@ const KanjiCardItem: React.FC<{
   const isNum = SUUJI_CHARACTERS.includes(item.character);
 
   const isKana = isHira || isKata;
+  const isBasicGlyph = isKana || isNum;
 
   const badgeLabel = isHira ? 'Hiragana' : isKata ? 'Katakana' : isNum ? 'Angka' : item.jlpt || 'N3';
   const badgeColor = isHira
@@ -875,7 +884,7 @@ const KanjiCardItem: React.FC<{
     >
       {/* Top Badges */}
       <div className="w-full flex items-center justify-between text-[9px] sm:text-[10px] font-mono text-text-muted gap-1 min-h-[18px]">
-        {!isKana ? (
+        {!isBasicGlyph ? (
           <span className={`px-1 sm:px-1.5 py-0.5 rounded font-bold border text-[8px] sm:text-[9.5px] tracking-wide whitespace-nowrap leading-none ${badgeColor}`}>
             {badgeLabel}
           </span>
@@ -885,7 +894,7 @@ const KanjiCardItem: React.FC<{
           </span>
         )}
         <div className="flex items-center gap-1 shrink-0">
-          {!isKana && (
+          {!isBasicGlyph && (
             <span className="whitespace-nowrap text-[8.5px] sm:text-[10px]">{item.strokeCount}画</span>
           )}
           {onRemoveItem && (
@@ -903,22 +912,17 @@ const KanjiCardItem: React.FC<{
             </button>
           )}
           {onToggleBookmark && (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                onToggleBookmark(item.id || item.character, 'kanji');
-                playSound('click', soundEnabled);
-              }}
-              className={`p-0.5 sm:p-1 rounded border transition-all cursor-pointer ${
-                isItemBookmarked(userDecks, item.id || item.character, 'kanji')
-                  ? 'bg-surface-elevated text-gold border-gold/40 ring-1 ring-gold/30'
-                  : 'bg-surface-inset text-text-muted hover:text-gold border-border-subtle'
-              }`}
-              title={isItemBookmarked(userDecks, item.id || item.character, 'kanji') ? 'Tersimpan di Buku Saku' : 'Simpan ke Buku Saku'}
-            >
-              <Bookmark className={`w-3 h-3 sm:w-3.5 sm:h-3.5 ${isItemBookmarked(userDecks, item.id || item.character, 'kanji') ? 'fill-gold text-gold' : ''}`} />
-            </button>
+            <DeckBookmarkPicker
+              itemId={item.id || item.character}
+              category="kanji"
+              itemTitle={item.character}
+              itemSubtitle={item.meaning || (isNum ? 'Angka Suuji' : isKana ? 'Aksara Kana' : item.jlpt)}
+              userDecks={userDecks}
+              onToggleBookmark={onToggleBookmark}
+              onUpdateDecks={onUpdateDecks}
+              soundEnabled={soundEnabled}
+              compact
+            />
           )}
         </div>
       </div>

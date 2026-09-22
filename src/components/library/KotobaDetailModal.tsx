@@ -24,6 +24,7 @@ interface KotobaDetailModalProps {
   onToggleBookmark?: () => void;
   userDecks?: UserDeck[];
   onToggleDeckItem?: (deckId: string) => void;
+  onUpdateDecks?: (decks: UserDeck[]) => void;
   onNext?: () => void;
   onPrev?: () => void;
   hasNext?: boolean;
@@ -57,6 +58,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
   onToggleBookmark,
   userDecks,
   onToggleDeckItem,
+  onUpdateDecks,
   onNext,
   onPrev,
   hasNext = false,
@@ -191,10 +193,13 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
               <DeckBookmarkPicker
                 itemId={item.id}
                 category="kotoba"
+                itemTitle={item.word}
+                itemSubtitle={item.meaning}
                 userDecks={userDecks}
                 onToggleDeckItem={onToggleDeckItem}
                 isDefaultBookmarked={isBookmarked}
                 onToggleDefaultBookmark={onToggleBookmark}
+                onUpdateDecks={onUpdateDecks}
                 soundEnabled={soundEnabled}
               />
               <button

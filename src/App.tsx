@@ -1382,6 +1382,21 @@ export default function App() {
                   onCompleteStudyItem={handleStudyComplete}
                   userDecks={stats.userDecks}
                   onToggleBookmark={handleToggleBookmark}
+                  onUpdateDecks={(updatedDecks) => {
+                    setStats(prev => {
+                      const updated = { ...prev, userDecks: updatedDecks };
+                      if (isAuthenticated && updated.userId) {
+                        saveGameToCloud({
+                          stats: updated,
+                          stageProgress: stageProgressRef.current,
+                          dailyMissions: dailyMissionsRef.current,
+                          weeklyMissions: weeklyMissionsRef.current,
+                          updatedAt: new Date().toISOString()
+                        });
+                      }
+                      return updated;
+                    });
+                  }}
                 />
               )}
             </div>
