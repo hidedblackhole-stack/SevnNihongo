@@ -28,5 +28,15 @@ export default defineConfig(() => {
         },
       },
     },
+    preview: {
+      proxy: {
+        '/supabase-proxy': {
+          target: 'https://iokhdhqnpslpwsxspvaj.supabase.co',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/supabase-proxy/, ''),
+          secure: true,
+        },
+      },
+    },
   };
 });

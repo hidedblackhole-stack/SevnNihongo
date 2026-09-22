@@ -171,12 +171,6 @@ export const SelectDeckForWorldModal: React.FC<SelectDeckForWorldModalProps> = (
                               )}
                             </div>
 
-                            {deck.description && (
-                              <p className="text-xs text-text-secondary line-clamp-1">
-                                {deck.description}
-                              </p>
-                            )}
-
                             {/* Item stats */}
                             <div className="flex items-center gap-2 pt-1 flex-wrap text-[11px] font-mono">
                               {kanjiCount > 0 && (

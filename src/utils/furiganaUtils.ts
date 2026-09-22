@@ -110,6 +110,196 @@ function mergeNonKanjiSegments(segments: RubySegment[]): RubySegment[] {
 }
 
 /**
+ * Detect context-sensitive stem readings for inflected verbs and adjectives
+ * when the inflected surface form (e.g. 食べました, 来ました, 行った) is not in the dictionary.
+ */
+function getInflectedKanjiReading(kanjiChar: string, followingText: string): string | null {
+  if (!followingText) return null;
+
+  // 1. 食べる (taberu) and its inflections (食べた, 食べて, 食べます, 食べない, 食べたい, etc.)
+  if (kanjiChar === '食' && followingText.startsWith('べ')) {
+    return 'た';
+  }
+
+  // 2. 来る (kuru / kuru-family verbs)
+  if (kanjiChar === '来') {
+    // 来ます, 来て, 来た, 来たい, 来たら
+    if (/^[まてたい]/.test(followingText)) return 'き';
+    // 来ない, 来られる, 来させる, 来よう, 来い
+    if (/^[ならさよい]/.test(followingText)) return 'こ';
+    // 来る, 来れば
+    if (/^[るれ]/.test(followingText)) return 'く';
+  }
+
+  // 3. 飲む (nomu) -> 飲んだ, 飲んで, 飲みます, 飲まない
+  if (kanjiChar === '飲' && /^[みんまめも]/.test(followingText)) return 'の';
+
+  // 4. 行く (iku) vs 行う (okonau)
+  if (kanjiChar === '行') {
+    if (/^[きっかけこ]/.test(followingText)) return 'い';
+    if (/^[いうわっえ]/.test(followingText)) return 'おこな';
+  }
+
+  // 5. 話す (hanasu) -> 話した, 話して, 話します
+  if (kanjiChar === '話' && /^[しさせそ]/.test(followingText)) return 'はな';
+
+  // 6. 待つ (matsu) -> 待った, 待って, 待ちます
+  if (kanjiChar === '待' && /^[ちったてと]/.test(followingText)) return 'ま';
+
+  // 7. 買う (kau) -> 買った, 買って, 買います
+  if (kanjiChar === '買' && /^[いっわえお]/.test(followingText)) return 'か';
+
+  // 8. 書く (kaku) -> 書いた, 書いて, 書きます
+  if (kanjiChar === '書' && /^[きいかけこ]/.test(followingText)) return 'か';
+
+  // 9. 読む (yomu) -> 読んだ, 読んで, 読みます
+  if (kanjiChar === '読' && /^[みんまめも]/.test(followingText)) return 'よ';
+
+  // 10. 泳ぐ (oyogu) -> 泳いだ, 泳いで, 泳ぎます
+  if (kanjiChar === '泳' && /^[ぎいがげご]/.test(followingText)) return 'およ';
+
+  // 11. 遊ぶ (asobu) -> 遊んだ, 遊んで, 遊びます
+  if (kanjiChar === '遊' && /^[びんばべぼ]/.test(followingText)) return 'あそ';
+
+  // 12. 死ぬ (shinu) -> 死んだ, 死んで, 死にます
+  if (kanjiChar === '死' && /^[にんなねの]/.test(followingText)) return 'し';
+
+  // 13. 作る (tsukuru) -> 作った, 作って, 作ります
+  if (kanjiChar === '作' && /^[りっられろ]/.test(followingText)) return 'つく';
+
+  // 14. 使う (tsukau) -> 使った, 使って, 使います
+  if (kanjiChar === '使' && /^[いっわえお]/.test(followingText)) return 'つか';
+
+  // 15. 見る (miru) / 見せる (miseru)
+  if (kanjiChar === '見' && /^[まてたなよろらせ]/.test(followingText)) return 'み';
+
+  // 16. 寝る (neru)
+  if (kanjiChar === '寝' && /^[まてたなよろら]/.test(followingText)) return 'ね';
+
+  // 17. 起きる (okiru)
+  if (kanjiChar === '起' && followingText.startsWith('き')) return 'お';
+
+  // 18. 教える (oshieru)
+  if (kanjiChar === '教' && followingText.startsWith('え')) return 'おし';
+
+  // 19. 答える (kotaeru)
+  if (kanjiChar === '答' && followingText.startsWith('え')) return 'こた';
+
+  // 20. 始める (hajimeru)
+  if (kanjiChar === '始' && followingText.startsWith('め')) return 'はじ';
+
+  // 21. 終わる (owaru)
+  if (kanjiChar === '終' && /^[わっり]/.test(followingText)) return 'お';
+
+  // 22. 忘れる (wasureru)
+  if (kanjiChar === '忘' && followingText.startsWith('れ')) return 'わす';
+
+  // 23. 疲れる (tsukareru)
+  if (kanjiChar === '疲' && followingText.startsWith('れ')) return 'つか';
+
+  // 24. 覚える (oboeru)
+  if (kanjiChar === '覚' && followingText.startsWith('え')) return 'おぼ';
+
+  // 25. 調べる (shiraberu)
+  if (kanjiChar === '調' && followingText.startsWith('べ')) return 'しら';
+
+  // 26. 考える (kangaeru)
+  if (kanjiChar === '考' && followingText.startsWith('え')) return 'かんが';
+
+  // 27. 立つ (tatsu)
+  if (kanjiChar === '立' && /^[ちったて]/.test(followingText)) return 'た';
+
+  // 28. 座る (suwaru)
+  if (kanjiChar === '座' && /^[りっられ]/.test(followingText)) return 'すわ';
+
+  // 29. 乗る (noru)
+  if (kanjiChar === '乗' && /^[りっられ]/.test(followingText)) return 'の';
+
+  // 30. 降りる (oriru) vs 降る (furu)
+  if (kanjiChar === '降') {
+    if (followingText.startsWith('り')) return 'お';
+    if (/^[るっら]/.test(followingText)) return 'ふ';
+  }
+
+  // 31. 貸す (kasu)
+  if (kanjiChar === '貸' && /^[しさせ]/.test(followingText)) return 'か';
+
+  // 32. 借りる (kariru)
+  if (kanjiChar === '借' && followingText.startsWith('り')) return 'か';
+
+  // 33. 走る (hashiru)
+  if (kanjiChar === '走' && /^[りっられ]/.test(followingText)) return 'はし';
+
+  // 34. 帰る (kaeru)
+  if (kanjiChar === '帰' && /^[りっられ]/.test(followingText)) return 'かえ';
+
+  // 35. 入る (hairu) vs 入れる (ireru)
+  if (kanjiChar === '入') {
+    if (followingText.startsWith('れ')) return 'い';
+    if (/^[りっられ]/.test(followingText)) return 'はい';
+  }
+
+  // 36. 出す (dasu) vs 出る (deru) vs 出かける (dekakeru)
+  if (kanjiChar === '出') {
+    if (followingText.startsWith('か')) return 'で';
+    if (/^[しさせ]/.test(followingText)) return 'だ';
+    if (/^[るてたなよ]/.test(followingText)) return 'で';
+  }
+
+  // 37. 切る (kiru)
+  if (kanjiChar === '切' && /^[りっられ]/.test(followingText)) return 'き';
+
+  // 38. 知る (shiru)
+  if (kanjiChar === '知' && /^[りっられ]/.test(followingText)) return 'し';
+
+  // 39. 洗う (arau)
+  if (kanjiChar === '洗' && /^[いっわえ]/.test(followingText)) return 'あら';
+
+  // 40. 開ける (akeru) vs 開く (aku / hiraku)
+  if (kanjiChar === '開') {
+    if (followingText.startsWith('け')) return 'あ';
+    if (/^[きいかけ]/.test(followingText)) return 'あ';
+  }
+
+  // 41. 閉める (shimeru) / 閉まる (shimaru)
+  if (kanjiChar === '閉') {
+    if (/^[めま]/.test(followingText)) return 'し';
+  }
+
+  // 42. 消す (kesu) vs 消える (kieru)
+  if (kanjiChar === '消') {
+    if (/^[しさせ]/.test(followingText)) return 'け';
+    if (followingText.startsWith('え')) return 'き';
+  }
+
+  // 43. 置く (oku)
+  if (kanjiChar === '置' && /^[きいかけ]/.test(followingText)) return 'お';
+
+  // 44. 落とす (otosu) vs 落ちる (ochiru)
+  if (kanjiChar === '落' && /^[とち]/.test(followingText)) return 'お';
+
+  // 45. 直す (naosu) / 直る (naoru)
+  if (kanjiChar === '直' && /^[しりっ]/.test(followingText)) return 'なお';
+
+  // 46. 呼ぶ (yobu)
+  if (kanjiChar === '呼' && /^[びんばべぼ]/.test(followingText)) return 'よ';
+
+  // 47. 頼む (tanomu)
+  if (kanjiChar === '頼' && /^[みんまめも]/.test(followingText)) return 'たの';
+
+  // 48. 運ぶ (hakobu)
+  if (kanjiChar === '運' && /^[びんばべぼ]/.test(followingText)) return 'はこ';
+
+  // 49. 急ぐ (isogu)
+  if (kanjiChar === '急' && /^[ぎいがげご]/.test(followingText)) return 'いそ';
+
+  // 50. 働く (hataraku)
+  if (kanjiChar === '働' && /^[きいかけこ]/.test(followingText)) return 'はたら';
+
+  return null;
+}
+
+/**
  * Automatically annotate kanji words in Japanese text using the comprehensive built-in dictionary.
  * Used as an automatic fallback when no explicit reading string is provided for a question.
  */
@@ -182,8 +372,16 @@ function autoAnnotateFurigana(text: string, excludeKanji?: Set<string>): RubySeg
       if (excludeKanji && excludeKanji.has(char)) {
         segments.push({ text: char, isKanji: false });
       } else {
-        const singleReading = furiganaDict.kanji[char];
-        segments.push({ text: char, ruby: singleReading || undefined, isKanji: true });
+        // 1. Check dynamic inflection rules for common verbs and adjectives
+        const followingText = text.slice(i + 1);
+        const inflectedReading = getInflectedKanjiReading(char, followingText);
+        if (inflectedReading) {
+          segments.push({ text: char, ruby: inflectedReading, isKanji: true });
+        } else {
+          // 2. Fallback to kanji dictionary
+          const singleReading = furiganaDict.kanji[char];
+          segments.push({ text: char, ruby: singleReading || undefined, isKanji: true });
+        }
       }
       i++;
       continue;

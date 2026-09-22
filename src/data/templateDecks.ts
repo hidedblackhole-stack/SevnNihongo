@@ -177,6 +177,21 @@ const kanzenN1Refs: DeckItemRef[] = [
   ...toRefs(n1AllKotoba.slice(0, 150), 'kotoba'),
 ];
 
+// 9. KAIGO & TOKUTEI GINOU (Caregiver & SSW)
+const kaigoKotobaIds = kotobaList
+  .filter(k => (k as any).tags?.includes('Kaigo') || (k as any).tags?.includes('SSW') || k.jlpt === 'Kaigo' || k.jlpt === 'SSW')
+  .map(k => k.id);
+
+const kaigoKanjiKeywords = ['介', '護', '病', '院', '薬', '医', '体', '患', '熱', '痛', '血', '便', '尿', '食', '歩', '寝', '洗', '顔', '歯', '耳', '目', '手', '足', '骨'];
+const kaigoKanjiIds = kanjiList
+  .filter(k => kaigoKanjiKeywords.includes(k.character))
+  .map(k => k.id || k.character);
+
+const kaigoRefs: DeckItemRef[] = [
+  ...toRefs(kaigoKanjiIds, 'kanji'),
+  ...toRefs(kaigoKotobaIds, 'kotoba'),
+];
+
 export const TEMPLATE_DECKS: UserDeck[] = [
   {
     id: 'template_kana_dojo',
@@ -273,6 +288,18 @@ export const TEMPLATE_DECKS: UserDeck[] = [
     createdAt: now,
     updatedAt: now,
     items: kanzenN1Refs,
+  },
+  {
+    id: 'template_kaigo_ssw',
+    title: 'Deck Keperawatan Kaigo & Tokutei Ginou (介護と特定技能)',
+    description: '397 Kosakata & Kanji Praktis Caregiver: Istilah medis dasar, pengukuran tanda vital, komunikasi lansia (利用者), ambulasi, ekskresi, kebersihan, dan etika kerja lapangan di Jepang.',
+    level: 'Kaigo',
+    type: 'mixed',
+    isDefault: false,
+    coverIcon: '介',
+    createdAt: now,
+    updatedAt: now,
+    items: kaigoRefs,
   },
 ];
 

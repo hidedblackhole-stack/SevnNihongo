@@ -1,5 +1,5 @@
-// SevnQuest Service Worker for PWA Support (v2.3)
-const CACHE_NAME = 'sevnquest-v2.3';
+// SevnQuest Service Worker for PWA Support (v2.4)
+const CACHE_NAME = 'sevnquest-v2.4';
 const STATIC_ASSETS = [
   '/manifest.webmanifest',
   '/favicon.ico',
@@ -116,6 +116,9 @@ self.addEventListener('fetch', (event) => {
           });
         }
         return networkResponse;
+      }).catch((err) => {
+        console.warn('[PWA] Asset fetch failed, falling back to 404 response:', request.url, err);
+        return new Response(null, { status: 404, statusText: 'Not Found' });
       });
     })
   );

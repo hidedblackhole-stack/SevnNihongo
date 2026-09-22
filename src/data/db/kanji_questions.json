@@ -181115,5 +181115,166 @@
     "stage_id": "extreme-100",
     "version": 1,
     "status": "published"
+  },
+  {
+    "id": "kj_n5_8ab0_q1",
+    "question_type": "kanji_recognition",
+    "difficulty_level": 1,
+    "skill": "recognition",
+    "prompt": "Kanji 「誰」 memiliki arti / makna utama...",
+    "options": [
+      "Apa",
+      "Siapa",
+      "Mana",
+      "Kapan"
+    ],
+    "correct_index": 1,
+    "explanation": "Kanji 「誰」 memiliki arti \"Siapa\". (Kunyomi: だれ | Onyomi: すい).",
+    "knowledge_refs": [
+      "kj_n5_8ab0"
+    ],
+    "kanji_refs": [
+      "kj_n5_8ab0"
+    ],
+    "version": 1,
+    "status": "published"
+  },
+  {
+    "id": "kj_n5_8ab0_q2",
+    "question_type": "kanji_reading",
+    "difficulty_level": 1,
+    "skill": "reading",
+    "prompt": "Cara baca kunyomi yang tepat untuk kanji 「誰」 adalah...",
+    "options": [
+      "なに",
+      "だれ",
+      "どこ",
+      "いつ"
+    ],
+    "correct_index": 1,
+    "explanation": "Cara baca umum (kunyomi) untuk kanji 「誰」 adalah 「だれ」 (siapa).",
+    "knowledge_refs": [
+      "kj_n5_8ab0"
+    ],
+    "kanji_refs": [
+      "kj_n5_8ab0"
+    ],
+    "version": 1,
+    "status": "published"
+  },
+  {
+    "id": "kj_n3_6b6f_q1",
+    "question_type": "kanji_recognition",
+    "difficulty_level": 1,
+    "skill": "recognition",
+    "prompt": "Kanji 「歯」 memiliki arti / makna utama...",
+    "options": [
+      "Mata",
+      "Gigi",
+      "Tangan",
+      "Kaki"
+    ],
+    "correct_index": 1,
+    "explanation": "Kanji 「歯」 memiliki arti \"Gigi\". (Kunyomi: は | Onyomi: し).",
+    "knowledge_refs": [
+      "kj_n3_6b6f"
+    ],
+    "kanji_refs": [
+      "kj_n3_6b6f"
+    ],
+    "version": 1,
+    "status": "published"
+  },
+  {
+    "id": "kj_n3_6b6f_q2",
+    "question_type": "kanji_reading",
+    "difficulty_level": 1,
+    "skill": "reading",
+    "prompt": "Cara baca kunyomi yang tepat untuk kanji 「歯」 adalah...",
+    "options": [
+      "め",
+      "は",
+      "て",
+      "あし"
+    ],
+    "correct_index": 1,
+    "explanation": "Cara baca kunyomi untuk kanji 「歯」 adalah 「は」 (gigi).",
+    "knowledge_refs": [
+      "kj_n3_6b6f"
+    ],
+    "kanji_refs": [
+      "kj_n3_6b6f"
+    ],
+    "version": 1,
+    "status": "published"
+  },
+  {
+    "id": "kj_n4_50cd_q1",
+    "question_type": "kanji_recognition",
+    "difficulty_level": 1,
+    "skill": "recognition",
+    "prompt": "Kanji 「働」 memiliki arti / makna utama...",
+    "options": [
+      "Bermain",
+      "Bekerja",
+      "Tidur",
+      "Makan"
+    ],
+    "correct_index": 1,
+    "explanation": "Kanji 「働」 memiliki arti \"Bekerja\". (Kunyomi: はたらく | Onyomi: どう).",
+    "knowledge_refs": [
+      "kj_n4_50cd"
+    ],
+    "kanji_refs": [
+      "kj_n4_50cd"
+    ],
+    "version": 1,
+    "status": "published"
+  },
+  {
+    "id": "kj_n4_50cd_q2",
+    "question_type": "kanji_reading",
+    "difficulty_level": 1,
+    "skill": "reading",
+    "prompt": "Cara baca kunyomi yang tepat untuk kanji 「働」 adalah...",
+    "options": [
+      "うごく",
+      "はたらく",
+      "あるく",
+      "やすむ"
+    ],
+    "correct_index": 1,
+    "explanation": "Cara baca kunyomi untuk 「働」 adalah 「はたらく」 (bekerja).",
+    "knowledge_refs": [
+      "kj_n4_50cd"
+    ],
+    "kanji_refs": [
+      "kj_n4_50cd"
+    ],
+    "version": 1,
+    "status": "published"
+  },
+  {
+    "id": "kj_n1_62ed_q1",
+    "question_type": "kanji_recognition",
+    "difficulty_level": 2,
+    "skill": "recognition",
+    "prompt": "Kanji 「拭」 dalam istilah keperawatan memiliki arti...",
+    "options": [
+      "Mencuci",
+      "Mengusap / Mengelap",
+      "Membuang",
+      "Memotong"
+    ],
+    "correct_index": 1,
+    "explanation": "Kanji 「拭」 berarti \"Mengusap / Mengelap\". Sering dipakai pada istilah 清拭 (seishiki: mengusap badan pasien).",
+    "knowledge_refs": [
+      "kj_n1_62ed"
+    ],
+    "kanji_refs": [
+      "kj_n1_62ed"
+    ],
+    "version": 1,
+    "status": "published"
   }
 ]

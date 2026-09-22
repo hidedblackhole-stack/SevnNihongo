@@ -80,11 +80,18 @@ function getConjugatedFormReading(verb: { kanji: string; reading: string }, form
       formText.startsWith('来な') ||
       formText.startsWith('来ら') ||
       formText.startsWith('来さ') ||
-      formText.startsWith('来よ')
+      formText.startsWith('来よ') ||
+      formText.startsWith('来い')
     ) {
       return formText.replace('来', 'こ');
     }
-    if (formText.startsWith('来ま') || formText.startsWith('来て') || formText.startsWith('来た')) {
+    if (
+      formText.startsWith('来ま') ||
+      formText.startsWith('来て') ||
+      formText.startsWith('来た') ||
+      formText.startsWith('来たい') ||
+      formText.startsWith('来たら')
+    ) {
       return formText.replace('来', 'き');
     }
     return formText.replace('来', 'く');
@@ -104,21 +111,22 @@ function getConjugatedFormReading(verb: { kanji: string; reading: string }, form
 }
 
 function computeVerbFormsReadings(verb: { kanji: string; reading: string; forms: VerbForms }): VerbForms {
+  const inflected = conjugateVerb(verb.kanji, verb.reading);
   return {
-    dictionary: getConjugatedFormReading(verb, verb.forms.dictionary),
-    masu: getConjugatedFormReading(verb, verb.forms.masu),
-    te: getConjugatedFormReading(verb, verb.forms.te),
-    ta: getConjugatedFormReading(verb, verb.forms.ta),
-    nai: getConjugatedFormReading(verb, verb.forms.nai),
-    potential: getConjugatedFormReading(verb, verb.forms.potential),
-    passive: getConjugatedFormReading(verb, verb.forms.passive),
-    causative: getConjugatedFormReading(verb, verb.forms.causative),
-    ba: getConjugatedFormReading(verb, verb.forms.ba),
-    volitional: getConjugatedFormReading(verb, verb.forms.volitional),
-    causative_passive: verb.forms.causative_passive ? getConjugatedFormReading(verb, verb.forms.causative_passive) : undefined,
-    tai: verb.forms.tai ? getConjugatedFormReading(verb, verb.forms.tai) : undefined,
-    tara: verb.forms.tara ? getConjugatedFormReading(verb, verb.forms.tara) : undefined,
-    imperative: verb.forms.imperative ? getConjugatedFormReading(verb, verb.forms.imperative) : undefined,
+    dictionary: inflected.forms.jisho?.reading || getConjugatedFormReading(verb, verb.forms.dictionary),
+    masu: inflected.forms.masu?.reading || getConjugatedFormReading(verb, verb.forms.masu),
+    te: inflected.forms.te?.reading || getConjugatedFormReading(verb, verb.forms.te),
+    ta: inflected.forms.ta?.reading || getConjugatedFormReading(verb, verb.forms.ta),
+    nai: inflected.forms.nai?.reading || getConjugatedFormReading(verb, verb.forms.nai),
+    potential: inflected.forms.potential?.reading || getConjugatedFormReading(verb, verb.forms.potential),
+    passive: inflected.forms.passive?.reading || getConjugatedFormReading(verb, verb.forms.passive),
+    causative: inflected.forms.causative?.reading || getConjugatedFormReading(verb, verb.forms.causative),
+    ba: inflected.forms.ba?.reading || getConjugatedFormReading(verb, verb.forms.ba),
+    volitional: inflected.forms.volitional?.reading || getConjugatedFormReading(verb, verb.forms.volitional),
+    causative_passive: inflected.forms.causative_passive?.reading || (verb.forms.causative_passive ? getConjugatedFormReading(verb, verb.forms.causative_passive) : undefined),
+    tai: inflected.forms.tai?.reading || (verb.forms.tai ? getConjugatedFormReading(verb, verb.forms.tai) : undefined),
+    tara: inflected.forms.tara?.reading || (verb.forms.tara ? getConjugatedFormReading(verb, verb.forms.tara) : undefined),
+    imperative: inflected.forms.imperative?.reading || (verb.forms.imperative ? getConjugatedFormReading(verb, verb.forms.imperative) : undefined),
   };
 }
 
@@ -143,6 +151,10 @@ const RAW_VERBS: Omit<VerbItem, 'formsReadings'>[] = [
       causative: '飲ませる',
       ba: '飲めば',
       volitional: '飲もう',
+      causative_passive: '飲ませられる',
+      tai: '飲みたい',
+      tara: '飲んだら',
+      imperative: '飲め',
     },
   },
   {
@@ -164,6 +176,10 @@ const RAW_VERBS: Omit<VerbItem, 'formsReadings'>[] = [
       causative: '書かせる',
       ba: '書けば',
       volitional: '書こう',
+      causative_passive: '書かせられる',
+      tai: '書きたい',
+      tara: '書いたら',
+      imperative: '書け',
     },
   },
   {
@@ -185,6 +201,10 @@ const RAW_VERBS: Omit<VerbItem, 'formsReadings'>[] = [
       causative: '行かせる',
       ba: '行けば',
       volitional: '行こう',
+      causative_passive: '行かせられる',
+      tai: '行きたい',
+      tara: '行ったら',
+      imperative: '行け',
     },
   },
   {
@@ -206,6 +226,10 @@ const RAW_VERBS: Omit<VerbItem, 'formsReadings'>[] = [
       causative: '泳がせる',
       ba: '泳げば',
       volitional: '泳ごう',
+      causative_passive: '泳がせられる',
+      tai: '泳ぎたい',
+      tara: '泳いだら',
+      imperative: '泳げ',
     },
   },
   {
@@ -227,6 +251,10 @@ const RAW_VERBS: Omit<VerbItem, 'formsReadings'>[] = [
       causative: '話させる',
       ba: '話せば',
       volitional: '話そう',
+      causative_passive: '話させられる',
+      tai: '話したい',
+      tara: '話したら',
+      imperative: '話せ',
     },
   },
   {
@@ -248,6 +276,10 @@ const RAW_VERBS: Omit<VerbItem, 'formsReadings'>[] = [
       causative: '待たせる',
       ba: '待てば',
       volitional: '待とう',
+      causative_passive: '待たせられる',
+      tai: '待ちたい',
+      tara: '待ったら',
+      imperative: '待て',
     },
   },
   {
@@ -269,6 +301,10 @@ const RAW_VERBS: Omit<VerbItem, 'formsReadings'>[] = [
       causative: '買わせる',
       ba: '買えば',
       volitional: '買おう',
+      causative_passive: '買わせられる',
+      tai: '買いたい',
+      tara: '買ったら',
+      imperative: '買え',
     },
   },
   {
@@ -290,6 +326,10 @@ const RAW_VERBS: Omit<VerbItem, 'formsReadings'>[] = [
       causative: '取らせる',
       ba: '取れば',
       volitional: '取ろう',
+      causative_passive: '取らせられる',
+      tai: '取りたい',
+      tara: '取ったら',
+      imperative: '取れ',
     },
   },
   {
@@ -311,6 +351,10 @@ const RAW_VERBS: Omit<VerbItem, 'formsReadings'>[] = [
       causative: '遊ばせる',
       ba: '遊べば',
       volitional: '遊ぼう',
+      causative_passive: '遊ばせられる',
+      tai: '遊びたい',
+      tara: '遊んだら',
+      imperative: '遊べ',
     },
   },
   {
@@ -332,6 +376,10 @@ const RAW_VERBS: Omit<VerbItem, 'formsReadings'>[] = [
       causative: '死なせる',
       ba: '死ねば',
       volitional: '死のう',
+      causative_passive: '死なせられる',
+      tai: '死にたい',
+      tara: '死んだら',
+      imperative: '死ね',
     },
   },
 
@@ -354,6 +402,10 @@ const RAW_VERBS: Omit<VerbItem, 'formsReadings'>[] = [
       causative: '食べさせる',
       ba: '食べれば',
       volitional: '食べよう',
+      causative_passive: '食べさせられる',
+      tai: '食べたい',
+      tara: '食べたら',
+      imperative: '食べろ',
     },
   },
   {
@@ -374,6 +426,10 @@ const RAW_VERBS: Omit<VerbItem, 'formsReadings'>[] = [
       causative: '見させる',
       ba: '見れば',
       volitional: '見よう',
+      causative_passive: '見させられる',
+      tai: '見たい',
+      tara: '見たら',
+      imperative: '見ろ',
     },
   },
   {
@@ -394,6 +450,10 @@ const RAW_VERBS: Omit<VerbItem, 'formsReadings'>[] = [
       causative: '寝させる',
       ba: '寝れば',
       volitional: '寝よう',
+      causative_passive: '寝させられる',
+      tai: '寝たい',
+      tara: '寝たら',
+      imperative: '寝ろ',
     },
   },
   {
@@ -414,6 +474,10 @@ const RAW_VERBS: Omit<VerbItem, 'formsReadings'>[] = [
       causative: '起きさせる',
       ba: '起きれば',
       volitional: '起きよう',
+      causative_passive: '起きさせられる',
+      tai: '起きたい',
+      tara: '起きたら',
+      imperative: '起きろ',
     },
   },
 
@@ -436,6 +500,10 @@ const RAW_VERBS: Omit<VerbItem, 'formsReadings'>[] = [
       causative: 'させる',
       ba: 'すれば',
       volitional: 'しよう',
+      causative_passive: 'させられる',
+      tai: 'したい',
+      tara: 'したら',
+      imperative: 'しろ',
     },
   },
   {
@@ -456,14 +524,38 @@ const RAW_VERBS: Omit<VerbItem, 'formsReadings'>[] = [
       causative: '来させる',
       ba: '来れば',
       volitional: '来よう',
+      causative_passive: '来させられる',
+      tai: '来たい',
+      tara: '来たら',
+      imperative: '来い',
     },
   },
 ];
 
-export const VERB_CONJUGATION_DATABASE: VerbItem[] = RAW_VERBS.map(verb => ({
-  ...verb,
-  formsReadings: computeVerbFormsReadings(verb),
-}));
+export const VERB_CONJUGATION_DATABASE: VerbItem[] = RAW_VERBS.map(verb => {
+  const inflected = conjugateVerb(verb.kanji, verb.reading);
+  const fullForms: VerbForms = {
+    dictionary: verb.forms.dictionary || inflected.forms.jisho?.japanese || verb.kanji,
+    masu: verb.forms.masu || inflected.forms.masu?.japanese || '',
+    te: verb.forms.te || inflected.forms.te?.japanese || '',
+    ta: verb.forms.ta || inflected.forms.ta?.japanese || '',
+    nai: verb.forms.nai || inflected.forms.nai?.japanese || '',
+    potential: verb.forms.potential || inflected.forms.potential?.japanese || '',
+    passive: verb.forms.passive || inflected.forms.passive?.japanese || '',
+    causative: verb.forms.causative || inflected.forms.causative?.japanese || '',
+    ba: verb.forms.ba || inflected.forms.ba?.japanese || '',
+    volitional: verb.forms.volitional || inflected.forms.volitional?.japanese || '',
+    causative_passive: verb.forms.causative_passive || inflected.forms.causative_passive?.japanese,
+    tai: verb.forms.tai || inflected.forms.tai?.japanese,
+    tara: verb.forms.tara || inflected.forms.tara?.japanese,
+    imperative: verb.forms.imperative || inflected.forms.imperative?.japanese,
+  };
+  const verbWithForms = { ...verb, forms: fullForms };
+  return {
+    ...verbWithForms,
+    formsReadings: computeVerbFormsReadings(verbWithForms),
+  };
+});
 
 /* ==========================================================================
    2. PANDUAN BENTUK-BENTUK PERUBAHAN KATA (CONJUGATION FORMS ENCYCLOPEDIA)
@@ -938,7 +1030,10 @@ export function generateConjugationQuestion(
     : availableForms[Math.floor(Math.random() * availableForms.length)];
 
   const correctFormKey = formInfo.id as keyof VerbItem['forms'];
-  const correctAnswer = verb.forms[correctFormKey] || verb.forms.te || verb.forms.dictionary;
+  const inflected = conjugateVerb(verb.kanji, verb.reading);
+  const inflectedFormObj = (inflected.forms as any)?.[correctFormKey];
+  const inflectedFallback = inflectedFormObj?.japanese;
+  const correctAnswer = verb.forms[correctFormKey] || inflectedFallback || verb.forms.dictionary;
 
   // 3. Generate 3 smart distractors based on morphological patterns
   const distractors: string[] = [];
@@ -953,6 +1048,9 @@ export function generateConjugationQuestion(
     else if (correctFormKey === 'ba') distractors.push(verb.reading.slice(0, -1) + 'れば');
     else if (correctFormKey === 'volitional') distractors.push(verb.reading.slice(0, -1) + 'よう');
     else if (correctFormKey === 'imperative') distractors.push(verb.reading.slice(0, -1) + 'ろ');
+    else if (correctFormKey === 'tara') distractors.push(verb.reading.slice(0, -1) + 'たら');
+    else if (correctFormKey === 'tai') distractors.push(verb.reading.slice(0, -1) + 'るたい');
+    else if (correctFormKey === 'causative_passive') distractors.push(verb.reading.slice(0, -1) + 'させられる');
     else distractors.push(verb.reading.slice(0, -1) + 'た');
   } else if (verb.group === 'ichidan') {
     if (correctFormKey === 'te') distractors.push(verb.reading.slice(0, -1) + 'って');
@@ -963,11 +1061,17 @@ export function generateConjugationQuestion(
     else if (correctFormKey === 'ba') distractors.push(verb.reading.slice(0, -1) + 'えば');
     else if (correctFormKey === 'volitional') distractors.push(verb.reading.slice(0, -1) + 'ろう');
     else if (correctFormKey === 'imperative') distractors.push(verb.reading.slice(0, -1) + 'え');
+    else if (correctFormKey === 'tara') distractors.push(verb.reading.slice(0, -1) + 'ったら');
+    else if (correctFormKey === 'tai') distractors.push(verb.reading.slice(0, -1) + 'りたい');
+    else if (correctFormKey === 'causative_passive') distractors.push(verb.reading.slice(0, -1) + 'される');
     else distractors.push(verb.reading.slice(0, -1) + 'った');
   } else {
     // Irregular errors
     if (correctFormKey === 'te') distractors.push(verb.reading + 'て');
     else if (correctFormKey === 'nai') distractors.push(verb.reading + 'ない');
+    else if (correctFormKey === 'tara') distractors.push(verb.reading + 'たら');
+    else if (correctFormKey === 'tai') distractors.push(verb.reading + 'たい');
+    else if (correctFormKey === 'imperative') distractors.push(verb.reading + 'ろ');
     else distractors.push(verb.reading + 'た');
   }
 
@@ -991,6 +1095,10 @@ export function generateConjugationQuestion(
     distractors.push(verb.reading.slice(0, -1) + 'さられる');
   } else if (correctFormKey === 'tai') {
     distractors.push(verb.kanji + 'ほしい');
+  } else if (correctFormKey === 'tara') {
+    distractors.push(verb.kanji + 'なら');
+  } else if (correctFormKey === 'imperative') {
+    distractors.push(verb.kanji + 'なさい');
   } else if (correctFormKey === 'volitional') {
     distractors.push(verb.kanji + 'ましょう');
   } else if (correctFormKey === 'te') {
@@ -1012,7 +1120,14 @@ export function generateConjugationQuestion(
   const correctIndex = allOptions.indexOf(correctAnswer);
 
   // Exact hiragana readings for all options
-  const allOptionsRuby = allOptions.map(opt => getConjugatedFormReading(verb, opt));
+  const allOptionsRuby = allOptions.map(opt => {
+    for (const key of Object.keys(verb.forms) as (keyof VerbItem['forms'])[]) {
+      if (verb.forms[key] === opt && verb.formsReadings[key]) {
+        return verb.formsReadings[key]!;
+      }
+    }
+    return getConjugatedFormReading(verb, opt);
+  });
 
   const groupLabel = verb.group === 'godan'
     ? 'Golongan 1 (Godan / 五段動詞)'

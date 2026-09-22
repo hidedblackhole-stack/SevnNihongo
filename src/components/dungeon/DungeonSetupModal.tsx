@@ -925,9 +925,6 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                                       </span>
                                     )}
                                   </div>
-                                  <p className="text-[11px] text-text-muted truncate mt-0.5 font-body">
-                                    {deck.description || 'Deck materi Buku Saku'}
-                                  </p>
                                 </div>
                               </div>
 

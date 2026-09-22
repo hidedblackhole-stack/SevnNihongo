@@ -99,7 +99,7 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
   };
 
   const basicForms = CONJUGATION_FORMS_INFO.filter(f => ['te', 'nai', 'ta', 'masu'].includes(f.id));
-  const advancedForms = CONJUGATION_FORMS_INFO.filter(f => ['potential', 'passive', 'causative'].includes(f.id));
+  const advancedForms = CONJUGATION_FORMS_INFO.filter(f => !['te', 'nai', 'ta', 'masu'].includes(f.id));
 
   return (
     <div className="w-full max-w-5xl mx-auto space-y-6 animate-fade-in pb-12">
@@ -407,7 +407,7 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
           </div>
           <div className="text-left">
             <span className="block text-xs leading-none font-bold">Bentuk Lanjutan</span>
-            <span className="text-[10px] opacity-70 font-mono">Potensial • Pasif • Kausatif</span>
+            <span className="text-[10px] opacity-70 font-mono">Potensial • Pasif • Tara • dll</span>
           </div>
         </button>
 

@@ -66225,5 +66225,153 @@
     "unicode": "U+30F4",
     "version": 1,
     "status": "published"
+  },
+  "kj_n5_8ab0": {
+    "id": "kj_n5_8ab0",
+    "character": "誰",
+    "meaningId": "Siapa",
+    "meaningEn": "Who, someone, anyone",
+    "onyomi": [
+      "すい"
+    ],
+    "kunyomi": [
+      "だれ",
+      "たれ"
+    ],
+    "jlpt": "N5",
+    "strokeCount": 15,
+    "radical": "Words",
+    "radicalName": "言 (ごんべん / Words)",
+    "relatedWords": [
+      {
+        "word": "誰",
+        "reading": "だれ",
+        "meaningId": "Siapa"
+      },
+      {
+        "word": "誰か",
+        "reading": "だれか",
+        "meaningId": "Seseorang"
+      },
+      {
+        "word": "誰も",
+        "reading": "だれも",
+        "meaningId": "Siapa pun / Tidak ada siapapun"
+      }
+    ],
+    "unicode": "U+8AB0",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n3_6b6f": {
+    "id": "kj_n3_6b6f",
+    "character": "歯",
+    "meaningId": "Gigi",
+    "meaningEn": "Tooth, cog",
+    "onyomi": [
+      "し"
+    ],
+    "kunyomi": [
+      "は"
+    ],
+    "jlpt": "N3",
+    "strokeCount": 12,
+    "radical": "Tooth",
+    "radicalName": "歯 (は / Tooth)",
+    "relatedWords": [
+      {
+        "word": "歯",
+        "reading": "は",
+        "meaningId": "Gigi"
+      },
+      {
+        "word": "歯医者",
+        "reading": "はいしゃ",
+        "meaningId": "Dokter gigi"
+      },
+      {
+        "word": "虫歯",
+        "reading": "むしば",
+        "meaningId": "Gigi berlubang"
+      },
+      {
+        "word": "歯磨き",
+        "reading": "はみがき",
+        "meaningId": "Menggosok gigi"
+      }
+    ],
+    "unicode": "U+6B6F",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n4_50cd": {
+    "id": "kj_n4_50cd",
+    "character": "働",
+    "meaningId": "Bekerja",
+    "meaningEn": "Work, labor",
+    "onyomi": [
+      "どう"
+    ],
+    "kunyomi": [
+      "はたら.く",
+      "はたらき"
+    ],
+    "jlpt": "N4",
+    "strokeCount": 13,
+    "radical": "Person",
+    "radicalName": "人 (にんべん / Person)",
+    "relatedWords": [
+      {
+        "word": "働く",
+        "reading": "はたらく",
+        "meaningId": "Bekerja"
+      },
+      {
+        "word": "労働",
+        "reading": "ろうどう",
+        "meaningId": "Tenaga kerja"
+      },
+      {
+        "word": "働き手",
+        "reading": "はたらきて",
+        "meaningId": "Pekerja"
+      }
+    ],
+    "unicode": "U+50CD",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_62ed": {
+    "id": "kj_n1_62ed",
+    "character": "拭",
+    "meaningId": "Mengusap; Mengelap",
+    "meaningEn": "Wipe, mop, swab",
+    "onyomi": [
+      "しき",
+      "しょく"
+    ],
+    "kunyomi": [
+      "ふ.く",
+      "ぬぐ.う"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 9,
+    "radical": "Hand",
+    "radicalName": "手 (てへん / Hand)",
+    "relatedWords": [
+      {
+        "word": "拭く",
+        "reading": "ふく",
+        "meaningId": "Mengelap / menyeka"
+      },
+      {
+        "word": "清拭",
+        "reading": "せいしき",
+        "meaningId": "Pembersihan tubuh pasien dengan waslap hangat"
+      }
+    ],
+    "unicode": "U+62ED",
+    "version": 1,
+    "status": "published"
   }
 }

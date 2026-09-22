@@ -8,9 +8,12 @@ const supabaseKey = (import.meta as any).env?.VITE_SUPABASE_ANON_KEY || 'eyJhbGc
 
 function getSupabaseUrl(): string {
   if (typeof window !== 'undefined') {
-    // Route all in-browser requests through same-origin reverse proxy (/supabase-proxy),
-    // which is handled by vite.config.ts (local dev) and vercel.json (production on .vercel.app & custom domains like sevnquest.sevnsoul.site).
-    // This completely bypasses Indonesian ISP DNS blocks (Nawala/Telkom/Indihome) and CORS issues.
+    // If running from file:// or empty origin (standalone/Cordova), use directUrl
+    if (window.location.protocol === 'file:' || !window.location.origin || window.location.origin === 'null') {
+      return directUrl;
+    }
+    // Route in-browser requests through same-origin reverse proxy (/supabase-proxy),
+    // which is handled by vite.config.ts (local dev & preview) and vercel.json (production).
     return `${window.location.origin}/supabase-proxy`;
   }
   return directUrl;
@@ -18,10 +21,76 @@ function getSupabaseUrl(): string {
 
 const supabaseUrl = getSupabaseUrl();
 
+/**
+ * Resilient Fetch wrapper:
+ * 1. Enforces a 7-second timeout so network requests never hang indefinitely.
+ * 2. If /supabase-proxy fails (timeout, 404, >= 500, or network error),
+ *    automatically falls back to directUrl (supabase.co).
+ */
+async function resilientFetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
+  const urlStr = typeof input === 'string' ? input : input instanceof URL ? input.toString() : (input as Request).url;
+  
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 7000);
+  
+  const externalSignal = init?.signal;
+  const onExternalAbort = () => controller.abort();
+  if (externalSignal) {
+    if (externalSignal.aborted) {
+      controller.abort();
+    } else {
+      externalSignal.addEventListener('abort', onExternalAbort, { once: true });
+    }
+  }
+
+  try {
+    const res = await fetch(input, { ...init, signal: controller.signal });
+    clearTimeout(timer);
+
+    // If reverse proxy returned 404 or server error, retry via directUrl
+    if (!res.ok && (res.status === 404 || res.status >= 500) && urlStr.includes('/supabase-proxy')) {
+      const fallbackUrl = urlStr.replace(/^https?:\/\/[^/]+\/supabase-proxy/, directUrl);
+      const fbController = new AbortController();
+      const fbTimer = setTimeout(() => fbController.abort(), 7000);
+      try {
+        const fallbackRes = await fetch(fallbackUrl, { ...init, signal: fbController.signal });
+        clearTimeout(fbTimer);
+        return fallbackRes;
+      } catch {
+        clearTimeout(fbTimer);
+      }
+    }
+    return res;
+  } catch (err: any) {
+    clearTimeout(timer);
+    if (urlStr.includes('/supabase-proxy')) {
+      const fallbackUrl = urlStr.replace(/^https?:\/\/[^/]+\/supabase-proxy/, directUrl);
+      const fbController = new AbortController();
+      const fbTimer = setTimeout(() => fbController.abort(), 7000);
+      try {
+        const fallbackRes = await fetch(fallbackUrl, { ...init, signal: fbController.signal });
+        clearTimeout(fbTimer);
+        return fallbackRes;
+      } catch (fbErr) {
+        clearTimeout(fbTimer);
+      }
+    }
+    throw err;
+  } finally {
+    if (externalSignal) {
+      externalSignal.removeEventListener('abort', onExternalAbort);
+    }
+  }
+}
+
 function initSupabase() {
   if (supabaseUrl && supabaseKey) {
     try {
-      return createClient(supabaseUrl, supabaseKey);
+      return createClient(supabaseUrl, supabaseKey, {
+        global: {
+          fetch: resilientFetch
+        }
+      });
     } catch (err) {
       console.warn('Supabase client creation failed, using fallback:', err);
     }
@@ -207,8 +276,12 @@ export async function upsertLeaderboard(stats: PlayerStats) {
   }
 }
 
+export const STORAGE_KEY_LB_CACHE = 'nihongo_quest_leaderboard_alltime_cache';
+export const STORAGE_KEY_WEEKLY_CACHE = 'nihongo_quest_leaderboard_weekly_cache';
+
 /**
  * Fetch players from the All-Time leaderboard (default limit: 100).
+ * Falls back to local storage cache if network is temporarily unreachable.
  */
 export async function getLeaderboard(limit = 100): Promise<LeaderboardEntry[]> {
   try {
@@ -219,13 +292,33 @@ export async function getLeaderboard(limit = 100): Promise<LeaderboardEntry[]> {
       .limit(limit);
 
     if (error) {
-      console.error('Error fetching leaderboard:', error);
+      console.warn('Warning fetching leaderboard from network, checking cache:', error.message);
+      const cached = localStorage.getItem(STORAGE_KEY_LB_CACHE);
+      if (cached) {
+        try {
+          const parsed = JSON.parse(cached);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        } catch {}
+      }
       return [];
     }
 
-    return data as LeaderboardEntry[];
+    if (data && data.length > 0) {
+      try {
+        localStorage.setItem(STORAGE_KEY_LB_CACHE, JSON.stringify(data));
+      } catch {}
+    }
+
+    return (data || []) as LeaderboardEntry[];
   } catch (err) {
-    console.error('Failed to get leaderboard:', err);
+    console.warn('Failed to get leaderboard, checking cache:', err);
+    const cached = localStorage.getItem(STORAGE_KEY_LB_CACHE);
+    if (cached) {
+      try {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      } catch {}
+    }
     return [];
   }
 }
@@ -239,10 +332,36 @@ export interface UserRankInfo {
 
 /**
  * Fetch user's exact rank and leaderboard entry across all players in the database.
+ * If preloadedEntries (top 100 from getLeaderboard) is provided, calculates rank instantly!
  */
-export async function getUserLeaderboardRank(userId: string): Promise<UserRankInfo | null> {
+export async function getUserLeaderboardRank(
+  userId: string,
+  preloadedEntries?: LeaderboardEntry[]
+): Promise<UserRankInfo | null> {
   if (!userId) return null;
   try {
+    // FAST PATH: Check if user is already present in the preloaded Top 100 entries
+    if (preloadedEntries && preloadedEntries.length > 0) {
+      const foundIndex = preloadedEntries.findIndex((e) => e.user_id === userId);
+      if (foundIndex >= 0) {
+        const userEntry = preloadedEntries[foundIndex];
+        const cutoff = preloadedEntries[Math.min(99, preloadedEntries.length - 1)]?.total_exp ?? 0;
+
+        // Only need a single lightweight HEAD query for total player count
+        const { count: totalCount } = await supabase
+          .from('leaderboard')
+          .select('*', { count: 'exact', head: true });
+
+        return {
+          entry: userEntry,
+          rank: foundIndex + 1,
+          totalPlayers: totalCount ?? (preloadedEntries.length || 100),
+          cutoffExpTop100: cutoff,
+        };
+      }
+    }
+
+    // NORMAL PATH: User is outside top 100 or no preloaded data
     const { data: userEntry, error } = await supabase
       .from('leaderboard')
       .select('*')
@@ -251,30 +370,30 @@ export async function getUserLeaderboardRank(userId: string): Promise<UserRankIn
 
     if (error || !userEntry) return null;
 
-    // Count how many players have higher EXP
-    const { count: higherCount } = await supabase
-      .from('leaderboard')
-      .select('*', { count: 'exact', head: true })
-      .gt('total_exp', userEntry.total_exp);
-
-    // Get total count of players
-    const { count: totalCount } = await supabase
-      .from('leaderboard')
-      .select('*', { count: 'exact', head: true });
-
-    // Get 100th player's EXP for cutoff reference
-    const { data: rank100Data } = await supabase
-      .from('leaderboard')
-      .select('total_exp')
-      .order('total_exp', { ascending: false })
-      .range(99, 99)
-      .maybeSingle();
+    // Run higherCount, totalCount, and cutoff queries in parallel
+    const [higherRes, totalRes, rank100Res] = await Promise.all([
+      supabase
+        .from('leaderboard')
+        .select('*', { count: 'exact', head: true })
+        .gt('total_exp', userEntry.total_exp),
+      supabase
+        .from('leaderboard')
+        .select('*', { count: 'exact', head: true }),
+      preloadedEntries && preloadedEntries.length >= 100
+        ? Promise.resolve({ data: { total_exp: preloadedEntries[99].total_exp } })
+        : supabase
+            .from('leaderboard')
+            .select('total_exp')
+            .order('total_exp', { ascending: false })
+            .range(99, 99)
+            .maybeSingle(),
+    ]);
 
     return {
       entry: userEntry as LeaderboardEntry,
-      rank: (higherCount ?? 0) + 1,
-      totalPlayers: totalCount ?? 100,
-      cutoffExpTop100: rank100Data?.total_exp ?? 0,
+      rank: (higherRes.count ?? 0) + 1,
+      totalPlayers: totalRes.count ?? 100,
+      cutoffExpTop100: rank100Res.data?.total_exp ?? 0,
     };
   } catch (err) {
     console.warn('Failed to calculate user rank:', err);
@@ -295,13 +414,33 @@ export async function getWeeklyLeaderboard(weekId: string, limit = 100): Promise
       .limit(limit);
 
     if (error) {
-      console.error('Error fetching weekly leaderboard:', error);
+      console.warn('Warning fetching weekly leaderboard:', error.message);
+      const cached = localStorage.getItem(STORAGE_KEY_WEEKLY_CACHE);
+      if (cached) {
+        try {
+          const parsed = JSON.parse(cached);
+          if (Array.isArray(parsed)) return parsed;
+        } catch {}
+      }
       return [];
     }
 
-    return data as WeeklyLeaderboardEntry[];
+    if (data && data.length > 0) {
+      try {
+        localStorage.setItem(STORAGE_KEY_WEEKLY_CACHE, JSON.stringify(data));
+      } catch {}
+    }
+
+    return (data || []) as WeeklyLeaderboardEntry[];
   } catch (err) {
-    console.error('Failed to get weekly leaderboard:', err);
+    console.warn('Failed to get weekly leaderboard:', err);
+    const cached = localStorage.getItem(STORAGE_KEY_WEEKLY_CACHE);
+    if (cached) {
+      try {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed)) return parsed;
+      } catch {}
+    }
     return [];
   }
 }

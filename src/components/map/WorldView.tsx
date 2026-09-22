@@ -88,6 +88,7 @@ const LEVEL_CONFIG: Record<string, { label: string; color: string; bg: string }>
   N3: { label: 'JLPT N3 · Menengah', color: 'text-gold border-gold/30', bg: 'bg-gold/10' },
   N2: { label: 'JLPT N2 · Mahir', color: 'text-indigo border-indigo/30', bg: 'bg-indigo/10' },
   N1: { label: 'JLPT N1 · Ahli', color: 'text-crimson border-crimson/30', bg: 'bg-crimson/10' },
+  Kaigo: { label: 'Kaigo · SSW', color: 'text-amber-400 border-amber-500/30', bg: 'bg-amber-500/10' },
 };
 
 const LEVEL_FILTERS = [
@@ -98,6 +99,7 @@ const LEVEL_FILTERS = [
   { id: 'N3', label: 'N3' },
   { id: 'N2', label: 'N2' },
   { id: 'N1', label: 'N1' },
+  { id: 'Kaigo', label: 'Kaigo · SSW' },
 ];
 
 export const WorldView: React.FC<WorldViewProps> = ({
@@ -520,14 +522,11 @@ export const WorldView: React.FC<WorldViewProps> = ({
                       </div>
                     </div>
 
-                    {/* Judul & Deskripsi */}
+                    {/* Judul */}
                     <div>
-                      <h3 className="text-base sm:text-lg font-bold text-text-primary font-heading leading-snug group-hover:text-gold transition-colors">
+                      <h3 className="text-base sm:text-lg font-bold text-text-primary font-heading leading-snug group-hover:text-gold transition-colors line-clamp-2">
                         {deck.title}
                       </h3>
-                      <p className="text-xs text-text-secondary line-clamp-2 leading-relaxed mt-1">
-                        {deck.description}
-                      </p>
                     </div>
 
                     {/* Rincian Materi (Object UI Inventory Slots) */}

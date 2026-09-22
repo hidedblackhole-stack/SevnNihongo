@@ -15,6 +15,15 @@ import {
   X
 } from 'lucide-react';
 import { UserDeck, DeckItemCategory, DeckType, DeckItemRef } from '../../types/rpg';
+import { OfficialBook, OfficialChapter } from '../../types/books';
+import {
+  OFFICIAL_BOOKS,
+  chapterToUserDeck,
+  bookToFullUserDeck,
+  cloneChapterToUserDecks,
+} from '../../data/officialBooks';
+import { BookshelfView } from './BookshelfView';
+import { BookDetailView } from './BookDetailView';
 import { CurriculumConfigModal } from '../curriculum/CurriculumConfigModal';
 import { CustomWorldView } from '../curriculum/CustomWorldView';
 import { CustomCurriculum, CustomCurriculumProgress } from '../../types/curriculum';
@@ -108,10 +117,19 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
 
   const [selectedDeckId, setSelectedDeckId] = useState<string | null>(null);
 
+  const [activeSubTab, setActiveSubTab] = useState<'my_pocket' | 'official_books'>('my_pocket');
+  const [selectedOfficialBook, setSelectedOfficialBook] = useState<OfficialBook | null>(null);
+  const [activeOfficialDeck, setActiveOfficialDeck] = useState<UserDeck | null>(null);
+  const [clonedSuccessChapterId, setClonedSuccessChapterId] = useState<string | null>(null);
+  const [virtualRunnerDeck, setVirtualRunnerDeck] = useState<UserDeck | null>(null);
+
   // Reset to initial Deck List screen when navbar triggers reset
   useEffect(() => {
     if (resetSignal !== undefined && resetSignal > 0) {
       setSelectedDeckId(null);
+      setSelectedOfficialBook(null);
+      setActiveOfficialDeck(null);
+      setVirtualRunnerDeck(null);
       setActiveRunner(null);
       setIsCreateModalOpen(false);
       setIsAddItemModalOpen(false);
@@ -142,12 +160,41 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
   const [selectedKanji, setSelectedKanji] = useState<KanjiItem | null>(null);
   const [selectedBunpou, setSelectedBunpou] = useState<BunpouItem | null>(null);
 
-
   // Custom Curriculum & World state
   const [activeWorldDeckId, setActiveWorldDeckId] = useState<string | null>(null);
   const [isCurriculumConfigOpen, setIsCurriculumConfigOpen] = useState(false);
   const [curriculums, setCurriculums] = useState<Record<string, CustomCurriculum>>(() => loadAllCustomCurriculums());
   const [curriculumProgressMap, setCurriculumProgressMap] = useState<Record<string, CustomCurriculumProgress>>(() => loadAllCurriculumProgress());
+
+  // Handlers for Official Books & Chapters
+  const handleCloneChapter = (chapter: OfficialChapter) => {
+    if (!selectedOfficialBook) return;
+    const { updatedDecks } = cloneChapterToUserDecks(chapter, selectedOfficialBook, decks);
+    onUpdateDecks(updatedDecks);
+    setClonedSuccessChapterId(chapter.id);
+    playSound('levelup', soundEnabled);
+    setTimeout(() => setClonedSuccessChapterId(null), 2500);
+  };
+
+  const handlePlayChapterFlashcard = (chapter: OfficialChapter) => {
+    if (!selectedOfficialBook) return;
+    const virtualDeck = chapterToUserDeck(chapter, selectedOfficialBook);
+    setVirtualRunnerDeck(virtualDeck);
+    setActiveRunner('flashcard');
+  };
+
+  const handlePlayChapterWriting = (chapter: OfficialChapter) => {
+    if (!selectedOfficialBook) return;
+    const virtualDeck = chapterToUserDeck(chapter, selectedOfficialBook);
+    setVirtualRunnerDeck(virtualDeck);
+    setActiveRunner('writing');
+  };
+
+  const handlePlayFullBook = (book: OfficialBook) => {
+    const fullDeck = bookToFullUserDeck(book);
+    setVirtualRunnerDeck(fullDeck);
+    setActiveRunner('flashcard');
+  };
 
   // Active selected deck object
   const activeDeck = useMemo(() => {
@@ -296,20 +343,26 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
   return (
     <div className="w-full max-w-6xl mx-auto space-y-6 animate-fade-in pb-16">
       {/* Runner Modes */}
-      {activeRunner === 'flashcard' && activeDeck && (
+      {activeRunner === 'flashcard' && (virtualRunnerDeck || activeDeck) && (
         <DeckFlashcardRunner
-          deck={activeDeck}
-          onClose={() => setActiveRunner(null)}
+          deck={virtualRunnerDeck || activeDeck!}
+          onClose={() => {
+            setActiveRunner(null);
+            setVirtualRunnerDeck(null);
+          }}
           onReward={onRewardPlayer}
           onCompleteStudyItem={onCompleteStudyItem}
           soundEnabled={soundEnabled}
         />
       )}
 
-      {activeRunner === 'writing' && activeDeck && (
+      {activeRunner === 'writing' && (virtualRunnerDeck || activeDeck) && (
         <DeckWritingRunner
-          deck={activeDeck}
-          onClose={() => setActiveRunner(null)}
+          deck={virtualRunnerDeck || activeDeck!}
+          onClose={() => {
+            setActiveRunner(null);
+            setVirtualRunnerDeck(null);
+          }}
           onReward={onRewardPlayer}
           onCompleteStudyItem={onCompleteStudyItem}
           soundEnabled={soundEnabled}
@@ -344,10 +397,105 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
           soundEnabled={soundEnabled}
         />
       ) : !activeDeck ? (
-        /* ================= DECK LIST VIEW ================= */
         <div className="space-y-6">
-          {/* Header & Stats Banner */}
-          <div className="panel p-5 sm:p-6 rounded-3xl space-y-4 shadow-sm border border-border-subtle">
+          {/* Sub-Tab Navigation Bar: Buku Saku Saya vs Buku Kurikulum Resmi */}
+          <div className="panel p-1.5 rounded-2xl bg-surface-inset border border-border-subtle flex items-center gap-2 shadow-inner">
+            <button
+              type="button"
+              onClick={() => {
+                setActiveSubTab('my_pocket');
+                setSelectedOfficialBook(null);
+                playSound('click', soundEnabled);
+              }}
+              className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3 sm:px-4 rounded-xl text-xs sm:text-sm font-bold font-sans transition-all ${
+                activeSubTab === 'my_pocket'
+                  ? 'bg-surface-card text-text-primary shadow-sm border border-border-subtle'
+                  : 'text-text-muted hover:text-text-primary'
+              }`}
+            >
+              <Bookmark className={`w-4 h-4 shrink-0 ${activeSubTab === 'my_pocket' ? 'text-gold fill-gold' : ''}`} />
+              <span>Buku Saku Saya ({decks.length})</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                setActiveSubTab('official_books');
+                playSound('click', soundEnabled);
+              }}
+              className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3 sm:px-4 rounded-xl text-xs sm:text-sm font-bold font-sans transition-all ${
+                activeSubTab === 'official_books'
+                  ? 'bg-surface-card text-text-primary shadow-sm border border-border-subtle'
+                  : 'text-text-muted hover:text-text-primary'
+              }`}
+            >
+              <BookOpen className={`w-4 h-4 shrink-0 ${activeSubTab === 'official_books' ? 'text-gold' : ''}`} />
+              <span>Buku Kurikulum Resmi ({OFFICIAL_BOOKS.length})</span>
+            </button>
+          </div>
+
+          {activeSubTab === 'official_books' ? (
+            activeOfficialDeck ? (
+              <DeckDetailView
+                deck={activeOfficialDeck}
+                isTemplate={true}
+                onBack={() => {
+                  setActiveOfficialDeck(null);
+                  playSound('click', soundEnabled);
+                }}
+                onPlayWorld={() => {
+                  playSound('click', soundEnabled);
+                  if (curriculums[activeOfficialDeck.id]) {
+                    setActiveWorldDeckId(activeOfficialDeck.id);
+                  } else {
+                    setIsCurriculumConfigOpen(true);
+                  }
+                }}
+                onCloneTemplate={() => {
+                  const ch = selectedOfficialBook?.chapters.find(c => c.id === activeOfficialDeck.id);
+                  if (ch && selectedOfficialBook) {
+                    handleCloneChapter(ch);
+                  }
+                }}
+                isCloned={selectedOfficialBook ? clonedSuccessChapterId === activeOfficialDeck.id : false}
+                soundEnabled={soundEnabled}
+                userDecks={decks}
+                itemMastery={itemMastery}
+                furiganaEnabled={furiganaEnabled}
+                onRewardPlayer={onRewardPlayer}
+                onCompleteStudyItem={onCompleteStudyItem}
+              />
+            ) : selectedOfficialBook ? (
+              <BookDetailView
+                book={selectedOfficialBook}
+                onBack={() => {
+                  setSelectedOfficialBook(null);
+                  playSound('click', soundEnabled);
+                }}
+                onSelectChapterDeck={(chapter) => {
+                  const virtualDeck = chapterToUserDeck(chapter, selectedOfficialBook);
+                  setActiveOfficialDeck(virtualDeck);
+                  playSound('click', soundEnabled);
+                }}
+                onCloneChapter={handleCloneChapter}
+                clonedSuccessChapterId={clonedSuccessChapterId}
+                soundEnabled={soundEnabled}
+                itemMastery={itemMastery}
+              />
+            ) : (
+              <BookshelfView
+                onSelectBook={(b) => {
+                  setSelectedOfficialBook(b);
+                  playSound('click', soundEnabled);
+                }}
+                soundEnabled={soundEnabled}
+                itemMastery={itemMastery}
+              />
+            )
+          ) : (
+            <>
+              {/* Header & Stats Banner */}
+              <div className="panel p-5 sm:p-6 rounded-3xl space-y-4 shadow-sm border border-border-subtle">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="space-y-1">
                 <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-text-muted">
@@ -476,14 +624,11 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
                       )}
                     </div>
 
-                    {/* Title & Description */}
+                    {/* Title */}
                     <div>
-                      <h3 className="font-heading font-bold text-base text-text-primary group-hover:text-gold transition-colors">
+                      <h3 className="font-heading font-bold text-base text-text-primary group-hover:text-gold transition-colors line-clamp-2">
                         {deck.title}
                       </h3>
-                      <p className="text-xs text-text-secondary line-clamp-2 mt-1">
-                        {deck.description || 'Tidak ada deskripsi tambahan.'}
-                      </p>
                     </div>
                   </div>
 
@@ -507,8 +652,10 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
               );
             })}
           </div>
-        </div>
-      ) : activeDeck ? (
+        </>
+      )}
+    </div>
+  ) : activeDeck ? (
         <DeckDetailView
           deck={activeDeck}
           isTemplate={false}

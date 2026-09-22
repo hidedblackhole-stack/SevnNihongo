@@ -76,9 +76,9 @@ const TOUR_STEPS: TourStep[] = [
   },
   {
     id: 'deck',
-    title: 'Buku Saku (Custom Decks)',
-    subtitle: 'Hafalan Personalisasi',
-    description: 'Tandai kosakata atau kanji favoritmu ke dalam Buku Saku. Latih ingatanmu melalui Flashcard Spaced Repetition, Latihan Menulis Kanji, atau Custom RPG Dungeon!',
+    title: 'Rak Buku (Kurikulum & Buku Saku)',
+    subtitle: 'Buku Kurikulum & Deck Hafalan',
+    description: 'Akses Rak Buku Kurikulum Resmi (Soumatome, Minna no Nihongo, dsb) atau kelola Buku Saku pribadimu dengan Flashcard dan Latihan Menulis!',
     targetSelector: '[data-tour="nav-deck"]',
     icon: Bookmark,
     accentColor: 'text-amber-400',

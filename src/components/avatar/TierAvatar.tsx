@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'motion/react';
 import {
   User,
@@ -84,8 +84,17 @@ export const TierAvatar: React.FC<TierAvatarProps> = ({
   showRankBadge = false,
 }) => {
   const [imgError, setImgError] = useState(false);
-  const currentTier = RPG_TIERS[Math.min(9, Math.max(0, tierIndex))];
+  const [candidateIndex, setCandidateIndex] = useState(0);
+
+  const safeTierIndex = typeof tierIndex === 'number' && !isNaN(tierIndex) ? tierIndex : 0;
+  const currentTier = RPG_TIERS[Math.min(9, Math.max(0, safeTierIndex))] || RPG_TIERS[0];
   const tierNum = currentTier.tier; // 1 to 10
+
+  // Whenever tierIndex, gender, or tierNum changes, reset error state and candidate pointer
+  useEffect(() => {
+    setImgError(false);
+    setCandidateIndex(0);
+  }, [safeTierIndex, gender, tierNum]);
 
   const sizeClasses = {
     sm: 'w-16 h-16',
@@ -105,11 +114,39 @@ export const TierAvatar: React.FC<TierAvatarProps> = ({
   const isChampion = tierNum >= 9;
   const isMythic = tierNum >= 10;
 
-  // Resolve image source: bundled asset first, then public path with BASE_URL
-  const avatarMap = gender === 'female' ? TIER_AVATAR_FEMALE_MAP : TIER_AVATAR_MALE_MAP;
-  const avatarSrc = avatarMap[tierNum] || (gender === 'female'
-    ? `${import.meta.env.BASE_URL}avatars/female/tier-${tierNum}.png`
-    : `${import.meta.env.BASE_URL}avatars/tier-${tierNum}.png`);
+  // Build a progressive candidate URL list for maximum resilience across all environments
+  const isFemale = gender === 'female';
+  const avatarMap = isFemale ? TIER_AVATAR_FEMALE_MAP : TIER_AVATAR_MALE_MAP;
+  const subFolder = isFemale ? 'female/' : '';
+  const baseUrl = import.meta.env.BASE_URL || './';
+  const cleanBase = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
+
+  const candidates = useMemo(() => {
+    const list: string[] = [];
+    // 1. Primary bundled asset (hashed URL from Vite)
+    if (avatarMap[tierNum]) list.push(avatarMap[tierNum]);
+    // 2. Relative public path with clean BASE_URL
+    list.push(`${cleanBase}avatars/${subFolder}tier-${tierNum}.png`);
+    // 3. Root-relative public path
+    list.push(`/avatars/${subFolder}tier-${tierNum}.png`);
+    // 4. Dot-relative path (for standalone serving)
+    list.push(`./avatars/${subFolder}tier-${tierNum}.png`);
+    // 5. Alternate gender fallback if primary is missing
+    const alternateMap = isFemale ? TIER_AVATAR_MALE_MAP : TIER_AVATAR_FEMALE_MAP;
+    if (alternateMap[tierNum]) list.push(alternateMap[tierNum]);
+
+    return Array.from(new Set(list.filter(Boolean)));
+  }, [avatarMap, tierNum, cleanBase, subFolder, isFemale]);
+
+  const currentSrc = candidates[candidateIndex] || candidates[0];
+
+  const handleImageError = () => {
+    if (candidateIndex < candidates.length - 1) {
+      setCandidateIndex(prev => prev + 1);
+    } else {
+      setImgError(true);
+    }
+  };
 
   const renderFallbackIcon = () => {
     const iconClass = "w-16 h-16 sm:w-20 sm:h-20 text-gold drop-shadow-[0_0_12px_rgba(251,191,36,0.5)]";
@@ -204,9 +241,10 @@ export const TierAvatar: React.FC<TierAvatarProps> = ({
               </div>
             ) : (
               <img 
-                src={avatarSrc}
+                key={`${tierNum}-${gender}-${candidateIndex}`}
+                src={currentSrc}
                 alt={`${currentTier.name} Avatar`}
-                onError={() => setImgError(true)}
+                onError={handleImageError}
                 className="w-full h-full object-contain drop-shadow-[0_10px_25px_rgba(0,0,0,0.6)]"
               />
             )}
