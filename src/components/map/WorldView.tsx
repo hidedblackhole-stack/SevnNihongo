@@ -349,14 +349,14 @@ export const WorldView: React.FC<WorldViewProps> = ({
             <p className="text-xs sm:text-sm text-text-secondary font-body">
               {worldMode === 'dungeon'
                 ? 'Latihan bebas: menulis aksara, flashcard kilat, susun pola kalimat, ubah bentuk kata, dan kuis cepat.'
-                : 'Mode Training berbasis Deck Template resmi kurikulum Jepang: Minna no Nihongo, Soumatome, Shin Kanzen Master, dan Kustom World.'}
+                : 'Tantang stage petualangan RPG untuk menguji pemahaman materi dan mengumpulkan EXP & Gold.'}
             </p>
           </div>
         </div>
 
       </div>
 
-      {/* 2. MODE SWITCHER BAR: TRAINING VS DUNGEON */}
+      {/* 2. MODE SWITCHER BAR: WORLD VS DUNGEON */}
       <div className="panel p-1.5 rounded-2xl bg-surface-inset border border-border-subtle flex items-center gap-2 shadow-inner">
         <button
           type="button"
@@ -369,8 +369,8 @@ export const WorldView: React.FC<WorldViewProps> = ({
         >
           <Compass className={`w-4 h-4 shrink-0 ${worldMode === 'training' ? 'text-gold' : ''}`} />
           <span>
-            <span className="inline sm:hidden">Training</span>
-            <span className="hidden sm:inline">Mode Training (Kurikulum Deck)</span>
+            <span className="inline sm:hidden">Petualangan</span>
+            <span className="hidden sm:inline">Petualangan World (Grinding EXP)</span>
           </span>
         </button>
 
@@ -422,59 +422,48 @@ export const WorldView: React.FC<WorldViewProps> = ({
         />
       ) : (
 
-      /* VIEW MODE TRAINING: WORLD PETUALANGAN & PUSAT MATERI */
+      /* VIEW MODE PETUALANGAN: WORLD GRINDING & PUSAT MATERI */
       <div className="space-y-6">
 
-        {/* 1. HERO BANNER: PUSAT BELAJAR MATERI RESMI */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="panel p-5 sm:p-7 rounded-3xl bg-gradient-to-br from-surface-elevated via-surface-card to-surface-card border border-gold/30 shadow-lg relative overflow-hidden"
-        >
-          {/* Background Ambient Glow & Watermark */}
-          <div className="absolute -right-6 -bottom-8 text-[110px] font-jp font-bold text-gold/5 pointer-events-none select-none">
-            本棚
-          </div>
-          <div className="absolute top-0 right-0 w-72 h-72 bg-gold/10 rounded-full blur-3xl pointer-events-none" />
-
-          <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5">
-            <div className="space-y-2.5 max-w-xl">
+        {/* 1. SHORTCUT: BELAJAR MATERI DI RAK BUKU */}
+        <div className="panel p-4 sm:p-5 rounded-2xl bg-surface-card border border-border-subtle shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5 min-w-0 flex-1">
+            <div className="w-10 h-10 rounded-xl bg-gold/15 border border-gold/30 flex items-center justify-center text-gold shrink-0">
+              <Library className="w-5 h-5" />
+            </div>
+            <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-gold/15 text-gold border border-gold/30 flex items-center gap-1.5">
-                  <Sparkles className="w-3 h-3 text-gold" />
-                  <span>Kurikulum Resmi Terstruktur</span>
+                <span className="text-[11px] font-bold uppercase tracking-wider text-gold font-heading">
+                  Belajar Materi
                 </span>
-                <span className="text-xs text-text-muted">7 Modul Standar Jepang</span>
+                <span className="text-[11px] text-text-muted font-mono">• 7 Modul Kurikulum Resmi</span>
               </div>
-
-              <h2 className="text-lg sm:text-xl font-heading font-bold text-text-primary flex items-center gap-2.5">
-                <BookOpen className="w-5 h-5 text-gold shrink-0" />
-                <span>Belajar & Kuasai Materi di Rak Buku</span>
-              </h2>
-
-              <p className="text-xs sm:text-sm text-text-secondary leading-relaxed font-body">
-                Kuasai materi terstruktur per bab (Minna no Nihongo, Soumatome, Shin Kanzen, Kaigo, Kana Dojo) di Rak Buku. Pelajari teorinya dengan Flashcard & Menulis santai, lalu tantang diri kamu di Petualangan World untuk mengumpulkan EXP & Gold!
+              <h3 className="text-sm sm:text-base font-bold text-text-primary font-heading truncate">
+                Rak Buku Kurikulum Resmi
+              </h3>
+              <p className="text-xs text-text-secondary mt-0.5 leading-relaxed line-clamp-1">
+                Kuasai materi terstruktur per bab (Minna no Nihongo, Soumatome, dll.) dengan Flashcard & Menulis di Rak Buku.
               </p>
             </div>
-
-            <button
-              type="button"
-              onClick={() => {
-                playSound('click', soundEnabled);
-                if (onNavigateToOfficialBooks) {
-                  onNavigateToOfficialBooks();
-                } else if (onNavigateTab) {
-                  onNavigateTab('deck');
-                }
-              }}
-              className="btn-cta py-3 px-5 sm:px-6 rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2.5 shadow-lg shadow-gold/20 shrink-0 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer font-heading whitespace-nowrap"
-            >
-              <Library className="w-4 h-4" />
-              <span>Buka Rak Buku Kurikulum</span>
-              <ChevronRight className="w-4 h-4" />
-            </button>
           </div>
-        </motion.div>
+
+          <button
+            type="button"
+            onClick={() => {
+              playSound('click', soundEnabled);
+              if (onNavigateToOfficialBooks) {
+                onNavigateToOfficialBooks();
+              } else if (onNavigateTab) {
+                onNavigateTab('deck');
+              }
+            }}
+            className="btn-physical-primary text-xs sm:text-sm py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 shrink-0 w-full sm:w-auto font-heading cursor-pointer whitespace-nowrap"
+          >
+            <BookOpen className="w-4 h-4" />
+            <span>Buka Rak Buku Kurikulum</span>
+            <ChevronRight className="w-4 h-4 opacity-70" />
+          </button>
+        </div>
 
         {/* 2. SEKSI: WORLD PETUALANGAN & GRINDING EXP */}
         <div className="space-y-3 pt-2">
@@ -595,7 +584,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
                       onNavigateTab('deck');
                     }
                   }}
-                  className="btn-cta text-xs py-2.5 px-4 rounded-xl flex items-center gap-2 cursor-pointer font-heading"
+                  className="btn-physical-primary text-xs py-2.5 px-4 rounded-xl flex items-center gap-2 cursor-pointer font-heading"
                 >
                   <Library className="w-3.5 h-3.5" />
                   <span>Buka Rak Buku Kurikulum</span>
