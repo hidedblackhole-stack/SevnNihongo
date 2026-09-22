@@ -203,11 +203,6 @@ export default function App() {
   const [deckResetCount, setDeckResetCount] = useState(0);
   const [deckInitialSubTab, setDeckInitialSubTab] = useState<'my_pocket' | 'official_books'>('my_pocket');
 
-  const handleNavigateToOfficialBooks = useCallback(() => {
-    setDeckInitialSubTab('official_books');
-    handleTabChange('deck');
-  }, [handleTabChange]);
-
   const handleTabChange = useCallback((tab: TabType) => {
     // If re-tapping the current active tab (Pop to Root / Scroll to Top)
     if (tab === activeTab && !selectedStage && !isRecallActive && !isBossBattleActive) {
@@ -240,6 +235,11 @@ export default function App() {
     setActiveTab(tab);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [activeTab, selectedStage, isRecallActive, isBossBattleActive]);
+
+  const handleNavigateToOfficialBooks = useCallback(() => {
+    setDeckInitialSubTab('official_books');
+    handleTabChange('deck');
+  }, [handleTabChange]);
   const [isOnboardingActive, setIsOnboardingActive] = useState<boolean>(() => {
     try {
       return !localStorage.getItem(STORAGE_KEY_ONBOARDING);
