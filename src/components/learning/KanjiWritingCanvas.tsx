@@ -332,6 +332,7 @@ export interface KanjiWritingCanvasProps {
   showStopwatch?: boolean; // Stopwatch on writing canvas (default: true)
   showPromptHeader?: boolean; // Complete prompt header with readings & audio (default: true)
   showDirectionGuide?: boolean; // Show stroke direction guide (default: true)
+  onReady?: () => void; // Triggered when stroke data is ready and canvas is interactive
   className?: string;
 }
 
@@ -384,6 +385,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
   showStopwatch = true,
   showPromptHeader = true,
   showDirectionGuide: _showDirectionGuide = true,
+  onReady,
   className = '',
 }) => {
   const kanjiChar = rawKanjiChar || character || '';
@@ -477,24 +479,24 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
 
   // Stopwatch State per Canvas Sheet (1 canvas = 1 sheet)
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
-  const [isTimerRunning, setIsTimerRunning] = useState(true);
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
 
   // Reset timer & sheet state whenever the character changes
   useEffect(() => {
     setCurrentSheet(1);
     setCompletedSheets([]);
     setElapsedSeconds(0);
-    setIsTimerRunning(true);
+    setIsTimerRunning(false);
     setWatermarkEverUsed(false);
     setAnimationCount(0);
     setLastReward(null);
     setCurrentStrokeIndex(0);
   }, [kanjiChar]);
 
-  // Timer interval
+  // Timer interval - strictly runs only when character is ready and not yet completed
   useEffect(() => {
     let interval: any = null;
-    if (isTimerRunning) {
+    if (isTimerRunning && !isLoading && !isQuizComplete) {
       interval = setInterval(() => {
         setElapsedSeconds(prev => prev + 1);
       }, 1000);
@@ -502,7 +504,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isTimerRunning]);
+  }, [isTimerRunning, isLoading, isQuizComplete]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -517,8 +519,8 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     const alreadyDone = completedSheets.includes(currentSheet);
     setIsQuizComplete(alreadyDone);
     setElapsedSeconds(0);
-    setIsTimerRunning(!alreadyDone);
-  }, [kanjiChar, currentSheet]);
+    setIsTimerRunning(!alreadyDone && !isLoading);
+  }, [kanjiChar, currentSheet, completedSheets, isLoading]);
 
   // Light Mode Detection for genuine Hosho paper & chocolate ink styling
   const [isLightMode, setIsLightMode] = useState(() =>
@@ -625,6 +627,14 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     writerContainerRef.current.innerHTML = '';
     const initialCached = getCachedStrokeData(kanjiChar);
     setIsLoading(!initialCached);
+    if (initialCached) {
+      setElapsedSeconds(0);
+      setIsTimerRunning(true);
+      onReady?.();
+    } else {
+      setIsTimerRunning(false);
+      setElapsedSeconds(0);
+    }
     setHasStrokeData(true);
     let isCancelled = false;
 
@@ -648,7 +658,10 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
           const cached = getCachedStrokeData(char);
           if (cached) {
             setIsLoading(false);
+            setElapsedSeconds(0);
+            setIsTimerRunning(true);
             onComplete(cached);
+            onReady?.();
             return;
           }
 
@@ -656,11 +669,15 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
             .then(data => {
               if (isCancelled) return;
               setIsLoading(false);
+              setElapsedSeconds(0);
+              setIsTimerRunning(true);
               onComplete(data);
+              onReady?.();
             })
             .catch(err => {
               if (isCancelled) return;
               setIsLoading(false);
+              setIsTimerRunning(false);
               setHasStrokeData(false);
               onError(err);
             });
@@ -1118,10 +1135,12 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
         <div className="flex items-center gap-1.5 flex-wrap">
           {showStopwatch && (
             <span
-              className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-surface-inset border border-border-subtle text-text-primary flex items-center gap-1 shadow-sm"
-              title={`Stopwatch (${isTimerRunning ? 'Berjalan' : 'Selesai'})`}
+              className={`px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-surface-inset border border-border-subtle flex items-center gap-1 shadow-sm transition-opacity ${
+                isLoading ? 'text-text-muted opacity-60' : 'text-text-primary'
+              }`}
+              title={isLoading ? 'Menyiapkan karakter...' : `Stopwatch (${isTimerRunning ? 'Berjalan' : 'Selesai'})`}
             >
-              <Clock className="w-3 h-3 text-gold" />
+              <Clock className={`w-3 h-3 ${isLoading ? 'text-text-muted' : 'text-gold'}`} />
               <span>{formatTime(elapsedSeconds)}</span>
               {totalSheets > 1 && (
                 <span className="text-[9px] text-text-muted font-normal">/kanvas #{currentSheet}</span>

@@ -50,7 +50,7 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
 
   // Master Kotoba Stopwatch: persists across all syllables/characters
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
-  const [isTimerRunning, setIsTimerRunning] = useState(true);
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
 
   const isWordFinished = completedChars.length === characters.length;
 
@@ -63,7 +63,7 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
     setAnimationCount(0);
     setLastReward(null);
     setElapsedSeconds(0);
-    setIsTimerRunning(true);
+    setIsTimerRunning(false);
     hasAwardedRef.current = false;
     // Preload all stroke data in the background!
     preloadStrokeData(kotoba.word);
@@ -233,6 +233,11 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
                 showStopwatch={false} // Use Kotoba's master word-level stopwatch
                 showPromptHeader={false} // Master card already displays Kotoba prompt header
                 level={kotoba.jlpt}
+                onReady={() => {
+                  if (!isWordFinished) {
+                    setIsTimerRunning(true);
+                  }
+                }}
                 onCompleteSheet={(_sheet, sheetScore, reward) => {
                   if (sheetScore < 100) {
                     setTotalMistakes(prev => prev + 1);
