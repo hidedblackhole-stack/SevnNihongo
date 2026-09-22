@@ -207,28 +207,116 @@ const saveStrokeDataToCache = (char: string, data: any) => {
   }
 };
 
-async function fetchWithTimeout(url: string, timeoutMs = 3000): Promise<any> {
+async function fetchWithTimeout(url: string, timeoutMs = 10000): Promise<any> {
   const controller = new AbortController();
-  const id = setTimeout(() => controller.abort(), timeoutMs);
+  let timedOut = false;
+  const id = setTimeout(() => {
+    timedOut = true;
+    try {
+      controller.abort();
+    } catch (_) {}
+  }, timeoutMs);
+
   try {
     const res = await fetch(url, { signal: controller.signal });
     clearTimeout(id);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const contentType = res.headers.get('content-type') || '';
-    if (contentType && !contentType.includes('json')) {
+    if (contentType && !contentType.includes('json') && !contentType.includes('application/octet-stream')) {
       throw new Error(`Invalid content-type: ${contentType}`);
     }
     const data = await res.json();
     if (!data || !Array.isArray(data.strokes)) throw new Error('Invalid stroke data');
     return data;
-  } catch (err) {
+  } catch (err: any) {
     clearTimeout(id);
+    if (timedOut) {
+      throw new Error(`Request timed out after ${timeoutMs}ms: ${url}`);
+    }
     throw err;
   }
 }
 
-async function fetchFastest(urls: string[], timeoutMs = 3000): Promise<any> {
-  return Promise.any(urls.map(url => fetchWithTimeout(url, timeoutMs)));
+async function fetchFastest(urls: string[], timeoutMs = 10000): Promise<any> {
+  if (urls.length === 0) throw new Error('No URLs provided');
+  if (urls.length === 1) return fetchWithTimeout(urls[0], timeoutMs);
+
+  return new Promise((resolve, reject) => {
+    let settled = false;
+    let failedCount = 0;
+    const errors: any[] = [];
+    const abortControllers = urls.map(() => new AbortController());
+
+    urls.forEach((url, idx) => {
+      const controller = abortControllers[idx];
+      let hasTimedOut = false;
+      const timer = setTimeout(() => {
+        hasTimedOut = true;
+        try {
+          controller.abort();
+        } catch (_) {}
+      }, timeoutMs);
+
+      fetch(url, { signal: controller.signal })
+        .then(async res => {
+          clearTimeout(timer);
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const contentType = res.headers.get('content-type') || '';
+          if (contentType && !contentType.includes('json') && !contentType.includes('application/octet-stream')) {
+            throw new Error(`Invalid content-type: ${contentType}`);
+          }
+          const data = await res.json();
+          if (!data || !Array.isArray(data.strokes)) throw new Error('Invalid stroke data');
+          return data;
+        })
+        .then(data => {
+          if (!settled) {
+            settled = true;
+            // Cleanly abort remaining requests without throwing unhandled rejections
+            abortControllers.forEach((ac, i) => {
+              if (i !== idx) {
+                try { ac.abort(); } catch (_) {}
+              }
+            });
+            resolve(data);
+          }
+        })
+        .catch(err => {
+          clearTimeout(timer);
+          errors.push(hasTimedOut ? new Error(`Timeout: ${url}`) : err);
+          failedCount++;
+          if (failedCount === urls.length && !settled) {
+            settled = true;
+            reject(new Error(`All ${urls.length} mirrors failed. Last error: ${errors[errors.length - 1]?.message || 'Unknown error'}`));
+          }
+        });
+    });
+  });
+}
+
+const getLocalStrokePaths = (dir: 'kanji-strokes' | 'kana-strokes', filename: string): string[] => {
+  const base = import.meta.env.BASE_URL || '/';
+  const cleanBase = base.endsWith('/') ? base : `${base}/`;
+  return [
+    `${cleanBase}data/${dir}/${filename}`,
+    `/data/${dir}/${filename}`,
+    `./data/${dir}/${filename}`,
+  ];
+};
+
+async function tryFetchLocal(dir: 'kanji-strokes' | 'kana-strokes', filename: string): Promise<any | null> {
+  const paths = getLocalStrokePaths(dir, filename);
+  for (const path of paths) {
+    try {
+      const data = await fetchWithTimeout(path, 2500);
+      if (data && Array.isArray(data.strokes)) {
+        return data;
+      }
+    } catch {
+      // Continue to next path candidate
+    }
+  }
+  return null;
 }
 
 export const fetchSingleCharStrokeData = async (char: string): Promise<any> => {
@@ -249,45 +337,55 @@ export const fetchSingleCharStrokeData = async (char: string): Promise<any> => {
 
     if (isKana) {
       // 1. Try local kana files first
-      try {
-        rawData = await fetchWithTimeout(`/data/kana-strokes/${encoded}.json`, 1500);
-      } catch {
-        try {
-          rawData = await fetchWithTimeout(`/data/kana-strokes/${hex}.json`, 1500);
-        } catch {
-          // Local kana not found, fallback to fast CDN
-          rawData = await fetchFastest([
-            `https://unpkg.com/hanzi-writer-data-jp@0.0.1/${encoded}.json`,
-            `https://cdn.jsdelivr.net/npm/hanzi-writer-data-jp@0.0.1/${encoded}.json`,
-            `https://fastly.jsdelivr.net/npm/hanzi-writer-data-jp@0.0.1/${encoded}.json`
-          ], 3000);
-        }
+      rawData = await tryFetchLocal('kana-strokes', `${encoded}.json`);
+      if (!rawData) {
+        rawData = await tryFetchLocal('kana-strokes', `${hex}.json`);
+      }
+      if (!rawData) {
+        rawData = await tryFetchLocal('kanji-strokes', `${encoded}.json`);
+      }
+      if (!rawData) {
+        rawData = await tryFetchLocal('kanji-strokes', `${hex}.json`);
+      }
+      // 2. Fallback to fast CDN mirrors with 10s timeout if local missing
+      if (!rawData) {
+        rawData = await fetchFastest([
+          `https://unpkg.com/hanzi-writer-data-jp@0.0.1/${encoded}.json`,
+          `https://cdn.jsdelivr.net/npm/hanzi-writer-data-jp@0.0.1/${encoded}.json`,
+          `https://fastly.jsdelivr.net/npm/hanzi-writer-data-jp@0.0.1/${encoded}.json`
+        ], 10000);
       }
     } else {
-      // Kanji: NEVER fetch local /data/kana-strokes/! Race top CDN mirrors in parallel
-      const primaryMirrors = [
-        `https://unpkg.com/hanzi-writer-data-jp@0.0.1/${encoded}.json`,
-        `https://cdn.jsdelivr.net/npm/hanzi-writer-data-jp@0.0.1/${encoded}.json`,
-        `https://fastly.jsdelivr.net/npm/hanzi-writer-data-jp@0.0.1/${encoded}.json`
-      ];
+      // Kanji: 1. Try bundled local kanji stroke data FIRST (Instant 0ms-2ms local load!)
+      rawData = await tryFetchLocal('kanji-strokes', `${encoded}.json`);
+      if (!rawData) {
+        rawData = await tryFetchLocal('kanji-strokes', `${hex}.json`);
+      }
 
-      try {
-        rawData = await fetchFastest(primaryMirrors, 3000);
-      } catch {
-        // Fallback to secondary general HanziWriter data
-        const fallbackMirrors = [
-          `https://unpkg.com/hanzi-writer-data@2.0.1/${encoded}.json`,
-          `https://cdn.jsdelivr.net/npm/hanzi-writer-data@2.0.1/${encoded}.json`,
-          `https://fastly.jsdelivr.net/npm/hanzi-writer-data@2.0.1/${encoded}.json`
+      // 2. Fallback to CDNs only if character is not bundled locally
+      if (!rawData) {
+        const primaryMirrors = [
+          `https://unpkg.com/hanzi-writer-data-jp@0.0.1/${encoded}.json`,
+          `https://cdn.jsdelivr.net/npm/hanzi-writer-data-jp@0.0.1/${encoded}.json`,
+          `https://fastly.jsdelivr.net/npm/hanzi-writer-data-jp@0.0.1/${encoded}.json`
         ];
+
         try {
-          rawData = await fetchFastest(fallbackMirrors, 3500);
+          rawData = await fetchFastest(primaryMirrors, 10000);
         } catch {
-          // Final fallback to Youyin repository
-          rawData = await fetchWithTimeout(
-            `https://cdn.jsdelivr.net/gh/MadLadSquad/hanzi-writer-data-youyin/data/${encoded}.json`,
-            4000
-          );
+          const fallbackMirrors = [
+            `https://unpkg.com/hanzi-writer-data@2.0.1/${encoded}.json`,
+            `https://cdn.jsdelivr.net/npm/hanzi-writer-data@2.0.1/${encoded}.json`,
+            `https://fastly.jsdelivr.net/npm/hanzi-writer-data@2.0.1/${encoded}.json`
+          ];
+          try {
+            rawData = await fetchFastest(fallbackMirrors, 10000);
+          } catch {
+            rawData = await fetchWithTimeout(
+              `https://cdn.jsdelivr.net/gh/MadLadSquad/hanzi-writer-data-youyin/data/${encoded}.json`,
+              10000
+            );
+          }
         }
       }
     }
@@ -477,7 +575,12 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
   const [mistakesCount, setMistakesCount] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isLoading, setIsLoading] = useState(() => !getCachedStrokeData(kanjiChar));
-  const [canvasSize, setCanvasSize] = useState(320);
+  const [canvasSize, setCanvasSize] = useState(() => {
+    if (typeof window !== 'undefined' && window.innerWidth >= 640) {
+      return 340;
+    }
+    return 320;
+  });
 
   // Performance factors for dynamic EXP
   const [watermarkEverUsed, setWatermarkEverUsed] = useState(false);
@@ -590,7 +693,8 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     const updateSize = () => {
       const el = gridCanvasRef.current?.parentElement;
       if (el && el.offsetWidth > 0) {
-        setCanvasSize(Math.min(340, Math.floor(el.offsetWidth)));
+        const target = Math.min(340, Math.floor(el.offsetWidth));
+        setCanvasSize(prev => (Math.abs(prev - target) > 6 ? target : prev));
       }
     };
 
@@ -704,6 +808,9 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
           fetchSingleCharStrokeData(char)
             .then(data => {
               if (isCancelled) return;
+              if (data && Array.isArray(data.strokes)) {
+                setTotalCharStrokes(data.strokes.length);
+              }
               setIsLoading(false);
               setElapsedSeconds(0);
               setIsTimerRunning(true);
@@ -712,6 +819,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
             })
             .catch(err => {
               if (isCancelled) return;
+              console.warn(`[KanjiWritingCanvas] Failed to load stroke data for '${char}':`, err);
               setIsLoading(false);
               setIsTimerRunning(false);
               setHasStrokeData(false);
@@ -724,13 +832,14 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
 
       // Extract total strokes count from character data
       writer.getCharacterData().then(charData => {
-        if (charData && Array.isArray(charData.strokes)) {
+        if (!isCancelled && charData && Array.isArray(charData.strokes)) {
           setTotalCharStrokes(charData.strokes.length);
         }
       }).catch(() => {});
 
       startQuiz(0);
-    } catch {
+    } catch (err) {
+      console.warn(`[KanjiWritingCanvas] Error initializing HanziWriter for '${kanjiChar}':`, err);
       setIsLoading(false);
       setHasStrokeData(false);
     }
