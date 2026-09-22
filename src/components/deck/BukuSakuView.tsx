@@ -29,6 +29,7 @@ import { CustomWorldView } from '../curriculum/CustomWorldView';
 import { CustomCurriculum, CustomCurriculumProgress } from '../../types/curriculum';
 import {
   generateCurriculum,
+  getOrCreateCurriculumForDeck,
   initializeCurriculumProgress,
   loadAllCustomCurriculums,
   saveCustomCurriculum,
@@ -445,11 +446,12 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
                 }}
                 onPlayWorld={() => {
                   playSound('click', soundEnabled);
-                  if (curriculums[activeOfficialDeck.id]) {
-                    setActiveWorldDeckId(activeOfficialDeck.id);
-                  } else {
-                    setIsCurriculumConfigOpen(true);
-                  }
+                  const targetDeck = activeOfficialDeck;
+                  const cur = curriculums[targetDeck.id] || getOrCreateCurriculumForDeck(targetDeck);
+                  saveCustomCurriculum(cur);
+                  const updatedAll = loadAllCustomCurriculums();
+                  setCurriculums(updatedAll);
+                  setActiveWorldDeckId(targetDeck.id);
                 }}
                 onCloneTemplate={() => {
                   const ch = selectedOfficialBook?.chapters.find(c => c.id === activeOfficialDeck.id);
@@ -666,11 +668,12 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
           }}
           onPlayWorld={() => {
             playSound('click', soundEnabled);
-            if (curriculums[activeDeck.id]) {
-              setActiveWorldDeckId(activeDeck.id);
-            } else {
-              setIsCurriculumConfigOpen(true);
-            }
+            const targetDeck = activeDeck;
+            const cur = curriculums[targetDeck.id] || getOrCreateCurriculumForDeck(targetDeck);
+            saveCustomCurriculum(cur);
+            const updatedAll = loadAllCustomCurriculums();
+            setCurriculums(updatedAll);
+            setActiveWorldDeckId(targetDeck.id);
           }}
           onEditDeck={(d) => {
             setEditingDeck(d);
@@ -861,10 +864,25 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
       {/* Curriculum Config Modal */}
       <CurriculumConfigModal
         isOpen={isCurriculumConfigOpen}
-        deck={activeDeck || (activeWorldDeckId ? decks.find(d => d.id === activeWorldDeckId) || null : null)}
+        deck={
+          activeOfficialDeck ||
+          activeDeck ||
+          (activeWorldDeckId
+            ? decks.find(d => d.id === activeWorldDeckId) ||
+              OFFICIAL_BOOKS.flatMap(b => b.chapters).map(c => chapterToUserDeck(c, OFFICIAL_BOOKS.find(bk => bk.id === c.bookId)!)).find(d => d.id === activeWorldDeckId) ||
+              null
+            : null)
+        }
         onClose={() => setIsCurriculumConfigOpen(false)}
         onGenerate={(config) => {
-          const targetDeck = activeDeck || (activeWorldDeckId ? decks.find(d => d.id === activeWorldDeckId) || null : null);
+          const targetDeck =
+            activeOfficialDeck ||
+            activeDeck ||
+            (activeWorldDeckId
+              ? decks.find(d => d.id === activeWorldDeckId) ||
+                OFFICIAL_BOOKS.flatMap(b => b.chapters).map(c => chapterToUserDeck(c, OFFICIAL_BOOKS.find(bk => bk.id === c.bookId)!)).find(d => d.id === activeWorldDeckId) ||
+                null
+              : null);
           if (!targetDeck) return;
           const generated = generateCurriculum(targetDeck, config);
           saveCustomCurriculum(generated);

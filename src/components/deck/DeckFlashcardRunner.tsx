@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion } from 'motion/react';
 import { X, RotateCcw, RotateCw, ArrowRight, ArrowLeft, Trophy, Check } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -145,8 +146,8 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
   };
 
   if (resolvedItems.length === 0) {
-    return (
-      <div className="fixed inset-0 z-[80] flex items-center justify-center p-4 bg-surface-ground/90 backdrop-blur-md">
+    const emptyContent = (
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-surface-ground/90 backdrop-blur-md">
         <div className="panel p-6 rounded-3xl max-w-md w-full border border-border-subtle text-center space-y-4">
           <h3 className="text-lg font-heading font-bold text-text-primary">Deck Masih Kosong</h3>
           <p className="text-xs text-text-secondary">
@@ -161,12 +162,16 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
         </div>
       </div>
     );
+    return typeof document !== 'undefined' ? createPortal(emptyContent, document.body) : emptyContent;
   }
 
-  return (
-    <div className="fixed inset-0 z-[80] flex flex-col bg-surface-ground/95 backdrop-blur-md overflow-y-auto">
+  const runnerContent = (
+    <div
+      className="fixed inset-0 z-[9999] flex flex-col bg-surface-ground/98 backdrop-blur-md overflow-y-auto overscroll-contain"
+      style={{ minHeight: '100dvh' }}
+    >
       {/* Top Header */}
-      <div className="p-4 sm:p-5 border-b border-border-subtle flex items-center justify-between max-w-2xl w-full mx-auto">
+      <div className="p-4 sm:p-5 border-b border-border-subtle flex items-center justify-between max-w-2xl w-full mx-auto shrink-0">
         <div className="flex items-center gap-2">
           <span className="text-xl">{deck.coverIcon || '📖'}</span>
           <div>
@@ -192,7 +197,7 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
 
       {/* Category Multi-Select Filter Bar */}
       {availableCategories.length > 1 && !isCompleted && (
-        <div className="flex items-center justify-center gap-2 py-2 px-4 max-w-2xl mx-auto w-full bg-surface-inset/60 border-b border-border-subtle/60 flex-wrap">
+        <div className="flex items-center justify-center gap-2 py-2 px-4 max-w-2xl mx-auto w-full bg-surface-inset/60 border-b border-border-subtle/60 flex-wrap shrink-0">
           <span className="text-[10px] font-heading font-bold text-text-muted uppercase tracking-wider">Tipe:</span>
           {(['kotoba', 'kanji', 'bunpou'] as const).map(cat => {
             if (!availableCategories.includes(cat)) return null;
@@ -220,7 +225,7 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
       )}
 
       {/* Main Flashcard Container */}
-      <div className="flex-1 flex items-center justify-center p-4 max-w-xl w-full mx-auto">
+      <div className="flex-1 flex flex-col justify-start sm:justify-center items-center py-4 px-3 sm:px-4 max-w-xl w-full mx-auto min-h-0">
         {isCompleted ? (
           /* Completion Screen */
           <motion.div
@@ -339,4 +344,6 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
       </div>
     </div>
   );
+
+  return typeof document !== 'undefined' ? createPortal(runnerContent, document.body) : runnerContent;
 };

@@ -558,21 +558,33 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     return () => clearTimeout(timer);
   }, [isQuizComplete, autoAdvance]);
 
-  // Measure container size dynamically
+  // Measure container size dynamically with ResizeObserver
   useEffect(() => {
     const container = gridCanvasRef.current?.parentElement;
     if (!container) return;
 
     const updateSize = () => {
-      const container = gridCanvasRef.current?.parentElement;
-      if (container && container.offsetWidth > 0) {
-        setCanvasSize(Math.floor(container.offsetWidth));
+      const el = gridCanvasRef.current?.parentElement;
+      if (el && el.offsetWidth > 0) {
+        setCanvasSize(Math.min(340, Math.floor(el.offsetWidth)));
       }
     };
 
     updateSize();
+
+    let ro: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== 'undefined') {
+      ro = new ResizeObserver(() => {
+        updateSize();
+      });
+      ro.observe(container);
+    }
+
     window.addEventListener('resize', updateSize);
-    return () => window.removeEventListener('resize', updateSize);
+    return () => {
+      if (ro) ro.disconnect();
+      window.removeEventListener('resize', updateSize);
+    };
   }, []);
 
   // 1. Background Grid Setup (HTML5 Canvas 2D Context)

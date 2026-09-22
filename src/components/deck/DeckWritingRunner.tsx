@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { createPortal } from 'react-dom';
 import { motion } from 'motion/react';
 import { X, ArrowLeft, ArrowRight, Trophy, PenTool, RotateCcw } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -100,8 +101,8 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
   };
 
   if (writableItems.length === 0) {
-    return (
-      <div className="fixed inset-0 z-[80] flex items-center justify-center p-4 bg-surface-ground/90 backdrop-blur-md">
+    const emptyContent = (
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-surface-ground/90 backdrop-blur-md">
         <div className="panel p-6 rounded-3xl max-w-md w-full border border-border-subtle text-center space-y-4">
           <div className="w-12 h-12 rounded-2xl bg-surface-inset text-gold border border-border-subtle flex items-center justify-center mx-auto">
             <PenTool className="w-6 h-6" />
@@ -119,12 +120,16 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
         </div>
       </div>
     );
+    return typeof document !== 'undefined' ? createPortal(emptyContent, document.body) : emptyContent;
   }
 
-  return (
-    <div className="fixed inset-0 z-[80] flex flex-col bg-surface-ground/95 backdrop-blur-md overflow-y-auto">
+  const runnerContent = (
+    <div
+      className="fixed inset-0 z-[9999] flex flex-col bg-surface-ground/98 backdrop-blur-md overflow-y-auto overscroll-contain"
+      style={{ minHeight: '100dvh' }}
+    >
       {/* Header */}
-      <div className="p-3 sm:p-4 border-b border-border-subtle flex items-center justify-between max-w-3xl w-full mx-auto">
+      <div className="p-3 sm:p-4 border-b border-border-subtle flex items-center justify-between max-w-3xl w-full mx-auto shrink-0">
         <div className="flex items-center gap-2">
           <span className="text-xl">{deck.coverIcon || '✍️'}</span>
           <div>
@@ -151,7 +156,7 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
       </div>
 
       {/* Content Area */}
-      <div className="flex-1 flex items-center justify-center p-3 sm:p-4 max-w-3xl w-full mx-auto">
+      <div className="flex-1 flex flex-col justify-start sm:justify-center items-center p-3 sm:p-4 max-w-3xl w-full mx-auto min-h-0">
         {isFinishedAll ? (
           /* Completion Card */
           <motion.div
@@ -219,7 +224,7 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
           <div className="w-full space-y-3">
             {/* Render Canvas using Unified UniversalWritingCard */}
             {currentItem && (
-              <div className="panel p-4 sm:p-5 rounded-3xl border border-border-subtle shadow-lg">
+              <div className="w-full flex justify-center">
                 <UniversalWritingCard
                   item={currentItem}
                   soundEnabled={soundEnabled}
@@ -260,4 +265,6 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
       </div>
     </div>
   );
+
+  return typeof document !== 'undefined' ? createPortal(runnerContent, document.body) : runnerContent;
 };
