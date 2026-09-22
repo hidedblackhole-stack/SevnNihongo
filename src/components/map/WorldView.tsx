@@ -352,19 +352,6 @@ export const WorldView: React.FC<WorldViewProps> = ({
           </div>
         </div>
 
-        {/* TOMBOL: BUAT KUSTOM WORLD */}
-        {worldMode === 'training' && (
-          <button
-            type="button"
-            onClick={handleOpenCreateCustomWorld}
-            className="btn-skeuo-indigo self-stretch sm:self-auto justify-center text-xs py-2.5 px-4 shadow-md active:scale-95 transition-all"
-            title="Buat Kustom World baru dari materi Buku Saku"
-          >
-            <Sparkles className="w-4 h-4 text-gold shrink-0" />
-            <span className="whitespace-nowrap font-bold">Buat Kustom World</span>
-            <ChevronRight className="w-3.5 h-3.5 opacity-70 shrink-0" />
-          </button>
-        )}
       </div>
 
       {/* 2. MODE SWITCHER BAR: TRAINING VS DUNGEON */}
