@@ -92,6 +92,8 @@ interface BukuSakuViewProps {
   onStartRemediationRecall?: (itemIds: string[]) => void;
   itemMastery?: Record<string, ItemMasteryRecord>;
   furiganaEnabled?: boolean;
+  initialSubTab?: 'my_pocket' | 'official_books';
+  onSubTabChange?: (tab: 'my_pocket' | 'official_books') => void;
 }
 
 export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
@@ -113,16 +115,24 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
   onStartRemediationRecall,
   itemMastery = {},
   furiganaEnabled = true,
+  initialSubTab,
+  onSubTabChange,
 }) => {
   const decks = useMemo(() => ensureUserDecks(userDecks), [userDecks]);
 
   const [selectedDeckId, setSelectedDeckId] = useState<string | null>(null);
 
-  const [activeSubTab, setActiveSubTab] = useState<'my_pocket' | 'official_books'>('my_pocket');
+  const [activeSubTab, setActiveSubTab] = useState<'my_pocket' | 'official_books'>(initialSubTab || 'my_pocket');
   const [selectedOfficialBook, setSelectedOfficialBook] = useState<OfficialBook | null>(null);
   const [activeOfficialDeck, setActiveOfficialDeck] = useState<UserDeck | null>(null);
   const [clonedSuccessChapterId, setClonedSuccessChapterId] = useState<string | null>(null);
   const [virtualRunnerDeck, setVirtualRunnerDeck] = useState<UserDeck | null>(null);
+
+  useEffect(() => {
+    if (initialSubTab) {
+      setActiveSubTab(initialSubTab);
+    }
+  }, [initialSubTab]);
 
   // Reset to initial Deck List screen when navbar triggers reset
   useEffect(() => {
@@ -405,6 +415,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
               type="button"
               onClick={() => {
                 setActiveSubTab('my_pocket');
+                onSubTabChange?.('my_pocket');
                 setSelectedOfficialBook(null);
                 playSound('click', soundEnabled);
               }}
@@ -422,6 +433,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
               type="button"
               onClick={() => {
                 setActiveSubTab('official_books');
+                onSubTabChange?.('official_books');
                 playSound('click', soundEnabled);
               }}
               className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3 sm:px-4 rounded-xl text-xs sm:text-sm font-bold font-sans transition-all ${

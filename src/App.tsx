@@ -201,6 +201,12 @@ export default function App() {
   const [worldNavView, setWorldNavView] = useState<import('./components/map/WorldView').WorldNavView>('world_hub');
   const [worldResetCount, setWorldResetCount] = useState(0);
   const [deckResetCount, setDeckResetCount] = useState(0);
+  const [deckInitialSubTab, setDeckInitialSubTab] = useState<'my_pocket' | 'official_books'>('my_pocket');
+
+  const handleNavigateToOfficialBooks = useCallback(() => {
+    setDeckInitialSubTab('official_books');
+    handleTabChange('deck');
+  }, [handleTabChange]);
 
   const handleTabChange = useCallback((tab: TabType) => {
     // If re-tapping the current active tab (Pop to Root / Scroll to Top)
@@ -1318,6 +1324,7 @@ export default function App() {
                       });
                     }}
                     onNavigateTab={(tab) => handleTabChange(tab as TabType)}
+                    onNavigateToOfficialBooks={handleNavigateToOfficialBooks}
                     onRewardPlayer={handleRewardPlayer}
                     onCompleteStudyItem={handleStudyComplete}
                     playerMp={stats.mp}
@@ -1410,6 +1417,8 @@ export default function App() {
                 <BukuSakuView
                   userDecks={stats.userDecks}
                   resetSignal={deckResetCount}
+                  initialSubTab={deckInitialSubTab}
+                  onSubTabChange={(subTab) => setDeckInitialSubTab(subTab)}
                   onUpdateDecks={(updatedDecks) => {
                     setStats(prev => {
                       const updated = { ...prev, userDecks: updatedDecks };

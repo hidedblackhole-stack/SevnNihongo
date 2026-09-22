@@ -58,6 +58,7 @@ interface WorldViewProps {
   userDecks?: UserDeck[];
   onUpdateDecks?: (decks: UserDeck[]) => void;
   onNavigateTab?: (tab: 'home' | 'maps' | 'daily' | 'weekly' | 'leaderboard' | 'library' | 'deck' | 'settings') => void;
+  onNavigateToOfficialBooks?: () => void;
   onRewardPlayer?: (exp: number, gold: number) => void;
   onCompleteStudyItem?: (
     moduleId: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss' | 'questions' | 'tryOuts',
@@ -107,6 +108,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
   resetSignal,
   soundEnabled = true,
   onNavigateTab,
+  onNavigateToOfficialBooks,
   userDecks,
   onUpdateDecks,
   onRewardPlayer,
@@ -420,203 +422,83 @@ export const WorldView: React.FC<WorldViewProps> = ({
         />
       ) : (
 
-      /* VIEW MODE TRAINING: DECK TEMPLATES GALLERY */
+      /* VIEW MODE TRAINING: WORLD PETUALANGAN & PUSAT MATERI */
       <div className="space-y-6">
 
-        {/* 3. LEVEL FILTER TABS */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-          {LEVEL_FILTERS.map(filter => {
-            const isActive = selectedLevelFilter === filter.id;
-            return (
-              <button
-                key={filter.id}
-                type="button"
-                onClick={() => {
-                  playSound('click', soundEnabled);
-                  setSelectedLevelFilter(filter.id);
-                }}
-                className={`notebook-filter-tab ${isActive ? 'active' : ''}`}
-              >
-                {filter.label}
-              </button>
-            );
-          })}
-        </div>
+        {/* 1. HERO BANNER: PUSAT BELAJAR MATERI RESMI */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="panel p-5 sm:p-7 rounded-3xl bg-gradient-to-br from-surface-elevated via-surface-card to-surface-card border border-gold/30 shadow-lg relative overflow-hidden"
+        >
+          {/* Background Ambient Glow & Watermark */}
+          <div className="absolute -right-6 -bottom-8 text-[110px] font-jp font-bold text-gold/5 pointer-events-none select-none">
+            本棚
+          </div>
+          <div className="absolute top-0 right-0 w-72 h-72 bg-gold/10 rounded-full blur-3xl pointer-events-none" />
 
-        {/* 4. SEKSI: DECK TEMPLATE RESMI */}
-        <div className="space-y-3">
-          <div className="flex items-center justify-between px-1">
-            <div>
-              <h2 className="text-sm sm:text-base font-bold text-text-primary font-heading flex items-center gap-2">
-                <Library className="w-4 h-4 text-gold" />
-                <span>Deck Petualangan Template Resmi ({filteredTemplates.length})</span>
+          <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5">
+            <div className="space-y-2.5 max-w-xl">
+              <div className="flex items-center gap-2">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-gold/15 text-gold border border-gold/30 flex items-center gap-1.5">
+                  <Sparkles className="w-3 h-3 text-gold" />
+                  <span>Kurikulum Resmi Terstruktur</span>
+                </span>
+                <span className="text-xs text-text-muted">7 Modul Standar Jepang</span>
+              </div>
+
+              <h2 className="text-lg sm:text-xl font-heading font-bold text-text-primary flex items-center gap-2.5">
+                <BookOpen className="w-5 h-5 text-gold shrink-0" />
+                <span>Belajar & Kuasai Materi di Rak Buku</span>
               </h2>
-              <p className="text-xs text-text-secondary font-body mt-0.5">
-                Deck template buatan tim pengajar: mainkan langsung sebagai World kurikulum atau salin ke Buku Saku.
+
+              <p className="text-xs sm:text-sm text-text-secondary leading-relaxed font-body">
+                Kuasai materi terstruktur per bab (Minna no Nihongo, Soumatome, Shin Kanzen, Kaigo, Kana Dojo) di Rak Buku. Pelajari teorinya dengan Flashcard & Menulis santai, lalu tantang diri kamu di Petualangan World untuk mengumpulkan EXP & Gold!
               </p>
             </div>
+
+            <button
+              type="button"
+              onClick={() => {
+                playSound('click', soundEnabled);
+                if (onNavigateToOfficialBooks) {
+                  onNavigateToOfficialBooks();
+                } else if (onNavigateTab) {
+                  onNavigateTab('deck');
+                }
+              }}
+              className="btn-cta py-3 px-5 sm:px-6 rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2.5 shadow-lg shadow-gold/20 shrink-0 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer font-heading whitespace-nowrap"
+            >
+              <Library className="w-4 h-4" />
+              <span>Buka Rak Buku Kurikulum</span>
+              <ChevronRight className="w-4 h-4" />
+            </button>
           </div>
+        </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {filteredTemplates.map((deck) => {
-              const kanjiCount = deck.items.filter(i => i.category === 'kanji').length;
-              const kotobaCount = deck.items.filter(i => i.category === 'kotoba').length;
-              const bunpouCount = deck.items.filter(i => i.category === 'bunpou').length;
-
-              const prog = curriculumProgressMap[deck.id];
-              const curriculum = customCurriculums[deck.id];
-              const totalStages = curriculum?.stages.length || 8;
-              const clearedCount = Object.values(prog?.stages || {}).filter(s => s.status === 'completed').length;
-              const pct = Math.round((clearedCount / Math.max(1, totalStages)) * 100);
-              const totalStars = Object.values(prog?.stages || {}).reduce((acc, s) => acc + (s.stars || 0), 0);
-
-              const levelInfo = LEVEL_CONFIG[deck.level || 'N5'] || {
-                label: deck.level || 'N5',
-              };
-
-              const isCloned = clonedSuccessId === deck.id;
-
-              return (
-                <motion.div
-                  key={deck.id}
-                  whileHover={{ y: -2 }}
-                  onClick={() => {
-                    playSound('click', soundEnabled);
-                    setSelectedTemplateDeck(deck);
-                  }}
-                  className="notebook-adventure-card group cursor-pointer"
-                >
-                  <div className="space-y-3 relative z-10">
-                    {/* Top row: Level Stamp & Stage Count */}
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-xl bg-surface-inset border border-border-subtle flex items-center justify-center text-sm font-jp font-bold text-gold shadow-inner shrink-0">
-                          {deck.coverIcon || '書'}
-                        </div>
-                        <span className="notebook-level-stamp">
-                          {levelInfo.label}
-                        </span>
-                      </div>
-
-                      <div className="flex items-center gap-2 text-xs font-mono">
-                        {totalStars > 0 && (
-                          <span className="text-gold flex items-center gap-1 font-bold">
-                            <Star className="w-3.5 h-3.5 fill-gold" />
-                            <span>{totalStars}</span>
-                          </span>
-                        )}
-                        <span className="text-text-secondary font-bold">{totalStages} Stage</span>
-                      </div>
-                    </div>
-
-                    {/* Judul */}
-                    <div>
-                      <h3 className="text-base sm:text-lg font-bold text-text-primary font-heading leading-snug group-hover:text-gold transition-colors line-clamp-2">
-                        {deck.title}
-                      </h3>
-                    </div>
-
-                    {/* Rincian Materi (Object UI Inventory Slots) */}
-                    <div className="flex items-center gap-2 flex-wrap pt-0.5">
-                      {kotobaCount > 0 && (
-                        <div className="notebook-object-slot" title={`${kotobaCount} Kosakata`}>
-                          <span className="w-4 h-4 rounded bg-surface-inset flex items-center justify-center text-[10px] font-jp font-bold text-text-primary">語</span>
-                          <span>{kotobaCount} Kotoba</span>
-                        </div>
-                      )}
-                      {kanjiCount > 0 && (
-                        <div className="notebook-object-slot" title={`${kanjiCount} Kanji`}>
-                          <span className="w-4 h-4 rounded bg-surface-inset flex items-center justify-center text-[10px] font-jp font-bold text-text-primary">字</span>
-                          <span>{kanjiCount} Kanji</span>
-                        </div>
-                      )}
-                      {bunpouCount > 0 && (
-                        <div className="notebook-object-slot" title={`${bunpouCount} Pola Tata Bahasa`}>
-                          <span className="w-4 h-4 rounded bg-surface-inset flex items-center justify-center text-[10px] font-jp font-bold text-text-primary">文</span>
-                          <span>{bunpouCount} Bunpou</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Bottom: Progres (Meteran Alat Tulis) & Aksi (Physical Buttons) */}
-                  <div className="pt-3 border-t border-border-subtle/70 space-y-3 relative z-10 mt-3">
-                    <div className="space-y-1.5">
-                      <div className="flex justify-between text-[11px] font-mono">
-                        <span className="text-text-muted font-medium">Progres:</span>
-                        <span className="font-bold text-text-primary">{clearedCount} / {totalStages} ({pct}%)</span>
-                      </div>
-                      <div className="notebook-ruler-track">
-                        <div
-                          className="notebook-ruler-fill"
-                          style={{ width: `${pct}%` }}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between gap-2 pt-1">
-                      {/* Tombol Salin ke Buku Saku (Physical Key) */}
-                      <button
-                        type="button"
-                        onClick={(e) => handleCloneTemplate(deck, e)}
-                        className={`btn-physical-secondary text-xs ${
-                          isCloned ? 'ring-2 ring-emerald-600/40 text-emerald-800' : ''
-                        }`}
-                        title="Klon deck template ini ke koleksi Buku Saku kamu"
-                      >
-                        {isCloned ? (
-                          <>
-                            <Check className="w-3.5 h-3.5 text-emerald-700" />
-                            <span>Tersalin!</span>
-                          </>
-                        ) : (
-                          <>
-                            <Copy className="w-3.5 h-3.5 opacity-70" />
-                            <span>Salin</span>
-                          </>
-                        )}
-                      </button>
-
-                      {/* Tombol Buka Deck (Physical Primary Key) */}
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          playSound('click', soundEnabled);
-                          setSelectedTemplateDeck(deck);
-                        }}
-                        className="btn-physical-primary text-xs ml-auto"
-                      >
-                        <BookOpen className="w-3.5 h-3.5" />
-                        <span>Buka Deck</span>
-                        <ChevronRight className="w-3.5 h-3.5 opacity-70" />
-                      </button>
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* 5. SEKSI: WORLD KUSTOM PETUALANG (JIKA ADA DECK PRIBADI DIJADIKAN WORLD) */}
-        {userCustomWorldList.length > 0 && (
-          <div className="space-y-3 pt-2">
-            <div className="flex items-center justify-between px-1">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-text-secondary font-heading flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-amber-400" />
-                <span>World Kustom Petualang ({userCustomWorldList.length})</span>
+        {/* 2. SEKSI: WORLD PETUALANGAN & GRINDING EXP */}
+        <div className="space-y-3 pt-2">
+          <div className="flex items-center justify-between px-1">
+            <div>
+              <h3 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-text-primary font-heading flex items-center gap-2">
+                <Compass className="w-4 h-4 text-gold" />
+                <span>World Petualangan & Grinding EXP ({userCustomWorldList.length})</span>
               </h3>
-              <button
-                type="button"
-                onClick={handleOpenCreateCustomWorld}
-                className="text-xs text-indigo hover:text-indigo/80 font-bold flex items-center gap-1 font-heading"
-              >
-                <Plus className="w-3.5 h-3.5" />
-                <span>Buat World Baru</span>
-              </button>
+              <p className="text-xs text-text-secondary font-body mt-0.5">
+                Mainkan stage petualangan RPG untuk mengumpulkan EXP, Gold, dan Mastery item.
+              </p>
             </div>
+            <button
+              type="button"
+              onClick={handleOpenCreateCustomWorld}
+              className="text-xs text-indigo hover:text-indigo/80 font-bold flex items-center gap-1 font-heading cursor-pointer shrink-0"
+            >
+              <Plus className="w-3.5 h-3.5" />
+              <span>Buat World Baru</span>
+            </button>
+          </div>
 
+          {userCustomWorldList.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {userCustomWorldList.map((curriculum) => {
                 const prog = curriculumProgressMap[curriculum.deckId];
@@ -638,7 +520,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
                     <div className="space-y-2 relative z-10">
                       <div className="flex items-center justify-between">
                         <span className="notebook-level-stamp uppercase">
-                          Kustom World
+                          Petualangan Aktif
                         </span>
                         <div className="flex items-center gap-2 text-xs font-mono">
                           <span className="text-gold flex items-center gap-1 font-bold">
@@ -656,14 +538,14 @@ export const WorldView: React.FC<WorldViewProps> = ({
                       </div>
 
                       <p className="text-xs text-text-secondary line-clamp-2 leading-relaxed mt-1">
-                        Petualangan kustom beranggotakan {totalStages} stage materi belajar Kanji, Kotoba, dan Pola Kalimat dari Buku Saku kamu.
+                        Petualangan beranggotakan {totalStages} stage materi belajar Kanji, Kotoba, dan Pola Kalimat untuk tantangan battler dan pengumpulan EXP.
                       </p>
                     </div>
 
                     <div className="pt-3 border-t border-border-subtle/70 space-y-3 relative z-10 mt-3">
                       <div className="space-y-1.5">
                         <div className="flex justify-between text-[11px] font-mono">
-                          <span className="text-text-muted font-medium">Progres:</span>
+                          <span className="text-text-muted font-medium">Progres Stage:</span>
                           <span className="font-bold text-text-primary">{clearedCount} / {totalStages} ({pct}%)</span>
                         </div>
                         <div className="notebook-ruler-track">
@@ -689,8 +571,49 @@ export const WorldView: React.FC<WorldViewProps> = ({
                 );
               })}
             </div>
-          </div>
-        )}
+          ) : (
+            <div className="p-8 sm:p-10 text-center panel rounded-3xl border border-dashed border-border-subtle bg-surface-card/40 space-y-4">
+              <div className="w-14 h-14 rounded-2xl bg-gold/10 border border-gold/25 flex items-center justify-center text-gold mx-auto shadow-inner">
+                <Compass className="w-7 h-7" />
+              </div>
+              <div className="space-y-1 max-w-md mx-auto">
+                <h3 className="text-base font-bold font-heading text-text-primary">
+                  Belum Ada Petualangan World yang Aktif
+                </h3>
+                <p className="text-xs text-text-secondary leading-relaxed">
+                  World adalah tempat bermain untuk menguji kemampuan dan mengumpulkan EXP! Buka bab materi di <strong>Rak Buku Kurikulum</strong> lalu klik tombol <strong>⚔️ Petualangan World</strong>, atau buat World baru dari Buku Saku kamu.
+                </p>
+              </div>
+              <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    playSound('click', soundEnabled);
+                    if (onNavigateToOfficialBooks) {
+                      onNavigateToOfficialBooks();
+                    } else if (onNavigateTab) {
+                      onNavigateTab('deck');
+                    }
+                  }}
+                  className="btn-cta text-xs py-2.5 px-4 rounded-xl flex items-center gap-2 cursor-pointer font-heading"
+                >
+                  <Library className="w-3.5 h-3.5" />
+                  <span>Buka Rak Buku Kurikulum</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={handleOpenCreateCustomWorld}
+                  className="btn-physical-secondary text-xs py-2.5 px-4 rounded-xl flex items-center gap-2 cursor-pointer font-heading"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Buat World dari Buku Saku</span>
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+
 
         {/* 6. BANNER MENUJU BUKU SAKU */}
         {onNavigateTab && (
