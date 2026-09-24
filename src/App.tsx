@@ -511,7 +511,8 @@ export default function App() {
 
   // Daily midnight reset & streak tracking
   useEffect(() => {
-    const today = new Date().toISOString().split('T')[0];
+    const now = new Date();
+    const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
     const lastReset = localStorage.getItem('n3quest_last_daily_reset');
     if (lastReset !== today) {
       setDailyMissions(INITIAL_DAILY_MISSIONS);
@@ -526,13 +527,17 @@ export default function App() {
       if (!lastActive) {
         newStreak = 1;
       } else {
-        const lastDate = new Date(lastActive);
-        const currentDate = new Date(today);
-        const diffDays = Math.round(Math.abs(currentDate.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24));
+        const lastDate = new Date(lastActive + 'T00:00:00');
+        const currentDate = new Date(today + 'T00:00:00');
+        const diffMs = currentDate.getTime() - lastDate.getTime();
+        const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
         if (diffDays === 1) {
           newStreak += 1;
         } else if (diffDays > 1) {
           newStreak = 1;
+        } else if (diffDays <= 0) {
+          // Same day or clock manipulation backwards - do not increment streak
+          return prev;
         }
       }
 
@@ -1002,6 +1007,9 @@ export default function App() {
 
   // Claim Mission Reward
   const handleClaimMission = (mission: Mission) => {
+    if (mission.claimed) return;
+    if (!mission.completed && (mission.progress || 0) < mission.target) return;
+
     handleRewardPlayer(mission.rewardExp, mission.rewardGold);
     if (mission.rewardGems) {
       setStats(prev => ({ ...prev, gems: prev.gems + (mission.rewardGems || 0) }));
@@ -1080,79 +1088,17 @@ export default function App() {
     }
   };
 
-  // Handle Name Update & Cheat Code
+  // Handle Name Update
   const handleUpdateName = (newName: string) => {
-    if (newName.trim() === '777sevnsoul777') {
-      playSound('levelup', true);
-      alert('Cheat Code Activated: MAX TIER & UNLOCK ALL!');
-      
-      // Unlock all stages
-      const unlockedStages: Record<string, StageClearData> = {};
-      MAP_REGIONS.forEach(map => {
-        const mapStages = getStagesForMap(map.id);
-        mapStages.forEach(stage => {
-          unlockedStages[stage.id] = {
-            stageId: stage.id,
-            cleared: true,
-            stars: 3,
-            clearedModules: ['bunpou', 'kotoba', 'kanji', 'dokkai', 'choukai'],
-            lastPlayedAt: new Date().toISOString()
-          };
-        });
-      });
-      setStageProgress(unlockedStages);
-
-      // Max stats
-      setStats(prev => {
-        const expGained = 1000000;
-        const newTotalExp = Math.round((prev.totalExp || 0) + expGained);
-        const { tierIndex } = getTierForExp(newTotalExp);
-        const levelInfo = getLevelInfo(newTotalExp);
-        const newLevel = Math.round(levelInfo.level);
-        
-        const updated = {
-          ...prev,
-          playerName: 'SevnSoul',
-          totalExp: newTotalExp,
-          level: newLevel,
-          currentExp: levelInfo.currentLevelExp,
-          maxExp: levelInfo.expNeededForNextLevel,
-          tierIndex: tierIndex,
-          gold: 999999,
-          gems: 999999,
-          hp: calculateMaxHp(newLevel, prev.vit),
-          maxHp: calculateMaxHp(newLevel, prev.vit),
-          mp: calculateMaxMp(newLevel, prev.int),
-          maxMp: calculateMaxMp(newLevel, prev.int),
-          unallocatedPoints: prev.unallocatedPoints + (newLevel * 3),
-          studyStats: {
-            ...prev.studyStats,
-            flashcards: { total: 4243, uniqueIds: Array.from({ length: 614 }, (_, i) => `dummy_${i}`) },
-            kanjiWriting: { total: 2057, uniqueIds: Array.from({ length: 1000 }, (_, i) => `dummy_${i}`) },
-            questions: { total: 8086, uniqueIds: Array.from({ length: 2000 }, (_, i) => `dummy_${i}`) },
-            tryOuts: { total: 43, uniqueIds: Array.from({ length: 15 }, (_, i) => `dummy_${i}`) },
-            dokkai: prev.studyStats?.dokkai || { total: 0, uniqueIds: [] },
-            choukai: prev.studyStats?.choukai || { total: 0, uniqueIds: [] },
-            bunpou: prev.studyStats?.bunpou || { total: 0, uniqueIds: [] },
-            stages: prev.studyStats?.stages || { total: 0, uniqueIds: [] },
-            bossBattles: prev.studyStats?.bossBattles || { total: 0, uniqueIds: [] },
-          }
-        };
-        if (isAuthenticated && updated.userId) {
-          upsertLeaderboard(updated);
-        }
-        return updated;
-      });
-    } else {
-      const trimmed = newName.trim();
-      setStats(prev => {
-        const updated = { ...prev, playerName: trimmed };
-        if (isAuthenticated && updated.userId) {
-          upsertLeaderboard(updated);
-        }
-        return updated;
-      });
-    }
+    const trimmed = newName.trim().slice(0, 30);
+    if (!trimmed) return;
+    setStats(prev => {
+      const updated = { ...prev, playerName: trimmed };
+      if (isAuthenticated && updated.userId) {
+        upsertLeaderboard(updated);
+      }
+      return updated;
+    });
   };
 
   // Handle Player Signature / Bio Motto Update

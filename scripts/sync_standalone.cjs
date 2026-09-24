@@ -32,5 +32,19 @@ function copyDirRecursive(src, dest) {
 }
 
 console.log('📦 Memperbarui folder produk jadi di:', targetDir);
+
+// Clean old assets folder in targetDir to prevent accumulation of old hashed builds
+const targetAssetsDir = path.join(targetDir, 'assets');
+if (fs.existsSync(targetAssetsDir)) {
+  fs.rmSync(targetAssetsDir, { recursive: true, force: true });
+}
+
 copyDirRecursive(sourceDir, targetDir);
+
+// Copy serve.js to standalone directory
+const serveScript = path.resolve(__dirname, 'serve.js');
+if (fs.existsSync(serveScript)) {
+  fs.copyFileSync(serveScript, path.join(targetDir, 'serve.js'));
+}
+
 console.log('✅ SUKSES: NihongoQuest_Standalone telah disinkronkan dengan build terbaru!\n');

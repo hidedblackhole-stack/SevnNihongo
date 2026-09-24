@@ -96,9 +96,28 @@ function initSupabase() {
     }
   }
 
+  function createQueryStub(): any {
+    const chain: any = {
+      order: () => chain,
+      limit: () => chain,
+      range: () => chain,
+      eq: () => chain,
+      gt: () => chain,
+      lt: () => chain,
+      gte: () => chain,
+      lte: () => chain,
+      single: async () => ({ data: null, error: null }),
+      maybeSingle: async () => ({ data: null, error: null }),
+      then: (resolve: (val: any) => any) => Promise.resolve(resolve({ data: [], count: 0, error: null })),
+    };
+    return chain;
+  }
+
   return {
     auth: {
       getSession: async () => ({ data: { session: null }, error: null }),
+      getUser: async () => ({ data: { user: null }, error: null }),
+      updateUser: async () => ({ data: { user: null }, error: null }),
       signOut: async () => ({ error: null }),
       signInWithPassword: async () => ({
         data: { user: null, session: null },
@@ -113,15 +132,13 @@ function initSupabase() {
       }),
     },
     from: () => ({
-      select: () => ({
-        order: () => ({ limit: async () => ({ data: [], error: null }) }),
-        eq: () => ({
-          order: () => ({ limit: async () => ({ data: [], error: null }) }),
-        }),
-      }),
-      upsert: async () => ({ error: null }),
+      select: () => createQueryStub(),
+      insert: async () => ({ data: null, error: null }),
+      upsert: async () => ({ data: null, error: null }),
+      update: () => createQueryStub(),
+      delete: () => createQueryStub(),
     }),
-    rpc: async () => ({ error: null }),
+    rpc: async () => ({ data: null, error: null }),
   } as any;
 }
 
@@ -497,17 +514,20 @@ export async function saveGameToCloud(saveData: CloudSavePayload): Promise<boole
     if (saveData.stats?.itemMastery) {
       const masteryRecords: UserMasteryEntity[] = Object.values(saveData.stats.itemMastery).map(item => ({
         userId: targetUser.id,
-        entityType: (item.category as any) || 'grammar',
+        entityType: (item.category as any) || 'bunpou',
         entityId: item.itemId,
         masteryState: item.status || 'LEARNING',
-        knowledgeScore: 0,
-        recognitionScore: 0,
-        applicationScore: 0,
-        retentionScore: 0,
+        knowledgeScore: Math.round(item.masteryPercentage || 0),
+        recognitionScore: Math.round(item.masteryPercentage || 0),
+        applicationScore: item.contextualSuccessCount ? Math.min(100, item.contextualSuccessCount * 20) : 0,
+        retentionScore: Math.round(Math.min(100, (item.decayFactor || 1.0) * 100)),
         trueMasteryPercentage: item.masteryPercentage || 0,
         masteryLevel: item.masteryLevel || 1,
         attemptsCount: item.attemptsCount || 0,
-        correctCount: item.consecutivePerfects || 0,
+        writingCount: item.writingCount || 0,
+        flashcardCount: item.flashcardCount || 0,
+        quizCount: item.quizCount || 0,
+        correctCount: Math.max(0, (item.attemptsCount || 0) - (item.mistakeCount || 0)),
         wrongCount: item.mistakeCount || 0,
         streak: item.consecutivePerfects || 0,
         consecutivePerfects: item.consecutivePerfects || 0,
