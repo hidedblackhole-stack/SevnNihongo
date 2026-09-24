@@ -58,9 +58,9 @@ export const SUBCATEGORY_CONFIG: Record<
   all: { label: 'Semua Format', jp: '全て', section: 'all', color: 'text-text-primary', bg: 'bg-surface-inset border-border-subtle' },
   kanji_reading: { label: 'Cara Baca Kanji', jp: '漢字読み', section: 'mojiGoi', color: 'text-indigo dark:text-indigo-soft', bg: 'bg-indigo/15 border-indigo/30' },
   kanji_writing: { label: 'Penulisan Aksara', jp: '表記', section: 'mojiGoi', color: 'text-blue-500 dark:text-blue-400', bg: 'bg-blue-500/15 border-blue-500/30' },
-  vocab_context: { label: 'Konteks Kosakata', jp: '文脈規定', section: 'mojiGoi', color: 'text-emerald-500 dark:text-emerald-400', bg: 'bg-emerald-500/15 border-emerald-500/30' },
-  synonym: { label: 'Sinonim / Semakna', jp: '言い換え', section: 'mojiGoi', color: 'text-teal-500 dark:text-teal-400', bg: 'bg-teal-500/15 border-teal-500/30' },
-  vocab_usage: { label: 'Penggunaan Kata', jp: '用法', section: 'mojiGoi', color: 'text-amber-500 dark:text-amber-400', bg: 'bg-amber-500/15 border-amber-500/30' },
+  vocab_context: { label: 'Konteks Kosakata', jp: '文脈規定', section: 'mojiGoi', color: 'text-emerald-800 dark:text-emerald-400', bg: 'bg-emerald-500/15 border-emerald-500/30' },
+  synonym: { label: 'Sinonim / Semakna', jp: '言い換え', section: 'mojiGoi', color: 'text-teal-600 dark:text-teal-400', bg: 'bg-teal-500/15 border-teal-500/30' },
+  vocab_usage: { label: 'Penggunaan Kata', jp: '用法', section: 'mojiGoi', color: 'text-red-700 dark:text-amber-400', bg: 'bg-red-700/15 border-red-700/30' },
   grammar_form: { label: 'Pola & Konjugasi', jp: '文法形式', section: 'bunpou', color: 'text-purple-500 dark:text-purple-400', bg: 'bg-purple-500/15 border-purple-500/30' },
   sentence_star: { label: 'Susun Kalimat (★)', jp: '文の組み立て', section: 'bunpou', color: 'text-gold dark:text-gold', bg: 'bg-gold/15 border-gold/30' },
   dokkai_reading: { label: 'Wacana Bacaan', jp: '読解', section: 'dokkai', color: 'text-rose-500 dark:text-rose-400', bg: 'bg-rose-500/15 border-rose-500/30' },
@@ -282,9 +282,9 @@ const LEVEL_COLORS: Record<string, { bg: string; text: string; border: string }>
   N1: { bg: 'bg-rose-500/15', text: 'text-rose-400', border: 'border-rose-500/30' },
   N2: { bg: 'bg-indigo/15', text: 'text-indigo', border: 'border-indigo/30' },
   N3: { bg: 'bg-gold/15', text: 'text-gold', border: 'border-gold/30' },
-  N4: { bg: 'bg-emerald-500/15', text: 'text-emerald-400', border: 'border-emerald-500/30' },
-  N5: { bg: 'bg-cyan-500/15', text: 'text-cyan-400', border: 'border-cyan-500/30' },
-  JFT: { bg: 'bg-amber-500/15', text: 'text-amber-400', border: 'border-amber-500/30' },
+  N4: { bg: 'bg-surface-inset', text: 'text-emerald-800 dark:text-emerald-400', border: 'border-border-subtle' },
+  N5: { bg: 'bg-cyan-500/15', text: 'text-cyan-600 dark:text-cyan-400', border: 'border-cyan-500/30' },
+  JFT: { bg: 'bg-surface-inset', text: 'text-red-700 dark:text-amber-400', border: 'border-border-subtle' },
 };
 
 interface QuestionLibraryViewProps {
@@ -1256,7 +1256,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
               Simulasi Ujian Berskala Penuh
             </h3>
             <p className="text-xs text-text-secondary leading-relaxed">
-              Kondisi ujian JLPT sesungguhnya dengan batas waktu resmi, multi-sesi (Moji-Goi, Bunpou-Dokkai, Choukai), lembar jawaban grid, dan sertifikat kelulusan.
+              Kondisi ujian JLPT sesungguhnya dengan batas waktu standar, multi-sesi (Moji-Goi, Bunpou-Dokkai, Choukai), lembar jawaban grid, dan sertifikat kelulusan.
             </p>
           </div>
 
@@ -1286,7 +1286,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
           <div className="flex items-center justify-between">
             <h3 className="text-base font-bold text-text-primary flex items-center gap-2">
               <Swords className="w-5 h-5 text-gold" />
-              Paket Simulasi Ujian JLPT Resmi ({filteredTryouts.length} Paket)
+              Paket Simulasi Ujian JLPT ({filteredTryouts.length} Paket)
             </h3>
             <span className="text-xs font-mono text-text-muted">
               {levelFilter === 'all' ? 'Menampilkan Seluruh Level' : `Level ${levelFilter}`}
@@ -1317,7 +1317,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
                         {to.title}
                       </h4>
                       <p className="text-xs text-text-secondary mt-1">
-                        Paket ujian resmi dengan format soal standar JLPT
+                        Paket simulasi ujian dengan format soal standar JLPT
                       </p>
                     </div>
 
@@ -1328,7 +1328,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
                       </div>
                       <div className="p-2 rounded-xl bg-surface-inset border border-border-subtle flex items-center gap-1.5">
                         <Clock className="w-3.5 h-3.5 text-text-muted" />
-                        <span>Timer Resmi</span>
+                        <span>Timer Standar</span>
                       </div>
                     </div>
                   </div>

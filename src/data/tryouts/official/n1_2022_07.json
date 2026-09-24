@@ -1,10 +1,8 @@
 {
   "id": "n1_2022_07",
-  "title": "JLPT N1 — Juli 2022 (Resmi)",
+  "title": "Simulasi N1 — Paket 006",
   "level": "N1",
-  "code": "2022-07",
-  "year": 2022,
-  "month": 7,
+  "code": "006",
   "passingScore": 100,
   "maxScore": 180,
   "sections": {

@@ -57,6 +57,7 @@ export interface PlayerStats {
   // Equipment & Customization
   characterGender?: 'male' | 'female';
   equippedTitle?: string;
+  signature?: string;
   avatar?: string;
   selectedSkinId?: string;
   equippedSkin?: string;

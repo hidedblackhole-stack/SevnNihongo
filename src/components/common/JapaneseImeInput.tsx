@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
-import { Sparkles, CornerDownLeft, Languages } from 'lucide-react';
+import { CornerDownLeft, Languages } from 'lucide-react';
 import { convertRomajiToKana, getHenkanCandidates, HenkanCandidate } from '../../utils/imeEngine';
 import { playSound } from '../../utils/audio';
 
@@ -350,7 +350,6 @@ export const JapaneseImeInput: React.FC<JapaneseImeInputProps> = ({
       {showCandidates && candidates.length > 0 && (
         <div className="flex items-center gap-1.5 flex-wrap p-2 bg-surface-card border border-gold/40 rounded-2xl shadow-[3px_3px_10px_var(--neu-d),0_0_14px_rgba(240,190,82,0.18)] animate-fade-in z-20">
           <div className="flex items-center gap-1 text-[10px] font-mono font-bold text-text-muted px-1.5 shrink-0">
-            <Sparkles className="w-3.5 h-3.5 text-gold" />
             <span>Pilihan Kata:</span>
           </div>
 

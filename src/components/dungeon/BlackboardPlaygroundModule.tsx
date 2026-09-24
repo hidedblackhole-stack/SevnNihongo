@@ -763,10 +763,10 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
                       key={lvl}
                       type="button"
                       onClick={() => setVerbLevelFilter(lvl)}
-                      className={`px-3 py-1 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer ${
+                      className={`px-3 py-1 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer border ${
                         verbLevelFilter === lvl
-                          ? 'bg-indigo text-white shadow-xs'
-                          : 'bg-surface-inset text-text-muted hover:text-text-primary'
+                          ? 'bg-surface-elevated border-text-primary/40 text-text-primary shadow-xs ring-1 ring-border-primary'
+                          : 'bg-surface-inset border-border-subtle text-text-muted hover:text-text-primary'
                       }`}
                     >
                       {lvl === 'all' ? 'Semua' : lvl}

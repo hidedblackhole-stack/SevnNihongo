@@ -191,9 +191,9 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
               : 'text-text-secondary hover:text-text-primary hover:bg-surface-inset'
           }`}
         >
-          <Zap className="w-4 h-4 text-amber-500" />
+          <Zap className="w-4 h-4 text-red-700 dark:text-amber-400" />
           <span>Perubahan Bentuk Kata (Konjugasi)</span>
-          <span className="hidden sm:inline-block text-[10px] uppercase tracking-wider bg-surface-inset text-amber-500 border border-border-subtle px-1.5 py-0.5 rounded font-mono font-bold">
+          <span className="hidden sm:inline-block text-[10px] uppercase tracking-wider bg-surface-inset text-red-700 dark:text-amber-400 border border-border-subtle px-1.5 py-0.5 rounded font-mono font-bold">
             Dojo & Latihan
           </span>
         </button>

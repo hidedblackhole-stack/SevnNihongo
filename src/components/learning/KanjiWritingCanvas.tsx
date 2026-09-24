@@ -8,7 +8,7 @@ import { KANA_STROKE_DICT } from '../../data/kanaStrokeDict';
 import { getKanjiBaseExp, calculateWritingReward, WritingRewardResult } from '../../utils/rewards';
 import { KANJI_DATABASE } from '../../data/kanji';
 import { KanjiItem } from '../../types/content';
-import { getHighlightedYomikata } from '../../utils/readingHighlightUtils';
+import { normalizeWordAndReading, getHighlightedYomikata } from '../../utils/readingHighlightUtils';
 import { RubyText } from './RubyText';
 
 const SMALL_KANA_SET = new Set([
@@ -1183,8 +1183,8 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                 <span>{formatTime(elapsedSeconds)}</span>
               </span>
               {lastReward && (
-                <span className="px-2.5 py-0.5 rounded-lg bg-amber-500/15 text-amber-500 font-bold border border-amber-500/30 flex items-center gap-1 shadow-sm">
-                  <Sparkles className="w-3 h-3 text-amber-500" />
+                <span className="px-2.5 py-0.5 rounded-lg bg-surface-inset text-red-700 dark:text-amber-400 font-bold border border-border-subtle flex items-center gap-1 shadow-sm">
+                  <Sparkles className="w-3 h-3 text-red-700 dark:text-amber-400" />
                   <span>+{lastReward.expGained} EXP</span>
                 </span>
               )}
@@ -1316,27 +1316,35 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                 <BookOpen className="w-3.5 h-3.5 text-wine-accent" /> Contoh Kosakata Terkait
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                {effectiveRelatedWords.slice(0, 4).map((rw, i) => (
-                  <div
-                    key={i}
-                    onClick={() => {
-                      speakJapanese(rw.word);
-                      playSound('click', soundEnabled);
-                    }}
-                    className="p-2.5 rounded-xl bg-surface-inset hover:bg-surface-elevated border border-border-subtle hover:border-wine-accent/40 transition-all cursor-pointer flex items-center justify-between gap-2 shadow-xs group"
-                    title="Klik untuk mendengar pelafalan"
-                  >
-                    <div className="space-y-0.5 min-w-0">
-                      <div className="font-bold font-jp text-sm text-text-primary flex items-center gap-1">
-                        <RubyText japanese={rw.word} reading={rw.reading} showFurigana={true} />
+                {effectiveRelatedWords.slice(0, 4).map((rw, i) => {
+                  const { displayWord, displayReading } = normalizeWordAndReading(rw.word, rw.reading);
+                  return (
+                    <div
+                      key={i}
+                      onClick={() => {
+                        speakJapanese(displayWord);
+                        playSound('click', soundEnabled);
+                      }}
+                      className="p-2.5 rounded-xl bg-surface-inset hover:bg-surface-elevated border border-border-subtle hover:border-border-primary transition-all cursor-pointer flex items-center justify-between gap-2 shadow-xs group"
+                      title="Klik untuk mendengar pelafalan"
+                    >
+                      <div className="space-y-0.5 min-w-0">
+                        <div className="font-bold font-jp text-sm text-text-primary flex items-center gap-1">
+                          <RubyText
+                            japanese={displayWord}
+                            reading={displayReading}
+                            showFurigana={true}
+                            highlightKanji={kanjiChar}
+                          />
+                        </div>
+                        <p className="text-[11px] text-text-secondary truncate">
+                          {rw.meaningId}
+                        </p>
                       </div>
-                      <p className="text-[11px] text-text-secondary truncate">
-                        {rw.meaningId}
-                      </p>
+                      <Volume2 className="w-3.5 h-3.5 text-text-muted group-hover:text-text-primary shrink-0 transition-colors" />
                     </div>
-                    <Volume2 className="w-3.5 h-3.5 text-text-muted group-hover:text-wine-accent shrink-0 transition-colors" />
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           )}
@@ -1385,33 +1393,42 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
       {/* Compact Prompt & Yomikata Header */}
       {showPromptHeader && (
         <div className="w-full max-w-[320px] sm:max-w-[340px] flex flex-col items-center space-y-1.5 text-center">
-          {/* Example Words: 2-column sleek grid on mobile, never stacks vertically into huge boxes */}
+          {/* Example Words in Pure Hiragana: compact chips, shows 2 or 3 words without kanji spoiler and without bulky outlines */}
           {effectiveRelatedWords && effectiveRelatedWords.length > 0 ? (
-            <div className={`w-full ${effectiveRelatedWords.length > 1 ? 'grid grid-cols-2 gap-2' : 'flex justify-center'}`}>
-              {effectiveRelatedWords.slice(0, 2).map((rw, i) => (
-                <div
-                  key={i}
-                  className="flex flex-col items-center justify-center py-1.5 px-2.5 rounded-xl bg-surface-inset hover:bg-surface-card border border-border-subtle hover:border-wine-accent/40 transition-all shadow-inner group cursor-pointer w-full text-center"
-                  onClick={() => speakJapanese(rw.word)}
-                  title="Klik untuk mendengar audio kata ini"
-                >
-                  <div className="flex items-center justify-center gap-1 w-full">
-                    <div className="text-base sm:text-lg font-bold font-jp truncate">
-                      {getHighlightedYomikata(rw.word, rw.reading, promptKanjiItem)}
+            <div className={`w-full grid gap-1.5 sm:gap-2 ${
+              effectiveRelatedWords.slice(0, 3).length === 1
+                ? 'grid-cols-1 max-w-[200px]'
+                : effectiveRelatedWords.slice(0, 3).length === 2
+                  ? 'grid-cols-2'
+                  : 'grid-cols-2 sm:grid-cols-3'
+            }`}>
+              {effectiveRelatedWords.slice(0, 3).map((rw, i) => {
+                const cleanAudioWord = rw.reading.replace(/[.-]/g, '').trim() || rw.word;
+                return (
+                  <div
+                    key={i}
+                    className="flex flex-col items-center justify-center py-1.5 px-2 rounded-xl bg-surface-inset hover:bg-surface-card border border-border-subtle hover:border-border-primary transition-all shadow-inner group cursor-pointer w-full text-center"
+                    onClick={() => speakJapanese(cleanAudioWord)}
+                    title="Klik untuk mendengar audio kata ini"
+                  >
+                    <div className="flex items-center justify-center gap-1 w-full">
+                      <div className="text-sm sm:text-base font-bold font-jp truncate">
+                        {getHighlightedYomikata(rw.word, rw.reading, promptKanjiItem)}
+                      </div>
+                      <Volume2 className="w-3 h-3 text-text-muted opacity-50 group-hover:text-text-primary transition-opacity shrink-0" />
                     </div>
-                    <Volume2 className="w-3.5 h-3.5 text-text-muted opacity-60 group-hover:text-wine-accent transition-all shrink-0" />
+                    {rw.meaningId && (
+                      <span className="text-[10px] text-text-secondary truncate w-full mt-0.5 font-normal">
+                        {rw.meaningId}
+                      </span>
+                    )}
                   </div>
-                  {rw.meaningId && (
-                    <span className="text-[10px] text-text-secondary truncate w-full mt-0.5 font-medium">
-                      {rw.meaningId}
-                    </span>
-                  )}
-                </div>
-              ))}
+                );
+              })}
             </div>
           ) : (
             <div
-              className="flex items-center justify-between px-3.5 py-1.5 rounded-xl bg-surface-inset hover:bg-surface-card border border-border-subtle hover:border-wine-accent/40 transition-all shadow-inner group cursor-pointer w-full"
+              className="flex items-center justify-between px-3.5 py-1.5 rounded-xl bg-surface-inset hover:bg-surface-card border border-border-subtle hover:border-border-primary transition-all shadow-inner group cursor-pointer w-full"
               onClick={() =>
                 speakJapanese(
                   cleanKunyomiList[0] || cleanOnyomiList[0] || reading || kanjiChar
@@ -1419,11 +1436,11 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
               }
               title="Klik untuk mendengar audio"
             >
-              <div className="text-base sm:text-lg font-bold font-jp text-wine-accent flex items-center gap-1.5">
+              <div className="text-base sm:text-lg font-bold font-jp text-text-primary flex items-center gap-1.5">
                 <span>
                   {cleanKunyomiList[0] || cleanOnyomiList[0] || reading || kanjiChar}
                 </span>
-                <Volume2 className="w-3.5 h-3.5 text-text-muted opacity-60 group-hover:text-wine-accent transition-colors" />
+                <Volume2 className="w-3.5 h-3.5 text-text-muted opacity-60 group-hover:text-text-primary transition-colors" />
               </div>
               {effectiveMeaning && (
                 <span className="text-xs text-text-secondary truncate font-medium max-w-[180px]">
@@ -1451,7 +1468,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                     <span className="text-text-muted font-bold bg-surface-inset px-1.5 py-0.5 rounded text-[9px] font-mono border border-border-subtle">
                       ON
                     </span>
-                    <span className="text-amber-400 font-jp tracking-wider font-semibold text-xs">
+                    <span className="text-red-700 dark:text-amber-400 font-jp tracking-wider font-semibold text-xs">
                       {cleanOnyomiList.join(', ')}
                     </span>
                   </div>
@@ -1461,7 +1478,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                     <span className="text-text-muted font-bold bg-surface-inset px-1.5 py-0.5 rounded text-[9px] font-mono border border-border-subtle">
                       KUN
                     </span>
-                    <span className="text-emerald-400 font-jp tracking-wider font-semibold text-xs">
+                    <span className="text-emerald-800 dark:text-emerald-400 font-jp tracking-wider font-semibold text-xs">
                       {cleanKunyomiList.join(', ')}
                     </span>
                   </div>

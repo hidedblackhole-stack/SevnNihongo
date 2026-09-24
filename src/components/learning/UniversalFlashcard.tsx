@@ -126,7 +126,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                     {norm.kanji?.strokeCount || 1} Goresan
                   </span>
                   {hasMultipleKanjiReadings && (
-                    <span className="px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 text-[10px] font-mono font-bold flex items-center gap-1">
+                    <span className="px-2 py-0.5 rounded-full bg-surface-inset text-red-700 dark:text-amber-400 border border-border-subtle text-[10px] font-mono font-bold flex items-center gap-1">
                       <span>⚡</span> {kanjiTotalReadings} Cara Baca
                     </span>
                   )}
@@ -226,7 +226,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                     {norm.kotoba?.jlpt || norm.level} • {norm.kotoba?.wordType || 'Kosakata'}
                   </span>
                   {hasMultipleKotobaReadings && (
-                    <span className="px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 text-[10px] font-mono font-bold flex items-center gap-1">
+                    <span className="px-2 py-0.5 rounded-full bg-surface-inset text-red-700 dark:text-amber-400 border border-border-subtle text-[10px] font-mono font-bold flex items-center gap-1">
                       <span>⚡</span> {kotobaVariations.length} Cara Baca
                     </span>
                   )}
@@ -381,7 +381,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                 </div>
 
                 {hasMultipleKanjiReadings && (
-                  <p className="text-[10px] text-amber-600 dark:text-amber-400 font-mono text-center pt-0.5">
+                  <p className="text-[10px] text-text-muted font-mono text-center pt-0.5">
                     *Kanji memiliki {kanjiTotalReadings} cara baca (Onyomi &amp; Kunyomi). Hafalkan terpisah sesuai konteks!
                   </p>
                 )}
@@ -539,8 +539,8 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
 
                 {/* Alternative Readings Box for Kotoba */}
                 {hasMultipleKotobaReadings && (
-                  <div className="w-full p-2.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-left space-y-1.5 my-1">
-                    <div className="flex items-center justify-between text-[11px] font-bold text-amber-600 dark:text-amber-400 font-heading">
+                  <div className="w-full p-2.5 rounded-2xl bg-surface-inset border border-border-subtle text-left space-y-1.5 my-1">
+                    <div className="flex items-center justify-between text-[11px] font-bold text-red-700 dark:text-amber-400 font-heading">
                       <span>⚡ Memiliki {kotobaVariations.length} Cara Baca (Hafalkan Terpisah):</span>
                     </div>
                     <div className="flex flex-wrap gap-1.5">
@@ -552,12 +552,12 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                             e.stopPropagation();
                             speakJapanese(v);
                           }}
-                          className="px-2.5 py-1 rounded-xl bg-surface-card border border-amber-500/30 hover:border-amber-500 text-text-primary text-xs font-jp font-bold flex items-center gap-1.5 transition-colors shadow-xs"
+                          className="px-2.5 py-1 rounded-xl bg-surface-card border border-border-subtle hover:border-red-700/40 dark:hover:border-amber-400/40 text-text-primary text-xs font-jp font-bold flex items-center gap-1.5 transition-colors shadow-xs"
                           title={`Dengarkan bacaan #${i + 1}: ${v}`}
                         >
-                          <span className="text-[10px] font-mono text-amber-500 font-bold">#{i + 1}</span>
+                          <span className="text-[10px] font-mono text-red-700 dark:text-amber-400 font-bold">#{i + 1}</span>
                           <span>{v}</span>
-                          <Volume2 className="w-3 h-3 text-amber-500" />
+                          <Volume2 className="w-3 h-3 text-red-700 dark:text-amber-400" />
                         </button>
                       ))}
                     </div>

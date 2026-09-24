@@ -1,8 +1,8 @@
 {
   "id": "jft_001",
-  "title": "Simulasi JFT-Basic — Paket Resmi A2",
+  "title": "Simulasi JFT-Basic — Paket 001",
   "level": "JFT",
-  "code": "JFT",
+  "code": "001",
   "year": 2026,
   "passingScore": 200,
   "maxScore": 250,

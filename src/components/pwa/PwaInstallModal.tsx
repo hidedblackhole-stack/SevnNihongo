@@ -97,7 +97,7 @@ export const PwaInstallModal: React.FC<PwaInstallModalProps> = ({
             <div className="p-3.5 rounded-2xl bg-indigo/10 border border-indigo/40 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left shadow-sm">
               <div>
                 <div className="text-xs font-bold text-indigo font-heading flex items-center gap-1.5 justify-center sm:justify-start">
-                  <Sparkles className="w-3.5 h-3.5 text-gold" /> Perangkat Siap Mendukung Instalasi
+                  <Check className="w-3.5 h-3.5 text-state-success" /> Perangkat Siap Mendukung Instalasi
                 </div>
                 <p className="text-[11px] text-text-secondary mt-0.5">
                   Klik tombol untuk langsung memunculkan dialog pasang sistem.

@@ -1,10 +1,8 @@
 {
   "id": "n1_2021_07",
-  "title": "JLPT N1 — Juli 2021 (Resmi)",
+  "title": "Simulasi N1 — Paket 007",
   "level": "N1",
-  "code": "2021-07",
-  "year": 2021,
-  "month": 7,
+  "code": "007",
   "passingScore": 100,
   "maxScore": 180,
   "sections": {

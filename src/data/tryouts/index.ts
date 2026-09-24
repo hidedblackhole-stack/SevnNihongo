@@ -97,8 +97,8 @@ export const ALL_TRYOUTS: TryOutMeta[] = [
   {
     id: 'jft_001',
     level: 'JFT',
-    title: 'Simulasi JFT-Basic — Paket Resmi A2',
-    code: 'JFT',
+    title: 'Simulasi JFT-Basic — Paket 001',
+    code: '001',
     totalQuestions: jft_001.sections.mojiGoi.questions.length + jft_001.sections.bunpouDokkai.questions.length + jft_001.sections.choukai.questions.length,
     data: jft_001 as unknown as TryOutData
   },

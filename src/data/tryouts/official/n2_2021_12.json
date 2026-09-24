@@ -1,10 +1,8 @@
 {
   "id": "n2_2021_12",
-  "title": "JLPT N2 — Desember 2021 (Resmi)",
+  "title": "Simulasi N2 — Paket 010",
   "level": "N2",
-  "code": "2021-12",
-  "year": 2021,
-  "month": 12,
+  "code": "010",
   "passingScore": 90,
   "maxScore": 180,
   "sections": {

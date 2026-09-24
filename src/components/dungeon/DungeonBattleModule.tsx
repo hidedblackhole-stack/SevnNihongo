@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
-  Skull, Clock, ChevronLeft, ChevronRight, Flag, CheckCircle2, 
-  Volume2, Trophy, Award, BookOpen, Layers 
+  Clock, ChevronLeft, ChevronRight, Flag, CheckCircle2, 
+  Volume2, Trophy, Award, BookOpen, Layers, X 
 } from 'lucide-react';
+import { 
+  RpgTargetIcon, RpgBookIcon, RpgSwordsIcon, RpgHourglassIcon 
+} from '../ui/RpgLineIcons';
 import { TryOutData } from '../../types/content';
 import { playSound, speakJapanese } from '../../utils/audio';
 import { ALL_TRYOUTS, DEFAULT_TRYOUT } from '../../data/tryouts';
@@ -17,48 +20,42 @@ interface DungeonBattleModuleProps {
 
 type StepKey = 'intro' | 'mojiGoi' | 'bunpouDokkai' | 'choukai' | 'transition' | 'results';
 
-const LEVEL_COLORS: Record<string, { bg: string; text: string; border: string; glow: string; badge: string }> = {
+const LEVEL_COLORS: Record<string, { bg: string; text: string; border: string; badge: string }> = {
   N1: { 
-    bg: 'bg-crimson/10', 
-    text: 'text-crimson', 
-    border: 'border-crimson/40', 
-    glow: 'shadow-crimson/20', 
-    badge: 'bg-crimson text-white font-bold' 
+    bg: 'bg-red-500/10', 
+    text: 'text-red-700 dark:text-red-400', 
+    border: 'border-red-500/30', 
+    badge: 'bg-red-100 text-red-800 border border-red-300 dark:bg-red-950/70 dark:text-red-300 dark:border-red-800/40 font-bold' 
   },
   N2: { 
-    bg: 'bg-indigo/10', 
-    text: 'text-indigo', 
-    border: 'border-indigo/40', 
-    glow: 'shadow-indigo/20', 
-    badge: 'bg-indigo text-white font-bold' 
+    bg: 'bg-blue-500/10', 
+    text: 'text-blue-700 dark:text-blue-400', 
+    border: 'border-blue-500/30', 
+    badge: 'bg-blue-100 text-blue-900 border border-blue-300 dark:bg-blue-950/70 dark:text-blue-300 dark:border-blue-800/40 font-bold' 
   },
   N3: { 
-    bg: 'bg-gold/10', 
-    text: 'text-gold', 
-    border: 'border-gold/40', 
-    glow: 'shadow-gold/20', 
-    badge: 'bg-gold text-surface-ground font-bold' 
+    bg: 'bg-amber-500/10', 
+    text: 'text-amber-800 dark:text-amber-400', 
+    border: 'border-amber-500/30', 
+    badge: 'bg-amber-100 text-amber-900 border border-amber-300 dark:bg-amber-950/70 dark:text-amber-300 dark:border-amber-800/40 font-bold' 
   },
   N4: { 
-    bg: 'bg-matcha/10', 
-    text: 'text-matcha', 
-    border: 'border-matcha/40', 
-    glow: 'shadow-matcha/20', 
-    badge: 'bg-matcha text-white font-bold' 
+    bg: 'bg-emerald-500/10', 
+    text: 'text-emerald-800 dark:text-emerald-400', 
+    border: 'border-emerald-500/30', 
+    badge: 'bg-emerald-100 text-emerald-900 border border-emerald-300 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border-emerald-800/40 font-bold' 
   },
   N5: { 
-    bg: 'bg-teal/10', 
-    text: 'text-teal', 
-    border: 'border-teal/40', 
-    glow: 'shadow-teal/20', 
-    badge: 'bg-teal text-white font-bold' 
+    bg: 'bg-teal-500/10', 
+    text: 'text-teal-800 dark:text-teal-400', 
+    border: 'border-teal-500/30', 
+    badge: 'bg-teal-100 text-teal-900 border border-teal-300 dark:bg-teal-950/70 dark:text-teal-300 dark:border-teal-800/40 font-bold' 
   },
   JFT: { 
-    bg: 'bg-amber-500/10', 
-    text: 'text-amber-400', 
-    border: 'border-amber-500/40', 
-    glow: 'shadow-amber-500/20', 
-    badge: 'bg-amber-500 text-surface-ground font-bold' 
+    bg: 'bg-stone-500/10', 
+    text: 'text-stone-800 dark:text-stone-300', 
+    border: 'border-stone-500/30', 
+    badge: 'bg-stone-200 text-stone-900 border border-stone-400 dark:bg-stone-800 dark:text-stone-200 dark:border-stone-700 font-bold' 
   },
 };
 
@@ -69,6 +66,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
   soundEnabled = true,
 }) => {
   const [activeTryOut, setActiveTryOut] = useState<TryOutData>(tryOutData || DEFAULT_TRYOUT);
+  const [launchModalPack, setLaunchModalPack] = useState<TryOutData | null>(null);
   const [selectedLevelFilter, setSelectedLevelFilter] = useState<'ALL' | 'N1' | 'N2' | 'N3' | 'N4' | 'N5' | 'JFT'>('ALL');
   const [currentStep, setCurrentStep] = useState<StepKey>('intro');
   const [nextSectionKey, setNextSectionKey] = useState<StepKey | null>(null);
@@ -113,11 +111,12 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
     }
   }, [timeLeft, currentStep]);
 
-  const startSection = (key: 'mojiGoi' | 'bunpouDokkai' | 'choukai') => {
-    const sec = activeTryOut.sections[key];
+  const startSection = (key: 'mojiGoi' | 'bunpouDokkai' | 'choukai', targetPack?: TryOutData) => {
+    const pack = targetPack || activeTryOut;
+    const sec = pack.sections[key];
     if (!sec || !sec.questions || sec.questions.length === 0) {
       if (key === 'mojiGoi') {
-        startSection('bunpouDokkai');
+        startSection('bunpouDokkai', pack);
       } else {
         setCurrentStep('results');
       }
@@ -134,6 +133,14 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
       audioRef.current.currentTime = 0;
     }
     playSound('click', soundEnabled);
+  };
+
+  const handleLaunchExam = (pack: TryOutData) => {
+    setActiveTryOut(pack);
+    setLaunchModalPack(null);
+    setAnswers({});
+    setFlags({});
+    startSection('mojiGoi', pack);
   };
 
   const handleFinishSection = () => {
@@ -236,21 +243,6 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
       ? ALL_TRYOUTS
       : ALL_TRYOUTS.filter(t => t.level === selectedLevelFilter);
 
-    const activeMeta = ALL_TRYOUTS.find(t => t.id === activeTryOut.id) || {
-      id: activeTryOut.id,
-      level: (activeTryOut.level || 'N3') as 'N1' | 'N2' | 'N3' | 'N4' | 'N5' | 'JFT',
-      title: activeTryOut.title,
-      year: activeTryOut.year || 2023,
-      totalQuestions: (activeTryOut.sections.mojiGoi?.questions.length || 0) + (activeTryOut.sections.bunpouDokkai?.questions.length || 0)
-    };
-
-    const activeColor = LEVEL_COLORS[activeMeta.level] || LEVEL_COLORS.N3;
-    const mojiQ = activeTryOut.sections.mojiGoi?.questions.length || 0;
-    const bunpouQ = activeTryOut.sections.bunpouDokkai?.questions.length || 0;
-    const choukaiQ = activeTryOut.sections.choukai?.questions.length || 0;
-    const mojiTime = activeTryOut.sections.mojiGoi?.timeLimitMinutes || 30;
-    const bunpouTime = activeTryOut.sections.bunpouDokkai?.timeLimitMinutes || 60;
-
     return (
       <div className="w-full max-w-5xl mx-auto space-y-6 animate-fade-in pb-12">
         {/* Header Bar */}
@@ -265,8 +257,8 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
             </button>
             <div>
               <h2 className="text-sm font-bold uppercase tracking-wider text-crimson font-heading flex items-center gap-2">
-                <Skull className="w-4 h-4 text-crimson" />
-                <span>JLPT Dungeon Boss — Tryout Resmi</span>
+                <RpgTargetIcon className="w-4 h-4 text-crimson" />
+                <span>JLPT Dungeon Boss — Simulasi Tryout</span>
               </h2>
               <p className="text-xs text-text-secondary">
                 Simulasi Ujian JLPT & JFT-Basic Terstandar & Dinilai Otomatis
@@ -294,15 +286,17 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
                   setSelectedLevelFilter(lvl);
                   playSound('click', soundEnabled);
                 }}
-                className={`px-4 py-2 rounded-xl text-xs font-bold font-mono transition-all shrink-0 flex items-center gap-2 border ${
+                className={`px-4 py-2 rounded-xl text-xs font-mono transition-all shrink-0 flex items-center gap-2 border cursor-pointer select-none ${
                   isSelected
-                    ? 'bg-crimson text-white border-crimson shadow-md shadow-crimson/20'
-                    : 'bg-surface-card border-border-subtle text-text-secondary hover:text-text-primary hover:border-border-strong'
+                    ? 'bg-surface-elevated border-text-primary/40 text-text-primary shadow-sm font-extrabold ring-1 ring-border-primary'
+                    : 'bg-surface-card border-border-subtle text-text-secondary hover:text-text-primary hover:border-border-strong font-medium'
                 }`}
               >
                 <span>{lvl === 'ALL' ? 'Semua Level' : lvl}</span>
-                <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
-                  isSelected ? 'bg-white/20 text-white font-black' : 'bg-surface-inset text-text-secondary'
+                <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold font-mono transition-colors ${
+                  isSelected
+                    ? 'bg-red-100 text-red-800 dark:bg-gold/20 dark:text-gold border border-red-200 dark:border-gold/30'
+                    : 'bg-surface-inset text-text-muted border border-border-subtle'
                 }`}>
                   {count}
                 </span>
@@ -314,23 +308,18 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
         {/* Tryout Selection Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {filteredPacks.map((pack) => {
-            const isChosen = activeTryOut.id === pack.id;
             const color = LEVEL_COLORS[pack.level] || LEVEL_COLORS.N3;
 
             return (
               <motion.div
                 key={pack.id}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.99 }}
                 onClick={() => {
-                  setActiveTryOut(pack.data);
+                  setLaunchModalPack(pack.data);
                   playSound('click', soundEnabled);
                 }}
-                className={`panel p-4 rounded-2xl cursor-pointer transition-all border relative flex flex-col justify-between ${
-                  isChosen
-                    ? 'border-gold/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_4px_14px_rgba(0,0,0,0.4)] bg-surface-elevated'
-                    : 'border-border-subtle hover:border-border-muted'
-                }`}
+                className="panel p-4 rounded-2xl cursor-pointer transition-all border border-border-subtle hover:border-border-strong bg-surface-card hover:bg-surface-elevated shadow-sm flex flex-col justify-between group"
               >
                 {/* Level badge + Package Code */}
                 <div className="flex items-center justify-between mb-3">
@@ -343,95 +332,141 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
                 </div>
 
                 <div className="space-y-1 mb-4">
-                  <h3 className="font-bold text-text-primary text-sm font-jp line-clamp-1">
+                  <h3 className="font-bold text-text-primary text-sm font-jp line-clamp-1 group-hover:text-gold transition-colors">
                     {pack.title}
                   </h3>
-                  <p className="text-xs text-text-secondary flex items-center gap-2">
-                    <BookOpen className="w-3.5 h-3.5 text-gold" />
+                  <p className="text-xs text-text-secondary flex items-center gap-1.5">
+                    <RpgBookIcon className="w-3.5 h-3.5 text-gold" />
                     <span>{pack.totalQuestions} Soal Lengkap</span>
                   </p>
                 </div>
 
-                {/* Section breakdown tags */}
-                <div className="flex items-center gap-1.5 flex-wrap">
-                  <span className="text-[10px] px-2 py-0.5 rounded bg-surface-inset border border-border-subtle text-text-secondary">
-                    Moji-Goi ({pack.data.sections.mojiGoi?.questions.length || 0})
-                  </span>
-                  <span className="text-[10px] px-2 py-0.5 rounded bg-surface-inset border border-border-subtle text-text-secondary">
-                    Bunpou-Dokkai ({pack.data.sections.bunpouDokkai?.questions.length || 0})
-                  </span>
-                  {isChosen && (
-                    <span className="ml-auto text-[10px] font-bold text-crimson flex items-center gap-1">
-                      <CheckCircle2 className="w-3 h-3" />
-                      Aktif
+                {/* Section breakdown tags & Mulai button */}
+                <div className="flex items-center justify-between gap-2 pt-2 border-t border-border-subtle/50">
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <span className="text-[10px] px-2 py-0.5 rounded bg-surface-inset border border-border-subtle text-text-secondary">
+                      Moji-Goi ({pack.data.sections.mojiGoi?.questions.length || 0})
                     </span>
-                  )}
+                    <span className="text-[10px] px-2 py-0.5 rounded bg-surface-inset border border-border-subtle text-text-secondary">
+                      Bunpou ({pack.data.sections.bunpouDokkai?.questions.length || 0})
+                    </span>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setLaunchModalPack(pack.data);
+                      playSound('click', soundEnabled);
+                    }}
+                    className="btn-physical-primary py-1 px-3 rounded-lg text-xs font-bold font-heading flex items-center gap-1 shrink-0"
+                  >
+                    <span>Mulai</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
                 </div>
               </motion.div>
             );
           })}
         </div>
 
-        {/* Active Pack Briefing Card & Start Button */}
-        <div className={`panel p-6 sm:p-8 rounded-3xl ${activeColor.border} shadow-2xl relative overflow-hidden space-y-6 text-center`}>
-          <div className="absolute top-0 right-0 w-64 h-64 bg-crimson/5 rounded-full blur-3xl pointer-events-none" />
-          
-          <div className="max-w-2xl mx-auto space-y-3">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-inset border border-border-subtle text-xs font-mono text-crimson font-bold">
-              <Award className="w-3.5 h-3.5" />
-              <span>Paket Terpilih: {activeTryOut.title}</span>
-            </div>
-            
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-text-primary font-heading">
-              Tantang Simulasi {activeMeta.level}
-            </h1>
-            
-            <p className="text-text-secondary text-sm leading-relaxed">
-              Kamu akan mengerjakan simulasi komprehensif {activeMeta.level} yang terdiri dari sesi 文字・語彙 dan 文法・読解.
-              Timer akan otomatis berjalan untuk tiap sesi. Nilai akan dikonversi ke skala kelulusan (180 / 120 poin).
-            </p>
-          </div>
-
-          {/* Quick Specs */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl mx-auto text-left">
-            <div className="p-3 rounded-xl bg-surface-inset border border-border-subtle">
-              <span className="text-[10px] uppercase font-bold text-text-muted block">Sesi 1</span>
-              <p className="text-xs font-bold text-text-primary">Moji-Goi</p>
-              <p className="text-[11px] text-gold font-mono">{mojiQ} Soal • {mojiTime}m</p>
-            </div>
-            <div className="p-3 rounded-xl bg-surface-inset border border-border-subtle">
-              <span className="text-[10px] uppercase font-bold text-text-muted block">Sesi 2</span>
-              <p className="text-xs font-bold text-text-primary">Bunpou-Dokkai</p>
-              <p className="text-[11px] text-gold font-mono">{bunpouQ} Soal • {bunpouTime}m</p>
-            </div>
-            <div className="p-3 rounded-xl bg-surface-inset border border-border-subtle">
-              <span className="text-[10px] uppercase font-bold text-text-muted block">Sesi 3</span>
-              <p className="text-xs font-bold text-text-primary">Choukai</p>
-              <p className="text-[11px] text-text-secondary font-mono">{choukaiQ > 0 ? `${choukaiQ} Soal` : 'Paper Edition'}</p>
-            </div>
-            <div className="p-3 rounded-xl bg-surface-inset border border-border-subtle">
-              <span className="text-[10px] uppercase font-bold text-text-muted block">Target Lulus</span>
-              <p className="text-xs font-bold text-text-primary">Passing Mark</p>
-              <p className="text-[11px] text-matcha font-mono font-bold">
-                {activeMeta.level === 'N1' ? '≥ 100/180' : activeMeta.level === 'N3' ? '≥ 95/180' : activeMeta.level === 'N5' ? '≥ 80/180' : '≥ 90/180'}
-              </p>
-            </div>
-          </div>
-
-          <div className="pt-2">
-            <button
-              onClick={() => {
-                setAnswers({});
-                setFlags({});
-                startSection('mojiGoi');
-              }}
-              className="px-10 py-4 rounded-2xl bg-crimson hover:brightness-110 text-white font-bold text-base shadow-xl hover:shadow-crimson/30 transition-all transform hover:scale-105 inline-flex items-center gap-3 font-heading"
+        {/* Modal Konfirmasi & Mulai Ujian (Muncul langsung saat paket diklik) */}
+        <AnimatePresence>
+          {launchModalPack && (
+            <div 
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/65 backdrop-blur-xs animate-fade-in"
+              onClick={() => setLaunchModalPack(null)}
             >
-              <Skull className="w-5 h-5" />
-              <span>Mulai Ujian Sekarang</span>
-            </button>
-          </div>
-        </div>
+              <motion.div
+                initial={{ scale: 0.95, opacity: 0, y: 8 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.95, opacity: 0, y: 8 }}
+                transition={{ duration: 0.15 }}
+                onClick={(e) => e.stopPropagation()}
+                className="panel p-6 sm:p-7 rounded-3xl bg-surface-card border border-border-subtle shadow-2xl max-w-lg w-full relative space-y-5"
+              >
+                {/* Close Button */}
+                <button
+                  type="button"
+                  onClick={() => setLaunchModalPack(null)}
+                  className="absolute top-4 right-4 p-2 rounded-xl bg-surface-inset border border-border-subtle text-text-muted hover:text-text-primary transition-colors"
+                  title="Tutup"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+
+                {/* Header & Title */}
+                <div className="space-y-2 pr-8">
+                  <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md text-xs font-mono font-bold bg-surface-inset border border-border-subtle text-gold">
+                    <RpgTargetIcon className="w-3.5 h-3.5 text-gold" />
+                    <span>Simulasi {launchModalPack.level || 'JLPT'} · Paket {launchModalPack.id?.slice(-3) || '001'}</span>
+                  </div>
+                  <h2 className="text-xl sm:text-2xl font-extrabold text-text-primary font-heading font-jp">
+                    {launchModalPack.title}
+                  </h2>
+                  <p className="text-xs text-text-secondary leading-relaxed">
+                    Kamu akan mengerjakan simulasi komprehensif {launchModalPack.level || 'JLPT'}. Timer akan otomatis berjalan untuk tiap sesi. Nilai akhir dikonversi ke skala kelulusan resmi (180 poin).
+                  </p>
+                </div>
+
+                {/* Specs Grid */}
+                {(() => {
+                  const mQ = launchModalPack.sections.mojiGoi?.questions.length || 0;
+                  const bQ = launchModalPack.sections.bunpouDokkai?.questions.length || 0;
+                  const cQ = launchModalPack.sections.choukai?.questions.length || 0;
+                  const mT = launchModalPack.sections.mojiGoi?.timeLimitMinutes || 30;
+                  const bT = launchModalPack.sections.bunpouDokkai?.timeLimitMinutes || 60;
+                  const lvl = launchModalPack.level || 'N3';
+                  const passingScore = lvl === 'N1' ? '≥ 100/180' : lvl === 'N3' ? '≥ 95/180' : lvl === 'N5' ? '≥ 80/180' : '≥ 90/180';
+
+                  return (
+                    <div className="grid grid-cols-2 gap-2.5">
+                      <div className="p-3 rounded-xl bg-surface-inset border border-border-subtle">
+                        <span className="text-[10px] uppercase font-bold text-text-muted block">Sesi 1</span>
+                        <p className="text-xs font-bold text-text-primary">Moji-Goi</p>
+                        <p className="text-[11px] text-gold font-mono">{mQ} Soal • {mT}m</p>
+                      </div>
+                      <div className="p-3 rounded-xl bg-surface-inset border border-border-subtle">
+                        <span className="text-[10px] uppercase font-bold text-text-muted block">Sesi 2</span>
+                        <p className="text-xs font-bold text-text-primary">Bunpou-Dokkai</p>
+                        <p className="text-[11px] text-gold font-mono">{bQ} Soal • {bT}m</p>
+                      </div>
+                      <div className="p-3 rounded-xl bg-surface-inset border border-border-subtle">
+                        <span className="text-[10px] uppercase font-bold text-text-muted block">Sesi 3</span>
+                        <p className="text-xs font-bold text-text-primary">Choukai</p>
+                        <p className="text-[11px] text-text-secondary font-mono">{cQ > 0 ? `${cQ} Soal` : 'Paper Edition'}</p>
+                      </div>
+                      <div className="p-3 rounded-xl bg-surface-inset border border-border-subtle">
+                        <span className="text-[10px] uppercase font-bold text-text-muted block">Target Lulus</span>
+                        <p className="text-xs font-bold text-text-primary">Passing Mark</p>
+                        <p className="text-[11px] text-matcha font-mono font-bold">{passingScore}</p>
+                      </div>
+                    </div>
+                  );
+                })()}
+
+                {/* Modal Actions */}
+                <div className="flex items-center justify-end gap-2.5 pt-2 border-t border-border-subtle">
+                  <button
+                    type="button"
+                    onClick={() => setLaunchModalPack(null)}
+                    className="btn-secondary py-2.5 px-4 rounded-xl text-xs font-heading font-medium"
+                  >
+                    Batal
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleLaunchExam(launchModalPack)}
+                    className="btn-physical-primary py-2.5 px-6 rounded-xl text-sm font-bold font-heading flex items-center gap-2 shadow-lg"
+                  >
+                    <RpgSwordsIcon className="w-4 h-4" />
+                    <span>Mulai Ujian Sekarang</span>
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
       </div>
     );
   }
@@ -479,7 +514,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
           </h3>
           <p className="text-text-secondary text-sm">
             {isSuccess 
-              ? `Selamat! Kamu berhasil melampaui batas nilai kelulusan resmi (${passingScore}/${maxTotalScore}).` 
+              ? `Selamat! Kamu berhasil melampaui batas nilai kelulusan standar (${passingScore}/${maxTotalScore}).` 
               : `Kamu memperoleh nilai ${totalScore}/${maxTotalScore}. Batas lulus adalah ${passingScore}. Ayo coba lagi!`}
           </p>
         </div>
@@ -580,7 +615,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
                 handleFinishSection();
               }
             }}
-            className="px-4 py-1.5 bg-crimson hover:brightness-110 text-white text-xs font-bold rounded-lg shadow-sm transition-all"
+            className="btn-physical-primary py-1.5 px-3.5 rounded-xl text-xs font-bold font-heading cursor-pointer shadow-sm"
           >
             Kumpul Sesi
           </button>
@@ -614,8 +649,8 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
                       playSound('click', soundEnabled);
                     }}
                     className={`relative py-2 rounded-lg text-xs font-mono font-bold border transition-all ${
-                      isCur ? 'border-crimson bg-crimson/15 text-crimson font-black' 
-                      : isAns ? 'border-matcha/50 bg-matcha/15 text-matcha'
+                      isCur ? 'border-red-600 bg-red-500/15 text-red-700 dark:text-red-400 font-black' 
+                      : isAns ? 'border-emerald-600/50 bg-emerald-500/15 text-emerald-800 dark:text-emerald-400'
                       : 'border-border-subtle bg-surface-inset text-text-muted hover:border-border-strong'
                     }`}
                   >
@@ -804,9 +839,9 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
                       }
                     }}
                     disabled={currentQuestionIndex === totalQ - 1}
-                    className="px-4 py-2 flex items-center gap-1 rounded-xl bg-crimson hover:brightness-110 disabled:bg-surface-inset disabled:text-text-muted disabled:border disabled:border-border-subtle text-white font-bold transition-all shadow-sm"
+                    className="btn-physical-primary py-2 px-4 rounded-xl text-xs font-bold font-heading flex items-center gap-1 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed shadow-sm"
                   >
-                    Selanjutnya
+                    <span>Selanjutnya</span>
                     <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>

@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion } from 'motion/react';
-import { X, Volume2, Layers, Link as LinkIcon, Network, Edit3, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, Volume2, Layers, Link as LinkIcon, Network, Edit3, ChevronLeft, ChevronRight, Zap, AlertTriangle } from 'lucide-react';
 import { BookIcon } from '../ui/EngravingIcons';
 import { KotobaItem, ItemMasteryRecord } from '../../types/content';
 import { playSound, speakJapanese } from '../../utils/audio';
@@ -265,17 +265,18 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                   {item.wordType}
                 </span>
                 {hasMultipleReadings && (
-                  <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-bold border border-amber-500/40 text-amber-600 dark:text-amber-300 bg-amber-500/15 shadow-sm flex items-center gap-1">
-                    <span>⚡</span> {readingVariations.length} Cara Baca Alternatif
+                  <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-bold border border-red-700/25 dark:border-amber-400/30 text-red-700 dark:text-amber-400 bg-surface-inset shadow-sm flex items-center gap-1.5">
+                    <Zap className="w-3.5 h-3.5 text-red-700 dark:text-amber-400 fill-red-700/20 dark:fill-amber-400/25 shrink-0" />
+                    <span>{readingVariations.length} Cara Baca Alternatif</span>
                   </span>
                 )}
               </div>
 
               {masteryRecord && (
                 <div className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-surface-inset border border-border-subtle text-text-secondary shadow-xs">
-                  <span title="Berapa kali dipelajari via flashcard">🎴 Flashcard: {masteryRecord.flashcardCount || 0}x</span>
+                  <span title="Berapa kali dipelajari via flashcard">Flashcard: {masteryRecord.flashcardCount || 0}x</span>
                   <span className="opacity-40">|</span>
-                  <span title="Berapa kali latihan menulis kata ini">✍️ Ditulis: {masteryRecord.writingCount || 0}x</span>
+                  <span title="Berapa kali latihan menulis kata ini">Ditulis: {masteryRecord.writingCount || 0}x</span>
                   <span className="opacity-40">|</span>
                   <span className="text-gold" title="Mastery">Lv.{masteryRecord.masteryLevel || 1} ({masteryRecord.masteryPercentage || 0}%)</span>
                 </div>
@@ -323,20 +324,21 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                             }`}
                             title={`Pilih bacaan #${idx + 1} (${v}) & putar suara`}
                           >
-                            <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-surface-card border border-border-subtle text-amber-500 font-bold">
+                            <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-surface-card border border-border-subtle text-red-700 dark:text-amber-400 font-bold">
                               #{idx + 1}
                             </span>
                             <span className="text-sm font-black">{v}</span>
-                            <Volume2 className="w-3.5 h-3.5 text-amber-500" />
+                            <Volume2 className="w-3.5 h-3.5 text-red-700 dark:text-amber-400" />
                           </button>
                         );
                       })}
                     </div>
 
                     {/* Educational Note */}
-                    <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/25 text-left text-xs space-y-1 shadow-inner">
-                      <div className="flex items-center gap-1.5 font-bold text-amber-600 dark:text-amber-400 font-heading text-[11.5px]">
-                        <span>⚠️ PENTING: JANGAN DIHAFAL GABUNG!</span>
+                    <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle text-left text-xs space-y-1 shadow-inner">
+                      <div className="flex items-center gap-1.5 font-bold text-red-700 dark:text-amber-400 font-heading text-[11.5px]">
+                        <AlertTriangle className="w-3.5 h-3.5 text-red-700 dark:text-amber-400 shrink-0" />
+                        <span>CATATAN: JANGAN DIHAFAL GABUNG!</span>
                       </div>
                       <p className="text-[11.5px] text-text-secondary leading-relaxed">
                         Kata ini memiliki <strong>{readingVariations.length} cara baca alternatif</strong> ({readingVariations.map(r => `「${r}」`).join(' atau ')}), <em>bukan dibaca sekaligus sebagai satu kesatuan kata</em>. Hafalkan masing-masing cara baca secara terpisah sesuai konteks penggunaannya. Klik tombol bacaan di atas untuk mendengarkan audio per kata.

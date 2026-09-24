@@ -548,8 +548,8 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
           {/* ------------------------------------------------------ */}
           <div ref={node5Ref} className="panel p-5 sm:p-6 rounded-3xl bg-surface-card border border-border-subtle/80 shadow-xs space-y-4">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-amber-400 font-bold text-xs uppercase tracking-wider font-heading">
-                <AlertTriangle className="w-4 h-4 text-amber-400" />
+              <div className="flex items-center gap-2 text-red-700 dark:text-amber-400 font-bold text-xs uppercase tracking-wider font-heading">
+                <AlertTriangle className="w-4 h-4 text-red-700 dark:text-amber-400" />
                 <span>⑤ Perbedaan: "Jangan sampai tertukar!"</span>
               </div>
               <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-surface-inset text-text-muted border border-border-subtle">

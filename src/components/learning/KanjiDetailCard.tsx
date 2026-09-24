@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Edit3, Volume2, ArrowLeft, HelpCircle } from 'lucide-react';
+import { Edit3, Volume2, ArrowLeft, HelpCircle, Zap } from 'lucide-react';
 import { KanjiItem, ItemMasteryRecord } from '../../types/content';
 import { KanjiWritingCanvas, preloadStrokeData } from './KanjiWritingCanvas';
 import { RubyText } from './RubyText';
@@ -91,15 +91,16 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
               {item.strokeCount} Goresan
             </span>
             {hasMultipleReadings && (
-              <span className="px-3 py-1 rounded-full text-xs font-mono font-bold border border-amber-500/40 text-amber-600 dark:text-amber-400 bg-amber-500/10 shadow-xs flex items-center gap-1">
-                <span>⚡</span> {totalKanjiReadings} Cara Baca
+              <span className="px-3 py-1 rounded-full text-xs font-mono font-bold border border-red-700/25 dark:border-amber-400/30 text-red-700 dark:text-amber-400 bg-surface-inset shadow-xs flex items-center gap-1.5">
+                <Zap className="w-3.5 h-3.5 text-red-700 dark:text-amber-400 fill-red-700/20 dark:fill-amber-400/25 shrink-0" />
+                <span>{totalKanjiReadings} Cara Baca</span>
               </span>
             )}
             {masteryRecord && (
               <div className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-surface-inset border border-border-subtle text-text-secondary">
-                <span title="Latihan menulis">✍️ {masteryRecord.writingCount || 0}x</span>
+                <span title="Latihan menulis">Tulis: {masteryRecord.writingCount || 0}x</span>
                 <span className="opacity-40">|</span>
-                <span title="Dilihat di flashcard">🎴 {masteryRecord.flashcardCount || 0}x</span>
+                <span title="Dilihat di flashcard">Kartu: {masteryRecord.flashcardCount || 0}x</span>
                 <span className="opacity-40">|</span>
                 <span className="text-gold" title="Mastery">Lv.{masteryRecord.masteryLevel || 1} ({masteryRecord.masteryPercentage || 0}%)</span>
               </div>
@@ -119,21 +120,21 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
                 : 'opacity-70 hover:opacity-100'
             }`}
           >
-            📖 Detail & Arti
+            Detail & Arti
           </button>
           <button
             onClick={() => {
               setDetailSubTab('writing');
               playSound('click', soundEnabled);
             }}
-            className={`btn btn-pill text-xs flex items-center gap-1 ${
+            className={`btn btn-pill text-xs flex items-center gap-1.5 ${
               detailSubTab === 'writing'
                 ? 'bg-surface-elevated text-wine-accent font-bold border border-border-muted shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_4px_rgba(0,0,0,0.2)]'
                 : 'opacity-70 hover:opacity-100'
             }`}
           >
-            <Edit3 className="w-3 h-3 text-wine-accent" />
-            <span>✍️ Latihan Menulis</span>
+            <Edit3 className="w-3.5 h-3.5 text-wine-accent" />
+            <span>Latihan Menulis</span>
           </button>
         </div>
       </div>
@@ -173,8 +174,9 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
                   </span>
                 )}
                 {hasMultipleReadings && (
-                  <span className="px-2.5 py-0.5 rounded-full border border-amber-500/40 text-amber-600 dark:text-amber-400 bg-amber-500/10 text-xs font-mono font-bold flex items-center gap-1">
-                    <span>⚡</span> {totalKanjiReadings} Cara Baca ({onyomiList.length} On • {kunyomiList.length} Kun)
+                  <span className="px-2.5 py-0.5 rounded-full border border-red-700/25 dark:border-amber-400/30 text-red-700 dark:text-amber-400 bg-surface-inset text-xs font-mono font-bold flex items-center gap-1.5">
+                    <Zap className="w-3 h-3 text-red-700 dark:text-amber-400 fill-red-700/20 dark:fill-amber-400/25 shrink-0" />
+                    <span>{totalKanjiReadings} Cara Baca ({onyomiList.length} On • {kunyomiList.length} Kun)</span>
                   </span>
                 )}
               </div>
@@ -267,9 +269,10 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
 
               {/* Tips Edukasi Cara Baca Kanji */}
               {hasMultipleReadings && (
-                <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/25 space-y-1.5 text-xs text-left shadow-inner">
-                  <div className="flex items-center gap-1.5 font-bold text-amber-600 dark:text-amber-400 font-heading text-[11.5px]">
-                    <span>💡 TIPS CARA BACA KANJI ({totalKanjiReadings} BACAAN):</span>
+                <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle space-y-1.5 text-xs text-left shadow-inner">
+                  <div className="flex items-center gap-1.5 font-bold text-red-700 dark:text-amber-400 font-heading text-[11.5px]">
+                    <HelpCircle className="w-3.5 h-3.5 text-red-700 dark:text-amber-400 shrink-0" />
+                    <span>TIPS CARA BACA KANJI ({totalKanjiReadings} BACAAN):</span>
                   </div>
                   <p className="text-[11.5px] text-text-secondary leading-relaxed">
                     Kanji ini memiliki <strong>{totalKanjiReadings} variasi cara baca</strong> ({onyomiList.length} Onyomi &amp; {kunyomiList.length} Kunyomi). <em>Jangan dihafal sekaligus sebagai satu kesatuan kata!</em> Hafalkan secara terpisah sesuai konteksnya:

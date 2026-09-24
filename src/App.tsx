@@ -121,6 +121,7 @@ export default function App() {
           gold: Math.round(Number(parsed.gold) || 0),
           gems: Math.round(Number(parsed.gems) || 0),
           playerName: loadedName,
+          signature: parsed.signature || localStorage.getItem('nihongo_quest_player_signature') || '',
           itemMastery: loadedMastery,
           recallQueue: (() => {
             try {
@@ -1108,6 +1109,18 @@ export default function App() {
     }
   };
 
+  // Handle Player Signature / Bio Motto Update
+  const handleUpdateSignature = (newSignature: string) => {
+    const trimmed = newSignature.trim().slice(0, 60);
+    setStats(prev => {
+      const updated = { ...prev, signature: trimmed };
+      try {
+        localStorage.setItem('nihongo_quest_player_signature', trimmed);
+      } catch {}
+      return updated;
+    });
+  };
+
   const handleToggleBookmark = useCallback((id: string, category: DeckItemCategory, notes?: string, targetDeckId?: string) => {
     setStats(prev => {
       let updatedDecks: UserDeck[];
@@ -1179,7 +1192,7 @@ export default function App() {
                 SevnQuest
               </span>
               <p className="text-[10px] text-text-secondary font-mono tracking-wider">
-                5 Alam Petualangan (N5 - N1)
+                The Learning World
               </p>
             </div>
           </div>
@@ -1306,6 +1319,7 @@ export default function App() {
                     }}
                     stageProgress={stageProgress}
                     playerLevel={stats.level}
+                    playerTierIndex={stats.tierIndex}
                     onSelectStage={(stage) => setSelectedStage(stage)}
                     onSelectMap={(mapId) => setStats(prev => ({ ...prev, currentMapId: mapId }))}
                     onSelectWorld={(worldId) => setStats(prev => ({ ...prev, currentWorldId: worldId }))}
@@ -1367,8 +1381,10 @@ export default function App() {
               {visitedTabs.has('leaderboard') && (
                 <LeaderboardView
                   currentUserId={stats.userId!}
+                  currentUserStats={stats}
                   soundEnabled={stats.soundEnabled}
                   onOpenStatusModal={() => setIsStatusModalOpen(true)}
+                  onUpdateSignature={handleUpdateSignature}
                   isActive={activeTab === 'leaderboard'}
                 />
               )}

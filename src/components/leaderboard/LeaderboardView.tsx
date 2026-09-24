@@ -22,14 +22,17 @@ import {
   UserRankInfo
 } from '../../lib/supabase';
 import { playSound } from '../../utils/audio';
+import { PlayerStats } from '../../types/rpg';
 import { RPG_TIERS, getTierForExp } from '../../data/tiers';
 import { TIER_AVATAR_MAP, TIER_AVATAR_FEMALE_MAP } from '../avatar/TierAvatar';
 import { PlayerProfileModal } from './PlayerProfileModal';
 
 interface LeaderboardViewProps {
   currentUserId: string;
+  currentUserStats?: PlayerStats;
   soundEnabled: boolean;
   onOpenStatusModal?: () => void;
+  onUpdateSignature?: (sig: string) => void;
   isActive?: boolean;
 }
 
@@ -71,8 +74,10 @@ const SEED_LEADERBOARD_ENTRIES: LeaderboardEntry[] = [
 
 export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
   currentUserId,
+  currentUserStats,
   soundEnabled,
   onOpenStatusModal,
+  onUpdateSignature,
   isActive = true,
 }) => {
   const [activeTab, setActiveTab] = useState<LeaderboardTab>('all-time');
@@ -563,6 +568,8 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
         isCurrentUser={selectedPlayer?.user_id === currentUserId}
         soundEnabled={soundEnabled}
         onOpenFullStatusModal={onOpenStatusModal}
+        currentUserStats={currentUserStats}
+        onUpdateSignature={onUpdateSignature}
       />
     </div>
   );

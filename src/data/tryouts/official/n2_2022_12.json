@@ -1,10 +1,8 @@
 {
   "id": "n2_2022_12",
-  "title": "JLPT N2 — Desember 2022 (Resmi)",
+  "title": "Simulasi N2 — Paket 008",
   "level": "N2",
-  "code": "2022-12",
-  "year": 2022,
-  "month": 12,
+  "code": "008",
   "passingScore": 90,
   "maxScore": 180,
   "sections": {

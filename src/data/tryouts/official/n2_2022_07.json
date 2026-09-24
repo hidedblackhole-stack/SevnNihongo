@@ -1,10 +1,8 @@
 {
   "id": "n2_2022_07",
-  "title": "JLPT N2 — Juli 2022 (Resmi)",
+  "title": "Simulasi N2 — Paket 009",
   "level": "N2",
-  "code": "2022-07",
-  "year": 2022,
-  "month": 7,
+  "code": "009",
   "passingScore": 90,
   "maxScore": 180,
   "sections": {

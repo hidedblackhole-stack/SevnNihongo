@@ -52,7 +52,7 @@ const TOUR_STEPS: TourStep[] = [
   },
   {
     id: 'maps',
-    title: '5 Alam Petualangan (World)',
+    title: 'The Learning World',
     subtitle: 'Peta Penjelajahan',
     description: 'Jelajahi peta dunia bertahap dari Hiragana & Katakana, berlanjut ke N5 hingga N1. Setiap stage menyajikan materi interaktif, latihan soal, dan duel Boss!',
     targetSelector: '[data-tour="nav-maps"]',
@@ -410,8 +410,7 @@ export const SpotlightOnboarding: React.FC<SpotlightOnboardingProps> = ({
 
               {/* Top Badge & Close button */}
               <div className="flex items-center justify-between relative z-10">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold/15 border border-gold/40 text-gold text-[11px] font-bold tracking-wider font-mono">
-                  <Sparkles className="w-3.5 h-3.5 fill-gold" />
+                <span className="inline-flex items-center px-3 py-1 rounded-full bg-surface-inset border border-border-subtle text-gold text-[11px] font-bold tracking-wider font-mono">
                   LANGKAH TERAKHIR
                 </span>
                 <button

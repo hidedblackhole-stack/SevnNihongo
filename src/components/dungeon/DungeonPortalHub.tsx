@@ -6,7 +6,6 @@ import {
   BookOpen,
   Zap,
   Swords,
-  Sparkles,
   ChevronRight,
   Flame,
   Trophy,
@@ -175,7 +174,7 @@ export const DungeonPortalHub: React.FC<DungeonPortalHubProps> = ({
         {/* Highlight Feature Badges */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-border-subtle text-xs text-text-secondary">
           <div className="flex items-center gap-1.5 font-medium">
-            <Sparkles className="w-3.5 h-3.5 text-gold shrink-0" />
+            <Layers className="w-3.5 h-3.5 text-gold shrink-0" />
             <span>Soal Dinamis & Acak</span>
           </div>
           <div className="flex items-center gap-1.5 font-medium">

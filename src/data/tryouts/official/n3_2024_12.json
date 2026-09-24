@@ -1,10 +1,8 @@
 {
   "id": "n3_2024_12",
-  "title": "JLPT N3 — Desember 2024 (Resmi)",
+  "title": "Simulasi N3 — Paket 005",
   "level": "N3",
-  "code": "2024-12",
-  "year": 2024,
-  "month": 12,
+  "code": "005",
   "passingScore": 95,
   "maxScore": 180,
   "sections": {

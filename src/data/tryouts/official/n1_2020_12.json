@@ -1,10 +1,8 @@
 {
   "id": "n1_2020_12",
-  "title": "JLPT N1 — Desember 2020 (Resmi)",
+  "title": "Simulasi N1 — Paket 008",
   "level": "N1",
-  "code": "2020-12",
-  "year": 2020,
-  "month": 12,
+  "code": "008",
   "passingScore": 100,
   "maxScore": 180,
   "sections": {

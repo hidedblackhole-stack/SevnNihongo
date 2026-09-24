@@ -1,5 +1,6 @@
 import { OfficialBook, OfficialChapter } from '../types/books';
 import { UserDeck, DeckItemRef } from '../types/rpg';
+import { THEMATIC_BOOKS } from './thematicBooks';
 import bunpouDb from './db/bunpou.json';
 import bunpouW1 from './db/bunpou_w1.json';
 import bunpouW2 from './db/bunpou_w2.json';
@@ -646,9 +647,9 @@ const kaigoChapters: OfficialChapter[] = [
 ];
 
 // -------------------------------------------------------------
-// MASTER OFFICIAL BOOKS LIST
+// MASTER OFFICIAL & THEMATIC BOOKS LIST
 // -------------------------------------------------------------
-export const OFFICIAL_BOOKS: OfficialBook[] = [
+export const CURRICULUM_BOOKS: OfficialBook[] = [
   {
     id: 'book_kana_dojo',
     title: 'Kuil Aksara Kana Dojo',
@@ -656,6 +657,7 @@ export const OFFICIAL_BOOKS: OfficialBook[] = [
     subtitle: 'Fondasi 46 Hiragana & 46 Katakana',
     description: 'Panduan menulis kuas kaligrafi, pengenalan bentuk aksara, pelafalan dakuon, dan kosakata bacaan dasar untuk pemula.',
     level: 'KANA',
+    category: 'curriculum',
     coverIcon: '仮',
     colorTheme: {
       accentColor: 'text-emerald-500',
@@ -669,9 +671,10 @@ export const OFFICIAL_BOOKS: OfficialBook[] = [
     id: 'book_minna_n5',
     title: 'Minna no Nihongo I (N5)',
     japaneseTitle: 'みんなの日本語 初級 I',
-    subtitle: 'Kurikulum Resmi Standar Bab 1〜25',
+    subtitle: 'Kurikulum Standar Bab 1〜25',
     description: 'Fondasi partikel bahasa Jepang, kata kerja harian, bentuk sopan -masu, bentuk santai futsukei, dan kanji dasar N5.',
     level: 'N5',
+    category: 'curriculum',
     coverIcon: '初',
     colorTheme: {
       accentColor: 'text-teal',
@@ -688,6 +691,7 @@ export const OFFICIAL_BOOKS: OfficialBook[] = [
     subtitle: 'Kurikulum Pra-Menengah Bab 26〜50',
     description: 'Konjugasi bentuk potensial (bisa), kalimat pasif, kausatif (menyuruh), memberi-menerima, pengandaian, dan sopan santun Keigo.',
     level: 'N4',
+    category: 'curriculum',
     coverIcon: '進',
     colorTheme: {
       accentColor: 'text-sky-500',
@@ -704,6 +708,7 @@ export const OFFICIAL_BOOKS: OfficialBook[] = [
     subtitle: 'Peta Terstruktur 6 Minggu Menengah',
     description: 'Buku teks terpopuler untuk persiapan JLPT N3: 132 pola kalimat esensial dibagi rapi ke dalam 6 minggu pembelajaran mandiri.',
     level: 'N3',
+    category: 'curriculum',
     coverIcon: '志',
     colorTheme: {
       accentColor: 'text-gold',
@@ -720,6 +725,7 @@ export const OFFICIAL_BOOKS: OfficialBook[] = [
     subtitle: 'Kurikulum Mahir Wacana & Presisi Nuansa',
     description: 'Buku rujukan utama pembelajar tingkat mahir untuk menguasai perbedaan tipis pola kalimat formal, berita, dan logika bisnis.',
     level: 'N2',
+    category: 'curriculum',
     coverIcon: '達',
     colorTheme: {
       accentColor: 'text-purple-400',
@@ -736,6 +742,7 @@ export const OFFICIAL_BOOKS: OfficialBook[] = [
     subtitle: 'Puncak Tertinggi Tata Bahasa Sastra & Filosofis',
     description: 'Penguasaan kalimat ekspresif, idiom sastra kuno, dan wacana akademis tingkat penutur asli untuk target skor maksimal N1.',
     level: 'N1',
+    category: 'curriculum',
     coverIcon: '頂',
     colorTheme: {
       accentColor: 'text-rose-400',
@@ -752,6 +759,7 @@ export const OFFICIAL_BOOKS: OfficialBook[] = [
     subtitle: 'Panduan Bahasa Kerja Praktis Caregiver Jepang',
     description: '397 Kosakata & ekspresi komunikasi lapangan: bantuan makan, mandi, mobilitas, tanda vital, rekam medis, dan etika kerja panti lansia.',
     level: 'Kaigo',
+    category: 'curriculum',
     coverIcon: '介',
     colorTheme: {
       accentColor: 'text-amber-400',
@@ -761,6 +769,13 @@ export const OFFICIAL_BOOKS: OfficialBook[] = [
     },
     chapters: kaigoChapters
   }
+];
+
+export { THEMATIC_BOOKS };
+
+export const OFFICIAL_BOOKS: OfficialBook[] = [
+  ...CURRICULUM_BOOKS,
+  ...THEMATIC_BOOKS
 ];
 
 /**

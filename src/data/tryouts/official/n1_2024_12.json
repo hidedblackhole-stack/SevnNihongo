@@ -1,10 +1,8 @@
 {
   "id": "n1_2024_12",
-  "title": "JLPT N1 — Desember 2024 (Resmi)",
+  "title": "Simulasi N1 — Paket 002",
   "level": "N1",
-  "code": "2024-12",
-  "year": 2024,
-  "month": 12,
+  "code": "002",
   "passingScore": 100,
   "maxScore": 180,
   "sections": {

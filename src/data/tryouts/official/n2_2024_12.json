@@ -1,10 +1,8 @@
 {
   "id": "n2_2024_12",
-  "title": "JLPT N2 — Desember 2024 (Resmi)",
+  "title": "Simulasi N2 — Paket 004",
   "level": "N2",
-  "code": "2024-12",
-  "year": 2024,
-  "month": 12,
+  "code": "004",
   "passingScore": 90,
   "maxScore": 180,
   "sections": {

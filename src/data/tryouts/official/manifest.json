@@ -2,10 +2,8 @@
   {
     "id": "n1_2024_12",
     "level": "N1",
-    "title": "JLPT N1 — Desember 2024 (Resmi)",
-    "code": "2024-12",
-    "year": 2024,
-    "month": 12,
+    "title": "Simulasi N1 — Paket 002",
+    "code": "002",
     "totalQuestions": 66,
     "fileName": "n1_2024_12.json",
     "filePath": "./official/n1_2024_12.json"
@@ -13,10 +11,8 @@
   {
     "id": "n1_2024_07",
     "level": "N1",
-    "title": "JLPT N1 — Juli 2024 (Resmi)",
-    "code": "2024-07",
-    "year": 2024,
-    "month": 7,
+    "title": "Simulasi N1 — Paket 003",
+    "code": "003",
     "totalQuestions": 96,
     "fileName": "n1_2024_07.json",
     "filePath": "./official/n1_2024_07.json"
@@ -24,10 +20,8 @@
   {
     "id": "n1_2023_12",
     "level": "N1",
-    "title": "JLPT N1 — Desember 2023 (Resmi)",
-    "code": "2023-12",
-    "year": 2023,
-    "month": 12,
+    "title": "Simulasi N1 — Paket 004",
+    "code": "004",
     "totalQuestions": 96,
     "fileName": "n1_2023_12.json",
     "filePath": "./official/n1_2023_12.json"
@@ -35,10 +29,8 @@
   {
     "id": "n1_2023_07",
     "level": "N1",
-    "title": "JLPT N1 — Juli 2023 (Resmi)",
-    "code": "2023-07",
-    "year": 2023,
-    "month": 7,
+    "title": "Simulasi N1 — Paket 005",
+    "code": "005",
     "totalQuestions": 96,
     "fileName": "n1_2023_07.json",
     "filePath": "./official/n1_2023_07.json"
@@ -46,10 +38,8 @@
   {
     "id": "n1_2022_07",
     "level": "N1",
-    "title": "JLPT N1 — Juli 2022 (Resmi)",
-    "code": "2022-07",
-    "year": 2022,
-    "month": 7,
+    "title": "Simulasi N1 — Paket 006",
+    "code": "006",
     "totalQuestions": 103,
     "fileName": "n1_2022_07.json",
     "filePath": "./official/n1_2022_07.json"
@@ -57,10 +47,8 @@
   {
     "id": "n1_2021_07",
     "level": "N1",
-    "title": "JLPT N1 — Juli 2021 (Resmi)",
-    "code": "2021-07",
-    "year": 2021,
-    "month": 7,
+    "title": "Simulasi N1 — Paket 007",
+    "code": "007",
     "totalQuestions": 104,
     "fileName": "n1_2021_07.json",
     "filePath": "./official/n1_2021_07.json"
@@ -68,10 +56,8 @@
   {
     "id": "n1_2020_12",
     "level": "N1",
-    "title": "JLPT N1 — Desember 2020 (Resmi)",
-    "code": "2020-12",
-    "year": 2020,
-    "month": 12,
+    "title": "Simulasi N1 — Paket 008",
+    "code": "008",
     "totalQuestions": 103,
     "fileName": "n1_2020_12.json",
     "filePath": "./official/n1_2020_12.json"
@@ -79,10 +65,8 @@
   {
     "id": "n2_2024_12",
     "level": "N2",
-    "title": "JLPT N2 — Desember 2024 (Resmi)",
-    "code": "2024-12",
-    "year": 2024,
-    "month": 12,
+    "title": "Simulasi N2 — Paket 004",
+    "code": "004",
     "totalQuestions": 71,
     "fileName": "n2_2024_12.json",
     "filePath": "./official/n2_2024_12.json"
@@ -90,10 +74,8 @@
   {
     "id": "n2_2024_07",
     "level": "N2",
-    "title": "JLPT N2 — Juli 2024 (Resmi)",
-    "code": "2024-07",
-    "year": 2024,
-    "month": 7,
+    "title": "Simulasi N2 — Paket 005",
+    "code": "005",
     "totalQuestions": 71,
     "fileName": "n2_2024_07.json",
     "filePath": "./official/n2_2024_07.json"
@@ -101,10 +83,8 @@
   {
     "id": "n2_2023_12",
     "level": "N2",
-    "title": "JLPT N2 — Desember 2023 (Resmi)",
-    "code": "2023-12",
-    "year": 2023,
-    "month": 12,
+    "title": "Simulasi N2 — Paket 006",
+    "code": "006",
     "totalQuestions": 71,
     "fileName": "n2_2023_12.json",
     "filePath": "./official/n2_2023_12.json"
@@ -112,10 +92,8 @@
   {
     "id": "n2_2023_07",
     "level": "N2",
-    "title": "JLPT N2 — Juli 2023 (Resmi)",
-    "code": "2023-07",
-    "year": 2023,
-    "month": 7,
+    "title": "Simulasi N2 — Paket 007",
+    "code": "007",
     "totalQuestions": 101,
     "fileName": "n2_2023_07.json",
     "filePath": "./official/n2_2023_07.json"
@@ -123,10 +101,8 @@
   {
     "id": "n2_2022_12",
     "level": "N2",
-    "title": "JLPT N2 — Desember 2022 (Resmi)",
-    "code": "2022-12",
-    "year": 2022,
-    "month": 12,
+    "title": "Simulasi N2 — Paket 008",
+    "code": "008",
     "totalQuestions": 101,
     "fileName": "n2_2022_12.json",
     "filePath": "./official/n2_2022_12.json"
@@ -134,10 +110,8 @@
   {
     "id": "n2_2022_07",
     "level": "N2",
-    "title": "JLPT N2 — Juli 2022 (Resmi)",
-    "code": "2022-07",
-    "year": 2022,
-    "month": 7,
+    "title": "Simulasi N2 — Paket 009",
+    "code": "009",
     "totalQuestions": 101,
     "fileName": "n2_2022_07.json",
     "filePath": "./official/n2_2022_07.json"
@@ -145,10 +119,8 @@
   {
     "id": "n2_2021_12",
     "level": "N2",
-    "title": "JLPT N2 — Desember 2021 (Resmi)",
-    "code": "2021-12",
-    "year": 2021,
-    "month": 12,
+    "title": "Simulasi N2 — Paket 010",
+    "code": "010",
     "totalQuestions": 101,
     "fileName": "n2_2021_12.json",
     "filePath": "./official/n2_2021_12.json"
@@ -156,10 +128,8 @@
   {
     "id": "n2_2021_07",
     "level": "N2",
-    "title": "JLPT N2 — Juli 2021 (Resmi)",
-    "code": "2021-07",
-    "year": 2021,
-    "month": 7,
+    "title": "Simulasi N2 — Paket 011",
+    "code": "011",
     "totalQuestions": 102,
     "fileName": "n2_2021_07.json",
     "filePath": "./official/n2_2021_07.json"
@@ -167,10 +137,8 @@
   {
     "id": "n3_2025_12",
     "level": "N3",
-    "title": "JLPT N3 — Desember 2025 (Resmi)",
-    "code": "2025-12",
-    "year": 2025,
-    "month": 12,
+    "title": "Simulasi N3 — Paket 003",
+    "code": "003",
     "totalQuestions": 101,
     "fileName": "n3_2025_12.json",
     "filePath": "./official/n3_2025_12.json"
@@ -178,10 +146,8 @@
   {
     "id": "n3_2025_07",
     "level": "N3",
-    "title": "JLPT N3 — Juli 2025 (Resmi)",
-    "code": "2025-07",
-    "year": 2025,
-    "month": 7,
+    "title": "Simulasi N3 — Paket 004",
+    "code": "004",
     "totalQuestions": 101,
     "fileName": "n3_2025_07.json",
     "filePath": "./official/n3_2025_07.json"
@@ -189,10 +155,8 @@
   {
     "id": "n3_2024_12",
     "level": "N3",
-    "title": "JLPT N3 — Desember 2024 (Resmi)",
-    "code": "2024-12",
-    "year": 2024,
-    "month": 12,
+    "title": "Simulasi N3 — Paket 005",
+    "code": "005",
     "totalQuestions": 101,
     "fileName": "n3_2024_12.json",
     "filePath": "./official/n3_2024_12.json"
@@ -200,10 +164,8 @@
   {
     "id": "n3_2024_07",
     "level": "N3",
-    "title": "JLPT N3 — Juli 2024 (Resmi)",
-    "code": "2024-07",
-    "year": 2024,
-    "month": 7,
+    "title": "Simulasi N3 — Paket 006",
+    "code": "006",
     "totalQuestions": 101,
     "fileName": "n3_2024_07.json",
     "filePath": "./official/n3_2024_07.json"
@@ -211,10 +173,8 @@
   {
     "id": "n3_2023_12",
     "level": "N3",
-    "title": "JLPT N3 — Desember 2023 (Resmi)",
-    "code": "2023-12",
-    "year": 2023,
-    "month": 12,
+    "title": "Simulasi N3 — Paket 007",
+    "code": "007",
     "totalQuestions": 101,
     "fileName": "n3_2023_12.json",
     "filePath": "./official/n3_2023_12.json"
@@ -222,10 +182,8 @@
   {
     "id": "n3_2023_07",
     "level": "N3",
-    "title": "JLPT N3 — Juli 2023 (Resmi)",
-    "code": "2023-07",
-    "year": 2023,
-    "month": 7,
+    "title": "Simulasi N3 — Paket 008",
+    "code": "008",
     "totalQuestions": 101,
     "fileName": "n3_2023_07.json",
     "filePath": "./official/n3_2023_07.json"
@@ -233,10 +191,8 @@
   {
     "id": "n3_2022_12",
     "level": "N3",
-    "title": "JLPT N3 — Desember 2022 (Resmi)",
-    "code": "2022-12",
-    "year": 2022,
-    "month": 12,
+    "title": "Simulasi N3 — Paket 009",
+    "code": "009",
     "totalQuestions": 101,
     "fileName": "n3_2022_12.json",
     "filePath": "./official/n3_2022_12.json"
@@ -244,10 +200,8 @@
   {
     "id": "n3_2022_07",
     "level": "N3",
-    "title": "JLPT N3 — Juli 2022 (Resmi)",
-    "code": "2022-07",
-    "year": 2022,
-    "month": 7,
+    "title": "Simulasi N3 — Paket 010",
+    "code": "010",
     "totalQuestions": 100,
     "fileName": "n3_2022_07.json",
     "filePath": "./official/n3_2022_07.json"
@@ -255,10 +209,8 @@
   {
     "id": "n3_2021_12",
     "level": "N3",
-    "title": "JLPT N3 — Desember 2021 (Resmi)",
-    "code": "2021-12",
-    "year": 2021,
-    "month": 12,
+    "title": "Simulasi N3 — Paket 011",
+    "code": "011",
     "totalQuestions": 101,
     "fileName": "n3_2021_12.json",
     "filePath": "./official/n3_2021_12.json"
@@ -266,10 +218,8 @@
   {
     "id": "n3_2020_12",
     "level": "N3",
-    "title": "JLPT N3 — Desember 2020 (Resmi)",
-    "code": "2020-12",
-    "year": 2020,
-    "month": 12,
+    "title": "Simulasi N3 — Paket 012",
+    "code": "012",
     "totalQuestions": 101,
     "fileName": "n3_2020_12.json",
     "filePath": "./official/n3_2020_12.json"

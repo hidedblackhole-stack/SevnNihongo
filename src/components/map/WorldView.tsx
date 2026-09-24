@@ -10,11 +10,12 @@ import {
   Plus, 
   Star, 
   Swords,
-  Copy,
-  Check,
-  BookOpen,
-  Layers,
-  Library
+  Copy, 
+  Check, 
+  BookOpen, 
+  Layers, 
+  Library,
+  Zap
 } from 'lucide-react';
 import { StageClearData, UserDeck, DeckItemCategory } from '../../types/rpg';
 import { Stage, ItemMasteryRecord } from '../../types/content';
@@ -30,7 +31,7 @@ import {
   getOrCreateCurriculumForDeck,
 } from '../../utils/curriculumEngine';
 import { ensureUserDecks, toggleBookmarkItem } from '../../utils/decks';
-import { TEMPLATE_DECKS, getTemplateDeckById, cloneTemplateToUserDecks } from '../../data/templateDecks';
+import { TEMPLATE_DECKS, cloneTemplateToUserDecks } from '../../data/templateDecks';
 import { SelectDeckForWorldModal } from '../curriculum/SelectDeckForWorldModal';
 import { CurriculumConfigModal } from '../curriculum/CurriculumConfigModal';
 import { CustomWorldView } from '../curriculum/CustomWorldView';
@@ -39,8 +40,12 @@ import { DungeonType, DungeonPayload, generateDungeonSession } from '../../utils
 import { DungeonPortalHub } from '../dungeon/DungeonPortalHub';
 import { DungeonSetupModal } from '../dungeon/DungeonSetupModal';
 import { DungeonSessionRunner } from '../dungeon/DungeonSessionRunner';
+import { ArcadeHubView } from '../arcade/ArcadeHubView';
+import { StageJourneyPicker } from './StageJourneyPicker';
+import { chapterToUserDeck, bookToFullUserDeck } from '../../data/officialBooks';
+import { OfficialBook, OfficialChapter } from '../../types/books';
 
-export type WorldNavView = 'world_hub' | 'level_hub' | 'maps' | 'dungeon';
+export type WorldNavView = 'world_hub' | 'level_hub' | 'maps' | 'dungeon' | 'arcade' | 'stage';
 
 interface WorldViewProps {
   currentMapId?: string;
@@ -48,6 +53,7 @@ interface WorldViewProps {
   resetSignal?: number;
   stageProgress?: Record<string, StageClearData>;
   playerLevel?: number;
+  playerTierIndex?: number;
   onSelectStage?: (stage: Stage) => void;
   onSelectMap?: (mapId: string) => void;
   onSelectWorld?: (worldId: string) => void;
@@ -82,27 +88,6 @@ interface WorldViewProps {
   furiganaEnabled?: boolean;
 }
 
-const LEVEL_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
-  KANA: { label: 'KANA · Pemula', color: 'text-emerald-400 border-emerald-500/30', bg: 'bg-emerald-500/10' },
-  N5: { label: 'JLPT N5 · Dasar', color: 'text-teal border-teal/30', bg: 'bg-teal/10' },
-  N4: { label: 'JLPT N4 · Pra-Menengah', color: 'text-matcha border-matcha/30', bg: 'bg-matcha/10' },
-  N3: { label: 'JLPT N3 · Menengah', color: 'text-gold border-gold/30', bg: 'bg-gold/10' },
-  N2: { label: 'JLPT N2 · Mahir', color: 'text-indigo border-indigo/30', bg: 'bg-indigo/10' },
-  N1: { label: 'JLPT N1 · Ahli', color: 'text-crimson border-crimson/30', bg: 'bg-crimson/10' },
-  Kaigo: { label: 'Kaigo · SSW', color: 'text-amber-400 border-amber-500/30', bg: 'bg-amber-500/10' },
-};
-
-const LEVEL_FILTERS = [
-  { id: 'ALL', label: 'Semua Level' },
-  { id: 'KANA', label: 'KANA' },
-  { id: 'N5', label: 'N5' },
-  { id: 'N4', label: 'N4' },
-  { id: 'N3', label: 'N3' },
-  { id: 'N2', label: 'N2' },
-  { id: 'N1', label: 'N1' },
-  { id: 'Kaigo', label: 'Kaigo · SSW' },
-];
-
 export const WorldView: React.FC<WorldViewProps> = ({
   currentWorldId,
   resetSignal,
@@ -113,6 +98,8 @@ export const WorldView: React.FC<WorldViewProps> = ({
   onUpdateDecks,
   onRewardPlayer,
   onCompleteStudyItem,
+  playerLevel = 1,
+  playerTierIndex = 0,
   playerMp = 100,
   playerMaxMp = 100,
   playerInt = 10,
@@ -128,9 +115,13 @@ export const WorldView: React.FC<WorldViewProps> = ({
   navView,
   onNavViewChange,
 }) => {
-  const [worldMode, setWorldMode] = useState<'training' | 'dungeon'>(() => {
-    return navView === 'dungeon' ? 'dungeon' : 'training';
+  // 3 Modes: arcade (default), dungeon, stage
+  const [worldMode, setWorldMode] = useState<'arcade' | 'dungeon' | 'stage'>(() => {
+    if (navView === 'dungeon') return 'dungeon';
+    if (navView === 'maps' || navView === 'stage') return 'stage';
+    return 'arcade';
   });
+
   const [setupDungeonType, setSetupDungeonType] = useState<DungeonType | null>(null);
   const [activeDungeonPayload, setActiveDungeonPayload] = useState<DungeonPayload | null>(null);
 
@@ -148,8 +139,10 @@ export const WorldView: React.FC<WorldViewProps> = ({
   useEffect(() => {
     if (navView === 'dungeon') {
       setWorldMode('dungeon');
-    } else if (navView === 'world_hub') {
-      setWorldMode('training');
+    } else if (navView === 'maps' || navView === 'stage') {
+      setWorldMode('stage');
+    } else if (navView === 'arcade' || navView === 'world_hub') {
+      setWorldMode('arcade');
     }
   }, [navView]);
 
@@ -160,17 +153,18 @@ export const WorldView: React.FC<WorldViewProps> = ({
       setIsPlayingTemplateWorld(false);
       setDeckForCurriculumConfig(null);
       setIsSelectDeckModalOpen(false);
-      setWorldMode('training');
+      setWorldMode('arcade');
       setSetupDungeonType(null);
       setActiveDungeonPayload(null);
     }
   }, [resetSignal]);
 
-  const handleSwitchMode = (mode: 'training' | 'dungeon') => {
+  const handleSwitchMode = (mode: 'arcade' | 'dungeon' | 'stage') => {
     playSound('click', soundEnabled);
     setWorldMode(mode);
     if (onNavViewChange) {
-      onNavViewChange(mode === 'dungeon' ? 'dungeon' : 'world_hub');
+      const targetNav: WorldNavView = mode === 'dungeon' ? 'dungeon' : mode === 'stage' ? 'maps' : 'world_hub';
+      onNavViewChange(targetNav);
     }
   };
 
@@ -205,11 +199,25 @@ export const WorldView: React.FC<WorldViewProps> = ({
     setTimeout(() => setClonedSuccessId(null), 3000);
   };
 
-  // Filtered official template decks
-  const filteredTemplates = useMemo(() => {
-    if (selectedLevelFilter === 'ALL') return TEMPLATE_DECKS;
-    return TEMPLATE_DECKS.filter(d => d.level === selectedLevelFilter);
-  }, [selectedLevelFilter]);
+  // Launch Stage from Official Chapter
+  const handleSelectChapterStage = (chapter: OfficialChapter, book: OfficialBook) => {
+    const virtualDeck = chapterToUserDeck(chapter, book);
+    const cur = getOrCreateCurriculumForDeck(virtualDeck);
+    saveCustomCurriculum(cur);
+    setCustomCurriculums(loadAllCustomCurriculums());
+    setCurriculumProgressMap(loadAllCurriculumProgress());
+    setActiveCustomWorldDeckId(virtualDeck.id);
+  };
+
+  // Launch Stage from Full Official Book
+  const handleSelectBookStage = (book: OfficialBook) => {
+    const virtualDeck = bookToFullUserDeck(book);
+    const cur = getOrCreateCurriculumForDeck(virtualDeck);
+    saveCustomCurriculum(cur);
+    setCustomCurriculums(loadAllCustomCurriculums());
+    setCurriculumProgressMap(loadAllCurriculumProgress());
+    setActiveCustomWorldDeckId(virtualDeck.id);
+  };
 
   // 1. IF PLAYING TEMPLATE DECK WORLD:
   if (selectedTemplateDeck && isPlayingTemplateWorld) {
@@ -254,7 +262,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
     }
   };
 
-  // 2. IF VIEWING A TEMPLATE DECK (EXACTLY LIKE BUKU SAKU DECK LIBRARY VIEW):
+  // 2. IF VIEWING A TEMPLATE DECK:
   if (selectedTemplateDeck) {
     return (
       <div className="w-full max-w-4xl mx-auto space-y-6 pb-20 sm:pb-12 animate-fade-in px-2 sm:px-0">
@@ -284,7 +292,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
     );
   }
 
-  // 3. IF A USER CUSTOM WORLD IS CURRENTLY OPENED FOR PLAYING:
+  // 3. IF A USER OR BOOK STAGE WORLD IS CURRENTLY OPENED FOR PLAYING:
   if (activeCustomWorldDeckId) {
     const customDeck = (userDecks || []).find(d => d.id === activeCustomWorldDeckId);
 
@@ -339,45 +347,65 @@ export const WorldView: React.FC<WorldViewProps> = ({
       {/* 1. HEADER UTAMA: WORLD */}
       <div className="panel p-4 sm:p-5 rounded-2xl sm:rounded-3xl shadow-md border border-border-subtle flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3.5">
-          <div className={`w-11 h-11 rounded-2xl ${worldMode === 'dungeon' ? 'bg-crimson/15 text-crimson border-crimson/30' : 'bg-gold/15 text-gold border-gold/30'} border flex items-center justify-center shrink-0 shadow-sm`}>
-            {worldMode === 'dungeon' ? <Swords className="w-6 h-6" /> : <Compass className="w-6 h-6" />}
+          <div className={`w-11 h-11 rounded-2xl ${
+            worldMode === 'arcade'
+              ? 'bg-amber-500/15 text-amber-400 border-amber-500/30'
+              : worldMode === 'dungeon'
+                ? 'bg-crimson/15 text-crimson border-crimson/30'
+                : 'bg-gold/15 text-gold border-gold/30'
+          } border flex items-center justify-center shrink-0 shadow-sm`}>
+            {worldMode === 'arcade' ? (
+              <Zap className="w-6 h-6 fill-amber-400/20" />
+            ) : worldMode === 'dungeon' ? (
+              <Swords className="w-6 h-6" />
+            ) : (
+              <Compass className="w-6 h-6" />
+            )}
           </div>
           <div>
             <h1 className="text-xl sm:text-2xl font-bold text-text-primary font-heading tracking-wide">
-              {worldMode === 'dungeon' ? 'Petualangan Dungeon' : 'Petualangan World'}
+              {worldMode === 'arcade'
+                ? 'Petualangan World · Arena Game'
+                : worldMode === 'dungeon'
+                  ? 'Petualangan World · Mode Dungeon'
+                  : 'Petualangan World · Peta Stage'}
             </h1>
             <p className="text-xs sm:text-sm text-text-secondary font-body">
-              {worldMode === 'dungeon'
-                ? 'Latihan bebas: menulis aksara, flashcard kilat, susun pola kalimat, ubah bentuk kata, dan kuis cepat.'
-                : 'Tantang stage petualangan RPG untuk menguji pemahaman materi dan mengumpulkan EXP & Gold.'}
+              {worldMode === 'arcade'
+                ? 'Uji kecepatan menulis dan refleksmu di game arcade dengan tantangan rekor terbaik.'
+                : worldMode === 'dungeon'
+                  ? 'Latihan bebas tanpa beban: menulis aksara, flashcard kilat, susun pola kalimat, ubah bentuk kata, dan kuis cepat.'
+                  : 'Pilih kurikulum resmi atau rak tematik untuk langsung bertarung dan menjelajahi stage RPG.'}
             </p>
           </div>
         </div>
-
       </div>
 
-      {/* 2. MODE SWITCHER BAR: WORLD VS DUNGEON */}
-      <div className="panel p-1.5 rounded-2xl bg-surface-inset border border-border-subtle flex items-center gap-2 shadow-inner">
+      {/* 2. THREE-MODE SWITCHER BAR */}
+      <div className="panel p-1.5 rounded-2xl bg-surface-inset border border-border-subtle flex items-center gap-1.5 sm:gap-2 shadow-inner overflow-x-auto scrollbar-none">
+        
+        {/* TAB 1: ARENA ARCADE */}
         <button
           type="button"
-          onClick={() => handleSwitchMode('training')}
-          className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 px-2.5 sm:px-4 rounded-xl text-xs sm:text-sm font-bold font-sans transition-all whitespace-nowrap ${
-            worldMode === 'training'
-              ? 'bg-surface-card text-text-primary shadow-sm border border-border-subtle'
+          onClick={() => handleSwitchMode('arcade')}
+          className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 px-2.5 sm:px-3 rounded-xl text-xs sm:text-sm font-bold font-sans transition-all whitespace-nowrap ${
+            worldMode === 'arcade'
+              ? 'bg-surface-card text-amber-400 shadow-sm border border-amber-500/30'
               : 'text-text-muted hover:text-text-primary'
           }`}
         >
-          <Compass className={`w-4 h-4 shrink-0 ${worldMode === 'training' ? 'text-gold' : ''}`} />
+          <Zap className={`w-4 h-4 shrink-0 ${worldMode === 'arcade' ? 'text-amber-400 fill-amber-400/20' : ''}`} />
           <span>
-            <span className="inline sm:hidden">Petualangan</span>
-            <span className="hidden sm:inline">Petualangan World (Grinding EXP)</span>
+            <span className="inline sm:hidden">Arcade</span>
+            <span className="hidden sm:inline">Arena Arcade</span>
           </span>
         </button>
 
+        {/* TAB 2: MODE DUNGEON */}
         <button
           type="button"
           onClick={() => handleSwitchMode('dungeon')}
-          className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 px-2.5 sm:px-4 rounded-xl text-xs sm:text-sm font-bold font-sans transition-all whitespace-nowrap ${
+          className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 px-2.5 sm:px-3 rounded-xl text-xs sm:text-sm font-bold font-sans transition-all whitespace-nowrap ${
             worldMode === 'dungeon'
               ? 'bg-surface-card text-crimson shadow-sm border border-crimson/30'
               : 'text-text-muted hover:text-text-primary'
@@ -386,16 +414,44 @@ export const WorldView: React.FC<WorldViewProps> = ({
           <Swords className={`w-4 h-4 shrink-0 ${worldMode === 'dungeon' ? 'text-crimson' : ''}`} />
           <span>
             <span className="inline sm:hidden">Dungeon</span>
-            <span className="hidden sm:inline">Mode Dungeon (Latihan Bebas)</span>
-          </span>
-          <span className="px-1.5 py-0.5 rounded text-[9px] font-mono bg-crimson/20 text-crimson font-black uppercase tracking-wider shrink-0">
-            Baru
+            <span className="hidden sm:inline">Mode Dungeon</span>
           </span>
         </button>
+
+        {/* TAB 3: PETUALANGAN STAGE */}
+        <button
+          type="button"
+          onClick={() => handleSwitchMode('stage')}
+          className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 px-2.5 sm:px-3 rounded-xl text-xs sm:text-sm font-bold font-sans transition-all whitespace-nowrap ${
+            worldMode === 'stage'
+              ? 'bg-surface-card text-gold shadow-sm border border-gold/30'
+              : 'text-text-muted hover:text-text-primary'
+          }`}
+        >
+          <Compass className={`w-4 h-4 shrink-0 ${worldMode === 'stage' ? 'text-gold' : ''}`} />
+          <span>
+            <span className="inline sm:hidden">Stage</span>
+            <span className="hidden sm:inline">Petualangan Stage</span>
+          </span>
+        </button>
+
       </div>
 
-      {worldMode === 'dungeon' ? (
-        /* VIEW MODE DUNGEON: PORTAL HUB */
+      {/* 3. CONTENT PER ACTIVE MODE */}
+      {worldMode === 'arcade' && (
+        /* MODE 1: ARENA ARCADE */
+        <ArcadeHubView
+          soundEnabled={soundEnabled}
+          userDecks={userDecks}
+          playerLevel={playerLevel}
+          playerTierIndex={playerTierIndex}
+          onRewardPlayer={onRewardPlayer}
+          onCompleteStudyItem={onCompleteStudyItem}
+        />
+      )}
+
+      {worldMode === 'dungeon' && (
+        /* MODE 2: DUNGEON PORTAL HUB */
         <DungeonPortalHub
           onSelectDungeon={(type) => {
             if (type === 'blackboard') {
@@ -420,217 +476,29 @@ export const WorldView: React.FC<WorldViewProps> = ({
           }}
           soundEnabled={soundEnabled}
         />
-      ) : (
+      )}
 
-      /* VIEW MODE PETUALANGAN: WORLD GRINDING & PUSAT MATERI */
-      <div className="space-y-6">
-
-        {/* 1. SHORTCUT: BELAJAR MATERI DI RAK BUKU */}
-        <div className="panel p-4 sm:p-5 rounded-2xl bg-surface-card border border-border-subtle shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3.5 min-w-0 flex-1">
-            <div className="w-10 h-10 rounded-xl bg-gold/15 border border-gold/30 flex items-center justify-center text-gold shrink-0">
-              <Library className="w-5 h-5" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-gold font-heading">
-                  Belajar Materi
-                </span>
-                <span className="text-[11px] text-text-muted font-mono">• 7 Modul Kurikulum Resmi</span>
-              </div>
-              <h3 className="text-sm sm:text-base font-bold text-text-primary font-heading truncate">
-                Rak Buku Kurikulum Resmi
-              </h3>
-              <p className="text-xs text-text-secondary mt-0.5 leading-relaxed line-clamp-1">
-                Kuasai materi terstruktur per bab (Minna no Nihongo, Soumatome, dll.) dengan Flashcard & Menulis di Rak Buku.
-              </p>
-            </div>
-          </div>
-
-          <button
-            type="button"
-            onClick={() => {
-              playSound('click', soundEnabled);
-              if (onNavigateToOfficialBooks) {
-                onNavigateToOfficialBooks();
-              } else if (onNavigateTab) {
-                onNavigateTab('deck');
-              }
-            }}
-            className="btn-physical-primary text-xs sm:text-sm py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 shrink-0 w-full sm:w-auto font-heading cursor-pointer whitespace-nowrap"
-          >
-            <BookOpen className="w-4 h-4" />
-            <span>Buka Rak Buku Kurikulum</span>
-            <ChevronRight className="w-4 h-4 opacity-70" />
-          </button>
-        </div>
-
-        {/* 2. SEKSI: WORLD PETUALANGAN & GRINDING EXP */}
-        <div className="space-y-3 pt-2">
-          <div className="flex items-center justify-between px-1">
-            <div>
-              <h3 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-text-primary font-heading flex items-center gap-2">
-                <Compass className="w-4 h-4 text-gold" />
-                <span>World Petualangan & Grinding EXP ({userCustomWorldList.length})</span>
-              </h3>
-              <p className="text-xs text-text-secondary font-body mt-0.5">
-                Mainkan stage petualangan RPG untuk mengumpulkan EXP, Gold, dan Mastery item.
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={handleOpenCreateCustomWorld}
-              className="text-xs text-indigo hover:text-indigo/80 font-bold flex items-center gap-1 font-heading cursor-pointer shrink-0"
-            >
-              <Plus className="w-3.5 h-3.5" />
-              <span>Buat World Baru</span>
-            </button>
-          </div>
-
-          {userCustomWorldList.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {userCustomWorldList.map((curriculum) => {
-                const prog = curriculumProgressMap[curriculum.deckId];
-                const totalStages = curriculum.stages.length;
-                const clearedCount = Object.values(prog?.stages || {}).filter(s => s.status === 'completed').length;
-                const pct = Math.round((clearedCount / Math.max(1, totalStages)) * 100);
-                const totalStars = Object.values(prog?.stages || {}).reduce((acc, s) => acc + (s.stars || 0), 0);
-
-                return (
-                  <motion.div
-                    key={curriculum.id}
-                    whileHover={{ y: -2 }}
-                    className="notebook-adventure-card group cursor-pointer"
-                    onClick={() => {
-                      playSound('click', soundEnabled);
-                      setActiveCustomWorldDeckId(curriculum.deckId);
-                    }}
-                  >
-                    <div className="space-y-2 relative z-10">
-                      <div className="flex items-center justify-between">
-                        <span className="notebook-level-stamp uppercase">
-                          Petualangan Aktif
-                        </span>
-                        <div className="flex items-center gap-2 text-xs font-mono">
-                          <span className="text-gold flex items-center gap-1 font-bold">
-                            <Star className="w-3.5 h-3.5 fill-gold" />
-                            <span>{totalStars}</span>
-                          </span>
-                          <span className="text-text-secondary font-bold">{totalStages} Stage</span>
-                        </div>
-                      </div>
-
-                      <div>
-                        <h3 className="text-base sm:text-lg font-bold text-text-primary font-heading leading-snug group-hover:text-gold transition-colors">
-                          {curriculum.deckTitle}
-                        </h3>
-                      </div>
-
-                      <p className="text-xs text-text-secondary line-clamp-2 leading-relaxed mt-1">
-                        Petualangan beranggotakan {totalStages} stage materi belajar Kanji, Kotoba, dan Pola Kalimat untuk tantangan battler dan pengumpulan EXP.
-                      </p>
-                    </div>
-
-                    <div className="pt-3 border-t border-border-subtle/70 space-y-3 relative z-10 mt-3">
-                      <div className="space-y-1.5">
-                        <div className="flex justify-between text-[11px] font-mono">
-                          <span className="text-text-muted font-medium">Progres Stage:</span>
-                          <span className="font-bold text-text-primary">{clearedCount} / {totalStages} ({pct}%)</span>
-                        </div>
-                        <div className="notebook-ruler-track">
-                          <div
-                            className="notebook-ruler-fill"
-                            style={{ width: `${pct}%` }}
-                          />
-                        </div>
-                      </div>
-
-                      <div className="flex items-center justify-end pt-1">
-                        <button
-                          type="button"
-                          className="btn-physical-primary text-xs"
-                        >
-                          <Play className="w-3.5 h-3.5 fill-current" />
-                          <span>Masuk World</span>
-                          <ChevronRight className="w-3.5 h-3.5 opacity-70" />
-                        </button>
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-          ) : (
-            <div className="p-8 sm:p-10 text-center panel rounded-3xl border border-dashed border-border-subtle bg-surface-card/40 space-y-4">
-              <div className="w-14 h-14 rounded-2xl bg-gold/10 border border-gold/25 flex items-center justify-center text-gold mx-auto shadow-inner">
-                <Compass className="w-7 h-7" />
-              </div>
-              <div className="space-y-1 max-w-md mx-auto">
-                <h3 className="text-base font-bold font-heading text-text-primary">
-                  Belum Ada Petualangan World yang Aktif
-                </h3>
-                <p className="text-xs text-text-secondary leading-relaxed">
-                  World adalah tempat bermain untuk menguji kemampuan dan mengumpulkan EXP! Buka bab materi di <strong>Rak Buku Kurikulum</strong> lalu klik tombol <strong>⚔️ Petualangan World</strong>, atau buat World baru dari Buku Saku kamu.
-                </p>
-              </div>
-              <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    playSound('click', soundEnabled);
-                    if (onNavigateToOfficialBooks) {
-                      onNavigateToOfficialBooks();
-                    } else if (onNavigateTab) {
-                      onNavigateTab('deck');
-                    }
-                  }}
-                  className="btn-physical-primary text-xs py-2.5 px-4 rounded-xl flex items-center gap-2 cursor-pointer font-heading"
-                >
-                  <Library className="w-3.5 h-3.5" />
-                  <span>Buka Rak Buku Kurikulum</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
-                <button
-                  type="button"
-                  onClick={handleOpenCreateCustomWorld}
-                  className="btn-physical-secondary text-xs py-2.5 px-4 rounded-xl flex items-center gap-2 cursor-pointer font-heading"
-                >
-                  <Plus className="w-3.5 h-3.5" />
-                  <span>Buat World dari Buku Saku</span>
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-
-
-        {/* 6. BANNER MENUJU BUKU SAKU */}
-        {onNavigateTab && (
-          <div className="panel p-5 rounded-3xl bg-surface-card border border-border-subtle shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mt-2">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2 text-indigo font-bold text-sm font-heading">
-                <Bookmark className="w-4 h-4" />
-                <span>Buat Deck di Buku Saku untuk Kustom World</span>
-              </div>
-              <p className="text-xs text-text-secondary max-w-xl leading-relaxed">
-                Kelola koleksi kartu hafalan dan materi bookmark di Buku Saku. Gunakan deck tersebut untuk merancang stage petualangan Kustom World sendiri!
-              </p>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => {
-                playSound('click', soundEnabled);
-                onNavigateTab('deck');
-              }}
-              className="btn btn-secondary text-xs gap-2 py-2.5 px-4 shrink-0 shadow-xs"
-            >
-              <span>Buka Buku Saku</span>
-              <ChevronRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        )}
-      </div>
+      {worldMode === 'stage' && (
+        /* MODE 3: PETUALANGAN STAGE (PETA PERJALANAN KURIKULUM & RAK TEMATIK) */
+        <StageJourneyPicker
+          soundEnabled={soundEnabled}
+          onSelectChapterStage={handleSelectChapterStage}
+          onSelectBookStage={handleSelectBookStage}
+          onSelectCustomWorld={(curriculum) => {
+            setActiveCustomWorldDeckId(curriculum.deckId);
+          }}
+          onOpenCreateCustomWorld={handleOpenCreateCustomWorld}
+          onNavigateToBookshelf={() => {
+            if (onNavigateToOfficialBooks) {
+              onNavigateToOfficialBooks();
+            } else if (onNavigateTab) {
+              onNavigateTab('deck');
+            }
+          }}
+          userCustomWorldList={userCustomWorldList}
+          curriculumProgressMap={curriculumProgressMap}
+          itemMastery={itemMastery}
+        />
       )}
 
       {/* MODAL 1: PILIH DECK DARI BUKU SAKU */}

@@ -300,13 +300,13 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
                       }`}
                       title={`Putar pelafalan #${i + 1}: ${v}`}
                     >
-                      <span className="text-[10px] font-mono text-amber-500 font-bold">#{i + 1}</span>
+                      <span className="text-[10px] font-mono text-red-700 dark:text-amber-400 font-bold">#{i + 1}</span>
                       <span>{v}</span>
-                      <Volume2 className="w-3.5 h-3.5 text-amber-500" />
+                      <Volume2 className="w-3.5 h-3.5 text-red-700 dark:text-amber-400" />
                     </button>
                   ))}
                 </div>
-                <p className="text-[10.5px] text-amber-600 dark:text-amber-400 font-mono">
+                <p className="text-[10.5px] text-text-muted font-mono">
                   *Memiliki {readingVariations.length} cara baca alternatif. Hafalkan terpisah!
                 </p>
               </div>
@@ -328,8 +328,8 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
               {kotoba.meaningId}
             </h3>
             {(kotoba.definitionId || kotoba.meaningJaId) && (
-              <p className="text-xs text-indigo-400 dark:text-indigo-300 leading-relaxed font-medium">
-                <span className="font-bold text-text-secondary">Penjelasan Makna: </span>
+              <p className="text-xs text-text-secondary leading-relaxed font-medium">
+                <span className="font-bold text-text-primary">Penjelasan Makna: </span>
                 {kotoba.definitionId || kotoba.meaningJaId}
               </p>
             )}

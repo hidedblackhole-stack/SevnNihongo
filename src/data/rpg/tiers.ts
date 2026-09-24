@@ -5,7 +5,7 @@ export const RPG_TIERS: TierInfo[] = [
     tier: 1,
     name: 'Villager (N5)',
     titleName: 'Peasant Explorer (N5)',
-    description: 'Pakaian biasa warga desa pemula, memegang tongkat kayu sederhana di Dunia Permulaan N5.',
+    description: 'Pakaian petualang pemula yang bersiap mengawali langkah fondasi pertama di kurikulum N5.',
     visualAssetDesc: 'Simple linen tunic, wooden walking stick, humble starting adventurer.',
     baseColor: 'to-stone-600',
     glowColor: 'shadow-slate-800/40',
@@ -53,7 +53,7 @@ export const RPG_TIERS: TierInfo[] = [
     tier: 5,
     name: 'Knight (N3)',
     titleName: 'Honorable Knight (N3)',
-    description: 'Armor besi penuh (full plate), memancarkan aura keberanian memasuki Alam Soumatome N3.',
+    description: 'Armor besi penuh (full plate), memancarkan aura ketekunan mengarungi Kurikulum Soumatome N3.',
     visualAssetDesc: 'Full steel plate armor, visor helmet with plume, glowing knight blade.',
     baseColor: 'to-purple-900',
     glowColor: 'shadow-purple-500/40',
@@ -113,12 +113,12 @@ export const RPG_TIERS: TierInfo[] = [
     tier: 10,
     name: 'Mythic Deity (N1)',
     titleName: 'Mythic Deity of Knowledge (N1)',
-    description: 'Wujud maksimal transenden, mahkota cahaya suci dan sayap malaikat bercahaya penguasa 5 Dunia.',
+    description: 'Wujud puncak pembelajar sejati, memancarkan aura kebijaksanaan dan penguasaan bahasa Jepang terlengkap (N5 ~ N1).',
     visualAssetDesc: 'Transcendent deity form, luminous halo crown, 6 wings of pure radiant light.',
     baseColor: 'to-amber-500',
     glowColor: 'shadow-amber-300/80',
     requiredExpTotal: 320000,
-    perks: 'Penguasaan Penuh Seluruh 5 Alam Jepang (N5-N1). RPG Stats & Study Boost Maksimal.',
+    perks: 'Penguasaan Penuh Seluruh Kurikulum Jepang (N5-N1). RPG Stats & Study Boost Maksimal.',
     iconName: 'Star'
   }
 ];

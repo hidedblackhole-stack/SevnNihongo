@@ -169,6 +169,7 @@ export interface LeaderboardEntry {
   stat_flashcard?: number;
   stat_kanji?: number;
   stat_boss?: number;
+  signature?: string;
 }
 
 export interface WeeklyLeaderboardEntry {

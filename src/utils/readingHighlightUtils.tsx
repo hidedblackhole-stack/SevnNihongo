@@ -59,7 +59,19 @@ const getKanjiStems = (kanji: KanjiItem): string[] => {
 
 const findReadingSegments = (word: string, reading: string, kanji: KanjiItem) => {
   if (!reading) return { prefix: '', target: word || '', suffix: '' };
-  const cleanReading = reading.trim();
+
+  // Handle dot notation in dictionary readings (e.g. "う.る" -> kanji reading is "う", okurigana is "る")
+  if (reading.includes('.')) {
+    const [kanjiPart, okuri = ''] = reading.split('.');
+    const cleanOkuri = okuri.replace(/[.-]/g, '').trim();
+    return {
+      prefix: '',
+      target: kanjiPart.trim(),
+      suffix: cleanOkuri,
+    };
+  }
+
+  const cleanReading = reading.replace(/[.-]/g, '').trim();
   const char = kanji?.character;
   const kanjiIdx = word ? word.indexOf(char) : -1;
 
@@ -140,44 +152,47 @@ export const parseReadingVariations = (reading?: string): string[] => {
     .filter(Boolean);
 };
 
-export const getHighlightedYomikata = (word: string, reading: string, kanji: KanjiItem) => {
-  if (!reading) return <span className="text-wine-accent font-bold">{word}</span>;
+/**
+ * Normalizes example vocabulary word and reading for clean display in RubyText.
+ * Handles cases where dictionary entries have dotted okurigana, e.g. "売" with "う.る" -> "売る" with "うる".
+ */
+export const normalizeWordAndReading = (word: string, reading?: string) => {
+  if (!reading) return { displayWord: word, displayReading: '' };
+  // Handle alternative readings: pick primary
+  const primary = reading.split(/[/,、;]/)[0].trim();
+  if (primary.includes('.')) {
+    const [kanjiPart, okuri = ''] = primary.split('.');
+    const cleanOkuri = okuri.replace(/[.-]/g, '');
+    const displayWord = cleanOkuri && !word.includes(cleanOkuri) ? word + cleanOkuri : word;
+    const displayReading = kanjiPart + cleanOkuri;
+    return { displayWord, displayReading };
+  }
+  return { displayWord: word, displayReading: primary };
+};
 
-  // Handle alternative readings (slashes, double spaces, commas, etc.)
-  const readings = parseReadingVariations(reading);
+export const getHighlightedYomikata = (word: string, reading: string, kanji: KanjiItem) => {
+  if (!reading) return <span className="font-bold text-text-primary">{word}</span>;
+
+  // Handle alternative readings: pick primary reading
+  const primaryReading = parseReadingVariations(reading)[0] || reading;
+  const seg = findReadingSegments(word, primaryReading, kanji);
 
   return (
-    <div className="inline-flex flex-wrap items-center justify-center gap-1.5 font-jp text-sm sm:text-base">
-      {readings.map((singleReading, rIdx) => {
-        const seg = findReadingSegments(word, singleReading, kanji);
-        return (
-          <React.Fragment key={rIdx}>
-            {rIdx > 0 && <span className="text-text-muted/50 px-0.5">/</span>}
-            {seg.target && seg.target !== singleReading ? (
-              <span className="inline-flex items-center gap-0.5">
-                {seg.prefix && (
-                  <span className="text-text-secondary/60 dark:text-text-secondary/70 font-medium tracking-normal px-0.5">
-                    {seg.prefix}
-                  </span>
-                )}
-                <span className="px-2 py-0.5 rounded-md bg-wine-accent/15 dark:bg-wine-accent/30 text-wine-accent dark:text-rose-300 font-extrabold border border-wine-accent/35 shadow-xs tracking-wider">
-                  {seg.target}
-                </span>
-                {seg.suffix && (
-                  <span className="text-text-secondary/60 dark:text-text-secondary/70 font-medium tracking-normal px-0.5">
-                    {seg.suffix}
-                  </span>
-                )}
-              </span>
-            ) : (
-              <span className="px-2 py-0.5 rounded-md bg-wine-accent/15 dark:bg-wine-accent/30 text-wine-accent dark:text-rose-300 font-extrabold border border-wine-accent/35 shadow-xs tracking-wider">
-                {singleReading}
-              </span>
-            )}
-          </React.Fragment>
-        );
-      })}
-    </div>
+    <span className="inline-flex items-baseline font-jp tracking-wide">
+      {seg.prefix && (
+        <span className="text-text-primary">
+          {seg.prefix}
+        </span>
+      )}
+      <span className="text-red-700 dark:text-amber-400 font-bold">
+        {seg.target}
+      </span>
+      {seg.suffix && (
+        <span className="text-text-primary">
+          {seg.suffix}
+        </span>
+      )}
+    </span>
   );
 };
 
@@ -348,17 +363,17 @@ export const getHighlightedKotobaYomikata = (
             {rIdx > 0 && <span className="text-text-muted/50 px-1">/</span>}
             <span className="inline-flex items-center gap-0.5">
               {prefix && (
-                <span className="text-text-secondary/60 dark:text-text-secondary/70 font-medium tracking-normal px-0.5">
+                <span className="text-text-primary/90 font-medium tracking-normal px-0.5">
                   {prefix}
                 </span>
               )}
               {target ? (
-                <span className="px-2.5 py-0.5 rounded-lg bg-wine-accent/15 dark:bg-wine-accent/30 text-wine-accent dark:text-rose-300 font-extrabold border border-wine-accent/35 shadow-xs tracking-wider">
+                <span className="text-red-700 dark:text-amber-400 font-extrabold tracking-wider">
                   {target}
                 </span>
               ) : null}
               {suffix && (
-                <span className="text-text-secondary/60 dark:text-text-secondary/70 font-medium tracking-normal px-0.5">
+                <span className="text-text-primary/90 font-medium tracking-normal px-0.5">
                   {suffix}
                 </span>
               )}

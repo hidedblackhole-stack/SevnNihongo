@@ -111,13 +111,13 @@ html.theme-light,
   --leather-mid: var(--color-surface-card);
   --leather-low: var(--color-surface-inset);
 
-  /* Navy Aizome Indigo */
+  /* Warm Chestnut Russet Leather (Merah Kecoklatan Khas Penjilid Buku) */
   --indigo: #253e63;
   --indigo-deep: #182840;
-  --choco: var(--indigo-deep);
-  --choco-hi: var(--indigo);
-  --color-leather-primary: var(--indigo);
-  --color-leather-shadow: var(--indigo-deep);
+  --choco: #5f1f1b;
+  --choco-hi: #7c2d28;
+  --color-leather-primary: #7c2d28;
+  --color-leather-shadow: #3b100d;
 
   /* Sashiko Thread (Warm Earthy Washi Stitch) */
   --thread: rgba(94, 86, 64, 0.22);
@@ -197,10 +197,10 @@ html.theme-light,
 
   --color-amber-100: #fef3c7;
   --color-amber-200: #fde68a;
-  --color-amber-300: #fcd34d;
-  --color-amber-400: #fbbf24;
-  --color-amber-500: #f59e0b;
-  --color-amber-600: #d97706;
+  --color-amber-300: #8c580f;
+  --color-amber-400: #8c580f;
+  --color-amber-500: #78350f;
+  --color-amber-600: #5c3805;
   --color-amber-700: #b45309;
   --color-amber-800: #92400e;
   --color-amber-900: #78350f;
@@ -211,9 +211,9 @@ html.theme-light,
   --color-emerald-800: #065f46;
   --color-emerald-700: #047857;
   --color-emerald-600: #059669;
-  --color-emerald-500: #10b981;
-  --color-emerald-400: #1e7a54;
-  --color-emerald-300: #204531;
+  --color-emerald-500: #166534;
+  --color-emerald-400: #166534;
+  --color-emerald-300: #14532d;
   --color-emerald-200: #a7f3d0;
   --color-emerald-100: #e2f1e9;
 
@@ -795,18 +795,18 @@ html.theme-light,
 
   html.theme-light .btn-physical-primary,
   .theme-light .btn-physical-primary {
-    background: linear-gradient(180deg, #2a4168 0%, #1e304e 100%);
+    background: linear-gradient(180deg, #7c2d28 0%, #5f1f1b 100%);
     color: #f7f5ed;
-    border: 1px solid #16243b;
+    border: 1px solid #4a1714;
     box-shadow:
-      0 4px 0 #111a2a,
-      0 6px 12px rgba(30, 20, 10, 0.16),
+      0 4px 0 #3b100d,
+      0 6px 12px rgba(60, 20, 15, 0.20),
       inset 0 1px 0 rgba(255, 255, 255, 0.28);
   }
 
   html.theme-light .btn-physical-primary:hover,
   .theme-light .btn-physical-primary:hover {
-    background: linear-gradient(180deg, #324e7a 0%, #223758 100%);
+    background: linear-gradient(180deg, #8a342f 0%, #6b2420 100%);
     filter: brightness(1.03);
   }
 
@@ -814,8 +814,8 @@ html.theme-light,
   .theme-light .btn-physical-primary:active {
     transform: translateY(3px);
     box-shadow:
-      0 1px 0 #111a2a,
-      0 2px 4px rgba(30, 20, 10, 0.14),
+      0 1px 0 #3b100d,
+      0 2px 4px rgba(60, 20, 15, 0.16),
       inset 0 1px 2px rgba(0, 0, 0, 0.25);
   }
 

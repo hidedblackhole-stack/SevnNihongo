@@ -174,7 +174,7 @@ export const SakubunStudio: React.FC<SakubunStudioProps> = ({
       <div className="p-4 rounded-3xl bg-surface-base border border-border-subtle shadow-md">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border-subtle/60 pb-3">
           <div className="flex items-center gap-2.5">
-            <span className="p-2 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-500">
+            <span className="p-2 rounded-2xl bg-surface-inset border border-border-subtle text-red-700 dark:text-gold">
               <Sparkles className="w-5 h-5" />
             </span>
             <div>

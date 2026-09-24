@@ -747,7 +747,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
           <div className="panel w-full max-w-md border border-border-subtle rounded-3xl shadow-2xl p-5 space-y-4">
             <div className="flex items-center justify-between border-b border-border-subtle pb-3">
               <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-gold" />
+                <Layers className="w-4 h-4 text-gold" />
                 <h3 className="font-heading font-bold text-base text-text-primary">
                   Isi Cepat Preset JLPT
                 </h3>

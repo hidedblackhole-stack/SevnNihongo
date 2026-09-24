@@ -13,7 +13,6 @@ import {
   Layers,
   Trophy,
   Edit2,
-  Sparkles,
   ShieldAlert,
   CheckCircle2,
   AlertTriangle,
@@ -172,8 +171,7 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
                   </h3>
                 </div>
                 <div className="flex items-center justify-center gap-2 mt-2">
-                  <span className="px-3 py-1 rounded-xl bg-surface-card text-gold font-bold font-mono text-xs border border-border-subtle flex items-center gap-1.5 shadow-sm">
-                    <Star className="w-3.5 h-3.5 fill-gold text-gold" />
+                  <span className="px-3 py-1 rounded-xl bg-surface-card text-gold font-bold font-mono text-xs border border-border-subtle shadow-sm">
                     {stats.totalExp.toLocaleString()} Akumulasi EXP Belajar
                   </span>
                 </div>
@@ -201,7 +199,7 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
                       : 'bg-surface-card border-border-subtle text-indigo'
                   }`}>
                     {ascensionProgress.canAscend ? (
-                      <Sparkles className="w-4 h-4 animate-bounce" />
+                      <CheckCircle2 className="w-4 h-4" />
                     ) : ascensionProgress.isGated ? (
                       <ShieldAlert className="w-4 h-4" />
                     ) : (
@@ -226,8 +224,7 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
                 {/* Status Badge */}
                 <div className="shrink-0 self-start sm:self-auto">
                   {ascensionProgress.canAscend ? (
-                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold font-mono bg-state-success/20 text-state-success border border-state-success/40 flex items-center gap-1 shadow-sm whitespace-nowrap">
-                      <Sparkles className="w-3 h-3 fill-state-success" />
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold font-mono bg-state-success/20 text-state-success border border-state-success/40 shadow-sm whitespace-nowrap">
                       Siap Ascend
                     </span>
                   ) : ascensionProgress.isGated ? (
@@ -355,10 +352,9 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
                         onAscendTier?.(ascensionProgress.nextTierIndex, ascensionProgress.targetJlpt);
                       }
                     }}
-                    className="w-full py-2.5 px-4 rounded-2xl font-bold font-heading text-xs uppercase tracking-wider bg-gradient-to-r from-state-success via-emerald-500 to-teal-500 hover:from-state-success/90 hover:to-teal-400 text-white shadow-lg shadow-state-success/25 hover:shadow-state-success/40 active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    className="btn-physical-primary w-full py-2.5 px-4 rounded-2xl font-bold font-heading text-xs uppercase tracking-wider text-white shadow-md active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
                   >
-                    <Sparkles className="w-4 h-4 fill-white animate-spin" />
-                    ⚡ Lakukan Ascend ke {ascensionProgress.targetJlpt}!
+                    <span>Lakukan Ascend ke {ascensionProgress.targetJlpt}!</span>
                   </button>
                 )}
               </div>

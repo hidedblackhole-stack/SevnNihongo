@@ -18,7 +18,8 @@ export interface OfficialBook {
   japaneseTitle: string;
   subtitle: string;
   description: string;
-  level: 'KANA' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'Kaigo';
+  level: 'KANA' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'Kaigo' | 'TEMATIK';
+  category?: 'curriculum' | 'thematic';
   coverIcon: string;
   colorTheme: {
     accentColor: string;

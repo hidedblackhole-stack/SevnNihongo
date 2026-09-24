@@ -204557,5 +204557,158 @@
       "宣",
       "伝"
     ]
+  },
+  "kotoba_theme_kao": {
+    "id": "kotoba_theme_kao",
+    "word": "顔",
+    "reading": "かお",
+    "meaningId": "Wajah; muka",
+    "meaningEn": "face",
+    "meaningJa": "頭部の前面。目・鼻・口などがある部分。",
+    "jlpt": "N5",
+    "wordType": "noun",
+    "kanjiComponents": [
+      "顔"
+    ],
+    "exampleSentence": {
+      "japanese": "毎朝、冷たい水で顔を洗います。",
+      "reading": "まいあさ、つめたいみずでかおをあらいます。",
+      "meaningId": "Setiap pagi, saya mencuci muka dengan air dingin."
+    }
+  },
+  "kotoba_theme_ashikubi": {
+    "id": "kotoba_theme_ashikubi",
+    "word": "足首",
+    "reading": "あしくび",
+    "meaningId": "Pergelangan kaki",
+    "meaningEn": "ankle",
+    "meaningJa": "足と下腿の境の細い部分。",
+    "jlpt": "N3",
+    "wordType": "noun",
+    "kanjiComponents": [
+      "足",
+      "首"
+    ],
+    "exampleSentence": {
+      "japanese": "階段で足を滑らせて足首をひねった。",
+      "reading": "かいだんであしをすべらせてあしくびをひねった。",
+      "meaningId": "Saya terpeleset di tangga dan pergelangan kaki saya terkilir."
+    }
+  },
+  "kotoba_theme_denshirenji": {
+    "id": "kotoba_theme_denshirenji",
+    "word": "電子レンジ",
+    "reading": "でんしれんじ",
+    "meaningId": "Microwave (alat penghangat makanan)",
+    "meaningEn": "microwave oven",
+    "meaningJa": "高周波電磁波を利用して食品を加熱調理する器具。",
+    "jlpt": "N4",
+    "wordType": "noun",
+    "kanjiComponents": [
+      "電",
+      "子"
+    ],
+    "exampleSentence": {
+      "japanese": "お弁当を電子レンジで２分温めてください。",
+      "reading": "おべんとうをでんしれんじでにふんあたためてください。",
+      "meaningId": "Tolong hangatkan bento ini dengan microwave selama 2 menit."
+    }
+  },
+  "kotoba_theme_haburashi": {
+    "id": "kotoba_theme_haburashi",
+    "word": "歯ブラシ",
+    "reading": "はぶらし",
+    "meaningId": "Sikat gigi",
+    "meaningEn": "toothbrush",
+    "meaningJa": "歯を磨くためのブラシ。",
+    "jlpt": "N5",
+    "wordType": "noun",
+    "kanjiComponents": [
+      "歯"
+    ],
+    "exampleSentence": {
+      "japanese": "毎食後、歯ブラシで歯を丁寧に磨きます。",
+      "reading": "まいしょくご、はぶらしではをていねいにみがきます。",
+      "meaningId": "Setelah setiap makan, saya menyikat gigi dengan seksama menggunakan sikat gigi."
+    }
+  },
+  "kotoba_theme_kouza": {
+    "id": "kotoba_theme_kouza",
+    "word": "口座",
+    "reading": "こうざ",
+    "meaningId": "Rekening (bank)",
+    "meaningEn": "bank account",
+    "meaningJa": "銀行などで預金などの取引をするために設ける口座。",
+    "jlpt": "N3",
+    "wordType": "noun",
+    "kanjiComponents": [
+      "口",
+      "座"
+    ],
+    "exampleSentence": {
+      "japanese": "銀行で新しい普通預金口座を開設しました。",
+      "reading": "ぎんこうであたらしいふつうよきんこうざをかいせつしました。",
+      "meaningId": "Saya telah membuka rekening tabungan biasa baru di bank."
+    }
+  },
+  "kotoba_theme_furikomi": {
+    "id": "kotoba_theme_furikomi",
+    "word": "振込",
+    "reading": "ふりこみ",
+    "meaningId": "Transfer bank / pembayaran via rekening",
+    "meaningEn": "bank transfer",
+    "meaningJa": "指定の口座にお金を払い込むこと。",
+    "jlpt": "N3",
+    "wordType": "noun",
+    "kanjiComponents": [
+      "振",
+      "込"
+    ],
+    "exampleSentence": {
+      "japanese": "家賃は毎月２５日までに銀行振込で支払います。",
+      "reading": "やちんはまいつきにじゅうごにちまでにぎんこうふりこみでしはらいます。",
+      "meaningId": "Uang sewa rumah dibayar lewat transfer bank sebelum tanggal 25 setiap bulannya."
+    }
+  },
+  "kotoba_theme_anshoubangou": {
+    "id": "kotoba_theme_anshoubangou",
+    "word": "暗証番号",
+    "reading": "あんしょうばんごう",
+    "meaningId": "Nomor PIN / kata sandi rahasia ATM",
+    "meaningEn": "PIN number / personal identification number",
+    "meaningJa": "本人確認のための秘密の番号。",
+    "jlpt": "N3",
+    "wordType": "noun",
+    "kanjiComponents": [
+      "暗",
+      "証",
+      "番",
+      "号"
+    ],
+    "exampleSentence": {
+      "japanese": "ATMで暗証番号を３回間違えるとカードが使えなくなります。",
+      "reading": "えーてぃーえむであんしょうばんごうをさんかいまちがえるとかーどがつかえなくなります。",
+      "meaningId": "Jika salah memasukkan PIN ATM 3 kali, kartu tidak akan bisa digunakan lagi."
+    }
+  },
+  "kotoba_theme_hokenshou": {
+    "id": "kotoba_theme_hokenshou",
+    "word": "保険証",
+    "reading": "ほけんしょう",
+    "meaningId": "Kartu asuransi kesehatan",
+    "meaningEn": "health insurance card",
+    "meaningJa": "健康保険に加入していることを証明する証書。",
+    "jlpt": "N3",
+    "wordType": "noun",
+    "kanjiComponents": [
+      "保",
+      "険",
+      "証"
+    ],
+    "exampleSentence": {
+      "japanese": "病院の受付で健康保険証を提示してください。",
+      "reading": "びょういんのうけつけでけんこうほけんしょうをていじしてください。",
+      "meaningId": "Tolong tunjukkan kartu asuransi kesehatan di meja resepsionis rumah sakit."
+    }
   }
 }

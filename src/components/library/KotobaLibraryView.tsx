@@ -31,8 +31,8 @@ const LEVEL_BADGE_STYLE: Record<string, string> = {
   N3: 'border-border-subtle text-text-primary bg-surface-inset shadow-sm',
   N2: 'border-border-subtle text-text-primary bg-surface-inset shadow-sm',
   N1: 'border-border-subtle text-text-primary bg-surface-inset shadow-sm',
-  Kaigo: 'border-emerald-500/40 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 shadow-sm font-bold',
-  SSW: 'border-amber-500/40 text-amber-600 dark:text-amber-400 bg-amber-500/10 shadow-sm font-bold',
+  Kaigo: 'border-emerald-800/30 dark:border-emerald-500/40 text-emerald-800 dark:text-emerald-400 bg-surface-inset shadow-sm font-bold',
+  SSW: 'border-red-700/25 dark:border-amber-500/40 text-red-700 dark:text-amber-400 bg-surface-inset shadow-sm font-bold',
 };
 
 export type PriorityTier = 'all' | 'essential' | 'important' | 'supplementary';

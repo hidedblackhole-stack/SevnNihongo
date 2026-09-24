@@ -1,10 +1,8 @@
 {
   "id": "n2_2024_07",
-  "title": "JLPT N2 — Juli 2024 (Resmi)",
+  "title": "Simulasi N2 — Paket 005",
   "level": "N2",
-  "code": "2024-07",
-  "year": 2024,
-  "month": 7,
+  "code": "005",
   "passingScore": 90,
   "maxScore": 180,
   "sections": {

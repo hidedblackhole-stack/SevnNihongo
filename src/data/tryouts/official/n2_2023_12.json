@@ -1,10 +1,8 @@
 {
   "id": "n2_2023_12",
-  "title": "JLPT N2 — Desember 2023 (Resmi)",
+  "title": "Simulasi N2 — Paket 006",
   "level": "N2",
-  "code": "2023-12",
-  "year": 2023,
-  "month": 12,
+  "code": "006",
   "passingScore": 90,
   "maxScore": 180,
   "sections": {

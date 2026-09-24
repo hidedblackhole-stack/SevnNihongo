@@ -220,10 +220,12 @@ async function scrapeExamPage(level, pageUrl, fileName) {
     year = parseInt(nameMatch[2], 10);
   }
 
-  const monthName = month === 7 ? 'Juli' : month === 12 ? 'Desember' : `Bulan ${month}`;
-  const packageCode = `${year}-${String(month).padStart(2, '0')}`;
+  const levelCounters = global.levelCounters || (global.levelCounters = { N1: 2, N2: 4, N3: 3 });
+  const packageNum = levelCounters[level] || 1;
+  levelCounters[level] = packageNum + 1;
+  const packageCode = String(packageNum).padStart(3, '0');
   const packageId = `${level.toLowerCase()}_${year}_${String(month).padStart(2, '0')}`;
-  const title = `JLPT ${level} — ${monthName} ${year} (Resmi)`;
+  const title = `Simulasi ${level} — Paket ${packageCode}`;
 
   const { mojiGoi, bunpouDokkai, choukai } = parseSectionsFromHtml(html, packageId, level);
 
@@ -232,8 +234,6 @@ async function scrapeExamPage(level, pageUrl, fileName) {
     title,
     level,
     code: packageCode,
-    year,
-    month,
     passingScore: level === 'N1' ? 100 : level === 'N2' ? 90 : 95,
     maxScore: 180,
     sections: {
@@ -266,8 +266,6 @@ async function scrapeExamPage(level, pageUrl, fileName) {
     level,
     title,
     code: packageCode,
-    year,
-    month,
     totalQuestions,
     fileName: `${packageId}.json`,
     filePath: `./official/${packageId}.json`
@@ -353,7 +351,7 @@ async function run() {
 
 function generateOfficialIndex(manifest) {
   const lines = [
-    `// Auto-generated official JLPT exam packages from themarsjlpt.dev`,
+    `// Auto-generated JLPT exam simulation packages`,
     `import { TryOutMeta } from '../index';`,
     `import { TryOutData } from '../../../types/content';`,
     ``

@@ -1,10 +1,8 @@
 {
   "id": "n1_2023_07",
-  "title": "JLPT N1 — Juli 2023 (Resmi)",
+  "title": "Simulasi N1 — Paket 005",
   "level": "N1",
-  "code": "2023-07",
-  "year": 2023,
-  "month": 7,
+  "code": "005",
   "passingScore": 100,
   "maxScore": 180,
   "sections": {
