@@ -1328,7 +1328,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                     <div
                       key={i}
                       onClick={() => {
-                        speakJapanese(displayWord);
+                        speakJapanese(displayReading || displayWord);
                         playSound('click', soundEnabled);
                       }}
                       className="p-2.5 rounded-xl bg-surface-inset hover:bg-surface-elevated border border-border-subtle hover:border-border-primary transition-all cursor-pointer flex items-center justify-between gap-2 shadow-xs group"

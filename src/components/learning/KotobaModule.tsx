@@ -256,8 +256,8 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
     return list;
   }, [items, detectedConjugations]);
 
-  const handlePlayAudio = (word: string) => {
-    speakJapanese(word);
+  const handlePlayAudio = (word: string, reading?: string) => {
+    speakJapanese(reading || word);
   };
 
   const handleFlipCard = () => {
@@ -421,7 +421,7 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        handlePlayAudio(item.word);
+                        handlePlayAudio(item.word, item.reading);
                       }}
                       className="p-1.5 rounded-lg bg-surface-inset text-text-secondary hover:text-indigo hover:bg-surface-elevated transition-colors"
                       title="Dengar Audio"

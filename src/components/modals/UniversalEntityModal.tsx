@@ -191,7 +191,7 @@ export const UniversalEntityModal: React.FC<UniversalEntityModalProps> = ({
   // Audio speech
   const handlePlayAudio = () => {
     if (!unified) return;
-    speakJapanese(unified.title || unified.reading);
+    speakJapanese(unified.reading || unified.title);
     playSound('click', soundEnabled);
   };
 

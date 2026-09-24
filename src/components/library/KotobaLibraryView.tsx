@@ -535,7 +535,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        speakJapanese(item.word);
+                        speakJapanese(item.reading || item.word);
                       }}
                       className="p-2.5 rounded-xl bg-surface-inset text-text-secondary hover:bg-surface-elevated hover:text-text-primary transition-colors border border-border-subtle"
                       title="Dengarkan Pengucapan"

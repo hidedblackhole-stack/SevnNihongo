@@ -350,7 +350,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        speakJapanese(rw.word);
+                        speakJapanese(rw.reading || rw.word);
                       }}
                       className="p-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-wine-accent border border-border-subtle transition-colors shrink-0"
                       title="Dengar pengucapan"

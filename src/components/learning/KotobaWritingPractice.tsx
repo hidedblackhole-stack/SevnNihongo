@@ -117,7 +117,7 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
       // Final character completed
       setIsTimerRunning(false); // Stop stopwatch on word completion
       playSound('fanfare', soundEnabled);
-      speakJapanese(kotoba.word);
+      speakJapanese(displayPracticeReading || kotoba.reading || kotoba.word);
       const baseExp = getKotobaBaseExp(kotoba);
       const reward = calculateWritingReward({
         baseExp,
@@ -163,7 +163,7 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
             {/* Yomikata / Reading Card with dynamic syllable highlight per character (matching KanjiWritingCanvas layout) */}
             <div
               className="flex flex-col items-center justify-between px-4 py-3 rounded-2xl bg-surface-inset hover:bg-surface-card border border-border-subtle hover:border-wine-accent/40 transition-all shadow-inner group cursor-pointer w-full text-center"
-              onClick={() => speakJapanese(kotoba.word)}
+              onClick={() => speakJapanese(displayPracticeReading || kotoba.reading || kotoba.word)}
               title="Klik untuk mendengar audio kata ini"
             >
               {/* Highlighted Yomikata Reading */}
@@ -312,7 +312,7 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
               </div>
             ) : (
               <button
-                onClick={() => speakJapanese(kotoba.word)}
+                onClick={() => speakJapanese(displayPracticeReading || kotoba.reading || kotoba.word)}
                 className="mx-auto flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-colors text-xs font-bold border border-border-subtle shadow-sm"
                 title="Dengarkan pelafalan"
               >
