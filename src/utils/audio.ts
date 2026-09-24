@@ -301,6 +301,42 @@ export function playSound(type: SoundType, soundEnabled: boolean = true) {
   }
 }
 
+// Voice cache for SpeechSynthesis
+let cachedVoices: SpeechSynthesisVoice[] = [];
+
+if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+  cachedVoices = window.speechSynthesis.getVoices();
+  window.speechSynthesis.onvoiceschanged = () => {
+    cachedVoices = window.speechSynthesis.getVoices();
+  };
+}
+
+function getBestJapaneseVoice(): SpeechSynthesisVoice | null {
+  if (typeof window === 'undefined' || !('speechSynthesis' in window)) return null;
+  const voices = cachedVoices.length > 0 ? cachedVoices : window.speechSynthesis.getVoices();
+  const jaVoices = voices.filter(v => {
+    const l = v.lang.replace('_', '-').toLowerCase();
+    return l.startsWith('ja') || l.includes('ja-jp');
+  });
+
+  if (jaVoices.length === 0) return null;
+
+  // 1. Highest priority: Online / Neural / Natural AI voices (e.g. Microsoft Nanami Natural, Google 日本語)
+  const neuralVoice = jaVoices.find(v => 
+    /natural|neural|online|google|premium|enhanced/i.test(v.name)
+  );
+  if (neuralVoice) return neuralVoice;
+
+  // 2. High priority: Known high-quality Japanese voice models
+  const qualityVoice = jaVoices.find(v =>
+    /nanami|keita|kyoko|otoya|mei|sayaka|haruka|ayumi/i.test(v.name)
+  );
+  if (qualityVoice) return qualityVoice;
+
+  // 3. Fallback to any Japanese voice
+  return jaVoices[0];
+}
+
 // Japanese Text-to-Speech using browser SpeechSynthesis
 export function speakJapanese(text: string, rate: number = 0.95): Promise<void> {
   return new Promise((resolve) => {
@@ -316,9 +352,8 @@ export function speakJapanese(text: string, rate: number = 0.95): Promise<void> 
       utterance.rate = rate;
       utterance.pitch = 1.0;
 
-      // Find Japanese voice if available
-      const voices = window.speechSynthesis.getVoices();
-      const jaVoice = voices.find(v => v.lang.includes('ja') || v.lang.includes('JP'));
+      // Select highest quality Neural/Natural voice available
+      const jaVoice = getBestJapaneseVoice();
       if (jaVoice) {
         utterance.voice = jaVoice;
       }
