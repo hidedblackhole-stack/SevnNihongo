@@ -1,18 +1,20 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import {
   X,
   Volume2,
   ChevronRight,
+  ChevronLeft,
   CheckCircle2,
   XCircle,
   RotateCcw,
-  ArrowDown,
   ArrowRight,
   Lightbulb,
   AlertTriangle,
   Flame,
+  Layers,
+  BookOpen,
 } from 'lucide-react';
 import { BunpouItem, Question, ItemMasteryRecord } from '../../types/content';
 import { RubyText } from '../learning/RubyText';
@@ -60,6 +62,82 @@ const cleanSummary = (text?: string): string => {
     .trim();
 };
 
+type ScrapbookTabId = 'inti' | 'rumus' | 'fungsi' | 'contoh' | 'kuis';
+
+interface ScrapbookTabMeta {
+  id: ScrapbookTabId;
+  label: string;
+  paletteName: string;
+  tabNumber: string;
+  tabColorActive: string;
+  tabColorInactive: string;
+  sheetAccentBg: string;
+  tagline: string;
+}
+
+const SCRAPBOOK_TABS: ScrapbookTabMeta[] = [
+  {
+    id: 'inti',
+    label: 'Inti Makna',
+    paletteName: 'Beige',
+    tabNumber: '①',
+    tabColorActive:
+      'bg-[#f4eee1] text-[#3d3322] border-[#c8bba3] dark:bg-[#2c261e] dark:text-[#f3ede1] dark:border-[#524637]',
+    tabColorInactive:
+      'bg-[#e2d8c5] text-[#63553f] border-[#c8bba3] hover:bg-[#ede5d5] dark:bg-[#1f1b16] dark:text-[#a89b88] dark:border-[#383025] hover:dark:bg-[#28221b]',
+    sheetAccentBg: 'border-l-4 border-l-[#bfa06d]',
+    tagline: 'Esensi & pola pikir dasar pola ini',
+  },
+  {
+    id: 'rumus',
+    label: 'Rumus & Pola',
+    paletteName: 'Steel',
+    tabNumber: '②',
+    tabColorActive:
+      'bg-[#4a6d8c] text-white border-[#3b5974] dark:bg-[#274057] dark:text-white dark:border-[#3d5e7d]',
+    tabColorInactive:
+      'bg-[#405f7c] text-white/80 border-[#324b61] hover:bg-[#4a6d8c] dark:bg-[#182937] dark:text-[#8cb3d9] dark:border-[#243a4e] hover:dark:bg-[#203445]',
+    sheetAccentBg: 'border-l-4 border-l-[#4a6d8c]',
+    tagline: 'Koneksi kata kerja, sifat & kata benda',
+  },
+  {
+    id: 'fungsi',
+    label: 'Fungsi & Nuansa',
+    paletteName: 'Carolina',
+    tabNumber: '③',
+    tabColorActive:
+      'bg-[#7ba399] text-[#112923] border-[#65887e] dark:bg-[#233d37] dark:text-[#e6f4f1] dark:border-[#375a51]',
+    tabColorInactive:
+      'bg-[#6d9289] text-[#112923]/80 border-[#56766d] hover:bg-[#7ba399] dark:bg-[#162723] dark:text-[#8cb8ae] dark:border-[#233a34] hover:dark:bg-[#1e342f]',
+    sheetAccentBg: 'border-l-4 border-l-[#7ba399]',
+    tagline: 'Kapan dipakai & cegah tertukar',
+  },
+  {
+    id: 'contoh',
+    label: 'Contoh Nyata',
+    paletteName: 'Cherry',
+    tabNumber: '④',
+    tabColorActive:
+      'bg-[#b85338] text-white border-[#9b422a] dark:bg-[#4a2016] dark:text-[#ffdfd7] dark:border-[#6b2c1f]',
+    tabColorInactive:
+      'bg-[#a3472d] text-white/80 border-[#853721] hover:bg-[#b85338] dark:bg-[#2c130d] dark:text-[#df8c7c] dark:border-[#421b13] hover:dark:bg-[#3d1a12]',
+    sheetAccentBg: 'border-l-4 border-l-[#b85338]',
+    tagline: 'Kalimat percakapan bertingkat & audio',
+  },
+  {
+    id: 'kuis',
+    label: 'Latihan Kuis',
+    paletteName: 'Peaches',
+    tabNumber: '⑤',
+    tabColorActive:
+      'bg-[#e59e93] text-[#3d1a15] border-[#c98378] dark:bg-[#482426] dark:text-[#ffe4e2] dark:border-[#683437]',
+    tabColorInactive:
+      'bg-[#cc8b80] text-[#3d1a15]/80 border-[#b07369] hover:bg-[#e59e93] dark:bg-[#271415] dark:text-[#d99497] dark:border-[#381c1e] hover:dark:bg-[#381a1c]',
+    sheetAccentBg: 'border-l-4 border-l-[#e59e93]',
+    tagline: 'Uji pemahaman & raih +15 EXP',
+  },
+];
+
 export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
   item,
   masteryRecord,
@@ -79,41 +157,37 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
     onClose();
   }, 'bunpou_detail_modal');
 
+  // Scrapbook Active Tab State
+  const [activeTab, setActiveTab] = useState<ScrapbookTabId>('inti');
+
   // Extract human-centered learning flow
   const skillNodes = getGrammarSkillNodes(item);
   const patternTitle = getCanonicalGrammarTitle(item);
   const categoryTags = getBunpouCategoryTags(item);
   const levelLabel = item.baseLevel ? `Level ${item.baseLevel}` : `Level ${item.level}`;
 
-  // Section references for quick-jump navigation
-  const node1Ref = useRef<HTMLDivElement>(null);
-  const node2Ref = useRef<HTMLDivElement>(null);
-  const node3Ref = useRef<HTMLDivElement>(null);
-  const node4Ref = useRef<HTMLDivElement>(null);
-  const node5Ref = useRef<HTMLDivElement>(null);
-  const node6Ref = useRef<HTMLDivElement>(null);
-  const node7Ref = useRef<HTMLDivElement>(null);
+  const currentTabIdx = SCRAPBOOK_TABS.findIndex((t) => t.id === activeTab);
+  const activeTabMeta = SCRAPBOOK_TABS[currentTabIdx] || SCRAPBOOK_TABS[0];
 
-  const nodeRefs = [node1Ref, node2Ref, node3Ref, node4Ref, node5Ref, node6Ref, node7Ref];
-  const stepItems = [
-    { label: '① Inti', essential: true },
-    { label: '② Fungsi', essential: true },
-    { label: '③ Rumus', essential: true },
-    { label: '④ Kata Cocok', essential: false },
-    { label: '⑤ Perbedaan', essential: false },
-    { label: '⑥ Contoh', essential: true },
-    { label: '⑦ Kuis', essential: true },
-  ];
-
-  const scrollToNode = (index: number) => {
+  const handleTabChange = (tabId: ScrapbookTabId) => {
+    if (tabId === activeTab) return;
     playSound('click', soundEnabled);
-    const target = nodeRefs[index]?.current;
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setActiveTab(tabId);
+  };
+
+  const handlePrevTab = () => {
+    if (currentTabIdx > 0) {
+      handleTabChange(SCRAPBOOK_TABS[currentTabIdx - 1].id);
     }
   };
 
-  // Node 7: Training Quiz States
+  const handleNextTab = () => {
+    if (currentTabIdx < SCRAPBOOK_TABS.length - 1) {
+      handleTabChange(SCRAPBOOK_TABS[currentTabIdx + 1].id);
+    }
+  };
+
+  // Node 5: Training Quiz States
   const questions = skillNodes.trainingQuestions || [];
   const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);
   const activeQuestion: Question | undefined = questions[currentQuestionIdx] || questions[0];
@@ -167,15 +241,15 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
 
   return createPortal(
     <motion.div
-      key="grammar-skill-modal-container"
-      className="fixed inset-0 z-[80] flex items-center justify-center p-2 sm:p-4"
+      key="grammar-scrapbook-modal-container"
+      className="fixed inset-0 z-[80] flex items-center justify-center p-2 sm:p-4 select-none"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      {/* Backdrop */}
+      {/* Dimmed Ambient Backdrop with warm desk atmosphere */}
       <motion.div
-        className="fixed inset-0 bg-black/80 backdrop-blur-md"
+        className="fixed inset-0 bg-black/80 backdrop-blur-sm"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -185,628 +259,734 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
         }}
       />
 
-      {/* Modal Dialog */}
+      {/* Main Scrapbook Binder Notebook Container */}
       <motion.div
         initial={{ scale: 0.95, opacity: 0, y: 15 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.95, opacity: 0, y: 15 }}
         transition={{ duration: 0.2, ease: 'easeOut' }}
-        className="relative z-10 panel w-full max-w-3xl border border-border-primary rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh] sm:max-h-[90vh] bg-surface-card"
+        className="panel relative z-10 w-full max-w-2xl flex flex-col max-h-[92vh] sm:max-h-[88vh] overflow-hidden rounded-3xl shadow-2xl border border-border-primary/60 bg-surface-card"
         onClick={(e) => e.stopPropagation()}
       >
         {/* ======================================================== */}
-        {/* HEADER IDENTITY: BERSIH & RAMAH PEMULA                   */}
+        {/* SCRAPBOOK TOP FOLDER DIVIDER TABS                        */}
         {/* ======================================================== */}
-        <div className="p-4 sm:p-6 border-b border-border-subtle shrink-0 bg-surface-elevated/95 relative overflow-hidden">
-          {/* Subtle Ambient Glow */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-indigo/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="relative pt-2.5 sm:pt-3 px-2 sm:px-4 bg-surface-inset border-b border-border-subtle flex items-end justify-between gap-1 overflow-x-auto scrollbar-none select-none">
+          <div className="flex items-end gap-1 sm:gap-1.5 min-w-max">
+            {SCRAPBOOK_TABS.map((tab) => {
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => handleTabChange(tab.id)}
+                  className={`group relative transition-all duration-200 cursor-pointer rounded-t-xl sm:rounded-t-2xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 flex items-center gap-1 sm:gap-1.5 border-t border-x font-heading text-xs sm:text-sm font-bold ${
+                    isActive
+                      ? `${tab.tabColorActive} z-30 translate-y-[1px] shadow-sm pb-2.5 sm:pb-3`
+                      : `${tab.tabColorInactive} z-10 opacity-75 hover:opacity-100 hover:-translate-y-0.5`
+                  }`}
+                  title={`${tab.label} (${tab.paletteName})`}
+                >
+                  {/* Tab Label */}
+                  <span>
+                    {tab.tabNumber} {tab.label}
+                  </span>
 
-          <div className="relative z-10 flex items-start justify-between gap-4">
-            <div className="space-y-2 min-w-0 flex-1">
-              {/* Badges */}
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded-lg bg-indigo/15 text-indigo text-xs font-mono font-bold border border-indigo/30 shadow-xs">
+                  {/* Palette Name (Desktop Accent) */}
+                  <span
+                    className={`text-[9px] sm:text-[10px] uppercase font-mono tracking-wider opacity-60 hidden sm:inline ${
+                      isActive ? 'font-bold opacity-80' : ''
+                    }`}
+                  >
+                    {tab.paletteName}
+                  </span>
+
+                  {/* Active Elevated Tab Highlight */}
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeTabUnderline"
+                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-white/40"
+                    />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Quick Close & Tools on Tab Spine */}
+          <div className="pb-1.5 sm:pb-2 flex items-center gap-1.5 pl-2 shrink-0">
+            <DeckBookmarkPicker
+              itemId={item.id}
+              category="bunpou"
+              itemTitle={item.title}
+              itemSubtitle={item.meaningId || (item as any).meaning}
+              userDecks={userDecks}
+              onToggleDeckItem={onToggleDeckItem}
+              isDefaultBookmarked={isBookmarked}
+              onToggleDefaultBookmark={onToggleBookmark}
+              onUpdateDecks={onUpdateDecks}
+              soundEnabled={soundEnabled}
+            />
+
+            <button
+              type="button"
+              onClick={onClose}
+              className="p-1.5 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-colors cursor-pointer border border-border-subtle shadow-xs"
+              title="Tutup Scrapbook"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        {/* ======================================================== */}
+        {/* ACTIVE SCRAPBOOK SHEET                                   */}
+        {/* ======================================================== */}
+        <div className="flex-1 overflow-y-auto bg-surface-card text-text-primary flex flex-col relative scrollbar-thin">
+          {/* Stationery Page Header Banner */}
+          <div className="p-3.5 sm:p-5 border-b border-border-subtle bg-surface-elevated/40 relative">
+            {/* Washi Tape Accent on Top-Left */}
+            <div className="absolute -top-1.5 left-5 sm:left-8 w-16 sm:w-20 h-3.5 bg-gold/25 border-y border-dashed border-gold/40 rotate-[-1.5deg] rounded-xs shadow-xs pointer-events-none z-10" />
+
+            <div className="space-y-1.5 max-w-xl">
+              {/* Badges & Stamps */}
+              <div className="flex flex-wrap items-center gap-1.5">
+                <span className="px-2 py-0.5 rounded-lg bg-indigo/15 text-indigo text-[11px] font-mono font-bold border border-indigo/30 shadow-xs">
                   {levelLabel}
                 </span>
 
                 {categoryTags.map((tag, tIdx) => (
                   <span
                     key={tIdx}
-                    className="px-2 py-0.5 rounded-lg bg-surface-card text-text-secondary text-[11px] font-mono font-semibold border border-border-subtle"
+                    className="px-2 py-0.5 rounded-lg bg-surface-inset text-text-secondary text-[10px] font-mono border border-border-subtle"
                   >
                     {tag}
                   </span>
                 ))}
+
+                {/* Hanko Seal Stamp */}
+                <span className="px-1.5 py-0.5 rounded-sm border border-wine text-wine font-jp text-[10px] font-bold tracking-wider rotate-[-1.5deg] bg-wine/10">
+                  文法検定
+                </span>
               </div>
 
-              {/* Pattern Title */}
-              <div className="flex items-center gap-2.5">
-                <h1 className="text-xl sm:text-2xl font-bold text-text-primary font-heading tracking-wide font-jp truncate">
+              {/* Grammar Pattern Title */}
+              <div className="flex items-center gap-2 pt-0.5">
+                <h1 className="text-lg sm:text-xl font-bold text-text-primary font-heading tracking-wide font-jp truncate">
                   {patternTitle}
                 </h1>
 
                 <button
                   type="button"
                   onClick={() => speakJapanese(patternTitle.replace(/^[〜~]/, ''))}
-                  className="p-1.5 sm:p-2 rounded-xl bg-surface-card hover:bg-surface-inset text-indigo hover:text-indigo-light transition-all border border-border-subtle cursor-pointer shrink-0 shadow-xs active:scale-95"
-                  title="Dengarkan pelafalan"
+                  className="p-1 sm:p-1.5 rounded-lg bg-surface-card hover:bg-surface-elevated text-indigo hover:text-indigo-light transition-all border border-border-subtle cursor-pointer shrink-0 shadow-xs active:scale-95"
+                  title="Dengarkan pelafalan pola kalimat"
                 >
-                  <Volume2 className="w-4 h-4" />
+                  <Volume2 className="w-3.5 h-3.5" />
                 </button>
               </div>
 
-              {/* Plain Meaning */}
-              <p className="text-xs sm:text-sm text-text-secondary leading-relaxed max-w-xl font-normal">
+              {/* Meaning Summary */}
+              <p className="text-xs sm:text-sm text-text-secondary font-normal leading-relaxed">
                 {cleanSummary(item.meaningId || (item as any).meaning)}
               </p>
             </div>
-
-            {/* Top Right Actions */}
-            <div className="flex items-center gap-2 shrink-0">
-              <DeckBookmarkPicker
-                itemId={item.id}
-                category="bunpou"
-                itemTitle={item.title}
-                itemSubtitle={item.meaningId || (item as any).meaning}
-                userDecks={userDecks}
-                onToggleDeckItem={onToggleDeckItem}
-                isDefaultBookmarked={isBookmarked}
-                onToggleDefaultBookmark={onToggleBookmark}
-                onUpdateDecks={onUpdateDecks}
-                soundEnabled={soundEnabled}
-              />
-
-              <button
-                type="button"
-                onClick={onClose}
-                className="p-2 rounded-2xl bg-surface-card hover:bg-surface-inset text-text-muted hover:text-text-primary transition-colors border border-border-subtle cursor-pointer shadow-xs"
-                title="Tutup"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
           </div>
 
-          {/* Quick Flow Stepper */}
-          <div className="pt-3 mt-1.5 border-t border-border-subtle/70 flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
-            {stepItems.map((step, sIdx) => (
-              <button
-                key={sIdx}
-                type="button"
-                onClick={() => scrollToNode(sIdx)}
-                className={`px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl text-xs font-semibold font-sans transition-all whitespace-nowrap shrink-0 flex items-center gap-1.5 cursor-pointer shadow-xs active:scale-95 ${
-                  step.essential
-                    ? 'bg-surface-card hover:bg-surface-inset border border-border-subtle text-text-primary hover:text-indigo'
-                    : 'bg-surface-inset/60 hover:bg-surface-card border border-border-subtle/60 text-text-muted hover:text-text-secondary'
-                }`}
-              >
-                <span>{step.label}</span>
-                {step.essential && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-gold shrink-0" title="Wajib Paham" />
-                )}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* ======================================================== */}
-        {/* LEARNING FLOW: 7 KARTU BELAJAR MANUSIAWI                 */}
-        {/* ======================================================== */}
-        <div className="flex-1 overflow-y-auto p-3.5 sm:p-6 space-y-4 sm:space-y-6 scrollbar-thin">
-
-          {/* ------------------------------------------------------ */}
-          {/* CARD 1: INTI POLA — "Apa maksudnya?" (WAJIB PAHAM)     */}
-          {/* ------------------------------------------------------ */}
-          <div ref={node1Ref} className="panel p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-surface-card border border-border-subtle shadow-sm space-y-3.5">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-indigo font-bold text-xs uppercase tracking-wider font-heading">
-                <Lightbulb className="w-4 h-4 text-indigo" />
-                <span>① Inti Pola: "Apa maksudnya?"</span>
-              </div>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-indigo/10 text-indigo border border-indigo/20">
-                Wajib Paham ★★★★★
-              </span>
-            </div>
-
-            {/* Direct Essence Statement */}
-            <div className="p-3.5 sm:p-4 rounded-2xl bg-surface-inset border border-border-subtle/80 space-y-3">
-              <div className="space-y-1">
-                <span className="px-2 py-0.5 rounded-md bg-indigo/10 text-indigo text-[11px] font-mono font-semibold border border-indigo/20 inline-block">
-                  Inti Makna
-                </span>
-                <p className="text-sm sm:text-base font-semibold text-text-primary leading-relaxed">
-                  {cleanSummary(skillNodes.concept.summary)}
-                </p>
-              </div>
-
-              {/* Status Before -> After (Clean Balanced Sub-cards) */}
-              {(skillNodes.concept.beforeState || skillNodes.concept.afterState) && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2.5 border-t border-border-subtle/60 text-xs">
-                  <div className="p-2.5 rounded-xl bg-surface-card/70 border border-border-subtle/70">
-                    <span className="text-[10px] font-bold text-text-muted uppercase tracking-wider block mb-0.5">
-                      Tanpa Pola (Fakta Biasa)
-                    </span>
-                    <p className="text-xs text-text-secondary leading-normal">
-                      {skillNodes.concept.beforeState?.replace(/^(Dulu:\s*|Tanpa Pola:\s*|Tanpa Pola Ini:\s*|Kalimat Netral:\s*|Kalimat Biasa:\s*|Bentuk Standar:\s*)/i, '').replace(/[❌📜💬]/g, '').trim() || 'Kalimat fakta netral biasa.'}
-                    </p>
-                  </div>
-                  <div className="p-2.5 rounded-xl bg-indigo/5 border border-indigo/20">
-                    <span className="text-[10px] font-bold text-indigo uppercase tracking-wider block mb-0.5">
-                      Dengan Pola Ini (Nuansa Khusus)
-                    </span>
-                    <p className="text-xs text-text-primary font-medium leading-normal">
-                      {skillNodes.concept.afterState?.replace(/^(Sekarang:\s*|Dengan Pola:\s*|Dengan Pola Ini:\s*|Pasif Kerugian:\s*|Pola Pasif Repot:\s*|Ragam Lisan:\s*)/i, '').replace(/[✅💬🎯🛡️🤝💡]/g, '').trim() || 'Mengandung nuansa dan maksud pembicara yang spesifik.'}
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Instant Concrete Example */}
-            {skillNodes.concept.starterExample && (
-              <div className="p-3.5 sm:p-4 rounded-2xl bg-surface-inset border border-border-subtle/80 space-y-2.5">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-text-muted font-heading">
-                    Contoh Penggunaan Langsung
-                  </span>
-
-                  <button
-                    type="button"
-                    onClick={() => speakJapanese(skillNodes.concept.starterExample!.japanese)}
-                    className="p-1.5 rounded-lg text-text-muted hover:text-indigo hover:bg-surface-card transition-colors cursor-pointer"
-                    title="Dengarkan pelafalan"
-                  >
-                    <Volume2 className="w-4 h-4" />
-                  </button>
-                </div>
-
-                <p className="text-sm sm:text-base font-semibold text-text-primary font-jp leading-relaxed">
-                  <RubyText
-                    japanese={skillNodes.concept.starterExample.japanese}
-                    reading={skillNodes.concept.starterExample.reading}
-                    showFurigana={true}
-                  />
-                </p>
-
-                <p className="text-xs sm:text-sm text-text-secondary leading-relaxed font-normal">
-                  {cleanSummary(skillNodes.concept.starterExample.meaningId)}
-                </p>
-
-                {skillNodes.concept.starterExample.contrastNote &&
-                  !skillNodes.concept.starterExample.contrastNote.includes('Penerapan langsung') && (
-                  <p className="text-xs text-indigo/90 font-medium border-t border-border-subtle/50 pt-2 leading-relaxed">
-                    💡 {skillNodes.concept.starterExample.contrastNote}
-                  </p>
-                )}
-              </div>
-            )}
-
-            {skillNodes.concept.keyTakeaway &&
-              !skillNodes.concept.keyTakeaway.includes('membuat kalimatmu terdengar alami') && (
-              <p className="text-xs text-text-muted pl-1 leading-relaxed">
-                📌 {skillNodes.concept.keyTakeaway}
-              </p>
-            )}
-          </div>
-
-          {/* ------------------------------------------------------ */}
-          {/* CARD 2: FUNGSI — "Dipakai kapan?" (WAJIB PAHAM)         */}
-          {/* ------------------------------------------------------ */}
-          <div ref={node2Ref} className="panel p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-surface-card border border-border-subtle shadow-sm space-y-3.5">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-indigo font-bold text-xs uppercase tracking-wider font-heading">
-                <span className="w-5 h-5 rounded-md bg-indigo/15 text-indigo flex items-center justify-center font-bold text-xs">
-                  2
-                </span>
-                <span>② Fungsi: "Dipakai kapan?"</span>
-              </div>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-indigo/10 text-indigo border border-indigo/20">
-                Wajib Paham ★★★★★
-              </span>
-            </div>
-
-            <div className="space-y-2.5">
-              {skillNodes.functions.map((fn, fIdx) => (
-                <div
-                  key={fIdx}
-                  className="p-3.5 sm:p-4 rounded-2xl bg-surface-inset border border-border-subtle/80 space-y-2"
+          {/* ====================================================== */}
+          {/* TAB CONTENT PAGES WITH ANIMATION                       */}
+          {/* ====================================================== */}
+          <div className="p-3.5 sm:p-5 flex-1 space-y-3.5 sm:space-y-4">
+            <AnimatePresence mode="wait">
+              {/* ---------------------------------------------------- */}
+              {/* SHEET 1: INTI MAKNA (Beige Sheet)                    */}
+              {/* ---------------------------------------------------- */}
+              {activeTab === 'inti' && (
+                <motion.div
+                  key="sheet-inti"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.16 }}
+                  className="space-y-3 sm:space-y-3.5"
                 >
-                  <div className="flex items-center gap-2">
-                    <span className="w-5 h-5 rounded-md bg-indigo/15 text-indigo font-bold text-xs flex items-center justify-center shrink-0">
-                      {fn.number}
-                    </span>
-                    <h3 className="text-xs sm:text-sm font-bold text-text-primary font-heading">
-                      {fn.label}
-                    </h3>
-                  </div>
-
-                  <p className="text-xs text-text-secondary leading-relaxed">
-                    {fn.description}
-                  </p>
-
-                  {fn.miniExample && (
-                    <div className="p-2.5 sm:p-3 rounded-xl bg-surface-card border border-border-subtle/80 flex items-start justify-between gap-2.5">
-                      <div className="space-y-1 min-w-0">
-                        <p className="text-xs sm:text-sm font-semibold text-text-primary font-jp leading-relaxed">
-                          {fn.miniExample.japanese}
-                        </p>
-                        <p className="text-[11px] sm:text-xs text-text-muted leading-relaxed font-normal">
-                          {cleanSummary(fn.miniExample.meaningId)}
-                        </p>
+                  {/* Essence Memo Card */}
+                  <div className="p-3.5 sm:p-4 rounded-2xl bg-surface-inset border border-border-subtle shadow-xs space-y-2.5">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1.5 text-text-primary font-heading font-bold text-xs uppercase tracking-wider">
+                        <Lightbulb className="w-3.5 h-3.5 text-gold" />
+                        <span>Esensi Maksud & Logika Berpikir</span>
                       </div>
-                      <button
-                        type="button"
-                        onClick={() => speakJapanese(fn.miniExample!.japanese)}
-                        className="p-1 rounded-lg text-text-muted hover:text-indigo transition-colors shrink-0 cursor-pointer"
-                        title="Dengarkan audio"
-                      >
-                        <Volume2 className="w-3.5 h-3.5" />
-                      </button>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-gold/15 text-gold border border-gold/30">
+                        Wajib Paham ★★★★★
+                      </span>
                     </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
 
-          {/* ------------------------------------------------------ */}
-          {/* CARD 3: RUMUS — "Cara membuatnya" (WAJIB PAHAM)         */}
-          {/* ------------------------------------------------------ */}
-          <div ref={node3Ref} className="panel p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-surface-card border border-border-subtle shadow-sm space-y-3.5">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-indigo font-bold text-xs uppercase tracking-wider font-heading">
-                <span className="w-5 h-5 rounded-md bg-indigo/15 text-indigo flex items-center justify-center font-bold text-xs">
-                  3
-                </span>
-                <span>③ Rumus: "Cara membuatnya"</span>
-              </div>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-indigo/10 text-indigo border border-indigo/20">
-                Wajib Paham ★★★★★
-              </span>
-            </div>
+                    <p className="text-sm sm:text-base font-bold text-text-primary font-heading leading-relaxed">
+                      {cleanSummary(skillNodes.concept.summary)}
+                    </p>
 
-            <div className="space-y-3">
-              {skillNodes.formulas.map((form, fIdx) => (
-                <div
-                  key={fIdx}
-                  className="p-3.5 sm:p-4 rounded-2xl bg-surface-inset border border-border-subtle/80 space-y-2.5"
-                >
-                  <h4 className="text-xs sm:text-sm font-bold text-text-primary font-heading">
-                    {form.title}
-                  </h4>
-
-                  {/* Formula Breakdown Badges */}
-                  <div className="flex flex-wrap items-center gap-1.5">
-                    {form.breakdown.map((part, pIdx) => (
-                      <React.Fragment key={pIdx}>
-                        {pIdx > 0 && <span className="text-text-muted font-bold text-xs">＋</span>}
-                        <span className="px-2.5 py-1 rounded-lg bg-surface-card border border-border-subtle font-mono text-xs font-medium text-text-primary shadow-xs">
-                          {part}
-                        </span>
-                      </React.Fragment>
-                    ))}
-                  </div>
-
-                  {/* Step Progression (e.g. 話す ↓ 話せる ↓ 話せるようになる) */}
-                  {form.progression && form.progression.length > 0 && (
-                    <div className="p-2.5 rounded-xl bg-surface-card border border-border-subtle/80 flex flex-wrap items-center gap-1.5 text-xs font-mono">
-                      {form.progression.map((step, sIdx) => (
-                        <React.Fragment key={sIdx}>
-                          {sIdx > 0 && <ArrowRight className="w-3.5 h-3.5 text-text-muted" />}
-                          <span className={`px-2 py-0.5 rounded-md ${sIdx === form.progression!.length - 1 ? 'bg-indigo/15 text-indigo border border-indigo/25 font-semibold' : 'bg-surface-inset text-text-secondary font-medium'}`}>
-                            {step}
+                    {/* Comparison Sticky Notes (Before vs After) */}
+                    {(skillNodes.concept.beforeState || skillNodes.concept.afterState) && (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1.5 border-t border-border-subtle/60">
+                        {/* Note 1: Tanpa Pola */}
+                        <div className="p-2.5 rounded-xl bg-surface-card/80 border border-border-subtle/80 space-y-1">
+                          <span className="text-[10px] font-bold text-text-muted uppercase tracking-wider block font-mono">
+                            Tanpa Pola (Fakta Biasa)
                           </span>
-                        </React.Fragment>
-                      ))}
-                    </div>
-                  )}
+                          <p className="text-xs text-text-secondary leading-normal">
+                            {skillNodes.concept.beforeState
+                              ?.replace(
+                                /^(Dulu:\s*|Tanpa Pola:\s*|Tanpa Pola Ini:\s*|Kalimat Netral:\s*|Kalimat Biasa:\s*|Bentuk Standar:\s*)/i,
+                                ''
+                              )
+                              .replace(/[❌📜💬]/g, '')
+                              .trim() || 'Kalimat fakta netral biasa.'}
+                          </p>
+                        </div>
 
-                  {form.note && (
-                    <p className="text-[11px] text-text-muted leading-relaxed">
-                      💡 {form.note}
-                    </p>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* ------------------------------------------------------ */}
-          {/* CARD 4: KATA COCOK — "Kata apa yang bisa masuk?" (PELENGKAP) */}
-          {/* ------------------------------------------------------ */}
-          <div ref={node4Ref} className="panel p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-surface-card border border-border-subtle/80 shadow-xs space-y-3.5">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-text-secondary font-bold text-xs uppercase tracking-wider font-heading">
-                <span className="w-5 h-5 rounded-md bg-surface-inset text-text-secondary flex items-center justify-center font-bold text-xs">
-                  4
-                </span>
-                <span>④ Kata Cocok: "Kata apa yang bisa masuk?"</span>
-              </div>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-surface-inset text-text-muted border border-border-subtle">
-                Pelengkap ★★★
-              </span>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              {skillNodes.wordIdentities.map((identity, iIdx) => (
-                <div
-                  key={iIdx}
-                  className="p-3.5 sm:p-4 rounded-2xl bg-surface-inset border border-border-subtle/80 space-y-2 flex flex-col justify-between"
-                >
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm">{identity.icon || '🏷️'}</span>
-                      <h4 className="text-xs sm:text-sm font-bold text-text-primary font-heading">
-                        {identity.typeCategory}
-                      </h4>
-                    </div>
-
-                    <p className="text-xs text-text-secondary leading-relaxed font-normal">
-                      {identity.functionEffect}
-                    </p>
+                        {/* Note 2: Dengan Pola Ini */}
+                        <div className="p-2.5 rounded-xl bg-indigo/10 border border-indigo/25 space-y-1">
+                          <span className="text-[10px] font-bold text-indigo uppercase tracking-wider block font-mono">
+                            Dengan Pola Ini (Nuansa Alami)
+                          </span>
+                          <p className="text-xs text-text-primary font-medium leading-normal">
+                            {skillNodes.concept.afterState
+                              ?.replace(
+                                /^(Sekarang:\s*|Dengan Pola:\s*|Dengan Pola Ini:\s*|Pasif Kerugian:\s*|Pola Pasif Repot:\s*|Ragam Lisan:\s*)/i,
+                                ''
+                              )
+                              .replace(/[✅💬🎯🛡️🤝💡]/g, '')
+                              .trim() || 'Menambahkan nuansa dan maksud pembicara yang spesifik.'}
+                          </p>
+                        </div>
+                      </div>
+                    )}
                   </div>
 
-                  <div className="pt-2 border-t border-border-subtle/60 flex flex-wrap items-center gap-1.5">
-                    {identity.examples.map((ex, exIdx) => (
-                      <span
-                        key={exIdx}
-                        className="px-2 py-0.5 rounded-md bg-surface-card text-text-primary text-xs font-mono font-medium border border-border-subtle/80"
-                      >
-                        {ex}
+                  {/* Starter Example Card */}
+                  {skillNodes.concept.starterExample && (
+                    <div className="p-3.5 sm:p-4 rounded-2xl bg-surface-inset border border-border-subtle shadow-xs space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-text-muted font-heading">
+                          Contoh Penggunaan Langsung
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => speakJapanese(skillNodes.concept.starterExample!.japanese)}
+                          className="p-1 rounded-lg text-text-muted hover:text-text-primary hover:bg-surface-card transition-colors cursor-pointer"
+                          title="Dengarkan pelafalan kalimat"
+                        >
+                          <Volume2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+
+                      <p className="text-sm sm:text-base font-semibold text-text-primary font-jp leading-relaxed">
+                        <RubyText
+                          japanese={skillNodes.concept.starterExample.japanese}
+                          reading={skillNodes.concept.starterExample.reading}
+                          showFurigana={true}
+                        />
+                      </p>
+
+                      <p className="text-xs sm:text-sm text-text-secondary leading-relaxed font-sans">
+                        {cleanSummary(skillNodes.concept.starterExample.meaningId)}
+                      </p>
+
+                      {skillNodes.concept.starterExample.contrastNote &&
+                        !skillNodes.concept.starterExample.contrastNote.includes('Penerapan langsung') && (
+                          <p className="text-xs text-indigo font-medium border-t border-border-subtle/50 pt-1.5 leading-relaxed">
+                            💡 {skillNodes.concept.starterExample.contrastNote}
+                          </p>
+                        )}
+                    </div>
+                  )}
+
+                  {/* Grid Paper Memo Pad Accent (Matching Reference Photo) */}
+                  <div
+                    className="p-3 sm:p-4 rounded-xl bg-surface-elevated/70 border border-gold/25 shadow-xs relative overflow-hidden"
+                    style={{
+                      backgroundImage: `
+                        linear-gradient(to right, var(--color-border-subtle) 1px, transparent 1px),
+                        linear-gradient(to bottom, var(--color-border-subtle) 1px, transparent 1px)
+                      `,
+                      backgroundSize: '14px 14px',
+                    }}
+                  >
+                    <div className="flex items-center gap-1.5 mb-1.5">
+                      <span className="font-heading italic font-bold text-xs text-gold">
+                        ✦ Catatan Kunci (Key Takeaway)
                       </span>
+                    </div>
+
+                    <p className="text-xs text-text-secondary leading-relaxed font-sans">
+                      {skillNodes.concept.keyTakeaway ||
+                        'Gunakan pola ini untuk membuat ungkapanmu terasa wajar dan alami bagi penutur asli bahasa Jepang.'}
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* ---------------------------------------------------- */}
+              {/* SHEET 2: RUMUS & POLA (Steel Sheet)                  */}
+              {/* ---------------------------------------------------- */}
+              {activeTab === 'rumus' && (
+                <motion.div
+                  key="sheet-rumus"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.16 }}
+                  className="space-y-3 sm:space-y-3.5"
+                >
+                  {/* Formulas Section */}
+                  <div className="space-y-2.5">
+                    {skillNodes.formulas.map((form, fIdx) => (
+                      <div
+                        key={fIdx}
+                        className="p-3.5 sm:p-4 rounded-2xl bg-surface-inset border border-border-subtle shadow-xs space-y-2.5"
+                      >
+                        <h4 className="text-xs sm:text-sm font-bold text-text-primary font-heading">
+                          {form.title}
+                        </h4>
+
+                        {/* Connection Formula Pills */}
+                        <div className="flex flex-wrap items-center gap-1.5">
+                          {form.breakdown.map((part, pIdx) => (
+                            <React.Fragment key={pIdx}>
+                              {pIdx > 0 && <span className="text-text-muted font-bold text-xs">＋</span>}
+                              <span className="px-2.5 py-0.5 rounded-lg bg-surface-card border border-border-subtle font-mono text-xs font-semibold text-text-primary shadow-xs">
+                                {part}
+                              </span>
+                            </React.Fragment>
+                          ))}
+                        </div>
+
+                        {/* Progression Arrow */}
+                        {form.progression && form.progression.length > 0 && (
+                          <div className="p-2 sm:p-2.5 rounded-xl bg-surface-card border border-border-subtle flex flex-wrap items-center gap-1.5 text-xs font-mono">
+                            {form.progression.map((step, sIdx) => (
+                              <React.Fragment key={sIdx}>
+                                {sIdx > 0 && <ArrowRight className="w-3 h-3 text-text-muted" />}
+                                <span
+                                  className={`px-2 py-0.5 rounded-md ${
+                                    sIdx === form.progression!.length - 1
+                                      ? 'bg-indigo/20 text-indigo border border-indigo/30 font-bold'
+                                      : 'bg-surface-inset text-text-secondary font-medium'
+                                  }`}
+                                >
+                                  {step}
+                                </span>
+                              </React.Fragment>
+                            ))}
+                          </div>
+                        )}
+
+                        {form.note && (
+                          <p className="text-[11px] text-text-muted leading-relaxed font-sans">
+                            💡 {form.note}
+                          </p>
+                        )}
+                      </div>
                     ))}
                   </div>
-                </div>
-              ))}
-            </div>
-          </div>
 
-          {/* ------------------------------------------------------ */}
-          {/* CARD 5: PERBEDAAN — "Jangan sampai tertukar!" (PELENGKAP) */}
-          {/* ------------------------------------------------------ */}
-          <div ref={node5Ref} className="panel p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-surface-card border border-border-subtle/80 shadow-xs space-y-3.5">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-red-700 dark:text-amber-400 font-bold text-xs uppercase tracking-wider font-heading">
-                <AlertTriangle className="w-4 h-4 text-red-700 dark:text-amber-400" />
-                <span>⑤ Perbedaan: "Jangan sampai tertukar!"</span>
-              </div>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-surface-inset text-text-muted border border-border-subtle">
-                Pelengkap ★★★
-              </span>
-            </div>
+                  {/* Word Identities: Kata yang Cocok */}
+                  {skillNodes.wordIdentities.length > 0 && (
+                    <div className="p-3.5 sm:p-4 rounded-2xl bg-surface-inset border border-border-subtle shadow-xs space-y-2.5">
+                      <div className="flex items-center gap-1.5 text-text-primary font-heading font-bold text-xs uppercase tracking-wider">
+                        <Layers className="w-3.5 h-3.5 text-indigo" />
+                        <span>Kata yang Cocok Masuk (Kategori & Contoh)</span>
+                      </div>
 
-            <div className="space-y-2.5">
-              {skillNodes.nuances.map((nuance, nIdx) => (
-                <div
-                  key={nIdx}
-                  className="p-3.5 sm:p-4 rounded-2xl bg-surface-inset border border-border-subtle/80 space-y-2.5"
-                >
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    <div className="p-2.5 sm:p-3 rounded-xl bg-surface-card border border-border-subtle/80 space-y-1">
-                      <p className="text-xs font-bold text-indigo font-jp">
-                        {nuance.contrastA}
-                      </p>
-                      <p className="text-xs text-text-secondary font-normal leading-relaxed">
-                        = {cleanSummary(nuance.meaningA)}
-                      </p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {skillNodes.wordIdentities.map((identity, iIdx) => (
+                          <div
+                            key={iIdx}
+                            className="p-3 rounded-xl bg-surface-card border border-border-subtle space-y-1.5 flex flex-col justify-between"
+                          >
+                            <div className="space-y-1">
+                              <div className="flex items-center gap-1.5">
+                                <span className="text-sm">{identity.icon || '🏷️'}</span>
+                                <h5 className="text-xs font-bold text-text-primary font-heading">
+                                  {identity.typeCategory}
+                                </h5>
+                              </div>
+                              <p className="text-xs text-text-secondary font-sans leading-relaxed">
+                                {identity.functionEffect}
+                              </p>
+                            </div>
+
+                            <div className="pt-1.5 border-t border-border-subtle/60 flex flex-wrap items-center gap-1">
+                              {identity.examples.map((ex, exIdx) => (
+                                <span
+                                  key={exIdx}
+                                  className="px-2 py-0.5 rounded-md bg-surface-inset text-text-primary text-[11px] font-mono font-medium border border-border-subtle shadow-xs"
+                                >
+                                  {ex}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-
-                    <div className="p-2.5 sm:p-3 rounded-xl bg-surface-card border border-border-subtle/80 space-y-1">
-                      <p className="text-xs font-bold text-gold font-jp">
-                        {nuance.contrastB}
-                      </p>
-                      <p className="text-xs text-text-secondary font-normal leading-relaxed">
-                        = {cleanSummary(nuance.meaningB)}
-                      </p>
-                    </div>
-                  </div>
-
-                  {nuance.explanation && (
-                    <p className="text-xs text-text-muted leading-relaxed pl-0.5">
-                      💡 {nuance.explanation}
-                    </p>
                   )}
-                </div>
-              ))}
-            </div>
-          </div>
+                </motion.div>
+              )}
 
-          {/* ------------------------------------------------------ */}
-          {/* CARD 6: CONTOH NYATA — "Lihat contoh bertingkat" (WAJIB) */}
-          {/* ------------------------------------------------------ */}
-          <div ref={node6Ref} className="panel p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-surface-card border border-border-subtle shadow-sm space-y-3.5">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-indigo font-bold text-xs uppercase tracking-wider font-heading">
-                <span className="w-5 h-5 rounded-md bg-indigo/15 text-indigo flex items-center justify-center font-bold text-xs">
-                  6
-                </span>
-                <span>⑥ Contoh Nyata: "Lihat contoh bertingkat"</span>
-              </div>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-indigo/10 text-indigo border border-indigo/20">
-                Wajib Paham ★★★★★
-              </span>
-            </div>
+              {/* ---------------------------------------------------- */}
+              {/* SHEET 3: FUNGSI & NUANSA (Carolina Sheet)            */}
+              {/* ---------------------------------------------------- */}
+              {activeTab === 'fungsi' && (
+                <motion.div
+                  key="sheet-fungsi"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.16 }}
+                  className="space-y-3 sm:space-y-3.5"
+                >
+                  {/* Situations / Functions */}
+                  <div className="space-y-2">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-text-muted font-heading block">
+                      Situasi & Kapan Dipakai
+                    </span>
 
-            <div className="space-y-2.5">
-              {skillNodes.examples.map((ex, exIdx) => {
-                const tierColor =
-                  ex.tier === 'basic'
-                    ? 'border-emerald-500/25 bg-emerald-500/5'
-                    : ex.tier === 'daily'
-                    ? 'border-sky-500/25 bg-sky-500/5'
-                    : 'border-purple-500/25 bg-purple-500/5';
-
-                const badgeColor =
-                  ex.tier === 'basic'
-                    ? 'text-emerald-400 bg-emerald-500/15'
-                    : ex.tier === 'daily'
-                    ? 'text-sky-400 bg-sky-500/15'
-                    : 'text-purple-400 bg-purple-500/15';
-
-                return (
-                  <div
-                    key={exIdx}
-                    className={`p-3.5 sm:p-4 rounded-2xl border ${tierColor} space-y-2`}
-                  >
-                    <div className="flex items-center justify-between gap-2">
-                      <span className={`px-2 py-0.5 rounded-md text-[10px] font-semibold uppercase tracking-wider font-mono ${badgeColor}`}>
-                        {ex.tierLabel}
-                      </span>
-
-                      <button
-                        type="button"
-                        onClick={() => speakJapanese(ex.japanese)}
-                        className="p-1 rounded-lg text-text-muted hover:text-indigo hover:bg-surface-inset transition-colors cursor-pointer"
-                        title="Dengarkan pelafalan kalimat"
+                    {skillNodes.functions.map((fn, fIdx) => (
+                      <div
+                        key={fIdx}
+                        className="p-3 sm:p-3.5 rounded-2xl bg-surface-inset border border-border-subtle shadow-xs space-y-2"
                       >
-                        <Volume2 className="w-4 h-4" />
-                      </button>
-                    </div>
+                        <div className="flex items-center gap-2">
+                          <span className="w-5 h-5 rounded-md bg-indigo/15 text-indigo font-bold text-xs flex items-center justify-center shrink-0">
+                            {fn.number}
+                          </span>
+                          <h4 className="text-xs sm:text-sm font-bold text-text-primary font-heading">
+                            {fn.label}
+                          </h4>
+                        </div>
 
-                    <div className="space-y-1">
-                      <p className="text-sm sm:text-base font-semibold text-text-primary font-jp leading-relaxed">
-                        <RubyText japanese={ex.japanese} reading={ex.reading} showFurigana={true} />
-                      </p>
-                      <p className="text-xs sm:text-sm text-text-secondary font-normal leading-relaxed">
-                        {cleanSummary(ex.meaningId)}
-                      </p>
-                    </div>
+                        <p className="text-xs text-text-secondary leading-relaxed font-sans">
+                          {fn.description}
+                        </p>
+
+                        {fn.miniExample && (
+                          <div className="p-2 sm:p-2.5 rounded-xl bg-surface-card border border-border-subtle flex items-start justify-between gap-2">
+                            <div className="space-y-0.5 min-w-0">
+                              <p className="text-xs sm:text-sm font-semibold text-text-primary font-jp leading-relaxed">
+                                {fn.miniExample.japanese}
+                              </p>
+                              <p className="text-[11px] text-text-muted font-sans">
+                                {cleanSummary(fn.miniExample.meaningId)}
+                              </p>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => speakJapanese(fn.miniExample!.japanese)}
+                              className="p-1 rounded-lg text-text-muted hover:text-indigo transition-colors shrink-0 cursor-pointer"
+                              title="Dengarkan audio"
+                            >
+                              <Volume2 className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    ))}
                   </div>
-                );
-              })}
-            </div>
-          </div>
 
-          {/* ------------------------------------------------------ */}
-          {/* CARD 7: COBA KUIS — "Tes pemahamanmu!" (WAJIB PAHAM)   */}
-          {/* ------------------------------------------------------ */}
-          <div ref={node7Ref} className="panel p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-surface-elevated via-surface-card to-surface-card border border-gold/30 shadow-md space-y-3.5">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-gold font-bold text-xs uppercase tracking-wider font-heading">
-                <Flame className="w-4 h-4 text-gold" />
-                <span>⑦ Coba Kuis: "Tes pemahamanmu!"</span>
-              </div>
-              <span className="px-2 py-0.5 rounded-lg bg-gold/15 text-gold text-[10px] font-bold font-mono border border-gold/30">
-                +15 EXP & +10 Gold
-              </span>
-            </div>
+                  {/* Nuance & Difference Contrasts (Jangan Sampai Tertukar!) */}
+                  {skillNodes.nuances.length > 0 && (
+                    <div className="p-3.5 sm:p-4 rounded-2xl bg-surface-inset border border-border-subtle shadow-xs space-y-2.5">
+                      <div className="flex items-center gap-1.5 text-wine-accent font-heading font-bold text-xs uppercase tracking-wider">
+                        <AlertTriangle className="w-3.5 h-3.5 text-wine-accent" />
+                        <span>Perbedaan & Nuansa: Jangan Sampai Tertukar!</span>
+                      </div>
 
-            {activeQuestion ? (
-              <div className="space-y-3.5">
-                {/* Question Prompt */}
-                <div className="p-3.5 sm:p-4 rounded-2xl bg-surface-inset border border-border-subtle/80 space-y-1.5">
-                  <p className="text-[11px] sm:text-xs text-text-muted font-medium">
-                    {activeQuestion.instructionId || activeQuestion.instruction || 'Pilihlah jawaban yang paling tepat:'}
-                  </p>
-                  <p className="text-sm sm:text-base font-semibold text-text-primary font-jp leading-relaxed">
-                    <RubyText japanese={activeQuestion.prompt} reading={activeQuestion.ruby} showFurigana={true} />
-                  </p>
-                </div>
+                      <div className="space-y-2">
+                        {skillNodes.nuances.map((nuance, nIdx) => (
+                          <div
+                            key={nIdx}
+                            className="p-3 rounded-xl bg-surface-card border border-border-subtle space-y-2"
+                          >
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                              <div className="p-2 rounded-lg bg-surface-inset border border-border-subtle space-y-0.5">
+                                <p className="text-xs font-bold text-indigo font-jp">
+                                  {nuance.contrastA}
+                                </p>
+                                <p className="text-xs text-text-secondary font-sans leading-normal">
+                                  = {cleanSummary(nuance.meaningA)}
+                                </p>
+                              </div>
 
-                {/* Option Buttons */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {activeQuestion.options.map((opt, oIdx) => {
-                    const isSelected = selectedAnswerIndex === oIdx;
-                    const isCorrect = isAnswerChecked && oIdx === activeQuestion.correctIndex;
-                    const isWrong = isAnswerChecked && isSelected && !isCorrect;
+                              <div className="p-2 rounded-lg bg-surface-inset border border-border-subtle space-y-0.5">
+                                <p className="text-xs font-bold text-gold font-jp">
+                                  {nuance.contrastB}
+                                </p>
+                                <p className="text-xs text-text-secondary font-sans leading-normal">
+                                  = {cleanSummary(nuance.meaningB)}
+                                </p>
+                              </div>
+                            </div>
 
-                    let btnStyle = 'bg-surface-inset hover:bg-surface-card border-border-subtle text-text-primary shadow-[inset_1px_1px_3px_var(--neu-d)]';
-                    if (isCorrect) {
-                      btnStyle = 'bg-emerald-500/20 border-emerald-500/60 text-emerald-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_2px_4px_rgba(0,0,0,0.2)]';
-                    } else if (isWrong) {
-                      btnStyle = 'bg-rose-500/20 border-rose-500/60 text-rose-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_2px_4px_rgba(0,0,0,0.2)]';
-                    } else if (isSelected) {
-                      btnStyle = 'bg-surface-elevated border-border-muted text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_6px_rgba(0,0,0,0.25)]';
-                    }
+                            {nuance.explanation && (
+                              <p className="text-xs text-text-muted leading-relaxed font-sans">
+                                💡 {nuance.explanation}
+                              </p>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </motion.div>
+              )}
+
+              {/* ---------------------------------------------------- */}
+              {/* SHEET 4: CONTOH NYATA (Cherry Sheet)                 */}
+              {/* ---------------------------------------------------- */}
+              {activeTab === 'contoh' && (
+                <motion.div
+                  key="sheet-contoh"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.16 }}
+                  className="space-y-2.5 sm:space-y-3"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-text-muted font-heading">
+                      Contoh Percakapan Bertingkat
+                    </span>
+                    <span className="text-[10px] font-mono text-text-muted">
+                      {skillNodes.examples.length} Kalimat Tersedia
+                    </span>
+                  </div>
+
+                  {skillNodes.examples.map((ex, exIdx) => {
+                    const badgeBg =
+                      ex.tier === 'basic'
+                        ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/25'
+                        : ex.tier === 'daily'
+                        ? 'bg-sky-500/15 text-sky-400 border-sky-500/25'
+                        : 'bg-purple-500/15 text-purple-400 border-purple-500/25';
 
                     return (
-                      <button
-                        key={oIdx}
-                        type="button"
-                        onClick={() => handleSelectAnswer(oIdx)}
-                        disabled={isAnswerChecked}
-                        className={`p-3 rounded-xl border text-left font-jp text-xs sm:text-sm font-medium transition-all flex items-center justify-between gap-2 cursor-pointer shadow-xs ${btnStyle} ${isAnswerChecked ? 'cursor-default' : 'active:scale-[0.99]'}`}
+                      <div
+                        key={exIdx}
+                        className="p-3 sm:p-3.5 rounded-2xl bg-surface-inset border border-border-subtle shadow-xs space-y-1.5 relative"
                       >
-                        <span>{opt}</span>
-                        {isCorrect && <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />}
-                        {isWrong && <XCircle className="w-4 h-4 text-rose-400 shrink-0" />}
-                      </button>
+                        <div className="flex items-center justify-between gap-2">
+                          <span className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase border ${badgeBg}`}>
+                            {ex.tierLabel}
+                          </span>
+
+                          <button
+                            type="button"
+                            onClick={() => speakJapanese(ex.japanese)}
+                            className="p-1 rounded-lg text-text-muted hover:text-indigo hover:bg-surface-card transition-colors cursor-pointer"
+                            title="Dengarkan pelafalan kalimat"
+                          >
+                            <Volume2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+
+                        <div className="space-y-0.5">
+                          <p className="text-sm sm:text-base font-semibold text-text-primary font-jp leading-relaxed">
+                            <RubyText japanese={ex.japanese} reading={ex.reading} showFurigana={true} />
+                          </p>
+                          <p className="text-xs text-text-secondary font-sans leading-normal">
+                            {cleanSummary(ex.meaningId)}
+                          </p>
+                        </div>
+                      </div>
                     );
                   })}
-                </div>
+                </motion.div>
+              )}
 
-                {/* Feedback & Reward */}
-                {isAnswerChecked && (
-                  <div className="space-y-3 pt-2 animate-fade-in">
-                    {selectedAnswerIndex === activeQuestion.correctIndex ? (
-                      <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between gap-3">
-                        <div className="flex items-center gap-2 text-emerald-400 font-bold text-xs sm:text-sm font-heading">
-                          <CheckCircle2 className="w-5 h-5 shrink-0" />
-                          <span>Jawaban Tepat! Skill Tata Bahasa Berhasil Diuji.</span>
+              {/* ---------------------------------------------------- */}
+              {/* SHEET 5: LATIHAN KUIS (Peaches Sheet)                */}
+              {/* ---------------------------------------------------- */}
+              {activeTab === 'kuis' && (
+                <motion.div
+                  key="sheet-kuis"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.16 }}
+                  className="space-y-3 sm:space-y-3.5"
+                >
+                  <div className="p-3.5 sm:p-4 rounded-2xl bg-surface-inset border border-gold/30 shadow-xs space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1.5 text-gold font-heading font-bold text-xs uppercase tracking-wider">
+                        <Flame className="w-3.5 h-3.5 text-gold" />
+                        <span>Tantangan Uji Pemahaman</span>
+                      </div>
+                      <span className="px-2 py-0.5 rounded-lg bg-gold/15 text-gold text-[10px] font-bold font-mono border border-gold/30">
+                        +15 EXP & +10 Gold
+                      </span>
+                    </div>
+
+                    {activeQuestion ? (
+                      <div className="space-y-2.5">
+                        {/* Prompt */}
+                        <div className="p-3 rounded-xl bg-surface-card border border-border-subtle space-y-1">
+                          <p className="text-[11px] text-text-muted font-sans">
+                            {activeQuestion.instructionId || activeQuestion.instruction || 'Pilihlah jawaban yang paling tepat:'}
+                          </p>
+                          <p className="text-sm sm:text-base font-semibold text-text-primary font-jp leading-relaxed">
+                            <RubyText japanese={activeQuestion.prompt} reading={activeQuestion.ruby} showFurigana={true} />
+                          </p>
                         </div>
-                        <span className="text-xs font-mono font-bold text-gold shrink-0">
-                          +15 EXP 🌟
-                        </span>
+
+                        {/* Options */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                          {activeQuestion.options.map((opt, oIdx) => {
+                            const isSelected = selectedAnswerIndex === oIdx;
+                            const isCorrect = isAnswerChecked && oIdx === activeQuestion.correctIndex;
+                            const isWrong = isAnswerChecked && isSelected && !isCorrect;
+
+                            let btnStyle =
+                              'bg-surface-card hover:bg-surface-elevated border-border-subtle text-text-primary';
+                            if (isCorrect) {
+                              btnStyle =
+                                'bg-emerald-500/20 border-emerald-500/60 text-emerald-400';
+                            } else if (isWrong) {
+                              btnStyle =
+                                'bg-rose-500/20 border-rose-500/60 text-rose-400';
+                            } else if (isSelected) {
+                              btnStyle =
+                                'bg-surface-elevated border-border-muted text-text-primary';
+                            }
+
+                            return (
+                              <button
+                                key={oIdx}
+                                type="button"
+                                onClick={() => handleSelectAnswer(oIdx)}
+                                disabled={isAnswerChecked}
+                                className={`p-2.5 sm:p-3 rounded-xl border text-left font-jp text-xs sm:text-sm font-medium transition-all flex items-center justify-between gap-2 cursor-pointer shadow-xs ${btnStyle} ${
+                                  isAnswerChecked ? 'cursor-default' : 'active:scale-[0.99]'
+                                }`}
+                              >
+                                <span>{opt}</span>
+                                {isCorrect && <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />}
+                                {isWrong && <XCircle className="w-4 h-4 text-rose-400 shrink-0" />}
+                              </button>
+                            );
+                          })}
+                        </div>
+
+                        {/* Result Feedback */}
+                        {isAnswerChecked && (
+                          <div className="space-y-2.5 pt-1">
+                            {selectedAnswerIndex === activeQuestion.correctIndex ? (
+                              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between gap-2">
+                                <div className="flex items-center gap-1.5 text-emerald-400 font-bold text-xs sm:text-sm font-heading">
+                                  <CheckCircle2 className="w-4 h-4 shrink-0" />
+                                  <span>Tepat Sekali! Skill Pola Kalimat Berhasil Diuji.</span>
+                                </div>
+                                <span className="text-xs font-mono font-bold text-gold shrink-0">
+                                  +15 EXP 🌟
+                                </span>
+                              </div>
+                            ) : (
+                              <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center gap-1.5 text-rose-400 font-bold text-xs sm:text-sm font-heading">
+                                <XCircle className="w-4 h-4 shrink-0" />
+                                <span>Kurang Tepat. Simak catatan penjelasan berikut:</span>
+                              </div>
+                            )}
+
+                            {activeQuestion.explanation && (
+                              <div className="p-3 rounded-xl bg-surface-card border border-border-subtle text-xs text-text-secondary leading-relaxed space-y-1 font-sans">
+                                <strong className="text-text-primary block font-heading">Penjelasan:</strong>
+                                <p>{activeQuestion.explanation}</p>
+                              </div>
+                            )}
+
+                            <div className="flex items-center justify-end gap-2 pt-0.5">
+                              {selectedAnswerIndex !== activeQuestion.correctIndex && (
+                                <button
+                                  type="button"
+                                  onClick={handleRetryQuestion}
+                                  className="btn-physical-secondary text-xs py-1.5 px-3 rounded-xl flex items-center gap-1 cursor-pointer font-heading"
+                                >
+                                  <RotateCcw className="w-3.5 h-3.5" />
+                                  <span>Coba Lagi</span>
+                                </button>
+                              )}
+
+                              {questions.length > 1 && (
+                                <button
+                                  type="button"
+                                  onClick={handleNextQuestion}
+                                  className="btn-physical-primary text-xs py-1.5 px-3.5 rounded-xl flex items-center gap-1 cursor-pointer font-heading"
+                                >
+                                  <span>Soal Berikutnya</span>
+                                  <ChevronRight className="w-3.5 h-3.5" />
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        )}
                       </div>
                     ) : (
-                      <div className="p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/30 flex items-center gap-2 text-rose-400 font-bold text-xs sm:text-sm font-heading">
-                        <XCircle className="w-5 h-5 shrink-0" />
-                        <span>Kurang Tepat. Simak penjelasan berikut:</span>
-                      </div>
+                      <p className="text-xs text-text-muted">Soal latihan tidak tersedia saat ini.</p>
                     )}
-
-                    {activeQuestion.explanation && (
-                      <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle text-xs text-text-secondary leading-relaxed space-y-1">
-                        <strong className="text-text-primary block font-heading">Penjelasan:</strong>
-                        <p>{activeQuestion.explanation}</p>
-                      </div>
-                    )}
-
-                    <div className="flex items-center justify-end gap-2 pt-1">
-                      {selectedAnswerIndex !== activeQuestion.correctIndex && (
-                        <button
-                          type="button"
-                          onClick={handleRetryQuestion}
-                          className="btn-physical-secondary text-xs py-2 px-3 rounded-xl flex items-center gap-1.5 cursor-pointer font-heading"
-                        >
-                          <RotateCcw className="w-3.5 h-3.5" />
-                          <span>Coba Lagi</span>
-                        </button>
-                      )}
-
-                      {questions.length > 1 && (
-                        <button
-                          type="button"
-                          onClick={handleNextQuestion}
-                          className="btn-physical-primary text-xs py-2 px-3.5 rounded-xl flex items-center gap-1.5 cursor-pointer font-heading"
-                        >
-                          <span>Soal Lain</span>
-                          <ChevronRight className="w-3.5 h-3.5" />
-                        </button>
-                      )}
-                    </div>
                   </div>
-                )}
-              </div>
-            ) : (
-              <p className="text-xs text-text-muted">Soal latihan tidak tersedia saat ini.</p>
-            )}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
-        </div>
+          {/* ====================================================== */}
+          {/* SCRAPBOOK FOOTER / PAGE FLIP NAVIGATION CONTROLS       */}
+          {/* ====================================================== */}
+          <div className="p-3 sm:p-3.5 border-t border-border-subtle bg-surface-inset/90 flex items-center justify-between gap-2 shrink-0">
+            {/* Sheet Page Indicator */}
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-mono font-medium text-text-secondary">
+                Lembar {currentTabIdx + 1}/5
+              </span>
+              <span className="hidden sm:inline text-xs text-text-muted font-sans">
+                • {activeTabMeta.tagline}
+              </span>
+            </div>
 
-        {/* Footer */}
-        <div className="p-3 sm:p-4 border-t border-border-subtle bg-surface-inset flex items-center justify-between text-xs text-text-muted font-mono">
-          <span>SevnQuest Learning Flow • 7 Cards</span>
-          <button
-            type="button"
-            onClick={onClose}
-            className="btn-physical-primary text-xs py-2 px-4 rounded-xl cursor-pointer font-heading"
-          >
-            Selesai Belajar
-          </button>
-        </div>
+            {/* Previous & Next Page Turners */}
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <button
+                type="button"
+                onClick={handlePrevTab}
+                disabled={currentTabIdx === 0}
+                className="btn-physical-secondary text-xs py-1.5 px-3 rounded-xl flex items-center gap-1 font-heading font-semibold disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+              >
+                <ChevronLeft className="w-3.5 h-3.5" />
+                <span className="hidden xs:inline">Sebelumnya</span>
+              </button>
 
+              {currentTabIdx < SCRAPBOOK_TABS.length - 1 ? (
+                <button
+                  type="button"
+                  onClick={handleNextTab}
+                  className="btn-physical-primary text-xs py-1.5 px-3.5 rounded-xl flex items-center gap-1 font-heading font-bold cursor-pointer"
+                >
+                  <span>Selanjutnya</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="btn-physical-primary text-xs py-1.5 px-4 rounded-xl flex items-center gap-1 font-heading font-bold cursor-pointer"
+                >
+                  <span>Selesai Belajar</span>
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
       </motion.div>
     </motion.div>,
     document.body
