@@ -6,7 +6,6 @@ import {
   ChevronRight, 
   Play, 
   Bookmark, 
-  Sparkles, 
   Plus, 
   Star, 
   Swords,

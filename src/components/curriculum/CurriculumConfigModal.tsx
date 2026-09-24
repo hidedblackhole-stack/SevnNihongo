@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Sparkles, Sliders, Layers, CheckCircle2, AlertCircle, Compass, PenTool, BookOpen, Brain } from 'lucide-react';
+import { X, Sliders, Layers, CheckCircle2, AlertCircle, Compass, PenTool, BookOpen, Brain } from 'lucide-react';
 import { UserDeck, DeckItemCategory } from '../../types/rpg';
 import { CurriculumConfig } from '../../types/curriculum';
 import { extractDeckRefs } from '../../utils/curriculumEngine';
@@ -425,9 +425,8 @@ export const CurriculumConfigModal: React.FC<CurriculumConfigModalProps> = ({
               {/* LIVE SUMMARY BADGE */}
               <div className="p-3.5 rounded-2xl bg-surface-elevated border border-border-subtle flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5">
                 <div className="space-y-0.5">
-                  <span className="text-[11px] font-bold text-text-primary flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-gold" />
-                    <span>Ringkasan Kurikulum yang Akan Digenerate:</span>
+                  <span className="text-[11px] font-bold text-text-primary">
+                    Ringkasan Kurikulum yang Akan Digenerate:
                   </span>
                   <p className="text-[11px] text-text-secondary">
                     Total {previewTotalItems} materi dibagi ke dalam {stageCount} stage reguler.
@@ -464,7 +463,7 @@ export const CurriculumConfigModal: React.FC<CurriculumConfigModalProps> = ({
               onClick={handleGenerate}
               className="btn-skeuo-indigo text-xs py-2.5 px-5 shadow-md active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <Sparkles className="w-4 h-4 text-gold shrink-0" />
+              <Layers className="w-4 h-4 text-accent shrink-0" />
               <span className="whitespace-nowrap font-bold">Generate Kurikulum & Buka World</span>
             </button>
           </div>

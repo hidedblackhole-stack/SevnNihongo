@@ -3,7 +3,6 @@ import { createPortal } from 'react-dom';
 import { motion } from 'motion/react';
 import {
   X,
-  Sparkles,
   Layers,
   Flame,
   Clock,
@@ -660,7 +659,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                             : 'text-text-muted hover:text-text-primary hover:bg-surface-elevated/40'
                         }`}
                       >
-                        <Sparkles className="w-3.5 h-3.5" />
+                        <Layers className="w-3.5 h-3.5" />
                         <span>Pola Kurikulum / Deck</span>
                       </button>
 
@@ -789,7 +788,6 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                 {/* ================= SOURCE / LEVEL SELECTOR HEADER ================= */}
                 <div className="flex items-center justify-between pt-1">
                   <label className="text-xs font-bold uppercase tracking-wider text-text-muted font-heading flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-gold" />
                     <span>
                       {dungeonType === 'conjugation' && conjugationMode === 'custom'
                         ? '1. Pilih Tingkat Kosakata yang Dilatih:'
@@ -818,7 +816,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                         : 'text-text-muted hover:text-text-primary hover:bg-surface-card/30'
                     }`}
                   >
-                    <Sparkles className="w-3.5 h-3.5 text-gold" />
+                    <Layers className="w-3.5 h-3.5 text-gold" />
                     <span>
                       {dungeonType === 'conjugation' && conjugationMode === 'custom'
                         ? 'Tingkat Kosakata'

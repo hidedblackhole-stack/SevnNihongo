@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Sparkles, ChevronRight, Layers, Award, Compass, BookOpen } from 'lucide-react';
+import { ChevronRight, Layers, Award, Compass, BookOpen } from 'lucide-react';
 import { OfficialBook } from '../../types/books';
 import { OFFICIAL_BOOKS } from '../../data/officialBooks';
 import { ItemMasteryRecord } from '../../types/content';

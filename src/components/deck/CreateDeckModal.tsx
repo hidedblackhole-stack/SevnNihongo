@@ -1,12 +1,13 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Sparkles, Check, Bookmark, Search } from 'lucide-react';
+import { X, Check, Bookmark, Search } from 'lucide-react';
 import { DeckType, UserDeck, DeckItemRef, DeckItemCategory } from '../../types/rpg';
 import { playSound } from '../../utils/audio';
 import { generatePresetDeckItems, DEFAULT_BOOKMARK_DECK_ID } from '../../utils/decks';
 import { KOTOBA_DATABASE } from '../../data/kotoba';
 import { KANJI_DATABASE } from '../../data/kanji';
 import { BUNPOU_DATABASE } from '../../data/bunpou';
+import { useBackButton } from '../../hooks/useBackButton';
 
 const AVAILABLE_ICONS = ['📖', '🔖', '✍️', '⚡', '🎯', '🌸', '🗡️', '📜', '🌟', '🔥', '🏯', '🍵', '🏹', '💎', '🍁', '🍙'];
 
@@ -44,6 +45,10 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
   userDecks,
   soundEnabled = true,
 }) => {
+  useBackButton(isOpen, () => {
+    onClose();
+  }, 'create_deck_modal');
+
   const [title, setTitle] = useState(editingDeck?.title || '');
   const [description, setDescription] = useState(editingDeck?.description || '');
   const [type, setType] = useState<DeckType>(editingDeck?.type || 'mixed');
@@ -373,9 +378,8 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
               <div className="pt-3 border-t border-border-subtle space-y-3">
                 <div className="flex items-center justify-between">
                   <div>
-                    <label className="block text-xs font-bold font-heading uppercase tracking-wider text-text-primary flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-gold" />
-                      <span>Kustomisasi Isi Awal Deck</span>
+                    <label className="block text-xs font-bold font-heading uppercase tracking-wider text-text-primary">
+                      Kustomisasi Isi Awal Deck
                     </label>
                     <p className="text-[11px] text-text-secondary">
                       Tentukan bagaimana deck ini akan diisi materi
@@ -466,8 +470,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                       </div>
                     </div>
 
-                    <div className="p-2.5 rounded-xl bg-surface-card border border-border-subtle text-[11px] text-text-secondary flex items-start gap-2">
-                      <Sparkles className="w-3.5 h-3.5 text-gold shrink-0 mt-0.5" />
+                    <div className="p-2.5 rounded-xl bg-surface-card border border-border-subtle text-[11px] text-text-secondary">
                       <span>
                         Sistem akan otomatis mengacak dan mengisi <strong>{presetCount} materi</strong> sesuai tipe{' '}
                         <strong className="text-text-primary">{DECK_TYPES.find(d => d.type === type)?.label}</strong> pada level{' '}

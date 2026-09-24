@@ -6,7 +6,6 @@ import {
   Check,
   Award,
   ChevronRight,
-  Sparkles,
   Layers
 } from 'lucide-react';
 import { OfficialBook, OfficialChapter } from '../../types/books';

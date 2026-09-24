@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'motion/react';
 import { Feather } from 'lucide-react';
 import { KanjiItem, Question } from '../../types/content';
@@ -117,12 +117,16 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
   // Store questions in dedicated state created once upon starting the quiz
   const [activeQuestions, setActiveQuestions] = useState<Question[]>([]);
 
-  const handleStartQuiz = () => {
-    playSound('click', soundEnabled);
+  const compiledQuestions = useMemo(() => {
     const questionsFromKanji = activeKanji.questions && activeKanji.questions.length > 0
       ? activeKanji.questions
       : generateKanjiQuestions(kanjiList);
-    setActiveQuestions(questionsFromKanji.length > 0 ? questionsFromKanji : STAGE_1_KANJI_QUIZ);
+    return questionsFromKanji.length > 0 ? questionsFromKanji : STAGE_1_KANJI_QUIZ;
+  }, [activeKanji, kanjiList]);
+
+  const handleStartQuiz = () => {
+    playSound('click', soundEnabled);
+    setActiveQuestions(compiledQuestions);
     setIsQuizActive(true);
   };
 
@@ -130,7 +134,7 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
     return (
       <div className="w-full space-y-4">
         <QuizEngine
-          title={`🎯 Quiz Aksara & Kanji (${kanjiList.length} Karakter)`}
+          title={`🎯 Quiz Aksara & Kanji (${activeQuestions.length} Soal)`}
           questions={activeQuestions}
           playerMp={playerMp}
           playerInt={playerInt}
@@ -161,7 +165,7 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
               <span className="text-wine-accent">漢</span> KANJI (Karakter)
             </h2>
             <p className="text-xs text-text-secondary">
-              Pelajari {safeKanjiList.length} Karakter, latihan menulis 7 lembar stroke & selesaikan Quiz
+              Pelajari {safeKanjiList.length} Karakter, latihan menulis lembar stroke & selesaikan Quiz
             </p>
           </div>
         </div>
@@ -184,9 +188,9 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
           </button>
           <button
             onClick={handleStartQuiz}
-            className="btn btn-pill flex items-center gap-1.5 shadow-md"
+            className="btn btn-pill flex items-center gap-1.5 shadow-md text-gold border-gold/40 hover:border-gold"
           >
-            <span>🎯 Quiz Kanji (7 Soal)</span>
+            <span>🎯 Latihan ({compiledQuestions.length})</span>
           </button>
         </div>
       </div>

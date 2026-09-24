@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { KanjiItem, ItemMasteryRecord } from '../../types/content';
+import { KanjiItem, KotobaItem, ItemMasteryRecord } from '../../types/content';
 import { playSound } from '../../utils/audio';
 import { KanjiDetailCard } from '../learning/KanjiDetailCard';
 import { WritingRewardResult } from '../../utils/rewards';
 import { UserDeck } from '../../types/rpg';
 import { DeckBookmarkPicker } from '../deck/DeckBookmarkPicker';
+import { useBackButton } from '../../hooks/useBackButton';
+import { KOTOBA_DATABASE } from '../../data/kotoba';
+import { KotobaDetailModal } from './KotobaDetailModal';
 
 interface KanjiDetailModalProps {
   isOpen: boolean;
@@ -44,6 +47,35 @@ export const KanjiDetailModal: React.FC<KanjiDetailModalProps> = ({
   hasPrev = false,
   onCompleteSheet,
 }) => {
+  const [selectedKotobaItem, setSelectedKotobaItem] = useState<KotobaItem | null>(null);
+
+  // Hardware / Mobile Back button support
+  useBackButton(isOpen, () => {
+    if (selectedKotobaItem) {
+      setSelectedKotobaItem(null);
+      playSound('click', soundEnabled);
+      return false; // Handled child modal, keep kanji modal open
+    }
+    onClose();
+  }, 'kanji_detail_modal');
+
+  const handleSelectKotoba = (wordStr: string) => {
+    if (!item) return;
+    const found = Object.values(KOTOBA_DATABASE).find(k => k.word === wordStr);
+    const target: KotobaItem = found || {
+      id: `kotoba_rel_${wordStr}`,
+      word: wordStr,
+      reading: wordStr,
+      meaningId: `Kosakata terkait 「${wordStr}」`,
+      meaningEn: `Related word ${wordStr}`,
+      meaningJa: wordStr,
+      wordType: 'noun',
+      jlpt: item.jlpt || 'N5',
+      kanjiComponents: Array.from(wordStr).filter(c => /[\u4e00-\u9faf]/.test(c)),
+    };
+    setSelectedKotobaItem(target);
+  };
+
   if (!isOpen || !item) return null;
   if (typeof document === 'undefined') return null;
 
@@ -146,6 +178,7 @@ export const KanjiDetailModal: React.FC<KanjiDetailModalProps> = ({
             initialTab="detail"
             showQuestions={true}
             onCompleteSheet={onCompleteSheet}
+            onSelectKotoba={handleSelectKotoba}
             onFinish={() => {
               if (onNext && hasNext) {
                 onNext();
@@ -153,6 +186,19 @@ export const KanjiDetailModal: React.FC<KanjiDetailModalProps> = ({
             }}
           />
         </motion.div>
+
+        {/* Nested Kotoba Detail Modal when clicking a related word */}
+        {selectedKotobaItem && (
+          <KotobaDetailModal
+            isOpen={!!selectedKotobaItem}
+            onClose={() => setSelectedKotobaItem(null)}
+            item={selectedKotobaItem}
+            soundEnabled={soundEnabled}
+            userDecks={userDecks}
+            onToggleDeckItem={onToggleDeckItem}
+            onUpdateDecks={onUpdateDecks}
+          />
+        )}
       </motion.div>
     </AnimatePresence>,
     document.body

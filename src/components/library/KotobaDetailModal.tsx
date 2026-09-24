@@ -1,15 +1,18 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion } from 'motion/react';
-import { X, Volume2, Layers, Link as LinkIcon, Network, Edit3, ChevronLeft, ChevronRight, Zap, AlertTriangle } from 'lucide-react';
+import { X, Volume2, Layers, Link as LinkIcon, Network, Edit3, ChevronLeft, ChevronRight, Zap, AlertTriangle, ArrowLeft } from 'lucide-react';
 import { BookIcon } from '../ui/EngravingIcons';
-import { KotobaItem, ItemMasteryRecord } from '../../types/content';
+import { KotobaItem, ItemMasteryRecord, KanjiItem } from '../../types/content';
 import { playSound, speakJapanese } from '../../utils/audio';
 import { RubyText } from '../learning/RubyText';
 import { KOTOBA_DATABASE } from '../../data/kotoba';
+import { KANJI_DATABASE } from '../../data/kanji';
 import { KotobaWritingPractice } from '../learning/KotobaWritingPractice';
 import { parseReadingVariations } from '../../utils/readingHighlightUtils';
 import { fisherYatesShuffle } from '../../utils/smartRandomizer';
+import { useBackButton } from '../../hooks/useBackButton';
+import { KanjiDetailModal } from './KanjiDetailModal';
 
 import { UserDeck } from '../../types/rpg';
 import { DeckBookmarkPicker } from '../deck/DeckBookmarkPicker';
@@ -68,71 +71,158 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
   onRecordInteraction,
   onCompleteStudyItem,
 }) => {
+  // Navigation stack inside modal (e.g. drilling down through related words)
+  const [currentItem, setCurrentItem] = useState<KotobaItem | null>(item);
+  const [navHistory, setNavHistory] = useState<KotobaItem[]>([]);
+  const [selectedKanjiChar, setSelectedKanjiChar] = useState<string | null>(null);
+
   const [isWritingMode, setIsWritingMode] = useState(false);
   const [selectedReadingIndex, setSelectedReadingIndex] = useState<number>(-1);
   const hasRecordedWritingRef = React.useRef(false);
+
+  // Sync internal item when external item prop changes
+  useEffect(() => {
+    if (item) {
+      setCurrentItem(item);
+      setNavHistory([]);
+      setSelectedKanjiChar(null);
+    }
+  }, [item]);
+
+  const effectiveItem = currentItem || item;
+
+  // Handle drilldown back step
+  const handleBackInHistory = () => {
+    if (selectedKanjiChar) {
+      setSelectedKanjiChar(null);
+      playSound('click', soundEnabled);
+      return true;
+    }
+    if (isWritingMode) {
+      setIsWritingMode(false);
+      playSound('click', soundEnabled);
+      return true;
+    }
+    if (navHistory.length > 0) {
+      const prev = navHistory[navHistory.length - 1];
+      setNavHistory(h => h.slice(0, -1));
+      setCurrentItem(prev);
+      playSound('click', soundEnabled);
+      return true;
+    }
+    return false;
+  };
+
+  // Hardware & Mobile Back Button Trap
+  useBackButton(isOpen, () => {
+    const handled = handleBackInHistory();
+    if (handled) return false; // Handled sub-step, keep modal open
+    onClose();
+  }, 'kotoba_detail_modal');
+
+  const handleSelectRelatedWord = (wordStr: string) => {
+    if (!effectiveItem) return;
+    const found = Object.values(KOTOBA_DATABASE).find(k => k.word === wordStr);
+    const target: KotobaItem = found || {
+      id: `kotoba_rel_${wordStr}`,
+      word: wordStr,
+      reading: wordStr,
+      meaningId: `Kosakata terkait 「${wordStr}」`,
+      meaningEn: `Related word ${wordStr}`,
+      meaningJa: wordStr,
+      wordType: 'noun',
+      jlpt: effectiveItem.jlpt || 'N5',
+      kanjiComponents: Array.from(wordStr).filter(c => /[\u4e00-\u9faf]/.test(c)),
+    };
+
+    setNavHistory(prev => [...prev, effectiveItem]);
+    setCurrentItem(target);
+    setIsWritingMode(false);
+    playSound('click', soundEnabled);
+  };
+
+  const getKanjiItemForChar = (char: string): KanjiItem => {
+    const fromDb = KANJI_DATABASE[char] || Object.values(KANJI_DATABASE).find(kj => kj.character === char);
+    if (fromDb) return fromDb;
+
+    return {
+      id: `kj_${char}`,
+      character: char,
+      meaningId: `Aksara Kanji 「${char}」`,
+      meaningEn: `Kanji character ${char}`,
+      onyomi: [],
+      kunyomi: [],
+      strokeCount: 1,
+      radical: '',
+      radicalName: '',
+      jlpt: 'N5',
+      relatedWords: effectiveItem ? [{ word: effectiveItem.word, reading: effectiveItem.reading, meaningId: effectiveItem.meaningId }] : [],
+      questions: []
+    };
+  };
 
   useEffect(() => {
     if (!isOpen) {
       setIsWritingMode(false);
       hasRecordedWritingRef.current = false;
-    } else if (item?.id) {
+      setSelectedKanjiChar(null);
+    } else if (effectiveItem?.id) {
       setSelectedReadingIndex(-1);
       hasRecordedWritingRef.current = false;
-      onRecordInteraction?.(item.id, 'kotoba', 'flashcard', true);
+      onRecordInteraction?.(effectiveItem.id, 'kotoba', 'flashcard', true);
     }
-  }, [isOpen, item?.id]);
+  }, [isOpen, effectiveItem?.id]);
 
   const handleWritingWordCompleted = (score: number, reward?: import('../../utils/rewards').WritingRewardResult) => {
-    if (!item) return;
+    if (!effectiveItem) return;
     if (hasRecordedWritingRef.current) return;
     hasRecordedWritingRef.current = true;
 
     const exp = reward?.expGained ?? 20;
     const gold = reward?.goldGained ?? 5;
     if (onCompleteStudyItem) {
-      onCompleteStudyItem('kotoba', exp, gold, item.id, score >= 60 ? 1 : 0, 1, 'writing');
+      onCompleteStudyItem('kotoba', exp, gold, effectiveItem.id, score >= 60 ? 1 : 0, 1, 'writing');
     } else {
       if (onRecordInteraction) {
-        onRecordInteraction(item.id, 'kotoba', 'writing', score >= 60);
+        onRecordInteraction(effectiveItem.id, 'kotoba', 'writing', score >= 60);
       }
       onRewardPlayer?.(exp, gold);
-      onRecordStudy?.('flashcards', item.id, 1);
+      onRecordStudy?.('flashcards', effectiveItem.id, 1);
     }
   };
 
-  const readingVariations = useMemo(() => parseReadingVariations(item?.reading), [item?.reading]);
+  const readingVariations = useMemo(() => parseReadingVariations(effectiveItem?.reading), [effectiveItem?.reading]);
   const hasMultipleReadings = readingVariations.length > 1;
 
   const displayReading = useMemo(() => {
-    if (!hasMultipleReadings) return item?.reading || '';
+    if (!hasMultipleReadings) return effectiveItem?.reading || '';
     if (selectedReadingIndex >= 0 && selectedReadingIndex < readingVariations.length) {
       return readingVariations[selectedReadingIndex];
     }
     return readingVariations.join(' / ');
-  }, [hasMultipleReadings, item?.reading, selectedReadingIndex, readingVariations]);
+  }, [hasMultipleReadings, effectiveItem?.reading, selectedReadingIndex, readingVariations]);
 
   // Dynamically compute related words based on shared Kanji components
   const dynamicRelatedWords = useMemo(() => {
-    if (!item || !item.kanjiComponents || item.kanjiComponents.length === 0) return [];
+    if (!effectiveItem || !effectiveItem.kanjiComponents || effectiveItem.kanjiComponents.length === 0) return [];
     
     // Find up to 5 other words that share at least one kanji
     const allItems = Object.values(KOTOBA_DATABASE);
     const related = allItems.filter(other => 
-      other.id !== item.id && 
+      other.id !== effectiveItem.id && 
       other.kanjiComponents &&
-      other.kanjiComponents.some(kanji => item.kanjiComponents!.includes(kanji))
+      other.kanjiComponents.some(kanji => effectiveItem.kanjiComponents!.includes(kanji))
     );
     
     // Shuffle and pick 5
     return fisherYatesShuffle(related).slice(0, 5);
-  }, [item]);
+  }, [effectiveItem]);
 
-  if (!isOpen || !item) return null;
+  if (!isOpen || !effectiveItem) return null;
   if (typeof document === 'undefined') return null;
 
-  const relatedWords = item.relatedWords || dynamicRelatedWords.map(rw => rw.word);
-  const collocations = item.collocations || [];
+  const relatedWords = effectiveItem.relatedWords || dynamicRelatedWords.map(rw => rw.word);
+  const collocations = effectiveItem.collocations || [];
 
   return createPortal(
     <motion.div key="modal-container" className="fixed inset-0 z-[80] flex items-center justify-center px-4 py-6 sm:p-6" exit={{ opacity: 0 }}>
@@ -157,10 +247,23 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
         >
           {/* Header */}
           <div className="flex items-center justify-between p-4 sm:p-5 border-b border-border-subtle bg-surface-inset">
-            <h3 className="text-sm font-bold text-text-primary flex items-center gap-2 font-heading">
-              <BookIcon className="w-4 h-4 text-gold" />
-              Detail Kosakata
-            </h3>
+            <div className="flex items-center gap-2">
+              {navHistory.length > 0 && (
+                <button
+                  type="button"
+                  onClick={handleBackInHistory}
+                  className="p-1.5 -ml-1 rounded-xl text-text-secondary hover:text-wine-accent hover:bg-surface-card border border-border-subtle transition-all flex items-center gap-1 text-xs font-bold mr-1 cursor-pointer"
+                  title="Kembali ke kata sebelumnya"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  <span className="hidden sm:inline">Kembali</span>
+                </button>
+              )}
+              <h3 className="text-sm font-bold text-text-primary flex items-center gap-2 font-heading">
+                <BookIcon className="w-4 h-4 text-gold" />
+                Detail Kosakata
+              </h3>
+            </div>
             <div className="flex items-center gap-1.5">
               {(onPrev || onNext) && (
                 <div className="flex items-center gap-1 mr-1 border-r border-border-subtle pr-2">
@@ -191,10 +294,10 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                 </div>
               )}
               <DeckBookmarkPicker
-                itemId={item.id}
+                itemId={effectiveItem.id}
                 category="kotoba"
-                itemTitle={item.word}
-                itemSubtitle={item.meaningId || (item as any).meaning}
+                itemTitle={effectiveItem.word}
+                itemSubtitle={effectiveItem.meaningId || (effectiveItem as any).meaning}
                 userDecks={userDecks}
                 onToggleDeckItem={onToggleDeckItem}
                 isDefaultBookmarked={isBookmarked}
@@ -207,7 +310,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                   onClose();
                   playSound('click', soundEnabled);
                 }}
-                className="p-1.5 rounded-xl bg-surface-card border border-border-subtle hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-colors"
+                className="p-1.5 rounded-xl bg-surface-card border border-border-subtle hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -219,8 +322,8 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
             
             {isWritingMode ? (
               <KotobaWritingPractice
-                key={`writing-${item.id}`}
-                kotoba={item}
+                key={`writing-${effectiveItem.id}`}
+                kotoba={effectiveItem}
                 soundEnabled={soundEnabled}
                 nextButtonLabel={hasNext ? 'Lanjut ke Kata Berikutnya' : 'Selesai Menulis'}
                 onCompleteWord={(score, reward) => {
@@ -242,27 +345,27 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                 <div className="flex flex-col items-center text-center space-y-4">
               <div className="flex gap-2 justify-center flex-wrap">
                 <span className="px-2.5 py-1 rounded-lg bg-surface-inset text-text-primary text-xs font-mono font-bold border border-border-subtle shadow-sm">
-                  {item.jlpt.startsWith('N') ? `JLPT ${item.jlpt}` : item.jlpt}
+                  {effectiveItem.jlpt.startsWith('N') ? `JLPT ${effectiveItem.jlpt}` : effectiveItem.jlpt}
                 </span>
-                {item.tags?.includes('Kaigo') && item.jlpt !== 'Kaigo' && (
+                {effectiveItem.tags?.includes('Kaigo') && effectiveItem.jlpt !== 'Kaigo' && (
                   <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-bold border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 shadow-sm">
                     🩺 Kaigo
                   </span>
                 )}
-                {item.unitName && (
+                {effectiveItem.unitName && (
                   <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-surface-inset text-text-secondary border border-border-subtle shadow-sm">
-                    Unit: {item.unitName}
+                    Unit: {effectiveItem.unitName}
                   </span>
                 )}
                 <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-surface-inset text-text-secondary border border-border-subtle shadow-sm">
-                  {(item.id.match(/\d+$/) ? parseInt(item.id.match(/\d+$/)![0], 10) % 10 : 0) < 5
+                  {(effectiveItem.id.match(/\d+$/) ? parseInt(effectiveItem.id.match(/\d+$/)![0], 10) % 10 : 0) < 5
                     ? 'Essential (Core)'
-                    : (item.id.match(/\d+$/) ? parseInt(item.id.match(/\d+$/)![0], 10) % 10 : 0) < 8
+                    : (effectiveItem.id.match(/\d+$/) ? parseInt(effectiveItem.id.match(/\d+$/)![0], 10) % 10 : 0) < 8
                     ? 'Important (High Frequency)'
                     : 'Supplementary (Lanjutan)'}
                 </span>
                 <span className="px-2.5 py-1 rounded-lg bg-surface-inset text-text-muted text-xs font-mono border border-border-subtle uppercase font-bold shadow-sm">
-                  {item.wordType}
+                  {effectiveItem.wordType}
                 </span>
                 {hasMultipleReadings && (
                   <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-bold border border-red-700/25 dark:border-amber-400/30 text-red-700 dark:text-amber-400 bg-surface-inset shadow-sm flex items-center gap-1.5">
@@ -284,7 +387,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
               
               <div className="space-y-3 w-full">
                 <h1 className="text-5xl font-black text-text-primary font-jp tracking-wider">
-                  <RubyText japanese={item.word} reading={displayReading} showFurigana={true} />
+                  <RubyText japanese={effectiveItem.word} reading={displayReading} showFurigana={true} />
                 </h1>
 
                 {hasMultipleReadings ? (
@@ -347,8 +450,8 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                   </div>
                 ) : (
                   <button
-                    onClick={() => speakJapanese(item.reading || item.word)}
-                    className="mx-auto mt-2 flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-colors text-xs font-bold border border-border-subtle"
+                    onClick={() => speakJapanese(effectiveItem.reading || effectiveItem.word)}
+                    className="mx-auto mt-2 flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-colors text-xs font-bold border border-border-subtle cursor-pointer"
                   >
                     <Volume2 className="w-3.5 h-3.5" />
                     Dengarkan
@@ -359,23 +462,23 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
 
               <div className="space-y-2 bg-surface-inset p-4 rounded-2xl w-full border border-border-subtle text-left sm:text-center">
                 <h2 className="text-xl font-black text-text-primary font-heading leading-snug">
-                  {item.meaningId}
+                  {effectiveItem.meaningId}
                 </h2>
-                {(item.definitionId || item.meaningJaId) && (
+                {(effectiveItem.definitionId || effectiveItem.meaningJaId) && (
                   <p className="text-xs text-indigo-400 dark:text-indigo-300 leading-relaxed font-medium">
                     <span className="font-bold text-text-secondary">Penjelasan Makna: </span>
-                    {item.definitionId || item.meaningJaId}
+                    {effectiveItem.definitionId || effectiveItem.meaningJaId}
                   </p>
                 )}
-                {item.meaningJa && item.meaningJa !== item.word && (
+                {effectiveItem.meaningJa && effectiveItem.meaningJa !== effectiveItem.word && (
                   <p className="text-xs text-text-muted italic">
-                    {item.tags?.includes('Kaigo') ? 'Penjelasan JP (やさしい日本語): ' : 'Makna JP: '}
-                    <span className="font-jp not-italic font-semibold text-text-secondary">{item.meaningJa}</span>
+                    {effectiveItem.tags?.includes('Kaigo') ? 'Penjelasan JP (やさしい日本語): ' : 'Makna JP: '}
+                    <span className="font-jp not-italic font-semibold text-text-secondary">{effectiveItem.meaningJa}</span>
                   </p>
                 )}
-                {item.meaningEn && (
+                {effectiveItem.meaningEn && (
                   <p className="text-[11px] text-text-muted">
-                    English: {item.meaningEn}
+                    English: {effectiveItem.meaningEn}
                   </p>
                 )}
               </div>
@@ -385,24 +488,33 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                   setIsWritingMode(true);
                   playSound('click', soundEnabled);
                 }}
-                className="btn-cta mt-2 w-full max-w-xs mx-auto py-3 rounded-2xl font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 font-heading"
+                className="btn-cta mt-2 w-full max-w-xs mx-auto py-3 rounded-2xl font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 font-heading cursor-pointer active:scale-95"
               >
                 <Edit3 className="w-4 h-4" />
                 <span>Latih dengan Menulis (Active Recall)</span>
               </button>
             </div>
 
-            {/* Kanji Breakdown */}
-            {item.kanjiComponents && item.kanjiComponents.length > 0 && (
+            {/* Kanji Breakdown - Interactive Links */}
+            {effectiveItem.kanjiComponents && effectiveItem.kanjiComponents.length > 0 && (
               <div className="space-y-2">
                 <h4 className="text-xs font-bold text-text-muted uppercase tracking-wider flex items-center gap-1.5">
                   <Layers className="w-3.5 h-3.5" /> Komponen Kanji
                 </h4>
                 <div className="flex flex-wrap gap-2">
-                  {item.kanjiComponents.map((k, i) => (
-                    <span key={i} className="px-3 py-1.5 rounded-xl bg-surface-inset text-text-primary border border-border-subtle text-sm font-jp font-bold">
-                      {k}
-                    </span>
+                  {effectiveItem.kanjiComponents.map((k, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => {
+                        setSelectedKanjiChar(k);
+                        playSound('click', soundEnabled);
+                      }}
+                      className="px-3 py-1.5 rounded-xl bg-surface-inset hover:bg-surface-elevated text-text-primary hover:text-wine-accent border border-border-subtle hover:border-wine-accent/50 text-sm font-jp font-bold transition-all cursor-pointer shadow-xs active:scale-95 flex items-center gap-1"
+                      title={`Buka detail kanji 「${k}」 di ensiklopedi`}
+                    >
+                      <span>{k}</span>
+                    </button>
                   ))}
                 </div>
               </div>
@@ -411,21 +523,21 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
             {/* Example Sentences */}
             <div className="space-y-3">
               <h4 className="text-xs font-bold text-text-muted uppercase tracking-wider">Contoh Kalimat</h4>
-              {item.exampleSentence ? (
+              {effectiveItem.exampleSentence ? (
                 <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle space-y-2">
                   <p className="text-sm font-jp text-text-primary leading-relaxed font-bold">
                     <RubyText 
-                      japanese={item.exampleSentence.japanese} 
-                      reading={item.exampleSentence.reading} 
+                      japanese={effectiveItem.exampleSentence.japanese} 
+                      reading={effectiveItem.exampleSentence.reading} 
                       showFurigana={true} 
                     />
                   </p>
                   <p className="text-xs text-text-secondary font-medium">
-                    {item.exampleSentence.meaningId}
+                    {effectiveItem.exampleSentence.meaningId}
                   </p>
                   <button
-                    onClick={() => speakJapanese(item.exampleSentence!.japanese)}
-                    className="flex items-center gap-1.5 text-[10px] text-gold hover:underline font-bold uppercase tracking-wider mt-2"
+                    onClick={() => speakJapanese(effectiveItem.exampleSentence!.japanese)}
+                    className="flex items-center gap-1.5 text-[10px] text-gold hover:underline font-bold uppercase tracking-wider mt-2 cursor-pointer"
                   >
                     <Volume2 className="w-3 h-3" /> Putar Audio
                   </button>
@@ -437,25 +549,45 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
 
             {/* Related Words & Collocations Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* Related Words */}
+              {/* Related Words - Interactive Links */}
               <div className="space-y-2">
                 <h4 className="text-xs font-bold text-text-muted uppercase tracking-wider flex items-center gap-1.5">
                   <LinkIcon className="w-3.5 h-3.5" /> Kata Terkait
                 </h4>
                 {relatedWords.length > 0 ? (
                   <ul className="space-y-1.5">
-                    {relatedWords.map((word, i) => (
-                      <li key={i} className="text-sm text-text-primary font-jp bg-surface-inset px-2.5 py-1.5 rounded-lg border border-border-subtle">
-                        {word}
-                      </li>
-                    ))}
+                    {relatedWords.map((word, i) => {
+                      const matchedItem = Object.values(KOTOBA_DATABASE).find(k => k.word === word);
+                      return (
+                        <li
+                          key={i}
+                          onClick={() => handleSelectRelatedWord(word)}
+                          className="text-sm text-text-primary font-jp bg-surface-inset hover:bg-surface-elevated px-2.5 py-1.5 rounded-lg border border-border-subtle hover:border-gold/40 transition-all cursor-pointer flex items-center justify-between group active:scale-98"
+                          title={`Lihat detail kosakata 「${word}」`}
+                        >
+                          <div className="flex items-center gap-1.5 min-w-0">
+                            <span className="font-bold group-hover:text-gold transition-colors">{word}</span>
+                            {matchedItem?.reading && matchedItem.reading !== word && (
+                              <span className="text-[11px] text-text-muted font-normal truncate">
+                                ({matchedItem.reading})
+                              </span>
+                            )}
+                          </div>
+                          {matchedItem?.meaningId && (
+                            <span className="text-[10px] text-text-secondary truncate max-w-[120px] font-normal ml-2">
+                              {matchedItem.meaningId}
+                            </span>
+                          )}
+                        </li>
+                      );
+                    })}
                   </ul>
                 ) : (
                   <p className="text-xs text-text-muted italic">Tidak ada referensi kata terkait.</p>
                 )}
               </div>
 
-              {/* Collocations */}
+              {/* Collocations - Clickable for Audio */}
               <div className="space-y-2">
                 <h4 className="text-xs font-bold text-text-muted uppercase tracking-wider flex items-center gap-1.5">
                   <Network className="w-3.5 h-3.5" /> Kolokasi (Frasa)
@@ -463,8 +595,17 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                 {collocations.length > 0 ? (
                   <ul className="space-y-1.5">
                     {collocations.map((colloc, i) => (
-                      <li key={i} className="text-sm text-text-primary font-jp bg-surface-inset px-2.5 py-1.5 rounded-lg border border-border-subtle">
-                        {colloc}
+                      <li
+                        key={i}
+                        onClick={() => {
+                          speakJapanese(colloc);
+                          playSound('click', soundEnabled);
+                        }}
+                        className="text-sm text-text-primary font-jp bg-surface-inset hover:bg-surface-elevated px-2.5 py-1.5 rounded-lg border border-border-subtle hover:border-border-primary transition-all cursor-pointer flex items-center justify-between group active:scale-98"
+                        title="Klik untuk mendengarkan lafal frasa"
+                      >
+                        <span>{colloc}</span>
+                        <Volume2 className="w-3.5 h-3.5 text-text-muted group-hover:text-gold transition-colors shrink-0" />
                       </li>
                     ))}
                   </ul>
@@ -482,6 +623,19 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
 
           </div>
         </motion.div>
+
+        {/* Kanji Component Drilldown Modal */}
+        {selectedKanjiChar && (
+          <KanjiDetailModal
+            isOpen={!!selectedKanjiChar}
+            onClose={() => setSelectedKanjiChar(null)}
+            item={getKanjiItemForChar(selectedKanjiChar)}
+            soundEnabled={soundEnabled}
+            userDecks={userDecks}
+            onToggleDeckItem={onToggleDeckItem}
+            onUpdateDecks={onUpdateDecks}
+          />
+        )}
       </motion.div>,
     document.body
   );

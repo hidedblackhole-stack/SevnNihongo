@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Volume2, VolumeX, RotateCcw, ShieldAlert, Settings, BookOpen, User, LogOut, Coffee, MessageCircle, Sun, Moon, RefreshCw, Cloud, Check, Sparkles, Smartphone, Download } from 'lucide-react';
+import { Volume2, VolumeX, RotateCcw, ShieldAlert, Settings, BookOpen, User, LogOut, Coffee, MessageCircle, Sun, Moon, RefreshCw, Cloud, Check, Compass, Smartphone, Download } from 'lucide-react';
 import { PlayerStats } from '../../types/rpg';
 import { speakJapanese, playSound } from '../../utils/audio';
 import { signOut } from '../../lib/supabase';
@@ -566,7 +566,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           <div className="py-3.5 first:pt-1 last:pb-0 flex items-center justify-between gap-3">
             <div className="min-w-0 flex-1 pr-3">
               <h4 className="text-sm font-bold text-text-primary font-heading flex items-center gap-2 tracking-normal">
-                <Sparkles className="w-4 h-4 text-gold shrink-0" />
+                <Compass className="w-4 h-4 text-indigo shrink-0" />
                 <span>Panduan Awal (Tutorial)</span>
               </h4>
               <p className="text-xs text-text-secondary mt-0.5 leading-relaxed">

@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Sparkles, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { BunpouItem } from '../../types/content';
 import { ConjugationSheet } from './ConjugationSheet';
 

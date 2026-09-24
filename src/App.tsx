@@ -36,6 +36,7 @@ import { AuthModal } from './components/auth/AuthModal';
 import { supabase, getSession, saveGameToCloud, loadGameFromCloud, upsertLeaderboard } from './lib/supabase';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { SpotlightOnboarding } from './components/tutorial/SpotlightOnboarding';
+import { useBackButton } from './hooks/useBackButton';
 
 const STORAGE_KEY_STATS = 'nihongo_quest_player_stats_v2';
 const STORAGE_KEY_STAGES = 'nihongo_quest_stage_progress_v2';
@@ -203,6 +204,46 @@ export default function App() {
   const [worldResetCount, setWorldResetCount] = useState(0);
   const [deckResetCount, setDeckResetCount] = useState(0);
   const [deckInitialSubTab, setDeckInitialSubTab] = useState<'my_pocket' | 'official_books'>('my_pocket');
+  const [tabHistory, setTabHistory] = useState<TabType[]>([]);
+
+  // Hardware / System Back Button Handlers
+  useBackButton(isRecallActive, () => {
+    setIsRecallActive(false);
+  }, 'smart_recall_overlay');
+
+  useBackButton(isBossBattleActive, () => {
+    setIsBossBattleActive(false);
+  }, 'boss_battle_overlay');
+
+  useBackButton(isAuthModalOpen, () => {
+    setIsAuthModalOpen(false);
+  }, 'auth_modal');
+
+  // When on maps tab, inside a specific world (not world_hub), back returns to world_hub
+  useBackButton(
+    activeTab === 'maps' && !selectedStage && !isRecallActive && !isBossBattleActive && worldNavView !== 'world_hub',
+    () => {
+      setWorldNavView('world_hub');
+      setStats(prev => ({ ...prev, currentWorldId: '' }));
+      setWorldResetCount(c => c + 1);
+    },
+    'maps_world_navigation'
+  );
+
+  // Tab navigation history: when on any secondary tab, back returns to previous tab or home
+  useBackButton(
+    activeTab !== 'home' && !selectedStage && !isRecallActive && !isBossBattleActive && !isStatusModalOpen && !isAuthModalOpen,
+    () => {
+      if (tabHistory.length > 0) {
+        const prevTab = tabHistory[tabHistory.length - 1];
+        setTabHistory(h => h.slice(0, -1));
+        setActiveTab(prevTab);
+      } else {
+        setActiveTab('home');
+      }
+    },
+    'tab_navigation'
+  );
 
   const handleTabChange = useCallback((tab: TabType) => {
     // If re-tapping the current active tab (Pop to Root / Scroll to Top)
@@ -216,6 +257,11 @@ export default function App() {
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
+    }
+
+    // Record tab navigation history
+    if (tab !== activeTab) {
+      setTabHistory(prev => [...prev.filter(t => t !== tab), activeTab]);
     }
 
     // Dismiss any fullscreen stage overlays or active modals

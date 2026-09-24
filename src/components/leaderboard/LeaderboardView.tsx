@@ -6,7 +6,6 @@ import {
   RefreshCw,
   Flame,
   Crown,
-  Sparkles,
   ChevronDown,
   ChevronUp,
   WifiOff,
@@ -535,7 +534,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
                 <div className="text-[11px] text-text-muted flex items-center gap-1 truncate">
                   {myRankInfo.rank <= 100 ? (
                     <span className="text-emerald-400 font-semibold flex items-center gap-1">
-                      <Sparkles className="w-3 h-3 text-emerald-400" />
+                      <Trophy className="w-3 h-3 text-emerald-400" />
                       Masuk Top 100 Dunia!
                     </span>
                   ) : (

@@ -5,6 +5,7 @@ import { playSound, speakJapanese } from '../../utils/audio';
 import { ResolvedDeckItem } from '../../utils/decks';
 import { KotobaItem, KanjiItem, BunpouItem } from '../../types/content';
 import { parseReadingVariations } from '../../utils/readingHighlightUtils';
+import { getEnrichedKanjiRelatedWords } from '../../utils/kanjiVocabularyEnricher';
 
 
 export type UniversalFlashcardItem =
@@ -387,30 +388,36 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                 )}
 
                 {/* Related Words */}
-                {norm.kanji?.relatedWords && norm.kanji.relatedWords.length > 0 && (
-                  <div className="w-full p-2.5 rounded-xl bg-surface-inset border border-border-subtle text-left space-y-1 mt-1">
-                    <span className="text-[10px] font-bold text-text-muted uppercase font-mono">
-                      Contoh Kosakata Terkait:
-                    </span>
-                    <div className="flex flex-wrap gap-1.5 text-xs">
-                      {norm.kanji.relatedWords.slice(0, 3).map((rw, i) => (
-                        <button
-                          key={i}
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            speakJapanese(rw.word);
-                          }}
-                          className="px-2 py-1 rounded-lg bg-surface-card border border-border-subtle hover:border-gold/40 flex items-center gap-1.5 text-[11px] transition-colors"
-                        >
-                          <span className="font-jp font-bold text-text-primary">{rw.word}</span>
-                          <span className="text-text-muted font-mono">({rw.reading})</span>
-                          <span className="text-text-secondary">— {rw.meaningId}</span>
-                        </button>
-                      ))}
+                {(() => {
+                  const words = norm.kanji?.character
+                    ? getEnrichedKanjiRelatedWords(norm.kanji.character, norm.kanji.relatedWords, 6)
+                    : (norm.kanji?.relatedWords || []);
+                  if (!words || words.length === 0) return null;
+                  return (
+                    <div className="w-full p-2.5 rounded-xl bg-surface-inset border border-border-subtle text-left space-y-1 mt-1">
+                      <span className="text-[10px] font-bold text-text-muted uppercase font-mono">
+                        Contoh Kosakata Terkait:
+                      </span>
+                      <div className="flex flex-wrap gap-1.5 text-xs">
+                        {words.map((rw, i) => (
+                          <button
+                            key={i}
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              speakJapanese(rw.word);
+                            }}
+                            className="px-2 py-1 rounded-lg bg-surface-card border border-border-subtle hover:border-gold/40 flex items-center gap-1.5 text-[11px] transition-colors"
+                          >
+                            <span className="font-jp font-bold text-text-primary">{rw.word}</span>
+                            <span className="text-text-muted font-mono">({rw.reading})</span>
+                            <span className="text-text-secondary">— {rw.meaningId}</span>
+                          </button>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  );
+                })()}
               </div>
 
               <p className="text-[11px] text-text-muted font-mono">

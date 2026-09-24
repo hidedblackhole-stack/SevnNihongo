@@ -208,7 +208,7 @@ export const KanjiSpeedRushModal: React.FC<KanjiSpeedRushModalProps> = ({
       ? currentItem.onyomi[0] 
       : Array.isArray(currentItem.kunyomi) && currentItem.kunyomi[0] 
         ? currentItem.kunyomi[0] 
-        : currentItem.reading || '';
+        : ((currentItem as any).reading || '');
 
     setClearedList(prev => [
       ...prev,

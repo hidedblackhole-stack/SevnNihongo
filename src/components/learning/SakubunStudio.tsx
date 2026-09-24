@@ -7,7 +7,6 @@ import React, { useState, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
 import {
-  Sparkles,
   RotateCcw,
   CheckCircle2,
   XCircle,
@@ -175,7 +174,7 @@ export const SakubunStudio: React.FC<SakubunStudioProps> = ({
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border-subtle/60 pb-3">
           <div className="flex items-center gap-2.5">
             <span className="p-2 rounded-2xl bg-surface-inset border border-border-subtle text-red-700 dark:text-gold">
-              <Sparkles className="w-5 h-5" />
+              <BookOpen className="w-5 h-5" />
             </span>
             <div>
               <div className="flex items-center gap-2">

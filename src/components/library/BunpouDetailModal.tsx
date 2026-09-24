@@ -4,7 +4,6 @@ import { motion } from 'motion/react';
 import {
   X,
   Volume2,
-  Sparkles,
   ChevronRight,
   CheckCircle2,
   XCircle,
@@ -22,6 +21,7 @@ import { getCanonicalGrammarTitle } from '../../utils/bunpouTitleUtils';
 import { UserDeck } from '../../types/rpg';
 import { DeckBookmarkPicker } from '../deck/DeckBookmarkPicker';
 import { getGrammarSkillNodes, getBunpouCategoryTags } from '../../utils/bunpouSkillAdapter';
+import { useBackButton } from '../../hooks/useBackButton';
 
 interface BunpouDetailModalProps {
   item: BunpouItem;
@@ -50,6 +50,16 @@ interface BunpouDetailModalProps {
   ) => void;
 }
 
+/**
+ * Strips redundant trailing English in parentheses or bracket notes
+ */
+const cleanSummary = (text?: string): string => {
+  if (!text) return '';
+  return text
+    .replace(/\s*\([A-Za-z0-9\s/,'’._\-—]{4,}\)\.?\s*$/g, '')
+    .trim();
+};
+
 export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
   item,
   masteryRecord,
@@ -64,6 +74,11 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
   onRecordInteraction,
   onCompleteStudyItem,
 }) => {
+  // Hardware & Mobile Back Button Support
+  useBackButton(true, () => {
+    onClose();
+  }, 'bunpou_detail_modal');
+
   // Extract human-centered learning flow
   const skillNodes = getGrammarSkillNodes(item);
   const patternTitle = getCanonicalGrammarTitle(item);
@@ -194,11 +209,6 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                   {levelLabel}
                 </span>
 
-                <span className="px-2 py-0.5 rounded-lg bg-surface-card text-gold text-xs font-mono font-bold border border-gold/30 flex items-center gap-1">
-                  <Sparkles className="w-3 h-3 text-gold" />
-                  <span>Grammar Skill</span>
-                </span>
-
                 {categoryTags.map((tag, tIdx) => (
                   <span
                     key={tIdx}
@@ -210,15 +220,15 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
               </div>
 
               {/* Pattern Title */}
-              <div className="flex items-center gap-3">
-                <h1 className="text-2xl sm:text-3xl font-black text-text-primary font-heading tracking-wide font-jp truncate">
+              <div className="flex items-center gap-2.5">
+                <h1 className="text-xl sm:text-2xl font-bold text-text-primary font-heading tracking-wide font-jp truncate">
                   {patternTitle}
                 </h1>
 
                 <button
                   type="button"
                   onClick={() => speakJapanese(patternTitle.replace(/^[〜~]/, ''))}
-                  className="p-2 rounded-xl bg-surface-card hover:bg-surface-inset text-indigo hover:text-indigo-light transition-all border border-border-subtle cursor-pointer shrink-0 shadow-xs active:scale-95"
+                  className="p-1.5 sm:p-2 rounded-xl bg-surface-card hover:bg-surface-inset text-indigo hover:text-indigo-light transition-all border border-border-subtle cursor-pointer shrink-0 shadow-xs active:scale-95"
                   title="Dengarkan pelafalan"
                 >
                   <Volume2 className="w-4 h-4" />
@@ -226,8 +236,8 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
               </div>
 
               {/* Plain Meaning */}
-              <p className="text-xs sm:text-sm font-semibold text-text-secondary leading-relaxed max-w-xl">
-                {item.meaningId || (item as any).meaning}
+              <p className="text-xs sm:text-sm text-text-secondary leading-relaxed max-w-xl font-normal">
+                {cleanSummary(item.meaningId || (item as any).meaning)}
               </p>
             </div>
 
@@ -258,13 +268,13 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
           </div>
 
           {/* Quick Flow Stepper */}
-          <div className="pt-3.5 mt-2 border-t border-border-subtle/70 flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+          <div className="pt-3 mt-1.5 border-t border-border-subtle/70 flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
             {stepItems.map((step, sIdx) => (
               <button
                 key={sIdx}
                 type="button"
                 onClick={() => scrollToNode(sIdx)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold font-sans transition-all whitespace-nowrap shrink-0 flex items-center gap-1.5 cursor-pointer shadow-xs active:scale-95 ${
+                className={`px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl text-xs font-semibold font-sans transition-all whitespace-nowrap shrink-0 flex items-center gap-1.5 cursor-pointer shadow-xs active:scale-95 ${
                   step.essential
                     ? 'bg-surface-card hover:bg-surface-inset border border-border-subtle text-text-primary hover:text-indigo'
                     : 'bg-surface-inset/60 hover:bg-surface-card border border-border-subtle/60 text-text-muted hover:text-text-secondary'
@@ -282,69 +292,75 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
         {/* ======================================================== */}
         {/* LEARNING FLOW: 7 KARTU BELAJAR MANUSIAWI                 */}
         {/* ======================================================== */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 scrollbar-thin">
+        <div className="flex-1 overflow-y-auto p-3.5 sm:p-6 space-y-4 sm:space-y-6 scrollbar-thin">
 
           {/* ------------------------------------------------------ */}
           {/* CARD 1: INTI POLA — "Apa maksudnya?" (WAJIB PAHAM)     */}
           {/* ------------------------------------------------------ */}
-          <div ref={node1Ref} className="panel p-5 sm:p-6 rounded-3xl bg-surface-card border border-indigo/30 shadow-md space-y-4">
+          <div ref={node1Ref} className="panel p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-surface-card border border-border-subtle shadow-sm space-y-3.5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-indigo font-bold text-xs uppercase tracking-wider font-heading">
                 <Lightbulb className="w-4 h-4 text-indigo" />
                 <span>① Inti Pola: "Apa maksudnya?"</span>
               </div>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-indigo/15 text-indigo border border-indigo/30">
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-indigo/10 text-indigo border border-indigo/20">
                 Wajib Paham ★★★★★
               </span>
             </div>
 
             {/* Direct Essence Statement */}
-            <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-2">
-              <div className="flex items-baseline gap-2">
-                <span className="text-xl sm:text-2xl font-black text-text-primary font-jp">
-                  {patternTitle}
+            <div className="p-3.5 sm:p-4 rounded-2xl bg-surface-inset border border-border-subtle/80 space-y-3">
+              <div className="space-y-1">
+                <span className="px-2 py-0.5 rounded-md bg-indigo/10 text-indigo text-[11px] font-mono font-semibold border border-indigo/20 inline-block">
+                  Inti Makna
                 </span>
-                <span className="text-sm font-bold text-indigo">
-                  =
-                </span>
-                <span className="text-sm sm:text-base font-bold text-gold">
-                  {skillNodes.concept.summary}
-                </span>
+                <p className="text-sm sm:text-base font-semibold text-text-primary leading-relaxed">
+                  {cleanSummary(skillNodes.concept.summary)}
+                </p>
               </div>
 
-              {/* Status Before -> After */}
+              {/* Status Before -> After (Clean Balanced Sub-cards) */}
               {(skillNodes.concept.beforeState || skillNodes.concept.afterState) && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2 border-t border-border-subtle/70">
-                  <div className="flex items-center gap-2 text-xs font-semibold text-text-muted">
-                    <span>{skillNodes.concept.beforeState || 'Dulu: ❌ Belum terjadi'}</span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2.5 border-t border-border-subtle/60 text-xs">
+                  <div className="p-2.5 rounded-xl bg-surface-card/70 border border-border-subtle/70">
+                    <span className="text-[10px] font-bold text-text-muted uppercase tracking-wider block mb-0.5">
+                      Tanpa Pola (Fakta Biasa)
+                    </span>
+                    <p className="text-xs text-text-secondary leading-normal">
+                      {skillNodes.concept.beforeState?.replace(/^(Dulu:\s*|Tanpa Pola:\s*|Tanpa Pola Ini:\s*|Kalimat Netral:\s*|Kalimat Biasa:\s*|Bentuk Standar:\s*)/i, '').replace(/[❌📜💬]/g, '').trim() || 'Kalimat fakta netral biasa.'}
+                    </p>
                   </div>
-                  <div className="flex items-center gap-2 text-xs font-bold text-emerald-400">
-                    <span>{skillNodes.concept.afterState || 'Sekarang: ✅ Menjadi terwujud'}</span>
+                  <div className="p-2.5 rounded-xl bg-indigo/5 border border-indigo/20">
+                    <span className="text-[10px] font-bold text-indigo uppercase tracking-wider block mb-0.5">
+                      Dengan Pola Ini (Nuansa Khusus)
+                    </span>
+                    <p className="text-xs text-text-primary font-medium leading-normal">
+                      {skillNodes.concept.afterState?.replace(/^(Sekarang:\s*|Dengan Pola:\s*|Dengan Pola Ini:\s*|Pasif Kerugian:\s*|Pola Pasif Repot:\s*|Ragam Lisan:\s*)/i, '').replace(/[✅💬🎯🛡️🤝💡]/g, '').trim() || 'Mengandung nuansa dan maksud pembicara yang spesifik.'}
+                    </p>
                   </div>
                 </div>
               )}
             </div>
 
-            {/* Instant Concrete "Rasa" Example */}
+            {/* Instant Concrete Example */}
             {skillNodes.concept.starterExample && (
-              <div className="p-4 rounded-2xl bg-gold/10 border border-gold/30 space-y-2">
+              <div className="p-3.5 sm:p-4 rounded-2xl bg-surface-inset border border-border-subtle/80 space-y-2.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-gold font-heading flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span>Contoh Rasa Kalimat:</span>
+                  <span className="text-xs font-semibold uppercase tracking-wider text-text-muted font-heading">
+                    Contoh Penggunaan Langsung
                   </span>
 
                   <button
                     type="button"
                     onClick={() => speakJapanese(skillNodes.concept.starterExample!.japanese)}
-                    className="p-1 rounded-lg text-gold hover:bg-gold/20 transition-colors cursor-pointer"
+                    className="p-1.5 rounded-lg text-text-muted hover:text-indigo hover:bg-surface-card transition-colors cursor-pointer"
                     title="Dengarkan pelafalan"
                   >
                     <Volume2 className="w-4 h-4" />
                   </button>
                 </div>
 
-                <p className="text-base sm:text-lg font-bold text-text-primary font-jp">
+                <p className="text-sm sm:text-base font-semibold text-text-primary font-jp leading-relaxed">
                   <RubyText
                     japanese={skillNodes.concept.starterExample.japanese}
                     reading={skillNodes.concept.starterExample.reading}
@@ -352,20 +368,22 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                   />
                 </p>
 
-                <p className="text-xs sm:text-sm text-text-secondary font-semibold">
-                  {skillNodes.concept.starterExample.meaningId}
+                <p className="text-xs sm:text-sm text-text-secondary leading-relaxed font-normal">
+                  {cleanSummary(skillNodes.concept.starterExample.meaningId)}
                 </p>
 
-                {skillNodes.concept.starterExample.contrastNote && (
-                  <p className="text-xs text-gold/90 font-medium italic border-t border-gold/20 pt-1.5">
+                {skillNodes.concept.starterExample.contrastNote &&
+                  !skillNodes.concept.starterExample.contrastNote.includes('Penerapan langsung') && (
+                  <p className="text-xs text-indigo/90 font-medium border-t border-border-subtle/50 pt-2 leading-relaxed">
                     💡 {skillNodes.concept.starterExample.contrastNote}
                   </p>
                 )}
               </div>
             )}
 
-            {skillNodes.concept.keyTakeaway && (
-              <p className="text-xs text-text-muted pl-1">
+            {skillNodes.concept.keyTakeaway &&
+              !skillNodes.concept.keyTakeaway.includes('membuat kalimatmu terdengar alami') && (
+              <p className="text-xs text-text-muted pl-1 leading-relaxed">
                 📌 {skillNodes.concept.keyTakeaway}
               </p>
             )}
@@ -374,52 +392,52 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
           {/* ------------------------------------------------------ */}
           {/* CARD 2: FUNGSI — "Dipakai kapan?" (WAJIB PAHAM)         */}
           {/* ------------------------------------------------------ */}
-          <div ref={node2Ref} className="panel p-5 sm:p-6 rounded-3xl bg-surface-card border border-border-subtle shadow-sm space-y-4">
+          <div ref={node2Ref} className="panel p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-surface-card border border-border-subtle shadow-sm space-y-3.5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-indigo font-bold text-xs uppercase tracking-wider font-heading">
-                <span className="w-5 h-5 rounded-lg bg-indigo/15 text-indigo flex items-center justify-center font-bold text-xs">
+                <span className="w-5 h-5 rounded-md bg-indigo/15 text-indigo flex items-center justify-center font-bold text-xs">
                   2
                 </span>
                 <span>② Fungsi: "Dipakai kapan?"</span>
               </div>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-indigo/15 text-indigo border border-indigo/30">
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-indigo/10 text-indigo border border-indigo/20">
                 Wajib Paham ★★★★★
               </span>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               {skillNodes.functions.map((fn, fIdx) => (
                 <div
                   key={fIdx}
-                  className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-2"
+                  className="p-3.5 sm:p-4 rounded-2xl bg-surface-inset border border-border-subtle/80 space-y-2"
                 >
                   <div className="flex items-center gap-2">
-                    <span className="w-5 h-5 rounded-full bg-gold/20 text-gold font-bold text-xs flex items-center justify-center">
+                    <span className="w-5 h-5 rounded-md bg-indigo/15 text-indigo font-bold text-xs flex items-center justify-center shrink-0">
                       {fn.number}
                     </span>
-                    <h3 className="text-sm sm:text-base font-bold text-text-primary font-heading">
+                    <h3 className="text-xs sm:text-sm font-bold text-text-primary font-heading">
                       {fn.label}
                     </h3>
                   </div>
 
-                  <p className="text-xs text-text-secondary leading-relaxed pl-7">
+                  <p className="text-xs text-text-secondary leading-relaxed">
                     {fn.description}
                   </p>
 
                   {fn.miniExample && (
-                    <div className="ml-7 p-3 rounded-xl bg-surface-card border border-border-subtle flex items-start justify-between gap-3">
+                    <div className="p-2.5 sm:p-3 rounded-xl bg-surface-card border border-border-subtle/80 flex items-start justify-between gap-2.5">
                       <div className="space-y-1 min-w-0">
-                        <p className="text-sm font-bold text-text-primary font-jp">
+                        <p className="text-xs sm:text-sm font-semibold text-text-primary font-jp leading-relaxed">
                           {fn.miniExample.japanese}
                         </p>
-                        <p className="text-xs text-text-muted font-medium">
-                          {fn.miniExample.meaningId}
+                        <p className="text-[11px] sm:text-xs text-text-muted leading-relaxed font-normal">
+                          {cleanSummary(fn.miniExample.meaningId)}
                         </p>
                       </div>
                       <button
                         type="button"
                         onClick={() => speakJapanese(fn.miniExample!.japanese)}
-                        className="p-1.5 rounded-lg text-text-muted hover:text-indigo transition-colors shrink-0 cursor-pointer"
+                        className="p-1 rounded-lg text-text-muted hover:text-indigo transition-colors shrink-0 cursor-pointer"
                         title="Dengarkan audio"
                       >
                         <Volume2 className="w-3.5 h-3.5" />
@@ -434,35 +452,35 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
           {/* ------------------------------------------------------ */}
           {/* CARD 3: RUMUS — "Cara membuatnya" (WAJIB PAHAM)         */}
           {/* ------------------------------------------------------ */}
-          <div ref={node3Ref} className="panel p-5 sm:p-6 rounded-3xl bg-surface-card border border-border-subtle shadow-sm space-y-4">
+          <div ref={node3Ref} className="panel p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-surface-card border border-border-subtle shadow-sm space-y-3.5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-indigo font-bold text-xs uppercase tracking-wider font-heading">
-                <span className="w-5 h-5 rounded-lg bg-indigo/15 text-indigo flex items-center justify-center font-bold text-xs">
+                <span className="w-5 h-5 rounded-md bg-indigo/15 text-indigo flex items-center justify-center font-bold text-xs">
                   3
                 </span>
                 <span>③ Rumus: "Cara membuatnya"</span>
               </div>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-indigo/15 text-indigo border border-indigo/30">
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-indigo/10 text-indigo border border-indigo/20">
                 Wajib Paham ★★★★★
               </span>
             </div>
 
-            <div className="space-y-3.5">
+            <div className="space-y-3">
               {skillNodes.formulas.map((form, fIdx) => (
                 <div
                   key={fIdx}
-                  className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-3"
+                  className="p-3.5 sm:p-4 rounded-2xl bg-surface-inset border border-border-subtle/80 space-y-2.5"
                 >
                   <h4 className="text-xs sm:text-sm font-bold text-text-primary font-heading">
                     {form.title}
                   </h4>
 
                   {/* Formula Breakdown Badges */}
-                  <div className="flex flex-wrap items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-1.5">
                     {form.breakdown.map((part, pIdx) => (
                       <React.Fragment key={pIdx}>
                         {pIdx > 0 && <span className="text-text-muted font-bold text-xs">＋</span>}
-                        <span className="px-3 py-1.5 rounded-xl bg-surface-card border border-border-subtle font-mono text-xs font-bold text-text-primary shadow-xs">
+                        <span className="px-2.5 py-1 rounded-lg bg-surface-card border border-border-subtle font-mono text-xs font-medium text-text-primary shadow-xs">
                           {part}
                         </span>
                       </React.Fragment>
@@ -471,11 +489,11 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
 
                   {/* Step Progression (e.g. 話す ↓ 話せる ↓ 話せるようになる) */}
                   {form.progression && form.progression.length > 0 && (
-                    <div className="p-3 rounded-xl bg-surface-card border border-border-subtle flex flex-wrap items-center gap-2 text-xs font-mono">
+                    <div className="p-2.5 rounded-xl bg-surface-card border border-border-subtle/80 flex flex-wrap items-center gap-1.5 text-xs font-mono">
                       {form.progression.map((step, sIdx) => (
                         <React.Fragment key={sIdx}>
                           {sIdx > 0 && <ArrowRight className="w-3.5 h-3.5 text-text-muted" />}
-                          <span className={`px-2.5 py-1 rounded-lg ${sIdx === form.progression!.length - 1 ? 'bg-gold/20 text-gold border border-gold/30 font-bold' : 'bg-surface-inset text-text-secondary font-medium'}`}>
+                          <span className={`px-2 py-0.5 rounded-md ${sIdx === form.progression!.length - 1 ? 'bg-indigo/15 text-indigo border border-indigo/25 font-semibold' : 'bg-surface-inset text-text-secondary font-medium'}`}>
                             {step}
                           </span>
                         </React.Fragment>
@@ -496,10 +514,10 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
           {/* ------------------------------------------------------ */}
           {/* CARD 4: KATA COCOK — "Kata apa yang bisa masuk?" (PELENGKAP) */}
           {/* ------------------------------------------------------ */}
-          <div ref={node4Ref} className="panel p-5 sm:p-6 rounded-3xl bg-surface-card border border-border-subtle/80 shadow-xs space-y-4">
+          <div ref={node4Ref} className="panel p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-surface-card border border-border-subtle/80 shadow-xs space-y-3.5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-text-secondary font-bold text-xs uppercase tracking-wider font-heading">
-                <span className="w-5 h-5 rounded-lg bg-surface-inset text-text-secondary flex items-center justify-center font-bold text-xs">
+                <span className="w-5 h-5 rounded-md bg-surface-inset text-text-secondary flex items-center justify-center font-bold text-xs">
                   4
                 </span>
                 <span>④ Kata Cocok: "Kata apa yang bisa masuk?"</span>
@@ -509,21 +527,21 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
               </span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               {skillNodes.wordIdentities.map((identity, iIdx) => (
                 <div
                   key={iIdx}
-                  className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-2.5 flex flex-col justify-between"
+                  className="p-3.5 sm:p-4 rounded-2xl bg-surface-inset border border-border-subtle/80 space-y-2 flex flex-col justify-between"
                 >
-                  <div className="space-y-1.5">
+                  <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <span>{identity.icon || '🏷️'}</span>
+                      <span className="text-sm">{identity.icon || '🏷️'}</span>
                       <h4 className="text-xs sm:text-sm font-bold text-text-primary font-heading">
                         {identity.typeCategory}
                       </h4>
                     </div>
 
-                    <p className="text-xs text-text-secondary leading-relaxed font-medium">
+                    <p className="text-xs text-text-secondary leading-relaxed font-normal">
                       {identity.functionEffect}
                     </p>
                   </div>
@@ -532,7 +550,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                     {identity.examples.map((ex, exIdx) => (
                       <span
                         key={exIdx}
-                        className="px-2.5 py-1 rounded-lg bg-surface-card text-text-primary text-xs font-mono font-semibold border border-border-subtle"
+                        className="px-2 py-0.5 rounded-md bg-surface-card text-text-primary text-xs font-mono font-medium border border-border-subtle/80"
                       >
                         {ex}
                       </span>
@@ -546,7 +564,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
           {/* ------------------------------------------------------ */}
           {/* CARD 5: PERBEDAAN — "Jangan sampai tertukar!" (PELENGKAP) */}
           {/* ------------------------------------------------------ */}
-          <div ref={node5Ref} className="panel p-5 sm:p-6 rounded-3xl bg-surface-card border border-border-subtle/80 shadow-xs space-y-4">
+          <div ref={node5Ref} className="panel p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-surface-card border border-border-subtle/80 shadow-xs space-y-3.5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-red-700 dark:text-amber-400 font-bold text-xs uppercase tracking-wider font-heading">
                 <AlertTriangle className="w-4 h-4 text-red-700 dark:text-amber-400" />
@@ -557,34 +575,34 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
               </span>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               {skillNodes.nuances.map((nuance, nIdx) => (
                 <div
                   key={nIdx}
-                  className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-3"
+                  className="p-3.5 sm:p-4 rounded-2xl bg-surface-inset border border-border-subtle/80 space-y-2.5"
                 >
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    <div className="p-3 rounded-xl bg-surface-card border border-border-subtle space-y-1">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <div className="p-2.5 sm:p-3 rounded-xl bg-surface-card border border-border-subtle/80 space-y-1">
                       <p className="text-xs font-bold text-indigo font-jp">
                         {nuance.contrastA}
                       </p>
-                      <p className="text-xs text-text-secondary font-medium leading-relaxed">
-                        = {nuance.meaningA}
+                      <p className="text-xs text-text-secondary font-normal leading-relaxed">
+                        = {cleanSummary(nuance.meaningA)}
                       </p>
                     </div>
 
-                    <div className="p-3 rounded-xl bg-surface-card border border-border-subtle space-y-1">
+                    <div className="p-2.5 sm:p-3 rounded-xl bg-surface-card border border-border-subtle/80 space-y-1">
                       <p className="text-xs font-bold text-gold font-jp">
                         {nuance.contrastB}
                       </p>
-                      <p className="text-xs text-text-secondary font-medium leading-relaxed">
-                        = {nuance.meaningB}
+                      <p className="text-xs text-text-secondary font-normal leading-relaxed">
+                        = {cleanSummary(nuance.meaningB)}
                       </p>
                     </div>
                   </div>
 
                   {nuance.explanation && (
-                    <p className="text-xs text-text-muted leading-relaxed pl-1">
+                    <p className="text-xs text-text-muted leading-relaxed pl-0.5">
                       💡 {nuance.explanation}
                     </p>
                   )}
@@ -596,27 +614,27 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
           {/* ------------------------------------------------------ */}
           {/* CARD 6: CONTOH NYATA — "Lihat contoh bertingkat" (WAJIB) */}
           {/* ------------------------------------------------------ */}
-          <div ref={node6Ref} className="panel p-5 sm:p-6 rounded-3xl bg-surface-card border border-border-subtle shadow-sm space-y-4">
+          <div ref={node6Ref} className="panel p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-surface-card border border-border-subtle shadow-sm space-y-3.5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-indigo font-bold text-xs uppercase tracking-wider font-heading">
-                <span className="w-5 h-5 rounded-lg bg-indigo/15 text-indigo flex items-center justify-center font-bold text-xs">
+                <span className="w-5 h-5 rounded-md bg-indigo/15 text-indigo flex items-center justify-center font-bold text-xs">
                   6
                 </span>
                 <span>⑥ Contoh Nyata: "Lihat contoh bertingkat"</span>
               </div>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-indigo/15 text-indigo border border-indigo/30">
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-indigo/10 text-indigo border border-indigo/20">
                 Wajib Paham ★★★★★
               </span>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               {skillNodes.examples.map((ex, exIdx) => {
                 const tierColor =
                   ex.tier === 'basic'
-                    ? 'border-emerald-500/30 bg-emerald-500/5'
+                    ? 'border-emerald-500/25 bg-emerald-500/5'
                     : ex.tier === 'daily'
-                    ? 'border-sky-500/30 bg-sky-500/5'
-                    : 'border-purple-500/30 bg-purple-500/5';
+                    ? 'border-sky-500/25 bg-sky-500/5'
+                    : 'border-purple-500/25 bg-purple-500/5';
 
                 const badgeColor =
                   ex.tier === 'basic'
@@ -628,17 +646,17 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                 return (
                   <div
                     key={exIdx}
-                    className={`p-4 rounded-2xl border ${tierColor} space-y-2`}
+                    className={`p-3.5 sm:p-4 rounded-2xl border ${tierColor} space-y-2`}
                   >
                     <div className="flex items-center justify-between gap-2">
-                      <span className={`px-2.5 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider font-mono ${badgeColor}`}>
+                      <span className={`px-2 py-0.5 rounded-md text-[10px] font-semibold uppercase tracking-wider font-mono ${badgeColor}`}>
                         {ex.tierLabel}
                       </span>
 
                       <button
                         type="button"
                         onClick={() => speakJapanese(ex.japanese)}
-                        className="p-1.5 rounded-lg text-text-muted hover:text-indigo hover:bg-surface-inset transition-colors cursor-pointer"
+                        className="p-1 rounded-lg text-text-muted hover:text-indigo hover:bg-surface-inset transition-colors cursor-pointer"
                         title="Dengarkan pelafalan kalimat"
                       >
                         <Volume2 className="w-4 h-4" />
@@ -646,11 +664,11 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                     </div>
 
                     <div className="space-y-1">
-                      <p className="text-base sm:text-lg font-bold text-text-primary font-jp leading-relaxed">
+                      <p className="text-sm sm:text-base font-semibold text-text-primary font-jp leading-relaxed">
                         <RubyText japanese={ex.japanese} reading={ex.reading} showFurigana={true} />
                       </p>
-                      <p className="text-xs sm:text-sm text-text-secondary font-medium leading-relaxed">
-                        {ex.meaningId}
+                      <p className="text-xs sm:text-sm text-text-secondary font-normal leading-relaxed">
+                        {cleanSummary(ex.meaningId)}
                       </p>
                     </div>
                   </div>
@@ -662,32 +680,31 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
           {/* ------------------------------------------------------ */}
           {/* CARD 7: COBA KUIS — "Tes pemahamanmu!" (WAJIB PAHAM)   */}
           {/* ------------------------------------------------------ */}
-          <div ref={node7Ref} className="panel p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-surface-elevated via-surface-card to-surface-card border border-gold/30 shadow-lg space-y-4">
+          <div ref={node7Ref} className="panel p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-surface-elevated via-surface-card to-surface-card border border-gold/30 shadow-md space-y-3.5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-gold font-bold text-xs uppercase tracking-wider font-heading">
                 <Flame className="w-4 h-4 text-gold" />
                 <span>⑦ Coba Kuis: "Tes pemahamanmu!"</span>
               </div>
-              <span className="px-2.5 py-0.5 rounded-lg bg-gold/15 text-gold text-[10px] font-bold font-mono border border-gold/30 flex items-center gap-1">
-                <Sparkles className="w-3 h-3" />
-                <span>+15 EXP & +10 Gold</span>
+              <span className="px-2 py-0.5 rounded-lg bg-gold/15 text-gold text-[10px] font-bold font-mono border border-gold/30">
+                +15 EXP & +10 Gold
               </span>
             </div>
 
             {activeQuestion ? (
-              <div className="space-y-4">
+              <div className="space-y-3.5">
                 {/* Question Prompt */}
-                <div className="p-4 sm:p-5 rounded-2xl bg-surface-inset border border-border-subtle space-y-2">
-                  <p className="text-xs text-text-muted font-medium">
+                <div className="p-3.5 sm:p-4 rounded-2xl bg-surface-inset border border-border-subtle/80 space-y-1.5">
+                  <p className="text-[11px] sm:text-xs text-text-muted font-medium">
                     {activeQuestion.instructionId || activeQuestion.instruction || 'Pilihlah jawaban yang paling tepat:'}
                   </p>
-                  <p className="text-base sm:text-lg font-bold text-text-primary font-jp leading-relaxed">
+                  <p className="text-sm sm:text-base font-semibold text-text-primary font-jp leading-relaxed">
                     <RubyText japanese={activeQuestion.prompt} reading={activeQuestion.ruby} showFurigana={true} />
                   </p>
                 </div>
 
                 {/* Option Buttons */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {activeQuestion.options.map((opt, oIdx) => {
                     const isSelected = selectedAnswerIndex === oIdx;
                     const isCorrect = isAnswerChecked && oIdx === activeQuestion.correctIndex;
@@ -708,7 +725,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                         type="button"
                         onClick={() => handleSelectAnswer(oIdx)}
                         disabled={isAnswerChecked}
-                        className={`p-3.5 rounded-2xl border text-left font-jp text-xs sm:text-sm font-bold transition-all flex items-center justify-between gap-2 cursor-pointer shadow-xs ${btnStyle} ${isAnswerChecked ? 'cursor-default' : 'active:scale-[0.99]'}`}
+                        className={`p-3 rounded-xl border text-left font-jp text-xs sm:text-sm font-medium transition-all flex items-center justify-between gap-2 cursor-pointer shadow-xs ${btnStyle} ${isAnswerChecked ? 'cursor-default' : 'active:scale-[0.99]'}`}
                       >
                         <span>{opt}</span>
                         {isCorrect && <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />}

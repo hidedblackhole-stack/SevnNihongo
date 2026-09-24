@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Clock, ChevronLeft, ChevronRight, Flag, CheckCircle2, 
-  Volume2, Trophy, Award, BookOpen, Layers, X 
+  Volume2, Trophy, Award, BookOpen, Layers, X, Skull 
 } from 'lucide-react';
 import { 
   RpgTargetIcon, RpgBookIcon, RpgSwordsIcon, RpgHourglassIcon 

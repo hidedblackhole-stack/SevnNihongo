@@ -1073,7 +1073,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
                     </span>
                   </div>
                   <span className={`text-xs font-mono font-bold ${isCorrectCurrent ? 'text-emerald-400' : 'text-rose-400'}`}>
-                    {isCorrectCurrent ? 'Jawaban Kamu Benar! ✨' : 'Belum Tepat ❌'}
+                    {isCorrectCurrent ? 'Jawaban Kamu Benar!' : 'Belum Tepat'}
                   </span>
                 </div>
                 <p className="text-xs text-text-secondary leading-relaxed whitespace-pre-line">
@@ -1514,7 +1514,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
 
                         {isAnswered && (
                           <span className={`text-xs font-bold font-mono ${selectedAnswer === q.correctIndex ? 'text-emerald-400' : 'text-rose-400'}`}>
-                            {selectedAnswer === q.correctIndex ? 'Jawaban Benar! ✨' : 'Jawaban Salah ❌'}
+                            {selectedAnswer === q.correctIndex ? 'Jawaban Benar!' : 'Jawaban Salah'}
                           </span>
                         )}
                       </div>

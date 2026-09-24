@@ -57,145 +57,6 @@ const getKanjiStems = (kanji: KanjiItem): string[] => {
   return Array.from(stems).filter(Boolean).sort((a, b) => b.length - a.length);
 };
 
-const findReadingSegments = (word: string, reading: string, kanji: KanjiItem) => {
-  if (!reading) return { prefix: '', target: word || '', suffix: '' };
-
-  // Handle dot notation in dictionary readings (e.g. "う.る" -> kanji reading is "う", okurigana is "る")
-  if (reading.includes('.')) {
-    const [kanjiPart, okuri = ''] = reading.split('.');
-    const cleanOkuri = okuri.replace(/[.-]/g, '').trim();
-    return {
-      prefix: '',
-      target: kanjiPart.trim(),
-      suffix: cleanOkuri,
-    };
-  }
-
-  const cleanReading = reading.replace(/[.-]/g, '').trim();
-  const char = kanji?.character;
-  const kanjiIdx = word ? word.indexOf(char) : -1;
-
-  // Method 1: Okurigana alignment (if word has kana before/after target kanji)
-  if (kanjiIdx !== -1 && word) {
-    const wordPrefix = word.slice(0, kanjiIdx);
-    const wordSuffix = word.slice(kanjiIdx + 1);
-    const isSuffixAllKana = wordSuffix.length > 0 && /^[\u3040-\u309F]+$/.test(wordSuffix);
-    const isPrefixAllKana = wordPrefix.length > 0 && /^[\u3040-\u309F]+$/.test(wordPrefix);
-
-    if (isSuffixAllKana && cleanReading.endsWith(wordSuffix)) {
-      const rest = cleanReading.slice(0, cleanReading.length - wordSuffix.length);
-      if (isPrefixAllKana && rest.startsWith(wordPrefix)) {
-        return {
-          prefix: wordPrefix,
-          target: rest.slice(wordPrefix.length),
-          suffix: wordSuffix,
-        };
-      } else if (!wordPrefix) {
-        return {
-          prefix: '',
-          target: rest,
-          suffix: wordSuffix,
-        };
-      }
-    }
-  }
-
-  // Method 2: Match known stems (onyomi & kunyomi with sokuon and rendaku variations)
-  const stems = getKanjiStems(kanji);
-  for (const stem of stems) {
-    if (cleanReading.includes(stem)) {
-      if (kanjiIdx === 0 && cleanReading.startsWith(stem)) {
-        return {
-          prefix: '',
-          target: stem,
-          suffix: cleanReading.slice(stem.length),
-        };
-      }
-      if (kanjiIdx !== -1 && kanjiIdx === word.length - 1 && cleanReading.endsWith(stem)) {
-        return {
-          prefix: cleanReading.slice(0, cleanReading.length - stem.length),
-          target: stem,
-          suffix: '',
-        };
-      }
-      const idx = cleanReading.indexOf(stem);
-      return {
-        prefix: cleanReading.substring(0, idx),
-        target: stem,
-        suffix: cleanReading.substring(idx + stem.length),
-      };
-    }
-  }
-
-  return { prefix: '', target: cleanReading, suffix: '' };
-};
-
-/**
- * Splits a reading string that may contain multiple alternative readings.
- * Delimiters supported:
- * - slashes: '/' or '／'
- * - Japanese commas: '、'
- * - Standard commas/semicolons: ',' or ';'
- * - Multiple consecutive spaces: '\s{2,}'
- */
-export const parseReadingVariations = (reading?: string): string[] => {
-  if (!reading) return [];
-  const normalized = reading
-    .replace(/／/g, '/')
-    .replace(/、/g, '/')
-    .replace(/[,;]/g, '/')
-    .replace(/\s{2,}/g, '/');
-
-  return normalized
-    .split('/')
-    .map(r => r.trim())
-    .filter(Boolean);
-};
-
-/**
- * Normalizes example vocabulary word and reading for clean display in RubyText.
- * Handles cases where dictionary entries have dotted okurigana, e.g. "売" with "う.る" -> "売る" with "うる".
- */
-export const normalizeWordAndReading = (word: string, reading?: string) => {
-  if (!reading) return { displayWord: word, displayReading: '' };
-  // Handle alternative readings: pick primary
-  const primary = reading.split(/[/,、;]/)[0].trim();
-  if (primary.includes('.')) {
-    const [kanjiPart, okuri = ''] = primary.split('.');
-    const cleanOkuri = okuri.replace(/[.-]/g, '');
-    const displayWord = cleanOkuri && !word.includes(cleanOkuri) ? word + cleanOkuri : word;
-    const displayReading = kanjiPart + cleanOkuri;
-    return { displayWord, displayReading };
-  }
-  return { displayWord: word, displayReading: primary };
-};
-
-export const getHighlightedYomikata = (word: string, reading: string, kanji: KanjiItem) => {
-  if (!reading) return <span className="font-bold text-text-primary">{word}</span>;
-
-  // Handle alternative readings: pick primary reading
-  const primaryReading = parseReadingVariations(reading)[0] || reading;
-  const seg = findReadingSegments(word, primaryReading, kanji);
-
-  return (
-    <span className="inline-flex items-baseline font-jp tracking-wide">
-      {seg.prefix && (
-        <span className="text-text-primary">
-          {seg.prefix}
-        </span>
-      )}
-      <span className="text-red-700 dark:text-amber-400 font-bold">
-        {seg.target}
-      </span>
-      {seg.suffix && (
-        <span className="text-text-primary">
-          {seg.suffix}
-        </span>
-      )}
-    </span>
-  );
-};
-
 let kanjiReadingsCache: Map<string, string[]> | null = null;
 
 function getKanjiReadingsMap(): Map<string, string[]> {
@@ -249,7 +110,7 @@ function getCharCandidateReadings(char: string): Set<string> {
  * E.g.
  *   alignWordReading('帰る', 'かえる') -> ['かえ', 'る']
  *   alignWordReading('日本', 'にほん') -> ['に', 'ほん']
- *   alignWordReading('食べる', 'たべる') -> ['た', 'べ', 'る']
+ *   alignWordReading('時計', 'とけい') -> ['と', 'けい']
  */
 export function alignWordReading(word: string, reading: string): string[] {
   const chars = Array.from(word || '');
@@ -336,6 +197,166 @@ export function alignWordReading(word: string, reading: string): string[] {
   }
   return res;
 }
+
+const findReadingSegments = (word: string, reading: string, kanji: KanjiItem) => {
+  if (!reading) return { prefix: '', target: '', suffix: '' };
+
+  const cleanReading = reading.replace(/[.-]/g, '').trim();
+  const char = kanji?.character;
+  const kanjiIdx = word ? word.indexOf(char) : -1;
+
+  // Method 1: High-precision character alignment using alignWordReading (e.g. 時計 -> [と, けい])
+  if (kanjiIdx !== -1 && word) {
+    const aligned = alignWordReading(word, cleanReading);
+    if (aligned && aligned.length === word.length) {
+      return {
+        prefix: aligned.slice(0, kanjiIdx).join(''),
+        target: aligned[kanjiIdx] || '',
+        suffix: aligned.slice(kanjiIdx + 1).join(''),
+      };
+    }
+  }
+
+  // Handle dot notation in dictionary readings (e.g. "う.る" -> kanji reading is "う", okurigana is "る")
+  if (reading.includes('.')) {
+    const [kanjiPart, okuri = ''] = reading.split('.');
+    const cleanOkuri = okuri.replace(/[.-]/g, '').trim();
+    return {
+      prefix: '',
+      target: kanjiPart.trim(),
+      suffix: cleanOkuri,
+    };
+  }
+
+  // Method 2: Okurigana alignment (if word has kana before/after target kanji)
+  if (kanjiIdx !== -1 && word) {
+    const wordPrefix = word.slice(0, kanjiIdx);
+    const wordSuffix = word.slice(kanjiIdx + 1);
+    const isSuffixAllKana = wordSuffix.length > 0 && /^[\u3040-\u309F]+$/.test(wordSuffix);
+    const isPrefixAllKana = wordPrefix.length > 0 && /^[\u3040-\u309F]+$/.test(wordPrefix);
+
+    if (isSuffixAllKana && cleanReading.endsWith(wordSuffix)) {
+      const rest = cleanReading.slice(0, cleanReading.length - wordSuffix.length);
+      if (isPrefixAllKana && rest.startsWith(wordPrefix)) {
+        return {
+          prefix: wordPrefix,
+          target: rest.slice(wordPrefix.length),
+          suffix: wordSuffix,
+        };
+      } else if (!wordPrefix) {
+        return {
+          prefix: '',
+          target: rest,
+          suffix: wordSuffix,
+        };
+      }
+    }
+  }
+
+  // Method 3: Match known stems (onyomi & kunyomi with sokuon and rendaku variations)
+  const stems = getKanjiStems(kanji);
+  for (const stem of stems) {
+    if (cleanReading.includes(stem)) {
+      if (kanjiIdx === 0 && cleanReading.startsWith(stem)) {
+        return {
+          prefix: '',
+          target: stem,
+          suffix: cleanReading.slice(stem.length),
+        };
+      }
+      if (kanjiIdx !== -1 && kanjiIdx === word.length - 1 && cleanReading.endsWith(stem)) {
+        return {
+          prefix: cleanReading.slice(0, cleanReading.length - stem.length),
+          target: stem,
+          suffix: '',
+        };
+      }
+      const idx = cleanReading.indexOf(stem);
+      return {
+        prefix: cleanReading.substring(0, idx),
+        target: stem,
+        suffix: cleanReading.substring(idx + stem.length),
+      };
+    }
+  }
+
+  return { prefix: '', target: cleanReading, suffix: '' };
+};
+
+/**
+ * Splits a reading string that may contain multiple alternative readings.
+ * Delimiters supported:
+ * - slashes: '/' or '／'
+ * - Japanese commas: '、'
+ * - Standard commas/semicolons: ',' or ';'
+ * - Multiple consecutive spaces: '\s{2,}'
+ */
+export const parseReadingVariations = (reading?: string): string[] => {
+  if (!reading) return [];
+  const normalized = reading
+    .replace(/／/g, '/')
+    .replace(/、/g, '/')
+    .replace(/[,;]/g, '/')
+    .replace(/\s{2,}/g, '/');
+
+  return normalized
+    .split('/')
+    .map(r => r.trim())
+    .filter(Boolean);
+};
+
+/**
+ * Normalizes example vocabulary word and reading for clean display in RubyText.
+ * Handles cases where dictionary entries have dotted okurigana, e.g. "売" with "う.る" -> "売る" with "うる".
+ */
+export const normalizeWordAndReading = (word: string, reading?: string) => {
+  if (!reading) return { displayWord: word, displayReading: '' };
+  // Handle alternative readings: pick primary
+  const primary = reading.split(/[/,、;]/)[0].trim();
+  if (primary.includes('.')) {
+    const [kanjiPart, okuri = ''] = primary.split('.');
+    const cleanOkuri = okuri.replace(/[.-]/g, '');
+    const displayWord = cleanOkuri && !word.includes(cleanOkuri) ? word + cleanOkuri : word;
+    const displayReading = kanjiPart + cleanOkuri;
+    return { displayWord, displayReading };
+  }
+  return { displayWord: word, displayReading: primary };
+};
+
+export const getHighlightedYomikata = (word: string, reading: string, kanji: KanjiItem) => {
+  const primaryReading = parseReadingVariations(reading)[0] || reading;
+  if (!primaryReading) {
+    const fallback = (kanji?.kunyomi?.[0] || kanji?.onyomi?.[0] || '').replace(/[.-]/g, '').trim();
+    if (fallback) {
+      return (
+        <span className="inline-flex items-baseline font-jp tracking-wide">
+          <span className="text-red-700 dark:text-amber-400 font-bold">{fallback}</span>
+        </span>
+      );
+    }
+    return null;
+  }
+
+  const seg = findReadingSegments(word, primaryReading, kanji);
+
+  return (
+    <span className="inline-flex items-baseline font-jp tracking-wide">
+      {seg.prefix && (
+        <span className="text-text-primary">
+          {seg.prefix}
+        </span>
+      )}
+      <span className="text-red-700 dark:text-amber-400 font-bold">
+        {seg.target}
+      </span>
+      {seg.suffix && (
+        <span className="text-text-primary">
+          {seg.suffix}
+        </span>
+      )}
+    </span>
+  );
+};
 
 /**
  * Returns a high-contrast highlighted yomikata element for Kotoba writing mode,

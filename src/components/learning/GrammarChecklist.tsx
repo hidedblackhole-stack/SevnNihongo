@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle2, Sparkles, AlertCircle } from 'lucide-react';
+import { CheckCircle2, AlertCircle } from 'lucide-react';
 import { BunpouItem } from '../../types/content';
 
 interface GrammarChecklistProps {
@@ -111,7 +111,7 @@ export const GrammarChecklist: React.FC<GrammarChecklistProps> = ({ item, classN
       className={`p-3.5 sm:p-4 rounded-2xl bg-emerald-50/80 dark:bg-emerald-950/30 border-2 border-emerald-600/30 dark:border-emerald-500/30 space-y-2.5 shadow-xs ${className}`}
     >
       <div className="flex items-center gap-2 pb-1.5 border-b border-emerald-600/20 dark:border-emerald-500/20">
-        <Sparkles className="w-4 h-4 text-emerald-800 dark:text-emerald-400 shrink-0" />
+        <CheckCircle2 className="w-4 h-4 text-emerald-800 dark:text-emerald-400 shrink-0" />
         <span className="text-[11px] font-extrabold uppercase tracking-wider text-emerald-950 dark:text-emerald-300 font-heading">
           Fungsi & Situasi Penggunaan (使い分け)
         </span>

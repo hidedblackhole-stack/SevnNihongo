@@ -2,7 +2,6 @@ import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   X,
-  Sparkles,
   ArrowRight,
   BookOpen,
   Plus,
@@ -51,7 +50,7 @@ export const SelectDeckForWorldModal: React.FC<SelectDeckForWorldModalProps> = (
           <div className="p-4 sm:p-5 border-b border-border-subtle flex items-center justify-between gap-3 bg-surface-elevated/40">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl bg-indigo/15 text-indigo border border-indigo/30 flex items-center justify-center shrink-0 shadow-xs">
-                <Sparkles className="w-5 h-5 text-amber-300" />
+                <Compass className="w-5 h-5 text-indigo" />
               </div>
               <div>
                 <h2 className="text-base sm:text-lg font-bold text-text-primary font-heading tracking-wide">

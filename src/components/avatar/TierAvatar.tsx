@@ -10,7 +10,7 @@ import {
   Sun,
   Flame,
   Swords,
-  Sparkles
+  Trophy
 } from 'lucide-react';
 import { RPG_TIERS } from '../../data/tiers';
 
@@ -160,7 +160,7 @@ export const TierAvatar: React.FC<TierAvatarProps> = ({
       case 7: return <Sun className={iconClass} />;
       case 8: return <Flame className={iconClass} />;
       case 9: return <Swords className={iconClass} />;
-      case 10: return <Sparkles className={iconClass} />;
+      case 10: return <Trophy className={iconClass} />;
       default: return <Award className={iconClass} />;
     }
   };

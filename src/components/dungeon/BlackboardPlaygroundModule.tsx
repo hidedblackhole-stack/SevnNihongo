@@ -2,7 +2,6 @@ import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Volume2,
-  Sparkles,
   Shuffle,
   ChevronLeft,
   ChevronRight,
@@ -580,7 +579,6 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
               {/* Left Column: Logika Perubahan (Formula) */}
               <div className="p-2.5 sm:p-3 rounded-xl border border-border-subtle bg-surface-card/70 space-y-1 shadow-2xs">
                 <div className="flex items-center gap-1.5 font-bold text-text-primary">
-                  <Sparkles className="w-3.5 h-3.5 text-gold shrink-0" />
                   <span>Logika Perubahan:</span>
                 </div>
                 <div className="text-text-secondary space-y-0.5 text-[11px] sm:text-xs">
@@ -678,8 +676,8 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
           ───────────────────────────────────────────────────────────── */}
       <div className="panel p-3 sm:p-3.5 rounded-2xl border border-border-subtle bg-surface-card shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div className="flex items-start sm:items-center gap-2.5 min-w-0">
-          <div className="w-7 h-7 rounded-lg bg-gold/15 text-gold border border-gold/30 flex items-center justify-center shrink-0 shadow-inner mt-0.5 sm:mt-0">
-            <Sparkles className="w-3.5 h-3.5" />
+          <div className="w-7 h-7 rounded-lg bg-indigo/15 text-indigo border border-indigo/30 flex items-center justify-center shrink-0 shadow-inner mt-0.5 sm:mt-0">
+            <Layers className="w-3.5 h-3.5" />
           </div>
           <div className="text-xs">
             <p className="font-heading font-bold text-text-primary flex items-center gap-1">

@@ -8,7 +8,6 @@ import {
   ChevronDown, 
   Play, 
   Star, 
-  Sparkles, 
   Library, 
   Plus, 
   Award,

@@ -8,7 +8,6 @@ import {
   Check,
   BookOpen,
   Plus,
-  Sparkles,
   Bookmark,
   Trash2,
   Edit2,
@@ -207,9 +206,8 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
             <div className="space-y-1">
               <div className="flex items-center gap-2 flex-wrap">
                 {isTemplate ? (
-                  <span className="text-[10px] font-bold uppercase tracking-wider font-mono text-gold bg-gold/10 px-2 py-0.5 rounded-md border border-gold/30 flex items-center gap-1">
-                    <Sparkles className="w-3 h-3 text-gold" />
-                    <span>Template Resmi</span>
+                  <span className="text-[10px] font-bold uppercase tracking-wider font-mono text-gold bg-gold/10 px-2 py-0.5 rounded-md border border-gold/30">
+                    Template Resmi
                   </span>
                 ) : deck.isDefault ? (
                   <span className="text-[10px] font-bold uppercase tracking-wider font-mono text-gold bg-gold/10 px-2 py-0.5 rounded-md border border-gold/30 flex items-center gap-1">
@@ -340,7 +338,6 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                   className="px-3 py-1.5 rounded-xl text-xs font-bold text-text-secondary hover:text-text-primary bg-surface-inset hover:bg-surface-elevated border border-border-subtle flex items-center gap-1.5 transition-colors cursor-pointer"
                   title="Isi Cepat Berdasarkan Level JLPT"
                 >
-                  <Sparkles className="w-3.5 h-3.5 text-gold" />
                   <span>Isi Preset JLPT</span>
                 </button>
               )}
@@ -604,7 +601,6 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                     onClick={onOpenQuickPresetModal}
                     className="px-4 py-2.5 rounded-2xl font-heading font-bold text-xs bg-gold/15 text-gold border border-gold/40 hover:bg-gold/25 inline-flex items-center gap-2 transition-all cursor-pointer"
                   >
-                    <Sparkles className="w-4 h-4 text-gold" />
                     <span>Isi Otomatis Preset JLPT</span>
                   </button>
                 )}

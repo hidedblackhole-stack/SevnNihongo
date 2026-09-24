@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Edit3, Volume2, ArrowLeft, HelpCircle, Zap } from 'lucide-react';
 import { KanjiItem, ItemMasteryRecord } from '../../types/content';
 import { KanjiWritingCanvas, preloadStrokeData } from './KanjiWritingCanvas';
 import { RubyText } from './RubyText';
+import { getEnrichedKanjiRelatedWords } from '../../utils/kanjiVocabularyEnricher';
 import { ErrorBoundary } from '../ErrorBoundary';
 import { speakJapanese, playSound } from '../../utils/audio';
 import { WritingRewardResult } from '../../utils/rewards';
@@ -19,6 +20,7 @@ export interface KanjiDetailCardProps {
   onBack?: () => void;
   backButtonLabel?: string;
   showQuestions?: boolean;
+  onSelectKotoba?: (word: string) => void;
 }
 
 export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
@@ -32,6 +34,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
   onBack,
   backButtonLabel = 'Kembali ke Daftar Kanji',
   showQuestions = true,
+  onSelectKotoba,
 }) => {
   const [detailSubTab, setDetailSubTab] = useState<'detail' | 'writing'>(initialTab);
 
@@ -50,6 +53,13 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
   const kunyomiList = item.kunyomi || [];
   const totalKanjiReadings = onyomiList.length + kunyomiList.length;
   const hasMultipleReadings = !isKana && totalKanjiReadings > 1;
+
+  const enrichedRelatedWords = useMemo(() => {
+    if (isKana || !item.character) {
+      return item.relatedWords || [];
+    }
+    return getEnrichedKanjiRelatedWords(item.character, item.relatedWords, 8);
+  }, [item.character, item.relatedWords, isKana]);
 
   const levelBadgeLabel = isHiragana
     ? 'Hiragana'
@@ -301,16 +311,27 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-text-secondary font-mono">
               <span>{isKana ? `Kosakata Mengandung Huruf 「${item.character}」` : `Kosakata Terkait Mengandung Kanji 「${item.character}」`}</span>
             </div>
-            {item.relatedWords && item.relatedWords.length > 0 ? (
+            {enrichedRelatedWords && enrichedRelatedWords.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                {item.relatedWords.map((rw, i) => (
+                {enrichedRelatedWords.map((rw, i) => (
                   <div
                     key={i}
-                    className="p-3 rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-between gap-2 hover:border-border-muted transition-colors"
+                    onClick={() => {
+                      if (onSelectKotoba) {
+                        playSound('click', soundEnabled);
+                        onSelectKotoba(rw.word);
+                      }
+                    }}
+                    className={`p-3 rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-between gap-2 transition-all ${
+                      onSelectKotoba
+                        ? 'cursor-pointer hover:border-wine-accent/50 hover:bg-surface-elevated active:scale-[0.99] group/rw'
+                        : 'hover:border-border-muted'
+                    }`}
+                    title={onSelectKotoba ? `Lihat detail kosakata 「${rw.word}」 di library` : undefined}
                   >
                     <div>
                       {furiganaEnabled ? (
-                        <p className="text-base font-bold text-text-primary">
+                        <p className={`text-base font-bold text-text-primary ${onSelectKotoba ? 'group-hover/rw:text-wine-accent transition-colors' : ''}`}>
                           <RubyText
                             japanese={rw.word}
                             reading={rw.reading}
@@ -321,14 +342,17 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
                       ) : (
                         <>
                           <p className="text-[11px] text-wine-accent font-mono">{rw.reading}</p>
-                          <p className="text-base font-bold text-text-primary font-jp">{rw.word}</p>
+                          <p className={`text-base font-bold text-text-primary font-jp ${onSelectKotoba ? 'group-hover/rw:text-wine-accent transition-colors' : ''}`}>{rw.word}</p>
                         </>
                       )}
                       <p className="text-xs text-text-secondary mt-0.5">{rw.meaningId}</p>
                     </div>
                     <button
-                      onClick={() => speakJapanese(rw.word)}
-                      className="p-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-wine-accent border border-border-subtle transition-colors"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        speakJapanese(rw.word);
+                      }}
+                      className="p-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-wine-accent border border-border-subtle transition-colors shrink-0"
                       title="Dengar pengucapan"
                     >
                       <Volume2 className="w-3.5 h-3.5" />
@@ -400,7 +424,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
               meaning={item.meaningId}
               kunyomi={item.kunyomi}
               onyomi={item.onyomi}
-              relatedWords={item.relatedWords}
+              relatedWords={enrichedRelatedWords}
               soundEnabled={soundEnabled}
               level={item.jlpt}
               nextButtonLabel="Kembali ke Detail Kanji"

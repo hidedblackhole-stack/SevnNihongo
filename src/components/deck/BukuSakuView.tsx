@@ -9,9 +9,9 @@ import {
   Play,
   Search,
   BookOpen,
-  Sparkles,
   Bookmark,
   Compass,
+  Layers,
   X
 } from 'lucide-react';
 import { UserDeck, DeckItemCategory, DeckType, DeckItemRef } from '../../types/rpg';

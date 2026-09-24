@@ -11,7 +11,6 @@ import {
   ChevronRight, 
   ChevronLeft, 
   X, 
-  Sparkles,
   ShieldCheck,
   CheckCircle2
 } from 'lucide-react';
@@ -541,7 +540,7 @@ export const SpotlightOnboarding: React.FC<SpotlightOnboardingProps> = ({
                   {/* Pro-Tip Pill if available */}
                   {currentStep.tip && (
                     <div className="flex items-start gap-2 p-2 rounded-lg bg-surface-inset/80 border border-border-subtle/80 text-[11px] text-text-muted">
-                      <Sparkles className="w-3.5 h-3.5 text-gold shrink-0 mt-0.5" />
+                      <Bookmark className="w-3.5 h-3.5 text-indigo shrink-0 mt-0.5" />
                       <span>{currentStep.tip}</span>
                     </div>
                   )}

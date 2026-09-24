@@ -7,7 +7,6 @@ import {
   Flame, 
   RotateCcw, 
   Trophy, 
-  Sparkles, 
   CheckCircle2, 
   XCircle,
   Volume2,

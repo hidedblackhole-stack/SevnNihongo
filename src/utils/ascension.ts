@@ -195,7 +195,7 @@ export function calculateAscensionProgress(stats: PlayerStats): AscensionTierPro
   } else if (isAscended) {
     statusMessage = `Telah lulus Ascend ${currentJlpt}! Selamat mengarungi materi tingkat ${gateConfig.targetJlpt}.`;
   } else if (canAscend) {
-    statusMessage = `✨ Syarat 75% terpenuhi & EXP mencukupi! Siap melakukan Ascend ke ${gateConfig.targetJlpt}.`;
+    statusMessage = `Syarat 75% terpenuhi & EXP mencukupi! Siap melakukan Ascend ke ${gateConfig.targetJlpt}.`;
   } else if (isGated) {
     const missing: string[] = [];
     if (!pillars.kanji.passed) missing.push(`Kanji (${pillars.kanji.percentage}%/75%)`);

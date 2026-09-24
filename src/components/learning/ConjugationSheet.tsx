@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Volume2, MapPin, GitBranch, Settings2, BookOpen, Layers, Sparkles, HelpCircle } from 'lucide-react';
+import { X, Volume2, MapPin, GitBranch, Settings2, BookOpen, Layers, HelpCircle } from 'lucide-react';
 import {
   ConjugationPattern,
   CONJUGATION_PATTERNS,
@@ -140,7 +140,7 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
                 : 'text-text-secondary hover:text-text-primary hover:bg-surface-card'
             }`}
           >
-            <Sparkles className="w-3.5 h-3.5" />
+            <Layers className="w-3.5 h-3.5" />
             <span>Kata Akhiran Bantu</span>
           </button>
 
@@ -270,8 +270,7 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
           {activeTab === 'auxiliary' && auxiliaryInfo && (
             <div className="space-y-4">
               <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle space-y-1">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-gold font-heading flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5" />
+                <h4 className="text-xs font-bold uppercase tracking-wider text-gold font-heading">
                   Nuansa & Karakteristik
                 </h4>
                 <p className="text-xs sm:text-sm text-text-primary leading-relaxed">

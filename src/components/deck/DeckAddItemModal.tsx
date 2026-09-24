@@ -1,11 +1,12 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Search, Plus, Check, CheckSquare, Square, Sparkles } from 'lucide-react';
+import { X, Search, Plus, Check, CheckSquare, Square } from 'lucide-react';
 import { UserDeck, DeckItemCategory } from '../../types/rpg';
 import { KOTOBA_DATABASE } from '../../data/kotoba';
 import { KANJI_DATABASE } from '../../data/kanji';
 import { BUNPOU_DATABASE } from '../../data/bunpou';
 import { playSound } from '../../utils/audio';
+import { useBackButton } from '../../hooks/useBackButton';
 
 interface SearchResultItem {
   id: string;
@@ -33,6 +34,10 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
   onAddMultipleItems,
   soundEnabled = true,
 }) => {
+  useBackButton(isOpen, () => {
+    onClose();
+  }, 'deck_add_item_modal');
+
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState<'all' | 'kotoba' | 'kanji' | 'bunpou'>('all');
   const [levelFilter, setLevelFilter] = useState<string>('all');
@@ -448,7 +453,6 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
               className="absolute bottom-3 left-4 right-4 p-3 rounded-2xl bg-surface-elevated border border-border-primary shadow-2xl flex items-center justify-between gap-3 z-10 backdrop-blur-md"
             >
               <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-gold" />
                 <span className="text-xs font-heading font-bold text-text-primary">
                   {selectedKeys.size} materi siap ditambahkan
                 </span>

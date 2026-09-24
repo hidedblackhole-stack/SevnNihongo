@@ -1,18 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Volume2, ArrowRight, ArrowLeft, BookCheck } from 'lucide-react';
+import { Volume2, ArrowRight, ArrowLeft, Edit3 } from 'lucide-react';
 import { BookIcon } from '../ui/EngravingIcons';
 import { KotobaItem, Question } from '../../types/content';
 import { KOTOBA_DATABASE } from '../../data/kotoba';
+import { BUNPOU_DATABASE } from '../../data/bunpou';
 import { QuizEngine } from './QuizEngine';
 import { speakJapanese, playSound } from '../../utils/audio';
 import { RubyText } from './RubyText';
 import { UniversalFlashcard } from './UniversalFlashcard';
 import { KotobaDetailModal } from '../library/KotobaDetailModal';
-import { smartSample, fisherYatesShuffle } from '../../utils/smartRandomizer';
+import { KotobaWritingPractice } from './KotobaWritingPractice';
+import { fisherYatesShuffle } from '../../utils/smartRandomizer';
+import { conjugateVerb } from '../../engine/morphology/inflectionEngine';
 
 interface KotobaModuleProps {
   kotobaIds: string[];
+  bunpouIds?: string[];
   onReward: (exp: number, gold: number, moduleId: string, itemId?: string, score?: number, total?: number) => void;
   onBack: () => void;
   playerMp: number;
@@ -24,6 +28,7 @@ interface KotobaModuleProps {
 
 export const KotobaModule: React.FC<KotobaModuleProps> = ({
   kotobaIds,
+  bunpouIds = [],
   onReward,
   onBack: _onBack,
   playerMp,
@@ -32,65 +37,224 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
   soundEnabled = true,
   furiganaEnabled = true,
 }) => {
-  const [activeTab, setActiveTab] = useState<'library' | 'flashcard' | 'quiz'>('library');
+  const [activeTab, setActiveTab] = useState<'library' | 'flashcard' | 'writing'>('library');
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const [selectedWritingIndex, setSelectedWritingIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [expPopup, setExpPopup] = useState(false);
   const [isQuizActive, setIsQuizActive] = useState(false);
-  const [isExamActive, setIsExamActive] = useState(false);
   const [selectedItem, setSelectedItem] = useState<KotobaItem | null>(null);
 
-  const fallbackKotobaItem: KotobaItem = React.useMemo(() => {
+  const fallbackKotobaItem: KotobaItem = useMemo(() => {
     return Object.values(KOTOBA_DATABASE)[0] || {
       id: 'kotoba_0001',
-      word: '毎朝',
-      reading: 'まいあさ',
-      meaningId: 'Setiap pagi',
-      meaningEn: 'every morning',
-      meaningJa: '朝ごとに。すべての朝。',
+      word: '私',
+      reading: 'わたし',
+      meaningId: 'Saya / Aku',
+      meaningEn: 'I / me',
+      meaningJa: '自分を指す言葉。',
       jlpt: 'N5',
       wordType: 'noun',
-      kanjiComponents: ['毎', '朝']
+      kanjiComponents: ['私']
     };
   }, []);
 
-  // Flashcard pool: 15 items sampled with anti-repetition memory
-  const items: KotobaItem[] = React.useMemo(() => {
+  // Items dedicated to this stage
+  const items: KotobaItem[] = useMemo(() => {
     let validItems = (kotobaIds || []).map(id => KOTOBA_DATABASE[id]).filter(Boolean);
     if (validItems.length === 0) {
-      validItems = Object.values(KOTOBA_DATABASE);
-    }
-    return smartSample(validItems, 15, {
-      getId: it => it.id,
-      contextKey: 'kotoba_flashcards'
-    });
-  }, [kotobaIds]);
-
-  // Quiz pool: 25 items sampled with anti-repetition memory
-  const quizItems: KotobaItem[] = React.useMemo(() => {
-    let validItems = (kotobaIds || []).map(id => KOTOBA_DATABASE[id]).filter(Boolean);
-    if (validItems.length === 0) {
-      validItems = Object.values(KOTOBA_DATABASE);
-    }
-    return smartSample(validItems, 25, {
-      getId: it => it.id,
-      contextKey: 'kotoba_quiz'
-    });
-  }, [kotobaIds, isQuizActive]); // re-shuffle with fresh anti-repetition sample when quiz starts
-
-  // Exam pool: ALL items or 25 smart-sampled
-  const examItems: KotobaItem[] = React.useMemo(() => {
-    const validItems = (kotobaIds || []).map(id => KOTOBA_DATABASE[id]).filter(Boolean);
-    if (validItems.length === 0) {
-      return smartSample(Object.values(KOTOBA_DATABASE), 25, {
-        getId: it => it.id,
-        contextKey: 'kotoba_exam'
-      });
+      validItems = Object.values(KOTOBA_DATABASE).slice(0, 5);
     }
     return validItems;
   }, [kotobaIds]);
 
   const currentItem = items[currentCardIndex] || items[0] || fallbackKotobaItem;
+  const currentWritingItem = items[selectedWritingIndex] || items[0] || fallbackKotobaItem;
+
+  // Detect if any bunpou in this stage teaches verb/adjective conjugation patterns
+  const detectedConjugations = useMemo(() => {
+    if (!bunpouIds || bunpouIds.length === 0) return [];
+    const forms: Array<{ key: 'te' | 'masu' | 'nai' | 'ta' | 'potential' | 'volitional' | 'ba'; name: string }> = [];
+
+    for (const id of bunpouIds) {
+      const bp = BUNPOU_DATABASE[id];
+      if (!bp) continue;
+      const str = `${bp.title} ${bp.meaningId || ''} ${bp.formula || ''}`.toLowerCase();
+      if ((str.includes('て形') || str.includes('te-form') || str.includes('~て') || str.includes('〜て')) && !forms.some(f => f.key === 'te')) {
+        forms.push({ key: 'te', name: 'Bentuk ~て (Te-form)' });
+      }
+      if ((str.includes('ます形') || str.includes('masu-form') || str.includes('~ます') || str.includes('〜ます')) && !forms.some(f => f.key === 'masu')) {
+        forms.push({ key: 'masu', name: 'Bentuk ~ます (Masu-form)' });
+      }
+      if ((str.includes('ない形') || str.includes('nai-form') || str.includes('~ない') || str.includes('〜ない')) && !forms.some(f => f.key === 'nai')) {
+        forms.push({ key: 'nai', name: 'Bentuk ~ない (Nai-form)' });
+      }
+      if ((str.includes('た形') || str.includes('ta-form') || str.includes('~た') || str.includes('〜た')) && !forms.some(f => f.key === 'ta')) {
+        forms.push({ key: 'ta', name: 'Bentuk ~た (Ta-form/Lampau)' });
+      }
+      if ((str.includes('可能') || str.includes('potential') || str.includes('bisa')) && !forms.some(f => f.key === 'potential')) {
+        forms.push({ key: 'potential', name: 'Bentuk Potensial (Bisa/Dapat)' });
+      }
+    }
+    return forms;
+  }, [bunpouIds]);
+
+  // Helper to check clean Indonesian translation
+  const isCleanIndonesian = (text?: string) => {
+    if (!text || text.trim().length === 0) return false;
+    if (text.includes(';') || text.includes('(') || text.includes(')')) return false;
+    if (/^(to |the |a |an |in |on |of |at |for |with |and )\b/i.test(text.trim())) return false;
+    return true;
+  };
+
+  // Specific semantic distractors for greeting/time
+  const GREETING_DISTRACTORS = ['Selamat siang', 'Selamat malam', 'Sampai jumpa', 'Terima kasih', 'Sama-sama', 'Permisi', 'Maaf', 'Halo'];
+  const TIME_DISTRACTORS = ['Kemarin', 'Besok lusa', 'Tadi malam', 'Minggu depan', 'Bulan lalu', 'Tahun ini', 'Hari ini', 'Sekarang'];
+
+  // Generate dynamic, multi-faceted questions matching the exact stage vocabulary
+  const compiledQuizQuestions: Question[] = useMemo(() => {
+    const list: Question[] = [];
+
+    items.forEach((item, itemIdx) => {
+      const isGreeting = item.wordType === 'expression' || /^(おはよう|こんにちは|こんばんは|さようなら|ありがとう)/.test(item.word);
+      const isTimeWord = /^(きょう|きのう|あした|あさ|ひる|よる|こんばん|まいあさ)/.test(item.reading || item.word) || /\b(pagi|siang|malam|besok|kemarin|hari ini)\b/i.test(item.meaningId);
+
+      // Find suitable distractors from other words in KOTOBA_DATABASE
+      const otherKotoba = Object.values(KOTOBA_DATABASE).filter(k => 
+        k.id !== item.id && 
+        isCleanIndonesian(k.meaningId) && 
+        k.meaningId.toLowerCase() !== item.meaningId.toLowerCase()
+      );
+
+      // ─── 1. SOAL TEBAK ARTI (Arti Kosakata Bahasa Indonesia) ───
+      let meaningDistractors: string[] = [];
+      if (isGreeting) {
+        meaningDistractors = GREETING_DISTRACTORS.filter(d => d.toLowerCase() !== item.meaningId.toLowerCase());
+      } else if (isTimeWord) {
+        meaningDistractors = TIME_DISTRACTORS.filter(d => d.toLowerCase() !== item.meaningId.toLowerCase());
+      } else {
+        const sameType = otherKotoba.filter(k => k.wordType === item.wordType);
+        const pool = sameType.length >= 3 ? sameType : otherKotoba;
+        meaningDistractors = Array.from(new Set(pool.map(p => p.meaningId))).slice(0, 5);
+      }
+      meaningDistractors = fisherYatesShuffle(meaningDistractors).slice(0, 3);
+      while (meaningDistractors.length < 3) {
+        meaningDistractors.push(['Melakukan kegiatan', 'Menyatakan keadaan', 'Benda di sekitar'][meaningDistractors.length]);
+      }
+      const meaningOptions = fisherYatesShuffle([item.meaningId, ...meaningDistractors]);
+
+      list.push({
+        id: `kotoba_arti_${item.id}_${itemIdx}`,
+        instruction: '次の言葉の意味として最も適切なものを一つ選びなさい。',
+        instructionId: 'Pilihlah arti yang paling tepat untuk kosakata berikut.',
+        prompt: item.word,
+        ruby: item.reading,
+        translation: item.meaningId,
+        audioPrompt: item.word,
+        options: meaningOptions,
+        correctIndex: meaningOptions.indexOf(item.meaningId),
+        explanation: `Kata 「${item.word}」 (${item.reading || item.word}) memiliki arti "${item.meaningId}".`
+      });
+
+      // ─── 2. SOAL TEBAK CARA BACA (Hiragana/Reading) ───
+      // Hanya dibuat jika kata mengandung kanji (word != reading)
+      if (item.reading && item.word !== item.reading) {
+        const otherReadings = otherKotoba
+          .map(k => k.reading)
+          .filter(r => r && r !== item.reading && r.length >= (item.reading?.length || 2) - 1 && r.length <= (item.reading?.length || 2) + 2);
+        
+        const readingDistractors = fisherYatesShuffle(Array.from(new Set(otherReadings))).slice(0, 3);
+        const fallbackReadings = ['わたし', 'あなた', 'にほん', 'これ', 'それ', 'あした', 'きょう'];
+        while (readingDistractors.length < 3) {
+          const fb = fallbackReadings.find(f => f !== item.reading && !readingDistractors.includes(f)) || 'ことば';
+          readingDistractors.push(fb);
+        }
+
+        const readingOptions = fisherYatesShuffle([item.reading, ...readingDistractors]);
+
+        list.push({
+          id: `kotoba_reading_${item.id}_${itemIdx}`,
+          instruction: '___の言葉の正しい読み方（ひらがな）を一つ選びなさい。',
+          instructionId: 'Pilihlah cara baca (hiragana) yang benar untuk kosakata berikut.',
+          prompt: item.word,
+          ruby: undefined, // Sembunyikan ruby agar furigana tidak bocor di soal cara baca
+          translation: item.meaningId,
+          audioPrompt: item.word,
+          options: readingOptions,
+          correctIndex: readingOptions.indexOf(item.reading),
+          explanation: `Cara baca (furigana) yang benar untuk 「${item.word}」 adalah 「${item.reading}」.`
+        });
+      }
+
+      // ─── 3. SOAL LENGKAPI KALIMAT (Konteks Contoh Kalimat) ───
+      if (item.exampleSentence && item.exampleSentence.japanese && item.exampleSentence.japanese.includes(item.word)) {
+        const promptSentence = item.exampleSentence.japanese.replace(item.word, '（　）');
+        const sentenceDistractors = fisherYatesShuffle(
+          Array.from(new Set(otherKotoba.filter(k => k.wordType === item.wordType || k.jlpt === item.jlpt).map(k => k.word)))
+        ).filter(w => w !== item.word).slice(0, 3);
+
+        while (sentenceDistractors.length < 3) {
+          sentenceDistractors.push(['これ', 'それ', '私', '日本'][sentenceDistractors.length]);
+        }
+
+        const sentenceOptions = fisherYatesShuffle([item.word, ...sentenceDistractors]);
+
+        list.push({
+          id: `kotoba_context_${item.id}_${itemIdx}`,
+          instruction: '（　）に入れるのに最も適した言葉を一つ選びなさい。',
+          instructionId: 'Lengkapilah kalimat berikut dengan kosakata yang tepat.',
+          prompt: promptSentence,
+          ruby: undefined,
+          translation: item.exampleSentence.meaningId,
+          audioPrompt: item.word,
+          options: sentenceOptions,
+          correctIndex: sentenceOptions.indexOf(item.word),
+          explanation: `Kalimat lengkap: 「${item.exampleSentence.japanese}」 (${item.exampleSentence.meaningId}). Kata yang tepat adalah 「${item.word}」.`
+        });
+      }
+
+      // ─── 4. SOAL PERUBAHAN KONJUGASI KATA (Jika Kata Kerja / Sifat & Stage Memiliki Pola) ───
+      const isVerb = item.wordType === 'verb' || /[うくぐすつぬぶむる]$/.test(item.word);
+      if (isVerb && detectedConjugations.length > 0) {
+        try {
+          const conj = conjugateVerb(item.word, item.reading);
+          if (conj && conj.forms) {
+            detectedConjugations.forEach(conjPattern => {
+              const formResult = conj.forms[conjPattern.key];
+              if (formResult && formResult.japanese) {
+                const correctForm = formResult.japanese;
+                // Distractors from other forms of the same verb
+                const allForms = Object.values(conj.forms).map(f => f.japanese).filter(f => f !== correctForm);
+                const conjDistractors = fisherYatesShuffle(Array.from(new Set(allForms))).slice(0, 3);
+                while (conjDistractors.length < 3) {
+                  conjDistractors.push(correctForm + 'る', correctForm + 'ます', correctForm + 'ない');
+                }
+
+                const conjOptions = fisherYatesShuffle([correctForm, ...conjDistractors.slice(0, 3)]);
+
+                list.push({
+                  id: `kotoba_conj_${item.id}_${conjPattern.key}`,
+                  instruction: `「${item.word}」の【${conjPattern.name}】として最も適切なものを一つ選びなさい。`,
+                  instructionId: `Pilihlah perubahan bentuk (${conjPattern.name}) yang tepat untuk kata kerja berikut.`,
+                  prompt: item.word,
+                  ruby: item.reading,
+                  translation: item.meaningId,
+                  audioPrompt: correctForm,
+                  options: conjOptions,
+                  correctIndex: conjOptions.indexOf(correctForm),
+                  explanation: `Kata kerja 「${item.word}」 (${item.reading || item.word}) jika diubah ke ${conjPattern.name} menjadi 「${correctForm}」.`
+                });
+              }
+            });
+          }
+        } catch (_err) {
+          // If conjugation fails for non-standard item, gracefully skip
+        }
+      }
+    });
+
+    return list;
+  }, [items, detectedConjugations]);
 
   const handlePlayAudio = (word: string) => {
     speakJapanese(word);
@@ -122,169 +286,18 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
     }
   };
 
-
-
-  // Generate Quiz Questions from a given pool of items
-  // Generate Quiz Questions with high distractor plausibility and 100% Indonesian translations
-  const generateQuestions = (pool: KotobaItem[]): Question[] => {
-    // Helper to check if text is clean Indonesian (not English)
-    const isCleanIndonesian = (text?: string) => {
-      if (!text || text.trim().length === 0) return false;
-      // Tolak string yang mengandung titik koma atau kurung yang umum di JMdict (English)
-      if (text.includes(';') || text.includes('(') || text.includes(')')) return false;
-      
-      // Jika mengandung awalan kata bahasa Inggris yang umum
-      if (/^(to |the |a |an |in |on |of |at |for |with |and )\b/i.test(text.trim())) return false;
-      
-      // Jika hanya karakter latin biasa tapi tidak ada penanda kata Indonesia yang umum, kemungkinan itu bahasa asing
-      if (/^[a-zA-Z\s,.'\"?!-]+$/.test(text.trim()) && !/\b(dan|atau|yang|di|ke|dari|untuk|dengan|selamat|pagi|siang|malam|tidak|bisa|sudah|orang|satu|dua|tiga|hari|bulan|tahun|saya|kamu|dia|mereka|kita|kami|ini|itu|sini|sana|situ|apa|siapa|kapan|mengapa|berapa)\b/i.test(text)) {
-        return false;
-      }
-      return true;
-    };
-
-    // Specific semantic groups for common categories (greetings, numbers, family, colors, etc.)
-    const GREETING_DISTRACTORS = ['Selamat siang', 'Selamat malam', 'Sampai jumpa', 'Terima kasih', 'Sama-sama', 'Permisi', 'Maaf', 'Halo'];
-    const TIME_DISTRACTORS = ['Kemarin', 'Besok lusa', 'Tadi malam', 'Minggu depan', 'Bulan lalu', 'Tahun ini', 'Hari ini', 'Sekarang'];
-
-    return pool.map((item, _idx) => {
-      const isGreeting = item.wordType === 'expression' || /^(おはよう|こんにちは|こんばんは|さようなら|ありがとう|いただきます|ごちそうさま|いってきます|ただいま)/.test(item.word);
-      const isTimeWord = /^(きょう|きのう|あした|あさ|ひる|よる|こんばん|まいあさ|まいばん)/.test(item.reading || item.word) || /\b(pagi|siang|malam|besok|kemarin|hari ini)\b/i.test(item.meaningId);
-
-      // Get similar items for distractors
-      const sameTypeItems = Object.values(KOTOBA_DATABASE).filter(k => 
-        k.id !== item.id && 
-        k.wordType === item.wordType &&
-        isCleanIndonesian(k.meaningId) &&
-        k.meaningId.toLowerCase() !== item.meaningId.toLowerCase()
-      );
-
-      const poolCandidates = sameTypeItems.length >= 3 
-        ? sameTypeItems 
-        : Object.values(KOTOBA_DATABASE).filter(k => 
-            k.id !== item.id && 
-            isCleanIndonesian(k.meaningId) &&
-            k.meaningId.toLowerCase() !== item.meaningId.toLowerCase()
-          );
-
-      // Score candidates based on similarity
-      const getSimilarityScore = (candidate: KotobaItem) => {
-        let score = 0;
-        if (candidate.jlpt === item.jlpt) score += 5;
-        if (candidate.kanjiComponents && item.kanjiComponents) {
-          const sharedKanji = candidate.kanjiComponents.filter(c => item.kanjiComponents.includes(c)).length;
-          score += sharedKanji * 10;
-        }
-        score += Math.random() * 5;
-        return score;
-      };
-
-      const sortedCandidates = [...poolCandidates].sort((a, b) => getSimilarityScore(b) - getSimilarityScore(a));
-      const topCandidates = sortedCandidates.slice(0, 10);
-
-      // Randomize question type (0 = JP->ID, 1 = Example Context/JP word, 2 = Kanji->Reading)
-      const qType = Math.floor(Math.random() * 3);
-
-      let instruction = '';
-      let instructionId = '';
-      let prompt = '';
-      let ruby: string | undefined = undefined;
-      let translation = item.meaningId;
-      let correctAns = '';
-      let distractors: string[] = [];
-
-      if (qType === 0) {
-        instruction = '次の言葉の意味として最も適切なものを一つ選びなさい。';
-        instructionId = 'Pilihlah arti yang paling tepat untuk kosakata berikut.';
-        prompt = item.word;
-        ruby = item.reading;
-        correctAns = item.meaningId;
-        
-        let candStrings = [];
-        if (isGreeting) candStrings = GREETING_DISTRACTORS.filter(d => d.toLowerCase() !== item.meaningId.toLowerCase());
-        else if (isTimeWord) candStrings = TIME_DISTRACTORS.filter(d => d.toLowerCase() !== item.meaningId.toLowerCase());
-        else candStrings = topCandidates.map(c => c.meaningId);
-        
-        distractors = Array.from(new Set(candStrings)).slice(0, 3);
-      } else if (qType === 1 && item.exampleSentence) {
-        instruction = '（　）に入れるのに最も適した言葉を一つ選びなさい。';
-        instructionId = 'Lengkapilah kalimat berikut dengan kosakata yang tepat.';
-        prompt = item.exampleSentence.japanese.replace(item.word, '（　）');
-        ruby = item.exampleSentence.reading ? item.exampleSentence.reading.replace(item.reading || item.word, '（　）') : undefined;
-        translation = item.exampleSentence.meaningId;
-        correctAns = item.word;
-        distractors = Array.from(new Set(topCandidates.map(c => c.word))).slice(0, 3);
-      } else if (qType === 1) {
-        instruction = '次の意味を表す日本語として最も適切なものを一つ選びなさい。';
-        instructionId = 'Pilihlah bahasa Jepang yang tepat untuk arti berikut.';
-        prompt = item.word;
-        ruby = item.reading;
-        correctAns = item.word;
-        distractors = Array.from(new Set(topCandidates.map(c => c.word))).slice(0, 3);
-      } else {
-        instruction = '___の言葉の正しい読み方（ひらがな）を一つ選びなさい。';
-        instructionId = 'Pilihlah cara baca (hiragana) yang benar untuk kosakata berikut.';
-        prompt = item.word;
-        // In reading quiz, do not give ruby on tested word so learner can test recall
-        ruby = undefined;
-        correctAns = item.reading || item.word;
-        distractors = Array.from(new Set(topCandidates.map(c => c.reading || c.word))).slice(0, 3);
-      }
-
-      // Fallback distractors
-      const fallbacks = [
-        ['Melakukan kegiatan harian', 'Menyatakan keadaan', 'Kondisi saat ini'],
-        ['たべる', 'のむ', 'いく'],
-        ['たべる', 'のむ', 'いく']
-      ][qType];
-      
-      while (distractors.length < 3) {
-        distractors.push(fallbacks[distractors.length] || 'たべる');
-      }
-
-      const options = fisherYatesShuffle([correctAns, ...distractors]);
-      const correctIndex = options.indexOf(correctAns);
-
-      return {
-        id: `kotoba_q_${item.id}_${qType}`,
-        instruction,
-        instructionId,
-        prompt,
-        ruby,
-        translation,
-        audioPrompt: item.word,
-        options,
-        correctIndex,
-        explanation: `Kata 「${item.word}」 (${item.reading || item.word}) memiliki arti "${item.meaningId}".`
-      };
-    });
-  };
-
-  // Store questions in dedicated state created once upon starting the quiz
-  const [quizQuestions, setQuizQuestions] = useState<Question[]>([]);
-  const [examQuestions, setExamQuestions] = useState<Question[]>([]);
-
   const handleStartQuiz = () => {
     playSound('click', soundEnabled);
-    const generated = generateQuestions(quizItems);
-    setQuizQuestions(generated);
     setIsQuizActive(true);
   };
 
-  const handleStartExam = () => {
-    playSound('click', soundEnabled);
-    const generated = generateQuestions(examItems);
-    setExamQuestions(generated);
-    setIsExamActive(true);
-  };
-
-  // Quiz mode (25 soal random)
+  // Quiz mode: dynamically renders the exact questions compiled for this stage's kotoba
   if (isQuizActive) {
     return (
       <div className="w-full space-y-4">
         <QuizEngine
-          title={`📝 Latihan Kosakata (${quizQuestions.length} Soal Acak)`}
-          questions={quizQuestions}
+          title={`📝 Latihan Kosakata Stage (${compiledQuizQuestions.length} Soal)`}
+          questions={compiledQuizQuestions}
           playerMp={playerMp}
           playerInt={playerInt}
           onUseMp={onUseMp}
@@ -295,32 +308,6 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
           }}
           onExit={() => {
             setIsQuizActive(false);
-            setQuizQuestions([]);
-          }}
-        />
-      </div>
-    );
-  }
-
-  // Exam mode (seluruh kosakata stage)
-  if (isExamActive) {
-    return (
-      <div className="w-full space-y-4">
-        <QuizEngine
-          title={`🏆 Ujian Stage Kosakata (${examQuestions.length} Soal)`}
-          questions={examQuestions}
-          playerMp={playerMp}
-          playerInt={playerInt}
-          onUseMp={onUseMp}
-          soundEnabled={soundEnabled}
-          furiganaEnabled={furiganaEnabled}
-          onComplete={(score, total, exp, gold) => {
-            // Ujian Stage gives more reward
-            onReward(exp * 2, gold * 2, 'kotoba', items[0]?.id || 'kotoba_exam', score, total);
-          }}
-          onExit={() => {
-            setIsExamActive(false);
-            setExamQuestions([]);
           }}
         />
       </div>
@@ -328,7 +315,7 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
   }
 
   return (
-    <div className="w-full max-w-2xl mx-auto space-y-5">
+    <div className="w-full max-w-2xl mx-auto space-y-5 animate-fade-in">
       {/* Module Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-border-subtle">
         <div className="flex items-center gap-2">
@@ -340,65 +327,72 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
               Modul 2: 📝 KOTOBA (Kosakata)
             </h2>
             <p className="text-xs text-text-secondary">
-              Hafalkan {items.length} kosakata hari ini lewat Flashcard interaktif & Uji dengan Quiz
+              Pelajari {items.length} kosakata hari ini lewat Pustaka, Flashcard, Latihan Tulis Canvas & Kuis
             </p>
           </div>
         </div>
 
-        {/* Tab Switcher */}
+        {/* Tab Switcher: Pustaka, Flashcard, Tulis Canvas, Latihan (X) */}
         <div className="flex flex-wrap items-center gap-1.5 bg-surface-inset p-1 rounded-2xl border border-border-subtle">
           <button
             onClick={() => {
               setActiveTab('library');
               playSound('click', soundEnabled);
             }}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
               activeTab === 'library'
                 ? 'bg-indigo text-white shadow-sm'
                 : 'text-text-secondary hover:text-text-primary'
             }`}
           >
-            📖 Library Pustaka
+            📖 Pustaka
           </button>
-          
-          <div className="hidden sm:block w-px h-6 bg-border-subtle mx-1"></div>
 
           <button
             onClick={() => {
               setActiveTab('flashcard');
               playSound('click', soundEnabled);
             }}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
               activeTab === 'flashcard'
                 ? 'bg-indigo text-white shadow-sm'
                 : 'text-text-secondary hover:text-text-primary'
             }`}
           >
-            🗂️ Latihan Flashcard
+            🗂️ Flashcard
           </button>
+
+          <button
+            onClick={() => {
+              setActiveTab('writing');
+              playSound('click', soundEnabled);
+            }}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 ${
+              activeTab === 'writing'
+                ? 'bg-wine-accent text-white shadow-sm'
+                : 'text-text-secondary hover:text-text-primary'
+            }`}
+          >
+            <Edit3 className="w-3.5 h-3.5" />
+            <span>Tulis Canvas</span>
+          </button>
+
           <button
             onClick={handleStartQuiz}
-            className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-surface-elevated text-gold border border-gold/40 hover:brightness-105 transition-all flex items-center gap-1.5"
+            className="px-3 py-1.5 rounded-xl text-xs font-bold bg-surface-elevated text-gold border border-gold/40 hover:brightness-105 transition-all flex items-center gap-1.5 shadow-sm"
           >
-            🎯 Latihan (25)
-          </button>
-          <button
-            onClick={handleStartExam}
-            className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-surface-elevated text-wine-accent border border-wine-accent/40 hover:brightness-105 transition-all flex items-center gap-1.5"
-          >
-            <BookCheck className="w-3.5 h-3.5" />
-            🏆 Ujian Stage
+            🎯 Latihan ({compiledQuizQuestions.length})
           </button>
         </div>
       </div>
 
       {/* Main Content Area */}
-      {activeTab === 'library' ? (
+      {activeTab === 'library' && (
         <div className="space-y-3">
           <div className="p-4 rounded-2xl bg-surface-card border border-border-subtle">
             <h3 className="text-sm font-bold text-text-primary font-heading mb-1">Materi Kosakata (Kotoba)</h3>
             <p className="text-xs text-text-secondary">
-              Pelajari daftar kosakata di bawah ini dengan saksama. Jika Anda merasa sudah siap, masuklah ke Mode Latihan (Flashcard/Quiz) untuk mendapatkan EXP!
+              Pelajari daftar kosakata di bawah ini dengan saksama. Anda dapat mendengar pengucapan asli, melihat cara baca, maupun beralih ke Mode Tulis Canvas atau Latihan ({compiledQuizQuestions.length} Soal) untuk mendapatkan EXP!
             </p>
           </div>
           
@@ -430,6 +424,7 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
                         handlePlayAudio(item.word);
                       }}
                       className="p-1.5 rounded-lg bg-surface-inset text-text-secondary hover:text-indigo hover:bg-surface-elevated transition-colors"
+                      title="Dengar Audio"
                     >
                       <Volume2 className="w-3.5 h-3.5" />
                     </button>
@@ -439,73 +434,127 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
             ))}
           </div>
         </div>
-      ) : (
+      )}
+
+      {activeTab === 'flashcard' && (
         <div className="space-y-4">
-        {/* Card Progress */}
-        <div className="flex items-center justify-between text-xs text-text-muted">
-          <span>Kata <strong className="text-indigo font-bold">{currentCardIndex + 1}</strong> dari {items.length}</span>
-          <span className="font-mono text-gold font-bold">Total: {items.length}</span>
-        </div>
-
-        {/* Interactive 3D Flip Card */}
-        <div className="relative">
-          <AnimatePresence>
-            {expPopup && (
-              <motion.div
-                key="expPopup"
-                initial={{ opacity: 0, y: 0, scale: 0.5 }}
-                animate={{ opacity: 1, y: -40, scale: 1.2 }}
-                exit={{ opacity: 0, y: -60 }}
-                className="absolute top-4 right-4 sm:top-8 sm:right-8 z-50 text-state-success font-black text-xl drop-shadow-md pointer-events-none flex items-center gap-1"
-              >
-                +0.01 EXP
-              </motion.div>
-            )}
-          </AnimatePresence>
-          <UniversalFlashcard
-            item={currentItem}
-            isFlipped={isFlipped}
-            onFlip={handleFlipCard}
-            soundEnabled={soundEnabled}
-            furiganaEnabled={furiganaEnabled}
-          />
-        </div>
-
-        {/* Card Controls */}
-        <div className="flex items-center justify-between gap-3 pt-2">
-          <button
-            onClick={handlePrevCard}
-            disabled={currentCardIndex === 0}
-            className="rpg-btn rpg-btn-secondary flex-1 py-3 text-sm font-bold gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span>Sebelumnya</span>
-          </button>
-
-          <button
-            onClick={handleNextCard}
-            disabled={currentCardIndex === items.length - 1}
-            className="rpg-btn rpg-btn-primary flex-1 py-3 text-sm font-bold gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
-          >
-            <span>Selanjutnya</span>
-            <ArrowRight className="w-5 h-5" />
-          </button>
-        </div>
-
-        {/* Quick Quiz CTA Banner */}
-        <div className="p-4 rounded-2xl bg-surface-card border border-border-subtle flex items-center justify-between gap-3">
-          <div>
-            <h4 className="text-xs font-bold text-text-primary font-heading">Siap Menguji Ingatan Kotoba?</h4>
-            <p className="text-[11px] text-text-secondary">Jawab kuis arti kata dengan tantangan opsi pilihan ganda</p>
+          {/* Card Progress */}
+          <div className="flex items-center justify-between text-xs text-text-muted">
+            <span>Kata <strong className="text-indigo font-bold">{currentCardIndex + 1}</strong> dari {items.length}</span>
+            <span className="font-mono text-gold font-bold">Total: {items.length}</span>
           </div>
-          <button
-            onClick={handleStartQuiz}
-            className="btn py-2 px-4 text-xs font-bold shadow-md shrink-0"
-          >
-            Mulai Kuis
-          </button>
+
+          {/* Interactive 3D Flip Card */}
+          <div className="relative">
+            <AnimatePresence>
+              {expPopup && (
+                <motion.div
+                  key="expPopup"
+                  initial={{ opacity: 0, y: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, y: -40, scale: 1.2 }}
+                  exit={{ opacity: 0, y: -60 }}
+                  className="absolute top-4 right-4 sm:top-8 sm:right-8 z-50 text-state-success font-black text-xl drop-shadow-md pointer-events-none flex items-center gap-1"
+                >
+                  +0.01 EXP
+                </motion.div>
+              )}
+            </AnimatePresence>
+            <UniversalFlashcard
+              item={currentItem}
+              isFlipped={isFlipped}
+              onFlip={handleFlipCard}
+              soundEnabled={soundEnabled}
+              furiganaEnabled={furiganaEnabled}
+            />
+          </div>
+
+          {/* Card Controls */}
+          <div className="flex items-center justify-between gap-3 pt-2">
+            <button
+              onClick={handlePrevCard}
+              disabled={currentCardIndex === 0}
+              className="rpg-btn rpg-btn-secondary flex-1 py-3 text-sm font-bold gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <ArrowLeft className="w-5 h-5" />
+              <span>Sebelumnya</span>
+            </button>
+
+            <button
+              onClick={handleNextCard}
+              disabled={currentCardIndex === items.length - 1}
+              className="rpg-btn rpg-btn-primary flex-1 py-3 text-sm font-bold gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <span>Selanjutnya</span>
+              <ArrowRight className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Quick Quiz CTA Banner */}
+          <div className="p-4 rounded-2xl bg-surface-card border border-border-subtle flex items-center justify-between gap-3">
+            <div>
+              <h4 className="text-xs font-bold text-text-primary font-heading">Siap Menguji Ingatan Kotoba?</h4>
+              <p className="text-[11px] text-text-secondary">Jawab kuis arti & cara baca kata dengan {compiledQuizQuestions.length} tantangan pilihan ganda</p>
+            </div>
+            <button
+              onClick={handleStartQuiz}
+              className="btn py-2 px-4 text-xs font-bold shadow-md shrink-0 text-gold border-gold/40 hover:border-gold"
+            >
+              Mulai Kuis ({compiledQuizQuestions.length})
+            </button>
+          </div>
         </div>
-      </div>
+      )}
+
+      {activeTab === 'writing' && (
+        <div className="space-y-4">
+          <div className="p-4 rounded-2xl bg-surface-card border border-border-subtle">
+            <h3 className="text-sm font-bold text-text-primary font-heading flex items-center gap-2 mb-1">
+              <Edit3 className="w-4 h-4 text-wine-accent" />
+              Latihan Menulis Aksara (Kanji/Kana Canvas)
+            </h3>
+            <p className="text-xs text-text-secondary">
+              Pilih kosakata di bawah untuk melatih urutan goresan (stroke order) aksara kanji atau kana menggunakan kanvas interaktif.
+            </p>
+          </div>
+
+          {/* Word Selector Pills */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin">
+            {items.map((item, idx) => (
+              <button
+                key={item.id}
+                onClick={() => {
+                  setSelectedWritingIndex(idx);
+                  playSound('click', soundEnabled);
+                }}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all flex items-center gap-1.5 shrink-0 ${
+                  selectedWritingIndex === idx
+                    ? 'bg-wine-accent text-white border-wine-accent shadow-sm'
+                    : 'bg-surface-card text-text-secondary border-border-subtle hover:text-text-primary'
+                }`}
+              >
+                <span className="font-jp text-sm font-black">{item.word}</span>
+                <span className="text-[10px] opacity-75">({item.reading || item.word})</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Writing Canvas Practice Module */}
+          <div className="rounded-2xl bg-surface-card border border-border-subtle p-3 sm:p-5 shadow-md">
+            <KotobaWritingPractice
+              key={currentWritingItem.id}
+              kotoba={currentWritingItem}
+              soundEnabled={soundEnabled}
+              onCompleteWord={(score, reward) => {
+                onReward(reward?.expGained ?? 20, reward?.goldGained ?? 10, 'kotoba_writing', currentWritingItem.id, score, 100);
+              }}
+              onFinishWord={() => {
+                if (selectedWritingIndex < items.length - 1) {
+                  setSelectedWritingIndex(prev => prev + 1);
+                }
+              }}
+            />
+          </div>
+        </div>
       )}
 
       {/* Detail Modal */}

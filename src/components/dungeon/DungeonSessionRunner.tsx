@@ -14,7 +14,6 @@ import {
   Layers,
   PenTool,
   BookOpen,
-  Sparkles,
   ChevronDown,
   ChevronUp,
   Plus,
@@ -383,8 +382,8 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
 
   const renderFallbackMissingItem = () => (
     <div className="p-8 text-center space-y-4 my-auto bg-surface-inset/60 rounded-3xl border border-border-subtle">
-      <div className="w-12 h-12 mx-auto rounded-2xl bg-surface-card border border-border-subtle flex items-center justify-center text-text-muted shadow-xs">
-        <Sparkles className="w-6 h-6 text-gold" />
+      <div className="w-12 h-12 mx-auto rounded-2xl bg-surface-card border border-border-subtle flex items-center justify-center text-emerald-500 shadow-xs">
+        <CheckCircle2 className="w-6 h-6" />
       </div>
       <div className="space-y-1">
         <h4 className="text-base font-bold text-text-primary">Materi Selesai untuk Lantai Ini</h4>

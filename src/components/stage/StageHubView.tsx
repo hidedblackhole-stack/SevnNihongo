@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion } from 'motion/react';
-import { BookOpen, Layers, Feather, BookMarked, Headphones, Swords, ArrowLeft, CheckCircle2, Star, ShieldCheck, ChevronDown, ChevronUp, Crown, ChevronRight, ChevronLeft, Compass, ListFilter, X } from 'lucide-react';
+import { BookOpen, Layers, Feather, BookMarked, Headphones, Swords, ArrowLeft, CheckCircle2, Star, ShieldCheck, ChevronDown, ChevronUp, Crown, ChevronRight, ChevronLeft, Compass, ListFilter, X, Trophy, BookCheck } from 'lucide-react';
 import { Stage, ItemMasteryRecord } from '../../types/content';
 import { StageClearData } from '../../types/rpg';
 import { BunpouModule } from '../learning/BunpouModule';
@@ -9,6 +9,7 @@ import { KanjiModule } from '../learning/KanjiModule';
 import { DokkaiModule } from '../learning/DokkaiModule';
 import { ChoukaiModule } from '../learning/ChoukaiModule';
 import { BossBattleModule } from '../learning/BossBattleModule';
+import { QuizEngine } from '../learning/QuizEngine';
 import { playSound } from '../../utils/audio';
 import { useBackButton } from '../../hooks/useBackButton';
 import { BUNPOU_DATABASE } from '../../data/bunpou';
@@ -72,7 +73,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
   soundEnabled = true,
   furiganaEnabled = true,
 }) => {
-  const [activeModule, setActiveModule] = useState<'hub' | 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss'>('hub');
+  const [activeModule, setActiveModule] = useState<'hub' | 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss' | 'exam'>('hub');
   const [expandedDetails, setExpandedDetails] = useState(false);
   const [isStageListOpen, setIsStageListOpen] = useState(false);
 
@@ -86,17 +87,26 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
 
   // Hardware Back Button Interceptor
   useBackButton(true, () => {
-    if (activeModule === 'hub') {
-      onBackToMap();
-    } else {
-      const isConfirmed = window.confirm('Keluar dari Ujian? Progress saat ini tidak akan tersimpan.');
+    if (activeModule === 'exam') {
+      const isConfirmed = window.confirm('Keluar dari Ujian Stage? Progress pengerjaan soal saat ini tidak akan tersimpan.');
       if (isConfirmed) {
         setActiveModule('hub');
-      } else {
-        return false; // Prevent back
+        playSound('click', soundEnabled);
+        return false; // Remain inside stage hub
       }
+      return false; // Abort back, stay in exam
     }
-  });
+
+    if (activeModule !== 'hub') {
+      // Return from study submodule (Kotoba, Kanji, Bunpou, Reading, etc.) to stage hub
+      setActiveModule('hub');
+      playSound('click', soundEnabled);
+      return false; // Remain inside stage hub
+    }
+
+    // At stage hub, back returns to world/region map
+    onBackToMap();
+  }, 'stage_hub');
 
   const clearedModules = stageProgress?.clearedModules || [];
   const granularProgress = getGranularStageProgress(stage, itemMastery);
@@ -125,9 +135,32 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
     </button>
   );
 
-  // Memoize boss battle questions so options do not reshuffle on render and correctIndex is properly synced
+  // Approximate total question count for Ujian Stage banner display in Hub
+  const stageExamQuestionCount = React.useMemo(() => {
+    let count = 0;
+    (stage.bunpouIds || []).forEach(id => {
+      const bp = BUNPOU_DATABASE[id];
+      if (bp && bp.questions) count += Math.min(bp.questions.length, 3);
+    });
+    count += (stage.kotobaIds || []).length;
+    (stage.kanjiIds || []).forEach(id => {
+      const kj = KANJI_DATABASE[id];
+      if (kj && kj.questions) count += Math.min(kj.questions.length, 2);
+    });
+    (stage.dokkaiIds || []).forEach(id => {
+      const dk = DOKKAI_DATABASE[id];
+      if (dk && dk.questions) count += Math.min(dk.questions.length, 2);
+    });
+    (stage.choukaiIds || []).forEach(id => {
+      const ck = CHOUKAI_DATABASE[id];
+      if (ck && ck.questions) count += Math.min(ck.questions.length, 1);
+    });
+    return Math.max(count, 5);
+  }, [stage.bunpouIds, stage.kotobaIds, stage.kanjiIds, stage.dokkaiIds, stage.choukaiIds]);
+
+  // Memoize boss & stage exam questions so options do not reshuffle on render
   const memoizedBossQuestions = React.useMemo(() => {
-    if (activeModule !== 'boss') return [];
+    if (activeModule !== 'boss' && activeModule !== 'exam') return [];
 
     const compiled: (import('../../types/content').Question & { category: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' })[] = [];
 
@@ -143,14 +176,18 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
 
     // Kotoba questions (20%)
     if (stage.kotobaIds && stage.kotobaIds.length > 0) {
-      stage.kotobaIds.slice(0, 2).forEach(id => {
+      const otherKotoba = Object.values(KOTOBA_DATABASE);
+      stage.kotobaIds.forEach(id => {
         const kt = KOTOBA_DATABASE[id];
         if (kt) {
-          const rawOpts = [kt.meaningId, 'Menunda pertemuan penting', 'Membuat hidangan tradisional', 'Membeli perbekalan'];
-          const shuffledOpts = fisherYatesShuffle(rawOpts);
+          const poolDistractors = otherKotoba
+            .filter(o => o.id !== kt.id && o.meaningId)
+            .map(o => o.meaningId);
+          const shuffledPool = fisherYatesShuffle(poolDistractors).slice(0, 3);
+          const shuffledOpts = fisherYatesShuffle([kt.meaningId, ...shuffledPool]);
           const correctIdx = shuffledOpts.indexOf(kt.meaningId);
           compiled.push({
-            id: `boss_kt_${kt.id}`,
+            id: `exam_kt_${kt.id}`,
             category: 'kotoba',
             instruction: '次の言葉の意味として最も適切なものを一つ選びなさい。',
             instructionId: 'Pilihlah arti yang paling tepat untuk kosakata berikut.',
@@ -225,6 +262,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
         {renderBackButton()}
         <KotobaModule
           kotobaIds={stage.kotobaIds}
+          bunpouIds={stage.bunpouIds}
           onReward={(exp, gold, mod, itemId, score, total) => handleModuleReward(mod, exp, gold, itemId, score, total)}
           onBack={() => setActiveModule('hub')}
           playerMp={playerMp}
@@ -313,6 +351,27 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
           onVictory={(exp, gold) => handleModuleReward('boss', exp, gold)}
           onExit={() => setActiveModule('hub')}
           onStartRemediationRecall={onStartRemediationRecall}
+        />
+      </div>
+    );
+  }
+
+  if (activeModule === 'exam') {
+    return (
+      <div className="space-y-4">
+        {renderBackButton()}
+        <QuizEngine
+          title={`🏆 Ujian Stage ${stage.stageNumber}: Evaluasi Seluruh Materi (${memoizedBossQuestions.length} Soal)`}
+          questions={memoizedBossQuestions}
+          playerMp={playerMp}
+          playerInt={playerInt}
+          onUseMp={onUseMp}
+          soundEnabled={soundEnabled}
+          furiganaEnabled={furiganaEnabled}
+          onComplete={(score, total, exp, gold) => {
+            handleModuleReward('boss', exp * 1.5, gold * 1.5, stage.id, score, total);
+          }}
+          onExit={() => setActiveModule('hub')}
         />
       </div>
     );
@@ -630,35 +689,6 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
         </div>
       )}
 
-      {/* If it's a Boss Stage, show the Boss Encounter CTA banner */}
-      {stage.isBoss && (
-        <motion.div
-          whileHover={{ scale: 1.01 }}
-          whileTap={{ scale: 0.99 }}
-          onClick={() => {
-            playSound('attack', soundEnabled);
-            setActiveModule('boss');
-          }}
-          className="rpg-card p-5 sm:p-6 border border-wine-accent/40 cursor-pointer text-center space-y-3 shadow-xl group transition-all"
-        >
-          <div className="p-3 inline-flex rounded-full bg-wine/30 border border-wine-accent text-wine-accent">
-            <Swords className="w-7 h-7 animate-pulse" />
-          </div>
-          <div>
-            <h3 className="text-lg sm:text-xl font-bold text-wine-accent font-heading flex justify-center items-center gap-2 group-hover:brightness-110 transition-colors">
-              <Crown className="w-5 h-5 text-gold" />
-              TANTANG BOSS: {stage.bossName}
-            </h3>
-            <p className="text-xs text-text-secondary">
-              Kalahkan penguasa wilayah dengan evaluasi 5 pilar (Bunpou, Kotoba, Kanji, Dokkai, Choukai)!
-            </p>
-          </div>
-          <button className="btn btn-cta bg-wine hover:brightness-110 text-white gap-2 shadow-lg">
-            <Swords className="w-4 h-4" /> Masuki Arena Pertarungan Boss
-          </button>
-        </motion.div>
-      )}
-
       {/* The 5 Core Learning Modules */}
       <div className="space-y-3">
         <h3 className="breadcrumb-label px-1">
@@ -714,6 +744,61 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
             );
           })}
         </div>
+
+        {/* SECTION EVALUASI / UJIAN STAGE (Tepat di Bawah Pilar Materi) */}
+        {stage.isBoss ? (
+          <motion.div
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
+            onClick={() => {
+              playSound('attack', soundEnabled);
+              setActiveModule('boss');
+            }}
+            className="rpg-card p-5 sm:p-6 border border-wine-accent/40 cursor-pointer text-center space-y-3 shadow-xl group transition-all"
+          >
+            <div className="p-3 inline-flex rounded-full bg-wine/30 border border-wine-accent text-wine-accent">
+              <Swords className="w-7 h-7 animate-pulse" />
+            </div>
+            <div>
+              <h3 className="text-lg sm:text-xl font-bold text-wine-accent font-heading flex justify-center items-center gap-2 group-hover:brightness-110 transition-colors">
+                <Crown className="w-5 h-5 text-gold" />
+                TANTANG BOSS: {stage.bossName}
+              </h3>
+              <p className="text-xs text-text-secondary">
+                Kalahkan penguasa wilayah dengan evaluasi 5 pilar ({availableModules.map(m => m.name.split('•')[0].trim()).join(', ')})!
+              </p>
+            </div>
+            <button className="btn btn-cta bg-wine hover:brightness-110 text-white gap-2 shadow-lg">
+              <Swords className="w-4 h-4" /> Masuki Arena Pertarungan Boss
+            </button>
+          </motion.div>
+        ) : (
+          <motion.div
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
+            onClick={() => {
+              playSound('click', soundEnabled);
+              setActiveModule('exam');
+            }}
+            className="panel p-5 sm:p-6 border border-gold/40 text-center space-y-3 shadow-xl group transition-all bg-surface-card cursor-pointer hover:border-gold"
+          >
+            <div className="p-3 inline-flex rounded-full bg-gold/20 border border-gold text-gold">
+              <Trophy className="w-6 h-6 animate-pulse" />
+            </div>
+            <div>
+              <h3 className="text-base sm:text-lg font-bold text-gold font-heading flex justify-center items-center gap-2 group-hover:brightness-110">
+                <BookCheck className="w-5 h-5 text-gold" />
+                UJIAN STAGE {stage.stageNumber}: {stage.title_jp || stage.title}
+              </h3>
+              <p className="text-xs text-text-secondary max-w-md mx-auto mt-1">
+                Evaluasi pemahaman komprehensif menguji gabungan materi stage ini ({availableModules.map(m => m.name.split('•')[0].trim()).join(', ')})!
+              </p>
+            </div>
+            <button className="btn btn-cta bg-gold hover:brightness-110 text-surface-base font-bold gap-2 shadow-lg mx-auto">
+              <BookCheck className="w-4 h-4" /> Mulai Ujian Stage ({stageExamQuestionCount} Soal)
+            </button>
+          </motion.div>
+        )}
 
         {/* Bottom Quick Navigation Between Stages */}
         {onSelectStage && (prevStage || nextStage) && (

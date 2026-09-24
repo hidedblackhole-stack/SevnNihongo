@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { ChevronDown, Sparkles } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { parseFormula, splitFormulaVariants, FormulaToken } from '../../utils/formulaParser';
 import { getFormulaBreakdownExamples } from '../../utils/formulaBreakdownUtils';
 import { BunpouItem } from '../../types/content';
@@ -149,8 +149,7 @@ export const FormulaDisplay: React.FC<FormulaDisplayProps> = ({ formula, item })
             {/* Downwards Expanded Area */}
             {isExpanded && (
               <div className="px-3 pb-3 sm:px-3.5 sm:pb-3.5 pt-2 border-t border-border-subtle/70 space-y-2 animate-fadeIn bg-surface-card/30">
-                <div className="text-[10px] font-bold uppercase tracking-wider text-text-muted font-heading flex items-center gap-1.5 pt-0.5">
-                  <Sparkles className="w-3 h-3 text-gold" />
+                <div className="text-[10px] font-bold uppercase tracking-wider text-text-muted font-heading pt-0.5">
                   Contoh Singkat Perubahan Kata (実例):
                 </div>
 

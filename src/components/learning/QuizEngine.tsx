@@ -76,6 +76,11 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
   const currentQ = normalizeQuestion(rawCurrentQ);
   const totalQ = questions.length;
 
+  const isReadingQuestion = React.useMemo(() => {
+    const inst = ((currentQ?.instruction || '') + ' ' + (currentQ?.instructionId || '')).toLowerCase();
+    return inst.includes('読み方') || inst.includes('cara baca') || inst.includes('ひらがな');
+  }, [currentQ]);
+
   const handleSelectOption = (idx: number) => {
     if (isAnswered) return;
     setSelectedOption(idx);
@@ -293,15 +298,18 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
               <div className="flex items-center gap-1.5">
                 <button
                   type="button"
+                  disabled={isReadingQuestion}
                   onClick={() => setLocalFurigana(prev => !prev)}
                   className={`px-2.5 py-1 rounded-lg text-[11px] font-bold font-jp border transition-all ${
-                    localFurigana
-                      ? 'bg-indigo/15 text-indigo border-indigo/30 shadow-sm'
-                      : 'bg-surface-card text-text-muted border-border-subtle hover:text-text-primary'
+                    isReadingQuestion
+                      ? 'bg-surface-card text-text-muted/60 border-border-subtle cursor-not-allowed opacity-60'
+                      : localFurigana
+                        ? 'bg-indigo/15 text-indigo border-indigo/30 shadow-sm'
+                        : 'bg-surface-card text-text-muted border-border-subtle hover:text-text-primary'
                   }`}
-                  title="Aktifkan / Nonaktifkan Furigana Hiragana"
+                  title={isReadingQuestion ? 'Furigana dikunci (OFF) pada soal tebak cara baca agar jawaban tidak bocor' : 'Aktifkan / Nonaktifkan Furigana Hiragana'}
                 >
-                  ふりがな {localFurigana ? 'ON' : 'OFF'}
+                  {isReadingQuestion ? 'ふりがな LOCK' : `ふりがな ${localFurigana ? 'ON' : 'OFF'}`}
                 </button>
                 <button
                   type="button"
@@ -320,7 +328,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
                 <RubyText
                   japanese={currentQ.prompt}
                   reading={currentQ.ruby}
-                  showFurigana={localFurigana}
+                  showFurigana={localFurigana && !isReadingQuestion}
                 />
               </h3>
             </div>

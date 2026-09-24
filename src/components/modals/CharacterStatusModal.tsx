@@ -24,6 +24,7 @@ import { playSound } from '../../utils/audio';
 import { calculateLanguageProfile, calculateCoverage } from '../../utils/mastery';
 import { INITIAL_STUDY_STATS } from '../../utils/activity';
 import { calculateAscensionProgress, getEffectiveTier } from '../../utils/ascension';
+import { useBackButton } from '../../hooks/useBackButton';
 
 interface CharacterStatusModalProps {
   isOpen: boolean;
@@ -46,6 +47,11 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
   onUpdateGender,
   onAscendTier,
 }) => {
+  // Mobile/Hardware back button handler
+  useBackButton(isOpen, () => {
+    onClose();
+  }, 'character_status_modal');
+
   useEffect(() => {
     if (!isOpen) return;
     const originalOverflow = document.body.style.overflow;

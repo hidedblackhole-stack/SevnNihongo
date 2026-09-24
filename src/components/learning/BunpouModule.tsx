@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookOpen, Swords, Volume2, HelpCircle, GitBranch, MapPin, Settings2, Sparkles } from 'lucide-react';
+import { BookOpen, Swords, Volume2, HelpCircle, GitBranch, MapPin, Settings2, Edit3 } from 'lucide-react';
 import { BunpouItem, BunpouMixedSet, Question } from '../../types/content';
 import { BUNPOU_DATABASE, BUNPOU_MIXED_DATABASE } from '../../data/bunpou';
 import { getSubBranchesForBunpou } from '../../data/bunpouSubKnowledge';
@@ -192,7 +192,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
                 : 'text-text-muted hover:text-text-primary'
             }`}
           >
-            <Sparkles className="w-3.5 h-3.5" />
+            <Edit3 className="w-3.5 h-3.5" />
             <span>Susun Kalimat</span>
           </button>
           <button
@@ -583,7 +583,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
                 }}
                 className="py-3 px-4 rounded-2xl bg-amber-500/15 border border-amber-500/40 text-amber-400 font-bold text-xs sm:text-sm shadow-sm flex items-center justify-center gap-2 active:scale-95 hover:bg-amber-500/25 transition-all font-heading cursor-pointer"
               >
-                <Sparkles className="w-4 h-4" />
+                <Edit3 className="w-4 h-4" />
                 <span>Susun Kalimat Pola Ini</span>
               </button>
 
