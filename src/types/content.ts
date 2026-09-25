@@ -1,5 +1,6 @@
 // Learning & Content Types (Normalized relational structure)
 export * from './identity';
+export * from './tower';
 
 export type ErrorType =
   | 'PASSIVE_CONFUSION'

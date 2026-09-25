@@ -1,0 +1,602 @@
+// ==============================================================================
+// NIHONGO TOWER — ROUND RENDERER CONTRACT (STAGE 4B)
+// ==============================================================================
+
+import React, { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import {
+  RoundPhase,
+  RoundInput,
+  RoundResult,
+  InscriptionRoundInput,
+  IdentificationRoundInput,
+  AlchemyRoundInput,
+  SentenceRoundInput,
+  JLPTRoundInput,
+  GenericRoundInput
+} from '../../types/tower';
+import { KanjiWritingCanvas } from '../learning/KanjiWritingCanvas';
+import { QuizEngine } from '../learning/QuizEngine';
+import { Question } from '../../types/content';
+import { CanvasAdapter } from '../../engine/tower/adapters/canvasAdapter';
+import { QuizAdapter, QuizQuestionAnswer } from '../../engine/tower/adapters/quizAdapter';
+import { ConjugationAdapter, ConjugationAnswer } from '../../engine/tower/adapters/conjugationAdapter';
+import { playSound } from '../../utils/audio';
+import { RubyText } from '../learning/RubyText';
+import { CheckCircle2, XCircle, ArrowRight, RotateCcw, Sparkles } from 'lucide-react';
+
+interface RoundRendererProps {
+  phase: RoundPhase | null;
+  input: RoundInput | null;
+  onSubmitAnswer: (result: RoundResult) => void;
+  soundEnabled?: boolean;
+  className?: string;
+}
+
+export const RoundRenderer: React.FC<RoundRendererProps> = ({
+  phase,
+  input,
+  onSubmitAnswer,
+  soundEnabled = true,
+  className = ''
+}) => {
+  if (!phase || !input) {
+    return (
+      <div className="flex flex-col items-center justify-center p-12 text-center text-text-muted">
+        <div className="w-8 h-8 rounded-full border-2 border-wine-accent border-t-transparent animate-spin mb-3" />
+        <p className="text-sm font-bold font-heading">Menyiapkan tantangan ronde...</p>
+      </div>
+    );
+  }
+
+  // ----------------------------------------------------------------------------
+  // 1. INSCRIPTION RENDERER (Stroke Writing Canvas)
+  // ----------------------------------------------------------------------------
+  if (phase === RoundPhase.INSCRIPTION) {
+    const inscriptionInput = input as InscriptionRoundInput;
+    const targetKanji = inscriptionInput.targetKanji;
+
+    const handleCanvasComplete = (sheetNumber: number, accuracyScore: number) => {
+      const minAcc = inscriptionInput.minAccuracyScore || 70;
+      const result = CanvasAdapter.toRoundResult({
+        kanjiChar: targetKanji.kanji,
+        accuracy: accuracyScore,
+        minAccuracy: minAcc,
+        targetId: targetKanji.id || targetKanji.kanji,
+        roundIndex: inscriptionInput.roundIndex
+      });
+
+      onSubmitAnswer(result);
+    };
+
+    return (
+      <div className={`w-full max-w-lg mx-auto flex flex-col items-center ${className}`}>
+        <div className="text-center mb-3">
+          <span className="text-[11px] font-bold text-wine-accent uppercase tracking-widest font-heading">
+            Tantangan Inskripsi Kanji
+          </span>
+          <h2 className="text-xl font-black text-text-primary font-heading">
+            {targetKanji.kanji}
+          </h2>
+          <p className="text-xs text-text-secondary mt-0.5">
+            {targetKanji.meaning} • Target Akurasi: {inscriptionInput.minAccuracyScore}%
+          </p>
+        </div>
+
+        <KanjiWritingCanvas
+          kanjiChar={targetKanji.kanji}
+          meaning={targetKanji.meaning}
+          onyomi={targetKanji.onyomi}
+          kunyomi={targetKanji.kunyomi}
+          totalSheets={1}
+          autoAdvance={false}
+          showStopwatch={true}
+          soundEnabled={soundEnabled}
+          onCompleteSheet={handleCanvasComplete}
+          onFinish={() => handleCanvasComplete(1, 95)}
+        />
+      </div>
+    );
+  }
+
+  // ----------------------------------------------------------------------------
+  // 2. IDENTIFICATION RENDERER (Vocabulary Reading & Meaning Quiz)
+  // ----------------------------------------------------------------------------
+  if (phase === RoundPhase.IDENTIFICATION) {
+    const idInput = input as IdentificationRoundInput;
+
+    const quizQuestions: Question[] = useMemo(() => {
+      return idInput.questions.map((q, idx) => {
+        const correctIdx = q.options.indexOf(q.correctAnswer);
+        return {
+          id: `${q.targetId}_${idx}`,
+          prompt: q.prompt,
+          options: q.options,
+          correctIndex: correctIdx >= 0 ? correctIdx : 0,
+          explanation: `Jawaban benar: ${q.correctAnswer}`,
+          category: 'kotoba',
+          difficulty: 'normal'
+        };
+      });
+    }, [idInput]);
+
+    const handleQuizFinish = (score: number, total: number) => {
+      const answers: QuizQuestionAnswer[] = idInput.questions.map((q, idx) => {
+        // Evaluate score proportion
+        const isCorrect = idx < score;
+        return {
+          targetId: q.targetId,
+          selectedAnswer: isCorrect ? q.correctAnswer : 'salah',
+          correctAnswer: q.correctAnswer,
+          isCorrect
+        };
+      });
+
+      const result = QuizAdapter.toRoundResult({
+        answers,
+        roundIndex: idInput.roundIndex,
+        phase: RoundPhase.IDENTIFICATION,
+        passThresholdPercentage: idInput.difficultySettings?.accuracyRequired || 70
+      });
+
+      onSubmitAnswer(result);
+    };
+
+    return (
+      <div className={`w-full max-w-2xl mx-auto ${className}`}>
+        <QuizEngine
+          title={`Identifikasi Kosakata (F.${idInput.floor})`}
+          questions={quizQuestions}
+          soundEnabled={soundEnabled}
+          onComplete={handleQuizFinish}
+          onExit={() => {}}
+        />
+      </div>
+    );
+  }
+
+  // ----------------------------------------------------------------------------
+  // 3. ALCHEMY RENDERER (Verb & Adjective Conjugation Engine)
+  // ----------------------------------------------------------------------------
+  if (phase === RoundPhase.ALCHEMY) {
+    const alchemyInput = input as AlchemyRoundInput;
+    return (
+      <AlchemyInteractiveRunner
+        input={alchemyInput}
+        soundEnabled={soundEnabled}
+        onSubmitAnswer={onSubmitAnswer}
+        className={className}
+      />
+    );
+  }
+
+  // ----------------------------------------------------------------------------
+  // 4. SENTENCE RENDERER (Grammar Scramble & Synthesis)
+  // ----------------------------------------------------------------------------
+  if (phase === RoundPhase.SENTENCE) {
+    const sentenceInput = input as SentenceRoundInput;
+    return (
+      <SentenceInteractiveRunner
+        input={sentenceInput}
+        soundEnabled={soundEnabled}
+        onSubmitAnswer={onSubmitAnswer}
+        className={className}
+      />
+    );
+  }
+
+  // ----------------------------------------------------------------------------
+  // 5. JLPT BOSS RENDERER (Trial Diagnostic Boss Floors)
+  // ----------------------------------------------------------------------------
+  if (
+    phase === RoundPhase.JLPT_VOCABULARY ||
+    phase === RoundPhase.JLPT_GRAMMAR ||
+    phase === RoundPhase.JLPT_READING ||
+    phase === RoundPhase.JLPT_LISTENING
+  ) {
+    const jlptInput = input as JLPTRoundInput;
+
+    const questions: Question[] = useMemo(() => {
+      return jlptInput.questions.map(q => {
+        const correctIdx = q.options.indexOf(q.correctAnswer);
+        return {
+          id: q.id,
+          prompt: q.prompt,
+          options: q.options,
+          correctIndex: correctIdx >= 0 ? correctIdx : 0,
+          explanation: q.explanation || `Kunci jawaban: ${q.correctAnswer}`,
+          translation: q.contextText
+        };
+      });
+    }, [jlptInput]);
+
+    const handleBossComplete = (score: number, total: number) => {
+      const answers: QuizQuestionAnswer[] = jlptInput.questions.map((q, idx) => {
+        const isCorrect = idx < score;
+        return {
+          targetId: q.id,
+          selectedAnswer: isCorrect ? q.correctAnswer : 'salah',
+          correctAnswer: q.correctAnswer,
+          isCorrect
+        };
+      });
+
+      const result = QuizAdapter.toRoundResult({
+        answers,
+        roundIndex: jlptInput.roundIndex,
+        phase,
+        passThresholdPercentage: 75
+      });
+
+      onSubmitAnswer(result);
+    };
+
+    return (
+      <div className={`w-full max-w-2xl mx-auto ${className}`}>
+        <div className="bg-wine-accent/10 border border-wine-accent/30 rounded-2xl p-4 mb-4 text-center">
+          <span className="text-xs font-black text-wine-accent uppercase tracking-widest font-heading">
+            Ujian Bos JLPT {jlptInput.jlptLevel}
+          </span>
+          <p className="text-xs text-text-secondary mt-0.5">
+            Selesaikan soal evaluasi komprehensif untuk menaklukkan lantai bos ini.
+          </p>
+        </div>
+
+        <QuizEngine
+          title={`Ujian Bos ${jlptInput.jlptLevel} (${phase.replace('jlpt_', '').toUpperCase()})`}
+          questions={questions}
+          soundEnabled={soundEnabled}
+          onComplete={handleBossComplete}
+          onExit={() => {}}
+        />
+      </div>
+    );
+  }
+
+  // ----------------------------------------------------------------------------
+  // FALLBACK GENERIC RENDERER
+  // ----------------------------------------------------------------------------
+  const genericInput = input as GenericRoundInput;
+  return (
+    <div className={`w-full max-w-md mx-auto text-center p-8 bg-surface-card rounded-2xl border border-border-subtle ${className}`}>
+      <Sparkles className="w-8 h-8 text-wine-accent mx-auto mb-2" />
+      <h3 className="text-lg font-black text-text-primary font-heading">
+        {genericInput.title || `Tantangan Ronde`}
+      </h3>
+      <p className="text-xs text-text-secondary mt-1 mb-6">
+        {genericInput.description || 'Selesaikan tantangan ini untuk melanjutkan perjalanan menara.'}
+      </p>
+
+      <button
+        type="button"
+        onClick={() => {
+          onSubmitAnswer({
+            roundIndex: genericInput.roundIndex,
+            phase,
+            score: 100,
+            correct: true,
+            mistakes: [],
+            hpDamage: 0
+          });
+        }}
+        className="w-full py-3 rounded-xl bg-wine-accent text-white font-bold text-sm shadow-md active:scale-95 cursor-pointer transition-all"
+      >
+        Lanjutkan Ronde
+      </button>
+    </div>
+  );
+};
+
+// ------------------------------------------------------------------------------
+// SUB-RUNNER: ALCHEMY CONJUGATION RUNNER
+// ------------------------------------------------------------------------------
+
+interface AlchemyInteractiveRunnerProps {
+  input: AlchemyRoundInput;
+  soundEnabled: boolean;
+  onSubmitAnswer: (result: RoundResult) => void;
+  className?: string;
+}
+
+const AlchemyInteractiveRunner: React.FC<AlchemyInteractiveRunnerProps> = ({
+  input,
+  soundEnabled,
+  onSubmitAnswer,
+  className = ''
+}) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [answers, setAnswers] = useState<ConjugationAnswer[]>([]);
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [isChecked, setIsChecked] = useState(false);
+
+  const currentTarget = input.targets[currentIndex];
+
+  // Generate 4 plausible choices for multiple-choice conjugation practice
+  const options = useMemo(() => {
+    if (!currentTarget) return [];
+    const correct = currentTarget.expectedConjugated;
+    const base = currentTarget.dictionaryForm;
+
+    // Distractor heuristic
+    const distractors = [
+      `${base}ます`,
+      `${base.slice(0, -1)}て`,
+      `${base.slice(0, -1)}ない`,
+      `${base.slice(0, -1)}た`
+    ].filter(d => d !== correct);
+
+    const pool = Array.from(new Set([correct, ...distractors])).slice(0, 4);
+    return pool.sort(() => Math.random() - 0.5);
+  }, [currentTarget]);
+
+  const handleSelectOption = (opt: string) => {
+    if (isChecked) return;
+    setSelectedOption(opt);
+    setIsChecked(true);
+
+    const isCorrect = opt === currentTarget.expectedConjugated;
+    if (soundEnabled) {
+      playSound(isCorrect ? 'correct' : 'wrong', true);
+    }
+
+    const answerRecord: ConjugationAnswer = {
+      targetId: currentTarget.targetId,
+      dictionaryForm: currentTarget.dictionaryForm,
+      ruleName: currentTarget.ruleName,
+      userInput: opt,
+      expected: currentTarget.expectedConjugated,
+      isCorrect
+    };
+
+    const newAnswers = [...answers, answerRecord];
+    setAnswers(newAnswers);
+  };
+
+  const handleNext = () => {
+    if (currentIndex + 1 < input.targets.length) {
+      setCurrentIndex(currentIndex + 1);
+      setSelectedOption(null);
+      setIsChecked(false);
+    } else {
+      // Completed all alchemy targets -> submit to adapter
+      const result = ConjugationAdapter.toRoundResult({
+        answers,
+        roundIndex: input.roundIndex,
+        passThresholdPercentage: input.difficultySettings?.accuracyRequired || 70
+      });
+      onSubmitAnswer(result);
+    }
+  };
+
+  if (!currentTarget) return null;
+
+  return (
+    <div className={`w-full max-w-lg mx-auto bg-surface-card rounded-3xl p-6 border border-border-subtle shadow-xl ${className}`}>
+      <div className="flex items-center justify-between text-xs text-text-secondary mb-4 pb-3 border-b border-border-subtle">
+        <span className="font-bold text-wine-accent uppercase tracking-wider font-heading">
+          Alkemia Konjugasi • Tingkat {input.tier}
+        </span>
+        <span className="font-mono">{currentIndex + 1} / {input.targets.length}</span>
+      </div>
+
+      {/* Target Word & Prompt */}
+      <div className="text-center my-6">
+        <span className="text-xs px-2.5 py-1 rounded-full bg-surface-elevated text-text-secondary border border-border-subtle">
+          Bentuk: {currentTarget.ruleName}
+        </span>
+        <h3 className="text-3xl font-black text-text-primary font-heading mt-3 mb-1">
+          {currentTarget.dictionaryForm}
+        </h3>
+        <p className="text-xs text-text-muted">
+          ({currentTarget.reading}) • {currentTarget.meaning}
+        </p>
+      </div>
+
+      {/* Multiple Choice Options */}
+      <div className="grid grid-cols-2 gap-3 my-6">
+        {options.map((opt, i) => {
+          let btnStyle = 'bg-surface-inset border-border-subtle text-text-primary hover:border-wine-accent/40';
+          if (isChecked) {
+            if (opt === currentTarget.expectedConjugated) {
+              btnStyle = 'bg-emerald-500/20 border-emerald-500 text-emerald-400 font-bold';
+            } else if (opt === selectedOption) {
+              btnStyle = 'bg-red-500/20 border-red-500 text-red-400 font-bold';
+            } else {
+              btnStyle = 'bg-surface-inset/50 border-transparent text-text-muted opacity-40';
+            }
+          }
+
+          return (
+            <button
+              key={`${opt}_${i}`}
+              type="button"
+              disabled={isChecked}
+              onClick={() => handleSelectOption(opt)}
+              className={`py-3.5 px-3 rounded-2xl border text-sm font-bold transition-all active:scale-95 cursor-pointer shadow-sm ${btnStyle}`}
+            >
+              {opt}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Next Button */}
+      {isChecked && (
+        <button
+          type="button"
+          onClick={handleNext}
+          className="w-full py-3.5 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-wine-accent/25 transition-all cursor-pointer"
+        >
+          <span>{currentIndex + 1 < input.targets.length ? 'Lanjut Kata Berikutnya' : 'Selesaikan Ronde'}</span>
+          <ArrowRight className="w-4 h-4" />
+        </button>
+      )}
+    </div>
+  );
+};
+
+// ------------------------------------------------------------------------------
+// SUB-RUNNER: SENTENCE ORDERING RUNNER
+// ------------------------------------------------------------------------------
+
+interface SentenceInteractiveRunnerProps {
+  input: SentenceRoundInput;
+  soundEnabled: boolean;
+  onSubmitAnswer: (result: RoundResult) => void;
+  className?: string;
+}
+
+const SentenceInteractiveRunner: React.FC<SentenceInteractiveRunnerProps> = ({
+  input,
+  soundEnabled,
+  onSubmitAnswer,
+  className = ''
+}) => {
+  const [selectedTokens, setSelectedTokens] = useState<string[]>([]);
+  const [availableTokens, setAvailableTokens] = useState<string[]>(input.scrambledSegments);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handlePickToken = (token: string, idx: number) => {
+    if (isSubmitted) return;
+    const newAvail = [...availableTokens];
+    newAvail.splice(idx, 1);
+    setAvailableTokens(newAvail);
+    setSelectedTokens([...selectedTokens, token]);
+  };
+
+  const handleRemoveToken = (token: string, idx: number) => {
+    if (isSubmitted) return;
+    const newSel = [...selectedTokens];
+    newSel.splice(idx, 1);
+    setSelectedTokens(newSel);
+    setAvailableTokens([...availableTokens, token]);
+  };
+
+  const handleReset = () => {
+    if (isSubmitted) return;
+    setSelectedTokens([]);
+    setAvailableTokens(input.scrambledSegments);
+  };
+
+  const handleSubmit = () => {
+    setIsSubmitted(true);
+    const constructed = selectedTokens.join('');
+    const expected = input.correctOrder.join('');
+    const isCorrect = constructed === expected;
+
+    if (soundEnabled) {
+      playSound(isCorrect ? 'correct' : 'wrong', true);
+    }
+
+    const mistakes = isCorrect
+      ? []
+      : [
+          {
+            targetId: input.grammar.id,
+            expected,
+            actual: constructed,
+            reason: 'Susunan kalimat belum tepat.'
+          }
+        ];
+
+    const result: RoundResult = {
+      roundIndex: input.roundIndex,
+      phase: RoundPhase.SENTENCE,
+      score: isCorrect ? 100 : 40,
+      correct: isCorrect,
+      mistakes,
+      hpDamage: isCorrect ? 0 : 1,
+      masteryUpdates: [
+        {
+          targetId: input.grammar.id,
+          targetType: 'grammar',
+          previousScore: 0,
+          newScore: 0,
+          delta: isCorrect ? 15 : -8,
+          isCorrect
+        }
+      ]
+    };
+
+    setTimeout(() => {
+      onSubmitAnswer(result);
+    }, 1200);
+  };
+
+  return (
+    <div className={`w-full max-w-lg mx-auto bg-surface-card rounded-3xl p-6 border border-border-subtle shadow-xl ${className}`}>
+      <div className="text-center mb-5">
+        <span className="text-xs font-bold text-wine-accent uppercase tracking-wider font-heading">
+          Penyusunan Kalimat • {input.grammar.pattern}
+        </span>
+        <h3 className="text-base font-bold text-text-primary mt-1">
+          {input.prompt}
+        </h3>
+        {input.englishMeaning && (
+          <p className="text-xs text-text-secondary mt-0.5">{input.englishMeaning}</p>
+        )}
+      </div>
+
+      {/* Assembly Dropzone */}
+      <div className="min-h-[70px] p-3 rounded-2xl bg-surface-inset border-2 border-dashed border-border-subtle flex flex-wrap items-center gap-2 mb-6">
+        {selectedTokens.length === 0 ? (
+          <span className="text-xs text-text-muted italic mx-auto">
+            Ketuk potongan kata di bawah untuk menyusun kalimat...
+          </span>
+        ) : (
+          selectedTokens.map((tok, idx) => (
+            <motion.button
+              key={`${tok}_${idx}`}
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              type="button"
+              disabled={isSubmitted}
+              onClick={() => handleRemoveToken(tok, idx)}
+              className="px-3 py-1.5 rounded-xl bg-surface-elevated text-wine-accent border border-wine-accent/40 text-sm font-bold shadow-sm active:scale-95 cursor-pointer"
+            >
+              {tok}
+            </motion.button>
+          ))
+        )}
+      </div>
+
+      {/* Available Scrambled Pieces */}
+      <div className="flex flex-wrap justify-center gap-2 mb-6 min-h-[50px]">
+        {availableTokens.map((tok, idx) => (
+          <button
+            key={`${tok}_${idx}`}
+            type="button"
+            disabled={isSubmitted}
+            onClick={() => handlePickToken(tok, idx)}
+            className="px-3.5 py-2 rounded-xl bg-surface-elevated hover:bg-surface-inset border border-border-subtle text-text-primary text-sm font-bold shadow-sm transition-all active:scale-95 cursor-pointer"
+          >
+            {tok}
+          </button>
+        ))}
+      </div>
+
+      {/* Action Buttons */}
+      <div className="flex items-center gap-3">
+        <button
+          type="button"
+          onClick={handleReset}
+          disabled={isSubmitted || selectedTokens.length === 0}
+          className="p-3 rounded-2xl bg-surface-inset hover:bg-surface-elevated border border-border-subtle text-text-secondary hover:text-text-primary disabled:opacity-40 transition-all cursor-pointer"
+          title="Ulangi susunan"
+        >
+          <RotateCcw className="w-5 h-5" />
+        </button>
+
+        <button
+          type="button"
+          onClick={handleSubmit}
+          disabled={isSubmitted || availableTokens.length > 0}
+          className="flex-1 py-3 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-black text-sm flex items-center justify-center gap-2 shadow-md shadow-wine-accent/25 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer transition-all"
+        >
+          <span>Periksa Susunan Kalimat</span>
+          <ArrowRight className="w-4 h-4" />
+        </button>
+      </div>
+    </div>
+  );
+};

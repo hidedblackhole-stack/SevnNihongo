@@ -10,7 +10,8 @@ import {
   Play,
   Award,
   Layers,
-  HelpCircle
+  HelpCircle,
+  Castle
 } from 'lucide-react';
 import { KanjiSpeedRushModal } from './KanjiSpeedRushModal';
 import { SuddenDeathStreakModal } from './SuddenDeathStreakModal';
@@ -23,6 +24,7 @@ interface ArcadeHubViewProps {
   userDecks?: UserDeck[];
   playerLevel?: number;
   playerTierIndex?: number;
+  onOpenTower?: () => void;
   onRewardPlayer?: (exp: number, gold: number) => void;
   onCompleteStudyItem?: (
     moduleId: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss' | 'questions' | 'tryOuts',
@@ -39,6 +41,7 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
   userDecks = [],
   playerLevel = 1,
   playerTierIndex = 0,
+  onOpenTower,
   onRewardPlayer,
   onCompleteStudyItem,
 }) => {
@@ -63,6 +66,42 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
           </p>
         </div>
       </div>
+
+      {/* FEATURED: NIHONGO TOWER 1.000 FLOORS BANNER */}
+      {onOpenTower && (
+        <div className="panel p-5 rounded-3xl bg-gradient-to-r from-wine-accent/20 via-surface-card to-surface-card border-2 border-wine-accent/35 shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5">
+            <div className="w-12 h-12 rounded-2xl bg-wine-accent text-white flex items-center justify-center font-heading font-black text-xl shrink-0 shadow-md shadow-wine-accent/25">
+              <Castle className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="px-2 py-0.5 rounded-full bg-wine-accent/15 border border-wine-accent/30 text-wine-accent text-[10px] font-black tracking-wider uppercase">
+                  Mode Unggulan
+                </span>
+                <span className="text-xs text-text-muted font-bold font-mono">
+                  1.000 Lantai
+                </span>
+              </div>
+              <h3 className="text-base sm:text-lg font-black font-heading text-text-primary mt-0.5">
+                Menara 1.000 Lantai (Nihongo Tower)
+              </h3>
+              <p className="text-xs text-text-secondary mt-0.5 max-w-xl">
+                Petualangan mendaki vertikal melintasi 10 wilayah kuno Jepang, pos peristirahatan, dan pertarungan ujian bos JLPT dari N5 hingga N1!
+              </p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={onOpenTower}
+            className="w-full sm:w-auto px-5 py-3 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-bold text-xs font-heading flex items-center justify-center gap-2 shadow-md shadow-wine-accent/30 active:scale-95 transition-all cursor-pointer shrink-0"
+          >
+            <span>Daki Menara Sekarang</span>
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
+      )}
 
       {/* 2. THREE GAME CARDS GRID */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

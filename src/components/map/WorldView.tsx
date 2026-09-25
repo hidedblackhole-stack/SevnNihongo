@@ -14,7 +14,8 @@ import {
   BookOpen, 
   Layers, 
   Library,
-  Zap
+  Zap,
+  Castle
 } from 'lucide-react';
 import { StageClearData, UserDeck, DeckItemCategory } from '../../types/rpg';
 import { Stage, ItemMasteryRecord } from '../../types/content';
@@ -43,8 +44,10 @@ import { ArcadeHubView } from '../arcade/ArcadeHubView';
 import { StageJourneyPicker } from './StageJourneyPicker';
 import { chapterToUserDeck, bookToFullUserDeck } from '../../data/officialBooks';
 import { OfficialBook, OfficialChapter } from '../../types/books';
+import { TowerMap, TowerSessionRunner } from '../tower';
+import { loadTowerProgress, buildTowerPlayerProfile, TowerSavedProgress } from '../../engine/tower/world/towerProgress';
 
-export type WorldNavView = 'world_hub' | 'level_hub' | 'maps' | 'dungeon' | 'arcade' | 'stage';
+export type WorldNavView = 'world_hub' | 'level_hub' | 'maps' | 'dungeon' | 'arcade' | 'stage' | 'tower';
 
 interface WorldViewProps {
   currentMapId?: string;
@@ -114,15 +117,27 @@ export const WorldView: React.FC<WorldViewProps> = ({
   navView,
   onNavViewChange,
 }) => {
-  // 3 Modes: arcade (default), dungeon, stage
-  const [worldMode, setWorldMode] = useState<'arcade' | 'dungeon' | 'stage'>(() => {
+  // 4 Modes: arcade (default), dungeon, stage, tower
+  const [worldMode, setWorldMode] = useState<'arcade' | 'dungeon' | 'stage' | 'tower'>(() => {
     if (navView === 'dungeon') return 'dungeon';
     if (navView === 'maps' || navView === 'stage') return 'stage';
+    if (navView === 'tower') return 'tower';
     return 'arcade';
   });
 
   const [setupDungeonType, setSetupDungeonType] = useState<DungeonType | null>(null);
   const [activeDungeonPayload, setActiveDungeonPayload] = useState<DungeonPayload | null>(null);
+
+  // Tower 1000 Floors States
+  const [activeTowerFloor, setActiveTowerFloor] = useState<number | null>(null);
+  const [towerProgress, setTowerProgress] = useState<TowerSavedProgress>(() => loadTowerProgress());
+
+  const towerProfile = useMemo(() => {
+    return buildTowerPlayerProfile(
+      { userId: 'Pendaki Menara', level: playerLevel },
+      itemMastery
+    );
+  }, [playerLevel, itemMastery]);
 
   // Custom World & Template Deck States
   const [selectedLevelFilter, setSelectedLevelFilter] = useState<string>('ALL');
@@ -140,6 +155,8 @@ export const WorldView: React.FC<WorldViewProps> = ({
       setWorldMode('dungeon');
     } else if (navView === 'maps' || navView === 'stage') {
       setWorldMode('stage');
+    } else if (navView === 'tower') {
+      setWorldMode('tower');
     } else if (navView === 'arcade' || navView === 'world_hub') {
       setWorldMode('arcade');
     }
@@ -155,14 +172,15 @@ export const WorldView: React.FC<WorldViewProps> = ({
       setWorldMode('arcade');
       setSetupDungeonType(null);
       setActiveDungeonPayload(null);
+      setActiveTowerFloor(null);
     }
   }, [resetSignal]);
 
-  const handleSwitchMode = (mode: 'arcade' | 'dungeon' | 'stage') => {
+  const handleSwitchMode = (mode: 'arcade' | 'dungeon' | 'stage' | 'tower') => {
     playSound('click', soundEnabled);
     setWorldMode(mode);
     if (onNavViewChange) {
-      const targetNav: WorldNavView = mode === 'dungeon' ? 'dungeon' : mode === 'stage' ? 'maps' : 'world_hub';
+      const targetNav: WorldNavView = mode === 'dungeon' ? 'dungeon' : mode === 'stage' ? 'maps' : mode === 'tower' ? 'tower' : 'world_hub';
       onNavViewChange(targetNav);
     }
   };
@@ -351,12 +369,16 @@ export const WorldView: React.FC<WorldViewProps> = ({
               ? 'bg-amber-500/15 text-amber-400 border-amber-500/30'
               : worldMode === 'dungeon'
                 ? 'bg-crimson/15 text-crimson border-crimson/30'
-                : 'bg-gold/15 text-gold border-gold/30'
+                : worldMode === 'tower'
+                  ? 'bg-wine-accent/15 text-wine-accent border-wine-accent/30'
+                  : 'bg-gold/15 text-gold border-gold/30'
           } border flex items-center justify-center shrink-0 shadow-sm`}>
             {worldMode === 'arcade' ? (
               <Zap className="w-6 h-6 fill-amber-400/20" />
             ) : worldMode === 'dungeon' ? (
               <Swords className="w-6 h-6" />
+            ) : worldMode === 'tower' ? (
+              <Castle className="w-6 h-6" />
             ) : (
               <Compass className="w-6 h-6" />
             )}
@@ -367,20 +389,24 @@ export const WorldView: React.FC<WorldViewProps> = ({
                 ? 'Petualangan World · Arena Game'
                 : worldMode === 'dungeon'
                   ? 'Petualangan World · Mode Dungeon'
-                  : 'Petualangan World · Peta Stage'}
+                  : worldMode === 'tower'
+                    ? 'Petualangan World · Menara 1.000 (Nihongo Tower)'
+                    : 'Petualangan World · Peta Stage'}
             </h1>
             <p className="text-xs sm:text-sm text-text-secondary font-body">
               {worldMode === 'arcade'
                 ? 'Uji kecepatan menulis dan refleksmu di game arcade dengan tantangan rekor terbaik.'
                 : worldMode === 'dungeon'
                   ? 'Latihan bebas tanpa beban: menulis aksara, flashcard kilat, susun pola kalimat, ubah bentuk kata, dan kuis cepat.'
-                  : 'Pilih kurikulum resmi atau rak tematik untuk langsung bertarung dan menjelajahi stage RPG.'}
+                  : worldMode === 'tower'
+                    ? 'Daki 1.000 lantai menara legendaris secara vertikal. Taklukkan 10 wilayah, pos peristirahatan suci, dan bos ujian akbar JLPT.'
+                    : 'Pilih kurikulum resmi atau rak tematik untuk langsung bertarung dan menjelajahi stage RPG.'}
             </p>
           </div>
         </div>
       </div>
 
-      {/* 2. THREE-MODE SWITCHER BAR */}
+      {/* 2. FOUR-MODE SWITCHER BAR */}
       <div className="panel p-1.5 rounded-2xl bg-surface-inset border border-border-subtle flex items-center gap-1.5 sm:gap-2 shadow-inner overflow-x-auto scrollbar-none">
         
         {/* TAB 1: ARENA ARCADE */}
@@ -434,6 +460,23 @@ export const WorldView: React.FC<WorldViewProps> = ({
           </span>
         </button>
 
+        {/* TAB 4: MENARA 1.000 */}
+        <button
+          type="button"
+          onClick={() => handleSwitchMode('tower')}
+          className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 px-2.5 sm:px-3 rounded-xl text-xs sm:text-sm font-bold font-sans transition-all whitespace-nowrap ${
+            worldMode === 'tower'
+              ? 'bg-surface-card text-wine-accent shadow-sm border border-wine-accent/35'
+              : 'text-text-muted hover:text-text-primary'
+          }`}
+        >
+          <Castle className={`w-4 h-4 shrink-0 ${worldMode === 'tower' ? 'text-wine-accent' : ''}`} />
+          <span>
+            <span className="inline sm:hidden">Tower</span>
+            <span className="hidden sm:inline">Menara 1.000</span>
+          </span>
+        </button>
+
       </div>
 
       {/* 3. CONTENT PER ACTIVE MODE */}
@@ -444,6 +487,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
           userDecks={userDecks}
           playerLevel={playerLevel}
           playerTierIndex={playerTierIndex}
+          onOpenTower={() => handleSwitchMode('tower')}
           onRewardPlayer={onRewardPlayer}
           onCompleteStudyItem={onCompleteStudyItem}
         />
@@ -498,6 +542,36 @@ export const WorldView: React.FC<WorldViewProps> = ({
           curriculumProgressMap={curriculumProgressMap}
           itemMastery={itemMastery}
         />
+      )}
+
+      {worldMode === 'tower' && (
+        /* MODE 4: MENARA 1.000 LANTAI (NIHONGO TOWER) */
+        activeTowerFloor !== null ? (
+          <div className="w-full">
+            <TowerSessionRunner
+              initialFloor={activeTowerFloor}
+              playerProfile={towerProfile}
+              soundEnabled={soundEnabled}
+              onRewardPlayer={onRewardPlayer}
+              onFloorCleared={() => {
+                setTowerProgress(loadTowerProgress());
+              }}
+              onExit={() => {
+                setActiveTowerFloor(null);
+                setTowerProgress(loadTowerProgress());
+              }}
+            />
+          </div>
+        ) : (
+          <div className="h-[75vh] w-full rounded-3xl overflow-hidden border border-border-subtle shadow-xl bg-surface-base">
+            <TowerMap
+              currentFloor={towerProgress.currentFloor}
+              highestClearedFloor={towerProgress.highestFloorCleared}
+              playerProfile={towerProfile}
+              onSelectFloor={(floor) => setActiveTowerFloor(floor)}
+            />
+          </div>
+        )
       )}
 
       {/* MODAL 1: PILIH DECK DARI BUKU SAKU */}

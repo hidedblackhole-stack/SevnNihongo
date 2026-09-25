@@ -10,4 +10,5 @@ export * from './synthesis/sentenceSynthesizer';
 export * from './practice/sentenceBuilderEngine';
 export * from './traits/traits';
 export * from './registry/entityRegistry';
+export * from './tower';
 
