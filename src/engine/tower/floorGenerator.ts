@@ -19,6 +19,7 @@ import { KOTOBA_DATABASE } from '../../data/kotoba';
 import { BUNPOU_DATABASE } from '../../data/bunpou';
 import { KANJI_DATABASE } from '../../data/kanji';
 import { KotobaItem, BunpouItem, KanjiItem } from '../../types/content';
+import { FOUNDATION_FLOORS_DATA } from './foundationFloorsData';
 
 // ------------------------------------------------------------------------------
 // IN-MEMORY INDEX POOLS (Cached once for sub-millisecond retrieval)
@@ -715,12 +716,14 @@ export function calculateReward(floor: number, isBoss: boolean, isCheckpoint: bo
 // MAIN EXPORT: PROGRESSION-AWARE PROCEDURAL GENERATOR
 // ------------------------------------------------------------------------------
 
+export const MAX_TOWER_FLOORS = 10;
+
 /**
  * Generates a complete Tower Floor Blueprint based on Floor Number, Player Progression Model, and Floor Seed
  * 
- * @param floor Floor number (1 to 1000)
+ * @param floor Floor number (1 to 10)
  * @param playerProfile Optional player progression profile or PlayerStats
- * @param seed Optional string seed for 100% deterministic reproducibility (e.g. "SEVNQUEST-57-A")
+ * @param seed Optional string seed for 100% deterministic reproducibility (e.g. "SEVNQUEST-5-A")
  * @returns TowerFloorBlueprint
  */
 export function generateFloorBlueprint(
@@ -728,11 +731,71 @@ export function generateFloorBlueprint(
   playerProfile?: TowerPlayerProfile | any,
   seed?: string
 ): TowerFloorBlueprint {
-  // Validate floor range
-  const clampedFloor = Math.max(1, Math.min(1000, Math.floor(floor)));
+  // Cap strictly at 10 Foundation Floors as requested by user
+  const clampedFloor = Math.max(1, Math.min(MAX_TOWER_FLOORS, Math.floor(floor)));
   const effectiveSeed = seed || `SEVNQUEST-${clampedFloor}-${playerProfile?.userId || 'DEFAULT'}`;
-  const prng = createPrng(effectiveSeed);
 
+  // Check if player is replaying an already cleared floor
+  const isReplay = Boolean(
+    playerProfile?.clearedFloors?.[clampedFloor] ||
+    (playerProfile?.highestFloorCleared && playerProfile.highestFloorCleared > clampedFloor)
+  );
+
+  // If within the 10 Foundation Floors, use the curated pedagogical curriculum
+  const foundation = FOUNDATION_FLOORS_DATA[clampedFloor];
+  if (foundation) {
+    const isCheckpoint = foundation.isCheckpoint;
+    const isBossFloor = foundation.isBossFloor;
+    const isBossPreparation = clampedFloor === 9;
+    const arc = TowerArc.FOUNDATION;
+    const jlpt = JLPTLevel.N5;
+
+    // Rounds for foundation floors:
+    // Round 0: Inscription (Stroke practice: target kana / introductory kanji)
+    // Round 1: Identification (Kana character & sound recognition)
+    // Round 2: Identification (Vocabulary reading & meaning quiz)
+    // Round 3: Sentence (Kana token unscramble & word assembly)
+    const rounds: RoundPhase[] = [
+      RoundPhase.INSCRIPTION,
+      RoundPhase.IDENTIFICATION,
+      RoundPhase.IDENTIFICATION,
+      RoundPhase.SENTENCE
+    ];
+
+    const difficulty = calculateDifficulty(clampedFloor, isBossFloor, isCheckpoint);
+    const reward = calculateReward(clampedFloor, isBossFloor, isCheckpoint);
+
+    return {
+      floor: clampedFloor,
+      arc,
+      jlptTarget: jlpt,
+      theme: foundation.theme,
+      difficulty,
+      vocabulary: foundation.vocabularyTargets,
+      kanji: [foundation.inscriptionTarget],
+      grammar: [
+        {
+          id: `bp_f${clampedFloor}`,
+          pattern: clampedFloor === 10 ? '〜です (Sintesis Kana & Angka)' : `Dasar Aksara F.${clampedFloor}`,
+          jlpt: JLPTLevel.N5,
+          example: foundation.wordAssemblyQuestions[0]?.tokens.join('') || 'あいうえお',
+          unlockedFloor: clampedFloor
+        }
+      ],
+      conjugationTier: ConjugationTier.BASIC,
+      rounds,
+      reviewRatio: 0,
+      reward,
+      isCheckpoint,
+      isBossFloor,
+      isBossPreparation,
+      isReplay,
+      seed: effectiveSeed
+    };
+  }
+
+  // Fallback for safety
+  const prng = createPrng(effectiveSeed);
   const isCheckpoint = clampedFloor % 10 === 0;
   const isBossFloor = clampedFloor % 100 === 0;
   const isBossPreparation = !isBossFloor && clampedFloor % 100 >= 95;
@@ -752,12 +815,6 @@ export function generateFloorBlueprint(
   const difficulty = calculateDifficulty(clampedFloor, isBossFloor, isCheckpoint);
   const reward = calculateReward(clampedFloor, isBossFloor, isCheckpoint);
   const theme = generateTheme(clampedFloor, arc, jlpt);
-
-  // Check if player is replaying an already cleared floor
-  const isReplay = Boolean(
-    playerProfile?.clearedFloors?.[clampedFloor] ||
-    (playerProfile?.highestFloorCleared && playerProfile.highestFloorCleared > clampedFloor)
-  );
 
   return {
     floor: clampedFloor,

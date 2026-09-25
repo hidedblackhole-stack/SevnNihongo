@@ -43,7 +43,7 @@ export const TowerHUD: React.FC<TowerHUDProps> = ({
       <div className="max-w-4xl mx-auto flex items-center justify-between gap-3">
         {/* Left: Floor & Theme Info */}
         <div className="flex items-center gap-2.5 min-w-0">
-          <div className="w-10 h-10 rounded-xl bg-wine-accent/15 border border-wine-accent/30 flex flex-col items-center justify-center shrink-0 shadow-inner">
+          <div className="w-10 h-10 rounded-xl bg-surface-elevated border border-border-subtle flex flex-col items-center justify-center shrink-0 shadow-inner">
             <span className="text-[10px] font-bold text-wine-accent uppercase tracking-wider leading-none">F.</span>
             <span className="text-base font-black text-wine-accent font-heading leading-tight">{floor}</span>
           </div>
@@ -85,7 +85,7 @@ export const TowerHUD: React.FC<TowerHUDProps> = ({
                     isCurrent
                       ? 'bg-wine-accent text-white shadow-sm shadow-wine-accent/30 scale-105'
                       : isPast
-                        ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
+                        ? 'bg-surface-elevated text-emerald-400 border border-border-subtle'
                         : 'text-text-muted opacity-50'
                   }`}
                 >

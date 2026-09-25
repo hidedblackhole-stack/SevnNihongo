@@ -74,7 +74,7 @@ export const FloorNarrativeModal: React.FC<FloorNarrativeModalProps> = ({
           </div>
 
           {/* Japanese Dialogue Quote */}
-          <div className="p-4 rounded-2xl bg-surface-inset/80 border-l-4 border-wine-accent mb-4">
+          <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle mb-4">
             <p className="text-sm font-bold text-text-primary leading-relaxed font-japanese">
               {narrative.japaneseIntro}
             </p>
@@ -84,7 +84,7 @@ export const FloorNarrativeModal: React.FC<FloorNarrativeModalProps> = ({
           </div>
 
           {/* Objective Box */}
-          <div className="p-3 rounded-2xl bg-wine-accent/10 border border-wine-accent/25 flex items-center gap-2.5 mb-6 text-xs">
+          <div className="p-3 rounded-2xl bg-surface-elevated border border-border-subtle flex items-center gap-2.5 mb-6 text-xs">
             <Target className="w-4 h-4 text-wine-accent shrink-0" />
             <span className="text-text-primary font-bold">
               Objektif: {narrative.objective}

@@ -47,10 +47,10 @@ export const BossGateModal: React.FC<BossGateModalProps> = ({
 
           {/* Header */}
           <div className="text-center my-4">
-            <div className="w-16 h-16 mx-auto mb-3 rounded-2xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-500 shadow-inner">
+            <div className="w-16 h-16 mx-auto mb-3 rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-center text-rose-500 shadow-inner">
               <Lock className="w-8 h-8" />
             </div>
-            <span className="text-[11px] font-bold text-red-400 uppercase tracking-widest font-heading">
+            <span className="text-[11px] font-bold text-rose-400 uppercase tracking-widest font-heading">
               Akses Dibatasi
             </span>
             <h2 className="text-xl font-black text-text-primary font-heading mt-1">
@@ -99,7 +99,7 @@ export const BossGateModal: React.FC<BossGateModalProps> = ({
 
           {/* Weaknesses List */}
           {weaknesses.length > 0 && (
-            <div className="p-3.5 rounded-2xl bg-red-500/10 border border-red-500/20 text-xs mb-5">
+            <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle text-xs mb-5">
               <div className="flex items-center gap-1.5 text-red-400 font-bold mb-1">
                 <ShieldAlert className="w-4 h-4" />
                 <span>Titik Lemah yang Perlu Diperkuat:</span>

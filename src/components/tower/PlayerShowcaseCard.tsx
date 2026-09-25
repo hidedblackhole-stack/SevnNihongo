@@ -72,7 +72,7 @@ export const PlayerShowcaseCard: React.FC<PlayerShowcaseCardProps> = ({
       {/* Showcase Trading Card Container */}
       <motion.div
         whileHover={{ y: -4 }}
-        className="rounded-3xl p-6 bg-gradient-to-b from-surface-card via-surface-elevated to-surface-card border-2 border-wine-accent/40 shadow-2xl shadow-wine-accent/15 relative overflow-hidden"
+        className="rounded-3xl p-6 bg-gradient-to-b from-surface-card via-surface-elevated to-surface-card border border-border-subtle shadow-2xl relative overflow-hidden"
       >
         {/* Decorative Background Kanji Watermark */}
         <div className="absolute -right-6 -bottom-10 text-[140px] font-black text-white/5 pointer-events-none font-heading leading-none select-none">
@@ -95,7 +95,7 @@ export const PlayerShowcaseCard: React.FC<PlayerShowcaseCardProps> = ({
 
         {/* Avatar & Player Identity */}
         <div className="flex items-center gap-3.5 mb-5">
-          <div className="w-16 h-16 rounded-2xl bg-surface-inset border-2 border-wine-accent/50 flex items-center justify-center overflow-hidden shrink-0 shadow-md relative">
+          <div className="w-16 h-16 rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-center overflow-hidden shrink-0 shadow-inner relative">
             {avatarUrl ? (
               <img src={avatarUrl} alt={playerName} className="w-full h-full object-cover" />
             ) : (

@@ -23,6 +23,7 @@ import { conjugateVerb } from '../../morphology/inflectionEngine';
 import { ConjugationForm } from '../../types';
 import { KOTOBA_DATABASE } from '../../../data/kotoba';
 import { seededShuffle, createPrng } from '../floorGenerator';
+import { FOUNDATION_FLOORS_DATA } from '../foundationFloorsData';
 
 /**
  * Mapping from Indonesian/Japanese rule labels in CONJUGATION_RULES to ConjugationForm
@@ -104,19 +105,24 @@ export class RoundResolver {
     roundIndex: number,
     prng: () => number
   ): InscriptionRoundInput {
-    const kanjiList = blueprint.kanji.length > 0
-      ? blueprint.kanji
-      : [
-          {
-            kanji: '日',
-            onyomi: ['ニチ'],
-            kunyomi: ['ひ'],
-            meaning: 'Matahari / Hari',
-            writingRequired: true
-          }
-        ];
+    const foundation = blueprint.floor <= 10 ? FOUNDATION_FLOORS_DATA[blueprint.floor] : null;
+    const targetKanji = foundation
+      ? foundation.inscriptionTarget
+      : (blueprint.kanji.length > 0 ? blueprint.kanji[roundIndex % blueprint.kanji.length] : {
+          kanji: '日',
+          onyomi: ['ニチ'],
+          kunyomi: ['ひ'],
+          meaning: 'Matahari / Hari',
+          writingRequired: true
+        });
 
-    const targetKanji = kanjiList[roundIndex % kanjiList.length];
+    const isKana = targetKanji.meaning.includes('Hiragana') ||
+      targetKanji.meaning.includes('Katakana') ||
+      targetKanji.kanji.charCodeAt(0) < 0x4e00;
+
+    const prompt = isKana
+      ? `Tuliskan Aksara: ${targetKanji.kanji} (${targetKanji.meaning})`
+      : `Tuliskan Kanji: ${targetKanji.kanji} (${targetKanji.meaning})`;
 
     return {
       roundIndex,
@@ -124,7 +130,7 @@ export class RoundResolver {
       floor: blueprint.floor,
       difficulty: blueprint.difficulty,
       targetKanji,
-      prompt: `Tuliskan Kanji: ${targetKanji.kanji} (${targetKanji.meaning})`,
+      prompt,
       minAccuracyScore: Math.min(85, 65 + Math.floor(blueprint.difficulty * 2))
     };
   }
@@ -137,6 +143,28 @@ export class RoundResolver {
     roundIndex: number,
     prng: () => number
   ): IdentificationRoundInput {
+    const foundation = blueprint.floor <= 10 ? FOUNDATION_FLOORS_DATA[blueprint.floor] : null;
+
+    if (foundation) {
+      // In 4-round Foundation floors:
+      // Round index 1 = Kana character & sound recognition quiz (5-6 questions)
+      // Round index 2 = Vocabulary reading & meaning quiz (5 questions)
+      const isVocabRound = roundIndex >= 2;
+      const questions = isVocabRound && foundation.vocabularyQuestions.length > 0
+        ? foundation.vocabularyQuestions
+        : foundation.identificationQuestions;
+      const targets = foundation.vocabularyTargets;
+
+      return {
+        roundIndex,
+        phase: RoundPhase.IDENTIFICATION,
+        floor: blueprint.floor,
+        difficulty: blueprint.difficulty,
+        targets,
+        questions
+      };
+    }
+
     const targets = blueprint.vocabulary.length > 0
       ? blueprint.vocabulary
       : [
@@ -304,6 +332,45 @@ export class RoundResolver {
     roundIndex: number,
     prng: () => number
   ): SentenceRoundInput {
+    const foundation = blueprint.floor <= 10 ? FOUNDATION_FLOORS_DATA[blueprint.floor] : null;
+
+    if (foundation && foundation.wordAssemblyQuestions && foundation.wordAssemblyQuestions.length > 0) {
+      const exercises = foundation.wordAssemblyQuestions.map(w => {
+        let scrambled = seededShuffle([...w.tokens], prng);
+        if (scrambled.join('') === w.correctOrder.join('') && scrambled.length > 1) {
+          scrambled = [scrambled[1], ...scrambled.slice(2), scrambled[0]];
+        }
+        return {
+          prompt: w.prompt,
+          englishMeaning: w.englishMeaning,
+          scrambledSegments: scrambled,
+          correctOrder: w.correctOrder
+        };
+      });
+
+      const firstEx = exercises[0];
+      const grammar = blueprint.grammar[0] || {
+        id: `bp_f${blueprint.floor}`,
+        pattern: blueprint.floor === 10 ? '〜です (Kelulusan Dasar)' : `Susunan Aksara F.${blueprint.floor}`,
+        jlpt: JLPTLevel.N5,
+        example: firstEx.correctOrder.join(''),
+        unlockedFloor: blueprint.floor
+      };
+
+      return {
+        roundIndex,
+        phase: RoundPhase.SENTENCE,
+        floor: blueprint.floor,
+        difficulty: blueprint.difficulty,
+        grammar,
+        prompt: firstEx.prompt,
+        englishMeaning: firstEx.englishMeaning,
+        scrambledSegments: firstEx.scrambledSegments,
+        correctOrder: firstEx.correctOrder,
+        exercises
+      };
+    }
+
     const grammar = blueprint.grammar[0] || {
       id: 'bp_fallback',
       pattern: '〜です',

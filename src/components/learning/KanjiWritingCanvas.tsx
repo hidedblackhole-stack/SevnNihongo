@@ -1017,6 +1017,8 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
         if (writerRef.current) {
           try {
             writerRef.current.cancelQuiz();
+            writerRef.current.showOutline();
+            writerRef.current.hideCharacter();
             startQuiz(0);
           } catch (err) {
             console.warn('Canvas reset error:', err);
@@ -1209,7 +1211,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
           {/* Hero Section: Giant Character & Readings */}
           <div className="flex flex-col sm:flex-row items-center gap-4 py-1">
             {/* Hanko Motif Giant Character Frame */}
-            <div className="relative group w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-surface-inset border border-wine-accent/40 flex items-center justify-center text-5xl sm:text-6xl font-bold text-wine-accent font-jp shadow-inner shrink-0 select-none">
+            <div className="relative group w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-center text-5xl sm:text-6xl font-bold text-wine-accent font-jp shadow-inner shrink-0 select-none">
               {kanjiChar}
               <button
                 type="button"
@@ -1242,7 +1244,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                         speakJapanese(kanjiChar);
                         playSound('click', soundEnabled);
                       }}
-                      className="px-3 py-1.5 rounded-xl bg-wine-accent/15 text-wine-accent border border-wine-accent/30 font-bold hover:bg-wine-accent/25 flex items-center gap-1.5 text-xs font-mono transition-colors"
+                      className="px-3 py-1.5 rounded-xl bg-surface-elevated text-wine-accent border border-border-subtle font-bold hover:bg-surface-inset flex items-center gap-1.5 text-xs font-mono transition-colors"
                     >
                       <Volume2 className="w-3.5 h-3.5" />
                       <span>Putar Audio</span>
@@ -1266,7 +1268,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                               speakJapanese(on.split(' ')[0]);
                               playSound('click', soundEnabled);
                             }}
-                            className="px-2 py-0.5 rounded-lg bg-surface-card text-wine-accent border border-wine-accent/20 font-bold hover:border-wine-accent/50 flex items-center gap-1 text-xs font-jp transition-colors cursor-pointer"
+                            className="px-2 py-0.5 rounded-lg bg-surface-card text-wine-accent border border-border-subtle font-bold hover:border-border-strong flex items-center gap-1 text-xs font-jp transition-colors cursor-pointer"
                             title="Klik untuk mendengar"
                           >
                             <span>{on}</span>
@@ -1294,7 +1296,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                               speakJapanese(kun.replace(/[.-]/g, ''));
                               playSound('click', soundEnabled);
                             }}
-                            className="px-2 py-0.5 rounded-lg bg-surface-card text-state-success border border-state-success/20 font-bold hover:border-state-success/50 flex items-center gap-1 text-xs font-jp transition-colors cursor-pointer"
+                            className="px-2 py-0.5 rounded-lg bg-surface-card text-state-success border border-border-subtle font-bold hover:border-border-strong flex items-center gap-1 text-xs font-jp transition-colors cursor-pointer"
                             title="Klik untuk mendengar"
                           >
                             <span>{kun}</span>
@@ -1423,7 +1425,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                 return (
                   <div
                     key={i}
-                    className="flex flex-col items-center justify-center py-1 px-1.5 rounded-xl bg-surface-card/80 hover:bg-surface-elevated border border-border-subtle hover:border-gold/40 transition-all group cursor-pointer w-full text-center shadow-xs min-h-[42px]"
+                    className="flex flex-col items-center justify-center py-1 px-1.5 rounded-xl bg-surface-card/80 hover:bg-surface-elevated border border-border-subtle hover:border-border-strong transition-all group cursor-pointer w-full text-center shadow-xs min-h-[42px]"
                     onClick={() => speakJapanese(cleanAudioWord)}
                     title={`Dengar pengucapan: ${rw.reading} - ${rw.meaningId}`}
                   >
@@ -1444,7 +1446,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
             </div>
           ) : (
             <div
-              className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-surface-card/80 hover:bg-surface-elevated border border-border-subtle hover:border-gold/40 transition-all group cursor-pointer max-w-[200px]"
+              className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-surface-card/80 hover:bg-surface-elevated border border-border-subtle hover:border-border-strong transition-all group cursor-pointer max-w-[200px]"
               onClick={() =>
                 speakJapanese(
                   cleanKunyomiList[0] || cleanOnyomiList[0] || reading || (isKana ? kanjiChar : '')
@@ -1545,9 +1547,9 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                   }}
                   className={`py-1 rounded-lg text-xs font-bold transition-all ${
                     isCurrent
-                      ? 'bg-wine-accent text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_3px_6px_rgba(0,0,0,0.3)] border border-wine-accent/60 font-black scale-105'
+                      ? 'bg-wine-accent text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_3px_6px_rgba(0,0,0,0.3)] border border-border-subtle font-black scale-105'
                       : isCompleted
-                        ? 'bg-wine-accent/20 text-wine-accent border border-wine-accent/40 font-bold'
+                        ? 'bg-surface-elevated text-wine-accent border border-border-subtle font-bold'
                         : 'bg-surface-inset text-text-muted hover:bg-surface-elevated'
                   }`}
                 >
@@ -1577,7 +1579,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
             </span>
           )}
           {isQuizComplete && lastReward ? (
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-gold border border-gold/40 font-mono animate-scale-up shadow-sm">
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-surface-elevated text-gold border border-border-subtle font-mono animate-scale-up shadow-sm">
               +{lastReward.expGained} EXP!
             </span>
           ) : totalCharStrokes > 0 && !isQuizComplete ? (
@@ -1586,7 +1588,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
             </span>
           ) : null}
           {mistakesCount > 0 && !isQuizComplete ? (
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-surface-inset text-rose-400 border border-rose-500/30 flex items-center gap-1 font-mono">
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-surface-inset text-rose-400 border border-border-subtle flex items-center gap-1 font-mono">
               Salah: {mistakesCount}
             </span>
           ) : !totalCharStrokes && !isQuizComplete ? (
@@ -1602,7 +1604,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
             onClick={() => setShowGuide(!showGuide)}
             className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all flex items-center gap-1.5 shadow-sm select-none cursor-pointer ${
               showGuide
-                ? 'bg-wine-accent/20 text-wine-accent border border-wine-accent/40 hover:bg-wine-accent/30'
+                ? 'bg-surface-elevated text-wine-accent border border-border-subtle hover:bg-surface-card'
                 : 'bg-surface-inset text-text-muted border border-border-subtle hover:bg-surface-elevated'
             }`}
             title="Tampilkan / Sembunyikan garis panduan karakter"
@@ -1673,7 +1675,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
           type="button"
           onClick={animateOrder}
           disabled={isAnimating || !hasStrokeData}
-          className="py-2.5 px-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-primary text-xs font-bold flex items-center justify-center gap-1.5 transition-all border border-border-subtle hover:border-wine-accent/40 disabled:opacity-50 whitespace-nowrap shadow-sm select-none active:scale-95 cursor-pointer"
+          className="py-2.5 px-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-primary text-xs font-bold flex items-center justify-center gap-1.5 transition-all border border-border-subtle hover:border-border-strong disabled:opacity-50 whitespace-nowrap shadow-sm select-none active:scale-95 cursor-pointer"
           title="Tampilkan animasi goresan"
         >
           <PlayCircle className="w-4 h-4 text-wine-accent shrink-0" />

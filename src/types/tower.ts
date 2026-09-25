@@ -303,6 +303,13 @@ export interface AlchemyRoundInput extends BaseRoundInput {
   targets: AlchemyTarget[];
 }
 
+export interface SentenceExercise {
+  prompt: string;
+  englishMeaning?: string;
+  scrambledSegments: string[];
+  correctOrder: string[];
+}
+
 export interface SentenceRoundInput extends BaseRoundInput {
   phase: RoundPhase.SENTENCE;
   grammar: GrammarTarget;
@@ -310,6 +317,7 @@ export interface SentenceRoundInput extends BaseRoundInput {
   englishMeaning?: string;
   scrambledSegments: string[];
   correctOrder: string[];
+  exercises?: SentenceExercise[];
 }
 
 export interface JLPTBossQuestion {

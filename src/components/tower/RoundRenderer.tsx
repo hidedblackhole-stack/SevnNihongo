@@ -2,7 +2,7 @@
 // NIHONGO TOWER — ROUND RENDERER CONTRACT (STAGE 4B)
 // ==============================================================================
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   RoundPhase,
@@ -106,10 +106,15 @@ export const RoundRenderer: React.FC<RoundRendererProps> = ({
       onSubmitAnswer(result);
     };
 
+    const isVocabRound = idInput.roundIndex >= 2;
+    const quizTitle = isVocabRound
+      ? `Kuis Kosakata & Makna (F.${idInput.floor})`
+      : `Identifikasi Aksara & Bunyi (F.${idInput.floor})`;
+
     return (
       <div className={`w-full max-w-2xl mx-auto ${className}`}>
         <QuizEngine
-          title={`Identifikasi Kosakata (F.${idInput.floor})`}
+          title={quizTitle}
           questions={quizQuestions}
           soundEnabled={soundEnabled}
           onComplete={handleQuizFinish}
@@ -197,7 +202,7 @@ export const RoundRenderer: React.FC<RoundRendererProps> = ({
 
     return (
       <div className={`w-full max-w-2xl mx-auto ${className}`}>
-        <div className="bg-wine-accent/10 border border-wine-accent/30 rounded-2xl p-4 mb-4 text-center">
+        <div className="bg-surface-elevated border border-border-subtle rounded-2xl p-4 mb-4 text-center">
           <span className="text-xs font-black text-wine-accent uppercase tracking-widest font-heading">
             Ujian Bos JLPT {jlptInput.jlptLevel}
           </span>
@@ -252,7 +257,7 @@ export const RoundRenderer: React.FC<RoundRendererProps> = ({
 };
 
 // ------------------------------------------------------------------------------
-// SUB-RUNNER: INSCRIPTION RUNNER (Kanji Stroke Writing)
+// SUB-RUNNER: INSCRIPTION RUNNER (Kanji & Kana Stroke Writing)
 // ------------------------------------------------------------------------------
 
 interface InscriptionInteractiveRunnerProps {
@@ -270,14 +275,17 @@ const InscriptionInteractiveRunner: React.FC<InscriptionInteractiveRunnerProps> 
 }) => {
   const targetKanji = input.targetKanji;
   const [recordedScore, setRecordedScore] = useState<number>(100);
+  const scoreRef = useRef<number>(100);
 
   const handleSheetComplete = (_sheetNumber: number, accuracyScore: number) => {
+    scoreRef.current = accuracyScore;
     setRecordedScore(accuracyScore);
   };
 
   const handleProceedNext = (reward?: any) => {
     const minAcc = input.minAccuracyScore || 70;
-    const finalScore = (reward as any)?.accuracyScore ?? recordedScore;
+    // Always use latest recorded score from ref
+    const finalScore = scoreRef.current;
     const result = CanvasAdapter.toRoundResult({
       kanjiChar: targetKanji.kanji,
       accuracy: finalScore,
@@ -289,14 +297,20 @@ const InscriptionInteractiveRunner: React.FC<InscriptionInteractiveRunnerProps> 
     onSubmitAnswer(result);
   };
 
+  const isKana = targetKanji.meaning.includes('Hiragana') ||
+    targetKanji.meaning.includes('Katakana') ||
+    targetKanji.kanji.charCodeAt(0) < 0x4e00;
+
   return (
     <div className={`w-full max-w-lg mx-auto flex flex-col items-center ${className}`}>
       <div className="text-center mb-3">
         <span className="text-[11px] font-bold text-wine-accent uppercase tracking-widest font-heading">
-          Tantangan Inskripsi Kanji
+          {isKana ? 'Tantangan Inskripsi Aksara Kana' : 'Tantangan Inskripsi Kanji'}
         </span>
         <p className="text-xs text-text-secondary mt-0.5">
-          Tuliskan goresan kanji sesuai petunjuk bacaan & arti • Target Akurasi: {input.minAccuracyScore}%
+          {isKana
+            ? `Tuliskan goresan aksara sesuai urutan goresan • Target Akurasi: ${input.minAccuracyScore}%`
+            : `Tuliskan goresan kanji sesuai petunjuk bacaan & arti • Target Akurasi: ${input.minAccuracyScore}%`}
         </p>
       </div>
 
@@ -427,12 +441,12 @@ const AlchemyInteractiveRunner: React.FC<AlchemyInteractiveRunnerProps> = ({
       {/* Multiple Choice Options */}
       <div className="grid grid-cols-2 gap-3 my-6">
         {options.map((opt, i) => {
-          let btnStyle = 'bg-surface-inset border-border-subtle text-text-primary hover:border-wine-accent/40';
+          let btnStyle = 'bg-surface-inset border-border-subtle text-text-primary hover:border-border-strong';
           if (isChecked) {
             if (opt === currentTarget.expectedConjugated) {
-              btnStyle = 'bg-emerald-500/20 border-emerald-500 text-emerald-400 font-bold';
+              btnStyle = 'bg-emerald-500/20 border-border-subtle text-emerald-400 font-bold';
             } else if (opt === selectedOption) {
-              btnStyle = 'bg-red-500/20 border-red-500 text-red-400 font-bold';
+              btnStyle = 'bg-red-500/20 border-border-subtle text-red-400 font-bold';
             } else {
               btnStyle = 'bg-surface-inset/50 border-transparent text-text-muted opacity-40';
             }
@@ -468,7 +482,7 @@ const AlchemyInteractiveRunner: React.FC<AlchemyInteractiveRunnerProps> = ({
 };
 
 // ------------------------------------------------------------------------------
-// SUB-RUNNER: SENTENCE ORDERING RUNNER
+// SUB-RUNNER: SENTENCE & KANA ORDERING RUNNER (Multi-Exercise Enabled)
 // ------------------------------------------------------------------------------
 
 interface SentenceInteractiveRunnerProps {
@@ -484,9 +498,38 @@ const SentenceInteractiveRunner: React.FC<SentenceInteractiveRunnerProps> = ({
   onSubmitAnswer,
   className = ''
 }) => {
+  const exercises = useMemo(() => {
+    if (input.exercises && input.exercises.length > 0) {
+      return input.exercises;
+    }
+    return [
+      {
+        prompt: input.prompt,
+        englishMeaning: input.englishMeaning,
+        scrambledSegments: input.scrambledSegments,
+        correctOrder: input.correctOrder
+      }
+    ];
+  }, [input]);
+
+  const [currentIdx, setCurrentIdx] = useState(0);
+  const [correctExercises, setCorrectExercises] = useState(0);
+  const [collectedMistakes, setCollectedMistakes] = useState<any[]>([]);
+
+  const currentExercise = exercises[currentIdx] || exercises[0];
   const [selectedTokens, setSelectedTokens] = useState<string[]>([]);
-  const [availableTokens, setAvailableTokens] = useState<string[]>(input.scrambledSegments);
+  const [availableTokens, setAvailableTokens] = useState<string[]>(currentExercise?.scrambledSegments || []);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isCorrectFeedback, setIsCorrectFeedback] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    if (currentExercise) {
+      setSelectedTokens([]);
+      setAvailableTokens(currentExercise.scrambledSegments);
+      setIsSubmitted(false);
+      setIsCorrectFeedback(null);
+    }
+  }, [currentIdx, currentExercise]);
 
   const handlePickToken = (token: string, idx: number) => {
     if (isSubmitted) return;
@@ -507,73 +550,104 @@ const SentenceInteractiveRunner: React.FC<SentenceInteractiveRunnerProps> = ({
   const handleReset = () => {
     if (isSubmitted) return;
     setSelectedTokens([]);
-    setAvailableTokens(input.scrambledSegments);
+    setAvailableTokens(currentExercise.scrambledSegments);
   };
 
   const handleSubmit = () => {
     setIsSubmitted(true);
     const constructed = selectedTokens.join('');
-    const expected = input.correctOrder.join('');
+    const expected = currentExercise.correctOrder.join('');
     const isCorrect = constructed === expected;
+    setIsCorrectFeedback(isCorrect);
 
     if (soundEnabled) {
       playSound(isCorrect ? 'correct' : 'wrong', true);
     }
 
-    const mistakes = isCorrect
-      ? []
+    const newMistakes = isCorrect
+      ? collectedMistakes
       : [
+          ...collectedMistakes,
           {
             targetId: input.grammar.id,
             expected,
             actual: constructed,
-            reason: 'Susunan kalimat belum tepat.'
+            reason: `Susunan kata '${expected}' belum tepat.`
           }
         ];
+    setCollectedMistakes(newMistakes);
 
-    const result: RoundResult = {
-      roundIndex: input.roundIndex,
-      phase: RoundPhase.SENTENCE,
-      score: isCorrect ? 100 : 40,
-      correct: isCorrect,
-      mistakes,
-      hpDamage: isCorrect ? 0 : 1,
-      masteryUpdates: [
-        {
-          targetId: input.grammar.id,
-          targetType: 'grammar',
-          previousScore: 0,
-          newScore: 0,
-          delta: isCorrect ? 15 : -8,
-          isCorrect
-        }
-      ]
-    };
+    const newCorrect = isCorrect ? correctExercises + 1 : correctExercises;
+    if (isCorrect) {
+      setCorrectExercises(newCorrect);
+    }
 
     setTimeout(() => {
-      onSubmitAnswer(result);
-    }, 1200);
+      if (currentIdx + 1 < exercises.length) {
+        setCurrentIdx(prev => prev + 1);
+      } else {
+        // All exercises completed
+        const finalScore = Math.round((newCorrect / exercises.length) * 100);
+        const pass = finalScore >= (input.difficultySettings?.accuracyRequired || 65);
+
+        const result: RoundResult = {
+          roundIndex: input.roundIndex,
+          phase: RoundPhase.SENTENCE,
+          score: finalScore,
+          correct: pass,
+          mistakes: newMistakes,
+          hpDamage: pass ? 0 : 1,
+          masteryUpdates: [
+            {
+              targetId: input.grammar.id,
+              targetType: 'grammar',
+              previousScore: 0,
+              newScore: 0,
+              delta: pass ? 15 : -8,
+              isCorrect: pass
+            }
+          ]
+        };
+
+        onSubmitAnswer(result);
+      }
+    }, 1100);
   };
 
   return (
     <div className={`w-full max-w-lg mx-auto bg-surface-card rounded-3xl p-6 border border-border-subtle shadow-xl ${className}`}>
-      <div className="text-center mb-5">
-        <span className="text-xs font-bold text-wine-accent uppercase tracking-wider font-heading">
-          Penyusunan Kalimat • {input.grammar.pattern}
+      {/* Exercise progress header */}
+      <div className="flex items-center justify-between text-xs text-text-secondary mb-3 pb-2 border-b border-border-subtle">
+        <span className="font-bold text-wine-accent uppercase tracking-wider font-heading">
+          Penyusunan Aksara & Kalimat
         </span>
+        <span className="font-mono text-text-muted">
+          Soal {currentIdx + 1} dari {exercises.length}
+        </span>
+      </div>
+
+      <div className="text-center mb-5">
         <h3 className="text-base font-bold text-text-primary mt-1">
-          {input.prompt}
+          {currentExercise.prompt}
         </h3>
-        {input.englishMeaning && (
-          <p className="text-xs text-text-secondary mt-0.5">{input.englishMeaning}</p>
+        {currentExercise.englishMeaning && (
+          <p className="text-xs text-text-secondary mt-0.5">{currentExercise.englishMeaning}</p>
         )}
       </div>
 
       {/* Assembly Dropzone */}
-      <div className="min-h-[70px] p-3 rounded-2xl bg-surface-inset border-2 border-dashed border-border-subtle flex flex-wrap items-center gap-2 mb-6">
+      <div
+        className={`min-h-[70px] p-3 rounded-2xl bg-surface-inset border-2 border-dashed flex flex-wrap items-center gap-2 mb-6 transition-colors ${
+          isCorrectFeedback === true
+            ? 'border-emerald-500/60 bg-emerald-500/10'
+            : isCorrectFeedback === false
+              ? 'border-rose-500/60 bg-rose-500/10'
+              : 'border-border-subtle'
+        }`}
+      >
         {selectedTokens.length === 0 ? (
           <span className="text-xs text-text-muted italic mx-auto">
-            Ketuk potongan kata di bawah untuk menyusun kalimat...
+            Ketuk potongan aksara di bawah untuk menyusun urutan yang benar...
           </span>
         ) : (
           selectedTokens.map((tok, idx) => (
@@ -584,7 +658,7 @@ const SentenceInteractiveRunner: React.FC<SentenceInteractiveRunnerProps> = ({
               type="button"
               disabled={isSubmitted}
               onClick={() => handleRemoveToken(tok, idx)}
-              className="px-3 py-1.5 rounded-xl bg-surface-elevated text-wine-accent border border-wine-accent/40 text-sm font-bold shadow-sm active:scale-95 cursor-pointer"
+              className="px-3.5 py-2 rounded-xl bg-surface-elevated text-wine-accent border border-border-subtle hover:border-border-strong text-base font-bold shadow-sm active:scale-95 cursor-pointer font-jp"
             >
               {tok}
             </motion.button>
@@ -600,7 +674,7 @@ const SentenceInteractiveRunner: React.FC<SentenceInteractiveRunnerProps> = ({
             type="button"
             disabled={isSubmitted}
             onClick={() => handlePickToken(tok, idx)}
-            className="px-3.5 py-2 rounded-xl bg-surface-elevated hover:bg-surface-inset border border-border-subtle text-text-primary text-sm font-bold shadow-sm transition-all active:scale-95 cursor-pointer"
+            className="px-4 py-2 rounded-xl bg-surface-elevated hover:bg-surface-inset border border-border-subtle text-text-primary text-base font-bold shadow-sm transition-all active:scale-95 cursor-pointer font-jp"
           >
             {tok}
           </button>
@@ -625,7 +699,9 @@ const SentenceInteractiveRunner: React.FC<SentenceInteractiveRunnerProps> = ({
           disabled={isSubmitted || availableTokens.length > 0}
           className="flex-1 py-3 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-black text-sm flex items-center justify-center gap-2 shadow-md shadow-wine-accent/25 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer transition-all"
         >
-          <span>Periksa Susunan Kalimat</span>
+          <span>
+            {currentIdx + 1 < exercises.length ? 'Periksa & Lanjut' : 'Selesaikan Susunan'}
+          </span>
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>

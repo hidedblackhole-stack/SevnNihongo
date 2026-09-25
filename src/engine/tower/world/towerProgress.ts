@@ -77,8 +77,8 @@ export function recordFloorClear(
         score
       }
     },
-    highestFloorCleared: Math.max(current.highestFloorCleared, floor),
-    currentFloor: Math.min(1000, Math.max(current.currentFloor, floor + 1)),
+    highestFloorCleared: Math.min(10, Math.max(current.highestFloorCleared, floor)),
+    currentFloor: Math.min(10, Math.max(current.currentFloor, floor + 1)),
     flawlessFloorCount: isFlawless ? current.flawlessFloorCount + 1 : current.flawlessFloorCount
   };
 

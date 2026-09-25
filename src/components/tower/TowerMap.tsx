@@ -59,18 +59,15 @@ export const TowerMap: React.FC<TowerMapProps> = ({
     }
   };
 
-  // Focus view window: 25 floors around current floor (expandable)
-  const [viewMinFloor, setViewMinFloor] = useState<number>(() => Math.max(1, currentFloor - 10));
-  const [viewMaxFloor, setViewMaxFloor] = useState<number>(() => Math.min(1000, currentFloor + 25));
-
+  // Focus strictly on the 10 Foundation Floors (Lantai 1-10)
   const floorsToRender = useMemo(() => {
     const list: number[] = [];
     // Render top to bottom: higher floors at top, floor 1 at bottom!
-    for (let f = viewMaxFloor; f >= viewMinFloor; f--) {
+    for (let f = 10; f >= 1; f--) {
       list.push(f);
     }
     return list;
-  }, [viewMinFloor, viewMaxFloor]);
+  }, []);
 
   // Auto-scroll to active floor on mount
   useEffect(() => {
@@ -83,14 +80,6 @@ export const TowerMap: React.FC<TowerMapProps> = ({
     if (activeFloorRef.current) {
       activeFloorRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-  };
-
-  const handleLoadMoreAbove = () => {
-    setViewMaxFloor(prev => Math.min(1000, prev + 30));
-  };
-
-  const handleLoadMoreBelow = () => {
-    setViewMinFloor(prev => Math.max(1, prev - 30));
   };
 
   const activeRegion = getRegionForFloor(currentFloor);
@@ -167,47 +156,23 @@ export const TowerMap: React.FC<TowerMapProps> = ({
         </div>
       </div>
 
-      {/* Main Vertical Climbing Spire */}
+      {/* Main Vertical Climbing Spire (10 Foundation Floors) */}
       <div
         ref={scrollContainerRef}
         className="flex-1 overflow-y-auto px-4 py-8 relative flex flex-col items-center space-y-4"
       >
-        {/* Load Higher Floors Button */}
-        {viewMaxFloor < 1000 && (
-          <button
-            type="button"
-            onClick={handleLoadMoreAbove}
-            className="mb-4 py-2 px-5 rounded-full bg-surface-elevated hover:bg-surface-card border border-border-subtle text-xs font-bold text-text-secondary hover:text-text-primary transition-all flex items-center gap-1.5 cursor-pointer active:scale-95 shadow-sm"
-          >
-            <ChevronUp className="w-4 h-4" />
-            <span>Lihat Lantai Lebih Tinggi</span>
-          </button>
-        )}
-
-        {/* Floors Loop (High to Low) */}
+        {/* Floors Loop (High to Low: 10 down to 1) */}
         {floorsToRender.map(floorNum => {
           const isCurrent = floorNum === currentFloor;
           const isCleared = floorNum <= highestClearedFloor;
           const isUnlocked = floorNum <= highestClearedFloor + 1;
-          const isBoss = floorNum % 100 === 0;
-          const isCheckpoint = !isBoss && floorNum % 10 === 0;
-          const isBossPrep = !isBoss && floorNum % 100 >= 95;
+          const isBoss = floorNum === 10;
+          const isCheckpoint = floorNum === 5;
+          const isBossPrep = floorNum === 9;
           const floorRegion = getRegionForFloor(floorNum);
 
           return (
             <React.Fragment key={floorNum}>
-              {/* Region Border Archway (when crossing region boundary) */}
-              {floorNum === floorRegion.endFloor && floorNum !== 1000 && (
-                <div className="w-full max-w-sm my-4 py-2 px-4 rounded-2xl bg-surface-inset/80 border border-border-subtle text-center">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-text-muted block">
-                    Batas Wilayah Menara
-                  </span>
-                  <span className="text-xs font-black text-text-primary font-heading">
-                    {floorRegion.name} • {floorRegion.title}
-                  </span>
-                </div>
-              )}
-
               {/* Floor Spire Node */}
               <div
                 ref={isCurrent ? activeFloorRef : null}
@@ -225,42 +190,38 @@ export const TowerMap: React.FC<TowerMapProps> = ({
                       setSelectedPreviewFloor(floorNum);
                     }
                   }}
-                  className={`w-full z-10 rounded-2xl p-4 transition-all border shadow-md relative cursor-pointer ${
+                  className={`w-full z-10 rounded-2xl p-4 transition-all border shadow-sm relative cursor-pointer ${
                     isCurrent
-                      ? 'bg-wine-accent/15 border-wine-accent ring-2 ring-wine-accent/40 shadow-wine-accent/20'
-                      : isBoss
-                        ? 'bg-red-950/40 border-red-500/50 hover:border-red-500'
-                        : isCheckpoint
-                          ? 'bg-amber-950/30 border-amber-500/40 hover:border-amber-500'
-                          : isCleared
-                            ? 'bg-surface-card border-border-subtle hover:border-wine-accent/30 opacity-90'
-                            : isUnlocked
-                              ? 'bg-surface-card border-border-subtle hover:border-wine-accent/40'
-                              : 'bg-surface-inset/60 border-transparent opacity-40 cursor-not-allowed'
+                      ? 'bg-surface-elevated border-border-strong shadow-md'
+                      : isCleared
+                        ? 'bg-surface-card border-border-subtle hover:bg-surface-elevated hover:border-border-strong opacity-95'
+                        : isUnlocked
+                          ? 'bg-surface-card border-border-subtle hover:bg-surface-elevated hover:border-border-strong'
+                          : 'bg-surface-inset/60 border-transparent opacity-40 cursor-not-allowed'
                   }`}
                 >
                   <div className="flex items-center justify-between gap-3">
                     {/* Left: Floor Icon & Number */}
                     <div className="flex items-center gap-3">
                       <div
-                        className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 shadow-inner font-heading font-black text-sm ${
+                        className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 font-heading font-black text-sm ${
                           isBoss
-                            ? 'bg-red-600 text-white shadow-red-600/40'
+                            ? 'bg-surface-inset text-wine-accent border border-border-subtle shadow-inner'
                             : isCheckpoint
-                              ? 'bg-amber-500 text-slate-950 shadow-amber-500/30'
+                              ? 'bg-surface-inset text-gold border border-border-subtle shadow-inner'
                               : isCurrent
-                                ? 'bg-wine-accent text-white shadow-wine-accent/40'
+                                ? 'bg-wine-accent text-white shadow-sm'
                                 : isCleared
-                                  ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30'
+                                  ? 'bg-surface-inset text-emerald-400 border border-border-subtle'
                                   : 'bg-surface-inset text-text-muted border border-border-subtle'
                         }`}
                       >
                         {isBoss ? (
-                          <Trophy className="w-5 h-5" />
+                          <Trophy className="w-5 h-5 text-wine-accent" />
                         ) : isCheckpoint ? (
-                          <Heart className="w-5 h-5 fill-slate-950" />
+                          <Heart className="w-5 h-5 text-gold fill-gold/20" />
                         ) : isCleared ? (
-                          <CheckCircle2 className="w-5 h-5" />
+                          <CheckCircle2 className="w-5 h-5 text-emerald-400" />
                         ) : !isUnlocked ? (
                           <Lock className="w-4 h-4" />
                         ) : (
@@ -281,11 +242,11 @@ export const TowerMap: React.FC<TowerMapProps> = ({
                         </div>
                         <p className="text-xs text-text-secondary mt-0.5 truncate max-w-[190px]">
                           {isBoss
-                            ? `Gerbang Bos: ${floorRegion.bossName}`
+                            ? 'Ujian Kelulusan Gerbang Awal (Bos F.10)'
                             : isCheckpoint
-                              ? 'Pos Peristirahatan (Pemulihan Hati)'
+                              ? 'Pos Pemeriksaan (Checkpoint)'
                               : isBossPrep
-                                ? 'Area Sintesis Persiapan Bos'
+                                ? 'Katakana Essentials (Kata Serapan)'
                                 : floorRegion.title}
                         </p>
                       </div>
@@ -305,17 +266,6 @@ export const TowerMap: React.FC<TowerMapProps> = ({
             </React.Fragment>
           );
         })}
-
-        {/* Load Lower Floors Button */}
-        {viewMinFloor > 1 && (
-          <button
-            type="button"
-            onClick={handleLoadMoreBelow}
-            className="mt-4 py-2 px-5 rounded-full bg-surface-elevated hover:bg-surface-card border border-border-subtle text-xs font-bold text-text-secondary hover:text-text-primary transition-all flex items-center gap-1.5 cursor-pointer active:scale-95 shadow-sm"
-          >
-            <span>Lihat Lantai Lebih Rendah</span>
-          </button>
-        )}
       </div>
 
       {/* Floor Preview Bottom Drawer Modal */}
@@ -431,7 +381,7 @@ export const TowerMap: React.FC<TowerMapProps> = ({
               {/* Header */}
               <div className="flex items-center justify-between pb-3 border-b border-border-subtle mb-4 shrink-0">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-10 h-10 rounded-2xl bg-wine-accent/15 border border-wine-accent/30 text-wine-accent flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-2xl bg-surface-elevated border border-border-subtle text-wine-accent flex items-center justify-center">
                     <Sparkles className="w-5 h-5" />
                   </div>
                   <div>
@@ -445,7 +395,7 @@ export const TowerMap: React.FC<TowerMapProps> = ({
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <div className="px-3 py-1 rounded-xl bg-surface-inset border border-wine-accent/30 text-wine-accent text-xs font-black font-mono">
+                  <div className="px-3 py-1 rounded-xl bg-surface-inset border border-border-subtle text-wine-accent text-xs font-black font-mono">
                     {economy.skillPoints} SP Tersedia
                   </div>
                   <button

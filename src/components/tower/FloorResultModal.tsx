@@ -56,10 +56,8 @@ export const FloorResultModal: React.FC<FloorResultModalProps> = ({
           {/* Result Icon & Title */}
           <div className="text-center my-4">
             <div
-              className={`w-16 h-16 mx-auto mb-3 rounded-2xl flex items-center justify-center shadow-inner ${
-                isClear
-                  ? 'bg-emerald-500/15 border border-emerald-500/30 text-emerald-400'
-                  : 'bg-red-500/15 border border-red-500/30 text-red-400'
+              className={`w-16 h-16 mx-auto mb-3 rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-center shadow-inner ${
+                isClear ? 'text-gold' : 'text-rose-500'
               }`}
             >
               {isClear ? <Trophy className="w-8 h-8" /> : <Skull className="w-8 h-8" />}
@@ -67,7 +65,7 @@ export const FloorResultModal: React.FC<FloorResultModalProps> = ({
 
             <span
               className={`text-[11px] font-bold uppercase tracking-widest font-heading ${
-                isClear ? 'text-emerald-400' : 'text-red-400'
+                isClear ? 'text-emerald-400' : 'text-rose-400'
               }`}
             >
               {isClear ? 'Lantai Ditaklukkan!' : 'Tantangan Terhenti'}
@@ -78,7 +76,7 @@ export const FloorResultModal: React.FC<FloorResultModalProps> = ({
 
             {/* Flawless Victor Badge */}
             {report.isFlawless && (
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-400 text-xs font-bold font-heading mt-2 shadow-sm">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-elevated border border-border-subtle text-gold text-xs font-bold font-heading mt-2 shadow-sm">
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>Kemenangan Sempurna (Flawless)</span>
               </div>
@@ -152,10 +150,10 @@ export const FloorResultModal: React.FC<FloorResultModalProps> = ({
                 {Object.entries(report.masteryGain).map(([id, delta]) => (
                   <span
                     key={id}
-                    className={`px-2 py-0.5 rounded-lg border text-[11px] font-bold ${
+                    className={`px-2 py-0.5 rounded-lg border border-border-subtle text-[11px] font-bold ${
                       delta > 0
-                        ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
-                        : 'bg-red-500/10 text-red-400 border-red-500/30'
+                        ? 'bg-surface-elevated text-emerald-400'
+                        : 'bg-surface-elevated text-rose-400'
                     }`}
                   >
                     {id.replace(/^(kt_|kj_|bp_)/, '')} {delta > 0 ? `+${delta}` : delta}
