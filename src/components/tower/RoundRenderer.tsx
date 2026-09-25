@@ -273,57 +273,137 @@ const InscriptionInteractiveRunner: React.FC<InscriptionInteractiveRunnerProps> 
   onSubmitAnswer,
   className = ''
 }) => {
-  const targetKanji = input.targetKanji;
-  const [recordedScore, setRecordedScore] = useState<number>(100);
+  const targets = useMemo(() => {
+    return input.targets && input.targets.length > 0 ? input.targets : [input.targetKanji];
+  }, [input.targets, input.targetKanji]);
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [characterScores, setCharacterScores] = useState<number[]>([]);
   const scoreRef = useRef<number>(100);
+
+  const currentTarget = targets[currentIndex] || input.targetKanji;
 
   const handleSheetComplete = (_sheetNumber: number, accuracyScore: number) => {
     scoreRef.current = accuracyScore;
-    setRecordedScore(accuracyScore);
   };
 
-  const handleProceedNext = (reward?: any) => {
+  const isLastTarget = currentIndex + 1 >= targets.length;
+
+  const handleProceedNext = () => {
+    const currentScore = scoreRef.current;
+    const newScores = [...characterScores, currentScore];
+    setCharacterScores(newScores);
+
+    if (!isLastTarget) {
+      playSound('click', soundEnabled);
+      setCurrentIndex(prev => prev + 1);
+      scoreRef.current = 100;
+      return;
+    }
+
+    // All target characters completed
     const minAcc = input.minAccuracyScore || 70;
-    // Always use latest recorded score from ref
-    const finalScore = scoreRef.current;
-    const result = CanvasAdapter.toRoundResult({
-      kanjiChar: targetKanji.kanji,
-      accuracy: finalScore,
-      minAccuracy: minAcc,
-      targetId: targetKanji.id || targetKanji.kanji,
-      roundIndex: input.roundIndex
+    const avgScore = Math.round(newScores.reduce((acc, s) => acc + s, 0) / Math.max(1, newScores.length));
+    const isCorrect = avgScore >= minAcc;
+
+    const mistakes = isCorrect
+      ? []
+      : [
+          {
+            targetId: targets.map(t => t.kanji).join(', '),
+            expected: targets.map(t => t.kanji).join('・'),
+            actual: `Rata-rata akurasi: ${avgScore}% (minimal ${minAcc}%)`,
+            reason: 'Ketepatan goresan beberapa aksara belum memenuhi standar kelulusan.'
+          }
+        ];
+
+    const masteryUpdates = targets.map((t, idx) => {
+      const charScore = newScores[idx] ?? avgScore;
+      const charPassed = charScore >= minAcc;
+      return {
+        targetId: t.id || t.kanji,
+        targetType: 'kanji' as const,
+        previousScore: 0,
+        newScore: 0,
+        delta: charPassed ? (charScore >= 90 ? 20 : 15) : -8,
+        isCorrect: charPassed
+      };
     });
+
+    const result: RoundResult = {
+      roundIndex: input.roundIndex,
+      phase: RoundPhase.INSCRIPTION,
+      score: avgScore,
+      correct: isCorrect,
+      mistakes,
+      hpDamage: isCorrect ? 0 : 1,
+      timeSpentMs: 0,
+      masteryUpdates,
+      metadata: {
+        completedCharacters: targets.map(t => t.kanji),
+        scores: newScores
+      }
+    };
 
     onSubmitAnswer(result);
   };
 
-  const isKana = targetKanji.meaning.includes('Hiragana') ||
-    targetKanji.meaning.includes('Katakana') ||
-    targetKanji.kanji.charCodeAt(0) < 0x4e00;
+  const isKana = currentTarget.meaning.includes('Hiragana') ||
+    currentTarget.meaning.includes('Katakana') ||
+    currentTarget.kanji.charCodeAt(0) < 0x4e00;
+
+  const nextButtonLabel = isLastTarget
+    ? 'Selesaikan Ronde Inskripsi'
+    : `Lanjut ke Aksara Berikutnya (${targets[currentIndex + 1]?.kanji || ''})`;
 
   return (
     <div className={`w-full max-w-lg mx-auto flex flex-col items-center ${className}`}>
-      <div className="text-center mb-3">
+      <div className="text-center mb-2">
         <span className="text-[11px] font-bold text-wine-accent uppercase tracking-widest font-heading">
           {isKana ? 'Tantangan Inskripsi Aksara Kana' : 'Tantangan Inskripsi Kanji'}
         </span>
         <p className="text-xs text-text-secondary mt-0.5">
           {isKana
-            ? `Tuliskan goresan aksara sesuai urutan goresan • Target Akurasi: ${input.minAccuracyScore}%`
+            ? `Tuliskan setiap aksara sesuai urutan goresan • Target Akurasi: ${input.minAccuracyScore}%`
             : `Tuliskan goresan kanji sesuai petunjuk bacaan & arti • Target Akurasi: ${input.minAccuracyScore}%`}
         </p>
       </div>
 
+      {/* Multi-Character Step Navigator */}
+      {targets.length > 1 && (
+        <div className="flex items-center justify-center gap-1.5 mb-3 flex-wrap">
+          {targets.map((t, idx) => {
+            const isCompleted = idx < currentIndex;
+            const isCurrent = idx === currentIndex;
+            return (
+              <div
+                key={`${t.kanji}_${idx}`}
+                className={`flex items-center gap-1 px-3 py-1 rounded-xl text-xs font-bold font-jp border transition-all ${
+                  isCurrent
+                    ? 'bg-surface-elevated text-wine-accent border-border-strong shadow-sm scale-105'
+                    : isCompleted
+                      ? 'bg-surface-inset text-emerald-400 border-border-subtle'
+                      : 'bg-surface-inset text-text-muted border-border-subtle opacity-50'
+                }`}
+              >
+                <span>{t.kanji}</span>
+                {isCompleted && <span className="text-[10px] text-emerald-400">✓</span>}
+              </div>
+            );
+          })}
+        </div>
+      )}
+
       <KanjiWritingCanvas
-        key={`${targetKanji.kanji}_${input.roundIndex}`}
-        kanjiChar={targetKanji.kanji}
-        meaning={targetKanji.meaning}
-        onyomi={targetKanji.onyomi}
-        kunyomi={targetKanji.kunyomi}
+        key={`${currentTarget.kanji}_${currentIndex}_${input.roundIndex}`}
+        kanjiChar={currentTarget.kanji}
+        meaning={currentTarget.meaning}
+        onyomi={currentTarget.onyomi}
+        kunyomi={currentTarget.kunyomi}
         totalSheets={1}
         autoAdvance={false}
         showCompletionDetail={true}
-        nextButtonLabel="Lanjut ke Ronde Berikutnya"
+        nextButtonLabel={nextButtonLabel}
         showStopwatch={true}
         soundEnabled={soundEnabled}
         onCompleteSheet={handleSheetComplete}

@@ -269,6 +269,7 @@ export interface BaseRoundInput {
 export interface InscriptionRoundInput extends BaseRoundInput {
   phase: RoundPhase.INSCRIPTION;
   targetKanji: KanjiTarget;
+  targets?: KanjiTarget[];
   prompt: string;
   minAccuracyScore: number; // e.g. 70
 }

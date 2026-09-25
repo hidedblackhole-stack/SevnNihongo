@@ -18,6 +18,7 @@ export interface FoundationFloorData {
   isBossFloor: boolean;
   targetCharacters: string[];
   inscriptionTarget: KanjiTarget;
+  inscriptionTargets?: KanjiTarget[];
   identificationQuestions: IdentificationQuestion[];
   vocabularyTargets: VocabularyTarget[];
   vocabularyQuestions: IdentificationQuestion[];
@@ -50,6 +51,13 @@ export const FOUNDATION_FLOORS_DATA: Record<number, FoundationFloorData> = {
       meaning: 'Huruf Hiragana: A',
       writingRequired: true
     },
+    inscriptionTargets: [
+      { id: 'kana_a', kanji: 'あ', onyomi: ['vokal [a]'], kunyomi: ['a'], meaning: 'Huruf Hiragana: A', writingRequired: true },
+      { id: 'kana_i', kanji: 'い', onyomi: ['vokal [i]'], kunyomi: ['i'], meaning: 'Huruf Hiragana: I', writingRequired: true },
+      { id: 'kana_u', kanji: 'う', onyomi: ['vokal [u]'], kunyomi: ['u'], meaning: 'Huruf Hiragana: U', writingRequired: true },
+      { id: 'kana_e', kanji: 'え', onyomi: ['vokal [e]'], kunyomi: ['e'], meaning: 'Huruf Hiragana: E', writingRequired: true },
+      { id: 'kana_o', kanji: 'お', onyomi: ['vokal [o]'], kunyomi: ['o'], meaning: 'Huruf Hiragana: O', writingRequired: true }
+    ],
     vocabularyTargets: [
       { id: 'v_f1_ai', word: 'あい', reading: 'あい', meaning: 'Cinta / Kasih', source: 'new', masteryRequired: 70 },
       { id: 'v_f1_ue', word: 'うえ', reading: 'うえ', meaning: 'Atas', source: 'new', masteryRequired: 70 },
@@ -186,6 +194,13 @@ export const FOUNDATION_FLOORS_DATA: Record<number, FoundationFloorData> = {
       meaning: 'Huruf Hiragana: KA',
       writingRequired: true
     },
+    inscriptionTargets: [
+      { id: 'kana_ka', kanji: 'か', onyomi: ['suku kata [ka]'], kunyomi: ['ka'], meaning: 'Huruf Hiragana: KA', writingRequired: true },
+      { id: 'kana_ki', kanji: 'き', onyomi: ['suku kata [ki]'], kunyomi: ['ki'], meaning: 'Huruf Hiragana: KI', writingRequired: true },
+      { id: 'kana_ku', kanji: 'く', onyomi: ['suku kata [ku]'], kunyomi: ['ku'], meaning: 'Huruf Hiragana: KU', writingRequired: true },
+      { id: 'kana_ke', kanji: 'け', onyomi: ['suku kata [ke]'], kunyomi: ['ke'], meaning: 'Huruf Hiragana: KE', writingRequired: true },
+      { id: 'kana_ko', kanji: 'こ', onyomi: ['suku kata [ko]'], kunyomi: ['ko'], meaning: 'Huruf Hiragana: KO', writingRequired: true }
+    ],
     vocabularyTargets: [
       { id: 'v_f2_aka', word: 'あか', reading: 'あか', meaning: 'Merah', source: 'new', masteryRequired: 70 },
       { id: 'v_f2_eki', word: 'えき', reading: 'えき', meaning: 'Stasiun', source: 'new', masteryRequired: 70 },
@@ -315,6 +330,13 @@ export const FOUNDATION_FLOORS_DATA: Record<number, FoundationFloorData> = {
       meaning: 'Huruf Hiragana: SA',
       writingRequired: true
     },
+    inscriptionTargets: [
+      { id: 'kana_sa', kanji: 'さ', onyomi: ['suku kata [sa]'], kunyomi: ['sa'], meaning: 'Huruf Hiragana: SA', writingRequired: true },
+      { id: 'kana_shi', kanji: 'し', onyomi: ['suku kata [shi]'], kunyomi: ['shi'], meaning: 'Huruf Hiragana: SHI', writingRequired: true },
+      { id: 'kana_su', kanji: 'す', onyomi: ['suku kata [su]'], kunyomi: ['su'], meaning: 'Huruf Hiragana: SU', writingRequired: true },
+      { id: 'kana_se', kanji: 'せ', onyomi: ['suku kata [se]'], kunyomi: ['se'], meaning: 'Huruf Hiragana: SE', writingRequired: true },
+      { id: 'kana_so', kanji: 'そ', onyomi: ['suku kata [so]'], kunyomi: ['so'], meaning: 'Huruf Hiragana: SO', writingRequired: true }
+    ],
     vocabularyTargets: [
       { id: 'v_f3_asa', word: 'あさ', reading: 'あさ', meaning: 'Pagi', source: 'new', masteryRequired: 70 },
       { id: 'v_f3_sushi', word: 'すし', reading: 'すし', meaning: 'Sushi', source: 'new', masteryRequired: 70 },
@@ -431,6 +453,13 @@ export const FOUNDATION_FLOORS_DATA: Record<number, FoundationFloorData> = {
       meaning: 'Huruf Hiragana: TA',
       writingRequired: true
     },
+    inscriptionTargets: [
+      { id: 'kana_ta', kanji: 'た', onyomi: ['suku kata [ta]'], kunyomi: ['ta'], meaning: 'Huruf Hiragana: TA', writingRequired: true },
+      { id: 'kana_chi', kanji: 'ち', onyomi: ['suku kata [chi]'], kunyomi: ['chi'], meaning: 'Huruf Hiragana: CHI', writingRequired: true },
+      { id: 'kana_tsu', kanji: 'つ', onyomi: ['suku kata [tsu]'], kunyomi: ['tsu'], meaning: 'Huruf Hiragana: TSU', writingRequired: true },
+      { id: 'kana_te', kanji: 'て', onyomi: ['suku kata [te]'], kunyomi: ['te'], meaning: 'Huruf Hiragana: TE', writingRequired: true },
+      { id: 'kana_to', kanji: 'と', onyomi: ['suku kata [to]'], kunyomi: ['to'], meaning: 'Huruf Hiragana: TO', writingRequired: true }
+    ],
     vocabularyTargets: [
       { id: 'v_f4_uta', word: 'うた', reading: 'うた', meaning: 'Lagu', source: 'new', masteryRequired: 70 },
       { id: 'v_f4_te', word: 'て', reading: 'て', meaning: 'Tangan', source: 'new', masteryRequired: 70 },
@@ -541,6 +570,11 @@ export const FOUNDATION_FLOORS_DATA: Record<number, FoundationFloorData> = {
       meaning: 'Huruf Hiragana: TE',
       writingRequired: true
     },
+    inscriptionTargets: [
+      { id: 'kana_te', kanji: 'て', onyomi: ['suku kata [te]'], kunyomi: ['te'], meaning: 'Huruf Hiragana: TE', writingRequired: true },
+      { id: 'kana_ha', kanji: 'は', onyomi: ['suku kata [ha/wa]'], kunyomi: ['ha'], meaning: 'Huruf Hiragana: HA / WA', writingRequired: true },
+      { id: 'kana_no', kanji: 'の', onyomi: ['suku kata [no]'], kunyomi: ['no'], meaning: 'Huruf Hiragana: NO', writingRequired: true }
+    ],
     vocabularyTargets: [
       { id: 'v_f5_watashi', word: 'わたし', reading: 'わたし', meaning: 'Saya / Aku', source: 'new', masteryRequired: 75 },
       { id: 'v_f5_anata', word: 'あなた', reading: 'あなた', meaning: 'Anda / Kamu', source: 'new', masteryRequired: 75 },
@@ -636,6 +670,13 @@ export const FOUNDATION_FLOORS_DATA: Record<number, FoundationFloorData> = {
       meaning: 'Huruf Hiragana: HA',
       writingRequired: true
     },
+    inscriptionTargets: [
+      { id: 'kana_na', kanji: 'な', onyomi: ['suku kata [na]'], kunyomi: ['na'], meaning: 'Huruf Hiragana: NA', writingRequired: true },
+      { id: 'kana_ni', kanji: 'に', onyomi: ['suku kata [ni]'], kunyomi: ['ni'], meaning: 'Huruf Hiragana: NI', writingRequired: true },
+      { id: 'kana_ha', kanji: 'は', onyomi: ['suku kata [ha]'], kunyomi: ['ha'], meaning: 'Huruf Hiragana: HA', writingRequired: true },
+      { id: 'kana_hi', kanji: 'ひ', onyomi: ['suku kata [hi]'], kunyomi: ['hi'], meaning: 'Huruf Hiragana: HI', writingRequired: true },
+      { id: 'kana_fu', kanji: 'ふ', onyomi: ['suku kata [fu]'], kunyomi: ['fu'], meaning: 'Huruf Hiragana: FU', writingRequired: true }
+    ],
     vocabularyTargets: [
       { id: 'v_f6_inu', word: 'いぬ', reading: 'いぬ', meaning: 'Anjing', source: 'new', masteryRequired: 70 },
       { id: 'v_f6_neko', word: 'ねこ', reading: 'ねこ', meaning: 'Kucing', source: 'new', masteryRequired: 70 },
@@ -745,6 +786,11 @@ export const FOUNDATION_FLOORS_DATA: Record<number, FoundationFloorData> = {
       meaning: 'Huruf Hiragana: MA',
       writingRequired: true
     },
+    inscriptionTargets: [
+      { id: 'kana_ma', kanji: 'ま', onyomi: ['suku kata [ma]'], kunyomi: ['ma'], meaning: 'Huruf Hiragana: MA', writingRequired: true },
+      { id: 'kana_ya', kanji: 'や', onyomi: ['suku kata [ya]'], kunyomi: ['ya'], meaning: 'Huruf Hiragana: YA', writingRequired: true },
+      { id: 'kana_ra', kanji: 'ら', onyomi: ['suku kata [ra]'], kunyomi: ['ra'], meaning: 'Huruf Hiragana: RA', writingRequired: true }
+    ],
     vocabularyTargets: [
       { id: 'v_f7_mizu', word: 'みず', reading: 'みず', meaning: 'Air', source: 'new', masteryRequired: 70 },
       { id: 'v_f7_yama', word: 'やま', reading: 'やま', meaning: 'Gunung', source: 'new', masteryRequired: 70 },
@@ -847,6 +893,11 @@ export const FOUNDATION_FLOORS_DATA: Record<number, FoundationFloorData> = {
       meaning: 'Huruf Hiragana: WA',
       writingRequired: true
     },
+    inscriptionTargets: [
+      { id: 'kana_wa', kanji: 'わ', onyomi: ['suku kata [wa]'], kunyomi: ['wa'], meaning: 'Huruf Hiragana: WA', writingRequired: true },
+      { id: 'kana_n', kanji: 'ん', onyomi: ['konsonan [n]'], kunyomi: ['n'], meaning: 'Huruf Hiragana: N', writingRequired: true },
+      { id: 'kana_ga', kanji: 'が', onyomi: ['dakuten [ga]'], kunyomi: ['ga'], meaning: 'Huruf Hiragana: GA', writingRequired: true }
+    ],
     vocabularyTargets: [
       { id: 'v_f8_hon', word: 'ほん', reading: 'ほん', meaning: 'Buku', source: 'new', masteryRequired: 70 },
       { id: 'v_f8_gohan', word: 'ごはん', reading: 'ごはん', meaning: 'Nasi / Makanan', source: 'new', masteryRequired: 70 },
@@ -941,6 +992,13 @@ export const FOUNDATION_FLOORS_DATA: Record<number, FoundationFloorData> = {
       meaning: 'Huruf Katakana: A',
       writingRequired: true
     },
+    inscriptionTargets: [
+      { id: 'katakana_a', kanji: 'ア', onyomi: ['katakana [a]'], kunyomi: ['a'], meaning: 'Huruf Katakana: A', writingRequired: true },
+      { id: 'katakana_i', kanji: 'イ', onyomi: ['katakana [i]'], kunyomi: ['i'], meaning: 'Huruf Katakana: I', writingRequired: true },
+      { id: 'katakana_u', kanji: 'ウ', onyomi: ['katakana [u]'], kunyomi: ['u'], meaning: 'Huruf Katakana: U', writingRequired: true },
+      { id: 'katakana_e', kanji: 'エ', onyomi: ['katakana [e]'], kunyomi: ['e'], meaning: 'Huruf Katakana: E', writingRequired: true },
+      { id: 'katakana_o', kanji: 'オ', onyomi: ['katakana [o]'], kunyomi: ['o'], meaning: 'Huruf Katakana: O', writingRequired: true }
+    ],
     vocabularyTargets: [
       { id: 'v_f9_pan', word: 'パン', reading: 'パン', meaning: 'Roti (dari Portugis)', source: 'new', masteryRequired: 70 },
       { id: 'v_f9_aisu', word: 'アイス', reading: 'アイス', meaning: 'Es krim', source: 'new', masteryRequired: 70 },
@@ -1049,6 +1107,11 @@ export const FOUNDATION_FLOORS_DATA: Record<number, FoundationFloorData> = {
       meaning: 'Kanji Angka: Satu (1 Goresan)',
       writingRequired: true
     },
+    inscriptionTargets: [
+      { id: 'kanji_ichi', kanji: '一', onyomi: ['イチ (ICHI)', 'イツ (ITSU)'], kunyomi: ['ひと (hito)'], meaning: 'Kanji Angka: Satu (1 Goresan)', writingRequired: true },
+      { id: 'kanji_ni', kanji: '二', onyomi: ['ニ (NI)'], kunyomi: ['ふた (futa)'], meaning: 'Kanji Angka: Dua (2 Goresan)', writingRequired: true },
+      { id: 'kanji_san', kanji: '三', onyomi: ['サン (SAN)'], kunyomi: ['み (mi)'], meaning: 'Kanji Angka: Tiga (3 Goresan)', writingRequired: true }
+    ],
     vocabularyTargets: [
       { id: 'v_f10_ichi', word: '一', reading: 'いち', meaning: 'Satu (1)', source: 'new', masteryRequired: 80 },
       { id: 'v_f10_ni', word: '二', reading: 'に', meaning: 'Dua (2)', source: 'new', masteryRequired: 80 },

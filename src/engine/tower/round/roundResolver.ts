@@ -116,6 +116,8 @@ export class RoundResolver {
           writingRequired: true
         });
 
+    const targets = foundation?.inscriptionTargets || [targetKanji];
+
     const isKana = targetKanji.meaning.includes('Hiragana') ||
       targetKanji.meaning.includes('Katakana') ||
       targetKanji.kanji.charCodeAt(0) < 0x4e00;
@@ -130,6 +132,7 @@ export class RoundResolver {
       floor: blueprint.floor,
       difficulty: blueprint.difficulty,
       targetKanji,
+      targets,
       prompt,
       minAccuracyScore: Math.min(85, 65 + Math.floor(blueprint.difficulty * 2))
     };
