@@ -53,12 +53,13 @@ export const TowerSessionRunner: React.FC<TowerSessionRunnerProps> = ({
   useEffect(() => {
     if (tower.floorReport && tower.floorReport.status === 'CLEAR' && !hasRecordedCurrentReport) {
       setHasRecordedCurrentReport(true);
-      recordFloorClear(tower.currentFloor, tower.floorReport.score, tower.floorReport.mistakes);
+      const mistakesCount = tower.floorReport.isFlawless ? 0 : Math.max(0, tower.floorReport.totalRounds - tower.floorReport.roundsCompleted);
+      recordFloorClear(tower.currentFloor, tower.floorReport.accuracy, mistakesCount);
       if (onFloorCleared) {
         onFloorCleared(tower.currentFloor, tower.floorReport);
       }
-      if (onRewardPlayer && tower.floorReport.rewards) {
-        onRewardPlayer(tower.floorReport.rewards.exp, tower.floorReport.rewards.gold);
+      if (onRewardPlayer) {
+        onRewardPlayer(tower.floorReport.totalExp, tower.floorReport.totalGold);
       }
     } else if (!tower.floorReport) {
       setHasRecordedCurrentReport(false);

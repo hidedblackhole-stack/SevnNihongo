@@ -1013,8 +1013,16 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     }
 
     if (writerRef.current) {
-      writerRef.current.cancelQuiz();
-      startQuiz(0);
+      setTimeout(() => {
+        if (writerRef.current) {
+          try {
+            writerRef.current.cancelQuiz();
+            startQuiz(0);
+          } catch (err) {
+            console.warn('Canvas reset error:', err);
+          }
+        }
+      }, 16);
     }
   };
 
@@ -1153,9 +1161,10 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
     isDrawingFallbackRef.current = false;
   };
 
-  if (showDetailReview) {
-    return (
-      <div className={`w-full max-w-lg mx-auto flex flex-col items-center animate-fade-in ${className}`}>
+  return (
+    <div className={`flex flex-col items-center w-full max-w-lg mx-auto ${className}`}>
+      {showDetailReview && (
+        <div className="w-full max-w-lg mx-auto flex flex-col items-center animate-fade-in mb-3">
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -1391,11 +1400,10 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
           )}
         </motion.div>
       </div>
-    );
-  }
+    )}
 
-  return (
-    <div className={`flex flex-col items-center w-full max-w-md mx-auto space-y-2 sm:space-y-3 ${className}`}>
+    {/* Interactive Writing Canvas Container: preserved in DOM to prevent HanziWriter context loss */}
+    <div className={`flex flex-col items-center w-full max-w-md mx-auto space-y-2 sm:space-y-3 ${showDetailReview ? 'hidden' : 'flex'}`}>
       {/* Compact Prompt & Yomikata Header */}
       {showPromptHeader && (
         <div className="w-full max-w-[320px] sm:max-w-[340px] flex flex-col items-center space-y-1.5 text-center">
@@ -1707,6 +1715,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
           </span>
         </button>
       </div>
+    </div>
     </div>
   );
 };

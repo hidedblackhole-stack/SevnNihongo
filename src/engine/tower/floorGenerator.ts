@@ -77,8 +77,15 @@ function initializePools() {
     bunpouPoolsByLevel[lvl].push(item);
   }
 
-  // 3. Index Kanji
+  // 3. Index Kanji (Strict CJK Ideographs only, deduplicated)
+  const seenKanjiChars = new Set<string>();
   for (const item of Object.values(KANJI_DATABASE)) {
+    if (!item.character) continue;
+    const code = item.character.charCodeAt(0);
+    // Only accept genuine CJK Kanji (Unicode 4E00 - 9FAF)
+    if (code < 0x4e00 || code > 0x9faf) continue;
+    if (seenKanjiChars.has(item.character)) continue;
+    seenKanjiChars.add(item.character);
     const lvl = normalizeJLPTLevel(item.jlpt);
     kanjiPoolsByLevel[lvl].push(item);
   }
@@ -596,7 +603,24 @@ export function selectKanji(
   prng?: () => number
 ): KanjiTarget[] {
   initializePools();
-  const pool = kanjiPoolsByLevel![jlpt] || kanjiPoolsByLevel![JLPTLevel.N5];
+  let pool = kanjiPoolsByLevel![jlpt] || kanjiPoolsByLevel![JLPTLevel.N5];
+
+  // Foundation calibration: For early floors (floors 1-30), calibrate by stroke complexity
+  // so Floor 1-10 starts with foundational 1-4 stroke kanji (e.g. 一, 二, 三, 日, 月, 木, 人)
+  // instead of jumping straight to 14-stroke kanji like 聞.
+  if (floor <= 30 && jlpt === JLPTLevel.N5) {
+    const sortedN5 = [...pool].sort((a, b) => (a.strokeCount || 1) - (b.strokeCount || 1));
+    if (floor <= 10) {
+      const easyPool = sortedN5.filter(k => (k.strokeCount || 1) <= 4);
+      pool = easyPool.length >= 5 ? easyPool : sortedN5;
+    } else if (floor <= 20) {
+      const midPool = sortedN5.filter(k => (k.strokeCount || 1) <= 6);
+      pool = midPool.length >= 5 ? midPool : sortedN5;
+    } else {
+      pool = sortedN5;
+    }
+  }
+
   const targets: KanjiTarget[] = [];
   const selectedChars = new Set<string>();
 

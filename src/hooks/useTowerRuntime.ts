@@ -135,6 +135,9 @@ export function useTowerRuntime(options: UseTowerRuntimeOptions = {}) {
   const submitAnswer = useCallback(
     (result: RoundResult): SubmitAnswerOutcome => {
       const outcome = orchestrator.submitAnswer(result);
+      if (outcome.nextRoundAvailable) {
+        orchestrator.startNextRound();
+      }
       syncState();
       if (outcome.floorReport) {
         setFloorReport(outcome.floorReport);

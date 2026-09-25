@@ -53,49 +53,13 @@ export const RoundRenderer: React.FC<RoundRendererProps> = ({
   // 1. INSCRIPTION RENDERER (Stroke Writing Canvas)
   // ----------------------------------------------------------------------------
   if (phase === RoundPhase.INSCRIPTION) {
-    const inscriptionInput = input as InscriptionRoundInput;
-    const targetKanji = inscriptionInput.targetKanji;
-
-    const handleCanvasComplete = (sheetNumber: number, accuracyScore: number) => {
-      const minAcc = inscriptionInput.minAccuracyScore || 70;
-      const result = CanvasAdapter.toRoundResult({
-        kanjiChar: targetKanji.kanji,
-        accuracy: accuracyScore,
-        minAccuracy: minAcc,
-        targetId: targetKanji.id || targetKanji.kanji,
-        roundIndex: inscriptionInput.roundIndex
-      });
-
-      onSubmitAnswer(result);
-    };
-
     return (
-      <div className={`w-full max-w-lg mx-auto flex flex-col items-center ${className}`}>
-        <div className="text-center mb-3">
-          <span className="text-[11px] font-bold text-wine-accent uppercase tracking-widest font-heading">
-            Tantangan Inskripsi Kanji
-          </span>
-          <h2 className="text-xl font-black text-text-primary font-heading">
-            {targetKanji.kanji}
-          </h2>
-          <p className="text-xs text-text-secondary mt-0.5">
-            {targetKanji.meaning} • Target Akurasi: {inscriptionInput.minAccuracyScore}%
-          </p>
-        </div>
-
-        <KanjiWritingCanvas
-          kanjiChar={targetKanji.kanji}
-          meaning={targetKanji.meaning}
-          onyomi={targetKanji.onyomi}
-          kunyomi={targetKanji.kunyomi}
-          totalSheets={1}
-          autoAdvance={false}
-          showStopwatch={true}
-          soundEnabled={soundEnabled}
-          onCompleteSheet={handleCanvasComplete}
-          onFinish={() => handleCanvasComplete(1, 95)}
-        />
-      </div>
+      <InscriptionInteractiveRunner
+        input={input as InscriptionRoundInput}
+        soundEnabled={soundEnabled}
+        onSubmitAnswer={onSubmitAnswer}
+        className={className}
+      />
     );
   }
 
@@ -283,6 +247,74 @@ export const RoundRenderer: React.FC<RoundRendererProps> = ({
       >
         Lanjutkan Ronde
       </button>
+    </div>
+  );
+};
+
+// ------------------------------------------------------------------------------
+// SUB-RUNNER: INSCRIPTION RUNNER (Kanji Stroke Writing)
+// ------------------------------------------------------------------------------
+
+interface InscriptionInteractiveRunnerProps {
+  input: InscriptionRoundInput;
+  soundEnabled: boolean;
+  onSubmitAnswer: (result: RoundResult) => void;
+  className?: string;
+}
+
+const InscriptionInteractiveRunner: React.FC<InscriptionInteractiveRunnerProps> = ({
+  input,
+  soundEnabled,
+  onSubmitAnswer,
+  className = ''
+}) => {
+  const targetKanji = input.targetKanji;
+  const [recordedScore, setRecordedScore] = useState<number>(100);
+
+  const handleSheetComplete = (_sheetNumber: number, accuracyScore: number) => {
+    setRecordedScore(accuracyScore);
+  };
+
+  const handleProceedNext = (reward?: any) => {
+    const minAcc = input.minAccuracyScore || 70;
+    const finalScore = (reward as any)?.accuracyScore ?? recordedScore;
+    const result = CanvasAdapter.toRoundResult({
+      kanjiChar: targetKanji.kanji,
+      accuracy: finalScore,
+      minAccuracy: minAcc,
+      targetId: targetKanji.id || targetKanji.kanji,
+      roundIndex: input.roundIndex
+    });
+
+    onSubmitAnswer(result);
+  };
+
+  return (
+    <div className={`w-full max-w-lg mx-auto flex flex-col items-center ${className}`}>
+      <div className="text-center mb-3">
+        <span className="text-[11px] font-bold text-wine-accent uppercase tracking-widest font-heading">
+          Tantangan Inskripsi Kanji
+        </span>
+        <p className="text-xs text-text-secondary mt-0.5">
+          Tuliskan goresan kanji sesuai petunjuk bacaan & arti • Target Akurasi: {input.minAccuracyScore}%
+        </p>
+      </div>
+
+      <KanjiWritingCanvas
+        key={`${targetKanji.kanji}_${input.roundIndex}`}
+        kanjiChar={targetKanji.kanji}
+        meaning={targetKanji.meaning}
+        onyomi={targetKanji.onyomi}
+        kunyomi={targetKanji.kunyomi}
+        totalSheets={1}
+        autoAdvance={false}
+        showCompletionDetail={true}
+        nextButtonLabel="Lanjut ke Ronde Berikutnya"
+        showStopwatch={true}
+        soundEnabled={soundEnabled}
+        onCompleteSheet={handleSheetComplete}
+        onFinish={handleProceedNext}
+      />
     </div>
   );
 };
