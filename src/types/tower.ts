@@ -160,6 +160,8 @@ export interface TowerPlayerProfile {
   weakKanjiCharacters?: string[];
   clearedFloors?: Record<number, { clearedAt: string; mistakes: number; score: number }>;
   activeStreak?: number;
+  isTestMode?: boolean;
+  bypassBossGate?: boolean;
 }
 
 /**

@@ -716,7 +716,7 @@ export function calculateReward(floor: number, isBoss: boolean, isCheckpoint: bo
 // MAIN EXPORT: PROGRESSION-AWARE PROCEDURAL GENERATOR
 // ------------------------------------------------------------------------------
 
-export const MAX_TOWER_FLOORS = 10;
+export const MAX_TOWER_FLOORS = 1000;
 
 /**
  * Generates a complete Tower Floor Blueprint based on Floor Number, Player Progression Model, and Floor Seed
@@ -772,7 +772,7 @@ export function generateFloorBlueprint(
       theme: foundation.theme,
       difficulty,
       vocabulary: foundation.vocabularyTargets,
-      kanji: [foundation.inscriptionTarget],
+      kanji: foundation.inscriptionTargets || [foundation.inscriptionTarget],
       grammar: [
         {
           id: `bp_f${clampedFloor}`,

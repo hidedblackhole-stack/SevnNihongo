@@ -93,8 +93,8 @@ export function checkBossGate(
 
   const gateName = `Gerbang Ujian ${gateRequirement.jlptLevel} — Lantai ${floor}`;
 
-  // Non-boss floors never have entry gates
-  if (!isBossFloor) {
+  // Non-boss floors never have entry gates, and testing mode bypasses lock
+  if (!isBossFloor || playerProfile?.isTestMode || playerProfile?.bypassBossGate || !playerProfile) {
     return {
       canEnter: true,
       gateName,

@@ -17,15 +17,161 @@ import {
   Flame,
   Shield,
   BookOpen,
+  Crown,
   Zap,
   X,
-  Plus
+  Plus,
+  Swords,
+  Play
 } from 'lucide-react';
 import { TowerRegion, getRegionForFloor, getAllRegions } from '../../engine/tower/world/towerRegions';
 import { TowerPlayerProfile } from '../../types/tower';
 import { PlayerShowcaseCard } from './PlayerShowcaseCard';
 import { SkillTreeManager, TOWER_PASSIVE_SKILLS } from '../../engine/tower/combat/skillTree';
 import { loadTowerProgress } from '../../engine/tower/world/towerProgress';
+
+export interface LandmarkTestFloor {
+  floor: number;
+  label: string;
+  badge: string;
+  badgeColor?: string;
+  jlpt: string;
+  isBoss: boolean;
+  bossName?: string;
+  description: string;
+}
+
+export const TEST_LANDMARK_FLOORS: LandmarkTestFloor[] = [
+  {
+    floor: 1000,
+    label: 'Puncak Tertinggi Menara',
+    badge: 'APEX MASTER',
+    badgeColor: '#eab308',
+    jlpt: 'N1',
+    isBoss: true,
+    bossName: 'Celestial Sovereign (天守の覇王)',
+    description: 'Puncak 1.000 lantai. Ujian akhir penguasaan bahasa Jepang tingkat dewa.'
+  },
+  {
+    floor: 900,
+    label: 'Ujian Lorong Nirbatas',
+    badge: 'GRAND BOSS',
+    badgeColor: '#f59e0b',
+    jlpt: 'N1',
+    isBoss: true,
+    bossName: 'Chronos Sage (時の賢者)',
+    description: 'Bos penguji peribahasa kuno dan ungkapan tingkat tinggi N1.'
+  },
+  {
+    floor: 800,
+    label: 'Ujian Kelulusan N2',
+    badge: 'GRAND BOSS',
+    badgeColor: '#a855f7',
+    jlpt: 'N2',
+    isBoss: true,
+    bossName: 'Tsukuyomi Sentinel (月読の守護兵)',
+    description: 'Bos penguji kelulusan kurikulum JLPT N2 tingkat lanjut.'
+  },
+  {
+    floor: 700,
+    label: 'Kawah Ujian Bos N2',
+    badge: 'LANDMARK BOSS',
+    badgeColor: '#f97316',
+    jlpt: 'N2',
+    isBoss: true,
+    bossName: 'Oni Warlord (鬼将軍)',
+    description: 'Benteng bara tempat konjungsi formal dan wacana kompleks N2 ditempa.'
+  },
+  {
+    floor: 600,
+    label: 'Ujian Kelulusan N3',
+    badge: 'GRAND BOSS',
+    badgeColor: '#ec4899',
+    jlpt: 'N3',
+    isBoss: true,
+    bossName: 'Nine-Tailed Illusionist (白狐の化身)',
+    description: 'Bos penguji kelulusan kurikulum JLPT N3 menengah.'
+  },
+  {
+    floor: 500,
+    label: 'Kawah Arus Pasif/Kausatif',
+    badge: 'MID BOSS',
+    badgeColor: '#0ea5e9',
+    jlpt: 'N3',
+    isBoss: true,
+    bossName: 'Seiryu Dragon Spirit (青龍)',
+    description: 'Ujian pertengahan N3 menghadapi arus kalimat pasif & kausatif.'
+  },
+  {
+    floor: 400,
+    label: 'Pengarsip Gudang Kuno',
+    badge: 'LANDMARK BOSS',
+    badgeColor: '#8b5cf6',
+    jlpt: 'N3',
+    isBoss: true,
+    bossName: 'Grand Archivist Shoki (大書記官)',
+    description: 'Gudang naskah kuno pemahaman nuansa bacaan dan kanji majemuk N3.'
+  },
+  {
+    floor: 300,
+    label: 'Ujian Kelulusan N4',
+    badge: 'GRAND BOSS',
+    badgeColor: '#06b6d4',
+    jlpt: 'N4',
+    isBoss: true,
+    bossName: 'Fujin Bladesmith (風神)',
+    description: 'Bos penguji kelulusan kurikulum JLPT N4 dasar.'
+  },
+  {
+    floor: 200,
+    label: 'Kuil Penjaga Gerak N5/N4',
+    badge: 'MID BOSS',
+    badgeColor: '#10b981',
+    jlpt: 'N5',
+    isBoss: true,
+    bossName: 'Tengu of the Grove (天狗)',
+    description: 'Penjaga kuil hutan penguji verba perpindahan dan partikel lanjut.'
+  },
+  {
+    floor: 100,
+    label: 'Ujian Kelulusan N5',
+    badge: 'GRAND BOSS',
+    badgeColor: '#3b82f6',
+    jlpt: 'N5',
+    isBoss: true,
+    bossName: 'Sumi no Shugosha (墨の守護者)',
+    description: 'Gerbang kelulusan akbar tingkat pemula N5.'
+  },
+  {
+    floor: 50,
+    label: 'Ujian Pertengahan N5',
+    badge: 'MID BOSS',
+    badgeColor: '#6366f1',
+    jlpt: 'N5',
+    isBoss: true,
+    bossName: 'Penjaga Kuil Aksara (Mid-Boss)',
+    description: 'Ujian separuh perjalanan N5 menguji kata benda & tata bahasa awal.'
+  },
+  {
+    floor: 10,
+    label: 'Gerbang Bos Pondasi Kana',
+    badge: 'TOWER BOSS',
+    badgeColor: '#e11d48',
+    jlpt: 'Intro',
+    isBoss: true,
+    bossName: 'Gerbang Ujian Pondasi (一・二・三)',
+    description: 'Ujian kelulusan Hiragana & Katakana sebelum melangkah ke kosakata umum.'
+  },
+  {
+    floor: 1,
+    label: 'Langkah Pertama (AIUEO)',
+    badge: 'PONDASI AWAL',
+    badgeColor: '#10b981',
+    jlpt: 'Intro',
+    isBoss: false,
+    description: 'Fondasi awal: Menulis 5 vokal dasar あ・い・う・え・お.'
+  }
+];
 
 interface TowerMapProps {
   currentFloor: number;
@@ -47,6 +193,7 @@ export const TowerMap: React.FC<TowerMapProps> = ({
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const activeFloorRef = useRef<HTMLDivElement>(null);
 
+  const [viewMode, setViewMode] = useState<'landmarks' | 'foundation'>('landmarks');
   const [selectedPreviewFloor, setSelectedPreviewFloor] = useState<number | null>(null);
   const [isShowcaseOpen, setIsShowcaseOpen] = useState(false);
   const [isSkillTreeOpen, setIsSkillTreeOpen] = useState(false);
@@ -156,184 +303,363 @@ export const TowerMap: React.FC<TowerMapProps> = ({
         </div>
       </div>
 
-      {/* Main Vertical Climbing Spire (10 Foundation Floors) */}
+      {/* Mode Selector & Quick Testing Warp Bar */}
+      <div className="w-full bg-surface-card/60 border-b border-border-subtle px-4 py-2 flex flex-col gap-2 z-10 shrink-0">
+        <div className="flex items-center gap-1.5 p-1 bg-surface-inset rounded-2xl border border-border-subtle max-w-md w-full mx-auto">
+          <button
+            type="button"
+            onClick={() => setViewMode('landmarks')}
+            className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+              viewMode === 'landmarks'
+                ? 'bg-surface-elevated text-wine-accent shadow-sm border border-wine-accent/30'
+                : 'text-text-muted hover:text-text-primary'
+            }`}
+          >
+            <Trophy className="w-3.5 h-3.5" />
+            <span>Landmark & Bos (Testing 1-1000)</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setViewMode('foundation')}
+            className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+              viewMode === 'foundation'
+                ? 'bg-surface-elevated text-wine-accent shadow-sm border border-wine-accent/30'
+                : 'text-text-muted hover:text-text-primary'
+            }`}
+          >
+            <BookOpen className="w-3.5 h-3.5" />
+            <span>Pondasi Dasar (Lantai 1-10)</span>
+          </button>
+        </div>
+
+        {/* Quick Testing Warp Bar */}
+        <div className="w-full max-w-xl mx-auto flex items-center gap-1.5 overflow-x-auto scrollbar-none py-1 px-1">
+          <span className="text-[10px] font-bold text-text-muted uppercase tracking-wider shrink-0 flex items-center gap-1">
+            <Zap className="w-3 h-3 text-gold" />
+            Uji Cepat:
+          </span>
+          {TEST_LANDMARK_FLOORS.slice().reverse().map(lm => (
+            <button
+              key={lm.floor}
+              type="button"
+              onClick={() => setSelectedPreviewFloor(lm.floor)}
+              className={`px-2.5 py-1 rounded-xl text-xs font-mono font-bold shrink-0 transition-all border cursor-pointer ${
+                currentFloor === lm.floor
+                  ? 'bg-wine-accent text-white border-wine-accent shadow-sm'
+                  : lm.isBoss
+                    ? 'bg-surface-elevated hover:bg-surface-inset text-wine-accent border-border-subtle hover:border-wine-accent/50'
+                    : 'bg-surface-elevated hover:bg-surface-inset text-text-primary border-border-subtle'
+              }`}
+              title={`${lm.label} (${lm.jlpt})`}
+            >
+              F.{lm.floor}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Main Vertical Climbing Spire */}
       <div
         ref={scrollContainerRef}
         className="flex-1 overflow-y-auto px-4 py-8 relative flex flex-col items-center space-y-4"
       >
-        {/* Floors Loop (High to Low: 10 down to 1) */}
-        {floorsToRender.map(floorNum => {
-          const isCurrent = floorNum === currentFloor;
-          const isCleared = floorNum <= highestClearedFloor;
-          const isUnlocked = floorNum <= highestClearedFloor + 1;
-          const isBoss = floorNum === 10;
-          const isCheckpoint = floorNum === 5;
-          const isBossPrep = floorNum === 9;
-          const floorRegion = getRegionForFloor(floorNum);
+        {viewMode === 'landmarks' ? (
+          /* LANDMARK & BOSS TESTING FLOORS (1000 down to 1) */
+          TEST_LANDMARK_FLOORS.map(landmark => {
+            const floorNum = landmark.floor;
+            const isCurrent = floorNum === currentFloor;
+            const floorRegion = getRegionForFloor(floorNum);
 
-          return (
-            <React.Fragment key={floorNum}>
-              {/* Floor Spire Node */}
-              <div
-                ref={isCurrent ? activeFloorRef : null}
-                className="w-full max-w-sm flex flex-col items-center relative"
-              >
-                {/* Vertical Cable / Spire Line */}
-                <div className="w-1 h-6 bg-border-subtle/50 -mb-2 z-0" />
-
-                {/* Node Card */}
-                <motion.div
-                  whileHover={{ scale: isUnlocked ? 1.02 : 1 }}
-                  whileTap={{ scale: isUnlocked ? 0.98 : 1 }}
-                  onClick={() => {
-                    if (isUnlocked) {
-                      setSelectedPreviewFloor(floorNum);
-                    }
-                  }}
-                  className={`w-full z-10 rounded-2xl p-4 transition-all border shadow-sm relative cursor-pointer ${
-                    isCurrent
-                      ? 'bg-surface-elevated border-border-strong shadow-md'
-                      : isCleared
-                        ? 'bg-surface-card border-border-subtle hover:bg-surface-elevated hover:border-border-strong opacity-95'
-                        : isUnlocked
-                          ? 'bg-surface-card border-border-subtle hover:bg-surface-elevated hover:border-border-strong'
-                          : 'bg-surface-inset/60 border-transparent opacity-40 cursor-not-allowed'
-                  }`}
+            return (
+              <React.Fragment key={floorNum}>
+                {/* Floor Spire Node */}
+                <div
+                  ref={isCurrent ? activeFloorRef : null}
+                  className="w-full max-w-sm flex flex-col items-center relative"
                 >
-                  <div className="flex items-center justify-between gap-3">
-                    {/* Left: Floor Icon & Number */}
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 font-heading font-black text-sm ${
-                          isBoss
-                            ? 'bg-surface-inset text-wine-accent border border-border-subtle shadow-inner'
-                            : isCheckpoint
-                              ? 'bg-surface-inset text-gold border border-border-subtle shadow-inner'
-                              : isCurrent
-                                ? 'bg-wine-accent text-white shadow-sm'
-                                : isCleared
-                                  ? 'bg-surface-inset text-emerald-400 border border-border-subtle'
-                                  : 'bg-surface-inset text-text-muted border border-border-subtle'
-                        }`}
-                      >
-                        {isBoss ? (
-                          <Trophy className="w-5 h-5 text-wine-accent" />
-                        ) : isCheckpoint ? (
-                          <Heart className="w-5 h-5 text-gold fill-gold/20" />
-                        ) : isCleared ? (
-                          <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                        ) : !isUnlocked ? (
-                          <Lock className="w-4 h-4" />
-                        ) : (
-                          floorNum
-                        )}
-                      </div>
+                  {/* Vertical Cable / Spire Line */}
+                  <div className="w-1 h-6 bg-border-subtle/50 -mb-2 z-0" />
 
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm font-black text-text-primary font-heading">
-                            Lantai {floorNum}
-                          </span>
-                          {isCurrent && (
-                            <span className="px-2 py-0.5 rounded-full bg-wine-accent text-white text-[9px] font-black tracking-wider uppercase shadow-sm">
-                              Posisi Kamu
-                            </span>
+                  {/* Node Card */}
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => setSelectedPreviewFloor(floorNum)}
+                    className={`w-full z-10 rounded-2xl p-4 transition-all border shadow-sm relative cursor-pointer ${
+                      isCurrent
+                        ? 'bg-surface-elevated border-border-strong shadow-md'
+                        : landmark.floor === 1000
+                          ? 'bg-surface-card border-gold/40 hover:bg-surface-elevated shadow-gold/5'
+                          : landmark.isBoss
+                            ? 'bg-surface-card border-wine-accent/30 hover:bg-surface-elevated'
+                            : 'bg-surface-card border-border-subtle hover:bg-surface-elevated hover:border-border-strong'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      {/* Left: Floor Icon & Info */}
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div
+                          className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 font-heading font-black text-sm ${
+                            landmark.floor === 1000
+                              ? 'bg-gold/15 text-gold border border-gold/40 shadow-inner'
+                              : landmark.isBoss
+                                ? 'bg-surface-inset text-wine-accent border border-wine-accent/30 shadow-inner'
+                                : isCurrent
+                                  ? 'bg-wine-accent text-white shadow-sm'
+                                  : 'bg-surface-inset text-emerald-400 border border-border-subtle'
+                          }`}
+                        >
+                          {landmark.floor === 1000 ? (
+                            <Crown className="w-5 h-5 text-gold" />
+                          ) : landmark.isBoss ? (
+                            <Trophy className="w-5 h-5 text-wine-accent" />
+                          ) : (
+                            <BookOpen className="w-5 h-5 text-emerald-400" />
                           )}
                         </div>
-                        <p className="text-xs text-text-secondary mt-0.5 truncate max-w-[190px]">
-                          {isBoss
-                            ? 'Ujian Kelulusan Gerbang Awal (Bos F.10)'
-                            : isCheckpoint
-                              ? 'Pos Pemeriksaan (Checkpoint)'
-                              : isBossPrep
-                                ? 'Katakana Essentials (Kata Serapan)'
-                                : floorRegion.title}
-                        </p>
-                      </div>
-                    </div>
 
-                    {/* Right: Action or Status */}
-                    <div className="shrink-0">
-                      {isUnlocked && (
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-black text-text-primary font-heading truncate">
+                              Lantai {floorNum}
+                            </span>
+                            <span
+                              className="px-2 py-0.5 rounded-full text-[9px] font-black tracking-wider uppercase border shrink-0"
+                              style={{
+                                backgroundColor: `${landmark.badgeColor || '#9333ea'}15`,
+                                color: landmark.badgeColor || '#c084fc',
+                                borderColor: `${landmark.badgeColor || '#9333ea'}40`
+                              }}
+                            >
+                              {landmark.badge}
+                            </span>
+                            {isCurrent && (
+                              <span className="px-2 py-0.5 rounded-full bg-wine-accent text-white text-[9px] font-black tracking-wider uppercase shadow-sm shrink-0">
+                                Posisi Kamu
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-xs font-semibold text-text-primary mt-0.5 truncate">
+                            {landmark.label}
+                          </p>
+                          <p className="text-[11px] text-text-secondary truncate mt-0.5">
+                            {landmark.bossName ? `Bos: ${landmark.bossName}` : landmark.description}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Right: Action Arrow */}
+                      <div className="shrink-0">
                         <div className="w-8 h-8 rounded-xl bg-surface-inset flex items-center justify-center text-text-secondary hover:text-text-primary transition-colors">
                           <ArrowRight className="w-4 h-4" />
                         </div>
-                      )}
+                      </div>
                     </div>
-                  </div>
-                </motion.div>
-              </div>
-            </React.Fragment>
-          );
-        })}
+                  </motion.div>
+                </div>
+              </React.Fragment>
+            );
+          })
+        ) : (
+          /* 10 FOUNDATION CURRICULUM FLOORS (10 down to 1) */
+          floorsToRender.map(floorNum => {
+            const isCurrent = floorNum === currentFloor;
+            const isCleared = floorNum <= highestClearedFloor;
+            const isUnlocked = floorNum <= highestClearedFloor + 1;
+            const isBoss = floorNum === 10;
+            const isCheckpoint = floorNum === 5;
+            const isBossPrep = floorNum === 9;
+            const floorRegion = getRegionForFloor(floorNum);
+
+            return (
+              <React.Fragment key={floorNum}>
+                {/* Floor Spire Node */}
+                <div
+                  ref={isCurrent ? activeFloorRef : null}
+                  className="w-full max-w-sm flex flex-col items-center relative"
+                >
+                  {/* Vertical Cable / Spire Line */}
+                  <div className="w-1 h-6 bg-border-subtle/50 -mb-2 z-0" />
+
+                  {/* Node Card */}
+                  <motion.div
+                    whileHover={{ scale: isUnlocked ? 1.02 : 1 }}
+                    whileTap={{ scale: isUnlocked ? 0.98 : 1 }}
+                    onClick={() => {
+                      if (isUnlocked) {
+                        setSelectedPreviewFloor(floorNum);
+                      }
+                    }}
+                    className={`w-full z-10 rounded-2xl p-4 transition-all border shadow-sm relative cursor-pointer ${
+                      isCurrent
+                        ? 'bg-surface-elevated border-border-strong shadow-md'
+                        : isCleared
+                          ? 'bg-surface-card border-border-subtle hover:bg-surface-elevated hover:border-border-strong opacity-95'
+                          : isUnlocked
+                            ? 'bg-surface-card border-border-subtle hover:bg-surface-elevated hover:border-border-strong'
+                            : 'bg-surface-inset/60 border-transparent opacity-40 cursor-not-allowed'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      {/* Left: Floor Icon & Number */}
+                      <div className="flex items-center gap-3">
+                        <div
+                          className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 font-heading font-black text-sm ${
+                            isBoss
+                              ? 'bg-surface-inset text-wine-accent border border-border-subtle shadow-inner'
+                              : isCheckpoint
+                                ? 'bg-surface-inset text-gold border border-border-subtle shadow-inner'
+                                : isCurrent
+                                  ? 'bg-wine-accent text-white shadow-sm'
+                                  : isCleared
+                                    ? 'bg-surface-inset text-emerald-400 border border-border-subtle'
+                                    : 'bg-surface-inset text-text-muted border border-border-subtle'
+                          }`}
+                        >
+                          {isBoss ? (
+                            <Trophy className="w-5 h-5 text-wine-accent" />
+                          ) : isCheckpoint ? (
+                            <Heart className="w-5 h-5 text-gold fill-gold/20" />
+                          ) : isCleared ? (
+                            <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                          ) : !isUnlocked ? (
+                            <Lock className="w-4 h-4" />
+                          ) : (
+                            floorNum
+                          )}
+                        </div>
+
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-black text-text-primary font-heading">
+                              Lantai {floorNum}
+                            </span>
+                            {isCurrent && (
+                              <span className="px-2 py-0.5 rounded-full bg-wine-accent text-white text-[9px] font-black tracking-wider uppercase shadow-sm">
+                                Posisi Kamu
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-xs text-text-secondary mt-0.5 truncate max-w-[190px]">
+                            {isBoss
+                              ? 'Ujian Kelulusan Gerbang Awal (Bos F.10)'
+                              : isCheckpoint
+                                ? 'Pos Pemeriksaan (Checkpoint)'
+                                : isBossPrep
+                                  ? 'Katakana Essentials (Kata Serapan)'
+                                  : floorRegion.title}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Right: Action or Status */}
+                      <div className="shrink-0">
+                        {isUnlocked && (
+                          <div className="w-8 h-8 rounded-xl bg-surface-inset flex items-center justify-center text-text-secondary hover:text-text-primary transition-colors">
+                            <ArrowRight className="w-4 h-4" />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
+              </React.Fragment>
+            );
+          })
+        )}
       </div>
 
       {/* Floor Preview Bottom Drawer Modal */}
       <AnimatePresence>
-        {selectedPreviewFloor !== null && (
-          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/75 backdrop-blur-sm">
-            <motion.div
-              initial={{ y: 100, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 100, opacity: 0 }}
-              className="w-full max-w-md bg-surface-card rounded-t-3xl sm:rounded-3xl p-6 border border-border-subtle shadow-2xl relative"
-            >
-              <div className="flex items-center justify-between mb-4 pb-3 border-b border-border-subtle">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-10 h-10 rounded-xl bg-wine-accent/20 text-wine-accent flex items-center justify-center font-black font-heading text-base">
-                    F.{selectedPreviewFloor}
+        {selectedPreviewFloor !== null && (() => {
+          const selectedLandmark = TEST_LANDMARK_FLOORS.find(l => l.floor === selectedPreviewFloor);
+          const region = getRegionForFloor(selectedPreviewFloor);
+
+          return (
+            <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/75 backdrop-blur-sm">
+              <motion.div
+                initial={{ y: 100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 100, opacity: 0 }}
+                className="w-full max-w-md bg-surface-card rounded-t-3xl sm:rounded-3xl p-6 border border-border-subtle shadow-2xl relative"
+              >
+                <div className="flex items-center justify-between mb-4 pb-3 border-b border-border-subtle">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-10 h-10 rounded-xl bg-wine-accent/20 text-wine-accent flex items-center justify-center font-black font-heading text-base">
+                      F.{selectedPreviewFloor}
+                    </div>
+                    <div>
+                      <h3 className="text-base font-black text-text-primary font-heading">
+                        Lantai {selectedPreviewFloor}
+                      </h3>
+                      <span className="text-xs text-text-secondary">
+                        {region.title} ({region.name})
+                      </span>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-base font-black text-text-primary font-heading">
-                      Lantai {selectedPreviewFloor}
-                    </h3>
-                    <span className="text-xs text-text-secondary">
-                      {getRegionForFloor(selectedPreviewFloor).title}
+
+                  <button
+                    type="button"
+                    onClick={() => setSelectedPreviewFloor(null)}
+                    className="text-text-muted hover:text-text-primary text-xs font-bold p-1 cursor-pointer"
+                  >
+                    Tutup
+                  </button>
+                </div>
+
+                {/* Information pill */}
+                <div className="space-y-3 mb-6">
+                  <div className="p-3 rounded-2xl bg-surface-inset border border-border-subtle text-xs flex items-center justify-between">
+                    <span className="text-text-muted">Target JLPT:</span>
+                    <span className="font-bold text-wine-accent">
+                      Level {region.jlptTier}
+                    </span>
+                  </div>
+
+                  {selectedLandmark && (
+                    <div className="p-3 rounded-2xl bg-surface-inset border border-border-subtle text-xs space-y-1.5">
+                      <div className="flex items-center justify-between">
+                        <span className="text-text-muted">Tipe Tantangan:</span>
+                        <span className="font-bold text-gold">{selectedLandmark.badge}</span>
+                      </div>
+                      {selectedLandmark.bossName && (
+                        <div className="flex items-center justify-between pt-1 border-t border-border-subtle/50">
+                          <span className="text-text-muted">Nama Bos / Penjaga:</span>
+                          <span className="font-bold text-wine-accent">{selectedLandmark.bossName}</span>
+                        </div>
+                      )}
+                      <p className="text-[11px] text-text-secondary pt-1 border-t border-border-subtle/50">
+                        {selectedLandmark.description}
+                      </p>
+                    </div>
+                  )}
+
+                  <div className="p-3 rounded-2xl bg-surface-inset border border-border-subtle text-xs flex items-center justify-between">
+                    <span className="text-text-muted">Akses Testing:</span>
+                    <span className="font-bold text-emerald-400">
+                      Terbuka Bebas (Bypass Gate Aktif)
                     </span>
                   </div>
                 </div>
 
+                {/* Start climbing button */}
                 <button
                   type="button"
-                  onClick={() => setSelectedPreviewFloor(null)}
-                  className="text-text-muted hover:text-text-primary text-xs font-bold p-1 cursor-pointer"
+                  onClick={() => {
+                    const target = selectedPreviewFloor;
+                    setSelectedPreviewFloor(null);
+                    onSelectFloor(target);
+                  }}
+                  className="w-full py-3.5 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-wine-accent/25 active:scale-95 transition-all cursor-pointer"
                 >
-                  Tutup
+                  <Play className="w-4 h-4 fill-white" />
+                  <span>Mulai Uji Tantangan Lantai Ini</span>
+                  <ArrowRight className="w-4 h-4" />
                 </button>
-              </div>
-
-              {/* Information pill */}
-              <div className="space-y-3 mb-6">
-                <div className="p-3 rounded-2xl bg-surface-inset border border-border-subtle text-xs flex items-center justify-between">
-                  <span className="text-text-muted">Status:</span>
-                  <span className="font-bold text-text-primary">
-                    {selectedPreviewFloor <= highestClearedFloor ? 'Sudah Ditaklukkan' : 'Tantangan Aktif'}
-                  </span>
-                </div>
-                <div className="p-3 rounded-2xl bg-surface-inset border border-border-subtle text-xs flex items-center justify-between">
-                  <span className="text-text-muted">Target JLPT:</span>
-                  <span className="font-bold text-wine-accent">
-                    Level {getRegionForFloor(selectedPreviewFloor).jlptTier}
-                  </span>
-                </div>
-              </div>
-
-              {/* Start climbing button */}
-              <button
-                type="button"
-                onClick={() => {
-                  const target = selectedPreviewFloor;
-                  setSelectedPreviewFloor(null);
-                  onSelectFloor(target);
-                }}
-                className="w-full py-3.5 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-wine-accent/25 active:scale-95 transition-all cursor-pointer"
-              >
-                <span>Mulai Mendaki Lantai Ini</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </motion.div>
-          </div>
-        )}
+              </motion.div>
+            </div>
+          );
+        })()}
       </AnimatePresence>
 
       {/* 1. Player Showcase Prestige Card Modal */}
