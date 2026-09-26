@@ -11,12 +11,14 @@ import {
   Award,
   Layers,
   HelpCircle,
-  Castle
+  Castle,
+  Star
 } from 'lucide-react';
 import { KanjiSpeedRushModal } from './KanjiSpeedRushModal';
 import { SuddenDeathStreakModal } from './SuddenDeathStreakModal';
 import { KotobaGuessModal } from './KotobaGuessModal';
 import { ConjugationSpeedRushModal } from './ConjugationSpeedRushModal';
+import { StarSentenceRushModal } from './StarSentenceRushModal';
 import { playSound } from '../../utils/audio';
 import { UserDeck } from '../../types/rpg';
 
@@ -46,7 +48,7 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
   onRewardPlayer,
   onCompleteStudyItem,
 }) => {
-  const [activeModal, setActiveModal] = useState<'kanji_speed' | 'sudden_death' | 'kotoba_guess' | 'conjugation_rush' | null>(null);
+  const [activeModal, setActiveModal] = useState<'kanji_speed' | 'sudden_death' | 'kotoba_guess' | 'conjugation_rush' | 'star_rush' | null>(null);
 
   return (
     <div className="space-y-6">
@@ -111,7 +113,7 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
       )}
 
       {/* 2. ARCADE GAME CARDS GRID */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
         
         {/* GAME 1: KANJI SPEED RUSH (60s) */}
         <motion.div
@@ -333,6 +335,62 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
           </button>
         </motion.div>
 
+        {/* GAME 5: SUSUN BINTANG KILAT (60s) */}
+        <motion.div
+          whileHover={{ y: -3 }}
+          className="panel p-5 rounded-3xl bg-surface-card border border-border-subtle hover:border-border-primary shadow-md flex flex-col justify-between space-y-4 group transition-all relative overflow-hidden"
+        >
+          <div className="space-y-3 relative z-10">
+            <div className="flex items-center justify-between">
+              <span className="px-2.5 py-1 rounded-full bg-surface-inset border border-border-subtle text-amber-400 text-[10px] font-mono font-bold flex items-center gap-1">
+                <Star className="w-3 h-3 fill-amber-400" />
+                文の組み立て
+              </span>
+              <span className="text-xs font-mono font-bold text-text-muted">
+                60 Detik
+              </span>
+            </div>
+
+            <div className="w-12 h-12 rounded-2xl bg-surface-inset border border-border-subtle text-amber-400 flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform">
+              <Star className="w-6 h-6 fill-current" />
+            </div>
+
+            <div>
+              <h3 className="text-base sm:text-lg font-bold font-heading text-text-primary group-hover:text-amber-400 transition-colors">
+                Susun Bintang Kilat
+              </h3>
+              <p className="text-xs text-text-secondary mt-1 leading-relaxed">
+                Susun 4 bagian kalimat dan temukan kata di posisi ★ secepat kilat! Diambil dari soal asli ujian resmi JLPT N5 sampai N1.
+              </p>
+            </div>
+
+            <div className="pt-2 flex flex-wrap gap-1.5 text-[10px] font-mono">
+              <span className="px-2 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-text-muted">
+                Soal Asli JLPT
+              </span>
+              <span className="px-2 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-text-muted">
+                Sintaksis & Pola
+              </span>
+              <span className="px-2 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-text-muted">
+                60s Sprint
+              </span>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => {
+              playSound('click', soundEnabled);
+              setActiveModal('star_rush');
+            }}
+            className="w-full btn-physical-primary py-2.5 rounded-xl text-xs font-bold font-heading flex items-center justify-center gap-2 cursor-pointer shadow-sm relative z-10"
+          >
+            <Play className="w-3.5 h-3.5 fill-current" />
+            <span>Mulai Susun (60s)</span>
+            <ChevronRight className="w-3.5 h-3.5" />
+          </button>
+        </motion.div>
+
       </div>
 
 
@@ -378,6 +436,17 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
         onClose={() => setActiveModal(null)}
         soundEnabled={soundEnabled}
         userDecks={userDecks}
+        playerLevel={playerLevel}
+        playerTierIndex={playerTierIndex}
+        onRewardPlayer={onRewardPlayer}
+        onCompleteStudyItem={onCompleteStudyItem}
+      />
+
+      {/* MODAL 5: STAR SENTENCE RUSH (SUSUN BINTANG KILAT) */}
+      <StarSentenceRushModal
+        isOpen={activeModal === 'star_rush'}
+        onClose={() => setActiveModal(null)}
+        soundEnabled={soundEnabled}
         playerLevel={playerLevel}
         playerTierIndex={playerTierIndex}
         onRewardPlayer={onRewardPlayer}
