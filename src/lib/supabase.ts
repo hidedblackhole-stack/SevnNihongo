@@ -7,15 +7,8 @@ const directUrl = (import.meta as any).env?.VITE_SUPABASE_URL || 'https://iokhdh
 const supabaseKey = (import.meta as any).env?.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlva2hkaHFucHNscHdzeHNwdmFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg0MjQyMDUsImV4cCI6MjEwNDAwMDIwNX0.8o2UFh4VXRUObjvBq_rVRxIar7yZSU7vrCgaHutYyPE';
 
 function getSupabaseUrl(): string {
-  if (typeof window !== 'undefined') {
-    // If running from file:// or empty origin (standalone/Cordova), use directUrl
-    if (window.location.protocol === 'file:' || !window.location.origin || window.location.origin === 'null') {
-      return directUrl;
-    }
-    // Route in-browser requests through same-origin reverse proxy (/supabase-proxy),
-    // which is handled by vite.config.ts (local dev & preview) and vercel.json (production).
-    return `${window.location.origin}/supabase-proxy`;
-  }
+  // Always prioritize directUrl for robust universal connectivity across Mobile PWA,
+  // Standalone executable, GitHub Pages, Vercel, and dev servers without relying on reverse proxies.
   return directUrl;
 }
 
@@ -24,8 +17,8 @@ const supabaseUrl = getSupabaseUrl();
 /**
  * Resilient Fetch wrapper:
  * 1. Enforces a 7-second timeout so network requests never hang indefinitely.
- * 2. If /supabase-proxy fails (timeout, 404, >= 500, or network error),
- *    automatically falls back to directUrl (supabase.co).
+ * 2. Detects non-API HTML responses (e.g. SPA servers returning index.html) and errors,
+ *    automatically falling back to directUrl (supabase.co).
  */
 async function resilientFetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
   const urlStr = typeof input === 'string' ? input : input instanceof URL ? input.toString() : (input as Request).url;
@@ -47,9 +40,12 @@ async function resilientFetch(input: RequestInfo | URL, init?: RequestInit): Pro
     const res = await fetch(input, { ...init, signal: controller.signal });
     clearTimeout(timer);
 
-    // If reverse proxy returned 404 or server error, retry via directUrl
-    if (!res.ok && (res.status === 404 || res.status >= 500) && urlStr.includes('/supabase-proxy')) {
-      const fallbackUrl = urlStr.replace(/^https?:\/\/[^/]+\/supabase-proxy/, directUrl);
+    const contentType = res.headers.get('content-type') || '';
+    const isHtml = contentType.includes('text/html');
+
+    // If reverse proxy returned 404, server error, or served HTML instead of JSON
+    if ((!res.ok || isHtml) && urlStr.includes('/supabase-proxy')) {
+      const fallbackUrl = urlStr.replace(/^https?:\/\/[^/]+(\/[^/]+)*\/supabase-proxy/, directUrl);
       const fbController = new AbortController();
       const fbTimer = setTimeout(() => fbController.abort(), 7000);
       try {
@@ -64,7 +60,7 @@ async function resilientFetch(input: RequestInfo | URL, init?: RequestInit): Pro
   } catch (err: any) {
     clearTimeout(timer);
     if (urlStr.includes('/supabase-proxy')) {
-      const fallbackUrl = urlStr.replace(/^https?:\/\/[^/]+\/supabase-proxy/, directUrl);
+      const fallbackUrl = urlStr.replace(/^https?:\/\/[^/]+(\/[^/]+)*\/supabase-proxy/, directUrl);
       const fbController = new AbortController();
       const fbTimer = setTimeout(() => fbController.abort(), 7000);
       try {

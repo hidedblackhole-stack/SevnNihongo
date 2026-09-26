@@ -16,6 +16,7 @@ import {
 import { KanjiSpeedRushModal } from './KanjiSpeedRushModal';
 import { SuddenDeathStreakModal } from './SuddenDeathStreakModal';
 import { KotobaGuessModal } from './KotobaGuessModal';
+import { ConjugationSpeedRushModal } from './ConjugationSpeedRushModal';
 import { playSound } from '../../utils/audio';
 import { UserDeck } from '../../types/rpg';
 
@@ -45,7 +46,7 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
   onRewardPlayer,
   onCompleteStudyItem,
 }) => {
-  const [activeModal, setActiveModal] = useState<'kanji_speed' | 'sudden_death' | 'kotoba_guess' | null>(null);
+  const [activeModal, setActiveModal] = useState<'kanji_speed' | 'sudden_death' | 'kotoba_guess' | 'conjugation_rush' | null>(null);
 
   return (
     <div className="space-y-6">
@@ -75,16 +76,22 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
               <Castle className="w-6 h-6" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <span className="px-2 py-0.5 rounded-full bg-wine-accent/15 border border-wine-accent/30 text-wine-accent text-[10px] font-black tracking-wider uppercase">
                   Mode Unggulan
+                </span>
+                <span className="px-2 py-0.5 rounded-full bg-gold/15 border border-gold/30 text-gold text-[10px] font-black tracking-wider uppercase font-mono">
+                  Beta Test
                 </span>
                 <span className="text-xs text-text-muted font-bold font-mono">
                   1.000 Lantai
                 </span>
               </div>
-              <h3 className="text-base sm:text-lg font-black font-heading text-text-primary mt-0.5">
-                Menara 1.000 Lantai (Nihongo Tower)
+              <h3 className="text-base sm:text-lg font-black font-heading text-text-primary mt-0.5 flex items-center gap-2 flex-wrap">
+                <span>Menara 1.000 Lantai (Nihongo Tower)</span>
+                <span className="text-xs sm:text-sm font-semibold text-gold font-mono tracking-tight">
+                  (Beta Test)
+                </span>
               </h3>
               <p className="text-xs text-text-secondary mt-0.5 max-w-xl">
                 Petualangan mendaki vertikal melintasi 10 wilayah kuno Jepang, pos peristirahatan, dan pertarungan ujian bos JLPT dari N5 hingga N1!
@@ -103,8 +110,8 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
         </div>
       )}
 
-      {/* 2. THREE GAME CARDS GRID */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {/* 2. ARCADE GAME CARDS GRID */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         
         {/* GAME 1: KANJI SPEED RUSH (60s) */}
         <motion.div
@@ -271,6 +278,61 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
           </button>
         </motion.div>
 
+        {/* GAME 4: ALTAR KONJUGASI KILAT (60s) */}
+        <motion.div
+          whileHover={{ y: -3 }}
+          className="panel p-5 rounded-3xl bg-surface-card border border-border-subtle hover:border-border-primary shadow-md flex flex-col justify-between space-y-4 group transition-all relative overflow-hidden"
+        >
+          <div className="space-y-3 relative z-10">
+            <div className="flex items-center justify-between">
+              <span className="px-2.5 py-1 rounded-full bg-surface-inset border border-border-subtle text-amber-400 text-[10px] font-mono font-bold">
+                Refleks Tata Bahasa
+              </span>
+              <span className="text-xs font-mono font-bold text-text-muted">
+                60 Detik
+              </span>
+            </div>
+
+            <div className="w-12 h-12 rounded-2xl bg-surface-inset border border-border-subtle text-amber-400 flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform">
+              <Zap className="w-6 h-6 fill-current" />
+            </div>
+
+            <div>
+              <h3 className="text-base sm:text-lg font-bold font-heading text-text-primary group-hover:text-amber-400 transition-colors">
+                Altar Konjugasi Kilat
+              </h3>
+              <p className="text-xs text-text-secondary mt-1 leading-relaxed">
+                Ubah kata kerja ke bentuk target (Te, Ta, Nai, Potensial, dsb) secepat kilat! Kumpulkan combo multiplier tertinggi dalam 60 detik!
+              </p>
+            </div>
+
+            <div className="pt-2 flex flex-wrap gap-1.5 text-[10px] font-mono">
+              <span className="px-2 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-text-muted">
+                Semua Golongan
+              </span>
+              <span className="px-2 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-text-muted">
+                Audio Native
+              </span>
+              <span className="px-2 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-text-muted">
+                60 Detik Sprint
+              </span>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => {
+              playSound('click', soundEnabled);
+              setActiveModal('conjugation_rush');
+            }}
+            className="w-full btn-physical-primary py-2.5 rounded-xl text-xs font-bold font-heading flex items-center justify-center gap-2 cursor-pointer shadow-sm relative z-10"
+          >
+            <Play className="w-3.5 h-3.5 fill-current" />
+            <span>Mulai Konjugasi (60s)</span>
+            <ChevronRight className="w-3.5 h-3.5" />
+          </button>
+        </motion.div>
+
       </div>
 
 
@@ -301,6 +363,18 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
       {/* MODAL 3: KOTOBA GUESS */}
       <KotobaGuessModal
         isOpen={activeModal === 'kotoba_guess'}
+        onClose={() => setActiveModal(null)}
+        soundEnabled={soundEnabled}
+        userDecks={userDecks}
+        playerLevel={playerLevel}
+        playerTierIndex={playerTierIndex}
+        onRewardPlayer={onRewardPlayer}
+        onCompleteStudyItem={onCompleteStudyItem}
+      />
+
+      {/* MODAL 4: CONJUGATION SPEED RUSH (ALTAR KONJUGASI KILAT) */}
+      <ConjugationSpeedRushModal
+        isOpen={activeModal === 'conjugation_rush'}
         onClose={() => setActiveModal(null)}
         soundEnabled={soundEnabled}
         userDecks={userDecks}

@@ -21,6 +21,9 @@ import { KanjiItem } from '../../types/content';
 import { playSound } from '../../utils/audio';
 import { RPG_TIERS } from '../../data/rpg/tiers';
 import { UserDeck } from '../../types/rpg';
+import { OFFICIAL_BOOKS } from '../../data/officialBooks';
+import { getKanjiPoolForBook } from '../../utils/arcadeSourceUtils';
+import { ArcadeSourceSelector } from './ArcadeSourceSelector';
 
 interface KanjiSpeedRushModalProps {
   isOpen: boolean;
@@ -40,7 +43,7 @@ interface KanjiSpeedRushModalProps {
   ) => void;
 }
 
-type LevelFilter = 'ALL' | 'KANA' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'BUKU_SAKU';
+type LevelFilter = 'ALL' | 'KANA' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1';
 
 interface ClearedRecord {
   character: string;
@@ -56,8 +59,7 @@ const LEVEL_OPTIONS: { id: LevelFilter; label: string; desc: string }[] = [
   { id: 'N3', label: 'JLPT N3', desc: 'Kanji menengah (366 karakter)' },
   { id: 'N2', label: 'JLPT N2', desc: 'Kanji mahir (367 karakter)' },
   { id: 'N1', label: 'JLPT N1', desc: 'Kanji ahli (1233 karakter)' },
-  { id: 'KANA', label: 'Kana (Hiragana & Katakana)', desc: 'Latihan goresan aksara dasar' },
-  { id: 'BUKU_SAKU', label: 'Buku Saku Bookmark', desc: 'Hanya kanji dari koleksi deck pribadimu' }
+  { id: 'KANA', label: 'Kana (Hiragana & Katakana)', desc: 'Latihan goresan aksara dasar' }
 ];
 
 export const KanjiSpeedRushModal: React.FC<KanjiSpeedRushModalProps> = ({
@@ -70,7 +72,9 @@ export const KanjiSpeedRushModal: React.FC<KanjiSpeedRushModalProps> = ({
   onRewardPlayer,
   onCompleteStudyItem,
 }) => {
+  const [sourceType, setSourceType] = useState<'LEVEL' | 'TEMPLATE_BOOK'>('LEVEL');
   const [selectedLevel, setSelectedLevel] = useState<LevelFilter>('N5');
+  const [selectedBookId, setSelectedBookId] = useState<string>('book_minna_n5');
   const [gameState, setGameState] = useState<'ready' | 'playing' | 'finished'>('ready');
   
   // Timer: 60 seconds
@@ -91,29 +95,29 @@ export const KanjiSpeedRushModal: React.FC<KanjiSpeedRushModalProps> = ({
     return LEVEL_OPTIONS.find(opt => opt.id === selectedLevel) || LEVEL_OPTIONS[0];
   }, [selectedLevel]);
 
+  // Active Source Label (for cards, summaries, and retries)
+  const activeSourceLabel = useMemo(() => {
+    if (sourceType === 'TEMPLATE_BOOK') {
+      const b = OFFICIAL_BOOKS.find(book => book.id === selectedBookId);
+      return b ? b.title : 'Rak Buku Template';
+    }
+    return currentLevelOption.label;
+  }, [sourceType, selectedBookId, currentLevelOption]);
+
   // Helper to build randomized queue
-  const buildQueue = useCallback((level: LevelFilter): KanjiItem[] => {
+  const buildQueue = useCallback((): KanjiItem[] => {
     let pool: KanjiItem[] = [];
 
-    if (level === 'BUKU_SAKU') {
-      const bookmarkKanjiIds = new Set<string>();
-      userDecks.forEach(deck => {
-        deck.items.forEach(item => {
-          if (item.category === 'kanji') {
-            bookmarkKanjiIds.add(item.id);
-          }
-        });
-      });
-      pool = Object.values(KANJI_DATABASE).filter(k => bookmarkKanjiIds.has(k.id) || bookmarkKanjiIds.has(k.character));
-      // Fallback if user has no bookmarks in buku saku
+    if (sourceType === 'TEMPLATE_BOOK') {
+      pool = getKanjiPoolForBook(selectedBookId);
       if (pool.length === 0) {
         pool = Object.values(KANJI_DATABASE).filter(k => k.jlpt === 'N5');
       }
-    } else if (level === 'ALL') {
+    } else if (selectedLevel === 'ALL') {
       // Pick balanced selection across levels (exclude KANA for default mixed kanji)
       pool = Object.values(KANJI_DATABASE).filter(k => k.jlpt && k.jlpt !== 'KANA');
     } else {
-      pool = Object.values(KANJI_DATABASE).filter(k => k.jlpt === level);
+      pool = Object.values(KANJI_DATABASE).filter(k => k.jlpt === selectedLevel);
     }
 
     // Deduplicate by character
@@ -129,7 +133,7 @@ export const KanjiSpeedRushModal: React.FC<KanjiSpeedRushModalProps> = ({
     // Shuffle
     const shuffled = [...uniquePool].sort(() => Math.random() - 0.5);
     return shuffled.length > 0 ? shuffled : Object.values(KANJI_DATABASE).slice(0, 30);
-  }, [userDecks]);
+  }, [sourceType, selectedBookId, selectedLevel]);
 
   // Reset state whenever modal is opened
   useEffect(() => {
@@ -155,7 +159,7 @@ export const KanjiSpeedRushModal: React.FC<KanjiSpeedRushModalProps> = ({
   // Start new game
   const handleStartGame = () => {
     playSound('attack', soundEnabled);
-    const queue = buildQueue(selectedLevel);
+    const queue = buildQueue();
     setKanjiQueue(queue);
     setCurrentIndex(0);
     setClearedList([]);
@@ -324,62 +328,19 @@ export const KanjiSpeedRushModal: React.FC<KanjiSpeedRushModalProps> = ({
                 </p>
               </div>
 
-              {/* Level Selector */}
-              <div className="space-y-2.5">
-                <label className="text-xs font-bold text-text-primary font-heading flex items-center gap-1.5">
-                  <Layers className="w-3.5 h-3.5 text-text-muted" />
-                  <span>Pilih Tingkatan Level Kanji:</span>
-                </label>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                  {LEVEL_OPTIONS.map(opt => {
-                    const isSelected = selectedLevel === opt.id;
-                    return (
-                      <button
-                        key={opt.id}
-                        type="button"
-                        onClick={() => {
-                          setSelectedLevel(opt.id);
-                          playSound('click', soundEnabled);
-                        }}
-                        className={`p-3 rounded-2xl border text-left transition-all flex flex-col justify-between ${
-                          isSelected
-                            ? 'bg-surface-elevated border-border-primary text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_8px_rgba(0,0,0,0.35)]'
-                            : 'bg-surface-inset border-border-subtle text-text-muted hover:text-text-primary hover:border-border-primary/60 shadow-inner'
-                        }`}
-                      >
-                        <div className="flex items-center justify-between w-full">
-                          <span className={`text-xs font-heading block ${isSelected ? 'font-bold text-text-primary' : 'font-medium text-text-secondary'}`}>
-                            {opt.label}
-                          </span>
-                          {isSelected && (
-                            <span className="w-1.5 h-1.5 rounded-full bg-text-primary shadow-xs shrink-0 ml-1" />
-                          )}
-                        </div>
-                        <span className={`text-[10px] line-clamp-1 mt-1 font-body ${isSelected ? 'text-text-secondary' : 'text-text-muted'}`}>
-                          {opt.desc}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Level Info Badge */}
-              <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-between shadow-inner">
-                <div className="flex items-center gap-3">
-                  <div className="px-2.5 py-1.5 rounded-xl bg-surface-elevated border border-border-subtle flex items-center justify-center font-bold text-xs font-mono text-text-primary shadow-xs">
-                    {currentLevelOption.id === 'ALL' ? 'ALL' : currentLevelOption.id}
-                  </div>
-                  <div>
-                    <span className="text-[10px] font-mono uppercase text-text-muted block">Level Dipilih</span>
-                    <span className="text-xs font-bold text-text-primary font-heading">{currentLevelOption.label}</span>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <span className="text-[10px] font-mono text-text-muted block">Durasi Tantangan</span>
-                  <span className="text-xs font-bold text-text-primary font-mono">60.0s Bersih</span>
-                </div>
-              </div>
+              {/* Unified Source & Bookshelf Selector */}
+              <ArcadeSourceSelector
+                sourceType={sourceType}
+                onSourceTypeChange={setSourceType}
+                selectedLevel={selectedLevel}
+                onSelectLevel={setSelectedLevel}
+                selectedBookId={selectedBookId}
+                onSelectBookId={setSelectedBookId}
+                levelOptions={LEVEL_OPTIONS}
+                mode="kanji"
+                challengeDurationText="60.0s Bersih"
+                soundEnabled={soundEnabled}
+              />
             </div>
 
             {/* Sticky Bottom CTA */}
@@ -519,11 +480,11 @@ export const KanjiSpeedRushModal: React.FC<KanjiSpeedRushModalProps> = ({
                 </div>
               </div>
 
-              {/* Difficulty Level Display */}
+              {/* Difficulty / Source Display */}
               <div className="p-3 rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-between text-xs font-mono">
-                <span className="text-text-muted">Tingkat Kesulitan:</span>
+                <span className="text-text-muted">Sumber / Tingkat:</span>
                 <span className="text-text-primary font-bold font-mono text-sm">
-                  {currentLevelOption.label}
+                  {activeSourceLabel}
                 </span>
               </div>
 
@@ -563,7 +524,7 @@ export const KanjiSpeedRushModal: React.FC<KanjiSpeedRushModalProps> = ({
                   className="flex-1 btn-physical-primary py-3 rounded-2xl text-xs sm:text-sm font-bold font-heading flex items-center justify-center gap-2 cursor-pointer shadow-md"
                 >
                   <RotateCcw className="w-4 h-4" />
-                  <span>Main Lagi (Level {selectedLevel})</span>
+                  <span className="truncate">Main Lagi ({activeSourceLabel})</span>
                 </button>
                 <button
                   type="button"

@@ -40,6 +40,32 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  // Proxy /supabase-proxy requests to Supabase directly
+  if (req.url && req.url.startsWith('/supabase-proxy')) {
+    const https = require('https');
+    const targetPath = req.url.replace(/^\/supabase-proxy/, '');
+    const options = {
+      hostname: 'iokhdhqnpslpwsxspvaj.supabase.co',
+      port: 443,
+      path: targetPath,
+      method: req.method,
+      headers: {
+        ...req.headers,
+        host: 'iokhdhqnpslpwsxspvaj.supabase.co'
+      }
+    };
+    const proxyReq = https.request(options, (proxyRes) => {
+      res.writeHead(proxyRes.statusCode, proxyRes.headers);
+      proxyRes.pipe(res, { end: true });
+    });
+    proxyReq.on('error', () => {
+      res.writeHead(502, { 'Content-Type': 'text/plain' });
+      res.end('Bad Gateway');
+    });
+    req.pipe(proxyReq, { end: true });
+    return;
+  }
+
   // Prevent Path Traversal
   const cleanPath = path.normalize(decodedUrl).replace(/^(\.\.[\/\\])+/, '');
   let filePath = path.resolve(ROOT, cleanPath === '.' || cleanPath === '/' || cleanPath === '\\' ? 'index.html' : '.' + path.sep + cleanPath);

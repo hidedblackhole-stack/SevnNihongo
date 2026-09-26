@@ -10,7 +10,7 @@ import { ConjugationDojoView } from './ConjugationDojoView';
 import { playSound } from '../../utils/audio';
 import { UserDeck } from '../../types/rpg';
 import { isItemBookmarked } from '../../utils/decks';
-import { getCanonicalGrammarTitle } from '../../utils/bunpouTitleUtils';
+import { getCanonicalGrammarTitle, getGrammarTitleInfo } from '../../utils/bunpouTitleUtils';
 import { matchBunpouItem } from '../../utils/bunpouSearchUtils';
 import { convertRomajiToKana } from '../../utils/imeEngine';
 import { DeckBookmarkPicker } from '../deck/DeckBookmarkPicker';
@@ -390,7 +390,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
         /* Compact List View: Fast scanning dictionary-style */
         <div className="space-y-2">
           {displayedBunpou.map((item) => {
-            const patternTitle = getCanonicalGrammarTitle(item);
+            const titleInfo = getGrammarTitleInfo(item);
             return (
               <div
                 key={item.id}
@@ -406,10 +406,15 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
                     {item.baseLevel ? item.baseLevel : item.level}
                   </span>
 
-                  <div className="min-w-0 flex-1 flex flex-col sm:flex-row sm:items-baseline sm:gap-3">
+                  <div className="min-w-0 flex-1 flex flex-col sm:flex-row sm:items-baseline sm:gap-2.5">
                     <h3 className="text-base sm:text-lg font-bold text-text-primary font-heading group-hover:text-indigo transition-colors shrink-0 font-jp">
-                      {patternTitle}
+                      {titleInfo.mainTitle}
                     </h3>
+                    {titleInfo.formationRule && (
+                      <span className="text-[11px] font-mono text-indigo font-medium hidden md:inline truncate">
+                        ({titleInfo.formationRule})
+                      </span>
+                    )}
                     <p className="text-xs sm:text-sm text-text-secondary truncate font-medium">
                       {item.meaningId}
                     </p>
@@ -457,7 +462,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
         /* Clean & Elegant Cards Grid */
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4">
           {displayedBunpou.map((item) => {
-            const patternTitle = getCanonicalGrammarTitle(item);
+            const titleInfo = getGrammarTitleInfo(item);
             const categoryTags = getBunpouCategoryTags(item);
             const levelLabel = item.baseLevel ? `Level ${item.baseLevel}` : `Level ${item.level}`;
 
@@ -507,11 +512,16 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
                   </div>
                 </div>
 
-                {/* Main: Clean Title & Meaning */}
+                {/* Main: Clean Title, Formation Rule & Meaning */}
                 <div className="space-y-1.5 py-0.5 min-w-0">
-                  <h3 className="text-xl sm:text-2xl font-bold text-text-primary font-heading group-hover:text-indigo transition-colors leading-snug font-jp truncate">
-                    {patternTitle}
+                  <h3 className="text-lg sm:text-xl font-bold text-text-primary font-heading group-hover:text-indigo transition-colors leading-snug font-jp truncate">
+                    {titleInfo.mainTitle}
                   </h3>
+                  {titleInfo.formationRule && (
+                    <p className="text-xs font-mono text-indigo font-medium truncate">
+                      {titleInfo.formationRule}
+                    </p>
+                  )}
                   <p className="text-xs sm:text-sm text-text-secondary font-medium leading-relaxed line-clamp-2">
                     {item.meaningId || (item as any).meaning}
                   </p>

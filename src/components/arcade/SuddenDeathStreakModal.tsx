@@ -19,6 +19,9 @@ import kotobaDb from '../../data/db/kotoba.json';
 import { playSound, speakJapanese } from '../../utils/audio';
 import { RPG_TIERS } from '../../data/rpg/tiers';
 import { UserDeck } from '../../types/rpg';
+import { OFFICIAL_BOOKS } from '../../data/officialBooks';
+import { getKotobaPoolForBook } from '../../utils/arcadeSourceUtils';
+import { ArcadeSourceSelector } from './ArcadeSourceSelector';
 
 interface SuddenDeathStreakModalProps {
   isOpen: boolean;
@@ -38,7 +41,7 @@ interface SuddenDeathStreakModalProps {
   ) => void;
 }
 
-type LevelFilter = 'ALL' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'BUKU_SAKU';
+type LevelFilter = 'ALL' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1';
 
 interface QuizQuestion {
   id: string;
@@ -57,8 +60,7 @@ const LEVEL_OPTIONS: { id: LevelFilter; label: string; desc: string }[] = [
   { id: 'N4', label: 'JLPT N4', desc: 'Kosakata pra-menengah' },
   { id: 'N3', label: 'JLPT N3', desc: 'Kosakata menengah' },
   { id: 'N2', label: 'JLPT N2', desc: 'Kosakata mahir' },
-  { id: 'N1', label: 'JLPT N1', desc: 'Kosakata ahli' },
-  { id: 'BUKU_SAKU', label: 'Buku Saku Bookmark', desc: 'Kosakata dari bookmark pribadimu' }
+  { id: 'N1', label: 'JLPT N1', desc: 'Kosakata ahli' }
 ];
 
 const rawKotobaList = Object.values(kotobaDb as Record<string, any>);
@@ -73,7 +75,9 @@ export const SuddenDeathStreakModal: React.FC<SuddenDeathStreakModalProps> = ({
   onRewardPlayer,
   onCompleteStudyItem,
 }) => {
+  const [sourceType, setSourceType] = useState<'LEVEL' | 'TEMPLATE_BOOK'>('LEVEL');
   const [selectedLevel, setSelectedLevel] = useState<LevelFilter>('N5');
+  const [selectedBookId, setSelectedBookId] = useState<string>('book_theme_body');
   const [gameState, setGameState] = useState<'ready' | 'playing' | 'gameover'>('ready');
   
   // 3 Nyawa
@@ -94,25 +98,26 @@ export const SuddenDeathStreakModal: React.FC<SuddenDeathStreakModalProps> = ({
     return LEVEL_OPTIONS.find(opt => opt.id === selectedLevel) || LEVEL_OPTIONS[0];
   }, [selectedLevel]);
 
+  // Active Source Label (for cards, summaries, and retries)
+  const activeSourceLabel = useMemo(() => {
+    if (sourceType === 'TEMPLATE_BOOK') {
+      const b = OFFICIAL_BOOKS.find(book => book.id === selectedBookId);
+      return b ? b.title : 'Rak Buku Template';
+    }
+    return currentLevelOption.label;
+  }, [sourceType, selectedBookId, currentLevelOption]);
+
   // Filter pool based on level
   const filteredPool = useMemo(() => {
-    if (selectedLevel === 'BUKU_SAKU') {
-      const bookmarkKotobaIds = new Set<string>();
-      userDecks.forEach(deck => {
-        deck.items.forEach(item => {
-          if (item.category === 'kotoba') {
-            bookmarkKotobaIds.add(item.id);
-          }
-        });
-      });
-      const pool = rawKotobaList.filter(k => bookmarkKotobaIds.has(k.id) || bookmarkKotobaIds.has(k.word));
+    if (sourceType === 'TEMPLATE_BOOK') {
+      const pool = getKotobaPoolForBook(selectedBookId);
       return pool.length > 0 ? pool : rawKotobaList.filter(k => k.jlpt === 'N5');
     }
     if (selectedLevel === 'ALL') {
       return rawKotobaList;
     }
     return rawKotobaList.filter(k => k.jlpt === selectedLevel || k.level === selectedLevel);
-  }, [selectedLevel, userDecks]);
+  }, [sourceType, selectedBookId, selectedLevel]);
 
   // Generator for fresh multiple-choice question
   const generateQuestion = useCallback((): QuizQuestion | null => {
@@ -362,45 +367,19 @@ export const SuddenDeathStreakModal: React.FC<SuddenDeathStreakModalProps> = ({
                 </p>
               </div>
 
-              {/* Level Selector */}
-              <div className="space-y-2.5">
-                <label className="text-xs font-bold text-text-primary font-heading flex items-center gap-1.5">
-                  <Layers className="w-3.5 h-3.5 text-text-muted" />
-                  <span>Pilih Cakupan Soal:</span>
-                </label>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                  {LEVEL_OPTIONS.map(opt => {
-                    const isSelected = selectedLevel === opt.id;
-                    return (
-                      <button
-                        key={opt.id}
-                        type="button"
-                        onClick={() => {
-                          setSelectedLevel(opt.id);
-                          playSound('click', soundEnabled);
-                        }}
-                        className={`p-3 rounded-2xl border text-left transition-all flex flex-col justify-between ${
-                          isSelected
-                            ? 'bg-surface-elevated border-border-primary text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_8px_rgba(0,0,0,0.35)]'
-                            : 'bg-surface-inset border-border-subtle text-text-muted hover:text-text-primary hover:border-border-primary/60 shadow-inner'
-                        }`}
-                      >
-                        <div className="flex items-center justify-between w-full">
-                          <span className={`text-xs font-heading block ${isSelected ? 'font-bold text-text-primary' : 'font-medium text-text-secondary'}`}>
-                            {opt.label}
-                          </span>
-                          {isSelected && (
-                            <span className="w-1.5 h-1.5 rounded-full bg-text-primary shadow-xs shrink-0 ml-1" />
-                          )}
-                        </div>
-                        <span className={`text-[10px] line-clamp-1 mt-1 font-body ${isSelected ? 'text-text-secondary' : 'text-text-muted'}`}>
-                          {opt.desc}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
+              {/* Unified Source & Bookshelf Selector */}
+              <ArcadeSourceSelector
+                sourceType={sourceType}
+                onSourceTypeChange={setSourceType}
+                selectedLevel={selectedLevel}
+                onSelectLevel={setSelectedLevel}
+                selectedBookId={selectedBookId}
+                onSelectBookId={setSelectedBookId}
+                levelOptions={LEVEL_OPTIONS}
+                mode="kotoba"
+                challengeDurationText="3 Nyawa Survival"
+                soundEnabled={soundEnabled}
+              />
             </div>
 
             {/* Sticky Bottom CTA */}
@@ -558,11 +537,11 @@ export const SuddenDeathStreakModal: React.FC<SuddenDeathStreakModalProps> = ({
                 </div>
               </div>
 
-              {/* Difficulty Level Display */}
+              {/* Difficulty / Source Display */}
               <div className="p-3 rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-between text-xs font-mono">
-                <span className="text-text-muted">Tingkat Kesulitan:</span>
+                <span className="text-text-muted">Sumber / Tingkat:</span>
                 <span className="text-text-primary font-bold font-mono text-sm">
-                  {currentLevelOption.label}
+                  {activeSourceLabel}
                 </span>
               </div>
 
@@ -582,7 +561,7 @@ export const SuddenDeathStreakModal: React.FC<SuddenDeathStreakModalProps> = ({
                   className="flex-1 btn-physical-primary py-3 rounded-2xl text-xs sm:text-sm font-bold font-heading flex items-center justify-center gap-2 cursor-pointer shadow-md"
                 >
                   <RotateCcw className="w-4 h-4" />
-                  <span>Main Lagi (Level {selectedLevel})</span>
+                  <span className="truncate">Main Lagi ({activeSourceLabel})</span>
                 </button>
                 <button
                   type="button"

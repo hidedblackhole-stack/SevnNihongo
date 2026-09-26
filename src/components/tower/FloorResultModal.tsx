@@ -140,28 +140,41 @@ export const FloorResultModal: React.FC<FloorResultModalProps> = ({
             )}
           </div>
 
-          {/* Mastery Progression Preview */}
-          {Object.keys(report.masteryGain).length > 0 && (
-            <div className="mb-5 text-xs">
-              <span className="text-[10px] font-bold text-text-muted uppercase tracking-wider block mb-1.5 font-heading">
-                Peningkatan Penguasaan Kata:
-              </span>
-              <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto pr-1">
-                {Object.entries(report.masteryGain).map(([id, delta]) => (
+          {/* Mastery Progress Summary */}
+          {Object.keys(report.masteryGain).length > 0 && (() => {
+            const entries = Object.entries(report.masteryGain);
+            const totalGained = entries.filter(([, delta]) => delta > 0).length;
+            const totalDelta = entries.reduce((acc, [, delta]) => acc + delta, 0);
+
+            return (
+              <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle mb-5 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 flex items-center justify-center shrink-0">
+                    <Sparkles className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="text-xs font-bold text-text-primary block font-heading">
+                      Penguasaan Materi Meningkat
+                    </span>
+                    <span className="text-[11px] text-text-secondary">
+                      {totalGained > 0 ? `${totalGained} materi kosakata & kanji berhasil diasah` : 'Evaluasi penguasaan materi selesai'}
+                    </span>
+                  </div>
+                </div>
+                {totalDelta !== 0 && (
                   <span
-                    key={id}
-                    className={`px-2 py-0.5 rounded-lg border border-border-subtle text-[11px] font-bold ${
-                      delta > 0
-                        ? 'bg-surface-elevated text-emerald-400'
-                        : 'bg-surface-elevated text-rose-400'
+                    className={`text-xs font-mono font-bold px-2.5 py-1 rounded-xl border shrink-0 ${
+                      totalDelta > 0
+                        ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/25'
+                        : 'text-rose-400 bg-rose-500/10 border-rose-500/25'
                     }`}
                   >
-                    {id.replace(/^(kt_|kj_|bp_)/, '')} {delta > 0 ? `+${delta}` : delta}
+                    {totalDelta > 0 ? `+${totalDelta}` : totalDelta} Mastery
                   </span>
-                ))}
+                )}
               </div>
-            </div>
-          )}
+            );
+          })()}
 
           {/* Action Buttons */}
           <div className="space-y-2">

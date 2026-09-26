@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import {
@@ -19,10 +19,10 @@ import {
 import { BunpouItem, Question, ItemMasteryRecord } from '../../types/content';
 import { RubyText } from '../learning/RubyText';
 import { speakJapanese, playSound } from '../../utils/audio';
-import { getCanonicalGrammarTitle } from '../../utils/bunpouTitleUtils';
+import { getCanonicalGrammarTitle, getGrammarTitleInfo } from '../../utils/bunpouTitleUtils';
 import { UserDeck } from '../../types/rpg';
 import { DeckBookmarkPicker } from '../deck/DeckBookmarkPicker';
-import { getGrammarSkillNodes, getBunpouCategoryTags } from '../../utils/bunpouSkillAdapter';
+import { getGrammarSkillNodes } from '../../utils/bunpouSkillAdapter';
 import { useBackButton } from '../../hooks/useBackButton';
 
 interface BunpouDetailModalProps {
@@ -67,7 +67,6 @@ type ScrapbookTabId = 'inti' | 'rumus' | 'fungsi' | 'contoh' | 'kuis';
 interface ScrapbookTabMeta {
   id: ScrapbookTabId;
   label: string;
-  paletteName: string;
   tabNumber: string;
   tabColorActive: string;
   tabColorInactive: string;
@@ -79,7 +78,6 @@ const SCRAPBOOK_TABS: ScrapbookTabMeta[] = [
   {
     id: 'inti',
     label: 'Inti Makna',
-    paletteName: 'Beige',
     tabNumber: '①',
     tabColorActive:
       'bg-[#f4eee1] text-[#3d3322] border-[#c8bba3] dark:bg-[#2c261e] dark:text-[#f3ede1] dark:border-[#524637]',
@@ -91,7 +89,6 @@ const SCRAPBOOK_TABS: ScrapbookTabMeta[] = [
   {
     id: 'rumus',
     label: 'Rumus & Pola',
-    paletteName: 'Steel',
     tabNumber: '②',
     tabColorActive:
       'bg-[#4a6d8c] text-white border-[#3b5974] dark:bg-[#274057] dark:text-white dark:border-[#3d5e7d]',
@@ -103,7 +100,6 @@ const SCRAPBOOK_TABS: ScrapbookTabMeta[] = [
   {
     id: 'fungsi',
     label: 'Fungsi & Nuansa',
-    paletteName: 'Carolina',
     tabNumber: '③',
     tabColorActive:
       'bg-[#7ba399] text-[#112923] border-[#65887e] dark:bg-[#233d37] dark:text-[#e6f4f1] dark:border-[#375a51]',
@@ -115,7 +111,6 @@ const SCRAPBOOK_TABS: ScrapbookTabMeta[] = [
   {
     id: 'contoh',
     label: 'Contoh Nyata',
-    paletteName: 'Cherry',
     tabNumber: '④',
     tabColorActive:
       'bg-[#b85338] text-white border-[#9b422a] dark:bg-[#4a2016] dark:text-[#ffdfd7] dark:border-[#6b2c1f]',
@@ -127,7 +122,6 @@ const SCRAPBOOK_TABS: ScrapbookTabMeta[] = [
   {
     id: 'kuis',
     label: 'Latihan Kuis',
-    paletteName: 'Peaches',
     tabNumber: '⑤',
     tabColorActive:
       'bg-[#e59e93] text-[#3d1a15] border-[#c98378] dark:bg-[#482426] dark:text-[#ffe4e2] dark:border-[#683437]',
@@ -162,9 +156,8 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
 
   // Extract human-centered learning flow
   const skillNodes = getGrammarSkillNodes(item);
-  const patternTitle = getCanonicalGrammarTitle(item);
-  const categoryTags = getBunpouCategoryTags(item);
-  const levelLabel = item.baseLevel ? `Level ${item.baseLevel}` : `Level ${item.level}`;
+  const titleInfo = getGrammarTitleInfo(item);
+  const cleanLevel = (item.baseLevel || item.level || 'N3').replace(/^Level\s*/i, '');
 
   const currentTabIdx = SCRAPBOOK_TABS.findIndex((t) => t.id === activeTab);
   const activeTabMeta = SCRAPBOOK_TABS[currentTabIdx] || SCRAPBOOK_TABS[0];
@@ -185,6 +178,127 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
     if (currentTabIdx < SCRAPBOOK_TABS.length - 1) {
       handleTabChange(SCRAPBOOK_TABS[currentTabIdx + 1].id);
     }
+  };
+
+  // Tab container refs & drag-to-scroll states
+  const tabsContainerRef = useRef<HTMLDivElement>(null);
+  const isDraggingTabs = useRef(false);
+  const startX = useRef(0);
+  const scrollLeftStart = useRef(0);
+  const hasDragged = useRef(false);
+  const [isDraggingState, setIsDraggingState] = useState(false);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  // Check scroll bounds to show/hide subtle fade edges
+  const checkScrollBounds = useCallback(() => {
+    const el = tabsContainerRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 4);
+    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 4);
+  }, []);
+
+  useEffect(() => {
+    const el = tabsContainerRef.current;
+    if (!el) return;
+    checkScrollBounds();
+    el.addEventListener('scroll', checkScrollBounds, { passive: true });
+    window.addEventListener('resize', checkScrollBounds);
+    return () => {
+      el.removeEventListener('scroll', checkScrollBounds);
+      window.removeEventListener('resize', checkScrollBounds);
+    };
+  }, [checkScrollBounds]);
+
+  // Handle horizontal mouse wheel scroll over tabs
+  useEffect(() => {
+    const el = tabsContainerRef.current;
+    if (!el) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX) && el.scrollWidth > el.clientWidth) {
+        e.preventDefault();
+        el.scrollLeft += e.deltaY;
+        checkScrollBounds();
+      }
+    };
+
+    el.addEventListener('wheel', handleWheel, { passive: false });
+    return () => el.removeEventListener('wheel', handleWheel);
+  }, [checkScrollBounds]);
+
+  // Auto-scroll active tab into view when active tab changes
+  useEffect(() => {
+    const el = tabsContainerRef.current;
+    if (!el) return;
+    const activeTabEl = el.querySelector(`[data-tab-id="${activeTab}"]`) as HTMLElement | null;
+    if (activeTabEl) {
+      activeTabEl.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+      const timer = setTimeout(checkScrollBounds, 250);
+      return () => clearTimeout(timer);
+    }
+  }, [activeTab, checkScrollBounds]);
+
+  // Mouse Drag handlers for tabs
+  const handleMouseDownTabs = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.button !== 0) return;
+    const el = tabsContainerRef.current;
+    if (!el) return;
+    isDraggingTabs.current = true;
+    hasDragged.current = false;
+    startX.current = e.pageX - el.offsetLeft;
+    scrollLeftStart.current = el.scrollLeft;
+    setIsDraggingState(true);
+  };
+
+  const handleMouseMoveTabs = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDraggingTabs.current) return;
+    const el = tabsContainerRef.current;
+    if (!el) return;
+    e.preventDefault();
+    const x = e.pageX - el.offsetLeft;
+    const walk = (x - startX.current) * 1.2;
+    if (Math.abs(walk) > 4) {
+      hasDragged.current = true;
+    }
+    el.scrollLeft = scrollLeftStart.current - walk;
+    checkScrollBounds();
+  };
+
+  const handleMouseUpOrLeaveTabs = () => {
+    if (isDraggingTabs.current) {
+      isDraggingTabs.current = false;
+      setIsDraggingState(false);
+      setTimeout(() => {
+        hasDragged.current = false;
+      }, 50);
+    }
+  };
+
+  // Touch swipe gesture for switching pages across the sheet
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+
+  const handleSheetTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleSheetTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+    const diffX = e.changedTouches[0].clientX - touchStartX.current;
+    const diffY = e.changedTouches[0].clientY - touchStartY.current;
+
+    // Minimum 50px horizontal swipe and must be largely horizontal
+    if (Math.abs(diffX) > 50 && Math.abs(diffX) > Math.abs(diffY) * 1.6) {
+      if (diffX < 0) {
+        handleNextTab();
+      } else {
+        handlePrevTab();
+      }
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
   };
 
   // Node 5: Training Quiz States
@@ -271,50 +385,67 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
         {/* ======================================================== */}
         {/* SCRAPBOOK TOP FOLDER DIVIDER TABS                        */}
         {/* ======================================================== */}
-        <div className="relative pt-2.5 sm:pt-3 px-2 sm:px-4 bg-surface-inset border-b border-border-subtle flex items-end justify-between gap-1 overflow-x-auto scrollbar-none select-none">
-          <div className="flex items-end gap-1 sm:gap-1.5 min-w-max">
-            {SCRAPBOOK_TABS.map((tab) => {
-              const isActive = activeTab === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  type="button"
-                  onClick={() => handleTabChange(tab.id)}
-                  className={`group relative transition-all duration-200 cursor-pointer rounded-t-xl sm:rounded-t-2xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 flex items-center gap-1 sm:gap-1.5 border-t border-x font-heading text-xs sm:text-sm font-bold ${
-                    isActive
-                      ? `${tab.tabColorActive} z-30 translate-y-[1px] shadow-sm pb-2.5 sm:pb-3`
-                      : `${tab.tabColorInactive} z-10 opacity-75 hover:opacity-100 hover:-translate-y-0.5`
-                  }`}
-                  title={`${tab.label} (${tab.paletteName})`}
-                >
-                  {/* Tab Label */}
-                  <span>
-                    {tab.tabNumber} {tab.label}
-                  </span>
+        <div className="relative pt-2.5 sm:pt-3 px-2 sm:px-4 bg-surface-inset border-b border-border-subtle flex items-end justify-between gap-1.5 select-none overflow-hidden">
+          {/* Scrollable & Draggable Tabs Area */}
+          <div className="relative flex-1 min-w-0 overflow-hidden">
+            {/* Left Fade Overflow Indicator */}
+            {canScrollLeft && (
+              <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-surface-inset via-surface-inset/80 to-transparent z-40 pointer-events-none" />
+            )}
 
-                  {/* Palette Name (Desktop Accent) */}
-                  <span
-                    className={`text-[9px] sm:text-[10px] uppercase font-mono tracking-wider opacity-60 hidden sm:inline ${
-                      isActive ? 'font-bold opacity-80' : ''
+            <div
+              ref={tabsContainerRef}
+              onMouseDown={handleMouseDownTabs}
+              onMouseMove={handleMouseMoveTabs}
+              onMouseUp={handleMouseUpOrLeaveTabs}
+              onMouseLeave={handleMouseUpOrLeaveTabs}
+              className={`flex items-end gap-1 sm:gap-1.5 overflow-x-auto scrollbar-none touch-pan-x ${
+                isDraggingState ? 'cursor-grabbing select-none' : 'cursor-grab'
+              }`}
+            >
+              {SCRAPBOOK_TABS.map((tab) => {
+                const isActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    data-tab-id={tab.id}
+                    type="button"
+                    onClick={() => {
+                      if (hasDragged.current) return;
+                      handleTabChange(tab.id);
+                    }}
+                    className={`group relative transition-all duration-200 cursor-pointer rounded-t-xl sm:rounded-t-2xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 flex items-center gap-1 sm:gap-1.5 border-t border-x font-heading text-xs sm:text-sm font-bold shrink-0 whitespace-nowrap ${
+                      isActive
+                        ? `${tab.tabColorActive} z-30 translate-y-[1px] shadow-sm pb-2.5 sm:pb-3`
+                        : `${tab.tabColorInactive} z-10 opacity-75 hover:opacity-100 hover:-translate-y-0.5`
                     }`}
+                    title={tab.label}
                   >
-                    {tab.paletteName}
-                  </span>
+                    {/* Tab Label */}
+                    <span>
+                      {tab.tabNumber} {tab.label}
+                    </span>
 
-                  {/* Active Elevated Tab Highlight */}
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeTabUnderline"
-                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-white/40"
-                    />
-                  )}
-                </button>
-              );
-            })}
+                    {/* Active Elevated Tab Highlight */}
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeTabUnderline"
+                        className="absolute bottom-0 left-0 right-0 h-[2px] bg-white/40"
+                      />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Right Fade Overflow Indicator */}
+            {canScrollRight && (
+              <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-surface-inset via-surface-inset/80 to-transparent z-40 pointer-events-none" />
+            )}
           </div>
 
-          {/* Quick Close & Tools on Tab Spine */}
-          <div className="pb-1.5 sm:pb-2 flex items-center gap-1.5 pl-2 shrink-0">
+          {/* Quick Close & Tools on Tab Spine - Sticky pinned on right */}
+          <div className="pb-1.5 sm:pb-2 flex items-center gap-1.5 pl-2 shrink-0 z-30 bg-surface-inset">
             <DeckBookmarkPicker
               itemId={item.id}
               category="bunpou"
@@ -342,54 +473,64 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
         {/* ======================================================== */}
         {/* ACTIVE SCRAPBOOK SHEET                                   */}
         {/* ======================================================== */}
-        <div className="flex-1 overflow-y-auto bg-surface-card text-text-primary flex flex-col relative scrollbar-thin">
+        <div
+          onTouchStart={handleSheetTouchStart}
+          onTouchEnd={handleSheetTouchEnd}
+          className="flex-1 overflow-y-auto bg-surface-card text-text-primary flex flex-col relative scrollbar-thin"
+        >
           {/* Stationery Page Header Banner */}
           <div className="p-3.5 sm:p-5 border-b border-border-subtle bg-surface-elevated/40 relative">
             {/* Washi Tape Accent on Top-Left */}
             <div className="absolute -top-1.5 left-5 sm:left-8 w-16 sm:w-20 h-3.5 bg-gold/25 border-y border-dashed border-gold/40 rotate-[-1.5deg] rounded-xs shadow-xs pointer-events-none z-10" />
 
-            <div className="space-y-1.5 max-w-xl">
-              {/* Badges & Stamps */}
-              <div className="flex flex-wrap items-center gap-1.5">
-                <span className="px-2 py-0.5 rounded-lg bg-indigo/15 text-indigo text-[11px] font-mono font-bold border border-indigo/30 shadow-xs">
-                  {levelLabel}
-                </span>
+            <div className="flex items-start justify-between gap-3 sm:gap-4 relative pt-0.5">
+              {/* Left Column: Title + Pola + Meaning */}
+              <div className="space-y-1.5 min-w-0 flex-1">
+                <div className="flex items-center gap-2">
+                  <h1 className="text-xl sm:text-2xl font-bold text-text-primary font-heading tracking-wide font-jp leading-tight">
+                    {titleInfo.mainTitle}
+                  </h1>
 
-                {categoryTags.map((tag, tIdx) => (
-                  <span
-                    key={tIdx}
-                    className="px-2 py-0.5 rounded-lg bg-surface-inset text-text-secondary text-[10px] font-mono border border-border-subtle"
+                  <button
+                    type="button"
+                    onClick={() => speakJapanese(titleInfo.audioTarget || titleInfo.mainTitle.replace(/^[〜~]/, ''))}
+                    className="p-1 sm:p-1.5 rounded-lg bg-surface-card hover:bg-surface-elevated text-indigo hover:text-indigo-light transition-all border border-border-subtle cursor-pointer shrink-0 shadow-xs active:scale-95"
+                    title="Dengarkan pelafalan pola kalimat"
                   >
-                    {tag}
-                  </span>
-                ))}
+                    <Volume2 className="w-3.5 h-3.5" />
+                  </button>
+                </div>
 
-                {/* Hanko Seal Stamp */}
-                <span className="px-1.5 py-0.5 rounded-sm border border-wine text-wine font-jp text-[10px] font-bold tracking-wider rotate-[-1.5deg] bg-wine/10">
-                  文法検定
+                {/* Pola Pembentukan (Formation Rule Subtitle) */}
+                {titleInfo.formationRule && (
+                  <div className="flex items-center gap-2 text-xs font-mono">
+                    <span className="px-1.5 py-0.5 rounded bg-indigo/10 border border-indigo/25 text-[10px] font-bold tracking-wider text-indigo uppercase font-mono shrink-0">
+                      Pola
+                    </span>
+                    <span className="text-text-secondary font-medium">
+                      {titleInfo.formationRule}
+                    </span>
+                  </div>
+                )}
+
+                {/* Meaning Summary */}
+                <p className="text-xs sm:text-sm text-text-secondary font-normal leading-relaxed pt-0.5 max-w-xl">
+                  {cleanSummary(item.meaningId || (item as any).meaning)}
+                </p>
+              </div>
+
+              {/* Right Column: JLPT Level Ink Stamp Seal (Cap) */}
+              <div
+                className="shrink-0 flex flex-col items-center justify-center border-2 border-dashed border-indigo/40 dark:border-indigo/40 text-indigo dark:text-indigo-light rounded-xl px-2.5 sm:px-3 py-1 sm:py-1.5 rotate-[3.5deg] select-none shadow-xs bg-indigo/5 dark:bg-indigo/10 hover:rotate-0 transition-transform duration-200"
+                title={`JLPT ${cleanLevel}`}
+              >
+                <span className="text-[8px] sm:text-[9px] font-mono uppercase tracking-widest font-extrabold opacity-75 leading-none">
+                  JLPT
+                </span>
+                <span className="text-sm sm:text-base font-mono font-black tracking-tight leading-none pt-0.5">
+                  {cleanLevel}
                 </span>
               </div>
-
-              {/* Grammar Pattern Title */}
-              <div className="flex items-center gap-2 pt-0.5">
-                <h1 className="text-lg sm:text-xl font-bold text-text-primary font-heading tracking-wide font-jp truncate">
-                  {patternTitle}
-                </h1>
-
-                <button
-                  type="button"
-                  onClick={() => speakJapanese(patternTitle.replace(/^[〜~]/, ''))}
-                  className="p-1 sm:p-1.5 rounded-lg bg-surface-card hover:bg-surface-elevated text-indigo hover:text-indigo-light transition-all border border-border-subtle cursor-pointer shrink-0 shadow-xs active:scale-95"
-                  title="Dengarkan pelafalan pola kalimat"
-                >
-                  <Volume2 className="w-3.5 h-3.5" />
-                </button>
-              </div>
-
-              {/* Meaning Summary */}
-              <p className="text-xs sm:text-sm text-text-secondary font-normal leading-relaxed">
-                {cleanSummary(item.meaningId || (item as any).meaning)}
-              </p>
             </div>
           </div>
 
