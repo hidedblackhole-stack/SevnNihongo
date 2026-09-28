@@ -106,11 +106,22 @@ export interface PlayerStats {
 export type DeckType = 'mixed' | 'flashcard' | 'writing' | 'kotoba' | 'kanji' | 'bunpou';
 export type DeckItemCategory = 'kotoba' | 'kanji' | 'bunpou';
 
+export interface CustomDeckItemPayload {
+  word: string;
+  reading?: string;
+  meaning: string;
+  exampleJp?: string;
+  exampleReading?: string;
+  exampleId?: string;
+  level?: string;
+}
+
 export interface DeckItemRef {
-  id: string; // Kotoba ID, Kanji character/ID, or Bunpou ID
+  id: string; // Kotoba ID, Kanji character/ID, Bunpou ID, or unique generated ID
   category: DeckItemCategory;
   addedAt: string;
   notes?: string;
+  customData?: CustomDeckItemPayload;
 }
 
 export interface UserDeck {

@@ -194,10 +194,9 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
               <h3 className="text-2xl font-bold font-heading text-text-primary">
                 {item.meaningId}
               </h3>
-              {item.meaningEn && (
+              {item.radicalName && (
                 <p className="text-xs text-text-secondary">
-                  Arti Inggris: {item.meaningEn}
-                  {item.radicalName ? ` • Radikal Asal: ${item.radicalName}` : ''}
+                  Radikal Asal: {item.radicalName}
                 </p>
               )}
             </div>

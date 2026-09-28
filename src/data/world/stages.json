@@ -19,7 +19,8 @@
     ],
     "bunpou": [],
     "dokkai": [],
-    "choukai": []
+    "choukai": [],
+    "title_id": "Hiragana 1: Vokal Dasar (A, I, U, E, O)"
   },
   {
     "id": "stage_kana_hira_2",
@@ -46,7 +47,8 @@
     ],
     "bunpou": [],
     "dokkai": [],
-    "choukai": []
+    "choukai": [],
+    "title_id": "Hiragana 2: Baris Ka & Sa (か〜こ / さ〜そ)"
   },
   {
     "id": "stage_kana_hira_3",
@@ -73,7 +75,8 @@
     ],
     "bunpou": [],
     "dokkai": [],
-    "choukai": []
+    "choukai": [],
+    "title_id": "Hiragana 3: Baris Ta & Na (た〜と / な〜の)"
   },
   {
     "id": "stage_kana_hira_4",
@@ -100,7 +103,8 @@
     ],
     "bunpou": [],
     "dokkai": [],
-    "choukai": []
+    "choukai": [],
+    "title_id": "Hiragana 4: Baris Ha & Ma (は〜ほ / ま〜も)"
   },
   {
     "id": "stage_kana_hira_5",
@@ -131,14 +135,15 @@
     ],
     "bunpou": [],
     "dokkai": [],
-    "choukai": []
+    "choukai": [],
+    "title_id": "Hiragana 5: Baris Ya, Ra, Wa & N (や〜よ / ら〜ろ / わ・を・ん)"
   },
   {
     "id": "stage_kana_hira_boss",
     "map_id": "map_kana_hiragana",
     "stage_number": 6,
     "title_jp": "ひらがな覇者の試練 (46文字完全読解＆筆記試験)",
-    "title_en": "Hiragana Grand Exam: Master of 46 Characters",
+    "title_en": "Ujian Besar Hiragana: Menguasai 46 Karakter",
     "kanji": [
       "kana_hira_a",
       "kana_hira_ka",
@@ -162,7 +167,8 @@
     ],
     "bunpou": [],
     "dokkai": [],
-    "choukai": []
+    "choukai": [],
+    "title_id": "Ujian Besar Hiragana: Menguasai 46 Karakter"
   },
   {
     "id": "stage_kana_kata_1",
@@ -184,7 +190,8 @@
     ],
     "bunpou": [],
     "dokkai": [],
-    "choukai": []
+    "choukai": [],
+    "title_id": "Katakana 1: Vokal Dasar (A, I, U, E, O)"
   },
   {
     "id": "stage_kana_kata_2",
@@ -211,7 +218,8 @@
     ],
     "bunpou": [],
     "dokkai": [],
-    "choukai": []
+    "choukai": [],
+    "title_id": "Katakana 2: Baris Ka & Sa (カ〜コ / サ〜ソ)"
   },
   {
     "id": "stage_kana_kata_3",
@@ -238,7 +246,8 @@
     ],
     "bunpou": [],
     "dokkai": [],
-    "choukai": []
+    "choukai": [],
+    "title_id": "Katakana 3: Baris Ta & Na (タ〜ト / ナ〜ノ)"
   },
   {
     "id": "stage_kana_kata_4",
@@ -265,7 +274,8 @@
     ],
     "bunpou": [],
     "dokkai": [],
-    "choukai": []
+    "choukai": [],
+    "title_id": "Katakana 4: Baris Ha & Ma (ハ〜ホ / マ〜モ)"
   },
   {
     "id": "stage_kana_kata_5",
@@ -296,14 +306,15 @@
     ],
     "bunpou": [],
     "dokkai": [],
-    "choukai": []
+    "choukai": [],
+    "title_id": "Katakana 5: Baris Ya, Ra, Wa & N (ヤ〜ヨ / ラ〜ロ / ワ・ヲ・ン)"
   },
   {
     "id": "stage_kana_kata_boss",
     "map_id": "map_kana_katakana",
     "stage_number": 6,
     "title_jp": "カタカナ覇者の試練 (46文字完全識別＆外来語読解)",
-    "title_en": "Katakana Grand Exam: Master of 46 Characters",
+    "title_en": "Ujian Besar Katakana: Master 46 Karakter",
     "kanji": [
       "kana_kata_a",
       "kana_kata_ka",
@@ -327,14 +338,15 @@
     ],
     "bunpou": [],
     "dokkai": [],
-    "choukai": []
+    "choukai": [],
+    "title_id": "Ujian Besar Katakana: Master 46 Karakter"
   },
   {
     "id": "stage_kana_verb_1",
     "map_id": "map_kana_verbs",
     "stage_number": 1,
     "title_jp": "動詞グループの識別 (五段・一段・不規則動詞)",
-    "title_en": "Verb Groups: Godan, Ichidan & Irregular",
+    "title_en": "Kelompok Kata Kerja: Godan, Ichidan & Irregular",
     "bunpou": [
       "bp_n5_061",
       "bp_n5_033"
@@ -354,14 +366,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Kelompok Kata Kerja: Godan, Ichidan & Irregular"
   },
   {
     "id": "stage_kana_verb_2",
     "map_id": "map_kana_verbs",
     "stage_number": 2,
     "title_jp": "辞書形・普通形 (Bentuk Kamus: 行く・食べる・する)",
-    "title_en": "Dictionary Form (Futsukei Present Casual)",
+    "title_en": "Bentuk Kamus (Futsukei Present Casual)",
     "bunpou": [
       "bp_n5_061",
       "bp_n5_062"
@@ -381,14 +394,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Bentuk Kamus (Futsukei Present Casual)"
   },
   {
     "id": "stage_kana_verb_3",
     "map_id": "map_kana_verbs",
     "stage_number": 3,
     "title_jp": "ます形 (Bentuk Sopan: 行きます・食べます・します)",
-    "title_en": "Masu Form (Polite Present: Masu / Masen)",
+    "title_en": "Bentuk Masu (Sopan Hadir: Masu / Masen)",
     "bunpou": [
       "bp_n5_036",
       "bp_n5_083"
@@ -408,14 +422,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Bentuk Masu (Sopan Hadir: Masu / Masen)"
   },
   {
     "id": "stage_kana_verb_4",
     "map_id": "map_kana_verbs",
     "stage_number": 4,
     "title_jp": "ない形 (Bentuk Negatif Kasual: 行かない・食べない)",
-    "title_en": "Nai Form (Casual Negative: Ikanai / Tabenai)",
+    "title_en": "Bentuk Nai (Negatif Santai: Ikanai / Tabenai)",
     "bunpou": [
       "bp_n5_069",
       "bp_n5_070"
@@ -435,14 +450,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Bentuk Nai (Negatif Santai: Ikanai / Tabenai)"
   },
   {
     "id": "stage_kana_verb_5",
     "map_id": "map_kana_verbs",
     "stage_number": 5,
     "title_jp": "た形・て形 (Bentuk Lampau & Sambung: 行った・行って)",
-    "title_en": "Ta & Te Form: Past & Linking (Itta / Itte)",
+    "title_en": "Bentuk Ta&Te : Past & Linking (Itta/Itte)",
     "bunpou": [
       "bp_n5_040",
       "bp_n5_048"
@@ -462,14 +478,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Bentuk Ta&Te : Past & Linking (Itta/Itte)"
   },
   {
     "id": "stage_kana_verb_boss",
     "map_id": "map_kana_verbs",
     "stage_number": 6,
     "title_jp": "動詞変形の覇者 (5大活用形マスター試験)",
-    "title_en": "Verb Conjugation Master Exam (Futsukei, Masu, Nai, Ta, Te)",
+    "title_en": "Ujian Master Konjugasi Kata Kerja (Futsukei, Masu, Nai, Ta, Te)",
     "bunpou": [
       "bp_n5_061",
       "bp_n5_036",
@@ -499,14 +516,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Ujian Master Konjugasi Kata Kerja (Futsukei, Masu, Nai, Ta, Te)"
   },
   {
     "id": "stage_kana_gram_1",
     "map_id": "map_kana_grammar",
     "stage_number": 1,
     "title_jp": "名詞述語 (A は B です & ではありません)",
-    "title_en": "Nominal Sentences: A is B & is not B",
+    "title_en": "Kalimat Nominal: A adalah B & bukan B",
     "bunpou": [
       "bp_n5_096",
       "bp_n5_036",
@@ -527,14 +545,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Kalimat Nominal: A adalah B & bukan B"
   },
   {
     "id": "stage_kana_gram_2",
     "map_id": "map_kana_grammar",
     "stage_number": 2,
     "title_jp": "疑問文の基礎 (〜は〜ですか & 肯定/否定応答)",
-    "title_en": "Question Sentences: Is A B? (Ka Particle)",
+    "title_en": "Kalimat Pertanyaan: Apakah A B? (Partikel Ka)",
     "bunpou": [
       "bp_n5_008",
       "bp_n5_097"
@@ -554,7 +573,8 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Kalimat Pertanyaan: Apakah A B? (Partikel Ka)"
   },
   {
     "id": "stage_kana_gram_3",
@@ -581,14 +601,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Direct Object & Subject Marker: Wo & Ga"
   },
   {
     "id": "stage_kana_gram_4",
     "map_id": "map_kana_grammar",
     "stage_number": 4,
     "title_jp": "時間と場所 (に & で・活動場所と特定時刻)",
-    "title_en": "Time & Location Particles: Ni & De",
+    "title_en": "Partikel Waktu & Lokasi: Ni & De",
     "bunpou": [
       "bp_n5_082",
       "bp_n5_049"
@@ -609,14 +630,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Partikel Waktu & Lokasi: Ni & De"
   },
   {
     "id": "stage_kana_gram_5",
     "map_id": "map_kana_grammar",
     "stage_number": 5,
     "title_jp": "修飾と同類 (の & も・所有と「〜もまた」)",
-    "title_en": "Possession & Also: No & Mo",
+    "title_en": "Kepemilikan & Juga: Tidak & Mo",
     "bunpou": [
       "bp_n5_087"
     ],
@@ -635,14 +657,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Kepemilikan & Juga: Tidak & Mo"
   },
   {
     "id": "stage_kana_gram_boss",
     "map_id": "map_kana_grammar",
     "stage_number": 6,
     "title_jp": "修練所の最終関門 (基礎文法総仕上げ・N5昇格試験)",
-    "title_en": "Grand Gate: Core Grammar & Particles Graduation Exam",
+    "title_en": "Grand Gate: Ujian Kelulusan Tata Bahasa & Partikel Inti",
     "bunpou": [
       "bp_n5_096",
       "bp_n5_036",
@@ -672,14 +695,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Grand Gate: Ujian Kelulusan Tata Bahasa & Partikel Inti"
   },
   {
     "id": "stage_n5_w1d1",
     "map_id": "map_n5_w1",
     "stage_number": 1,
     "title_jp": "第1節：始まりの門",
-    "title_en": "Drill Stage 1: Gate of Beginnings ",
+    "title_en": "Latihan Tahap 1: Gerbang Awal",
     "bunpou": [
       "bp_n5_001",
       "bp_n5_002",
@@ -705,14 +729,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 1: Gerbang Awal"
   },
   {
     "id": "stage_n5_w1d2",
     "map_id": "map_n5_w1",
     "stage_number": 2,
     "title_jp": "第2節：始まりの門",
-    "title_en": "Drill Stage 2: Gate of Beginnings ",
+    "title_en": "Drill Stage 2: Gate of Beginnings",
     "bunpou": [
       "bp_n5_004",
       "bp_n5_005",
@@ -738,14 +763,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Drill Stage 2: Gate of Beginnings"
   },
   {
     "id": "stage_n5_w1d3",
     "map_id": "map_n5_w1",
     "stage_number": 3,
     "title_jp": "第3節：始まりの門",
-    "title_en": "Drill Stage 3: Gate of Beginnings ",
+    "title_en": "Latihan Tahap 3: Gerbang Permulaan",
     "bunpou": [
       "bp_n5_007",
       "bp_n5_008",
@@ -771,14 +797,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 3: Gerbang Permulaan"
   },
   {
     "id": "stage_n5_w1d4",
     "map_id": "map_n5_w1",
     "stage_number": 4,
     "title_jp": "第4節：始まりの門",
-    "title_en": "Drill Stage 4: Gate of Beginnings ",
+    "title_en": "Latihan Tahap 4: Gerbang Permulaan",
     "bunpou": [
       "bp_n5_010",
       "bp_n5_011",
@@ -804,14 +831,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 4: Gerbang Permulaan"
   },
   {
     "id": "stage_n5_w1d5",
     "map_id": "map_n5_w1",
     "stage_number": 5,
     "title_jp": "第5節：始まりの門",
-    "title_en": "Drill Stage 5: Gate of Beginnings ",
+    "title_en": "Latihan Tahap 5: Gerbang Permulaan",
     "bunpou": [
       "bp_n5_013",
       "bp_n5_014",
@@ -837,14 +865,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 5: Gerbang Permulaan"
   },
   {
     "id": "stage_n5_w1d6",
     "map_id": "map_n5_w1",
     "stage_number": 6,
     "title_jp": "第6節：始まりの門",
-    "title_en": "Drill Stage 6: Gate of Beginnings ",
+    "title_en": "Latihan Tahap 6: Gerbang Permulaan",
     "bunpou": [
       "bp_n5_016",
       "bp_n5_017",
@@ -870,14 +899,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 6: Gerbang Permulaan"
   },
   {
     "id": "stage_n5_w1d7_boss",
     "map_id": "map_n5_w1",
     "stage_number": 7,
     "title_jp": "【BOSS】始まりの門 (Partikel Dasar & Salam)",
-    "title_en": "Boss Exam: Gate of Beginnings (Basic Particles & Greetings)",
+    "title_en": "Ujian Bos: Gerbang Awal (Partikel Dasar & Salam)",
     "bunpou": [
       "bp_n5_019",
       "bp_n5_020",
@@ -903,14 +933,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Ujian Bos: Gerbang Awal (Partikel Dasar & Salam)"
   },
   {
     "id": "stage_n5_w2d1",
     "map_id": "map_n5_w2",
     "stage_number": 1,
     "title_jp": "第1節：生活の村",
-    "title_en": "Drill Stage 1: Village of Daily Living ",
+    "title_en": "Latihan Tahap 1: Desa Kehidupan Sehari-hari",
     "bunpou": [
       "bp_n5_001",
       "bp_n5_002",
@@ -936,14 +967,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 1: Desa Kehidupan Sehari-hari"
   },
   {
     "id": "stage_n5_w2d2",
     "map_id": "map_n5_w2",
     "stage_number": 2,
     "title_jp": "第2節：生活の村",
-    "title_en": "Drill Stage 2: Village of Daily Living ",
+    "title_en": "Latihan Tahap 2: Desa Kehidupan Sehari-hari",
     "bunpou": [
       "bp_n5_004",
       "bp_n5_005",
@@ -969,14 +1001,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 2: Desa Kehidupan Sehari-hari"
   },
   {
     "id": "stage_n5_w2d3",
     "map_id": "map_n5_w2",
     "stage_number": 3,
     "title_jp": "第3節：生活の村",
-    "title_en": "Drill Stage 3: Village of Daily Living ",
+    "title_en": "Drill Stage 3: Village of Daily Living",
     "bunpou": [
       "bp_n5_007",
       "bp_n5_008",
@@ -1002,14 +1035,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Drill Stage 3: Village of Daily Living"
   },
   {
     "id": "stage_n5_w2d4",
     "map_id": "map_n5_w2",
     "stage_number": 4,
     "title_jp": "第4節：生活の村",
-    "title_en": "Drill Stage 4: Village of Daily Living ",
+    "title_en": "Latihan Tahap 4: Desa Kehidupan Sehari-hari",
     "bunpou": [
       "bp_n5_010",
       "bp_n5_011",
@@ -1035,14 +1069,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 4: Desa Kehidupan Sehari-hari"
   },
   {
     "id": "stage_n5_w2d5",
     "map_id": "map_n5_w2",
     "stage_number": 5,
     "title_jp": "第5節：生活の村",
-    "title_en": "Drill Stage 5: Village of Daily Living ",
+    "title_en": "Latihan Tahap 5: Desa Kehidupan Sehari-hari",
     "bunpou": [
       "bp_n5_013",
       "bp_n5_014",
@@ -1068,14 +1103,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 5: Desa Kehidupan Sehari-hari"
   },
   {
     "id": "stage_n5_w2d6",
     "map_id": "map_n5_w2",
     "stage_number": 6,
     "title_jp": "第6節：生活の村",
-    "title_en": "Drill Stage 6: Village of Daily Living ",
+    "title_en": "Latihan Tahap 6: Desa Kehidupan Sehari-hari",
     "bunpou": [
       "bp_n5_016",
       "bp_n5_017",
@@ -1101,14 +1137,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 6: Desa Kehidupan Sehari-hari"
   },
   {
     "id": "stage_n5_w2d7_boss",
     "map_id": "map_n5_w2",
     "stage_number": 7,
     "title_jp": "【BOSS】生活の村 (Kata Kerja & Benda Sehari-hari)",
-    "title_en": "Boss Exam: Village of Daily Living (Everyday Verbs & Nouns)",
+    "title_en": "Ujian Bos: Desa Kehidupan Sehari-hari (Kata Kerja & Kata Benda Sehari-hari)",
     "bunpou": [
       "bp_n5_019",
       "bp_n5_020",
@@ -1134,14 +1171,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Ujian Bos: Desa Kehidupan Sehari-hari (Kata Kerja & Kata Benda Sehari-hari)"
   },
   {
     "id": "stage_n5_w3d1",
     "map_id": "map_n5_w3",
     "stage_number": 1,
     "title_jp": "第1節：時間の森",
-    "title_en": "Drill Stage 1: Forest of Time ",
+    "title_en": "Latihan Tahap 1: Hutan Waktu",
     "bunpou": [
       "bp_n5_001",
       "bp_n5_002",
@@ -1167,14 +1205,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 1: Hutan Waktu"
   },
   {
     "id": "stage_n5_w3d2",
     "map_id": "map_n5_w3",
     "stage_number": 2,
     "title_jp": "第2節：時間の森",
-    "title_en": "Drill Stage 2: Forest of Time ",
+    "title_en": "Latihan Tahap 2: Hutan Waktu",
     "bunpou": [
       "bp_n5_004",
       "bp_n5_005",
@@ -1200,14 +1239,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 2: Hutan Waktu"
   },
   {
     "id": "stage_n5_w3d3",
     "map_id": "map_n5_w3",
     "stage_number": 3,
     "title_jp": "第3節：時間の森",
-    "title_en": "Drill Stage 3: Forest of Time ",
+    "title_en": "Latihan Tahap 3: Hutan Waktu",
     "bunpou": [
       "bp_n5_007",
       "bp_n5_008",
@@ -1233,14 +1273,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 3: Hutan Waktu"
   },
   {
     "id": "stage_n5_w3d4",
     "map_id": "map_n5_w3",
     "stage_number": 4,
     "title_jp": "第4節：時間の森",
-    "title_en": "Drill Stage 4: Forest of Time ",
+    "title_en": "Latihan Tahap 4: Hutan Waktu",
     "bunpou": [
       "bp_n5_010",
       "bp_n5_011",
@@ -1266,14 +1307,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 4: Hutan Waktu"
   },
   {
     "id": "stage_n5_w3d5",
     "map_id": "map_n5_w3",
     "stage_number": 5,
     "title_jp": "第5節：時間の森",
-    "title_en": "Drill Stage 5: Forest of Time ",
+    "title_en": "Latihan Tahap 5: Hutan Waktu",
     "bunpou": [
       "bp_n5_013",
       "bp_n5_014",
@@ -1299,14 +1341,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 5: Hutan Waktu"
   },
   {
     "id": "stage_n5_w3d6",
     "map_id": "map_n5_w3",
     "stage_number": 6,
     "title_jp": "第6節：時間の森",
-    "title_en": "Drill Stage 6: Forest of Time ",
+    "title_en": "Latihan Tahap 6: Hutan Waktu",
     "bunpou": [
       "bp_n5_016",
       "bp_n5_017",
@@ -1332,14 +1375,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 6: Hutan Waktu"
   },
   {
     "id": "stage_n5_w3d7_boss",
     "map_id": "map_n5_w3",
     "stage_number": 7,
     "title_jp": "【BOSS】時間の森 (Angka, Waktu, & Kata Sifat)",
-    "title_en": "Boss Exam: Forest of Time (Numbers, Time, & Adjectives)",
+    "title_en": "Ujian Bos: Hutan Waktu (Angka, Waktu, & Kata Sifat)",
     "bunpou": [
       "bp_n5_019",
       "bp_n5_020",
@@ -1365,14 +1409,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Ujian Bos: Hutan Waktu (Angka, Waktu, & Kata Sifat)"
   },
   {
     "id": "stage_n5_w4d1",
     "map_id": "map_n5_w4",
     "stage_number": 1,
     "title_jp": "第1節：試練の神殿",
-    "title_en": "Drill Stage 1: Temple of Trial ",
+    "title_en": "Latihan Tahap 1: Kuil Percobaan",
     "bunpou": [
       "bp_n5_001",
       "bp_n5_002",
@@ -1398,14 +1443,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 1: Kuil Percobaan"
   },
   {
     "id": "stage_n5_w4d2",
     "map_id": "map_n5_w4",
     "stage_number": 2,
     "title_jp": "第2節：試練の神殿",
-    "title_en": "Drill Stage 2: Temple of Trial ",
+    "title_en": "Latihan Tahap 2: Kuil Percobaan",
     "bunpou": [
       "bp_n5_004",
       "bp_n5_005",
@@ -1431,14 +1477,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 2: Kuil Percobaan"
   },
   {
     "id": "stage_n5_w4d3",
     "map_id": "map_n5_w4",
     "stage_number": 3,
     "title_jp": "第3節：試練の神殿",
-    "title_en": "Drill Stage 3: Temple of Trial ",
+    "title_en": "Latihan Tahap 3: Kuil Percobaan",
     "bunpou": [
       "bp_n5_007",
       "bp_n5_008",
@@ -1463,14 +1510,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 3: Kuil Percobaan"
   },
   {
     "id": "stage_n5_w4d4",
     "map_id": "map_n5_w4",
     "stage_number": 4,
     "title_jp": "第4節：試練の神殿",
-    "title_en": "Drill Stage 4: Temple of Trial ",
+    "title_en": "Latihan Tahap 4: Kuil Percobaan",
     "bunpou": [
       "bp_n5_010",
       "bp_n5_011",
@@ -1495,14 +1543,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 4: Kuil Percobaan"
   },
   {
     "id": "stage_n5_w4d5",
     "map_id": "map_n5_w4",
     "stage_number": 5,
     "title_jp": "第5節：試練の神殿",
-    "title_en": "Drill Stage 5: Temple of Trial ",
+    "title_en": "Latihan Tahap 5: Kuil Percobaan",
     "bunpou": [
       "bp_n5_013",
       "bp_n5_014",
@@ -1527,14 +1576,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 5: Kuil Percobaan"
   },
   {
     "id": "stage_n5_w4d6",
     "map_id": "map_n5_w4",
     "stage_number": 6,
     "title_jp": "第6節：試練の神殿",
-    "title_en": "Drill Stage 6: Temple of Trial ",
+    "title_en": "Latihan Tahap 6: Kuil Percobaan",
     "bunpou": [
       "bp_n5_016",
       "bp_n5_017",
@@ -1559,14 +1609,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 6: Kuil Percobaan"
   },
   {
     "id": "stage_n5_w4d7_boss",
     "map_id": "map_n5_w4",
     "stage_number": 7,
     "title_jp": "【BOSS】試練の神殿 (Bentuk Te & Boss Ujian N5)",
-    "title_en": "Boss Exam: Temple of Trial (Te-Form & Final N5 Boss)",
+    "title_en": "Ujian Bos: Temple of Trial (Te-Form & Final N5 Boss)",
     "bunpou": [
       "bp_n5_019",
       "bp_n5_020",
@@ -1591,14 +1642,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Ujian Bos: Temple of Trial (Te-Form & Final N5 Boss)"
   },
   {
     "id": "stage_n4_w1d1",
     "map_id": "map_n4_w1",
     "stage_number": 1,
     "title_jp": "第1節：旅立ちの平原",
-    "title_en": "Drill Stage 1: Plains of Departure ",
+    "title_en": "Drill Stage 1: Plains of Departure",
     "bunpou": [
       "bp_n4_001",
       "bp_n4_002",
@@ -1626,14 +1678,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Drill Stage 1: Plains of Departure"
   },
   {
     "id": "stage_n4_w1d2",
     "map_id": "map_n4_w1",
     "stage_number": 2,
     "title_jp": "第2節：旅立ちの平原",
-    "title_en": "Drill Stage 2: Plains of Departure ",
+    "title_en": "Pengeboran Tahap 2: Dataran Keberangkatan",
     "bunpou": [
       "bp_n4_004",
       "bp_n4_005",
@@ -1661,14 +1714,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Pengeboran Tahap 2: Dataran Keberangkatan"
   },
   {
     "id": "stage_n4_w1d3",
     "map_id": "map_n4_w1",
     "stage_number": 3,
     "title_jp": "第3節：旅立ちの平原",
-    "title_en": "Drill Stage 3: Plains of Departure ",
+    "title_en": "Pengeboran Tahap 3: Dataran Keberangkatan",
     "bunpou": [
       "bp_n4_007",
       "bp_n4_008",
@@ -1696,14 +1750,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Pengeboran Tahap 3: Dataran Keberangkatan"
   },
   {
     "id": "stage_n4_w1d4",
     "map_id": "map_n4_w1",
     "stage_number": 4,
     "title_jp": "第4節：旅立ちの平原",
-    "title_en": "Drill Stage 4: Plains of Departure ",
+    "title_en": "Pengeboran Tahap 4: Dataran Keberangkatan",
     "bunpou": [
       "bp_n4_010",
       "bp_n4_011",
@@ -1731,14 +1786,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Pengeboran Tahap 4: Dataran Keberangkatan"
   },
   {
     "id": "stage_n4_w1d5",
     "map_id": "map_n4_w1",
     "stage_number": 5,
     "title_jp": "第5節：旅立ちの平原",
-    "title_en": "Drill Stage 5: Plains of Departure ",
+    "title_en": "Latihan Tahap 5: Dataran Keberangkatan",
     "bunpou": [
       "bp_n4_013",
       "bp_n4_014",
@@ -1766,14 +1822,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 5: Dataran Keberangkatan"
   },
   {
     "id": "stage_n4_w1d6",
     "map_id": "map_n4_w1",
     "stage_number": 6,
     "title_jp": "第6節：旅立ちの平原",
-    "title_en": "Drill Stage 6: Plains of Departure ",
+    "title_en": "Latihan Tahap 6: Dataran Keberangkatan",
     "bunpou": [
       "bp_n4_016",
       "bp_n4_017",
@@ -1801,14 +1858,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 6: Dataran Keberangkatan"
   },
   {
     "id": "stage_n4_w1d7_boss",
     "map_id": "map_n4_w1",
     "stage_number": 7,
     "title_jp": "【BOSS】旅立ちの平原 (Bentuk Lampau & Nai-kei)",
-    "title_en": "Boss Exam: Plains of Departure (Past & Negative Verb Forms)",
+    "title_en": "Ujian Bos: Dataran Keberangkatan (Bentuk Kata Kerja Masa Lalu & Negatif)",
     "bunpou": [
       "bp_n4_019",
       "bp_n4_020",
@@ -1836,14 +1894,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Ujian Bos: Dataran Keberangkatan (Bentuk Kata Kerja Masa Lalu & Negatif)"
   },
   {
     "id": "stage_n4_w2d1",
     "map_id": "map_n4_w2",
     "stage_number": 1,
     "title_jp": "第1節：可能性の渓谷",
-    "title_en": "Drill Stage 1: Canyon of Potential ",
+    "title_en": "Pengeboran Tahap 1: Ngarai Potensial",
     "bunpou": [
       "bp_n4_001",
       "bp_n4_002",
@@ -1871,14 +1930,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Pengeboran Tahap 1: Ngarai Potensial"
   },
   {
     "id": "stage_n4_w2d2",
     "map_id": "map_n4_w2",
     "stage_number": 2,
     "title_jp": "第2節：可能性の渓谷",
-    "title_en": "Drill Stage 2: Canyon of Potential ",
+    "title_en": "Pengeboran Tahap 2: Ngarai Potensial",
     "bunpou": [
       "bp_n4_004",
       "bp_n4_005",
@@ -1906,14 +1966,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Pengeboran Tahap 2: Ngarai Potensial"
   },
   {
     "id": "stage_n4_w2d3",
     "map_id": "map_n4_w2",
     "stage_number": 3,
     "title_jp": "第3節：可能性の渓谷",
-    "title_en": "Drill Stage 3: Canyon of Potential ",
+    "title_en": "Pengeboran Tahap 3: Ngarai Potensial",
     "bunpou": [
       "bp_n4_007",
       "bp_n4_008",
@@ -1941,14 +2002,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Pengeboran Tahap 3: Ngarai Potensial"
   },
   {
     "id": "stage_n4_w2d4",
     "map_id": "map_n4_w2",
     "stage_number": 4,
     "title_jp": "第4節：可能性の渓谷",
-    "title_en": "Drill Stage 4: Canyon of Potential ",
+    "title_en": "Pengeboran Tahap 4: Ngarai Potensial",
     "bunpou": [
       "bp_n4_010",
       "bp_n4_011",
@@ -1976,14 +2038,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Pengeboran Tahap 4: Ngarai Potensial"
   },
   {
     "id": "stage_n4_w2d5",
     "map_id": "map_n4_w2",
     "stage_number": 5,
     "title_jp": "第5節：可能性の渓谷",
-    "title_en": "Drill Stage 5: Canyon of Potential ",
+    "title_en": "Pengeboran Tahap 5: Ngarai Potensial",
     "bunpou": [
       "bp_n4_013",
       "bp_n4_014",
@@ -2011,14 +2074,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Pengeboran Tahap 5: Ngarai Potensial"
   },
   {
     "id": "stage_n4_w2d6",
     "map_id": "map_n4_w2",
     "stage_number": 6,
     "title_jp": "第6節：可能性の渓谷",
-    "title_en": "Drill Stage 6: Canyon of Potential ",
+    "title_en": "Pengeboran Tahap 6: Ngarai Potensial",
     "bunpou": [
       "bp_n4_016",
       "bp_n4_017",
@@ -2046,14 +2110,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Pengeboran Tahap 6: Ngarai Potensial"
   },
   {
     "id": "stage_n4_w2d7_boss",
     "map_id": "map_n4_w2",
     "stage_number": 7,
     "title_jp": "【BOSS】可能性の渓谷 (Bentuk Potensial & Keinginan)",
-    "title_en": "Boss Exam: Canyon of Potential (Potential Forms & Desires)",
+    "title_en": "Ujian Bos: Ngarai Potensi (Bentuk & Keinginan Potensial)",
     "bunpou": [
       "bp_n4_019",
       "bp_n4_020",
@@ -2081,14 +2146,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Ujian Bos: Ngarai Potensi (Bentuk & Keinginan Potensial)"
   },
   {
     "id": "stage_n4_w3d1",
     "map_id": "map_n4_w3",
     "stage_number": 1,
     "title_jp": "第1節：条件の沼地",
-    "title_en": "Drill Stage 1: Swamp of Conditionals ",
+    "title_en": "Pengeboran Tahap 1: Rawa Kondisional",
     "bunpou": [
       "bp_n4_001",
       "bp_n4_002",
@@ -2116,14 +2182,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Pengeboran Tahap 1: Rawa Kondisional"
   },
   {
     "id": "stage_n4_w3d2",
     "map_id": "map_n4_w3",
     "stage_number": 2,
     "title_jp": "第2節：条件の沼地",
-    "title_en": "Drill Stage 2: Swamp of Conditionals ",
+    "title_en": "Pengeboran Tahap 2: Rawa Kondisional",
     "bunpou": [
       "bp_n4_004",
       "bp_n4_005",
@@ -2151,14 +2218,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Pengeboran Tahap 2: Rawa Kondisional"
   },
   {
     "id": "stage_n4_w3d3",
     "map_id": "map_n4_w3",
     "stage_number": 3,
     "title_jp": "第3節：条件の沼地",
-    "title_en": "Drill Stage 3: Swamp of Conditionals ",
+    "title_en": "Pengeboran Tahap 3: Rawa Kondisional",
     "bunpou": [
       "bp_n4_007",
       "bp_n4_008",
@@ -2186,14 +2254,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Pengeboran Tahap 3: Rawa Kondisional"
   },
   {
     "id": "stage_n4_w3d4",
     "map_id": "map_n4_w3",
     "stage_number": 4,
     "title_jp": "第4節：条件の沼地",
-    "title_en": "Drill Stage 4: Swamp of Conditionals ",
+    "title_en": "Pengeboran Tahap 4: Rawa Kondisional",
     "bunpou": [
       "bp_n4_010",
       "bp_n4_011",
@@ -2221,14 +2290,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Pengeboran Tahap 4: Rawa Kondisional"
   },
   {
     "id": "stage_n4_w3d5",
     "map_id": "map_n4_w3",
     "stage_number": 5,
     "title_jp": "第5節：条件の沼地",
-    "title_en": "Drill Stage 5: Swamp of Conditionals ",
+    "title_en": "Drill Stage 5: Swamp of Conditionals",
     "bunpou": [
       "bp_n4_013",
       "bp_n4_014",
@@ -2256,14 +2326,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Drill Stage 5: Swamp of Conditionals"
   },
   {
     "id": "stage_n4_w3d6",
     "map_id": "map_n4_w3",
     "stage_number": 6,
     "title_jp": "第6節：条件の沼地",
-    "title_en": "Drill Stage 6: Swamp of Conditionals ",
+    "title_en": "Pengeboran Tahap 6: Rawa Kondisional",
     "bunpou": [
       "bp_n4_016",
       "bp_n4_017",
@@ -2291,14 +2362,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Pengeboran Tahap 6: Rawa Kondisional"
   },
   {
     "id": "stage_n4_w3d7_boss",
     "map_id": "map_n4_w3",
     "stage_number": 7,
     "title_jp": "【BOSS】条件の沼地 (Tara, Nara, To, & Ba)",
-    "title_en": "Boss Exam: Swamp of Conditionals (Conditional Particles)",
+    "title_en": "Ujian Bos: Rawa Bersyarat (Partikel Bersyarat)",
     "bunpou": [
       "bp_n4_019",
       "bp_n4_020",
@@ -2326,14 +2398,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Ujian Bos: Rawa Bersyarat (Partikel Bersyarat)"
   },
   {
     "id": "stage_n4_w4d1",
     "map_id": "map_n4_w4",
     "stage_number": 1,
     "title_jp": "第1節：礼節の砦",
-    "title_en": "Drill Stage 1: Fortress of Politeness ",
+    "title_en": "Latihan Tahap 1: Benteng Kesopanan",
     "bunpou": [
       "bp_n4_001",
       "bp_n4_002",
@@ -2361,14 +2434,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 1: Benteng Kesopanan"
   },
   {
     "id": "stage_n4_w4d2",
     "map_id": "map_n4_w4",
     "stage_number": 2,
     "title_jp": "第2節：礼節の砦",
-    "title_en": "Drill Stage 2: Fortress of Politeness ",
+    "title_en": "Latihan Tahap 2: Benteng Kesopanan",
     "bunpou": [
       "bp_n4_004",
       "bp_n4_005",
@@ -2396,14 +2470,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 2: Benteng Kesopanan"
   },
   {
     "id": "stage_n4_w4d3",
     "map_id": "map_n4_w4",
     "stage_number": 3,
     "title_jp": "第3節：礼節の砦",
-    "title_en": "Drill Stage 3: Fortress of Politeness ",
+    "title_en": "Latihan Tahap 3: Benteng Kesopanan",
     "bunpou": [
       "bp_n4_007",
       "bp_n4_008",
@@ -2431,14 +2506,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 3: Benteng Kesopanan"
   },
   {
     "id": "stage_n4_w4d4",
     "map_id": "map_n4_w4",
     "stage_number": 4,
     "title_jp": "第4節：礼節の砦",
-    "title_en": "Drill Stage 4: Fortress of Politeness ",
+    "title_en": "Latihan Tahap 4: Benteng Kesopanan",
     "bunpou": [
       "bp_n4_010",
       "bp_n4_011",
@@ -2466,14 +2542,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 4: Benteng Kesopanan"
   },
   {
     "id": "stage_n4_w4d5",
     "map_id": "map_n4_w4",
     "stage_number": 5,
     "title_jp": "第5節：礼節の砦",
-    "title_en": "Drill Stage 5: Fortress of Politeness ",
+    "title_en": "Latihan Tahap 5: Benteng Kesopanan",
     "bunpou": [
       "bp_n4_013",
       "bp_n4_014",
@@ -2501,14 +2578,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 5: Benteng Kesopanan"
   },
   {
     "id": "stage_n4_w4d6",
     "map_id": "map_n4_w4",
     "stage_number": 6,
     "title_jp": "第6節：礼節の砦",
-    "title_en": "Drill Stage 6: Fortress of Politeness ",
+    "title_en": "Latihan Tahap 6: Benteng Kesopanan",
     "bunpou": [
       "bp_n4_016",
       "bp_n4_017",
@@ -2535,14 +2613,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 6: Benteng Kesopanan"
   },
   {
     "id": "stage_n4_w4d7_boss",
     "map_id": "map_n4_w4",
     "stage_number": 7,
     "title_jp": "【BOSS】礼節の砦 (Keigo Pemula & Pemberian Ageru/Morau)",
-    "title_en": "Boss Exam: Fortress of Politeness (Beginner Keigo & Giving)",
+    "title_en": "Ujian Bos: Benteng Kesopanan (Pemula Keigo & Memberi)",
     "bunpou": [
       "bp_n4_019",
       "bp_n4_020",
@@ -2569,14 +2648,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Ujian Bos: Benteng Kesopanan (Pemula Keigo & Memberi)"
   },
   {
     "id": "stage_n4_w5d1",
     "map_id": "map_n4_w5",
     "stage_number": 1,
     "title_jp": "第1節：昇格の塔",
-    "title_en": "Drill Stage 1: Tower of Promotion ",
+    "title_en": "Drill Stage 1: Tower of Promotion",
     "bunpou": [
       "bp_n4_001",
       "bp_n4_002",
@@ -2603,14 +2683,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Drill Stage 1: Tower of Promotion"
   },
   {
     "id": "stage_n4_w5d2",
     "map_id": "map_n4_w5",
     "stage_number": 2,
     "title_jp": "第2節：昇格の塔",
-    "title_en": "Drill Stage 2: Tower of Promotion ",
+    "title_en": "Latihan Tahap 2: Menara Promosi",
     "bunpou": [
       "bp_n4_004",
       "bp_n4_005",
@@ -2637,14 +2718,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 2: Menara Promosi"
   },
   {
     "id": "stage_n4_w5d3",
     "map_id": "map_n4_w5",
     "stage_number": 3,
     "title_jp": "第3節：昇格の塔",
-    "title_en": "Drill Stage 3: Tower of Promotion ",
+    "title_en": "Latihan Tahap 3: Menara Promosi",
     "bunpou": [
       "bp_n4_007",
       "bp_n4_008",
@@ -2671,14 +2753,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 3: Menara Promosi"
   },
   {
     "id": "stage_n4_w5d4",
     "map_id": "map_n4_w5",
     "stage_number": 4,
     "title_jp": "第4節：昇格の塔",
-    "title_en": "Drill Stage 4: Tower of Promotion ",
+    "title_en": "Latihan Tahap 4: Menara Promosi",
     "bunpou": [
       "bp_n4_010",
       "bp_n4_011",
@@ -2705,14 +2788,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 4: Menara Promosi"
   },
   {
     "id": "stage_n4_w5d5",
     "map_id": "map_n4_w5",
     "stage_number": 5,
     "title_jp": "第5節：昇格の塔",
-    "title_en": "Drill Stage 5: Tower of Promotion ",
+    "title_en": "Latihan Tahap 5: Menara Promosi",
     "bunpou": [
       "bp_n4_013",
       "bp_n4_014",
@@ -2739,14 +2823,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 5: Menara Promosi"
   },
   {
     "id": "stage_n4_w5d6",
     "map_id": "map_n4_w5",
     "stage_number": 6,
     "title_jp": "第6節：昇格の塔",
-    "title_en": "Drill Stage 6: Tower of Promotion ",
+    "title_en": "Latihan Tahap 6: Menara Promosi",
     "bunpou": [
       "bp_n4_016",
       "bp_n4_017",
@@ -2773,7 +2858,8 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 6: Menara Promosi"
   },
   {
     "id": "stage_n4_w5d7_boss",
@@ -2807,14 +2893,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Boss Exam: Tower of Promotion (Final N4 Evaluation Boss)"
   },
   {
     "id": "stage_bunpou_w1d1",
     "map_id": "map_bunpou_w1",
     "stage_number": 1,
     "title_jp": "ぼくにもやらせて",
-    "title_en": "Let me do it",
+    "title_en": "Biarkan aku melakukannya",
     "bunpou": [
       "w1d1g1",
       "w1d1g2",
@@ -2912,14 +2999,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Biarkan aku melakukannya"
   },
   {
     "id": "stage_bunpou_w1d2",
     "map_id": "map_bunpou_w1",
     "stage_number": 2,
     "title_jp": "そこに置いといて",
-    "title_en": "Just put it there",
+    "title_en": "Taruh saja di sana",
     "bunpou": [
       "w1d2g1",
       "w1d2g2",
@@ -3017,14 +3105,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Taruh saja di sana"
   },
   {
     "id": "stage_bunpou_w1d3",
     "map_id": "map_bunpou_w1",
     "stage_number": 3,
     "title_jp": "女らしい",
-    "title_en": "Feminine",
+    "title_en": "Wanita",
     "bunpou": [
       "w1d3g1",
       "w1d3g2",
@@ -3122,14 +3211,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Wanita"
   },
   {
     "id": "stage_bunpou_w1d4",
     "map_id": "map_bunpou_w1",
     "stage_number": 4,
     "title_jp": "できるようになった！",
-    "title_en": "I am getting better!",
+    "title_en": "Saya menjadi lebih baik!",
     "bunpou": [
       "w1d4g1",
       "w1d4g2",
@@ -3227,14 +3317,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Saya menjadi lebih baik!"
   },
   {
     "id": "stage_bunpou_w1d5",
     "map_id": "map_bunpou_w1",
     "stage_number": 5,
     "title_jp": "言ったように",
-    "title_en": "As I said",
+    "title_en": "Seperti yang saya katakan",
     "bunpou": [
       "w1d5g1",
       "w1d5g2",
@@ -3332,14 +3423,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Seperti yang saya katakan"
   },
   {
     "id": "stage_bunpou_w1d6",
     "map_id": "map_bunpou_w1",
     "stage_number": 6,
     "title_jp": "話を聞こうとしない",
-    "title_en": "He does not even listen",
+    "title_en": "Dia bahkan tidak mendengarkan",
     "bunpou": [
       "w1d6g1",
       "w1d6g2",
@@ -3437,14 +3529,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Dia bahkan tidak mendengarkan"
   },
   {
     "id": "stage_bunpou_w1d7_boss",
     "map_id": "map_bunpou_w1",
     "stage_number": 7,
     "title_jp": "実戦問題 (Boss Stage)",
-    "title_en": "Practice Exercise (Boss Stage)",
+    "title_en": "Latihan Latihan (Panggung Bos)",
     "bunpou": [
       "w1d1g1",
       "w1d1g2",
@@ -3558,14 +3651,15 @@
     "choukai": [
       "choukai_001"
     ],
-    "type": "boss_test"
+    "type": "boss_test",
+    "title_id": "Latihan Latihan (Panggung Bos)"
   },
   {
     "id": "stage_bunpou_w2d1",
     "map_id": "map_bunpou_w2",
     "stage_number": 1,
     "title_jp": "うそばっかり！",
-    "title_en": "You must be kidding!",
+    "title_en": "Kau pasti bercanda!",
     "bunpou": [
       "w2d1g1",
       "w2d1g2",
@@ -3664,14 +3758,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Kau pasti bercanda!"
   },
   {
     "id": "stage_bunpou_w2d2",
     "map_id": "map_bunpou_w2",
     "stage_number": 2,
     "title_jp": "事故などによる渋滞",
-    "title_en": "Traffic jam caused by accidents and other conditions",
+    "title_en": "Kemacetan lalu lintas yang disebabkan oleh kecelakaan dan kondisi lainnya",
     "bunpou": [
       "w2d2g1",
       "w2d2g2",
@@ -3770,14 +3865,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Kemacetan lalu lintas yang disebabkan oleh kecelakaan dan kondisi lainnya"
   },
   {
     "id": "stage_bunpou_w2d3",
     "map_id": "map_bunpou_w2",
     "stage_number": 3,
     "title_jp": "あなたのこと",
-    "title_en": "About you",
+    "title_en": "Tentang kamu",
     "bunpou": [
       "w2d3g1",
       "w2d3g2",
@@ -3876,14 +3972,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Tentang kamu"
   },
   {
     "id": "stage_bunpou_w2d4",
     "map_id": "map_bunpou_w2",
     "stage_number": 4,
     "title_jp": "省エネというのは・・・",
-    "title_en": "What 'Sho-ene' means....",
+    "title_en": "Apa arti 'Sho-ene'....",
     "bunpou": [
       "w2d4g1",
       "w2d4g2",
@@ -3981,14 +4078,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Apa arti 'Sho-ene'...."
   },
   {
     "id": "stage_bunpou_w2d5",
     "map_id": "map_bunpou_w2",
     "stage_number": 5,
     "title_jp": "美人というより",
-    "title_en": "Rather than beautiful",
+    "title_en": "Daripada cantik",
     "bunpou": [
       "w2d5g1",
       "w2d5g2",
@@ -4086,7 +4184,8 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Daripada cantik"
   },
   {
     "id": "stage_bunpou_w2d6",
@@ -4192,14 +4291,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "You should try it"
   },
   {
     "id": "stage_bunpou_w2d7_boss",
     "map_id": "map_bunpou_w2",
     "stage_number": 7,
     "title_jp": "実戦問題 (Boss Stage)",
-    "title_en": "Practice Exercise (Boss Stage)",
+    "title_en": "Latihan Latihan (Panggung Bos)",
     "bunpou": [
       "w2d1g1",
       "w2d1g2",
@@ -4317,14 +4417,15 @@
     "choukai": [
       "choukai_001"
     ],
-    "type": "boss_test"
+    "type": "boss_test",
+    "title_id": "Latihan Latihan (Panggung Bos)"
   },
   {
     "id": "stage_bunpou_w3d1",
     "map_id": "map_bunpou_w3",
     "stage_number": 1,
     "title_jp": "いくら安くても",
-    "title_en": "I don't care how cheap it is",
+    "title_en": "Saya tidak peduli betapa murahnya itu",
     "bunpou": [
       "w3d1g1",
       "w3d1g2",
@@ -4422,14 +4523,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Saya tidak peduli betapa murahnya itu"
   },
   {
     "id": "stage_bunpou_w3d2",
     "map_id": "map_bunpou_w3",
     "stage_number": 2,
     "title_jp": "それにしては",
-    "title_en": "Considering that",
+    "title_en": "Mengingat bahwa",
     "bunpou": [
       "w3d2g1",
       "w3d2g2",
@@ -4528,14 +4630,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Mengingat bahwa"
   },
   {
     "id": "stage_bunpou_w3d3",
     "map_id": "map_bunpou_w3",
     "stage_number": 3,
     "title_jp": "勉強するつもりでしたが・・・",
-    "title_en": "I was planning to study ...",
+    "title_en": "Saya berencana untuk belajar...",
     "bunpou": [
       "w3d3g1",
       "w3d3g2",
@@ -4634,14 +4737,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Saya berencana untuk belajar..."
   },
   {
     "id": "stage_bunpou_w3d4",
     "map_id": "map_bunpou_w3",
     "stage_number": 4,
     "title_jp": "会うたびに",
-    "title_en": "Every time I see you",
+    "title_en": "setiap ku melihatmu",
     "bunpou": [
       "w3d4g1",
       "w3d4g2",
@@ -4740,14 +4844,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "setiap ku melihatmu"
   },
   {
     "id": "stage_bunpou_w3d5",
     "map_id": "map_bunpou_w3",
     "stage_number": 5,
     "title_jp": "一人っきり",
-    "title_en": "Be completely alone",
+    "title_en": "Benar-benar sendirian",
     "bunpou": [
       "w3d5g1",
       "w3d5g2",
@@ -4846,14 +4951,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Benar-benar sendirian"
   },
   {
     "id": "stage_bunpou_w3d6",
     "map_id": "map_bunpou_w3",
     "stage_number": 6,
     "title_jp": "教えてほしい",
-    "title_en": "Would like you to teach me",
+    "title_en": "Ingin Anda mengajari saya",
     "bunpou": [
       "w3d6g1",
       "w3d6g2",
@@ -4951,14 +5057,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Ingin Anda mengajari saya"
   },
   {
     "id": "stage_bunpou_w3d7_boss",
     "map_id": "map_bunpou_w3",
     "stage_number": 7,
     "title_jp": "実戦問題 (Boss Stage)",
-    "title_en": "Practice Exercise (Boss Stage)",
+    "title_en": "Latihan Latihan (Panggung Bos)",
     "bunpou": [
       "w3d1g1",
       "w3d1g2",
@@ -5076,14 +5183,15 @@
     "choukai": [
       "choukai_001"
     ],
-    "type": "boss_test"
+    "type": "boss_test",
+    "title_id": "Latihan Latihan (Panggung Bos)"
   },
   {
     "id": "stage_bunpou_w4d1",
     "map_id": "map_bunpou_w4",
     "stage_number": 1,
     "title_jp": "子どものくせに",
-    "title_en": "You're just a kid",
+    "title_en": "Kamu masih anak-anak",
     "bunpou": [
       "w4d1g1",
       "w4d1g2",
@@ -5182,14 +5290,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Kamu masih anak-anak"
   },
   {
     "id": "stage_bunpou_w4d2",
     "map_id": "map_bunpou_w4",
     "stage_number": 2,
     "title_jp": "そのかわり",
-    "title_en": "Instead",
+    "title_en": "Alih-alih",
     "bunpou": [
       "w4d2g1",
       "w4d2g2",
@@ -5288,14 +5397,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Alih-alih"
   },
   {
     "id": "stage_bunpou_w4d3",
     "map_id": "map_bunpou_w4",
     "stage_number": 3,
     "title_jp": "見れば見るほど",
-    "title_en": "The more I look at it, the more...",
+    "title_en": "Semakin aku melihatnya, semakin...",
     "bunpou": [
       "w4d3g1",
       "w4d3g2",
@@ -5394,14 +5504,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Semakin aku melihatnya, semakin..."
   },
   {
     "id": "stage_bunpou_w4d4",
     "map_id": "map_bunpou_w4",
     "stage_number": 4,
     "title_jp": "やってみることだ",
-    "title_en": "It's something you should try",
+    "title_en": "Itu adalah sesuatu yang harus Anda coba",
     "bunpou": [
       "w4d4g1",
       "w4d4g2",
@@ -5500,14 +5611,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Itu adalah sesuatu yang harus Anda coba"
   },
   {
     "id": "stage_bunpou_w4d5",
     "map_id": "map_bunpou_w4",
     "stage_number": 5,
     "title_jp": "聞いてみるしかない",
-    "title_en": "I have no choice but to ask",
+    "title_en": "Saya tidak punya pilihan selain bertanya",
     "bunpou": [
       "w4d5g1",
       "w4d5g2",
@@ -5606,14 +5718,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Saya tidak punya pilihan selain bertanya"
   },
   {
     "id": "stage_bunpou_w4d6",
     "map_id": "map_bunpou_w4",
     "stage_number": 6,
     "title_jp": "つまり・・・",
-    "title_en": "In other words",
+    "title_en": "Dengan kata lain",
     "bunpou": [
       "w4d6g1",
       "w4d6g2",
@@ -5712,14 +5825,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Dengan kata lain"
   },
   {
     "id": "stage_bunpou_w4d7_boss",
     "map_id": "map_bunpou_w4",
     "stage_number": 7,
     "title_jp": "実戦問題 (Boss Stage)",
-    "title_en": "Practice Exercise (Boss Stage)",
+    "title_en": "Latihan Latihan (Panggung Bos)",
     "bunpou": [
       "w4d1g1",
       "w4d1g2",
@@ -5839,14 +5953,15 @@
     "choukai": [
       "choukai_001"
     ],
-    "type": "boss_test"
+    "type": "boss_test",
+    "title_id": "Latihan Latihan (Panggung Bos)"
   },
   {
     "id": "stage_bunpou_w5d1",
     "map_id": "map_bunpou_w5",
     "stage_number": 1,
     "title_jp": "子どもばかりか",
-    "title_en": "Not only kids but ...",
+    "title_en": "Bukan hanya anak-anak saja, tapi...",
     "bunpou": [
       "w5d1g1",
       "w5d1g2",
@@ -5945,14 +6060,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Bukan hanya anak-anak saja, tapi..."
   },
   {
     "id": "stage_bunpou_w5d2",
     "map_id": "map_bunpou_w5",
     "stage_number": 2,
     "title_jp": "炊きたて",
-    "title_en": "Freshly cooked (rice)",
+    "title_en": "Baru dimasak (nasi)",
     "bunpou": [
       "w5d2g1",
       "w5d2g2",
@@ -6051,7 +6167,8 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Baru dimasak (nasi)"
   },
   {
     "id": "stage_bunpou_w5d3",
@@ -6157,14 +6274,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "I hope I will pass the exam"
   },
   {
     "id": "stage_bunpou_w5d4",
     "map_id": "map_bunpou_w5",
     "stage_number": 4,
     "title_jp": "今晩から明日の朝にかけて",
-    "title_en": "All night",
+    "title_en": "Sepanjang malam",
     "bunpou": [
       "w5d4g1",
       "w5d4g2",
@@ -6263,14 +6381,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Sepanjang malam"
   },
   {
     "id": "stage_bunpou_w5d5",
     "map_id": "map_bunpou_w5",
     "stage_number": 5,
     "title_jp": "たとえ高くても",
-    "title_en": "Even if it is expensive",
+    "title_en": "Sekalipun itu mahal",
     "bunpou": [
       "w5d5g1",
       "w5d5g2",
@@ -6369,14 +6488,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Sekalipun itu mahal"
   },
   {
     "id": "stage_bunpou_w5d6",
     "map_id": "map_bunpou_w5",
     "stage_number": 6,
     "title_jp": "ところで・・・",
-    "title_en": "By the way",
+    "title_en": "Omong-omong",
     "bunpou": [
       "w5d6g1",
       "w5d6g2",
@@ -6475,14 +6595,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Omong-omong"
   },
   {
     "id": "stage_bunpou_w5d7_boss",
     "map_id": "map_bunpou_w5",
     "stage_number": 7,
     "title_jp": "実戦問題 (Boss Stage)",
-    "title_en": "Practice Exercise (Boss Stage)",
+    "title_en": "Latihan Latihan (Panggung Bos)",
     "bunpou": [
       "w5d1g1",
       "w5d1g2",
@@ -6602,14 +6723,15 @@
     "choukai": [
       "choukai_001"
     ],
-    "type": "boss_test"
+    "type": "boss_test",
+    "title_id": "Latihan Latihan (Panggung Bos)"
   },
   {
     "id": "stage_bunpou_w6d1",
     "map_id": "map_bunpou_w6",
     "stage_number": 1,
     "title_jp": "もし私じゃなかったら",
-    "title_en": "If it weren't me",
+    "title_en": "Kalau bukan aku",
     "bunpou": [
       "w6d1g1",
       "w6d1g2",
@@ -6707,14 +6829,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Kalau bukan aku"
   },
   {
     "id": "stage_bunpou_w6d2",
     "map_id": "map_bunpou_w6",
     "stage_number": 2,
     "title_jp": "話せることは話せますが・・・",
-    "title_en": "I can speak but not that well",
+    "title_en": "Saya dapat berbicara tetapi tidak begitu baik",
     "bunpou": [
       "w6d2g1",
       "w6d2g2",
@@ -6813,14 +6936,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Saya dapat berbicara tetapi tidak begitu baik"
   },
   {
     "id": "stage_bunpou_w6d3",
     "map_id": "map_bunpou_w6",
     "stage_number": 3,
     "title_jp": "もう少しで乗り遅れるところだった",
-    "title_en": "I almost missed the train",
+    "title_en": "Saya hampir ketinggalan kereta",
     "bunpou": [
       "w6d3g1",
       "w6d3g2",
@@ -6919,14 +7043,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Saya hampir ketinggalan kereta"
   },
   {
     "id": "stage_bunpou_w6d4",
     "map_id": "map_bunpou_w6",
     "stage_number": 4,
     "title_jp": "できるわけがない",
-    "title_en": "There is no way I can do it",
+    "title_en": "Tidak mungkin aku bisa melakukannya",
     "bunpou": [
       "w6d4g1",
       "w6d4g2",
@@ -7025,14 +7150,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Tidak mungkin aku bisa melakukannya"
   },
   {
     "id": "stage_bunpou_w6d5",
     "map_id": "map_bunpou_w6",
     "stage_number": 5,
     "title_jp": "めったに行かない",
-    "title_en": "Rarely go",
+    "title_en": "Jarang pergi",
     "bunpou": [
       "w6d5g1",
       "w6d5g2",
@@ -7131,14 +7257,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Jarang pergi"
   },
   {
     "id": "stage_bunpou_w6d6",
     "map_id": "map_bunpou_w6",
     "stage_number": 6,
     "title_jp": "その上・・・",
-    "title_en": "Besides / Moreover",
+    "title_en": "Selain itu / Terlebih lagi",
     "bunpou": [
       "w6d6g1",
       "w6d6g2",
@@ -7236,14 +7363,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Selain itu / Terlebih lagi"
   },
   {
     "id": "stage_bunpou_w6d7_boss",
     "map_id": "map_bunpou_w6",
     "stage_number": 7,
     "title_jp": "実戦問題 (Boss Stage)",
-    "title_en": "Practice Exercise (Boss Stage)",
+    "title_en": "Latihan Latihan (Panggung Bos)",
     "bunpou": [
       "w6d1g1",
       "w6d1g2",
@@ -7386,14 +7514,15 @@
     "choukai": [
       "choukai_001"
     ],
-    "type": "boss_test"
+    "type": "boss_test",
+    "title_id": "Latihan Latihan (Panggung Bos)"
   },
   {
     "id": "stage_n2_w1d1",
     "map_id": "map_n2_w1",
     "stage_number": 1,
     "title_jp": "第1節：形式の境界",
-    "title_en": "Drill Stage 1: Boundary of Formality ",
+    "title_en": "Drill Stage 1: Boundary of Formality",
     "bunpou": [
       "bp_n2_001",
       "bp_n2_002",
@@ -7439,14 +7568,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Drill Stage 1: Boundary of Formality"
   },
   {
     "id": "stage_n2_w1d2",
     "map_id": "map_n2_w1",
     "stage_number": 2,
     "title_jp": "第2節：形式の境界",
-    "title_en": "Drill Stage 2: Boundary of Formality ",
+    "title_en": "Latihan Tahap 2: Batasan Formalitas",
     "bunpou": [
       "bp_n2_004",
       "bp_n2_005",
@@ -7492,14 +7622,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 2: Batasan Formalitas"
   },
   {
     "id": "stage_n2_w1d3",
     "map_id": "map_n2_w1",
     "stage_number": 3,
     "title_jp": "第3節：形式の境界",
-    "title_en": "Drill Stage 3: Boundary of Formality ",
+    "title_en": "Latihan Tahap 3: Batasan Formalitas",
     "bunpou": [
       "bp_n2_007",
       "bp_n2_008",
@@ -7545,14 +7676,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 3: Batasan Formalitas"
   },
   {
     "id": "stage_n2_w1d4",
     "map_id": "map_n2_w1",
     "stage_number": 4,
     "title_jp": "第4節：形式の境界",
-    "title_en": "Drill Stage 4: Boundary of Formality ",
+    "title_en": "Latihan Tahap 4: Batasan Formalitas",
     "bunpou": [
       "bp_n2_010",
       "bp_n2_011",
@@ -7598,14 +7730,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 4: Batasan Formalitas"
   },
   {
     "id": "stage_n2_w1d5",
     "map_id": "map_n2_w1",
     "stage_number": 5,
     "title_jp": "第5節：形式の境界",
-    "title_en": "Drill Stage 5: Boundary of Formality ",
+    "title_en": "Latihan Tahap 5: Batasan Formalitas",
     "bunpou": [
       "bp_n2_013",
       "bp_n2_014",
@@ -7651,14 +7784,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 5: Batasan Formalitas"
   },
   {
     "id": "stage_n2_w1d6",
     "map_id": "map_n2_w1",
     "stage_number": 6,
     "title_jp": "第6節：形式の境界",
-    "title_en": "Drill Stage 6: Boundary of Formality ",
+    "title_en": "Latihan Tahap 6: Batasan Formalitas",
     "bunpou": [
       "bp_n2_016",
       "bp_n2_017",
@@ -7704,14 +7838,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 6: Batasan Formalitas"
   },
   {
     "id": "stage_n2_w1d7_boss",
     "map_id": "map_n2_w1",
     "stage_number": 7,
     "title_jp": "【BOSS】形式の境界 (Ni saishite, Ni atatte, O keiki ni)",
-    "title_en": "Boss Exam: Boundary of Formality (Official Expressions)",
+    "title_en": "Ujian Bos: Batasan Formalitas (Ekspresi Resmi)",
     "bunpou": [
       "bp_n2_019",
       "bp_n2_020",
@@ -7757,14 +7892,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Ujian Bos: Batasan Formalitas (Ekspresi Resmi)"
   },
   {
     "id": "stage_n2_w2d1",
     "map_id": "map_n2_w2",
     "stage_number": 1,
     "title_jp": "第1節：対比の断崖",
-    "title_en": "Drill Stage 1: Cliffs of Contrast ",
+    "title_en": "Latihan Tahap 1: Tebing Kontras",
     "bunpou": [
       "bp_n2_001",
       "bp_n2_002",
@@ -7810,14 +7946,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 1: Tebing Kontras"
   },
   {
     "id": "stage_n2_w2d2",
     "map_id": "map_n2_w2",
     "stage_number": 2,
     "title_jp": "第2節：対比の断崖",
-    "title_en": "Drill Stage 2: Cliffs of Contrast ",
+    "title_en": "Latihan Tahap 2: Tebing Kontras",
     "bunpou": [
       "bp_n2_004",
       "bp_n2_005",
@@ -7863,14 +8000,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 2: Tebing Kontras"
   },
   {
     "id": "stage_n2_w2d3",
     "map_id": "map_n2_w2",
     "stage_number": 3,
     "title_jp": "第3節：対比の断崖",
-    "title_en": "Drill Stage 3: Cliffs of Contrast ",
+    "title_en": "Latihan Tahap 3: Tebing Kontras",
     "bunpou": [
       "bp_n2_007",
       "bp_n2_008",
@@ -7916,14 +8054,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 3: Tebing Kontras"
   },
   {
     "id": "stage_n2_w2d4",
     "map_id": "map_n2_w2",
     "stage_number": 4,
     "title_jp": "第4節：対比の断崖",
-    "title_en": "Drill Stage 4: Cliffs of Contrast ",
+    "title_en": "Latihan Tahap 4: Tebing Kontras",
     "bunpou": [
       "bp_n2_010",
       "bp_n2_011",
@@ -7969,14 +8108,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 4: Tebing Kontras"
   },
   {
     "id": "stage_n2_w2d5",
     "map_id": "map_n2_w2",
     "stage_number": 5,
     "title_jp": "第5節：対比の断崖",
-    "title_en": "Drill Stage 5: Cliffs of Contrast ",
+    "title_en": "Latihan Tahap 5: Tebing Kontras",
     "bunpou": [
       "bp_n2_013",
       "bp_n2_014",
@@ -8022,14 +8162,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 5: Tebing Kontras"
   },
   {
     "id": "stage_n2_w2d6",
     "map_id": "map_n2_w2",
     "stage_number": 6,
     "title_jp": "第6節：対比の断崖",
-    "title_en": "Drill Stage 6: Cliffs of Contrast ",
+    "title_en": "Latihan Tahap 6: Tebing Kontras",
     "bunpou": [
       "bp_n2_016",
       "bp_n2_017",
@@ -8075,14 +8216,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 6: Tebing Kontras"
   },
   {
     "id": "stage_n2_w2d7_boss",
     "map_id": "map_n2_w2",
     "stage_number": 7,
     "title_jp": "【BOSS】対比の断崖 (Ippou de, Hanmen, Ni hanshite)",
-    "title_en": "Boss Exam: Cliffs of Contrast (Oppositions & Perspectives)",
+    "title_en": "Ujian Bos: Tebing Kontras (Oposisi & Perspektif)",
     "bunpou": [
       "bp_n2_019",
       "bp_n2_020",
@@ -8128,14 +8270,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Ujian Bos: Tebing Kontras (Oposisi & Perspektif)"
   },
   {
     "id": "stage_n2_w3d1",
     "map_id": "map_n2_w3",
     "stage_number": 1,
     "title_jp": "第1節：情感の迷宮",
-    "title_en": "Drill Stage 1: Labyrinth of Emotions & Inevitabilities",
+    "title_en": "Latihan Tahap 1: Labirin Emosi & Ketidakpastian",
     "bunpou": [
       "bp_n2_001",
       "bp_n2_002",
@@ -8181,14 +8324,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 1: Labirin Emosi & Ketidakpastian"
   },
   {
     "id": "stage_n2_w3d2",
     "map_id": "map_n2_w3",
     "stage_number": 2,
     "title_jp": "第2節：情感の迷宮",
-    "title_en": "Drill Stage 2: Labyrinth of Emotions & Inevitabilities",
+    "title_en": "Latihan Tahap 2: Labirin Emosi & Ketidakpastian",
     "bunpou": [
       "bp_n2_004",
       "bp_n2_005",
@@ -8234,14 +8378,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 2: Labirin Emosi & Ketidakpastian"
   },
   {
     "id": "stage_n2_w3d3",
     "map_id": "map_n2_w3",
     "stage_number": 3,
     "title_jp": "第3節：情感の迷宮",
-    "title_en": "Drill Stage 3: Labyrinth of Emotions & Inevitabilities",
+    "title_en": "Latihan Tahap 3: Labirin Emosi & Ketidakpastian",
     "bunpou": [
       "bp_n2_007",
       "bp_n2_008",
@@ -8287,14 +8432,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 3: Labirin Emosi & Ketidakpastian"
   },
   {
     "id": "stage_n2_w3d4",
     "map_id": "map_n2_w3",
     "stage_number": 4,
     "title_jp": "第4節：情感の迷宮",
-    "title_en": "Drill Stage 4: Labyrinth of Emotions & Inevitabilities",
+    "title_en": "Latihan Tahap 4: Labirin Emosi & Ketidakpastian",
     "bunpou": [
       "bp_n2_010",
       "bp_n2_011",
@@ -8339,14 +8485,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 4: Labirin Emosi & Ketidakpastian"
   },
   {
     "id": "stage_n2_w3d5",
     "map_id": "map_n2_w3",
     "stage_number": 5,
     "title_jp": "第5節：情感の迷宮",
-    "title_en": "Drill Stage 5: Labyrinth of Emotions & Inevitabilities",
+    "title_en": "Latihan Tahap 5: Labirin Emosi & Ketidakpastian",
     "bunpou": [
       "bp_n2_013",
       "bp_n2_014",
@@ -8391,14 +8538,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 5: Labirin Emosi & Ketidakpastian"
   },
   {
     "id": "stage_n2_w3d6",
     "map_id": "map_n2_w3",
     "stage_number": 6,
     "title_jp": "第6節：情感の迷宮",
-    "title_en": "Drill Stage 6: Labyrinth of Emotions & Inevitabilities",
+    "title_en": "Latihan Tahap 6: Labirin Emosi & Ketidakpastian",
     "bunpou": [
       "bp_n2_016",
       "bp_n2_017",
@@ -8443,14 +8591,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 6: Labirin Emosi & Ketidakpastian"
   },
   {
     "id": "stage_n2_w3d7_boss",
     "map_id": "map_n2_w3",
     "stage_number": 7,
     "title_jp": "【BOSS】情感の迷宮 (Te tamaranai, Zaru wo enai)",
-    "title_en": "Boss Exam: Labyrinth of Emotions & Inevitabilities",
+    "title_en": "Ujian Bos: Labirin Emosi & Ketidakpastian",
     "bunpou": [
       "bp_n2_019",
       "bp_n2_020",
@@ -8495,14 +8644,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Ujian Bos: Labirin Emosi & Ketidakpastian"
   },
   {
     "id": "stage_n2_w4d1",
     "map_id": "map_n2_w4",
     "stage_number": 1,
     "title_jp": "第1節：論理の回廊",
-    "title_en": "Drill Stage 1: Corridor of Academic Logic & Reasoning",
+    "title_en": "Latihan Tahap 1: Koridor Logika & Penalaran Akademik",
     "bunpou": [
       "bp_n2_001",
       "bp_n2_002",
@@ -8547,7 +8697,8 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 1: Koridor Logika & Penalaran Akademik"
   },
   {
     "id": "stage_n2_w4d2",
@@ -8599,14 +8750,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Drill Stage 2: Corridor of Academic Logic & Reasoning"
   },
   {
     "id": "stage_n2_w4d3",
     "map_id": "map_n2_w4",
     "stage_number": 3,
     "title_jp": "第3節：論理の回廊",
-    "title_en": "Drill Stage 3: Corridor of Academic Logic & Reasoning",
+    "title_en": "Latihan Tahap 3: Koridor Logika & Penalaran Akademik",
     "bunpou": [
       "bp_n2_007",
       "bp_n2_008",
@@ -8651,14 +8803,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 3: Koridor Logika & Penalaran Akademik"
   },
   {
     "id": "stage_n2_w4d4",
     "map_id": "map_n2_w4",
     "stage_number": 4,
     "title_jp": "第4節：論理の回廊",
-    "title_en": "Drill Stage 4: Corridor of Academic Logic & Reasoning",
+    "title_en": "Latihan Tahap 4: Koridor Logika & Penalaran Akademik",
     "bunpou": [
       "bp_n2_010",
       "bp_n2_011",
@@ -8703,14 +8856,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 4: Koridor Logika & Penalaran Akademik"
   },
   {
     "id": "stage_n2_w4d5",
     "map_id": "map_n2_w4",
     "stage_number": 5,
     "title_jp": "第5節：論理の回廊",
-    "title_en": "Drill Stage 5: Corridor of Academic Logic & Reasoning",
+    "title_en": "Latihan Tahap 5: Koridor Logika & Penalaran Akademik",
     "bunpou": [
       "bp_n2_013",
       "bp_n2_014",
@@ -8755,7 +8909,8 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 5: Koridor Logika & Penalaran Akademik"
   },
   {
     "id": "stage_n2_w4d6",
@@ -8807,14 +8962,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Drill Stage 6: Corridor of Academic Logic & Reasoning"
   },
   {
     "id": "stage_n2_w4d7_boss",
     "map_id": "map_n2_w4",
     "stage_number": 7,
     "title_jp": "【BOSS】論理の回廊 (Nomi narazu, Ni hoka naranai)",
-    "title_en": "Boss Exam: Corridor of Academic Logic & Reasoning",
+    "title_en": "Ujian Bos: Koridor Logika & Penalaran Akademik",
     "bunpou": [
       "bp_n2_019",
       "bp_n2_020",
@@ -8859,14 +9015,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Ujian Bos: Koridor Logika & Penalaran Akademik"
   },
   {
     "id": "stage_n2_w5d1",
     "map_id": "map_n2_w5",
     "stage_number": 1,
     "title_jp": "第1節：上級城塞",
-    "title_en": "Drill Stage 1: High Citadel of N2 Mastery ",
+    "title_en": "Latihan Tahap 1: Benteng Tinggi Penguasaan N2",
     "bunpou": [
       "bp_n2_001",
       "bp_n2_002",
@@ -8911,14 +9068,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 1: Benteng Tinggi Penguasaan N2"
   },
   {
     "id": "stage_n2_w5d2",
     "map_id": "map_n2_w5",
     "stage_number": 2,
     "title_jp": "第2節：上級城塞",
-    "title_en": "Drill Stage 2: High Citadel of N2 Mastery ",
+    "title_en": "Latihan Tahap 2: Benteng Tinggi Penguasaan N2",
     "bunpou": [
       "bp_n2_004",
       "bp_n2_005",
@@ -8963,14 +9121,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 2: Benteng Tinggi Penguasaan N2"
   },
   {
     "id": "stage_n2_w5d3",
     "map_id": "map_n2_w5",
     "stage_number": 3,
     "title_jp": "第3節：上級城塞",
-    "title_en": "Drill Stage 3: High Citadel of N2 Mastery ",
+    "title_en": "Latihan Tahap 3: Benteng Tinggi Penguasaan N2",
     "bunpou": [
       "bp_n2_007",
       "bp_n2_008",
@@ -9015,14 +9174,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 3: Benteng Tinggi Penguasaan N2"
   },
   {
     "id": "stage_n2_w5d4",
     "map_id": "map_n2_w5",
     "stage_number": 4,
     "title_jp": "第4節：上級城塞",
-    "title_en": "Drill Stage 4: High Citadel of N2 Mastery ",
+    "title_en": "Drill Stage 4: High Citadel of N2 Mastery",
     "bunpou": [
       "bp_n2_010",
       "bp_n2_011",
@@ -9067,14 +9227,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Drill Stage 4: High Citadel of N2 Mastery"
   },
   {
     "id": "stage_n2_w5d5",
     "map_id": "map_n2_w5",
     "stage_number": 5,
     "title_jp": "第5節：上級城塞",
-    "title_en": "Drill Stage 5: High Citadel of N2 Mastery ",
+    "title_en": "Drill Stage 5: High Citadel of N2 Mastery",
     "bunpou": [
       "bp_n2_013",
       "bp_n2_014",
@@ -9119,14 +9280,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Drill Stage 5: High Citadel of N2 Mastery"
   },
   {
     "id": "stage_n2_w5d6",
     "map_id": "map_n2_w5",
     "stage_number": 6,
     "title_jp": "第6節：上級城塞",
-    "title_en": "Drill Stage 6: High Citadel of N2 Mastery ",
+    "title_en": "Latihan Tahap 6: Benteng Tinggi Penguasaan N2",
     "bunpou": [
       "bp_n2_016",
       "bp_n2_017",
@@ -9171,14 +9333,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 6: Benteng Tinggi Penguasaan N2"
   },
   {
     "id": "stage_n2_w5d7_boss",
     "map_id": "map_n2_w5",
     "stage_number": 7,
     "title_jp": "【BOSS】上級城塞 (Boss Ujian Penguasaan N2)",
-    "title_en": "Boss Exam: High Citadel of N2 Mastery (Grand Boss)",
+    "title_en": "Ujian Bos: Benteng Tinggi Penguasaan N2 (Bos Besar)",
     "bunpou": [
       "bp_n2_019",
       "bp_n2_020",
@@ -9223,14 +9386,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Ujian Bos: Benteng Tinggi Penguasaan N2 (Bos Besar)"
   },
   {
     "id": "stage_n1_w1d1",
     "map_id": "map_n1_w1",
     "stage_number": 1,
     "title_jp": "第1節：古典の極み",
-    "title_en": "Drill Stage 1: Pinnacle of Classical Expressions",
+    "title_en": "Latihan Tahap 1: Puncak Ekspresi Klasik",
     "bunpou": [
       "bp_n1_001",
       "bp_n1_002",
@@ -9279,14 +9443,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 1: Puncak Ekspresi Klasik"
   },
   {
     "id": "stage_n1_w1d2",
     "map_id": "map_n1_w1",
     "stage_number": 2,
     "title_jp": "第2節：古典の極み",
-    "title_en": "Drill Stage 2: Pinnacle of Classical Expressions",
+    "title_en": "Latihan Tahap 2: Puncak Ekspresi Klasik",
     "bunpou": [
       "bp_n1_004",
       "bp_n1_005",
@@ -9335,14 +9500,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 2: Puncak Ekspresi Klasik"
   },
   {
     "id": "stage_n1_w1d3",
     "map_id": "map_n1_w1",
     "stage_number": 3,
     "title_jp": "第3節：古典の極み",
-    "title_en": "Drill Stage 3: Pinnacle of Classical Expressions",
+    "title_en": "Latihan Tahap 3: Puncak Ekspresi Klasik",
     "bunpou": [
       "bp_n1_007",
       "bp_n1_008",
@@ -9391,14 +9557,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 3: Puncak Ekspresi Klasik"
   },
   {
     "id": "stage_n1_w1d4",
     "map_id": "map_n1_w1",
     "stage_number": 4,
     "title_jp": "第4節：古典の極み",
-    "title_en": "Drill Stage 4: Pinnacle of Classical Expressions",
+    "title_en": "Latihan Tahap 4: Puncak Ekspresi Klasik",
     "bunpou": [
       "bp_n1_010",
       "bp_n1_011",
@@ -9447,14 +9614,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 4: Puncak Ekspresi Klasik"
   },
   {
     "id": "stage_n1_w1d5",
     "map_id": "map_n1_w1",
     "stage_number": 5,
     "title_jp": "第5節：古典の極み",
-    "title_en": "Drill Stage 5: Pinnacle of Classical Expressions",
+    "title_en": "Latihan Tahap 5: Puncak Ekspresi Klasik",
     "bunpou": [
       "bp_n1_013",
       "bp_n1_014",
@@ -9503,14 +9671,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 5: Puncak Ekspresi Klasik"
   },
   {
     "id": "stage_n1_w1d6",
     "map_id": "map_n1_w1",
     "stage_number": 6,
     "title_jp": "第6節：古典の極み",
-    "title_en": "Drill Stage 6: Pinnacle of Classical Expressions",
+    "title_en": "Latihan Tahap 6: Puncak Ekspresi Klasik",
     "bunpou": [
       "bp_n1_016",
       "bp_n1_017",
@@ -9559,14 +9728,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 6: Puncak Ekspresi Klasik"
   },
   {
     "id": "stage_n1_w1d7_boss",
     "map_id": "map_n1_w1",
     "stage_number": 7,
     "title_jp": "【BOSS】古典の極み (Gotoki, Nari ni, To ie domo)",
-    "title_en": "Boss Exam: Pinnacle of Classical Expressions",
+    "title_en": "Ujian Bos: Puncak Ekspresi Klasik",
     "bunpou": [
       "bp_n1_019",
       "bp_n1_020",
@@ -9615,14 +9785,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Ujian Bos: Puncak Ekspresi Klasik"
   },
   {
     "id": "stage_n1_w2d1",
     "map_id": "map_n1_w2",
     "stage_number": 1,
     "title_jp": "第1節：限界の深淵",
-    "title_en": "Drill Stage 1: Abyss of Instantaneous & Prohibitive Grammar",
+    "title_en": "Latihan Tahap 1: Jurang Tata Bahasa Sesaat & Melarang",
     "bunpou": [
       "bp_n1_001",
       "bp_n1_002",
@@ -9671,14 +9842,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 1: Jurang Tata Bahasa Sesaat & Melarang"
   },
   {
     "id": "stage_n1_w2d2",
     "map_id": "map_n1_w2",
     "stage_number": 2,
     "title_jp": "第2節：限界の深淵",
-    "title_en": "Drill Stage 2: Abyss of Instantaneous & Prohibitive Grammar",
+    "title_en": "Latihan Tahap 2: Jurang Tata Bahasa Sesaat & Melarang",
     "bunpou": [
       "bp_n1_004",
       "bp_n1_005",
@@ -9727,14 +9899,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 2: Jurang Tata Bahasa Sesaat & Melarang"
   },
   {
     "id": "stage_n1_w2d3",
     "map_id": "map_n1_w2",
     "stage_number": 3,
     "title_jp": "第3節：限界の深淵",
-    "title_en": "Drill Stage 3: Abyss of Instantaneous & Prohibitive Grammar",
+    "title_en": "Latihan Tahap 3: Jurang Tata Bahasa Sesaat & Melarang",
     "bunpou": [
       "bp_n1_007",
       "bp_n1_008",
@@ -9783,14 +9956,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 3: Jurang Tata Bahasa Sesaat & Melarang"
   },
   {
     "id": "stage_n1_w2d4",
     "map_id": "map_n1_w2",
     "stage_number": 4,
     "title_jp": "第4節：限界の深淵",
-    "title_en": "Drill Stage 4: Abyss of Instantaneous & Prohibitive Grammar",
+    "title_en": "Latihan Tahap 4: Jurang Tata Bahasa Sesaat & Melarang",
     "bunpou": [
       "bp_n1_010",
       "bp_n1_011",
@@ -9839,14 +10013,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 4: Jurang Tata Bahasa Sesaat & Melarang"
   },
   {
     "id": "stage_n1_w2d5",
     "map_id": "map_n1_w2",
     "stage_number": 5,
     "title_jp": "第5節：限界の深淵",
-    "title_en": "Drill Stage 5: Abyss of Instantaneous & Prohibitive Grammar",
+    "title_en": "Latihan Tahap 5: Jurang Tata Bahasa Sesaat & Melarang",
     "bunpou": [
       "bp_n1_013",
       "bp_n1_014",
@@ -9895,14 +10070,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 5: Jurang Tata Bahasa Sesaat & Melarang"
   },
   {
     "id": "stage_n1_w2d6",
     "map_id": "map_n1_w2",
     "stage_number": 6,
     "title_jp": "第6節：限界の深淵",
-    "title_en": "Drill Stage 6: Abyss of Instantaneous & Prohibitive Grammar",
+    "title_en": "Latihan Tahap 6: Jurang Tata Bahasa Sesaat & Melarang",
     "bunpou": [
       "bp_n1_016",
       "bp_n1_017",
@@ -9951,14 +10127,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 6: Jurang Tata Bahasa Sesaat & Melarang"
   },
   {
     "id": "stage_n1_w2d7_boss",
     "map_id": "map_n1_w2",
     "stage_number": 7,
     "title_jp": "【BOSS】限界の深淵 (Ya ina ya, Soba kara, Majiki)",
-    "title_en": "Boss Exam: Abyss of Instantaneous & Prohibitive Grammar",
+    "title_en": "Ujian Bos: Jurang Tata Bahasa Sesaat & Melarang",
     "bunpou": [
       "bp_n1_019",
       "bp_n1_020",
@@ -10007,7 +10184,8 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Ujian Bos: Jurang Tata Bahasa Sesaat & Melarang"
   },
   {
     "id": "stage_n1_w3d1",
@@ -10063,7 +10241,8 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Drill Stage 1: Palace of Critical Philosophy & Context"
   },
   {
     "id": "stage_n1_w3d2",
@@ -10119,14 +10298,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Drill Stage 2: Palace of Critical Philosophy & Context"
   },
   {
     "id": "stage_n1_w3d3",
     "map_id": "map_n1_w3",
     "stage_number": 3,
     "title_jp": "第3節：哲学の宮殿",
-    "title_en": "Drill Stage 3: Palace of Critical Philosophy & Context",
+    "title_en": "Latihan Tahap 3: Istana Filsafat & Konteks Kritis",
     "bunpou": [
       "bp_n1_007",
       "bp_n1_008",
@@ -10175,14 +10355,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 3: Istana Filsafat & Konteks Kritis"
   },
   {
     "id": "stage_n1_w3d4",
     "map_id": "map_n1_w3",
     "stage_number": 4,
     "title_jp": "第4節：哲学の宮殿",
-    "title_en": "Drill Stage 4: Palace of Critical Philosophy & Context",
+    "title_en": "Latihan Tahap 4: Istana Filsafat & Konteks Kritis",
     "bunpou": [
       "bp_n1_010",
       "bp_n1_011",
@@ -10231,14 +10412,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 4: Istana Filsafat & Konteks Kritis"
   },
   {
     "id": "stage_n1_w3d5",
     "map_id": "map_n1_w3",
     "stage_number": 5,
     "title_jp": "第5節：哲学の宮殿",
-    "title_en": "Drill Stage 5: Palace of Critical Philosophy & Context",
+    "title_en": "Latihan Tahap 5: Istana Filsafat & Konteks Kritis",
     "bunpou": [
       "bp_n1_013",
       "bp_n1_014",
@@ -10287,7 +10469,8 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 5: Istana Filsafat & Konteks Kritis"
   },
   {
     "id": "stage_n1_w3d6",
@@ -10343,14 +10526,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Drill Stage 6: Palace of Critical Philosophy & Context"
   },
   {
     "id": "stage_n1_w3d7_boss",
     "map_id": "map_n1_w3",
     "stage_number": 7,
     "title_jp": "【BOSS】哲学の宮殿 (Ni atte, O oite, Ni kakete wa)",
-    "title_en": "Boss Exam: Palace of Critical Philosophy & Context",
+    "title_en": "Ujian Bos: Istana Filsafat & Konteks Kritis",
     "bunpou": [
       "bp_n1_019",
       "bp_n1_020",
@@ -10399,14 +10583,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Ujian Bos: Istana Filsafat & Konteks Kritis"
   },
   {
     "id": "stage_n1_w4d1",
     "map_id": "map_n1_w4",
     "stage_number": 1,
     "title_jp": "第1節：言霊の頂",
-    "title_en": "Drill Stage 1: Summit of Sublime Linguistic Power",
+    "title_en": "Latihan Tahap 1: Puncak Kekuatan Linguistik yang Luhur",
     "bunpou": [
       "bp_n1_001",
       "bp_n1_002",
@@ -10455,14 +10640,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 1: Puncak Kekuatan Linguistik yang Luhur"
   },
   {
     "id": "stage_n1_w4d2",
     "map_id": "map_n1_w4",
     "stage_number": 2,
     "title_jp": "第2節：言霊の頂",
-    "title_en": "Drill Stage 2: Summit of Sublime Linguistic Power",
+    "title_en": "Latihan Tahap 2: Puncak Kekuatan Linguistik yang Luhur",
     "bunpou": [
       "bp_n1_004",
       "bp_n1_005",
@@ -10511,7 +10697,8 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 2: Puncak Kekuatan Linguistik yang Luhur"
   },
   {
     "id": "stage_n1_w4d3",
@@ -10567,7 +10754,8 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Drill Stage 3: Summit of Sublime Linguistic Power"
   },
   {
     "id": "stage_n1_w4d4",
@@ -10623,14 +10811,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Drill Stage 4: Summit of Sublime Linguistic Power"
   },
   {
     "id": "stage_n1_w4d5",
     "map_id": "map_n1_w4",
     "stage_number": 5,
     "title_jp": "第5節：言霊の頂",
-    "title_en": "Drill Stage 5: Summit of Sublime Linguistic Power",
+    "title_en": "Latihan Tahap 5: Puncak Kekuatan Linguistik yang Luhur",
     "bunpou": [
       "bp_n1_013",
       "bp_n1_014",
@@ -10679,14 +10868,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 5: Puncak Kekuatan Linguistik yang Luhur"
   },
   {
     "id": "stage_n1_w4d6",
     "map_id": "map_n1_w4",
     "stage_number": 6,
     "title_jp": "第6節：言霊の頂",
-    "title_en": "Drill Stage 6: Summit of Sublime Linguistic Power",
+    "title_en": "Latihan Tahap 6: Puncak Kekuatan Linguistik yang Luhur",
     "bunpou": [
       "bp_n1_016",
       "bp_n1_017",
@@ -10735,14 +10925,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 6: Puncak Kekuatan Linguistik yang Luhur"
   },
   {
     "id": "stage_n1_w4d7_boss",
     "map_id": "map_n1_w4",
     "stage_number": 7,
     "title_jp": "【BOSS】言霊の頂 (Kagiri da, Kiwamari nai, O fumaete)",
-    "title_en": "Boss Exam: Summit of Sublime Linguistic Power",
+    "title_en": "Ujian Bos: Puncak Kekuatan Linguistik yang Luhur",
     "bunpou": [
       "bp_n1_019",
       "bp_n1_020",
@@ -10791,14 +10982,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Ujian Bos: Puncak Kekuatan Linguistik yang Luhur"
   },
   {
     "id": "stage_n1_w5d1",
     "map_id": "map_n1_w5",
     "stage_number": 1,
     "title_jp": "第1節：超越者の玉座",
-    "title_en": "Drill Stage 1: Throne of the Transcendent ",
+    "title_en": "Latihan Tahap 1: Tahta Transenden",
     "bunpou": [
       "bp_n1_001",
       "bp_n1_002",
@@ -10847,14 +11039,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 1: Tahta Transenden"
   },
   {
     "id": "stage_n1_w5d2",
     "map_id": "map_n1_w5",
     "stage_number": 2,
     "title_jp": "第2節：超越者の玉座",
-    "title_en": "Drill Stage 2: Throne of the Transcendent ",
+    "title_en": "Latihan Tahap 2: Tahta Transenden",
     "bunpou": [
       "bp_n1_004",
       "bp_n1_005",
@@ -10903,14 +11096,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 2: Tahta Transenden"
   },
   {
     "id": "stage_n1_w5d3",
     "map_id": "map_n1_w5",
     "stage_number": 3,
     "title_jp": "第3節：超越者の玉座",
-    "title_en": "Drill Stage 3: Throne of the Transcendent ",
+    "title_en": "Latihan Tahap 3: Tahta Transenden",
     "bunpou": [
       "bp_n1_007",
       "bp_n1_008",
@@ -10959,14 +11153,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 3: Tahta Transenden"
   },
   {
     "id": "stage_n1_w5d4",
     "map_id": "map_n1_w5",
     "stage_number": 4,
     "title_jp": "第4節：超越者の玉座",
-    "title_en": "Drill Stage 4: Throne of the Transcendent ",
+    "title_en": "Latihan Tahap 4: Tahta Transenden",
     "bunpou": [
       "bp_n1_010",
       "bp_n1_011",
@@ -11015,14 +11210,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 4: Tahta Transenden"
   },
   {
     "id": "stage_n1_w5d5",
     "map_id": "map_n1_w5",
     "stage_number": 5,
     "title_jp": "第5節：超越者の玉座",
-    "title_en": "Drill Stage 5: Throne of the Transcendent ",
+    "title_en": "Latihan Tahap 5: Tahta Transenden",
     "bunpou": [
       "bp_n1_013",
       "bp_n1_014",
@@ -11071,14 +11267,15 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 5: Tahta Transenden"
   },
   {
     "id": "stage_n1_w5d6",
     "map_id": "map_n1_w5",
     "stage_number": 6,
     "title_jp": "第6節：超越者の玉座",
-    "title_en": "Drill Stage 6: Throne of the Transcendent ",
+    "title_en": "Latihan Tahap 6: Tahta Transenden",
     "bunpou": [
       "bp_n1_016",
       "bp_n1_017",
@@ -11127,7 +11324,8 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Latihan Tahap 6: Tahta Transenden"
   },
   {
     "id": "stage_n1_w5d7_boss",
@@ -11183,6 +11381,7 @@
     ],
     "choukai": [
       "choukai_001"
-    ]
+    ],
+    "title_id": "Boss Exam: Throne of the Transcendent (Grand Mythic Boss)"
   }
 ]

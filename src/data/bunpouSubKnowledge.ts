@@ -741,61 +741,204 @@ function inferUsageLocation(token: string): { location: string; type: SubFormula
 }
 
 /**
- * Infer connection conditions from the left-hand side of a formula.
+ * Parse an isolated segment of condition string (e.g. 'Vる', 'Vない', 'Nの', 'A')
  */
-function inferConditionsFromLeft(leftSide: string): ConnectionCondition[] {
+function parseSingleConditionSegment(seg: string): ConnectionCondition[] {
   const conditions: ConnectionCondition[] = [];
-  const normalized = leftSide.trim();
+  const normalized = seg.trim();
 
-  if (/N/.test(normalized)) {
-    conditions.push({
-      partOfSpeech: 'Kata Benda (N)',
-      rule: 'N ＋ pola tata bahasa',
-      example: 'Kata benda langsung atau dengan partikel sesuai pola',
-    });
-  }
-  if (/V/.test(normalized)) {
-    let vRule = 'V ＋ pola tata bahasa';
-    if (/Vます/.test(normalized)) {
-      vRule = 'Vます (Coret ます / Stem kata kerja) ＋ pola';
-    } else if (/Vて/.test(normalized)) {
-      vRule = 'Vて形 (Bentuk Sambung -te) ＋ pola';
-    } else if (/Vた/.test(normalized)) {
-      vRule = 'Vた形 (Bentuk Lampau) ＋ pola';
-    } else if (/Vない/.test(normalized)) {
-      vRule = 'Vない形 (Bentuk Negatif) ＋ pola';
-    } else if (/Vる/.test(normalized) || /V普/.test(normalized)) {
-      vRule = 'V普 (Bentuk Biasa / Kamus) ＋ pola';
+  // 1. Noun detection (only if it doesn't also contain V)
+  if (/N|Noun|名詞/i.test(normalized) && !/V|Verb/i.test(normalized)) {
+    let nRule = 'N (Kata Benda) ＋ pola';
+    let nEx = 'Kata benda langsung menempel sesuai pola';
+    if (/Nの|Noun.*の/i.test(normalized)) {
+      nRule = 'N ＋ の ＋ pola';
+      nEx = 'Hubungkan kata benda dengan partikel の (contoh: 先生の、子供の)';
+    } else if (/Nな|Noun.*な/i.test(normalized)) {
+      nRule = 'N ＋ な ＋ pola';
+      nEx = 'Hubungkan kata benda dengan partikel な (contoh: 病気な)';
+    } else if (/Nである|Noun.*である/i.test(normalized)) {
+      nRule = 'N ＋ である ＋ pola';
+      nEx = 'Gunakan bentuk formal である (contoh: 学生である)';
+    } else if (/Nに|Noun.*に/i.test(normalized)) {
+      nRule = 'N ＋ に ＋ pola';
+      nEx = 'Tandai kata benda dengan partikel に (contoh: 友達に)';
+    } else if (/Nで|Noun.*で/i.test(normalized)) {
+      nRule = 'N ＋ で ＋ pola';
+      nEx = 'Tandai kata benda dengan partikel で (contoh: バスで)';
     }
-    conditions.push({
-      partOfSpeech: 'Kata Kerja (V)',
-      rule: vRule,
-      example: 'Sesuaikan konjugasi kata kerja dasar yang disyaratkan',
-    });
-  }
-  if (/na/.test(normalized)) {
-    conditions.push({
-      partOfSpeech: 'Kata Sifat-na',
-      rule: 'na ＋ pola tata bahasa',
-      example: 'na(語幹) tanpa だ atau dengan な sesuai kebutuhan modifikasi',
-    });
-  }
-  if (/A/.test(normalized)) {
-    conditions.push({
-      partOfSpeech: 'Kata Sifat-i (A)',
-      rule: 'A ＋ pola tata bahasa',
-      example: 'Kata sifat berakhiran -i dalam bentuk biasa atau stem',
-    });
+    conditions.push({ partOfSpeech: 'Kata Benda (N)', rule: nRule, example: nEx });
+    return conditions;
   }
 
-  if (conditions.length === 0) {
-    conditions.push({
-      partOfSpeech: 'Aturan Sambungan',
-      rule: leftSide || 'Mengikuti rumus pembentukan dasar',
-    });
+  // 2. Verb detection
+  if (/V|Verb|動詞/i.test(normalized)) {
+    if (/Vよう|よう|volitional|意向形/i.test(normalized)) {
+      conditions.push({
+        partOfSpeech: 'Kata Kerja Bentuk Maksud (V-よう)',
+        rule: 'Vよう (Bentuk Maksud / Ajakan) ＋ pola',
+        example: 'Godan: u → ou (行こう), Ichidan: ru → you (食べよう), する → しよう, 来る → こよう',
+      });
+    } else if (/causative|使役|(さ)せて|させて|させる/i.test(normalized)) {
+      conditions.push({
+        partOfSpeech: 'Kata Kerja Kausatif (V-saseru)',
+        rule: 'V(さ)せる (Bentuk Kausatif) ＋ pola',
+        example: 'Godan: a + せる (書かせる), Ichidan: させる (食べさせる), する → させる, 来る → こさせる',
+      });
+    } else if (/Vれます/i.test(normalized)) {
+      conditions.push({
+        partOfSpeech: 'Kata Kerja Potensial Sopan (Vれます)',
+        rule: 'Vれます (Bentuk Potensial Sopan) ＋ pola',
+        example: 'Contoh: 合格できますように, 治りますように, 会えますように',
+      });
+    } else if (/Vません/i.test(normalized)) {
+      conditions.push({
+        partOfSpeech: 'Kata Kerja Negatif Sopan (Vません)',
+        rule: 'Vません (Bentuk Negatif Sopan) ＋ pola',
+        example: 'Contoh: 降りませんように, 失敗しませんように',
+      });
+    } else if (/Vます/i.test(normalized) || (/stem|［stem］/i.test(normalized) && !/Vる|Vない/i.test(normalized))) {
+      conditions.push({
+        partOfSpeech: 'Kata Kerja Bentuk Masu (Vます)',
+        rule: 'Vます (Bentuk Sopan / Stem) ＋ pola',
+        example: 'Coret ます: 行き (dari 行きます), 食べ (dari 食べます), し (dari します)',
+      });
+    } else if (/Vれる|Vられる|passive|受身/i.test(normalized)) {
+      conditions.push({
+        partOfSpeech: 'Kata Kerja Pasif/Potensial (Vれる)',
+        rule: 'Vれる / Vられる (Bentuk Pasif / Potensial) ＋ pola',
+        example: 'Godan: a + れる (書かれる), Ichidan: られる (褒められる), する → される, 来る → こられる',
+      });
+    } else if (/Vば|ば-form|ba-conditional|条件形|え-stem/i.test(normalized) || /ば$/i.test(normalized)) {
+      conditions.push({
+        partOfSpeech: 'Kata Kerja Pengandaian (Vば)',
+        rule: 'Vば形 (Bentuk Pengandaian -ba) ＋ pola',
+        example: 'Godan: e + ば (行けば), Ichidan: reba (食べれば), する → すれば, 来る → くれば',
+      });
+    } else if (/命令形|imperative/i.test(normalized)) {
+      conditions.push({
+        partOfSpeech: 'Kata Kerja Perintah (V命令形)',
+        rule: 'V命令形 (Bentuk Perintah) ＋ pola',
+        example: 'Godan: e (行け), Ichidan: ro (食べろ), する → しろ, 来る → こい',
+      });
+    } else if (/禁止形|prohibitive|るな/i.test(normalized)) {
+      conditions.push({
+        partOfSpeech: 'Kata Kerja Larangan (Vるな)',
+        rule: 'V禁止形 (Bentuk Larangan: Vるな) ＋ pola',
+        example: 'Bentuk kamus + な: 行くな (Jangan pergi), 食べるな (Jangan makan)',
+      });
+    } else if (/potential|可能形/i.test(normalized)) {
+      conditions.push({
+        partOfSpeech: 'Kata Kerja Potensial (V可能形)',
+        rule: 'V可能形 (Bentuk Potensial / Bisa) ＋ pola',
+        example: 'Godan: e + る (話せる), Ichidan: rareru (食べられる), する → できる, 来る → こられる',
+      });
+    } else if (/Vない|ない\s*form|［ない\s*form］|ない形/i.test(normalized)) {
+      conditions.push({
+        partOfSpeech: 'Kata Kerja Negatif (Vない)',
+        rule: 'Vない形 (Bentuk Negatif) ＋ pola',
+        example: 'Bentuk negatif: 忘れない, 遅れない, 諦めない, 行かない',
+      });
+    } else if (/Vて|て\s*form|［て\s*form］|て形/i.test(normalized)) {
+      conditions.push({
+        partOfSpeech: 'Kata Kerja Bentuk-Te (Vて)',
+        rule: 'Vて形 (Bentuk Sambung -te) ＋ pola',
+        example: 'Bentuk sambung: 食べて, 飲んで, 行って, して',
+      });
+    } else if (/Vた|た\s*form|［た\s*form］|た形/i.test(normalized)) {
+      conditions.push({
+        partOfSpeech: 'Kata Kerja Bentuk-Ta (Vた)',
+        rule: 'Vた形 (Bentuk Lampau) ＋ pola',
+        example: 'Bentuk lampau: 食べた, 飲んだ, 行った, した',
+      });
+    } else if (/Vる|dictionary|辞書形/i.test(normalized)) {
+      conditions.push({
+        partOfSpeech: 'Kata Kerja Kamus (Vる)',
+        rule: 'Vる (Bentuk Kamus) ＋ pola',
+        example: 'Bentuk kamus dasar: 早く来る, 気をつける, 食べる, 行く',
+      });
+    } else if (/V普|plain|普通形/i.test(normalized)) {
+      conditions.push({
+        partOfSpeech: 'Kata Kerja Biasa (V普)',
+        rule: 'V普 (Bentuk Biasa / Plain Form) ＋ pola',
+        example: 'Bentuk kasual biasa (kamus, negatif, lampau, lampau negatif)',
+      });
+    } else {
+      conditions.push({
+        partOfSpeech: 'Kata Kerja (V)',
+        rule: 'Kata Kerja (V) ＋ pola',
+        example: 'Sesuaikan konjugasi kata kerja yang disyaratkan pola',
+      });
+    }
+    return conditions;
+  }
+
+  // 3. Adjectives detection
+  if (/na|な-adjective|形容動詞/i.test(normalized)) {
+    let naRule = 'na (Kata Sifat-na) ＋ pola';
+    let naEx = 'Gunakan bentuk kata sifat-na sesuai kebutuhan';
+    if (/naな|な-adjective.*な/i.test(normalized)) {
+      naRule = 'na ＋ な ＋ pola';
+      naEx = 'Sifat-na memerlukan partikel な (contoh: 静かな, きれいな)';
+    } else if (/naである|な-adjective.*である/i.test(normalized)) {
+      naRule = 'na ＋ である ＋ pola';
+      naEx = 'Gunakan bentuk formal である (contoh: 静かである)';
+    } else if (/stem|語幹/i.test(normalized)) {
+      naRule = 'na (Stem / tanpa だ・な) ＋ pola';
+      naEx = 'Hanya batang kata sifat-na (contoh: 静か, 元気)';
+    }
+    conditions.push({ partOfSpeech: 'Kata Sifat-na', rule: naRule, example: naEx });
+    return conditions;
+  }
+
+  if (/A|い-adjective|い形|形容詞/i.test(normalized)) {
+    let aRule = 'Aい (Kata Sifat-i) ＋ pola';
+    let aEx = 'Kata sifat-i bentuk biasa langsung menyambung (contoh: 高い, 優しい)';
+    if (/stem|語幹|（い→/i.test(normalized)) {
+      aRule = 'Aい (Coret い / Stem) ＋ pola';
+      aEx = 'Hilangkan huruf akhiran い (contoh: 高い → 高, 暑い → 暑)';
+    } else if (/くて|［くて］/i.test(normalized)) {
+      aRule = 'Aくて (Bentuk Sambung) ＋ pola';
+      aEx = 'Ubah akhiran い menjadi くて (contoh: 安くて, 寒くて)';
+    }
+    conditions.push({ partOfSpeech: 'Kata Sifat-i (A)', rule: aRule, example: aEx });
+    return conditions;
   }
 
   return conditions;
+}
+
+/**
+ * Infer connection conditions from the left-hand side of a formula.
+ * Automatically splits multi-variant expressions like 'Vる／Vない' or 'Nの／V'.
+ */
+function inferConditionsFromLeft(leftSide: string): ConnectionCondition[] {
+  const normalized = leftSide.trim();
+  const segments = normalized.split(/[／/；;]/).map(s => s.trim()).filter(Boolean);
+
+  if (segments.length <= 1) {
+    const single = parseSingleConditionSegment(normalized);
+    if (single.length > 0) return single;
+  } else {
+    const results: ConnectionCondition[] = [];
+    const seenPos = new Set<string>();
+    for (const seg of segments) {
+      const conds = parseSingleConditionSegment(seg);
+      for (const c of conds) {
+        if (!seenPos.has(c.partOfSpeech)) {
+          seenPos.add(c.partOfSpeech);
+          results.push(c);
+        }
+      }
+    }
+    if (results.length > 0) return results;
+  }
+
+  return [{
+    partOfSpeech: 'Aturan Sambungan',
+    rule: leftSide || 'Mengikuti rumus pembentukan dasar',
+    example: 'Ikuti rumus sambungan dasar pola ini',
+  }];
 }
 
 /**
@@ -830,6 +973,9 @@ function extractSubBranchesFromFormula(item: BunpouItem): SubFormulaBranch[] {
     const parts = formula.split(/[＋+]/);
     leftSide = parts[0].trim();
     rightSide = parts.slice(1).join('＋').trim();
+  } else {
+    // If no explicit plus sign, use the formula/title to infer base conditions
+    leftSide = formula || item.title;
   }
 
   const baseConditions = inferConditionsFromLeft(leftSide);

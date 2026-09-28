@@ -447,6 +447,106 @@ export interface ResolvedDeckItem {
 }
 
 export function resolveDeckItem(ref: DeckItemRef): ResolvedDeckItem | null {
+  // 1. Direct support for custom AI/User-generated items
+  if (ref.customData) {
+    const cd = ref.customData;
+    const levelStr = cd.level || 'N5';
+
+    if (ref.category === 'kotoba') {
+      const pseudoKotoba: KotobaItem = {
+        id: ref.id,
+        word: cd.word,
+        reading: cd.reading || cd.word,
+        meaningId: cd.meaning,
+        meaningEn: cd.meaning,
+        jlpt: (levelStr as any) || 'N5',
+        examples: cd.exampleJp
+          ? [
+              {
+                jp: cd.exampleJp,
+                reading: cd.exampleReading || cd.exampleJp,
+                id: cd.exampleId || 'Contoh kalimat',
+                en: '',
+              },
+            ]
+          : [],
+      };
+
+      return {
+        ref,
+        category: 'kotoba',
+        kotoba: pseudoKotoba,
+        displayTitle: pseudoKotoba.word,
+        displayReading: pseudoKotoba.reading,
+        displayMeaning: pseudoKotoba.meaningId || '',
+        level: pseudoKotoba.jlpt || 'N5',
+      };
+    }
+
+    if (ref.category === 'kanji') {
+      const pseudoKanji: KanjiItem = {
+        id: ref.id,
+        character: cd.word,
+        meaningId: cd.meaning,
+        onyomi: cd.reading ? [cd.reading] : [],
+        kunyomi: [],
+        strokeCount: 1,
+        jlpt: levelStr,
+        examples: cd.exampleJp
+          ? [
+              {
+                jp: cd.exampleJp,
+                reading: cd.exampleReading || cd.exampleJp,
+                id: cd.exampleId || 'Contoh kalimat',
+                en: '',
+              },
+            ]
+          : [],
+      };
+
+      return {
+        ref,
+        category: 'kanji',
+        kanji: pseudoKanji,
+        displayTitle: pseudoKanji.character,
+        displayReading: cd.reading || '',
+        displayMeaning: pseudoKanji.meaningId || '',
+        level: pseudoKanji.jlpt || 'N5',
+      };
+    }
+
+    if (ref.category === 'bunpou') {
+      const pseudoBunpou: BunpouItem = {
+        id: ref.id,
+        title: cd.word,
+        formula: cd.reading || cd.word,
+        meaning_id: cd.meaning,
+        level: levelStr,
+        examples: cd.exampleJp
+          ? [
+              {
+                jp: cd.exampleJp,
+                reading: cd.exampleReading || cd.exampleJp,
+                id: cd.exampleId || 'Contoh penerapan',
+                en: '',
+              },
+            ]
+          : [],
+      };
+
+      return {
+        ref,
+        category: 'bunpou',
+        bunpou: pseudoBunpou,
+        displayTitle: pseudoBunpou.title,
+        displayReading: pseudoBunpou.formula,
+        displayMeaning: pseudoBunpou.meaning_id || '',
+        level: pseudoBunpou.level || 'N3',
+      };
+    }
+  }
+
+  // 2. Existing database lookup by reference ID
   if (ref.category === 'kotoba') {
     const item = KOTOBA_DATABASE[ref.id];
     if (!item) return null;

@@ -1,4 +1,5 @@
 import { BunpouItem, GrammarComparison } from '../types/content';
+import bunpouCuratedDict from './bunpouCuratedDict.json';
 
 export interface BunpouMetadata {
   functions: string[];
@@ -6,6 +7,10 @@ export interface BunpouMetadata {
   relatedKeywords: string[];
   baseLevel: 'N5' | 'N4' | 'N3' | 'N2';
   comparisonNotes?: GrammarComparison[];
+  keyTakeaway?: string;
+  beforeState?: string;
+  afterState?: string;
+  naturalMeaning?: string;
 }
 
 /**
@@ -521,8 +526,17 @@ const CATEGORY_MAP: Record<string, WeekDayFunctionMapping> = {
  * and intelligent curriculum mapping.
  */
 function getMetadataForBunpou(item: BunpouItem): BunpouMetadata {
+  const curated = (bunpouCuratedDict as Record<string, any>)[item.id];
   if (CURATED_BUNPOU_METADATA[item.id]) {
-    return CURATED_BUNPOU_METADATA[item.id];
+    const base = CURATED_BUNPOU_METADATA[item.id];
+    return {
+      ...base,
+      keyTakeaway: curated?.keyTakeaway || base.keyTakeaway,
+      beforeState: curated?.beforeState || base.beforeState,
+      afterState: curated?.afterState || base.afterState,
+      naturalMeaning: curated?.meaning_id || base.naturalMeaning,
+      nuance: curated?.nuance || base.nuance,
+    };
   }
 
   // If item ID matches Week-Day convention (e.g. w1d3g1 -> w1d3)
@@ -531,9 +545,13 @@ function getMetadataForBunpou(item: BunpouItem): BunpouMetadata {
     const fallbackCategory = CATEGORY_MAP[match[1]];
     return {
       functions: fallbackCategory.functions,
-      nuance: fallbackCategory.nuance,
+      nuance: curated?.nuance || fallbackCategory.nuance,
       relatedKeywords: fallbackCategory.relatedKeywords,
       baseLevel: fallbackCategory.baseLevel,
+      keyTakeaway: curated?.keyTakeaway,
+      beforeState: curated?.beforeState,
+      afterState: curated?.afterState,
+      naturalMeaning: curated?.meaning_id,
     };
   }
 
@@ -593,24 +611,32 @@ function getMetadataForBunpou(item: BunpouItem): BunpouMetadata {
 
   return {
     functions: derivedFunctions,
-    nuance: derivedNuance,
+    nuance: curated?.nuance || derivedNuance,
     relatedKeywords: derivedKeywords,
     baseLevel: level,
+    keyTakeaway: curated?.keyTakeaway,
+    beforeState: curated?.beforeState,
+    afterState: curated?.afterState,
+    naturalMeaning: curated?.meaning_id,
   };
 }
 
 /**
- * Enriches a BunpouItem with full pedagogical metadata (functions, nuance, keywords, base level).
+ * Enriches a BunpouItem with full pedagogical metadata (functions, nuance, keywords, base level, key takeaways).
  */
 export function enrichBunpouItem(item: BunpouItem): BunpouItem {
   const meta = getMetadataForBunpou(item);
   return {
     ...item,
+    meaningId: meta.naturalMeaning || item.meaningId,
     functions: meta.functions,
     nuance: meta.nuance,
     relatedKeywords: meta.relatedKeywords,
     baseLevel: meta.baseLevel,
     comparisonNotes: meta.comparisonNotes || item.comparisonNotes,
+    keyTakeaway: meta.keyTakeaway || item.keyTakeaway,
+    beforeState: meta.beforeState || item.beforeState,
+    afterState: meta.afterState || item.afterState,
   };
 }
 

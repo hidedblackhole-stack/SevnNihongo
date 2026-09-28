@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Check, Bookmark, Search } from 'lucide-react';
+import { X, Check, Bookmark, Search, Sparkles } from 'lucide-react';
 import { DeckType, UserDeck, DeckItemRef, DeckItemCategory } from '../../types/rpg';
 import { playSound } from '../../utils/audio';
 import { generatePresetDeckItems, DEFAULT_BOOKMARK_DECK_ID } from '../../utils/decks';
@@ -35,6 +35,7 @@ interface CreateDeckModalProps {
   editingDeck?: UserDeck | null;
   userDecks?: UserDeck[];
   soundEnabled?: boolean;
+  onOpenAiCustomizer?: () => void;
 }
 
 export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
@@ -44,6 +45,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
   editingDeck,
   userDecks,
   soundEnabled = true,
+  onOpenAiCustomizer,
 }) => {
   useBackButton(isOpen, () => {
     onClose();
@@ -376,6 +378,34 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
             {/* Deck Content Customization (Only for new deck creation) */}
             {!editingDeck && (
               <div className="pt-3 border-t border-border-subtle space-y-3">
+                {onOpenAiCustomizer && (
+                  <div className="p-3 rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-xl bg-surface-card border border-border-subtle flex items-center justify-center text-gold shadow-xs shrink-0">
+                        <Sparkles className="w-4 h-4 text-gold" />
+                      </div>
+                      <div>
+                        <p className="text-xs font-heading font-bold text-text-primary">
+                          Mau buat deck dengan AI Gemini?
+                        </p>
+                        <p className="text-[11px] text-text-secondary">
+                          Cukup ketik tema bebas, dapatkan deck lengkap dengan furigana & terjemahan.
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        playSound('click', soundEnabled);
+                        onOpenAiCustomizer();
+                      }}
+                      className="btn-physical-primary py-1.5 px-3 rounded-xl text-xs font-bold font-heading shrink-0 cursor-pointer shadow-xs"
+                    >
+                      Buka Studio AI
+                    </button>
+                  </div>
+                )}
+
                 <div className="flex items-center justify-between">
                   <div>
                     <label className="block text-xs font-bold font-heading uppercase tracking-wider text-text-primary">

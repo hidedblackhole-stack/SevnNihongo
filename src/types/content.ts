@@ -157,7 +157,7 @@ export interface GrammarSkillFunction {
 
 export interface GrammarSkillFormulaStep {
   title: string;
-  breakdown: string[]; // e.g. ["V Potensial", "+", "ようになる"]
+  breakdown: string[]; // e.g. ["Kata Kerja Potensial", "ようになる"] (separators are rendered automatically by UI, do not include standalone '+' or '＋')
   progression?: string[]; // e.g. ["話す", "話せる", "話せるようになる"]
   note?: string;
 }
@@ -216,6 +216,9 @@ export interface BunpouItem {
   tags?: string[];
   categoryType?: string; // e.g. "Change Pattern", "Desire Pattern", "Passive Pattern"
   skillNodes?: GrammarSkillNodes;
+  keyTakeaway?: string;
+  beforeState?: string;
+  afterState?: string;
 }
 
 export interface BunpouMixedSet {

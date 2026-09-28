@@ -9,6 +9,7 @@ import {
   TieredExampleSentence,
   Question,
 } from '../types/content';
+import bunpouCuratedDict from '../data/bunpouCuratedDict.json';
 
 /**
  * Handcrafted 7-node skill profiles for signature grammar points
@@ -54,13 +55,13 @@ const BESPOKE_SKILL_NODES: Record<string, Partial<GrammarSkillNodes>> = {
     formulas: [
       {
         title: 'A. Kemampuan (Bentuk Potensial)',
-        breakdown: ['Kata Kerja Potensial (V-bisa)', '+', 'ようになる'],
+        breakdown: ['Kata Kerja Potensial (V-bisa)', 'ようになる'],
         progression: ['話す (Bicara)', '話せる (Bisa bicara)', '話せるようになる (Menjadi bisa bicara)'],
         note: 'Ubah kata kerja ke bentuk potensial (bisa) dulu, lalu gabung dengan ようになる.',
       },
       {
         title: 'B. Kebiasaan (Bentuk Kamus)',
-        breakdown: ['Kata Kerja Kamus (V-dasar)', '+', 'ようになる'],
+        breakdown: ['Kata Kerja Kamus (V-dasar)', 'ようになる'],
         progression: ['勉強する (Belajar)', '勉強するようになる (Mulai terbiasa belajar)'],
         note: 'Gunakan bentuk kamus biasa untuk aksi yang sengaja dirutinkan.',
       },
@@ -161,13 +162,13 @@ const BESPOKE_SKILL_NODES: Record<string, Partial<GrammarSkillNodes>> = {
     formulas: [
       {
         title: 'Kata Benda Langsung Menempel',
-        breakdown: ['Kata Benda (N)', '+', 'みたいだ'],
+        breakdown: ['Kata Benda (N)', 'みたいだ'],
         progression: ['子供 (Anak)', '子供みたいだ (Seperti anak kecil)'],
         note: 'Tidak perlu partikel の atau だ di tengahnya.',
       },
       {
         title: 'Kata Kerja / Sifat Bentuk Biasa (Kasual)',
-        breakdown: ['Kata Kerja/Sifat (Bentuk Biasa)', '+', 'みたいだ'],
+        breakdown: ['Kata Kerja/Sifat (Bentuk Biasa)', 'みたいだ'],
         progression: ['降る (Turun)', '降るみたいだ (Sepertinya turun)'],
         note: 'Gunakan bentuk biasa (普通形), bukan bentuk sopan (ます).',
       },
@@ -261,7 +262,7 @@ const BESPOKE_SKILL_NODES: Record<string, Partial<GrammarSkillNodes>> = {
     formulas: [
       {
         title: 'Rumus Pasif Kerugian',
-        breakdown: ['Pelaku Pembuat Repot (N)', '+', 'に', '+', 'Kata Kerja Pasif (〜れる / 〜られる)'],
+        breakdown: ['Pelaku Pembuat Repot (N)', 'に', 'Kata Kerja Pasif (〜れる / 〜られる)'],
         progression: ['泣く (Menangis)', '泣かれる (Dibuat repot karena tangisannya)', '泣かれてしまった (Terlanjur dibuat repot)'],
         note: 'Pelaku selalu menggunakan partikel に. Kalimat berfokus pada dampak repot yang dialami pembicara.',
       },
@@ -355,7 +356,7 @@ const BESPOKE_SKILL_NODES: Record<string, Partial<GrammarSkillNodes>> = {
     formulas: [
       {
         title: 'Rumus Kausatif Permintaan Izin',
-        breakdown: ['Kata Kerja Kausatif (使役形)', '+', 'てください / もらえますか / もらえませんか'],
+        breakdown: ['Kata Kerja Kausatif (使役形)', 'てください / もらえますか / もらえませんか'],
         progression: ['帰る (Pulang)', '帰らせる (Membuat/membiarkan pulang)', '帰らせてください (Izinkan saya pulang)'],
         note: 'Jika kata kerja transitif (butuh objek), pembicara ditandai partikel に (私に言わせてください).',
       },
@@ -459,13 +460,13 @@ const BESPOKE_SKILL_NODES: Record<string, Partial<GrammarSkillNodes>> = {
     formulas: [
       {
         title: 'A. Bunyi ~te menjadi ~chau (〜て → 〜ちゃう)',
-        breakdown: ['Kata Kerja Bentuk-Te', 'hapus [て]', '+', 'ちゃう / ちゃった'],
+        breakdown: ['Kata Kerja Bentuk-Te (tanpa て)', 'ちゃう / ちゃった'],
         progression: ['食べる (Makan)', '食べて (Bentuk Te)', '食べちゃう (Habiskan / Terlanjur makan)', '食べちゃった (Sudah tuntas / Terlanjur)'],
         note: 'Untuk kata kerja yang berakhiran [て] biasa (contoh: 行く → 行って → 行っちゃう).',
       },
       {
         title: 'B. Bunyi ~de menjadi ~jau (〜で → 〜じゃう)',
-        breakdown: ['Kata Kerja Bentuk-De', 'hapus [で]', '+', 'じゃう / じゃった'],
+        breakdown: ['Kata Kerja Bentuk-De (tanpa で)', 'じゃう / じゃった'],
         progression: ['飲む (Minum)', '飲んで (Bentuk De)', '飲んじゃう (Habiskan)', '飲んじゃった (Sudah tuntas diminum)'],
         note: 'Untuk kata kerja yang bentuk te-nya bernada sengau/tebal [で] (contoh: 読む → 読んで → 読んじゃう).',
       },
@@ -573,6 +574,20 @@ const BESPOKE_SKILL_NODES: Record<string, Partial<GrammarSkillNodes>> = {
         },
       },
     ],
+    formulas: [
+      {
+        title: 'A. Ragam Lisan Santai: 〜なきゃ',
+        breakdown: ['Kata Kerja Bentuk-Nai (tanpa い)', 'なきゃ'],
+        progression: ['行く (Pergi)', '行かない (Bentuk Nai)', '行かなきゃ (Harus pergi!)'],
+        note: 'Singkatan percakapan dari 行かなければならない.',
+      },
+      {
+        title: 'B. Ragam Lisan Santai: 〜なくちゃ',
+        breakdown: ['Kata Kerja Bentuk-Nai (tanpa い)', 'なくちゃ'],
+        progression: ['食べる (Makan)', '食べない (Bentuk Nai)', '食べなくちゃ (Harus makan!)'],
+        note: 'Singkatan percakapan dari 食べなくてはならない.',
+      },
+    ],
   },
 
   // Signature N4: 書いとく（Vとく／Vどく）
@@ -621,6 +636,740 @@ const BESPOKE_SKILL_NODES: Record<string, Partial<GrammarSkillNodes>> = {
         },
       },
     ],
+    formulas: [
+      {
+        title: 'A. Bunyi ~te oku menjadi ~toku (〜ておく → 〜とく)',
+        breakdown: ['Kata Kerja Bentuk-Te (tanpa て)', 'とく / といた / とこう'],
+        progression: ['書く (Menulis)', '書いて (Bentuk Te)', '書いておく (Persiapan)', '書いとく (Singkatan lisan)'],
+        note: 'Dipakai saat bentuk te berakhiran て biasa.',
+      },
+      {
+        title: 'B. Bunyi ~de oku menjadi ~doku (〜でおく → 〜どく)',
+        breakdown: ['Kata Kerja Bentuk-De (tanpa で)', 'どく / どいた / どこう'],
+        progression: ['飲む (Minum)', '飲んで (Bentuk De)', '飲んでおく (Persiapan)', '飲んどく (Singkatan lisan)'],
+        note: 'Dipakai saat bentuk te bernada sengau/tebal で.',
+      },
+    ],
+  },
+
+  // Signature N4: やめようと思う（Vようと思う）
+  'w1d6g1': {
+    concept: {
+      summary: 'Menyatakan niat atau rencana dalam hati untuk melakukan sesuatu di masa depan.',
+      beforeState: 'Bentuk Kamus: やめる (Fakta umum: berhenti) 📖',
+      afterState: 'Bentuk Maksud: やめようと思う (Niat kuat pribadi yang sudah dipikirkan) 💭',
+      starterExample: {
+        japanese: '会社をやめようと思っている。',
+        reading: 'かいしゃをやめようとおもっている。',
+        meaningId: 'Aku berniat untuk berhenti dari pekerjaanku.',
+        contrastNote: 'Bukan sekadar ide spontan, melainkan niat yang sudah dipertimbangkan.',
+      },
+      keyTakeaway: 'Gunakan 〜ようと思っている jika niat tersebut sudah lama dipikirkan dan masih bertahan sampai sekarang.',
+    },
+    functions: [
+      {
+        number: 1,
+        label: 'Rencana Pribadi (個人的な意志・計画)',
+        description: 'Menyampaikan tekad atau rencana yang hendak dikerjakan sendiri.',
+        miniExample: {
+          japanese: '来年、日本へ留学しようと思います。',
+          reading: 'らいねん、にほんへりゅうがくしようとおもいます。',
+          meaningId: 'Tahun depan, saya berencana untuk kuliah ke Jepang.',
+        },
+      },
+      {
+        number: 2,
+        label: 'Niat Berkelanjutan (思っている)',
+        description: 'Menunjukkan keputusan batin yang sudah dipertimbangkan sejak beberapa waktu lalu.',
+        miniExample: {
+          japanese: '週末は家でゆっくり休もうと思っている。',
+          reading: 'しゅうまつはいえでゆっくりやすもうとおもっている。',
+          meaningId: 'Akhir pekan ini aku berniat istirahat santai di rumah saja.',
+        },
+      },
+    ],
+    formulas: [
+      {
+        title: 'Rumus Niat Batin: 〜ようと思う',
+        breakdown: ['Kata Kerja Bentuk Maksud (V-よう)', 'と思う / と思っている'],
+        progression: ['やめる (Berhenti)', 'やめよう (Bentuk Maksud)', 'やめようと思っている (Sudah diniatkan)'],
+        note: 'Ubah kata kerja ke bentuk maksud (volitional / 意向形) terlebih dahulu.',
+      },
+    ],
+    wordIdentities: [
+      {
+        typeCategory: 'A. Golongan 1 (Godan)',
+        tagColor: 'emerald',
+        icon: '🟢',
+        examples: ['行く → 行こう', '話す → 話そう', '買う → 買おう', '飲む → 飲もう'],
+        functionEffect: '→ Vokal akhir u berubah menjadi baris o panjang (ou).',
+      },
+      {
+        typeCategory: 'B. Golongan 2 & 3 (Ichidan & Irregular)',
+        tagColor: 'sky',
+        icon: '🔵',
+        examples: ['食べる → 食べよう', '見る → 見よう', 'する → しよう', '来る → こよう'],
+        functionEffect: '→ Golongan 2: hapus る + よう; する jadi しよう; くる jadi こよう.',
+      },
+    ],
+    nuances: [
+      {
+        contrastA: '〜ようと思う (Spontan)',
+        meaningA: 'Baru terlintas atau baru diputuskan saat berbicara.',
+        contrastB: '〜ようと思っている (Berkelanjutan)',
+        meaningB: 'Sudah diniatkan sejak beberapa waktu lalu dan masih berlanjut hingga sekarang.',
+        explanation: 'Dalam percakapan sehari-hari, penutur asli Jepang jauh lebih sering memakai 〜と思っている.',
+      },
+    ],
+  },
+
+  // Signature N4: 電車に乗ろうとしたときに（Vようとする）
+  'w1d6g2': {
+    concept: {
+      summary: 'Menyatakan momentum detik-detik tepat sesaat sebelum suatu tindakan dimulai.',
+      beforeState: 'Bentuk Niat: 乗ろうと思う (Niat santai di dalam pikiran) 💭',
+      afterState: 'Bentuk Momentum Sesaat: 乗ろうとしたときに (Tepat pas hendak melangkah naik!) ⚡',
+      starterExample: {
+        japanese: '電車に乗ろうとしたときに、ドアが閉まって乗れなかった。',
+        reading: 'でんしゃにのろうとしたときに、ドアがしまってのれなかった。',
+        meaningId: 'Tepat pas aku mau melangkah naik kereta, pintunya malah keburu menutup.',
+        contrastNote: 'Menangkap detik krusial sebelum aksi sempat tuntas terlaksana.',
+      },
+      keyTakeaway: 'Sering digunakan dalam bentuk lampau (〜としたときに / としたところ) untuk menceritakan rintangan mendadak yang menyela rencana kita.',
+    },
+    functions: [
+      {
+        number: 1,
+        label: 'Detik-Detik Sebelum Aksi Tersela (邪魔・不可抗力)',
+        description: 'Tepat ketika bersiap melangkah melakukan sesuatu, terjadi hal lain yang mengganggu.',
+        miniExample: {
+          japanese: '出かけようとしたら、急に雨が降ってきた。',
+          reading: 'でかけようとしたら、きゅうにあめがふってきた。',
+          meaningId: 'Pas tepat baru mau berangkat, tiba-tiba hujan malah turun deras.',
+        },
+      },
+      {
+        number: 2,
+        label: 'Upaya Memulai Tindakan (直前の動作・試み)',
+        description: 'Menggambarkan proses atau usaha seseorang yang sedang berupaya memulai sesuatu.',
+        miniExample: {
+          japanese: '犬がお風呂に入ろうとしない。',
+          reading: 'いぬがおふろにはいろうとしない。',
+          meaningId: 'Anjingnya sama sekali tidak berusaha masuk ke bak mandi.',
+        },
+      },
+    ],
+    formulas: [
+      {
+        title: 'Rumus Momentum Tepat Hendak Beraksi: 〜ようとする',
+        breakdown: ['Kata Kerja Bentuk Maksud (V-よう)', 'とする / としたときに / としたら'],
+        progression: ['乗る (Naik)', '乗ろう (Bentuk Maksud / Volitional)', '乗ろうとしたときに (Tepat pas mau naik)'],
+        note: 'Gunakan bentuk V-よう (意向形 / ajakan & maksud), bukan bentuk kamus biasa!',
+      },
+    ],
+    wordIdentities: [
+      {
+        typeCategory: 'A. Golongan 1 (Godan)',
+        tagColor: 'emerald',
+        icon: '🟢',
+        examples: ['乗る → 乗ろうとする', '出かける → 出かけようとする', '渡る → 渡ろうとする'],
+        functionEffect: '→ Vokal akhir u berubah menjadi ou + とする.',
+      },
+      {
+        typeCategory: 'B. Golongan 2 & 3 (Ichidan & Irregular)',
+        tagColor: 'sky',
+        icon: '🔵',
+        examples: ['寝る → 寝ようとする', '始める → 始めようとする', 'する → しようとする', '来る → こようとする'],
+        functionEffect: '→ Coret る + ようとする; する jadi しようとする; くる jadi こようとする.',
+      },
+    ],
+    nuances: [
+      {
+        contrastA: '〜ようとする (Momentum Tepat Hendak Beraksi)',
+        meaningA: 'Tepat di detik-detik aksi mau dieksekusi (contoh: kaki sudah melangkah mau masuk pintu).',
+        contrastB: '〜ところだ (Fase Waktu Umum)',
+        meaningB: 'Menunjukkan tahapan umum waktu (baru mau mulai, sedang berlangsung, atau baru selesai).',
+        explanation: '〜ようとする menekankan usaha atau niat fisik yang langsung hendak terjadi saat itu juga.',
+      },
+    ],
+  },
+
+  // Signature N4: 食べようとしない（Vようとしない）
+  'w1d6g3': {
+    concept: {
+      summary: 'Menyatakan bahwa seseorang sama sekali tidak memiliki niat, usaha, atau kemauan untuk melakukan suatu tindakan (sikap ogah/keras kepala).',
+      beforeState: 'Bentuk Negatif Biasa: 食べない (Hanya fakta tidak makan) 🍽️',
+      afterState: 'Bentuk Penolakan Keras: 食べようとしない (Sama sekali ogah & tak mau mencoba makan) 🙅',
+      starterExample: {
+        japanese: 'ご飯を食べようとしないんだよ。',
+        reading: 'ごはんをたべようとしないんだよ。',
+        meaningId: 'Dia sama sekali tidak mau mencoba makan nasi lho.',
+        contrastNote: 'Menyoroti keengganan keras atau sikap penolakan orang lain.',
+      },
+      keyTakeaway: 'Hanya digunakan untuk mengamati sikap orang lain atau hewan, BUKAN untuk diri sendiri.',
+    },
+    functions: [
+      {
+        number: 1,
+        label: 'Keengganan Pihak Ketiga (他人の拒絶・頑固さ)',
+        description: 'Mengamati orang lain yang bersikap keras kepala dan menolak melakukan hal yang seharusnya.',
+        miniExample: {
+          japanese: '弟は自分の非を認めようとしない。',
+          reading: 'おとうとはじぶんのひをみとめようとしない。',
+          meaningId: 'Adik laki-lakiku sama sekali tidak mau mengakui kesalahannya.',
+        },
+      },
+      {
+        number: 2,
+        label: 'Mogok / Tidak Berusaha (消極的態度)',
+        description: 'Sikap masa bodoh atau mogok berusaha sama sekali.',
+        miniExample: {
+          japanese: '彼は人の話を聞こうともしない。',
+          reading: 'かれはひとのはなしをきこうともしない。',
+          meaningId: 'Dia bahkan sama sekali tidak mau mendengarkan omongan orang lain.',
+        },
+      },
+    ],
+    formulas: [
+      {
+        title: 'Rumus Penolakan Keras: 〜ようとしない',
+        breakdown: ['Kata Kerja Bentuk Maksud (V-よう)', 'としない / ともしない'],
+        progression: ['食べる (Makan)', '食べよう (Bentuk Maksud)', '食べようとしない (Sama sekali ogah makan)'],
+        note: 'Kombinasi bentuk maksud (V-よう) + としない.',
+      },
+    ],
+    wordIdentities: [
+      {
+        typeCategory: 'A. Golongan 1 (Godan)',
+        tagColor: 'emerald',
+        icon: '🟢',
+        examples: ['聞く → 聞こうとしない', '話す → 話そうとしない', '手伝う → 手伝おうとしない'],
+        functionEffect: '→ Vokal u berubah menjadi ou + としない.',
+      },
+      {
+        typeCategory: 'B. Golongan 2 & 3 (Ichidan & Irregular)',
+        tagColor: 'sky',
+        icon: '🔵',
+        examples: ['食べる → 食べようとしない', '起きる → 起きようとしない', '勉強する → 勉強しようとしない'],
+        functionEffect: '→ Coret る + ようとしない; する jadi しようとしない.',
+      },
+    ],
+    nuances: [
+      {
+        contrastA: '〜ない (Negatif Netral)',
+        meaningA: 'Hanya menyatakan bahwa seseorang tidak melakukan tindakan.',
+        contrastB: '〜ようとしない (Penolakan Aktif)',
+        meaningB: 'Menunjukkan rasa jengkel atau heran karena orang tersebut sama sekali tidak punya iktikad baik untuk mencoba.',
+        explanation: 'Jangan gunakan pada diri sendiri! Kalimat seperti 私は勉強しようとしない adalah tidak wajar.',
+      },
+    ],
+  },
+
+  // Signature N4: 〜ようにする / 〜ようにしている (w1d4g1)
+  'w1d4g1': {
+    concept: {
+      summary: 'Berusaha untuk selalu... / Membiasakan diri agar...',
+      beforeState: 'Tanpa Ikhtiar Sadar: Bergantung pada situasi / sering lupa 🍃',
+      afterState: 'Upaya Sadar Berkelanjutan: Sengaja mendisiplinkan diri demi tujuan baik 🎯',
+      starterExample: {
+        japanese: '忘れ物をしないようにしましょう。',
+        reading: 'わすれものをしないようにしましょう。',
+        meaningId: 'Mari kita berusaha agar tidak meninggalkan barang bawaan.',
+        contrastNote: 'Menunjukkan komitmen dan upaya sadar secara terus-menerus.',
+      },
+      keyTakeaway: '〜ようにする menyatakan tekad untuk mulai berusaha, sedangkan 〜ようにしている menyatakan kebiasaan/rutinitas yang saat ini sudah konsisten dijalankan.',
+    },
+    functions: [
+      {
+        number: 1,
+        label: 'Upaya Menjaga Kebiasaan Baik (良い習慣の継続)',
+        description: 'Mendisiplinkan diri sendiri untuk melakukan hal positif secara konsisten.',
+        miniExample: {
+          japanese: '毎日野菜を食べるようにしている。',
+          reading: 'まいにちやさいをたべるようにしている。',
+          meaningId: 'Saya selalu membiasakan diri makan sayur setiap hari.',
+        },
+      },
+      {
+        number: 2,
+        label: 'Upaya Menghindari Hal Buruk (悪い事態の予防)',
+        description: 'Berusaha sekuat tenaga agar tidak melakukan hal buruk atau mengulangi kekeliruan.',
+        miniExample: {
+          japanese: '夜更かしをしないようにしている。',
+          reading: 'よふかしをしないようにしている。',
+          meaningId: 'Saya berusaha agar tidak tidur larut malam.',
+        },
+      },
+    ],
+    formulas: [
+      {
+        title: 'A. Membiasakan Hal Positif (Bentuk Kamus)',
+        breakdown: ['Kata Kerja Kamus (Vる)', 'ようにする / ようにしている'],
+        progression: ['早く起きる (Bangun pagi)', '早く起きるようにする (Berusaha bangun pagi)'],
+        note: 'Gunakan bentuk kamus (辞書形) untuk tindakan baik yang ingin dirutinkan.',
+      },
+      {
+        title: 'B. Menghindari Kebiasaan Buruk (Bentuk Negatif)',
+        breakdown: ['Kata Kerja Negatif (Vない)', 'ようにする / ようにしている'],
+        progression: ['忘れる (Lupa)', '忘れない (Tidak lupa)', '忘れないようにする (Berusaha agar tidak lupa)'],
+        note: 'Gunakan bentuk negatif (ない形) untuk hal yang ingin dicegah.',
+      },
+    ],
+    wordIdentities: [
+      {
+        typeCategory: 'A. Kata Kerja Kamus (Vる)',
+        tagColor: 'emerald',
+        icon: '🟢',
+        examples: ['早く寝る', '運動する', '本を読む', '野菜を食べる'],
+        functionEffect: '→ Berusaha merutinkan aksi: 早く寝るようにする (Berusaha tidur cepat).',
+      },
+      {
+        typeCategory: 'B. Kata Kerja Negatif (Vない)',
+        tagColor: 'amber',
+        icon: '🟡',
+        examples: ['忘れない', '遅れない', '食べすぎない', '夜更かししない'],
+        functionEffect: '→ Berusaha mencegah kebiasaan buruk: 忘れないようにする (Berusaha agar tidak lupa).',
+      },
+    ],
+    nuances: [
+      {
+        contrastA: '〜ようにする',
+        meaningA: 'Berusaha untuk melakukan / membiasakan diri (ada proses upaya sadar berulang)',
+        contrastB: '〜ことにする',
+        meaningB: 'Mengambil keputusan untuk melakukan (keputusan satu kali saat itu juga)',
+        explanation: '毎日走ることにした berarti kamu memutuskan mulai hari ini berlari, sedangkan 毎日走るようにしている berarti kamu saat ini terus berusaha konsisten menjalankannya.',
+      },
+    ],
+    examples: [
+      {
+        tier: 'basic',
+        tierLabel: 'Level 1: Sederhana (Pondasi)',
+        japanese: '忘れ物をしないようにしましょう。',
+        reading: 'わすれものをしないようにしましょう。',
+        meaningId: 'Mari kita berusaha agar tidak meninggalkan barang bawaan.',
+      },
+      {
+        tier: 'daily',
+        tierLabel: 'Level 2: Sehari-hari (Percakapan)',
+        japanese: '健康のために、毎朝散歩するようにしています。',
+        reading: 'けんこうのために、まいあささんぽするようにしています。',
+        meaningId: 'Demi kesehatan, saya membiasakan diri jalan pagi setiap pagi.',
+      },
+      {
+        tier: 'natural',
+        tierLabel: 'Level 3: Alami (Ekspresi Wajar)',
+        japanese: '甘いものはなるべく食べないように気をつけています。',
+        reading: 'あまいものはなるべくたべないようにきをつけています。',
+        meaningId: 'Saya berhati-hati dan sebisa mungkin berusaha agar tidak makan makanan manis.',
+      },
+    ],
+  },
+
+  // Signature N4: 〜ように (Tujuan / Supaya - w1d4g2)
+  'w1d4g2': {
+    concept: {
+      summary: 'Agar / Supaya (Mencapai kondisi atau keadaan yang ditargetkan)',
+      beforeState: 'Kondisi Belum Terwujud: Tak terdengar / Belum sampai / Tidak terlihat 🌫️',
+      afterState: 'Tindakan Demi Tujuan: Bicara lantang agar terdengar jelas 📢',
+      starterExample: {
+        japanese: '後ろの人にも聞こえるように、大きな声で話してください。',
+        reading: 'うしろのひとにもきこえるように、おおきなこえではなしてください。',
+        meaningId: 'Tolong berbicara dengan suara keras agar orang di belakang juga bisa mendengar.',
+        contrastNote: 'Target sebelum ように berupa kemampuan/kondisi yang diharapkan terwujud.',
+      },
+      keyTakeaway: 'Sebelum ように selalu diisi verba kondisi/potensial (聞こえる, 見える, 治る, できる) atau bentuk negatif (ない形). Jangan gunakan verba kehendak murni.',
+    },
+    functions: [
+      {
+        number: 1,
+        label: 'Tujuan Kondisi / Kemampuan (可能・状態の実現)',
+        description: 'Melakukan tindakan agar mencapai kapasitas atau situasi tertentu.',
+        miniExample: {
+          japanese: '日本語が上手に話せるように練習する。',
+          reading: 'にほんごがじょうずにはなせるようにれんしゅうする。',
+          meaningId: 'Berlatih agar bisa mahir berbahasa Jepang.',
+        },
+      },
+      {
+        number: 2,
+        label: 'Pencegahan Situasi Buruk (予防・否定の目的)',
+        description: 'Melakukan persiapan pencegahan agar hal buruk tidak terjadi.',
+        miniExample: {
+          japanese: '風邪をひかないようにマスクをする。',
+          reading: 'かぜをひかないようにますくをする。',
+          meaningId: 'Memakai masker agar tidak masuk angin.',
+        },
+      },
+    ],
+    formulas: [
+      {
+        title: 'A. Target Kemampuan & Kondisi (Bentuk Potensial / Kondisi)',
+        breakdown: ['Kata Kerja Potensial / Keadaan (Vれる・無意志)', 'ように'],
+        progression: ['聞こえる (Terdengar)', '聞こえるように (Supaya terdengar)'],
+        note: 'Bentuk potensial (話せる, 読める) atau kata kerja keadaan (聞こえる, 見える).',
+      },
+      {
+        title: 'B. Target Pencegahan (Bentuk Negatif)',
+        breakdown: ['Kata Kerja Negatif (Vない)', 'ように'],
+        progression: ['遅れない (Tidak terlambat)', '遅れないように (Supaya tidak terlambat)'],
+        note: 'Bentuk negatif (ない形) untuk menghindari konsekuensi yang tidak diinginkan.',
+      },
+    ],
+    wordIdentities: [
+      {
+        typeCategory: 'A. Verba Potensial & Kondisi (V可能形・状態動詞)',
+        tagColor: 'purple',
+        icon: '🟣',
+        examples: ['聞こえる', '見える', '話せる', '治る', '受かる'],
+        functionEffect: '→ Menunjukkan keadaan/kemampuan yang ingin diwujudkan: 聞こえるように (Agar terdengar).',
+      },
+      {
+        typeCategory: 'B. Verba Negatif (Vない)',
+        tagColor: 'amber',
+        icon: '🟡',
+        examples: ['遅れない', '忘れない', '風邪をひかない', '間違えない'],
+        functionEffect: '→ Menunjukkan kondisi buruk yang ingin dicegah: 忘れないように (Supaya tidak lupa).',
+      },
+    ],
+    nuances: [
+      {
+        contrastA: '〜ように (Tujuan Kondisi)',
+        meaningA: 'Subjek mengusahakan suatu keadaan/kemampuan terjadi di luar kendali langsung',
+        contrastB: '〜ために (Tujuan Aksi)',
+        meaningB: 'Subjek sengaja melakukan tindakan untuk meraih aksi berkehendak diri sendiri',
+        explanation: 'Contoh: 家を買うために貯金する (Beli rumah adalah aksi kehendak → ために), 家が買えるように貯金する (Bisa membeli adalah kemampuan → ように).',
+      },
+    ],
+    examples: [
+      {
+        tier: 'basic',
+        tierLabel: 'Level 1: Sederhana (Pondasi)',
+        japanese: 'みんなに聞こえるように、大きな声で話した。',
+        reading: 'みんなにきこえるように、おおきなこえではなした。',
+        meaningId: 'Saya berbicara dengan suara keras supaya terdengar oleh semuanya.',
+      },
+      {
+        tier: 'daily',
+        tierLabel: 'Level 2: Sehari-hari (Percakapan)',
+        japanese: '忘れないように、メモを取っておきましょう。',
+        reading: 'わすれないように、めもをとっておきましょう。',
+        meaningId: 'Mari kita catat di memo agar tidak lupa.',
+      },
+      {
+        tier: 'natural',
+        tierLabel: 'Level 3: Alami (Ekspresi Wajar)',
+        japanese: '早く風邪が治るように、薬を飲んで暖かくして寝てください。',
+        reading: 'はやくかぜがなおるように、くすりをのんであたたかくしてねてください。',
+        meaningId: 'Minumlah obat dan tidurlah dengan hangat agar flu Anda lekas sembuh.',
+      },
+    ],
+  },
+
+  // Signature N4: 〜ように (Sebagaimana / Seperti yang... - w1d5g1)
+  'w1d5g1': {
+    concept: {
+      summary: 'Sebagaimana / Seperti yang... (Merujuk pada fakta yang diketahui bersama)',
+      beforeState: 'Pernyataan Mandiri: Langsung menyampaikan topik 📜',
+      afterState: 'Pengantar Halus: Mengawali kalimat dengan acuan bersama (Sebagaimana hadirin ketahui...) 🤝',
+      starterExample: {
+        japanese: '皆様ご存じのように、来週から工事が始まります。',
+        reading: 'みなさまごぞんじのように、らいしゅうからこうじがはじまります。',
+        meaningId: 'Sebagaimana hadirin sekalian ketahui, mulai pekan depan renovasi akan dimulai.',
+        contrastNote: 'Dipakai sebagai kata pengantar sopan sebelum menyampaikan pengumuman atau fakta.',
+      },
+      keyTakeaway: 'Sangat sering berpasangan dengan kata seperti ご存じ (Nの), ご覧 (Nの), atau bentuk lampau ucapan (前にも言ったように).',
+    },
+    functions: [
+      {
+        number: 1,
+        label: 'Merujuk Pengetahuan Lawan Bicara (相手の既知事実)',
+        description: 'Mengingatkan lawan bicara pada hal yang sudah sama-sama diketahui.',
+        miniExample: {
+          japanese: 'ご存じのように、彼は来月帰国します。',
+          reading: 'ごぞんじのように、かれはらいげつきこくします。',
+          meaningId: 'Seperti yang Anda ketahui, bulan depan dia akan pulang ke negaranya.',
+        },
+      },
+      {
+        number: 2,
+        label: 'Merujuk Visual / Dokumen (図・表・写真の指示)',
+        description: 'Mengarahkan pandangan audiens ke gambar, tabel, atau dokumen acuan.',
+        miniExample: {
+          japanese: 'この図のように、矢印に従ってください。',
+          reading: 'このずのように、やじるしにしたがってください。',
+          meaningId: 'Sebagaimana terlihat pada gambar ini, ikutilah petunjuk tanda panah.',
+        },
+      },
+    ],
+    formulas: [
+      {
+        title: 'A. Kata Benda (N) Memerlukan の',
+        breakdown: ['Kata Benda (N)', 'の ＋ ように'],
+        progression: ['ご存じ (Mengetahui)', 'ご存じのように (Sebagaimana Anda ketahui)'],
+        note: 'Untuk kata benda, wajib menyisipkan partikel の di tengahnya.',
+      },
+      {
+        title: 'B. Kata Kerja Bentuk Biasa (V普)',
+        breakdown: ['Kata Kerja Biasa (V普)', 'ように'],
+        progression: ['話す (Bicara)', '話した (Telah bicara)', 'さっき話したように (Seperti yang tadi dibicarakan)'],
+        note: 'Dapat memakai bentuk lampau (Vた) atau bentuk kamus (Vる).',
+      },
+    ],
+    wordIdentities: [
+      {
+        typeCategory: 'A. Kata Benda + の (Nの)',
+        tagColor: 'sky',
+        icon: '🔵',
+        examples: ['ご存じの', 'ご覧の', '図の', '写真の', '前回の'],
+        functionEffect: '→ Memerlukan の sebelum ように: ご覧のように (Sebagaimana Anda lihat).',
+      },
+      {
+        typeCategory: 'B. Kata Kerja Bentuk Biasa (V普)',
+        tagColor: 'emerald',
+        icon: '🟢',
+        examples: ['言った', '説明した', '書いた', '知られている'],
+        functionEffect: '→ Mengacu pada keterangan/ucapan: 前にも言ったように (Seperti yang saya katakan sebelumnya).',
+      },
+    ],
+    nuances: [
+      {
+        contrastA: 'ご存じのように',
+        meaningA: 'Sebagaimana yang sudah Anda ketahui (bahasa sopan & formal)',
+        contrastB: '知っているとおり',
+        meaningB: 'Persis seperti yang kamu tahu (lebih kasual & langsung)',
+        explanation: 'ご存じのように adalah ungkapan standar dalam presentasi, pidato resmi, maupun surat bisnis.',
+      },
+    ],
+    examples: [
+      {
+        tier: 'basic',
+        tierLabel: 'Level 1: Sederhana (Pondasi)',
+        japanese: 'この図のように、机の上に本を並べてください。',
+        reading: 'このずのように、つくえのうえにほんをならべてください。',
+        meaningId: 'Seperti gambar ini, tolong sejajarkan buku di atas meja.',
+      },
+      {
+        tier: 'daily',
+        tierLabel: 'Level 2: Sehari-hari (Percakapan)',
+        japanese: '前にも言ったように、来週はテストがありますよ。',
+        reading: 'まえにもいったように、らいしゅうはてすとがありますよ。',
+        meaningId: 'Seperti yang sudah saya katakan sebelumnya, pekan depan ada ujian lho.',
+      },
+      {
+        tier: 'natural',
+        tierLabel: 'Level 3: Alami (Ekspresi Wajar)',
+        japanese: '皆様もご存じのように、今年の新入社員は過去最多となりました。',
+        reading: 'みなさまもごぞんじのように、ことしのしんにゅうしゃいんはかこさいたとなりました。',
+        meaningId: 'Sebagaimana hadirin sekalian ketahui, jumlah karyawan baru tahun ini adalah yang terbanyak dalam sejarah.',
+      },
+    ],
+  },
+
+  // Signature N4: 〜ように。 (Instruksi Halus / Arahan Atasan - w1d5g2)
+  'w1d5g2': {
+    concept: {
+      summary: 'Harap selalu... / Dimohon supaya... (Instruksi halus dari guru/atasan)',
+      beforeState: 'Perintah Keras/Mendesak: 早く来なさい / 来てください 📢',
+      afterState: 'Arahan Membimbing & Resmi: 早く来るように。 (Tertib, sopan, tanpa menekan) 🌱',
+      starterExample: {
+        japanese: '明日はもっと早く来るように。',
+        reading: 'あしたはもっとはやくくるように。',
+        meaningId: 'Besok harap datang lebih awal ya.',
+        contrastNote: 'Perintah bernuansa aturan atau bimbingan, berasal dari bentuk 〜ようにしてください.',
+      },
+      keyTakeaway: 'Dapat dimasuki Kata Kerja Kamus (Vる) untuk aksi yang harus dilakukan, maupun Kata Kerja Negatif (Vない) untuk hal yang wajib dihindari.',
+    },
+    functions: [
+      {
+        number: 1,
+        label: 'Instruksi Disiplin / Bimbingan Guru (指導・指示)',
+        description: 'Guru atau atasan menyampaikan tata tertib sekolah/kantor secara mendidik.',
+        miniExample: {
+          japanese: '宿題は必ず明日出すように。',
+          reading: 'しゅくだいはかならずあしただすように。',
+          meaningId: 'Pekerjaan rumah harap wajib dikumpulkan besok ya.',
+        },
+      },
+      {
+        number: 2,
+        label: 'Peringatan Menghindari Kesalahan (注意・予防)',
+        description: 'Mengingatkan agar tidak mengulangi kesalahan atau kelalaian yang merugikan.',
+        miniExample: {
+          japanese: '忘れ物をしないように。',
+          reading: 'わすれものをしないように。',
+          meaningId: 'Harap jangan sampai ada barang yang tertinggal.',
+        },
+      },
+    ],
+    formulas: [
+      {
+        title: 'A. Hal yang Dimohon untuk Dilakukan (Positif: Vる)',
+        breakdown: ['Kata Kerja Kamus (Vる)', 'ように。'],
+        progression: ['早く来る (Datang cepat)', '早く来るように。 (Harap datang lebih awal ya)'],
+        note: 'Gunakan bentuk kamus (辞書形) untuk arahan tindakan positif.',
+      },
+      {
+        title: 'B. Hal yang Dimohon untuk Dihindari (Negatif: Vない)',
+        breakdown: ['Kata Kerja Negatif (Vない)', 'ように。'],
+        progression: ['忘れる (Lupa)', '忘れない (Tidak lupa)', '忘れないように。 (Harap jangan lupa ya)'],
+        note: 'Gunakan bentuk negatif (ない形) untuk peringatan larangan/pencegahan.',
+      },
+    ],
+    wordIdentities: [
+      {
+        typeCategory: 'A. Kata Kerja Kamus (Vる)',
+        tagColor: 'emerald',
+        icon: '🟢',
+        examples: ['早く来る', '気をつける', '提出する', '守る'],
+        functionEffect: '→ Arahan untuk melakukan tindakan: 早く来るように (Harap datang lebih awal).',
+      },
+      {
+        typeCategory: 'B. Kata Kerja Negatif (Vない)',
+        tagColor: 'amber',
+        icon: '🟡',
+        examples: ['忘れない', '遅れない', '騒がない', '諦めない'],
+        functionEffect: '→ Peringatan untuk menghindari tindakan: 遅れないように (Harap tidak terlambat).',
+      },
+    ],
+    nuances: [
+      {
+        contrastA: '〜ように。',
+        meaningA: 'Instruksi bernada bimbingan resmi (sering tertulis di papan pengumuman atau arahan guru)',
+        contrastB: '〜てください',
+        meaningB: 'Permintaan tolong langsung (speaker meminta bantuan untuk kepentingan saat itu)',
+        explanation: '〜ように。 terkesan sebagai penyampaian peraturan umum, bukan permintaan pribadi.',
+      },
+      {
+        contrastA: '〜ように。',
+        meaningA: 'Arahan santun dan mendidik tanpa menekan',
+        contrastB: '〜なさい',
+        meaningB: 'Perintah langsung orang tua kepada anak yang tegas dan mendikte',
+        explanation: 'Dalam lingkungan sekolah maupun tempat kerja, 〜ように。 jauh lebih pantas dan profesional dibanding 〜なさい.',
+      },
+    ],
+    examples: [
+      {
+        tier: 'basic',
+        tierLabel: 'Level 1: Sederhana (Pondasi - Vる Kamus)',
+        japanese: '明日はもっと早く来るように。',
+        reading: 'あしたはもっとはやくくるように。',
+        meaningId: 'Besok harap datang lebih awal ya. (Arahan tindakan positif: Vる)',
+      },
+      {
+        tier: 'daily',
+        tierLabel: 'Level 2: Sehari-hari (Percakapan - Vない Negatif)',
+        japanese: '明日の会議には絶対に遅れないように。',
+        reading: 'あしたのかいぎにはぜったいにおくれないように。',
+        meaningId: 'Pastikan besok tidak terlambat hadir pada rapat ya. (Peringatan pencegahan: Vない)',
+      },
+      {
+        tier: 'natural',
+        tierLabel: 'Level 3: Alami (Instruksi Resmi / Sekolah)',
+        japanese: '宿題は明日までに必ず提出するように。',
+        reading: 'しゅくだいはあしたまでにかならずていしゅつするように。',
+        meaningId: 'Pekerjaan rumah harap diserahkan paling lambat besok ya. (Instruksi bimbingan guru/atasan)',
+      },
+    ],
+  },
+
+  // Signature N4: 〜ますように。 (Doa & Harapan - w1d5g3)
+  'w1d5g3': {
+    concept: {
+      summary: 'Semoga... / Mudah-mudahan... (Doa tulus atau harapan hati)',
+      beforeState: 'Harapan / Doa Dalam Hati: Sangat ingin lulus ujian 🙏',
+      afterState: 'Doa Yang Terucap: 合格しますように。 (Semoga berhasil lulus!) ✨',
+      starterExample: {
+        japanese: '試験に合格しますように。',
+        reading: 'しけんにごうかくしますように。',
+        meaningId: 'Semoga saya lulus ujian.',
+        contrastNote: 'Selalu diakhiri dengan tanda titik (.) di akhir kalimat doa permohonan.',
+      },
+      keyTakeaway: 'Khusus untuk doa kepada Tuhan / permohonan tulus. Verba selalu dalam bentuk sopan (ます, ません, atau れます).',
+    },
+    functions: [
+      {
+        number: 1,
+        label: 'Doa Keberhasilan / Keselamatan (祈願・祝福)',
+        description: 'Memohon agar harapan baik, kesembuhan, atau kesuksesan terwujud.',
+        miniExample: {
+          japanese: '早く元気になりますように。',
+          reading: 'はやくげんきになりますように。',
+          meaningId: 'Semoga Anda lekas sehat kembali.',
+        },
+      },
+      {
+        number: 2,
+        label: 'Doa Pencegahan Hal Buruk (無事・平穏の祈り)',
+        description: 'Memohon agar bencana, musibah, atau kegagalan tidak menimpa.',
+        miniExample: {
+          japanese: '明日は雨が降りませんように。',
+          reading: 'あしたはあめがふりませんように。',
+          meaningId: 'Semoga besok tidak turun hujan.',
+        },
+      },
+    ],
+    formulas: [
+      {
+        title: 'A. Harapan Terwujud (Bentuk Sopan Positif / Potensial)',
+        breakdown: ['Kata Kerja Sopan (Vます / Vれます)', 'ように。'],
+        progression: ['合格する (Lulus)', '合格します (Bentuk sopan)', '合格しますように。 (Semoga lulus!)'],
+        note: 'Bentuk sopan (ます形) atau potensial sopan (れます形).',
+      },
+      {
+        title: 'B. Doa Perlindungan (Bentuk Sopan Negatif)',
+        breakdown: ['Kata Kerja Negatif Sopan (Vません)', 'ように。'],
+        progression: ['降る (Turun)', '降りません (Tidak turun)', '雨が降りませんように。 (Semoga tidak hujan!)'],
+        note: 'Gunakan bentuk negatif sopan (ません形) untuk memohon perlindungan dari hal buruk.',
+      },
+    ],
+    wordIdentities: [
+      {
+        typeCategory: 'A. Harapan Positif & Potensial (Vます / Vれます)',
+        tagColor: 'emerald',
+        icon: '🟢',
+        examples: ['合格します', '治ります', '受かります', '幸せになります'],
+        functionEffect: '→ Doa untuk kebaikan: 早く治りますように (Semoga lekas sembuh).',
+      },
+      {
+        typeCategory: 'B. Doa Perlindungan dari Hal Buruk (Vません)',
+        tagColor: 'sky',
+        icon: '🔵',
+        examples: ['降りません', '失敗しません', '事故が起きません'],
+        functionEffect: '→ Doa agar tidak tertimpa musibah: 雨が降りませんように (Semoga tidak hujan).',
+      },
+    ],
+    nuances: [
+      {
+        contrastA: '〜ますように。',
+        meaningA: 'Doa langsung yang dipanjatkan kepada Tuhan/alam semesta (ekspresi spiritual/tulus)',
+        contrastB: '〜てほしい / 〜たい',
+        meaningB: 'Keinginan pribadi yang dituntut dari orang lain atau ego sendiri',
+        explanation: '〜ますように tertulis di papan doa kuil (絵馬 - ema) atau saat Tanabata untuk meminta berkat.',
+      },
+    ],
+    examples: [
+      {
+        tier: 'basic',
+        tierLabel: 'Level 1: Sederhana (Pondasi)',
+        japanese: '試験に合格しますように。',
+        reading: 'しけんにごうかくしますように。',
+        meaningId: 'Semoga saya lulus ujian.',
+      },
+      {
+        tier: 'daily',
+        tierLabel: 'Level 2: Sehari-hari (Percakapan)',
+        japanese: '今年一年、家族みんなが健康で過ごせますように。',
+        reading: 'ことしいちねん、かぞくみんながけんこうですごせますように。',
+        meaningId: 'Semoga sepanjang tahun ini sekeluarga bisa menghabiskan waktu dengan sehat.',
+      },
+      {
+        tier: 'natural',
+        tierLabel: 'Level 3: Alami (Ekspresi Wajar)',
+        japanese: '明日の遠足の日は、どうか雨が降りませんように。',
+        reading: 'あしたのえんそくのひは、どうかあめがふりませんように。',
+        meaningId: 'Untuk hari piknik besok, mudah-mudahan hujan sama sekali tidak turun.',
+      },
+    ],
   },
 };
 
@@ -636,10 +1385,18 @@ export function getGrammarSkillNodes(item: BunpouItem): GrammarSkillNodes {
   // Check bespoke lookup (by exact ID or normalized title)
   const bespoke = BESPOKE_SKILL_NODES[item.id] ||
     (item.title.includes('ようになる') ? BESPOKE_SKILL_NODES['bp_n4_youni_naru'] : undefined) ||
+    (item.title.includes('ようにする') ? BESPOKE_SKILL_NODES['w1d4g1'] : undefined) ||
+    (item.title.includes('聞こえるように') ? BESPOKE_SKILL_NODES['w1d4g2'] : undefined) ||
+    (item.title.includes('ご存じのように') ? BESPOKE_SKILL_NODES['w1d5g1'] : undefined) ||
+    (item.title.includes('早く来るように') || item.title.includes('ように。') ? BESPOKE_SKILL_NODES['w1d5g2'] : undefined) ||
+    (item.title.includes('合格しますように') || item.title.includes('ますように') ? BESPOKE_SKILL_NODES['w1d5g3'] : undefined) ||
     (item.title.includes('みたい') ? BESPOKE_SKILL_NODES['w1d3g1'] : undefined) ||
     (item.title.includes('ちゃう') || item.title.includes('じゃう') ? BESPOKE_SKILL_NODES['w1d2g2'] : undefined) ||
     (item.title.includes('なくちゃ') || item.title.includes('なきゃ') ? BESPOKE_SKILL_NODES['w1d2g1'] : undefined) ||
-    (item.title.includes('とく') || item.title.includes('どく') ? BESPOKE_SKILL_NODES['w1d2g3'] : undefined);
+    (item.title.includes('とく') || item.title.includes('どく') ? BESPOKE_SKILL_NODES['w1d2g3'] : undefined) ||
+    (item.title.includes('ようとする') ? BESPOKE_SKILL_NODES['w1d6g2'] : undefined) ||
+    (item.title.includes('ようと思う') ? BESPOKE_SKILL_NODES['w1d6g1'] : undefined) ||
+    (item.title.includes('ようとしない') ? BESPOKE_SKILL_NODES['w1d6g3'] : undefined);
 
   // 1. Concept Node
   const concept: GrammarSkillConcept = bespoke?.concept || generateFallbackConcept(item);
@@ -675,18 +1432,132 @@ export function getGrammarSkillNodes(item: BunpouItem): GrammarSkillNodes {
   };
 }
 
+const cleanSummaryStr = (text?: string): string => {
+  if (!text) return '';
+  return text
+    .replace(/\s*\([A-Za-z0-9\s/,'’._\-—]{4,}\)\.?\s*$/g, '')
+    .trim();
+};
+
+function deriveSmartKeyTakeaway(item: BunpouItem): string {
+  if (item.keyTakeaway) return item.keyTakeaway;
+  const curated = (bunpouCuratedDict as Record<string, any>)[item.id];
+  if (curated?.keyTakeaway) return curated.keyTakeaway;
+
+  const meaning = (item.meaningId || (item as any).meaning || '').toLowerCase();
+  const title = item.title || '';
+  const functions = (item.functions || []).join(' ').toLowerCase();
+  const text = `${meaning} ${title} ${functions}`;
+
+  if (/ralat|tepatnya|bukannya|daripada|pasnya|というより|というか/i.test(text)) {
+    return 'Gunakan saat kamu merasa sebutan atau kata sebelumnya kurang pas, lalu ingin langsung meralatnya ke deskripsi yang jauh lebih akurat dan tepat menggambarkan keadaan.';
+  }
+  if (/pasif|terkena|kerepotan|kerugian|泣かれた|降られた|受身/i.test(text)) {
+    return 'Pola pasif kerepotan (迷惑受身): subjek merasa dirugikan atau terbebani secara emosional akibat perbuatan pihak lain, meskipun tanpa kontak fisik langsung.';
+  }
+  if (/izin|memohon|biarkan|させて|許可/i.test(text)) {
+    return 'Pahami bedanya: pola ini dipakai untuk memohon izin agar diri sendiri diperbolehkan melakukan aksi, bukan menyuruh lawan bicara yang berbuat.';
+  }
+  if (/perumpamaan|seperti|mirip|tampak|dugaan|みたい|らしい|っぽい|推測|比喩/i.test(text)) {
+    return 'Dipakai saat mengibaratkan kemiripan sifat atau menduga kesan seketika dari apa yang diamati langsung oleh panca indra.';
+  }
+  if (/kewajiban|keharusan|sepantasnya|moral|harus|sebaiknya|べき|ことだ|義務|助言/i.test(text)) {
+    return 'Menegaskan hal yang sudah sewajarnya atau sepantasnya dilakukan berdasarkan norma moral, etika, atau akal sehat umum.';
+  }
+  if (/perubahan|menjadi|kebiasaan|rutin|ようになる|変化|習慣/i.test(text)) {
+    return 'Fokus pada transisi waktu: dulu tidak bisa atau belum biasa, seiring berjalannya waktu kini menjadi mampu atau mulai terbiasa.';
+  }
+  if (/pembatasan|melulu|hanya|cuma|eksklusif|ばかり|だけしか|さえ|限定|強調/i.test(text)) {
+    return 'Bukan sekadar menyatakan jumlah sedikit, melainkan memberi penekanan pada eksklusivitas ketat atau rasa risih karena melulu hal itu saja.';
+  }
+  if (/pengandaian|syarat|seandainya|jika|kalau|たら|ば|なら|仮定|条件/i.test(text)) {
+    return 'Perhatikan hubungan sebab-akibatnya: menetapkan kondisi pengandaian dan melihat konsekuensi logis atau hasil tak terduga yang mengikutinya.';
+  }
+  if (/waktu|momen|ketika|saat|sebelum|setelah|最中|とたん|時間|契機/i.test(text)) {
+    return 'Menunjukkan ketepatan momentum: titik waktu saat aksi berlangsung atau peristiwa tak terduga yang mendadak menyela di tengah jalan.';
+  }
+  if (/keigo|sopan|hormat|rendah hati|klien|tamu|お越し|拝見|申し上げる|敬語/i.test(text)) {
+    return 'Perhatikan posisi hierarki: apakah menghormati lawan bicara (Sonkeigo) atau merendahkan tindakan diri sendiri (Kenjougo) di hadapan klien.';
+  }
+  if (/sebab|karena|alasan|gara-gara|berkat|おかげ|せい|原因|理由/i.test(text)) {
+    return 'Menunjukkan kaitan kausalitas: perhatikan apakah akibat yang ditimbulkan bernuansa positif (berkat: おかげ) atau bernuansa negatif menyalahkan (gara-gara: せい).';
+  }
+
+  // Meaningful dynamic fallback derived from actual meaning
+  const cleanM = cleanSummaryStr(item.meaningId || (item as any).meaning || '');
+  if (cleanM) {
+    return `Inti penggunaan: ${cleanM}. Perhatikan konteks situasi dan pasangan kata pembentuknya agar pesan tersampaikan secara luwes dan tepat sasaran.`;
+  }
+  return 'Perhatikan situasi percakapan dan bentuk perubahan kata yang menyambung sebelum pola ini agar ungkapan tersampaikan secara alami.';
+}
+
+function deriveSmartBeforeAfter(item: BunpouItem): { beforeState: string; afterState: string } {
+  if (item.beforeState && item.afterState) {
+    return { beforeState: item.beforeState, afterState: item.afterState };
+  }
+  const curated = (bunpouCuratedDict as Record<string, any>)[item.id];
+  if (curated?.beforeState && curated?.afterState) {
+    return { beforeState: curated.beforeState, afterState: curated.afterState };
+  }
+
+  const text = `${item.meaningId || ''} ${item.title || ''} ${(item.functions || []).join(' ')}`.toLowerCase();
+
+  if (/ralat|tepatnya|bukannya|daripada|pasnya|というより/i.test(text)) {
+    return {
+      beforeState: 'Tanpa Ralat: Memakai sebutan awal yang kurang pas 💬',
+      afterState: 'Dengan Pola Ini: Meralat langsung ke ungkapan yang jauh lebih akurat 🎯'
+    };
+  }
+  if (/pasif|terkena|kerepotan|kerugian|泣かれた|降られた|受身/i.test(text)) {
+    return {
+      beforeState: 'Kalimat Netral: Pihak lain melakukan aksi biasa 👤',
+      afterState: 'Pasif Kerepotan: Subjek merasa sangat terbebani atau dirugikan 🛡️'
+    };
+  }
+  if (/izin|memohon|biarkan|させて|許可/i.test(text)) {
+    return {
+      beforeState: 'Menyuruh Orang Lain: 〜てください (Lawan bicara yang berbuat) 👥',
+      afterState: 'Meminta Izin Diri Sendiri: 〜(さ)せてください (Izinkan saya yang berbuat) 🤝'
+    };
+  }
+  if (/perumpamaan|seperti|mirip|tampak|dugaan|みたい|らしい|っぽい/i.test(text)) {
+    return {
+      beforeState: 'Fakta Pasti: Bukan hal tersebut / belum tentu pasti 🔍',
+      afterState: 'Kesan Tampang: Terlihat dan bertingkah mirip sekali 💡'
+    };
+  }
+  if (/perubahan|menjadi|kebiasaan|rutin|ようになる/i.test(text)) {
+    return {
+      beforeState: 'Dulu: ❌ Keadaan lama / Belum terbiasa',
+      afterState: 'Sekarang: ✅ Menjadi bisa / Mulai mahir dan terbiasa'
+    };
+  }
+  if (/pembatasan|melulu|hanya|cuma|eksklusif|ばかり|だけしか|さえ/i.test(text)) {
+    return {
+      beforeState: 'Kondisi Netral: Menyebutkan jumlah biasa 💬',
+      afterState: 'Dengan Pola Ini: Menegaskan batasan ketat atau rasa berlebihan 💢'
+    };
+  }
+  if (/keigo|sopan|hormat|rendah hati|お越し|拝見|申し上げる|敬語/i.test(text)) {
+    return {
+      beforeState: 'Ragam Bahasa Biasa: Ungkapan kasual sehari-hari 💬',
+      afterState: 'Ragam Bahasa Santun: Penuh penghormatan elegan kepada lawan bicara 🌸'
+    };
+  }
+
+  return {
+    beforeState: 'Tanpa Pola: Kalimat fakta biasa 💬',
+    afterState: 'Dengan Pola: Bernuansa dan terarah sesuai konteks 🎯'
+  };
+}
+
 /**
  * Fallback generator for Node 1: Concept
  */
 function generateFallbackConcept(item: BunpouItem): GrammarSkillConcept {
-  const rawExplanation = (item as any).nuance || item.meaningId || item.explanation || '';
-  const explanation = rawExplanation
-    .replace(/\s*\([A-Za-z0-9\s/,'’._\-—]{4,}\)\.?\s*$/g, '')
-    .trim();
-  const isChange = explanation.toLowerCase().includes('perubahan') || explanation.toLowerCase().includes('menjadi');
-  const isPassive = explanation.toLowerCase().includes('pasif') || item.title.includes('れる') || item.title.includes('られる');
-  const isCausative = explanation.toLowerCase().includes('izin') || explanation.toLowerCase().includes('menyuruh') || item.title.includes('させて');
-  const isDugaan = explanation.toLowerCase().includes('seperti') || explanation.toLowerCase().includes('tampaknya') || explanation.toLowerCase().includes('dugaan');
+  const curated = (bunpouCuratedDict as Record<string, any>)[item.id];
+  const rawExplanation = curated?.meaning_id || (item as any).nuance || item.meaningId || item.explanation || '';
+  const explanation = cleanSummaryStr(rawExplanation);
 
   const firstEx = item.examples && item.examples[0];
   const starterExample = firstEx ? {
@@ -695,47 +1566,15 @@ function generateFallbackConcept(item: BunpouItem): GrammarSkillConcept {
     meaningId: firstEx.meaningId,
   } : undefined;
 
-  if (isChange) {
-    return {
-      summary: explanation,
-      beforeState: 'Dulu: ❌ Keadaan lama / Belum terjadi',
-      afterState: 'Sekarang: ✅ Menjadi keadaan baru',
-      starterExample,
-    };
-  }
-
-  if (isPassive) {
-    return {
-      summary: explanation,
-      beforeState: 'Aksi Aktif: Pelaku yang berbuat 👤',
-      afterState: 'Posisi Pasif: Subjek terkena dampak / kerepotan 🛡️',
-      starterExample,
-    };
-  }
-
-  if (isCausative) {
-    return {
-      summary: explanation,
-      beforeState: 'Menunggu Izin: Mengharapkan perkenan pihak lain ⏳',
-      afterState: 'Meminta Izin: Mengizinkan atau meminta agar boleh berbuat 🤝',
-      starterExample,
-    };
-  }
-
-  if (isDugaan) {
-    return {
-      summary: explanation,
-      beforeState: 'Fakta Pasti: Belum dikonfirmasi 100% 🔍',
-      afterState: 'Kesan Tampang: Dugaan kuat dari apa yang diamati 💡',
-      starterExample,
-    };
-  }
+  const keyTakeaway = item.keyTakeaway || curated?.keyTakeaway || deriveSmartKeyTakeaway(item);
+  const { beforeState, afterState } = deriveSmartBeforeAfter(item);
 
   return {
     summary: explanation,
-    beforeState: 'Tanpa Pola: Kalimat fakta biasa 💬',
-    afterState: 'Dengan Pola: Bernuansa dan terarah 🎯',
+    beforeState,
+    afterState,
     starterExample,
+    keyTakeaway,
   };
 }
 
@@ -918,6 +1757,126 @@ const FUNCTION_KNOWLEDGE_MAP: Record<string, { label: string; description: strin
     description: 'Ragam bahasa hormat untuk menghargai lawan bicara atau merendahkan diri secara santun.',
     keywords: ['いらっしゃる', 'おっしゃる', 'いただく', '申す'],
   },
+  '祈願・指示': {
+    label: 'Instruksi Halus & Doa (祈願・指示)',
+    description: 'Digunakan dalam situasi resmi atau mendidik (seperti guru mengarahkan murid, atau atasan mengingatkan staf) agar arahan dipatuhi secara santun tanpa terkesan menekan lawan bicara.',
+    keywords: ['ように', '来る', '遅れない', '提出', '合格', '元気', '雨'],
+  },
+  '指示': {
+    label: 'Instruksi & Arahan Disiplin (指示)',
+    description: 'Dipakai oleh figur otoritas atau dalam peraturan tertulis untuk mengarahkan apa yang semestinya dikerjakan atau dihindari demi ketertiban bersama.',
+    keywords: ['ように', '来る', '遅れない', '提出', '切る', '守る'],
+  },
+  '祈願': {
+    label: 'Doa & Harapan Tulus (祈願)',
+    description: 'Diucapkan saat memanjatkan doa kepada Tuhan atau mengungkapkan permohonan mendalam dari lubuk hati agar diberi kelulusan, kesembuhan, atau keselamatan.',
+    keywords: ['合格', '治る', '健康', '降らない', '雨', 'ますように'],
+  },
+  '希望': {
+    label: 'Harapan & Keinginan Baik (希望)',
+    description: 'Menyatakan keinginan atau ekspektasi positif terhadap suatu keadaan yang diharapkan dapat terwujud.',
+    keywords: ['たい', 'ほしい', '願う', '祈る'],
+  },
+  '努力・変化・目的': {
+    label: 'Usaha, Perubahan & Tujuan (努力・変化・目的)',
+    description: 'Menjelaskan ikhtiar sadar dalam mendisiplinkan diri membentuk rutinitas baru, mengamati perkembangan kemampuan, atau melakukan tindakan demi mencapai target tertentu.',
+    keywords: ['ようにする', 'ようになる', '聞こえるように', '毎日', '練習'],
+  },
+  '意志・試み': {
+    label: 'Niat & Upaya Aksi (意志・試み)',
+    description: 'Mengungkapkan tekad kuat yang sudah direncanakan dalam pikiran, atau menggambarkan momen krusial saat seseorang baru saja hendak memulai suatu tindakan.',
+    keywords: ['と思う', 'とする', 'やめよう', '乗ろう', 'しよう'],
+  },
+  '意志': {
+    label: 'Niat & Tekad Bulat (意志)',
+    description: 'Menyatakan ketetapan hati pembicara yang sudah dipikirkan matang-matang sebelum diwujudkan ke dalam aksi nyata.',
+    keywords: ['と思う', 'つもり', 'やめよう', '決める'],
+  },
+  '試み': {
+    label: 'Momen Hendak Melakukan (試み)',
+    description: 'Menggambarkan momen tepat sesaat sebelum suatu tindakan dimulai, atau perjuangan seseorang saat sedang berusaha keras melaksanakannya.',
+    keywords: ['とする', '乗ろうとした', '開けよう', '出かけよう'],
+  },
+  '限定・強調': {
+    label: 'Pembatasan & Penekanan (限定・強調)',
+    description: 'Dipakai saat pembicara ingin menyoroti hal tertentu secara khusus (melulu itu saja) atau memberikan penekanan kuat pada frekuensi dan derajat suatu perbuatan.',
+    keywords: ['ばかり', 'だけ', '遊んで', 'テレビ', '文句'],
+  },
+  '関連・情報源・手段': {
+    label: 'Kaitan Topik & Sarana (関連・情報源・手段)',
+    description: 'Mengangkat suatu topik wacana ke ruang diskusi, merujuk sumber informasi acuan, atau menjelaskan metode yang dipakai dalam bertindak.',
+    keywords: ['について', 'によって', 'よると', 'ニュース', '調査', '問題'],
+  },
+  '名詞化': {
+    label: 'Pembentukan Konsep Nomina (名詞化)',
+    description: 'Mengubah kata sifat atau klausa peristiwa menjadi kata benda abstrak agar dapat dinilai bobotnya, diukur derajatnya, atau dianalisis lebih lanjut.',
+    keywords: ['さ', 'み', 'こと', 'もの', '重さ', '深み'],
+  },
+  '定義・説明': {
+    label: 'Definisi & Penjelasan Konsep (定義・説明)',
+    description: 'Digunakan saat memperkenalkan nama istilah baru, mendefinisikan konsep abstrak, atau menjelaskan makna suatu kata kepada lawan bicara.',
+    keywords: ['という', 'というのは', 'ことだ', '意味'],
+  },
+  '評価・引用': {
+    label: 'Penilaian & Sudut Pandang (評価・引用)',
+    description: 'Dipakai untuk meralat sebutan yang kurang pas ke deskripsi yang lebih akurat, atau menyampaikan sudut pandang kritis pembicara terhadap suatu hal.',
+    keywords: ['というより', 'というか', 'と言っても', '評価'],
+  },
+  '間接引用': {
+    label: 'Penyampaian Pesan / Kutipan (間接引用)',
+    description: 'Menyampaikan kembali arahan, teguran, atau instruksi dari pihak ketiga (seperti dokter, guru, atau atasan) kepada orang yang bersangkutan.',
+    keywords: ['ように言われた', 'と言っていた', '注意された'],
+  },
+  '立場・基準・仮定': {
+    label: 'Sudut Pandang Peran & Standar (立場・基準)',
+    description: 'Menilai suatu tindakan berdasarkan kapasitas peran tertentu (misal sebagai orang tua, dokter, pelajar) atau menimbangnya dari standar kelaziman umum.',
+    keywords: ['として', 'にしては', 'わりに', '立場', '基準'],
+  },
+  '確信・義務・追憶': {
+    label: 'Keyakinan, Kewajiban & Kenangan (確信・義務)',
+    description: 'Menyatakan kepastian logis berdasarkan fakta, keharusan moral yang patut dijalankan, atau mengenang kebiasaan berkesan di masa lalu.',
+    keywords: ['はずだ', 'べきだ', 'ものだ', '約束', '子供のころ'],
+  },
+  '時間・契機': {
+    label: 'Waktu & Momentum Aksi (時間・契機)',
+    description: 'Menunjukkan momen waktu yang tepat, momentum kebetulan saat dua peristiwa bertemu, atau pemicu dimulainya suatu aksi baru.',
+    keywords: ['うちに', 'あいだに', 'たびに', 'とたんに', '最中に'],
+  },
+  '状態・継続': {
+    label: 'Kondisi Berlanjut & Acuan (状態・継続)',
+    description: 'Membiarkan suatu keadaan tetap berlangsung sebagaimana adanya tanpa diubah, atau bertindak persis sesuai panduan dan rencana acuan.',
+    keywords: ['まま', 'っぱなし', 'とおりに', '指示'],
+  },
+  '感情・様子': {
+    label: 'Ekspresi Sikap & Emosi Pihak Ketiga (感情・様子)',
+    description: 'Menggambarkan perasaan, keinginan, atau sikap tampak dari orang lain (pihak ketiga) berdasarkan apa yang terlihat dari gelagat luarnya.',
+    keywords: ['がる', 'たがる', 'ふりをする', '寂しそう'],
+  },
+  '評価・不満': {
+    label: 'Evaluasi Kritis & Keluhan (評価・不満)',
+    description: 'Mengutarakan kritik, ketidakpuasan, atau rasa heran karena suatu hal berjalan tidak sesuai dengan harapan atau standar yang semestinya.',
+    keywords: ['くせに', 'わりに', '文句', '不満'],
+  },
+  '原因・理由・代替': {
+    label: 'Sebab-Akibat & Pengganti (原因・理由・代替)',
+    description: 'Menjelaskan faktor pemicu logis di balik terjadinya peristiwa, atau memilih opsi pengganti yang sepadan sebagai kompensasi.',
+    keywords: ['わけだ', 'せいで', 'おかげで', 'かわりに', 'ため'],
+  },
+  '受身・許可': {
+    label: 'Bentuk Pasif & Izin (受身・許可)',
+    description: 'Menyatakan peristiwa dari sudut pandang korban/penerima aksi yang terkena dampak, atau memohon izin secara santun agar diperbolehkan melakukan sesuatu.',
+    keywords: ['られる', 'させて', '泣かれた', '許可'],
+  },
+  '伝聞': {
+    label: 'Penyampaian Kabar Pihak Ketiga (伝聞)',
+    description: 'Menyampaikan kembali berita, kabar burung, atau informasi yang didengar dari media massa atau sumber lain tanpa menjamin kebenaran mutlaknya.',
+    keywords: ['そうだ', 'ということだ', 'ニュース', '聞いた'],
+  },
+  '伝達': {
+    label: 'Acuan Informasi Bersama (伝達)',
+    description: 'Mengawali percakapan atau presentasi dengan merujuk pada informasi, bagan, atau fakta yang sudah sama-sama diketahui oleh audiens.',
+    keywords: ['ご存じのように', '言ったように', '図のように'],
+  },
 };
 
 interface CandidateSentence {
@@ -986,8 +1945,19 @@ function generateFallbackFunctions(item: BunpouItem): GrammarSkillFunction[] {
       const kanjiKey = parts[0]?.trim() || '';
       const indoTag = parts[1]?.trim() || '';
 
-      const descriptor = FUNCTION_KNOWLEDGE_MAP[kanjiKey] ||
-        Object.entries(FUNCTION_KNOWLEDGE_MAP).find(([k]) => kanjiKey.includes(k))?.[1];
+      let descriptor = FUNCTION_KNOWLEDGE_MAP[kanjiKey];
+      if (!descriptor) {
+        const subKeys = kanjiKey.split(/[・、/]/).map(k => k.trim()).filter(Boolean);
+        for (const sk of subKeys) {
+          if (FUNCTION_KNOWLEDGE_MAP[sk]) {
+            descriptor = FUNCTION_KNOWLEDGE_MAP[sk];
+            break;
+          }
+        }
+      }
+      if (!descriptor) {
+        descriptor = Object.entries(FUNCTION_KNOWLEDGE_MAP).find(([k]) => kanjiKey.includes(k) || k.includes(kanjiKey))?.[1];
+      }
 
       let label = descriptor?.label;
       if (!label) {
@@ -1001,10 +1971,12 @@ function generateFallbackFunctions(item: BunpouItem): GrammarSkillFunction[] {
 
       let description = descriptor?.description;
       if (!description) {
+        const cleanTitle = item.title.split(/[(（]/)[0].trim().replace(/^[〜~]/, '');
+        const cleanMeaning = cleanSummaryStr(item.meaningId || (item as any).meaning || '');
         if (indoTag) {
-          description = `Dipakai untuk menyatakan fungsi ${indoTag} dalam konteks kalimat ${item.title}.`;
+          description = `Digunakan dalam situasi ${indoTag.toLowerCase()}, yaitu saat pembicara ingin menyampaikan maksud 「${cleanMeaning || cleanTitle}」 secara tepat dan wajar kepada lawan bicara.`;
         } else {
-          description = `Digunakan sesuai kaidah fungsi ${kanjiKey} dalam konteks kalimat.`;
+          description = `Dipakai saat pembicara ingin mengungkapkan nuansa 「${cleanMeaning || cleanTitle}」 dalam situasi percakapan nyata yang sesuai.`;
         }
       }
 
@@ -1082,22 +2054,79 @@ function generateFallbackFunctions(item: BunpouItem): GrammarSkillFunction[] {
 }
 
 /**
+ * Localizes English formula tokens to authentic Indonesian grammar terminology
+ */
+export function localizeFormulaString(str: string): string {
+  if (!str) return '';
+  return str
+    .replace(/［/g, '[').replace(/］/g, ']')
+    .replace(/Noun\s*\[\s*thing\s*\]/gi, 'Kata Benda [hal]')
+    .replace(/Noun\s*\[\s*person\s*[\/／]\s*faculty\s*\]/gi, 'Kata Benda [orang/pihak]')
+    .replace(/Noun\s*\[\s*person\s*\]/gi, 'Kata Benda [orang]')
+    .replace(/Noun\s*\[\s*place\s*\]/gi, 'Kata Benda [tempat]')
+    .replace(/Noun\s*\[\s*time\s*\]/gi, 'Kata Benda [waktu]')
+    .replace(/Noun\s*\[\s*reason\s*\]/gi, 'Kata Benda [alasan]')
+    .replace(/Noun\s*\[\s*situation\s*\]/gi, 'Kata Benda [situasi]')
+    .replace(/Noun-A/g, 'Kata Benda A')
+    .replace(/Noun-B/g, 'Kata Benda B')
+    .replace(/\bNoun\b/g, 'Kata Benda')
+    .replace(/\bVerb\s*\[\s*た\s*form\s*\]/gi, 'Kata Kerja [Bentuk-ta]')
+    .replace(/\bVerb\s*\[\s*dictionary\s*form\s*\]/gi, 'Kata Kerja [Bentuk Kamus]')
+    .replace(/\bVerb\s*\[\s*plain\s*form\s*\]/gi, 'Kata Kerja [Bentuk Biasa]')
+    .replace(/\bVerb\s*\[\s*stem\s*\]/gi, 'Kata Kerja [Bentuk Masu]')
+    .replace(/\bVerb\s*\[\s*te\s*form\s*\]/gi, 'Kata Kerja [Bentuk-te]')
+    .replace(/\bVerb\s*\[\s*nai\s*form\s*\]/gi, 'Kata Kerja [Bentuk-nai]')
+    .replace(/\bVerb\s*\[\s*volitional\s*form\s*\]/gi, 'Kata Kerja [Bentuk Maksud]')
+    .replace(/\bVerb\s*\[\s*potential\s*form\s*\]/gi, 'Kata Kerja [Bentuk Potensial]')
+    .replace(/\bVerb\s*\[\s*passive\s*form\s*\]/gi, 'Kata Kerja [Bentuk Pasif]')
+    .replace(/\bVerb\s*\[\s*causative\s*form\s*\]/gi, 'Kata Kerja [Bentuk Kausatif]')
+    .replace(/\bVerb\b/g, 'Kata Kerja')
+    .replace(/na-adjective|na adjective|な-adjective/gi, 'Kata Sifat-na')
+    .replace(/i-adjective|i adjective|い-adjective/gi, 'Kata Sifat-i')
+    .replace(/\bAdjective\b|\badjective\b/g, 'Kata Sifat')
+    .replace(/\bSentence\b|\bsentence\b/g, 'Kalimat')
+    .replace(/\bplain form\b/gi, 'Bentuk Biasa')
+    .replace(/\bdictionary form\b/gi, 'Bentuk Kamus')
+    .replace(/\bpolite form\b/gi, 'Bentuk Sopan')
+    .replace(/\bvolitional form\b|\bvolitional\b/gi, 'Bentuk Maksud')
+    .replace(/\bpotential form\b|\bpotential\b/gi, 'Bentuk Potensial')
+    .replace(/\bpassive form\b|\bpassive\b/gi, 'Bentuk Pasif')
+    .replace(/\bcausative form\b|\bcausative\b/gi, 'Bentuk Kausatif')
+    .replace(/\bClause\b|\bclause\b/gi, 'Klausa')
+    .replace(/\bPhrase\b|\bphrase\b/gi, 'Frasa')
+    .replace(/\bNumber\b|\bnumber\b/gi, 'Angka')
+    .replace(/\bCounter\b|\bcounter\b/gi, 'Kata Bantu Hitung')
+    .replace(/\bQuantity\b|\bquantity\b/gi, 'Jumlah')
+    .replace(/\bQuestion word\b/gi, 'Kata Tanya')
+    .replace(/\[thing\]/gi, '[hal]')
+    .replace(/\[person[\s\/／]*faculty\]/gi, '[orang/pihak]')
+    .replace(/\[person\]/gi, '[orang]')
+    .replace(/\[place\]/gi, '[tempat]')
+    .replace(/\[time\]/gi, '[waktu]')
+    .replace(/\[reason\]/gi, '[alasan]')
+    .replace(/\[situation\]/gi, '[situasi]');
+}
+
+/**
  * Fallback generator for Node 3: Formulas
  */
 function generateFallbackFormulas(item: BunpouItem): GrammarSkillFormulaStep[] {
   if (item.subFormulas && item.subFormulas.length > 0) {
     return item.subFormulas.map((sub) => {
-      const conditions = sub.connectionConditions.map(c => `${c.partOfSpeech}: ${c.rule}`);
+      const conditions = sub.connectionConditions.map(c => `${localizeFormulaString(c.partOfSpeech)}: ${localizeFormulaString(c.rule)}`);
       return {
-        title: sub.token || item.formula || item.title,
-        breakdown: conditions.length > 0 ? conditions : [item.formula || item.title],
+        title: sub.token || localizeFormulaString(item.formula || item.title),
+        breakdown: conditions.length > 0 ? conditions : [localizeFormulaString(item.formula || item.title)],
         note: sub.usageLocation ? `Letak dalam kalimat: ${sub.usageLocation}` : undefined,
       };
     });
   }
 
-  const rawFormula = item.formula || item.title;
-  const parts = rawFormula.split(/[＋+]/).map(p => p.trim());
+  const rawFormula = localizeFormulaString((item.formula || item.title).trim());
+  const parts = rawFormula
+    .split(/[＋+]/)
+    .map(p => p.replace(/^[＋+\s]+|[＋+\s]+$/g, '').trim())
+    .filter(p => p.length > 0 && p !== '+' && p !== '＋');
 
   return [
     {
@@ -1117,19 +2146,33 @@ function generateFallbackWordIdentities(item: BunpouItem): GrammarSkillWordIdent
   // Extract from connection conditions if present
   if (item.subFormulas && item.subFormulas.length > 0) {
     const seen = new Set<string>();
+    const alphabet = ['A', 'B', 'C', 'D', 'E', 'F'];
     for (const sub of item.subFormulas) {
       for (const cond of sub.connectionConditions) {
         if (!seen.has(cond.partOfSpeech)) {
           seen.add(cond.partOfSpeech);
-          const isVerb = cond.partOfSpeech.toLowerCase().includes('kerja') || cond.partOfSpeech.includes('V');
-          const isNoun = cond.partOfSpeech.toLowerCase().includes('benda') || cond.partOfSpeech.includes('N');
-          const isAdj = cond.partOfSpeech.toLowerCase().includes('sifat') || cond.partOfSpeech.includes('A');
+          const isVerb = cond.partOfSpeech.toLowerCase().includes('kerja') || cond.partOfSpeech.includes('V') || cond.partOfSpeech.includes('動詞');
+          const isNoun = cond.partOfSpeech.toLowerCase().includes('benda') || cond.partOfSpeech.includes('N') || cond.partOfSpeech.includes('名詞');
+          const isAdj = cond.partOfSpeech.toLowerCase().includes('sifat') || cond.partOfSpeech.includes('A') || cond.partOfSpeech.includes('形容詞');
 
+          let exampleList: string[] = [];
+          if (cond.example) {
+            const cleaned = cond.example.replace(/^[^:]+:\s*/, '').trim();
+            const rawParts = cleaned.split(/[,、]/).map(s => s.trim()).filter(Boolean);
+            if (rawParts.length > 0) {
+              exampleList = rawParts;
+            }
+          }
+          if (exampleList.length === 0) {
+            exampleList = [cond.rule];
+          }
+
+          const letter = alphabet[result.length] || '•';
           result.push({
-            typeCategory: isVerb ? 'A. Kata Kerja (動詞)' : isNoun ? 'B. Kata Benda (名詞)' : 'C. Kata Sifat (形容詞)',
+            typeCategory: `${letter}. ${cond.partOfSpeech}`,
             tagColor: isVerb ? 'emerald' : isNoun ? 'sky' : isAdj ? 'amber' : 'purple',
             icon: isVerb ? '🟢' : isNoun ? '🔵' : isAdj ? '🟡' : '🟣',
-            examples: cond.example ? [cond.example] : [cond.rule],
+            examples: exampleList,
             functionEffect: `→ Aturan gabung: ${cond.rule}`,
           });
         }
@@ -1197,18 +2240,69 @@ function generateFallbackNuances(item: BunpouItem): GrammarSkillNuance[] {
 
 /**
  * Fallback generator for Node 6: Tiered Examples
+ * Guarantees at least 3 distinct tiered examples by supplementing from authored questions if needed.
  */
 function generateFallbackExamples(item: BunpouItem): TieredExampleSentence[] {
-  const rawExamples = item.examples && item.examples.length > 0
-    ? item.examples
-    : [
-        {
-          japanese: `これは${item.title.replace(/^[〜~]/, '')}の例です。`,
-          reading: '',
-          meaningId: `Ini adalah contoh penerapan pola ${item.title}.`,
-        }
-      ];
+  const existingList: Array<{ japanese: string; reading: string; meaningId: string }> =
+    item.examples && item.examples.length > 0
+      ? item.examples.map(ex => {
+          let m = ex.meaningId || (ex as any).id;
+          if (!m || m.startsWith('Contoh penggunaan pola')) {
+            m = `Contoh penerapan pola ${item.title}.`;
+          }
+          return {
+            japanese: ex.japanese,
+            reading: ex.reading || ex.japanese,
+            meaningId: m,
+          };
+        })
+      : [];
 
+  // If fewer than 3 examples, supplement from item.questions only if it is a genuine fill-in sentence
+  if (existingList.length < 3 && item.questions && item.questions.length > 0) {
+    const seenJp = new Set(existingList.map(e => e.japanese.replace(/\s+/g, '')));
+    for (const q of item.questions) {
+      if (existingList.length >= 3) break;
+      const prompt = q.prompt || '';
+      
+      // Must have a blank to fill
+      const hasBlank = /[（(]\s*[)）]/.test(prompt);
+      if (!hasBlank) continue;
+
+      // Must NOT be a meta prompt or question in Indonesian or Japanese question instruction
+      if (/^(Apa|Pilihlah|Manakah|Bagaimana|Pernyataan|Kaidah|文の適切な形)/i.test(prompt)) continue;
+
+      // Must contain Japanese characters
+      if (!/[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/.test(prompt)) continue;
+
+      const qAny = q as any;
+      const correctIdx = q.correctIndex ?? qAny.correct_answer ?? 0;
+      const chosenOpt = (q.options && q.options[correctIdx]) ? q.options[correctIdx] : '';
+      const fullJp = prompt.replace(/[（(]\s*[)）]/, chosenOpt).trim();
+
+      if (fullJp && !seenJp.has(fullJp.replace(/\s+/g, '')) && !fullJp.includes('（')) {
+        seenJp.add(fullJp.replace(/\s+/g, ''));
+        const fullRuby = (q.ruby || '').replace(/[（(]\s*[)）]/, chosenOpt).trim();
+        let meaning = '';
+        const mMatch = (q.explanation || '').match(/Arti kalimat:\s*[\"“](.*?)[\"”]/i);
+        if (mMatch && mMatch[1]) {
+          meaning = mMatch[1];
+        } else {
+          const lines = (q.explanation || '').split('\n').map(l => l.trim()).filter(Boolean);
+          const found = lines.find(l => !l.startsWith('Jawaban') && !l.startsWith('Kaidah') && !l.startsWith('Pola') && !l.includes('Rumus:'));
+          meaning = found || `Contoh penerapan pola ${item.title}.`;
+        }
+
+        existingList.push({
+          japanese: fullJp,
+          reading: fullRuby || fullJp,
+          meaningId: meaning,
+        });
+      }
+    }
+  }
+
+  // Only return genuine, authentic examples. Never generate artificial dummy placeholders.
   const tiers: ('basic' | 'daily' | 'natural')[] = ['basic', 'daily', 'natural'];
   const tierLabels = [
     'Level 1: Sederhana (Pondasi)',
@@ -1216,7 +2310,7 @@ function generateFallbackExamples(item: BunpouItem): TieredExampleSentence[] {
     'Level 3: Alami (Ekspresi Wajar)',
   ];
 
-  return rawExamples.slice(0, 3).map((ex, idx) => ({
+  return existingList.slice(0, 3).map((ex, idx) => ({
     tier: tiers[idx] || 'daily',
     tierLabel: tierLabels[idx] || `Level ${idx + 1}`,
     japanese: ex.japanese,

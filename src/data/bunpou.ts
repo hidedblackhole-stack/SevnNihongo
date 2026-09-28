@@ -71,14 +71,14 @@ export const BUNPOU_DATABASE: Record<string, BunpouItem> = {};
   const examples = (item.examples || []).map(ex => {
     let cleanMeaningId = ex.id;
     const isPlaceholder = !cleanMeaningId || cleanMeaningId.startsWith('Contoh penggunaan pola');
-    if (isPlaceholder && ex.en) {
-      cleanMeaningId = ex.en;
+    if (isPlaceholder) {
+      cleanMeaningId = `Contoh penerapan pola ${item.title}.`;
     }
 
     return {
       japanese: ex.jp,
       reading: ex.reading || sentenceReadingMap.get(ex.jp) || ex.jp,
-      meaningId: cleanMeaningId || ex.en || 'Contoh kalimat.',
+      meaningId: cleanMeaningId || `Contoh penerapan pola ${item.title}.`,
       meaningEn: ex.en || ex.id
     };
   });
@@ -100,7 +100,7 @@ export const BUNPOU_DATABASE: Record<string, BunpouItem> = {};
     level: detectedLevel,
     explanation: item.explanation_note
       ? `${item.meaning_id}. Catatan: ${item.explanation_note}`
-      : `${item.meaning_id} (${item.meaning_en}).`,
+      : `${item.meaning_id}.`,
     formula: item.formula || '',
     examples,
     questions: questions.length > 0 ? questions : [

@@ -96,29 +96,29 @@ export function getFormulaGroups(item: BunpouItem): FormulaGroup[] {
   const rows: FormulaRow[] = [];
   const suffix = item.title.replace(/^[〜~]/, '');
 
-  if (raw.includes('Verb') || raw.includes('V')) {
+  if (raw.includes('Verb') || raw.includes('Kata Kerja') || raw.includes('K. Kerja') || raw.includes('V')) {
     let hint = '(biasa)';
-    if (raw.includes('Vます') || raw.includes('masu')) hint = '(stem -masu)';
-    else if (raw.includes('Vて') || raw.includes('te')) hint = '(bentuk -te)';
-    else if (raw.includes('Vた') || raw.includes('ta')) hint = '(bentuk -ta)';
-    else if (raw.includes('Vない') || raw.includes('nai')) hint = '(bentuk -nai)';
+    if (raw.includes('Vます') || raw.includes('masu') || raw.includes('Bentuk Masu')) hint = '(tanpa -masu)';
+    else if (raw.includes('Vて') || raw.includes('te') || raw.includes('Bentuk-te')) hint = '(bentuk -te)';
+    else if (raw.includes('Vた') || raw.includes('ta') || raw.includes('Bentuk-ta')) hint = '(bentuk -ta)';
+    else if (raw.includes('Vない') || raw.includes('nai') || raw.includes('Bentuk-nai')) hint = '(bentuk -nai)';
     rows.push({ partOfSpeech: 'K. Kerja', jpLabel: '動詞', formHint: hint, linkedPatternId: 'v_plain' });
   }
 
-  if (raw.includes('い-adjective') || raw.includes('い形') || raw.includes('A-i') || raw.includes('A')) {
+  if (raw.includes('い-adjective') || raw.includes('Kata Sifat-i') || raw.includes('い形') || raw.includes('A-i') || raw.includes('A')) {
     rows.push({ partOfSpeech: 'K. Sifat -i', jpLabel: 'い形容詞', formHint: '(biasa)', linkedPatternId: 'adj_i_plain' });
   }
 
-  if (raw.includes('な-adjective') || raw.includes('な形') || raw.includes('na')) {
+  if (raw.includes('な-adjective') || raw.includes('Kata Sifat-na') || raw.includes('な形') || raw.includes('na')) {
     let hint = 'な';
     if (raw.includes('na ＋ である') || raw.includes('である')) hint = 'な / である';
     rows.push({ partOfSpeech: 'K. Sifat -na', jpLabel: 'な形容詞', formHint: hint, linkedPatternId: 'adj_na_na' });
   }
 
-  if (raw.includes('Noun') || raw.includes('名詞') || raw.includes('N')) {
+  if (raw.includes('Noun') || raw.includes('Kata Benda') || raw.includes('K. Benda') || raw.includes('名詞') || raw.includes('N')) {
     let hint = 'の';
-    if (raw.includes('Noun ＋ な') || raw.includes('N な')) hint = 'な';
-    else if (raw.includes('Noun ＋ である')) hint = 'である';
+    if (raw.includes('Noun ＋ な') || raw.includes('Kata Benda ＋ な') || raw.includes('N な')) hint = 'な';
+    else if (raw.includes('Noun ＋ である') || raw.includes('Kata Benda ＋ である')) hint = 'である';
     rows.push({ partOfSpeech: 'K. Benda', jpLabel: '名詞', formHint: hint, linkedPatternId: 'noun_na' });
   }
 

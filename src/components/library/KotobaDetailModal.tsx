@@ -476,11 +476,6 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                     <span className="font-jp not-italic font-semibold text-text-secondary">{effectiveItem.meaningJa}</span>
                   </p>
                 )}
-                {effectiveItem.meaningEn && (
-                  <p className="text-[11px] text-text-muted">
-                    English: {effectiveItem.meaningEn}
-                  </p>
-                )}
               </div>
 
               <button

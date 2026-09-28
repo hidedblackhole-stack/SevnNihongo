@@ -662,7 +662,9 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
 
                     <p className="text-xs text-text-secondary leading-relaxed font-sans">
                       {skillNodes.concept.keyTakeaway ||
-                        'Gunakan pola ini untuk membuat ungkapanmu terasa wajar dan alami bagi penutur asli bahasa Jepang.'}
+                        (item.nuance
+                          ? item.nuance
+                          : `Pahami konteks penggunaannya: ${cleanSummary(item.meaningId || (item as any).meaning)}. Perhatikan pasangan kata dan situasinya agar penggunaannya tepat sasaran.`)}
                     </p>
                   </div>
                 </motion.div>
@@ -682,26 +684,72 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                 >
                   {/* Formulas Section */}
                   <div className="space-y-2.5">
-                    {skillNodes.formulas.map((form, fIdx) => (
-                      <div
-                        key={fIdx}
-                        className="p-3.5 sm:p-4 rounded-2xl bg-surface-inset border border-border-subtle shadow-xs space-y-2.5"
-                      >
-                        <h4 className="text-xs sm:text-sm font-bold text-text-primary font-heading">
-                          {form.title}
-                        </h4>
+                    {skillNodes.formulas.map((form, fIdx) => {
+                      // Defensively sanitize breakdown parts: strip leading/trailing '+' and filter out pure plus items
+                      const cleanParts = form.breakdown
+                        .map((p) => p.replace(/^[＋+\s]+|[＋+\s]+$/g, '').trim())
+                        .filter((p) => p.length > 0 && p !== '+' && p !== '＋');
 
-                        {/* Connection Formula Pills */}
-                        <div className="flex flex-wrap items-center gap-1.5">
-                          {form.breakdown.map((part, pIdx) => (
-                            <React.Fragment key={pIdx}>
-                              {pIdx > 0 && <span className="text-text-muted font-bold text-xs">＋</span>}
-                              <span className="px-2.5 py-0.5 rounded-lg bg-surface-card border border-border-subtle font-mono text-xs font-semibold text-text-primary shadow-xs">
-                                {part}
-                              </span>
-                            </React.Fragment>
-                          ))}
-                        </div>
+                      // Check if items are distinct part-of-speech rules (e.g. "Kata Benda (N): N ＋ らしい")
+                      const isConditionRules = cleanParts.length > 0 && cleanParts.some((p) => p.includes(':'));
+
+                      return (
+                        <div
+                          key={fIdx}
+                          className="p-3.5 sm:p-4 rounded-2xl bg-surface-inset border border-border-subtle shadow-xs space-y-2.5"
+                        >
+                          <h4 className="text-xs sm:text-sm font-bold text-text-primary font-heading">
+                            {form.title}
+                          </h4>
+
+                          {/* Connection Formula Display */}
+                          {isConditionRules ? (
+                            <div className="space-y-1.5">
+                              {cleanParts.map((part, pIdx) => {
+                                const colonIdx = part.indexOf(':');
+                                if (colonIdx !== -1) {
+                                  const posLabel = part.slice(0, colonIdx).trim();
+                                  const posRule = part.slice(colonIdx + 1).trim();
+                                  return (
+                                    <div
+                                      key={pIdx}
+                                      className="flex flex-wrap items-center gap-2 p-2 rounded-xl bg-surface-card border border-border-subtle/80 text-xs"
+                                    >
+                                      <span className="px-2 py-0.5 rounded-md bg-indigo/10 border border-indigo/20 text-indigo font-bold text-[11px] font-heading shrink-0">
+                                        {posLabel}
+                                      </span>
+                                      <span className="font-mono text-text-primary font-semibold text-xs tracking-wide">
+                                        {posRule}
+                                      </span>
+                                    </div>
+                                  );
+                                }
+                                return (
+                                  <div
+                                    key={pIdx}
+                                    className="p-2 rounded-xl bg-surface-card border border-border-subtle/80 text-xs font-mono text-text-primary font-semibold"
+                                  >
+                                    {part}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          ) : (
+                            <div className="flex flex-wrap items-center gap-1.5">
+                              {cleanParts.map((part, pIdx) => (
+                                <React.Fragment key={pIdx}>
+                                  {pIdx > 0 && (
+                                    <span className="text-text-muted font-bold text-xs select-none">
+                                      ＋
+                                    </span>
+                                  )}
+                                  <span className="px-2.5 py-0.5 rounded-lg bg-surface-card border border-border-subtle font-mono text-xs font-semibold text-text-primary shadow-xs">
+                                    {part}
+                                  </span>
+                                </React.Fragment>
+                              ))}
+                            </div>
+                          )}
 
                         {/* Progression Arrow */}
                         {form.progression && form.progression.length > 0 && (
@@ -728,8 +776,9 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                             💡 {form.note}
                           </p>
                         )}
-                      </div>
-                    ))}
+                        </div>
+                      );
+                    })}
                   </div>
 
                   {/* Word Identities: Kata yang Cocok */}
@@ -904,45 +953,36 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                     </span>
                   </div>
 
-                  {skillNodes.examples.map((ex, exIdx) => {
-                    const badgeBg =
-                      ex.tier === 'basic'
-                        ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/25'
-                        : ex.tier === 'daily'
-                        ? 'bg-sky-500/15 text-sky-400 border-sky-500/25'
-                        : 'bg-purple-500/15 text-purple-400 border-purple-500/25';
+                  {skillNodes.examples.map((ex, exIdx) => (
+                    <div
+                      key={exIdx}
+                      className="p-3 sm:p-3.5 rounded-2xl bg-surface-inset border border-border-subtle shadow-xs space-y-1.5 relative"
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-[11px] font-mono font-medium text-text-muted select-none tracking-wide">
+                          例 {exIdx + 1}
+                        </span>
 
-                    return (
-                      <div
-                        key={exIdx}
-                        className="p-3 sm:p-3.5 rounded-2xl bg-surface-inset border border-border-subtle shadow-xs space-y-1.5 relative"
-                      >
-                        <div className="flex items-center justify-between gap-2">
-                          <span className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase border ${badgeBg}`}>
-                            {ex.tierLabel}
-                          </span>
-
-                          <button
-                            type="button"
-                            onClick={() => speakJapanese(ex.japanese)}
-                            className="p-1 rounded-lg text-text-muted hover:text-indigo hover:bg-surface-card transition-colors cursor-pointer"
-                            title="Dengarkan pelafalan kalimat"
-                          >
-                            <Volume2 className="w-3.5 h-3.5" />
-                          </button>
-                        </div>
-
-                        <div className="space-y-0.5">
-                          <p className="text-sm sm:text-base font-semibold text-text-primary font-jp leading-relaxed">
-                            <RubyText japanese={ex.japanese} reading={ex.reading} showFurigana={true} />
-                          </p>
-                          <p className="text-xs text-text-secondary font-sans leading-normal">
-                            {cleanSummary(ex.meaningId)}
-                          </p>
-                        </div>
+                        <button
+                          type="button"
+                          onClick={() => speakJapanese(ex.japanese)}
+                          className="p-1 rounded-lg text-text-muted hover:text-indigo hover:bg-surface-card transition-colors cursor-pointer"
+                          title="Dengarkan pelafalan kalimat"
+                        >
+                          <Volume2 className="w-3.5 h-3.5" />
+                        </button>
                       </div>
-                    );
-                  })}
+
+                      <div className="space-y-0.5">
+                        <p className="text-sm sm:text-base font-semibold text-text-primary font-jp leading-relaxed">
+                          <RubyText japanese={ex.japanese} reading={ex.reading} showFurigana={true} />
+                        </p>
+                        <p className="text-xs text-text-secondary font-sans leading-normal">
+                          {cleanSummary(ex.meaningId)}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
                 </motion.div>
               )}
 

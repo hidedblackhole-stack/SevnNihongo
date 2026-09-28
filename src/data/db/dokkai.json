@@ -3,7 +3,7 @@
     "id": "dokkai_w1d1",
     "title": "Reading: 雪の村に生きる人々の知恵と絆",
     "level": "N3",
-    "category": "Daily Life / Society",
+    "category": "Kehidupan Sehari-hari / Masyarakat",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -82,7 +82,7 @@
     "id": "dokkai_w1d2",
     "title": "Reading: ある貿易会社員の忙しい一日",
     "level": "N3",
-    "category": "Work & Daily Life",
+    "category": "Dunia Kerja & Keseharian",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -191,7 +191,7 @@
     "id": "dokkai_w1d3",
     "title": "Reading: 大切な約束と予期せぬトラブル",
     "level": "N3",
-    "category": "Daily Life",
+    "category": "Kehidupan Sehari-hari",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -320,7 +320,7 @@
     "id": "dokkai_w1d4",
     "title": "Reading: 古い町での特別な出会い",
     "level": "N3",
-    "category": "Daily Life / Travel",
+    "category": "Keseharian & Perjalanan",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -409,7 +409,7 @@
     "id": "dokkai_w1d5",
     "title": "Reading: 地域を変える小さな挑戦",
     "level": "N3",
-    "category": "Society / Community",
+    "category": "Masyarakat & Komunitas",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -493,7 +493,7 @@
     "id": "dokkai_w1d6",
     "title": "Reading: 私の上京生活とアルバイト",
     "level": "N3",
-    "category": "Daily Life",
+    "category": "Kehidupan Sehari-hari",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -587,7 +587,7 @@
     "id": "dokkai_w1d7_boss",
     "title": "Reading: レストランでの不思議な出来事",
     "level": "N3",
-    "category": "Daily Life / Story",
+    "category": "Keseharian & Cerita",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -681,7 +681,7 @@
     "id": "dokkai_w2d1",
     "title": "Reading: ウサギの救出と優しい人々",
     "level": "N3",
-    "category": "Daily Life",
+    "category": "Kehidupan Sehari-hari",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -810,7 +810,7 @@
     "id": "dokkai_w2d2",
     "title": "Reading: 公園での素晴らしい一日",
     "level": "N3",
-    "category": "Daily Life / Story",
+    "category": "Keseharian & Cerita",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -894,7 +894,7 @@
     "id": "dokkai_w2d3",
     "title": "Reading: 日常の移動時間から学ぶこと",
     "level": "N3",
-    "category": "Daily Life / Essay",
+    "category": "Keseharian & Esai",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -978,7 +978,7 @@
     "id": "dokkai_w2d4",
     "title": "Reading: 日本での新しいスタートと理想の庭",
     "level": "N3",
-    "category": "Career & Life",
+    "category": "Karier & Kehidupan",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -1102,7 +1102,7 @@
     "id": "dokkai_w2d5",
     "title": "Reading: 人と動物が共生する小さな村",
     "level": "N3",
-    "category": "Culture & Society",
+    "category": "Budaya & Masyarakat",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -1270,7 +1270,7 @@
     "id": "dokkai_w2d7_boss",
     "title": "Reading: 教授の体験談と政治の現実",
     "level": "N3",
-    "category": "Education / Society",
+    "category": "Pendidikan & Sosial",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -1379,7 +1379,7 @@
     "id": "dokkai_w3d1",
     "title": "Reading: 雨の日の気づき",
     "level": "N3",
-    "category": "Personal Essay / Daily Life",
+    "category": "Esai Pribadi & Keseharian",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -1458,7 +1458,7 @@
     "id": "dokkai_w3d2",
     "title": "Reading: 兄の新しい生活と不思議な出来事",
     "level": "N3",
-    "category": "Daily Life",
+    "category": "Kehidupan Sehari-hari",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -1542,7 +1542,7 @@
     "id": "dokkai_w3d3",
     "title": "Reading: 息子の夢と将来への悩み",
     "level": "N3",
-    "category": "Daily Life",
+    "category": "Kehidupan Sehari-hari",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -1661,7 +1661,7 @@
     "id": "dokkai_w3d4",
     "title": "Reading: 夢を追いかける情熱と私の人生",
     "level": "N3",
-    "category": "エッセイ (Essay)",
+    "category": "Esai (エッセイ)",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -1745,7 +1745,7 @@
     "id": "dokkai_w3d5",
     "title": "Reading: 学校でのちょっとした事件",
     "level": "N3",
-    "category": "Daily Life",
+    "category": "Kehidupan Sehari-hari",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -1844,7 +1844,7 @@
     "id": "dokkai_w3d6",
     "title": "Reading: 祖父と水泳の思い出",
     "level": "N3",
-    "category": "Daily Life / Essay",
+    "category": "Keseharian & Esai",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -1923,7 +1923,7 @@
     "id": "dokkai_w3d7_boss",
     "title": "Reading: 謎の患者と消えた画家",
     "level": "N3",
-    "category": "Mystery / Drama",
+    "category": "Misteri & Drama",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -2052,7 +2052,7 @@
     "id": "dokkai_w4d1",
     "title": "Reading: Stage 1 (Tunggu AI)",
     "level": "N3",
-    "category": "Placeholder",
+    "category": "Membaca Teks",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -2087,7 +2087,7 @@
     "id": "dokkai_w4d2",
     "title": "Reading: Stage 2 (Tunggu AI)",
     "level": "N3",
-    "category": "Placeholder",
+    "category": "Membaca Teks",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -2122,7 +2122,7 @@
     "id": "dokkai_w4d3",
     "title": "Reading: Stage 3 (Tunggu AI)",
     "level": "N3",
-    "category": "Placeholder",
+    "category": "Membaca Teks",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -2157,7 +2157,7 @@
     "id": "dokkai_w4d4",
     "title": "Reading: Stage 4 (Tunggu AI)",
     "level": "N3",
-    "category": "Placeholder",
+    "category": "Membaca Teks",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -2192,7 +2192,7 @@
     "id": "dokkai_w4d5",
     "title": "Reading: Stage 5 (Tunggu AI)",
     "level": "N3",
-    "category": "Placeholder",
+    "category": "Membaca Teks",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -2227,7 +2227,7 @@
     "id": "dokkai_w4d6",
     "title": "Reading: Stage 6 (Tunggu AI)",
     "level": "N3",
-    "category": "Placeholder",
+    "category": "Membaca Teks",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -2262,7 +2262,7 @@
     "id": "dokkai_w4d7_boss",
     "title": "Reading: Stage 7 (Tunggu AI)",
     "level": "N3",
-    "category": "Placeholder",
+    "category": "Membaca Teks",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -2297,7 +2297,7 @@
     "id": "dokkai_w5d1",
     "title": "Reading: Stage 1 (Tunggu AI)",
     "level": "N3",
-    "category": "Placeholder",
+    "category": "Membaca Teks",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -2332,7 +2332,7 @@
     "id": "dokkai_w5d2",
     "title": "Reading: Stage 2 (Tunggu AI)",
     "level": "N3",
-    "category": "Placeholder",
+    "category": "Membaca Teks",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -2367,7 +2367,7 @@
     "id": "dokkai_w5d3",
     "title": "Reading: Stage 3 (Tunggu AI)",
     "level": "N3",
-    "category": "Placeholder",
+    "category": "Membaca Teks",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -2402,7 +2402,7 @@
     "id": "dokkai_w5d4",
     "title": "Reading: Stage 4 (Tunggu AI)",
     "level": "N3",
-    "category": "Placeholder",
+    "category": "Membaca Teks",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -2437,7 +2437,7 @@
     "id": "dokkai_w5d5",
     "title": "Reading: Stage 5 (Tunggu AI)",
     "level": "N3",
-    "category": "Placeholder",
+    "category": "Membaca Teks",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -2472,7 +2472,7 @@
     "id": "dokkai_w5d6",
     "title": "Reading: Stage 6 (Tunggu AI)",
     "level": "N3",
-    "category": "Placeholder",
+    "category": "Membaca Teks",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -2507,7 +2507,7 @@
     "id": "dokkai_w5d7_boss",
     "title": "Reading: Stage 7 (Tunggu AI)",
     "level": "N3",
-    "category": "Placeholder",
+    "category": "Membaca Teks",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -2542,7 +2542,7 @@
     "id": "dokkai_w6d1",
     "title": "Reading: Stage 1 (Tunggu AI)",
     "level": "N3",
-    "category": "Placeholder",
+    "category": "Membaca Teks",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -2577,7 +2577,7 @@
     "id": "dokkai_w6d2",
     "title": "Reading: Stage 2 (Tunggu AI)",
     "level": "N3",
-    "category": "Placeholder",
+    "category": "Membaca Teks",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -2612,7 +2612,7 @@
     "id": "dokkai_w6d3",
     "title": "Reading: Stage 3 (Tunggu AI)",
     "level": "N3",
-    "category": "Placeholder",
+    "category": "Membaca Teks",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -2647,7 +2647,7 @@
     "id": "dokkai_w6d4",
     "title": "Reading: Stage 4 (Tunggu AI)",
     "level": "N3",
-    "category": "Placeholder",
+    "category": "Membaca Teks",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -2682,7 +2682,7 @@
     "id": "dokkai_w6d5",
     "title": "Reading: Stage 5 (Tunggu AI)",
     "level": "N3",
-    "category": "Placeholder",
+    "category": "Membaca Teks",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -2717,7 +2717,7 @@
     "id": "dokkai_w6d6",
     "title": "Reading: Stage 6 (Tunggu AI)",
     "level": "N3",
-    "category": "Placeholder",
+    "category": "Membaca Teks",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,
@@ -2752,7 +2752,7 @@
     "id": "dokkai_w6d7_boss",
     "title": "Reading: Stage 7 (Tunggu AI)",
     "level": "N3",
-    "category": "Placeholder",
+    "category": "Membaca Teks",
     "relationships": {
       "stageRelevance": {
         "currentStagePct": 100,

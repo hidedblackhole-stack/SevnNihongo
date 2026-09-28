@@ -411,6 +411,89 @@ function autoAnnotateFurigana(text: string, excludeKanji?: Set<string>): RubySeg
 }
 
 /**
+ * Parse an annotated reading string where kanji is accompanied by inline reading or bracketed furigana
+ * (e.g. "これはあくまでも仮かりの数字すうじであって" or "日本[にほん]に行[い]く")
+ */
+function parseAnnotatedReading(
+  japanese: string,
+  reading: string,
+  excludeKanji?: Set<string>
+): RubySegment[] {
+  const segments: RubySegment[] = [];
+  let jIdx = 0;
+  let rIdx = 0;
+
+  while (jIdx < japanese.length && rIdx < reading.length) {
+    const jChar = japanese[jIdx];
+
+    if (isKanji(jChar)) {
+      if (excludeKanji && excludeKanji.has(jChar)) {
+        segments.push({ text: jChar, isKanji: false });
+        jIdx++;
+        if (rIdx < reading.length && reading[rIdx] === jChar) rIdx++;
+        continue;
+      }
+
+      let kanjiSeq = '';
+      while (jIdx < japanese.length && isKanji(japanese[jIdx]) && !(excludeKanji && excludeKanji.has(japanese[jIdx]))) {
+        kanjiSeq += japanese[jIdx];
+        jIdx++;
+      }
+
+      if (reading.startsWith(kanjiSeq, rIdx)) {
+        rIdx += kanjiSeq.length;
+      }
+
+      let ruby = '';
+      if (reading[rIdx] === '[' || reading[rIdx] === '(' || reading[rIdx] === '（' || reading[rIdx] === '《') {
+        const closeChar = reading[rIdx] === '[' ? ']' : reading[rIdx] === '(' ? ')' : reading[rIdx] === '（' ? '）' : '》';
+        rIdx++;
+        while (rIdx < reading.length && reading[rIdx] !== closeChar) {
+          ruby += reading[rIdx];
+          rIdx++;
+        }
+        if (rIdx < reading.length) rIdx++;
+      } else {
+        const nextJChar = jIdx < japanese.length ? japanese[jIdx] : null;
+        if (nextJChar) {
+          while (rIdx < reading.length && reading[rIdx] !== nextJChar && !isKanji(reading[rIdx])) {
+            ruby += reading[rIdx];
+            rIdx++;
+          }
+        } else {
+          while (rIdx < reading.length && !isKanji(reading[rIdx])) {
+            ruby += reading[rIdx];
+            rIdx++;
+          }
+        }
+      }
+
+      const finalRuby = ruby || furiganaDict.words[kanjiSeq] || furiganaDict.kanji[kanjiSeq] || undefined;
+      segments.push({ text: kanjiSeq, ruby: finalRuby, isKanji: true });
+    } else {
+      segments.push({ text: jChar, isKanji: false });
+      jIdx++;
+      if (rIdx < reading.length && reading[rIdx] === jChar) {
+        rIdx++;
+      }
+    }
+  }
+
+  while (jIdx < japanese.length) {
+    const jChar = japanese[jIdx];
+    if (isKanji(jChar)) {
+      const finalRuby = furiganaDict.kanji[jChar] || undefined;
+      segments.push({ text: jChar, ruby: finalRuby, isKanji: true });
+    } else {
+      segments.push({ text: jChar, isKanji: false });
+    }
+    jIdx++;
+  }
+
+  return mergeNonKanjiSegments(segments);
+}
+
+/**
  * Align a Japanese text (with kanji) against its full-hiragana reading
  * to produce ruby segments with kanji → reading mappings.
  */
@@ -429,16 +512,22 @@ function alignKanjiReadings(
   const japanese = normalizeJapanesePunctuation(origJapanese);
   const reading = normalizeJapanesePunctuation(origReading).replace(/\s{2,}/g, ' / ');
 
-
   if (japanese === reading) {
+    const hasKanji = Array.from(japanese).some(c => isKanji(c));
+    if (hasKanji) {
+      return autoAnnotateFurigana(origJapanese, excludeKanji);
+    }
     return [{ text: origJapanese, isKanji: false }];
   }
 
-  // If reading itself contains kanji, cannot do 1-to-1 hiragana mapping.
-  // CRITICAL: Never call autoAnnotateFurigana recursively to prevent RangeError call stack overflow!
+  // If reading itself contains kanji, parse it as an annotated reading string (e.g. 漢字[かんじ] or 漢字かんじ)
   const readingHasKanji = Array.from(reading).some(c => isKanji(c));
   if (readingHasKanji) {
-    return [{ text: origJapanese, isKanji: false }];
+    const inlineSegments = parseAnnotatedReading(japanese, reading, excludeKanji);
+    if (inlineSegments.some(s => s.isKanji && s.ruby)) {
+      return inlineSegments;
+    }
+    return autoAnnotateFurigana(origJapanese, excludeKanji);
   }
 
   const segments: RubySegment[] = [];

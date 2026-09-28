@@ -427,7 +427,7 @@ export function calculateLanguageProfile(
 
   const bunpouSubSkills: SubSkillRating[] = [
     {
-      name: 'Passive Voice (受身形)',
+      name: 'Bentuk Pasif (受身形)',
       japaneseName: '受身形',
       category: 'bunpou',
       percentage: passivePct,
@@ -435,28 +435,28 @@ export function calculateLanguageProfile(
       recentMistakeNotes: passivePct < 75 ? ['Sering tertukar antara pasif langsung dan pasif penderitaan (迷惑の受身).'] : []
     },
     {
-      name: 'Causative (使役形)',
+      name: 'Bentuk Kausatif (使役形)',
       japaneseName: '使役形',
       category: 'bunpou',
       percentage: causativePct,
       status: causativePct < 70 ? 'CRITICAL_WEAKNESS' : causativePct < 85 ? 'NEEDS_PRACTICE' : 'OPTIMAL'
     },
     {
-      name: 'Te-Form & Auxiliaries (て形・ておく)',
+      name: 'Bentuk-Te & Verba Bantu (て形・補助動詞)',
       japaneseName: 'て形・補助動詞',
       category: 'bunpou',
       percentage: teFormPct,
       status: teFormPct < 70 ? 'CRITICAL_WEAKNESS' : 'OPTIMAL'
     },
     {
-      name: 'Conditionals (ば・たら・なら)',
+      name: 'Bentuk Pengandaian (ば・たら・なら)',
       japaneseName: '条件形',
       category: 'bunpou',
       percentage: conditionalsPct,
       status: conditionalsPct < 70 ? 'CRITICAL_WEAKNESS' : conditionalsPct < 85 ? 'NEEDS_PRACTICE' : 'OPTIMAL'
     },
     {
-      name: 'Particles & Structure (助詞)',
+      name: 'Partikel & Struktur Kalimat (助詞・構文)',
       japaneseName: '助詞・構文',
       category: 'bunpou',
       percentage: particlesPct,
@@ -473,21 +473,21 @@ export function calculateLanguageProfile(
 
   const kotobaSubSkills: SubSkillRating[] = [
     {
-      name: 'Nouns & Action Verbs (名詞・動詞)',
+      name: 'Kata Benda & Kata Kerja Aksi (名詞・動詞)',
       japaneseName: '名詞・動詞',
       category: 'kotoba',
       percentage: nounsVerbsPct,
       status: nounsVerbsPct < 70 ? 'NEEDS_PRACTICE' : 'OPTIMAL'
     },
     {
-      name: 'Adjectives & Adverbs (形容詞・副詞)',
+      name: 'Kata Sifat & Kata Keterangan (形容詞・副詞)',
       japaneseName: '形容詞・副詞',
       category: 'kotoba',
       percentage: adjectivesPct,
       status: adjectivesPct < 70 ? 'NEEDS_PRACTICE' : 'OPTIMAL'
     },
     {
-      name: 'Collocations & Idioms (連語・慣用表現)',
+      name: 'Kolokasi & Ungkapan Idiom (連語・慣用表現)',
       japaneseName: '連語・慣用表現',
       category: 'kotoba',
       percentage: collocationsPct,
@@ -504,14 +504,14 @@ export function calculateLanguageProfile(
 
   const kanjiSubSkills: SubSkillRating[] = [
     {
-      name: 'Kanji Readings (音読み・訓読み)',
+      name: 'Pelafalan Kanji (音読み・訓読み)',
       japaneseName: '音読み・訓読み',
       category: 'kanji',
       percentage: kanjiReadingPct,
       status: kanjiReadingPct < 70 ? 'CRITICAL_WEAKNESS' : 'OPTIMAL'
     },
     {
-      name: 'Radicals & Structure (部首・構成)',
+      name: 'Radikal & Struktur Kanji (部首・構成)',
       japaneseName: '部首・書き分け',
       category: 'kanji',
       percentage: kanjiWritingPct,
@@ -519,7 +519,7 @@ export function calculateLanguageProfile(
       recentMistakeNotes: kanjiWritingPct < 70 ? ['Kerap keliru membedakan kanji dengan radikal tangan 扌 vs air 氵.'] : []
     },
     {
-      name: 'Contextual Recognition (文脈認識)',
+      name: 'Pengenalan Kontekstual (文脈認識)',
       japaneseName: '文脈認識',
       category: 'kanji',
       percentage: kanjiRecognitionPct,
@@ -536,21 +536,21 @@ export function calculateLanguageProfile(
 
   const dokkaiSubSkills: SubSkillRating[] = [
     {
-      name: 'Main Idea Comprehension (主旨把握)',
+      name: 'Pemahaman Gagasan Utama (主旨把握)',
       japaneseName: '主旨把握',
       category: 'dokkai',
       percentage: dokkaiMainIdeaPct,
       status: 'OPTIMAL'
     },
     {
-      name: 'Detail Retrieval (情報検索)',
+      name: 'Pencarian Informasi Detail (情報検索)',
       japaneseName: '情報検索',
       category: 'dokkai',
       percentage: dokkaiDetailPct,
       status: 'STABLE'
     },
     {
-      name: 'Contextual Inference (推論・文脈把握)',
+      name: 'Inferensi Kontekstual (推論・文脈把握)',
       japaneseName: '推論・文脈',
       category: 'dokkai',
       percentage: dokkaiInferencePct,
@@ -566,14 +566,14 @@ export function calculateLanguageProfile(
 
   const choukaiSubSkills: SubSkillRating[] = [
     {
-      name: 'Key Phrase Detection (重要語句)',
+      name: 'Deteksi Frasa Kunci (重要語句)',
       japaneseName: '重要語句聞き取り',
       category: 'choukai',
       percentage: choukaiKeywordsPct,
       status: choukaiKeywordsPct < 70 ? 'CRITICAL_WEAKNESS' : 'NEEDS_PRACTICE'
     },
     {
-      name: 'Speaker Intention & Summary (話者の意図)',
+      name: 'Intensi Pembicara & Ringkasan (話者の意図)',
       japaneseName: '意図理解・要約',
       category: 'choukai',
       percentage: choukaiIntentionPct,

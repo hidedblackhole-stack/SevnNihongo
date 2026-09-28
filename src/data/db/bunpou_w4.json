@@ -6,8 +6,8 @@
     "title": "あなたにとって（Nに＋とって／とっては／とっても）",
     "formula": "Nに ＋ とって／とっては／とっても",
     "meaning_en": "From someone's point of view / for someone.",
-    "meaning_id": "Dari sudut pandang seseorang / bagi seseorang.",
-    "explanation_note": "",
+    "meaning_id": "Bagi... / Dari sudut pandang... (Menilai kepentingan atau dampak dari kacamata seseorang)",
+    "explanation_note": "Subjektivitas prioritas nilai yang berbeda pada tiap individu.",
     "examples": [
       {
         "jp": "あなたにとって、いちばん大切なものは何ですか。",
@@ -33,8 +33,8 @@
     "title": "年のわりには（V/A/na/Nの＋わりに／わりには）",
     "formula": "V・A・na・N（Nの／naな） ＋ わりに／わりには",
     "meaning_en": "Relatively / unexpectedly, considering X.",
-    "meaning_id": "Secara relatif / di luar dugaan, mengingat X.",
-    "explanation_note": "",
+    "meaning_id": "Padahal..., tapi herannya malah... (Nggak sebanding dengan apa yang dikira)",
+    "explanation_note": "Keheranan atas hasil yang meleset dari taksiran awal.",
     "examples": [
       {
         "jp": "年のわりには若く見える。",
@@ -60,8 +60,8 @@
     "title": "知っているくせに（V/A/na/Nの＋くせに）",
     "formula": "V・A・na・N（Nの／naな） ＋ くせに",
     "meaning_en": "Even though (with a feeling of blame/criticism).",
-    "meaning_id": "Padahal / walaupun (dengan nada menyalahkan).",
-    "explanation_note": "",
+    "meaning_id": "Padahal tahu, tapi kok malah gitu! (Menyindir atau kesal karena perilakunya bertolak belakang)",
+    "explanation_note": "Kekecewaan emosional atas ketidakjujuran atau kemalasan pihak lain.",
     "examples": [
       {
         "jp": "知っているくせに、教えてくれない。",
@@ -87,8 +87,8 @@
     "title": "お化粧なんか（N/na/Nで＋なんか／なんて；Vて／Aく＋など）",
     "formula": "N／na・Nで ＋ なんか／なんて；Vて／Aく ＋ など",
     "meaning_en": "Emphasizes an unexpected or negative feeling; negative words follow.",
-    "meaning_id": "Menekankan perasaan tidak terduga/negatif; diikuti kata negatif.",
-    "explanation_note": "",
+    "meaning_id": "Hal sepele kayak gitu sih...! / Mana sudi... (Meremehkan, menganggap enteng, atau merendah)",
+    "explanation_note": "Memperkecil nilai suatu hal demi ketegasan atau kesopanan merendah.",
     "examples": [
       {
         "jp": "お化粧なんかしてはいけません。",
@@ -114,8 +114,8 @@
     "title": "先生のおかげで（V/i-adj/na/Nの＋おかげで／おかげだ）",
     "formula": "V・i形・na・N（Nの／naな） ＋ おかげで／おかげだ",
     "meaning_en": "Thanks to (good result for the speaker).",
-    "meaning_id": "Berkat (hasil baik bagi pembicara).",
-    "explanation_note": "",
+    "meaning_id": "Berkat bantuan... / Beruntung karena... (Hasil positif yang disyukuri)",
+    "explanation_note": "Rasa terima kasih yang tulus atas kontribusi pihak lain.",
     "examples": [
       {
         "jp": "先生のおかげで合格できました。",
@@ -141,8 +141,8 @@
     "title": "遅れたせいで（V/i-adj/na/Nの＋せいで／せいか／せいだ）",
     "formula": "V・i形・na・N（Nの／naな） ＋ せいで／せいか／せいだ",
     "meaning_en": "Because of (bad result for the speaker).",
-    "meaning_id": "Karena / gara-gara (hasil buruk bagi pembicara).",
-    "explanation_note": "",
+    "meaning_id": "Gara-gara... / Akibat buruk dari... (Menyalahkan penyebab atas hasil buruk)",
+    "explanation_note": "Kekesalan atas dampak buruk yang menimpa diri sendiri.",
     "examples": [
       {
         "jp": "バスが遅れたせいで、約束の時間に間に合わなかった。",
@@ -168,8 +168,8 @@
     "title": "ビールのかわりに（V/A/na/Nの＋かわりに；そのかわり(に)）",
     "formula": "V・A・na・N（Nの／naな） ＋ かわりに；そのかわり(に)",
     "meaning_en": "Instead of.",
-    "meaning_id": "Sebagai ganti / alih-alih.",
-    "explanation_note": "",
+    "meaning_id": "Sebagai ganti... / Mengompensasi hal lain (Pertukaran peran atau kompensasi setara)",
+    "explanation_note": "Keseimbangan timbal balik dalam pertukaran opsi.",
     "examples": [
       {
         "jp": "車で来たので、ビールのかわりにジュースをください。",
@@ -195,8 +195,8 @@
     "title": "部長にかわって（Nに＋かわって／かわり）",
     "formula": "Nに ＋ かわって／かわり",
     "meaning_en": "On behalf of.",
-    "meaning_id": "Mewakili / atas nama.",
-    "explanation_note": "",
+    "meaning_id": "Mewakili... / Atas nama... (Menggantikan peran orang lain secara resmi)",
+    "explanation_note": "Amanah resmi mewakili figur yang berhalangan hadir.",
     "examples": [
       {
         "jp": "出張中の部長にかわって、私がごあいさつさせていただきます。",
@@ -222,8 +222,8 @@
     "title": "米粒くらい／米粒ほど（N/naな/Aい/Vる＋くらい／ぐらい／ほど＋だ／に／のN）",
     "formula": "N・naな・Aい・Vる ＋ くらい／ぐらい／ほど（だ／に／のN）",
     "meaning_en": "Approximately / to the extent of.",
-    "meaning_id": "Kira-kira / sejauh / setingkat itu.",
-    "explanation_note": "",
+    "meaning_id": "Kira-kira sebesar... / Sampai ke tingkat... (Mengibaratkan ukuran atau derajat keparahan)",
+    "explanation_note": "Hiperbola wajar untuk menggambarkan intensitas perasaan.",
     "examples": [
       {
         "jp": "それは米粒くらいの大きさです。",
@@ -249,8 +249,8 @@
     "title": "若い人ほど（Aい／naな＋ほど；Nほど）",
     "formula": "Aい／naな ＋ ほど；Nほど",
     "meaning_en": "The more (contrastive, ≠くらい).",
-    "meaning_id": "Semakin (kontrastif, ≠くらい).",
-    "explanation_note": "",
+    "meaning_id": "Makin... justru makin... (Korelasi bertingkat atau kecenderungan kuat)",
+    "explanation_note": "Kecenderungan proporsional yang terlihat pada kelompok tertentu.",
     "examples": [
       {
         "jp": "若い人ほど朝寝坊をする。",
@@ -276,8 +276,8 @@
     "title": "知れば知るほど（Vば Vるほど／Aければ Aいほど／naならば naなほど）",
     "formula": "Vば Vる ＋ ほど；Aければ Aい ＋ ほど；naならば naな ＋ ほど",
     "meaning_en": "The more...the more (progressive correlation).",
-    "meaning_id": "Semakin...semakin (korelasi bertingkat).",
-    "explanation_note": "",
+    "meaning_id": "Makin sering... makin bertambah pula... (Korelasi bertingkat sejalan)",
+    "explanation_note": "Progresivitas linier di mana dua variabel saling memacu naik.",
     "examples": [
       {
         "jp": "彼のことを知れば知るほど好きになる。",
@@ -303,8 +303,8 @@
     "title": "彼女くらい親切な人はいない（Nくらい／ほど＋N[人]はいない／N[物・事]はない）",
     "formula": "Nくらい／ほど ＋ N[人]はいない／N[物・事]はない",
     "meaning_en": "There is no one/nothing as X as N (superlative).",
-    "meaning_id": "Tidak ada yang se-X N (bentuk superlatif).",
-    "explanation_note": "",
+    "meaning_id": "Nggak ada yang se-... ini! (Paling tiada duanya / tidak ada tandingannya)",
+    "explanation_note": "Kekaguman mutlak tanpa tandingan pembanding.",
     "examples": [
       {
         "jp": "彼女くらい親切な人はいない。",
@@ -330,8 +330,8 @@
     "title": "あやまることはない（Vる＋ことはない）",
     "formula": "Vる ＋ ことはない",
     "meaning_en": "No need to (do something).",
-    "meaning_id": "Tidak perlu (melakukan sesuatu).",
-    "explanation_note": "",
+    "meaning_id": "Nggak perlu sampai... segitunya / Tak usah repot-repot... (Menenangkan agar tidak berlebihan)",
+    "explanation_note": "Menghibur dan menenangkan hati lawan bicara yang sedang panik.",
     "examples": [
       {
         "jp": "君があやまることはないよ。",
@@ -357,8 +357,8 @@
     "title": "遅れるということだ（V/A/na/N＋ということだ）",
     "formula": "V・A・na・N ＋ ということだ",
     "meaning_en": "It means that / I heard that (hearsay, can follow imperative/volitional forms too).",
-    "meaning_id": "Artinya / katanya (bentuk hearsay, bisa mengikuti bentuk perintah/kehendak).",
-    "explanation_note": "",
+    "meaning_id": "Kabarnya katanya... / Itu artinya... (Menyampaikan kabar berita atau menyimpulkan makna)",
+    "explanation_note": "Penyampaian kabar yang terkonfirmasi atau penarikan kesimpulan logis.",
     "examples": [
       {
         "jp": "田中さんから電話があって、少し遅れるということです。",
@@ -384,8 +384,8 @@
     "title": "休むことだ（Vる／Vない＋ことだ）",
     "formula": "Vる／Vない ＋ ことだ",
     "meaning_en": "You should do / used when giving advice or suggestions.",
-    "meaning_id": "Sebaiknya melakukan / dipakai saat memberi saran.",
-    "explanation_note": "",
+    "meaning_id": "Kuncinya ya harus... / Jalan terbaiknya adalah... (Saran tegas dari orang berpengalaman)",
+    "explanation_note": "Nasihat otoritatif yang penuh kearifan praktis.",
     "examples": [
       {
         "jp": "暖かくして、ゆっくり休むことだ。",
@@ -411,8 +411,8 @@
     "title": "どんなにうれしいことか（どんなに／どれだけ／どれほど／何度／何時間＋Aいことか, etc.）",
     "formula": "どんなに／どれだけ／どれほど／何度 ＋ Aいことか／Aかったことか／naなことか／Vることか／Vたことか",
     "meaning_en": "How very much... (rhetorical emphasis of degree).",
-    "meaning_id": "Betapa sekali... (penekanan retoris atas derajat sesuatu).",
-    "explanation_note": "",
+    "meaning_id": "Betapa luar biasanya rasa... ini! (Luapan emosi mendalam yang tak terhingga)",
+    "explanation_note": "Ungkapan puitis dan emosional yang melampaui batas kata-kata biasa.",
     "examples": [
       {
         "jp": "合格できたら、どんなにうれしいことか。",
@@ -438,8 +438,8 @@
     "title": "来週だっけ？（N/naだ(った)っけ；Aかったっけ；Vたっけ）",
     "formula": "Nだ(った)っけ／naだ(った)っけ／Aかったっけ／Vたっけ",
     "meaning_en": "Trying to recall/confirm something forgotten.",
-    "meaning_id": "Mencoba mengingat/mengonfirmasi sesuatu yang lupa.",
-    "explanation_note": "",
+    "meaning_id": "Eh, bukannya... ya? / Waktu itu gimana ya? (Mencoba mengonfirmasi ingatan yang samar)",
+    "explanation_note": "Pengecekan ramah tanpa menghakimi kelupaan diri sendiri.",
     "examples": [
       {
         "jp": "国へ帰るのは、来週だ(った)っけ？",
@@ -465,8 +465,8 @@
     "title": "やるしかない（Vる＋しかない）",
     "formula": "Vる ＋ しかない",
     "meaning_en": "There is no choice but to.",
-    "meaning_id": "Tidak ada pilihan lain selain.",
-    "explanation_note": "",
+    "meaning_id": "Nggak ada pilihan lain selain harus...! (Tekad pasrah atau jalan satu-satunya)",
+    "explanation_note": "Kepasrahan berani untuk menghadapi tantangan terakhir.",
     "examples": [
       {
         "jp": "できるまで、やるしかない。",
@@ -492,8 +492,8 @@
     "title": "結婚してるんだって（V/A（んだ）って；na/N（んだ）って）",
     "formula": "V・A（んだ）って；na・N（んだ）って",
     "meaning_en": "Hearsay, casual: I heard that.",
-    "meaning_id": "Bentuk hearsay santai: katanya.",
-    "explanation_note": "",
+    "meaning_id": "Katanya sih... / Denger-denger katanya... (Kabar burung santai dalam obrolan)",
+    "explanation_note": "Ragam lisan akrab untuk berbagi kabar angin terkini.",
     "examples": [
       {
         "jp": "田中さん、結婚してるんだって。",
@@ -519,8 +519,8 @@
     "title": "だってまずいんだもん（V/A（んだ）もん；na/N（んだ）もん）",
     "formula": "V・A（んだ）もん；na・N（んだ）もん",
     "meaning_en": "Casual expression showing a reason (usually with だって).",
-    "meaning_id": "Ungkapan santai untuk menyatakan alasan (biasanya dengan だって).",
-    "explanation_note": "",
+    "meaning_id": "Habisnya... sih! / Soalnya gimana dong... (Alasan manja atau membela diri)",
+    "explanation_note": "Pembelaan diri emosional dengan nada sedikit merengek atau manja.",
     "examples": [
       {
         "jp": "「どうして食べないの？」「だって、まずいんだもん。」",
@@ -546,8 +546,8 @@
     "title": "父の兄、つまり伯父（a。つまりa'。）",
     "formula": "a。つまりa'。",
     "meaning_en": "Used when rephrasing an idea using different words.",
-    "meaning_id": "Dipakai untuk menyatakan ulang suatu hal dengan kata lain.",
-    "explanation_note": "",
+    "meaning_id": "Dengan kata lain... / Singkatnya... (Menyimpulkan atau memparafrasekan pokok bahasan)",
+    "explanation_note": "Penyederhanaan konsep rumit menjadi formula ringkas.",
     "examples": [
       {
         "jp": "父の兄、つまり私の伯父は、医者をしている。",
@@ -573,8 +573,8 @@
     "title": "事故があった。そのため(に)遅れている。（a〈目的・理由〉。そのため(に)b〈結果〉。）",
     "formula": "a。そのため(に)b。",
     "meaning_en": "As a result of / because of (stating the reason first, result after).",
-    "meaning_id": "Sebagai akibat dari / karena (alasan disebut dulu, hasil sesudahnya).",
-    "explanation_note": "",
+    "meaning_id": "Oleh sebab itulah... / Akibatnya... (Penyebab logis yang memicu hasil berikutnya)",
+    "explanation_note": "Kausalitas formal berurutan tanpa bias emosi.",
     "examples": [
       {
         "jp": "隣の駅で事故があったらしい。そのために電車が遅れている。",
@@ -600,8 +600,8 @@
     "title": "努力した。その結果成功した。（a〈過去に起きたこと〉。その結果b〈aが原因/理由で起きたこと〉。）",
     "formula": "a。その結果b。",
     "meaning_en": "As a result (of a past event).",
-    "meaning_id": "Sebagai hasilnya (dari kejadian sebelumnya).",
-    "explanation_note": "",
+    "meaning_id": "Sebagai hasilnya... / Akhirnya... (Hasil akhir yang terwujud dari proses sebelumnya)",
+    "explanation_note": "Klimaks pembuktian atas upaya yang sudah dicurahkan sebelumnya.",
     "examples": [
       {
         "jp": "父は、人の何倍も努力した。その結果、仕事で成功した。",
@@ -627,8 +627,8 @@
     "title": "帰国する。なぜなら結婚式に出席するからだ。（なぜなら(ば)／なぜかというと／どうしてかというと〜からだ）",
     "formula": "a。なぜなら(ば)／なぜかというと／どうしてかというと～からだ。",
     "meaning_en": "Because (stating reason/cause afterward, explaining conclusion first).",
-    "meaning_id": "Karena (alasan disebutkan belakangan, kesimpulan disebut dulu).",
-    "explanation_note": "",
+    "meaning_id": "Hal itu karena... / Alasannya adalah karena... (Menjelaskan sebab setelah kesimpulan disebut)",
+    "explanation_note": "Struktur retorika logis yang meletakkan kesimpulan di depan.",
     "examples": [
       {
         "jp": "来週、国に帰る予定です。なぜなら(ば)、親友の結婚式に出席するからです。",

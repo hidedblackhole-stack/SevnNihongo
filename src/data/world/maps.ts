@@ -153,14 +153,14 @@ const THEMES: Record<string, { theme: string; bannerBg: string; accentColor: str
     description: 'Wilayah 2: Akademi Katakana — Kuasai penulisan 7 sheet & pembacaan 46 aksara Katakana (ア〜ン) serta kosakata serapan.'
   },
   map_kana_verbs: {
-    theme: 'Verb Foundations (Wilayah 3)',
+    theme: 'Fondasi Kata Kerja (Wilayah 3)',
     bannerBg: 'bg-stone-900',
     accentColor: 'text-cyan-400 border-cyan-500',
     minLevel: 1,
     description: 'Wilayah 3: Fondasi Konjugasi — Kuasai 5 bentuk kata kerja paling dasar: Kamus (Futsukei), Masu, Nai, Ta, dan Te.'
   },
   map_kana_grammar: {
-    theme: 'Sentence Foundations (Wilayah 4)',
+    theme: 'Fondasi Kalimat (Wilayah 4)',
     bannerBg: 'bg-stone-900',
     accentColor: 'text-purple-400 border-purple-500',
     minLevel: 1,
@@ -366,7 +366,7 @@ export const MAP_REGIONS: MapRegion[] = (mapsDb as RawMapJson[]).map(m => {
     id: m.id,
     worldId: m.world_id || 'world_n3',
     mapNumber: m.map_number,
-    name: `Wilayah ${m.map_number}: ${m.title_en}`,
+    name: `Wilayah ${m.map_number}: ${(m as any).title_id || m.title_en}`,
     japaneseName: `第${m.map_number}章: ${m.title_jp}`,
     description: meta.description,
     theme: meta.theme,
@@ -406,13 +406,13 @@ export function getStagesForMap(mapId: string): Stage[] {
       id: s.id,
       mapId: s.map_id,
       stageNumber: s.stage_number,
-      title: isBoss ? `Stage ${s.stage_number}: Boss Battle (${s.title_jp})` : `Stage ${s.stage_number}: ${s.title_jp}`,
+      title: isBoss ? `Stage ${s.stage_number}: Pertarungan Boss (${s.title_jp})` : `Stage ${s.stage_number}: ${s.title_jp}`,
       description: isBoss
         ? `Ujian Boss Akhir Wilayah: Uji pemahaman menyeluruh semua materi!`
-        : `${s.title_en} — Pembelajaran tata bahasa, kosakata, kanji, dan kuis pemahaman.`,
+        : `${(s as any).title_id || s.title_en} — Pembelajaran tata bahasa, kosakata, kanji, dan kuis pemahaman.`,
       isBoss,
-      bossName: isBoss ? `Guardian of Wilayah ${s.stage_number} (守護神)` : undefined,
-      bossTitle: isBoss ? 'Master Overseer' : undefined,
+      bossName: isBoss ? `Penjaga Wilayah ${s.stage_number} (守護神)` : undefined,
+      bossTitle: isBoss ? 'Pengawas Utama' : undefined,
       bossHp: isBoss ? 200 + s.stage_number * 50 : undefined,
       bossAvatar: isBoss ? '👹' : undefined,
       
@@ -424,7 +424,7 @@ export function getStagesForMap(mapId: string): Stage[] {
 
       rewardExp: isBoss ? 250 : 80 + s.stage_number * 10,
       rewardGold: isBoss ? 350 : 100 + s.stage_number * 15,
-      rewardItem: isBoss ? 'Ramuan Semangat Nihongo (Master Elixir)' : undefined
+      rewardItem: isBoss ? 'Ramuan Semangat Nihongo (Ramuan Utama)' : undefined
     };
   });
 }

@@ -19,6 +19,57 @@ export interface GrammarTitleInfo {
  * - formationRule: The connection/formation pattern (if applicable)
  * - audioTarget: Text suitable for audio speech
  */
+export function localizeFormulaString(str: string): string {
+  if (!str) return '';
+  return str
+    .replace(/［/g, '[').replace(/］/g, ']')
+    .replace(/Noun\s*\[\s*thing\s*\]/gi, 'Kata Benda [hal]')
+    .replace(/Noun\s*\[\s*person\s*[\/／]\s*faculty\s*\]/gi, 'Kata Benda [orang/pihak]')
+    .replace(/Noun\s*\[\s*person\s*\]/gi, 'Kata Benda [orang]')
+    .replace(/Noun\s*\[\s*place\s*\]/gi, 'Kata Benda [tempat]')
+    .replace(/Noun\s*\[\s*time\s*\]/gi, 'Kata Benda [waktu]')
+    .replace(/Noun\s*\[\s*reason\s*\]/gi, 'Kata Benda [alasan]')
+    .replace(/Noun\s*\[\s*situation\s*\]/gi, 'Kata Benda [situasi]')
+    .replace(/Noun-A/g, 'Kata Benda A')
+    .replace(/Noun-B/g, 'Kata Benda B')
+    .replace(/\bNoun\b/g, 'Kata Benda')
+    .replace(/\bVerb\s*\[\s*た\s*form\s*\]/gi, 'Kata Kerja [Bentuk-ta]')
+    .replace(/\bVerb\s*\[\s*dictionary\s*form\s*\]/gi, 'Kata Kerja [Bentuk Kamus]')
+    .replace(/\bVerb\s*\[\s*plain\s*form\s*\]/gi, 'Kata Kerja [Bentuk Biasa]')
+    .replace(/\bVerb\s*\[\s*stem\s*\]/gi, 'Kata Kerja [Bentuk Masu]')
+    .replace(/\bVerb\s*\[\s*te\s*form\s*\]/gi, 'Kata Kerja [Bentuk-te]')
+    .replace(/\bVerb\s*\[\s*nai\s*form\s*\]/gi, 'Kata Kerja [Bentuk-nai]')
+    .replace(/\bVerb\s*\[\s*volitional\s*form\s*\]/gi, 'Kata Kerja [Bentuk Maksud]')
+    .replace(/\bVerb\s*\[\s*potential\s*form\s*\]/gi, 'Kata Kerja [Bentuk Potensial]')
+    .replace(/\bVerb\s*\[\s*passive\s*form\s*\]/gi, 'Kata Kerja [Bentuk Pasif]')
+    .replace(/\bVerb\s*\[\s*causative\s*form\s*\]/gi, 'Kata Kerja [Bentuk Kausatif]')
+    .replace(/\bVerb\b/g, 'Kata Kerja')
+    .replace(/na-adjective|na adjective|な-adjective/gi, 'Kata Sifat-na')
+    .replace(/i-adjective|i adjective|い-adjective/gi, 'Kata Sifat-i')
+    .replace(/\bAdjective\b|\badjective\b/g, 'Kata Sifat')
+    .replace(/\bSentence\b|\bsentence\b/g, 'Kalimat')
+    .replace(/\bplain form\b/gi, 'Bentuk Biasa')
+    .replace(/\bdictionary form\b/gi, 'Bentuk Kamus')
+    .replace(/\bpolite form\b/gi, 'Bentuk Sopan')
+    .replace(/\bvolitional form\b|\bvolitional\b/gi, 'Bentuk Maksud')
+    .replace(/\bpotential form\b|\bpotential\b/gi, 'Bentuk Potensial')
+    .replace(/\bpassive form\b|\bpassive\b/gi, 'Bentuk Pasif')
+    .replace(/\bcausative form\b|\bcausative\b/gi, 'Bentuk Kausatif')
+    .replace(/\bClause\b|\bclause\b/gi, 'Klausa')
+    .replace(/\bPhrase\b|\bphrase\b/gi, 'Frasa')
+    .replace(/\bNumber\b|\bnumber\b/gi, 'Angka')
+    .replace(/\bCounter\b|\bcounter\b/gi, 'Kata Bantu Hitung')
+    .replace(/\bQuantity\b|\bquantity\b/gi, 'Jumlah')
+    .replace(/\bQuestion word\b/gi, 'Kata Tanya')
+    .replace(/\[thing\]/gi, '[hal]')
+    .replace(/\[person[\s\/／]*faculty\]/gi, '[orang/pihak]')
+    .replace(/\[person\]/gi, '[orang]')
+    .replace(/\[place\]/gi, '[tempat]')
+    .replace(/\[time\]/gi, '[waktu]')
+    .replace(/\[reason\]/gi, '[alasan]')
+    .replace(/\[situation\]/gi, '[situasi]');
+}
+
 export function getGrammarTitleInfo(item: Pick<BunpouItem, 'title' | 'formula'>): GrammarTitleInfo {
   if (!item || !item.title) {
     return { mainTitle: '', audioTarget: '' };
@@ -37,6 +88,8 @@ export function getGrammarTitleInfo(item: Pick<BunpouItem, 'title' | 'formula'>)
 
     if (cleanFormula === rawTitle || !cleanFormula) {
       cleanFormula = undefined;
+    } else {
+      cleanFormula = localizeFormulaString(cleanFormula);
     }
 
     return {
@@ -211,11 +264,28 @@ export function getGrammarTitleInfo(item: Pick<BunpouItem, 'title' | 'formula'>)
     cleanFormation = '';
   }
 
+  // Ensure formation rule shows the complete connection if it only has isolated parts of speech
+  if (
+    cleanFormation &&
+    !cleanFormation.includes('+') &&
+    !cleanFormation.includes('＋') &&
+    !cleanFormation.includes('丁寧') &&
+    !cleanFormation.includes('伝言') &&
+    !cleanFormation.includes('敬語') &&
+    !cleanFormation.includes('[受身形]') &&
+    !cleanFormation.includes('[使役形]')
+  ) {
+    const mainCoreTail = cleanMain.replace(/^[〜~]/, '').split(' / ')[0].trim();
+    if (mainCoreTail && !cleanFormation.includes(mainCoreTail)) {
+      cleanFormation = `${cleanFormation} ＋ ${mainCoreTail}`;
+    }
+  }
+
   const audioTarget = cleanMain.replace(/^[〜~]/, '').split(' / ')[0].split('・')[0].trim();
 
   return {
     mainTitle: cleanMain,
-    formationRule: cleanFormation || undefined,
+    formationRule: cleanFormation ? localizeFormulaString(cleanFormation) : undefined,
     audioTarget
   };
 }

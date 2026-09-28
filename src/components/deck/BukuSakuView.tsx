@@ -12,7 +12,8 @@ import {
   Bookmark,
   Compass,
   Layers,
-  X
+  X,
+  Sparkles,
 } from 'lucide-react';
 import { UserDeck, DeckItemCategory, DeckType, DeckItemRef } from '../../types/rpg';
 import { OfficialBook, OfficialChapter } from '../../types/books';
@@ -55,6 +56,7 @@ import {
 } from '../../utils/decks';
 import { playSound } from '../../utils/audio';
 import { CreateDeckModal } from './CreateDeckModal';
+import { AIDeckCustomizerModal } from './AIDeckCustomizerModal';
 import { DeckAddItemModal } from './DeckAddItemModal';
 import { DeckFlashcardRunner } from './DeckFlashcardRunner';
 import { DeckWritingRunner } from './DeckWritingRunner';
@@ -151,9 +153,11 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
       setSelectedBunpou(null);
       setActiveWorldDeckId(null);
       setIsCurriculumConfigOpen(false);
+      setIsAiCustomizerOpen(false);
     }
   }, [resetSignal]);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isAiCustomizerOpen, setIsAiCustomizerOpen] = useState(false);
   const [editingDeck, setEditingDeck] = useState<UserDeck | null>(null);
   const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
   const [activeRunner, setActiveRunner] = useState<'flashcard' | 'writing' | null>(null);
@@ -524,17 +528,32 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
                 </p>
               </div>
 
-              <button
-                onClick={() => {
-                  setEditingDeck(null);
-                  setIsCreateModalOpen(true);
-                  playSound('click', soundEnabled);
-                }}
-                className="px-4 py-2.5 rounded-2xl bg-surface-elevated text-text-primary font-heading font-bold text-xs border border-border-primary shadow-sm hover:scale-105 flex items-center gap-2 transition-all shrink-0"
-              >
-                <Plus className="w-4 h-4 text-gold" />
-                <span>Buat Deck Baru</span>
-              </button>
+              <div className="flex items-center gap-2.5 shrink-0 flex-wrap">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsAiCustomizerOpen(true);
+                    playSound('click', soundEnabled);
+                  }}
+                  className="btn-physical-primary py-2.5 px-4 rounded-2xl text-xs font-heading font-bold shadow-sm flex items-center gap-2 cursor-pointer"
+                >
+                  <Sparkles className="w-4 h-4 text-gold" />
+                  <span>Buat Deck AI</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEditingDeck(null);
+                    setIsCreateModalOpen(true);
+                    playSound('click', soundEnabled);
+                  }}
+                  className="btn-physical-secondary py-2.5 px-4 rounded-2xl text-xs font-heading font-bold shadow-sm flex items-center gap-2 cursor-pointer"
+                >
+                  <Plus className="w-4 h-4 text-gold" />
+                  <span>Buat Deck Baru</span>
+                </button>
+              </div>
             </div>
 
             {/* Quick Summary Pill Bar */}
@@ -727,6 +746,24 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
         onSave={handleSaveDeck}
         editingDeck={editingDeck}
         userDecks={decks}
+        soundEnabled={soundEnabled}
+        onOpenAiCustomizer={() => {
+          setIsCreateModalOpen(false);
+          setIsAiCustomizerOpen(true);
+        }}
+      />
+
+      <AIDeckCustomizerModal
+        isOpen={isAiCustomizerOpen}
+        onClose={() => setIsAiCustomizerOpen(false)}
+        onSaveDeck={(newDeck) => {
+          const currentDecks = ensureUserDecks(userDecks);
+          const updated = [newDeck, ...currentDecks];
+          onUpdateDecks(updated);
+          setSelectedDeckId(newDeck.id);
+          setIsAiCustomizerOpen(false);
+          playSound('levelup', soundEnabled);
+        }}
         soundEnabled={soundEnabled}
       />
 
