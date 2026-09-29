@@ -8,6 +8,7 @@ export interface AiDeckPromptOptions {
   level?: string;
   type?: DeckType;
   count?: number;
+  customNotes?: string;
 }
 
 export interface ParsedAiDeckItem {
@@ -35,7 +36,7 @@ export interface ParsedAiDeck {
  * Explicitly instructs the AI to return clean, valid JSON formatted for Nihongo Quest.
  */
 export function buildGeminiDeckPrompt(options: AiDeckPromptOptions): string {
-  const { topic, level = 'N5', type = 'mixed', count = 10 } = options;
+  const { topic, level = 'N5', type = 'mixed', count = 10, customNotes } = options;
 
   const typeDescMap: Record<DeckType, string> = {
     mixed: 'Campuran kosakata, kanji, dan tata bahasa situasional',
@@ -54,6 +55,7 @@ SPESIFIKASI DECK:
 - Target Level: ${level === 'ALL' || level === 'Semua Level' ? 'Semua Level (N5 sampai N3 disesuaikan konteks)' : level}
 - Fokus Materi: ${typeDescMap[type] || 'Campuran'}
 - Jumlah Materi: ${count} kartu
+${customNotes && customNotes.trim() ? `- Instruksi Tambahan: "${customNotes.trim()}"\n` : ''}
 
 ATURAN WAJIB FORMAT OUTPUT:
 1. Output HANYA berupa objek JSON murni (boleh dibungkus markdown \`\`\`json ... \`\`\`).

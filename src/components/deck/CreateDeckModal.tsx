@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Check, Bookmark, Search, Sparkles } from 'lucide-react';
 import { DeckType, UserDeck, DeckItemRef, DeckItemCategory } from '../../types/rpg';
@@ -223,10 +224,10 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
     onClose();
   };
 
-  return (
+  const modalContent = (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[70] p-3 sm:p-4 bg-surface-ground/80 backdrop-blur-sm flex justify-center items-center animate-fade-in">
+        <div className="fixed inset-0 z-[100] p-3 sm:p-4 bg-surface-ground/80 backdrop-blur-sm flex justify-center items-center animate-fade-in">
           {/* Backdrop Click */}
           <div
             className="fixed inset-0 -z-10"
@@ -666,4 +667,8 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
   )}
 </AnimatePresence>
   );
+
+  return typeof document !== 'undefined'
+    ? createPortal(modalContent, document.body)
+    : modalContent;
 };
