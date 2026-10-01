@@ -253,7 +253,7 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
   return (
     <div className="w-full max-w-2xl mx-auto space-y-4 pb-6">
       {/* Priority Filter Tabs — Unified 2-Color Skeuomorphic Design */}
-      <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
+      <div className="flex flex-wrap items-center gap-1.5 pb-1 text-xs">
         <button
           onClick={() => { setActiveFilter('ALL'); setCurrentIndex(0); }}
           className={`px-3 py-1.5 rounded-xl font-bold transition-all shrink-0 ${

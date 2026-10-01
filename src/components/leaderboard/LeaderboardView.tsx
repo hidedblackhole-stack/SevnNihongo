@@ -342,7 +342,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
   return (
     <div className="space-y-4 pb-24">
       {/* Header */}
-      <div className="panel p-4 sm:p-5 mb-4 shadow-md border border-border-subtle flex items-center justify-between">
+      <div className="panel panel-stitched p-4 sm:p-5 mb-4 shadow-md border border-border-subtle flex items-center justify-between">
         <div>
           <h2 className="text-base sm:text-lg font-bold font-heading tracking-wide text-text-primary flex items-center gap-2">
             <Trophy className="w-5 h-5 text-gold" />

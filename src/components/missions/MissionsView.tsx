@@ -36,7 +36,7 @@ export const MissionsView: React.FC<MissionsViewProps> = ({
   return (
     <div className="w-full max-w-2xl mx-auto space-y-4 pb-6">
       {/* Header */}
-      <div className="panel p-4 sm:p-5 mb-3 shadow-md border border-border-subtle">
+      <div className="panel panel-stitched p-4 sm:p-5 mb-3 shadow-md border border-border-subtle">
         <div>
           <h2 className="text-base sm:text-lg font-bold font-heading tracking-wide text-text-primary flex items-center gap-2">
             {activeTab === 'daily' ? <><ScrollIcon className="w-5 h-5 text-gold" /> Papan Sayembara Harian</> : <><Calendar className="w-5 h-5 text-gold" /> Mandat Ekspedisi Mingguan</>}
@@ -94,7 +94,7 @@ export const MissionsView: React.FC<MissionsViewProps> = ({
             <motion.div
               key={mission.id}
               whileHover={{ y: -1 }}
-              className={`panel p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border border-border-subtle shadow-md ${
+              className={`panel panel-stitched p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border border-border-subtle shadow-md ${
                 mission.claimed ? 'opacity-60' : isComplete ? 'border-border-subtle' : ''
               }`}
             >

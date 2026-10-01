@@ -2250,3 +2250,17 @@ button, a, input, select, textarea, [role="button"] {
     scroll-behavior: auto !important;
   }
 }
+
+/* Input satu baris: teks/placeholder yang kepanjangan diberi elipsis, bukan terpotong di tengah huruf. */
+input:not([type="checkbox"]):not([type="radio"]) {
+  text-overflow: ellipsis;
+}
+
+/* Strip tab/filter yang bisa digeser: snap per item + sembunyikan scrollbar agar terlihat rapi. */
+.overflow-x-auto {
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+}
+.overflow-x-auto > * {
+  scroll-snap-align: start;
+}

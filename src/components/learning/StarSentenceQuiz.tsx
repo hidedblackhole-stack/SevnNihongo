@@ -166,7 +166,7 @@ export const StarSentenceQuiz: React.FC<StarSentenceQuizProps> = ({
       </div>
 
       {/* Main Sentence Card with Slots */}
-      <div className="panel p-4 sm:p-5 shadow-md space-y-4">
+      <div className="panel panel-stitched p-4 sm:p-5 shadow-md space-y-4">
         {/* Instruction note */}
         <p className="text-xs text-text-secondary font-medium">
           Ketuk kartu di bawah untuk mengisi slot 1, 2, ★, dan 4 secara berurutan:

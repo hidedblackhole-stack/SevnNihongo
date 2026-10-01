@@ -725,7 +725,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
   if (activeDungeonTryout) {
     return (
       <div className="space-y-4 animate-fade-in">
-        <Suspense fallback={<div className="panel p-12 text-center text-text-muted font-mono">Memuat Simulator Ujian...</div>}>
+        <Suspense fallback={<div className="panel panel-stitched p-12 text-center text-text-muted font-mono">Memuat Simulator Ujian...</div>}>
           <DungeonBattleModule
             tryOutData={activeDungeonTryout}
             onComplete={(score, total, exp, gold, tryoutId) => {
@@ -1110,7 +1110,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
     <div className="space-y-6">
       {/* Top JLPT Section Navigation Tabs (Now including Simulasi Ujian beside Choukai) */}
       <div className="panel panel-stitched p-3 sm:p-4 rounded-3xl border border-border-subtle shadow-sm space-y-3">
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
+        <div className="flex flex-wrap items-center gap-2 pb-1">
           {SECTION_TABS.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeSection === tab.value;
@@ -1143,7 +1143,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
         </div>
 
         {/* Level Quick Badges */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pt-1 no-scrollbar border-t border-border-subtle/40">
+        <div className="flex flex-wrap items-center gap-1.5 pt-1 border-t border-border-subtle/40">
           <span className="text-[11px] font-mono font-bold text-text-muted uppercase shrink-0 mr-1">
             Filter Level:
           </span>
@@ -1171,7 +1171,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
 
         {/* Sub-Category Format Quick Badges (When not in Tryout) */}
         {activeSection !== 'tryout' && availableSubCategories.length > 1 && (
-          <div className="flex items-center gap-1.5 overflow-x-auto pt-2 no-scrollbar border-t border-border-subtle/40">
+          <div className="flex flex-wrap items-center gap-1.5 pt-2 border-t border-border-subtle/40">
             <span className="text-[11px] font-mono font-bold text-text-muted uppercase shrink-0 mr-1 flex items-center gap-1">
               <Compass className="w-3.5 h-3.5 text-gold" />
               Tipe Soal:
@@ -1361,7 +1361,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
                   setSearchQuery(e.target.value);
                   setVisibleCount(30);
                 }}
-                placeholder="Cari teks soal, bacaan wacana, opsi kata, atau pembahasan..."
+                placeholder="Cari soal, wacana, opsi..."
                 className="w-full pl-10 pr-4 py-2 rounded-xl bg-surface-inset border border-border-subtle text-text-primary placeholder:text-text-muted text-xs sm:text-sm font-medium focus:outline-none focus:border-border-muted"
               />
               {searchQuery && (

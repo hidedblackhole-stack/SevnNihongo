@@ -226,7 +226,7 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
                   setSearchQuery(e.target.value);
                   setVisibleCount(30);
                 }}
-                placeholder="Cari kanji, kata, pola kalimat, atau arti..."
+                placeholder="Cari kanji, kata, pola, arti..."
                 className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-surface-inset border border-border-subtle focus:border-border-primary focus:outline-none text-xs sm:text-sm text-text-primary font-medium"
               />
               {searchQuery && (
@@ -239,7 +239,7 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
               )}
             </div>
 
-            <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin">
+            <div className="flex flex-wrap items-center gap-2 pb-1">
               {/* Category Pills */}
               {[
                 { id: 'all', label: 'Semua Kategori' },

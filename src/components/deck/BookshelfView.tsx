@@ -119,7 +119,7 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
 
         {/* Primary Category Switcher */}
         <div className="pt-2 border-t border-border-subtle flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="flex items-center gap-1.5 p-1 bg-surface-inset rounded-2xl border border-border-subtle w-full sm:w-auto overflow-x-auto scrollbar-none">
+          <div className="flex flex-wrap items-center gap-1.5 p-1 bg-surface-inset rounded-2xl border border-border-subtle w-full sm:w-auto">
             <button
               type="button"
               onClick={() => {
@@ -184,7 +184,7 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
 
         {/* Secondary Sub-Filters (Contextual) */}
         {activeCategory === 'THEMATIC' ? (
-          <div className="pt-2 flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+          <div className="pt-2 flex flex-wrap items-center gap-1.5 pb-1">
             {THEMATIC_FILTERS.map(f => {
               const isActive = selectedThematicFilter === f.id;
               return (
@@ -203,7 +203,7 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
             })}
           </div>
         ) : (
-          <div className="pt-2 flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+          <div className="pt-2 flex flex-wrap items-center gap-1.5 pb-1">
             {CURRICULUM_FILTERS.map(f => {
               const isActive = selectedLevelFilter === f.id;
               return (

@@ -720,7 +720,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                       <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
                       <input
                         type="text"
-                        placeholder="Cari pola (contoh: te, lampau, pasif, nai, ます)..."
+                        placeholder="Cari pola (te, lampau, pasif)..."
                         value={patternSearchQuery}
                         onChange={(e) => setPatternSearchQuery(e.target.value)}
                         className="w-full bg-surface-card border border-border-subtle rounded-xl pl-9 pr-8 py-2 text-xs text-text-primary placeholder:text-text-muted focus:outline-none focus:border-border-primary shadow-[inset_1px_1px_3px_var(--neu-d)]"

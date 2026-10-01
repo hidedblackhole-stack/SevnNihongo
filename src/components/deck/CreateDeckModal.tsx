@@ -558,7 +558,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                         />
                       </div>
 
-                      <div className="flex items-center gap-1 overflow-x-auto pb-1">
+                      <div className="flex flex-wrap items-center gap-1 pb-1">
                         {[
                           { id: 'all', label: 'Semua' },
                           { id: 'kotoba', label: 'Kosakata' },

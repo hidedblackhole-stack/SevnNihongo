@@ -155,7 +155,7 @@ export const ArcadeSourceSelector = <T extends string>({
       {sourceType === 'TEMPLATE_BOOK' && (
         <div className="space-y-2.5 animate-fade-in">
           {/* Category Filter Pills for Books */}
-          <div className="flex items-center gap-1.5 pb-0.5 overflow-x-auto custom-scrollbar">
+          <div className="flex flex-wrap items-center gap-1.5 pb-0.5">
             <button
               type="button"
               onClick={() => {

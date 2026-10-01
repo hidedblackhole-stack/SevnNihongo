@@ -272,7 +272,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
         </div>
 
         {/* Level Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 custom-scrollbar">
+        <div className="flex flex-wrap items-center gap-2 pb-1">
           {(['ALL', 'N5', 'N4', 'N3', 'N2', 'N1', 'JFT'] as const).map((lvl) => {
             const isSelected = selectedLevelFilter === lvl;
             const count = lvl === 'ALL' 

@@ -166,7 +166,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
     const expGained = quizReward.totalExpGained;
 
     return (
-      <div className="w-full max-w-xl mx-auto p-6 panel text-center space-y-5 shadow-2xl">
+      <div className="w-full max-w-xl mx-auto p-6 panel panel-stitched text-center space-y-5 shadow-2xl">
         <div className="p-4 inline-flex rounded-full bg-surface-inset border border-border-subtle text-gold">
           {isSuccess ? <CheckCircle2 className="w-9 h-9" /> : <RotateCcw className="w-9 h-9" />}
         </div>

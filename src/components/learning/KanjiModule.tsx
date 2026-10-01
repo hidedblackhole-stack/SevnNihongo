@@ -155,7 +155,7 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
   return (
     <div className="w-full max-w-3xl mx-auto space-y-5">
       {/* Header */}
-      <div className="panel p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md">
+      <div className="panel panel-stitched p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md">
         <div className="flex items-center gap-2.5">
           <span className="p-2.5 rounded-xl bg-surface-inset text-wine-accent border border-border-subtle shrink-0">
             <Feather className="w-5 h-5" />
@@ -235,7 +235,7 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
                   setDetailSubTab('detail');
                   playSound('click', soundEnabled);
                 }}
-                className="panel p-4 cursor-pointer text-center space-y-2 group transition-all shadow-md hover:border-border-primary"
+                className="panel panel-stitched p-4 cursor-pointer text-center space-y-2 group transition-all shadow-md hover:border-border-primary"
               >
                 <div className="w-16 h-16 mx-auto rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-center text-3xl font-bold text-wine-accent font-jp group-hover:scale-105 transition-transform">
                   {kanji.character}
@@ -256,7 +256,7 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
           </div>
 
           {/* Quick Quiz Banner */}
-          <div className="panel p-5 border border-border-subtle flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="panel panel-stitched p-5 border border-border-subtle flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="space-y-1 text-center sm:text-left">
               <h3 className="text-base font-bold text-wine-accent font-heading">
                 🎯 Uji Semua Kanji Hari Ini (7 Soal)

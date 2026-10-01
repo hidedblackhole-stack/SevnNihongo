@@ -136,7 +136,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   return (
     <div className="w-full max-w-2xl mx-auto space-y-5 pb-6">
       {/* Header */}
-      <div className="panel p-4 flex items-center justify-between gap-3 shadow-md mb-4">
+      <div className="panel panel-stitched p-4 flex items-center justify-between gap-3 shadow-md mb-4">
         <div className="flex items-center gap-2.5">
           <span className="p-2 rounded-xl bg-surface-inset border border-border-subtle text-indigo">
             <Settings className="w-5 h-5" />
@@ -153,7 +153,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       </div>
 
       {/* Account Section */}
-      <div className="panel p-4 sm:p-5 space-y-4 shadow-md">
+      <div className="panel panel-stitched p-4 sm:p-5 space-y-4 shadow-md">
         <h3 className="text-xs font-bold uppercase tracking-wider text-text-secondary flex items-center gap-1.5 font-heading">
           <User className="w-4 h-4 text-indigo" /> Akun SevnQuest
         </h3>
@@ -233,7 +233,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       </div>
 
       {/* Profile & Avatar Section */}
-      <div className="panel p-4 sm:p-5 space-y-5 shadow-md">
+      <div className="panel panel-stitched p-4 sm:p-5 space-y-5 shadow-md">
         <h3 className="text-xs font-bold uppercase tracking-wider text-text-secondary flex items-center gap-1.5 font-heading">
           <User className="w-4 h-4 text-indigo" /> Profil Pemain
         </h3>
@@ -377,7 +377,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       </div>
 
       {/* Audio & Sound Effects Section */}
-      <div className="panel p-4 sm:p-5 space-y-4 shadow-md">
+      <div className="panel panel-stitched p-4 sm:p-5 space-y-4 shadow-md">
         <h3 className="text-xs font-bold uppercase tracking-wider text-text-secondary flex items-center gap-1.5 font-heading">
           <Volume2 className="w-4 h-4 text-indigo" /> Audio & Mantra Suara
         </h3>
@@ -474,7 +474,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       </div>
 
       {/* Learning Preferences */}
-      <div className="panel p-4 sm:p-5 space-y-4 shadow-md">
+      <div className="panel panel-stitched p-4 sm:p-5 space-y-4 shadow-md">
         <h3 className="text-xs font-bold uppercase tracking-wider text-text-secondary flex items-center gap-2 font-mono">
           <BookOpen className="w-4 h-4 text-indigo" />
           <span>Pengaturan Belajar</span>
@@ -617,7 +617,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       </div>
 
       {/* Support & Community Section */}
-      <div className="panel p-4 sm:p-5 space-y-4 shadow-md">
+      <div className="panel panel-stitched p-4 sm:p-5 space-y-4 shadow-md">
         <h3 className="text-xs font-bold uppercase tracking-wider text-text-secondary flex items-center gap-1.5 font-heading">
           <MessageCircle className="w-4 h-4 text-indigo" /> Dukungan & Komunitas
         </h3>
@@ -654,7 +654,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       </div>
 
       {/* Reset Progress Section */}
-      <div className="panel p-4 sm:p-5 space-y-3 border border-border-subtle shadow-md">
+      <div className="panel panel-stitched p-4 sm:p-5 space-y-3 border border-border-subtle shadow-md">
         <div className="flex items-center gap-2 text-wine-accent font-bold text-xs sm:text-sm font-heading">
           <ShieldAlert className="w-4 h-4" />
           <span>Zona Riset Data</span>

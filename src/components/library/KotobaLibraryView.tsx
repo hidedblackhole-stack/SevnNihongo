@@ -267,7 +267,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted pointer-events-none" />
           <input
             type="text"
-            placeholder={imeActive ? "Cari kata (ketik romaji otomatis jadi kana)..." : "Cari kanji, romaji, atau arti..."}
+            placeholder={imeActive ? "Cari kata (romaji → kana)..." : "Cari kata, romaji, arti..."}
             value={searchQuery}
             onChange={(e) => {
               const raw = e.target.value;
@@ -372,7 +372,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
       </div>
 
       {/* Passing-Oriented Priority Filter Pills */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin">
+      <div className="flex flex-wrap items-center gap-2 pb-1">
         <span className="text-[11px] font-bold text-text-secondary font-heading uppercase tracking-wider shrink-0 pl-1">
           Prioritas:
         </span>
@@ -415,7 +415,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
               {filteredKotoba.length} Kosakata Ditampilkan
             </span>
           </div>
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-thin">
+          <div className="flex flex-wrap items-center gap-1.5 pb-1">
             <button
               type="button"
               onClick={() => {

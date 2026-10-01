@@ -518,7 +518,7 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
           </div>
 
           {/* Word Selector Pills */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin">
+          <div className="flex flex-wrap items-center gap-2 pb-1">
             {items.map((item, idx) => (
               <button
                 key={item.id}

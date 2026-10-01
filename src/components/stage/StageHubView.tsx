@@ -656,7 +656,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
 
       {/* Expanded Sub-Item Mastery Breakdown List */}
       {expandedDetails && (
-        <div className="panel p-4 sm:p-5 space-y-4">
+        <div className="panel panel-stitched p-4 sm:p-5 space-y-4">
           <h3 className="text-xs font-bold uppercase tracking-wider text-gold font-heading flex items-center gap-2">
             <span>📋 Status Penguasaan Setiap Butir Materi</span>
           </h3>
@@ -707,7 +707,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
                   playSound('click', soundEnabled);
                   setActiveModule(mod.id as any);
                 }}
-                className="panel p-4 sm:p-4.5 cursor-pointer flex items-center justify-between gap-4 transition-all shadow-md group hover:border-border-primary"
+                className="panel panel-stitched p-4 sm:p-4.5 cursor-pointer flex items-center justify-between gap-4 transition-all shadow-md group hover:border-border-primary"
               >
                 <div className="flex items-center gap-3.5">
                   <div className="p-2.5 rounded-xl bg-surface-inset/70 border border-border-subtle text-gold shrink-0">
@@ -780,7 +780,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
               playSound('click', soundEnabled);
               setActiveModule('exam');
             }}
-            className="panel p-5 sm:p-6 border border-border-subtle text-center space-y-3 shadow-xl group transition-all bg-surface-card cursor-pointer hover:border-border-primary"
+            className="panel panel-stitched p-5 sm:p-6 border border-border-subtle text-center space-y-3 shadow-xl group transition-all bg-surface-card cursor-pointer hover:border-border-primary"
           >
             <div className="p-3 inline-flex rounded-full bg-gold/20 border border-border-subtle text-gold">
               <Trophy className="w-6 h-6 animate-pulse" />

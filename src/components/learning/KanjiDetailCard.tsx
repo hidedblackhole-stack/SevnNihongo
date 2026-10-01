@@ -414,7 +414,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
         </div>
       ) : (
         /* Kanji Writing Practice Canvas */
-        <div className="panel p-5 sm:p-6 space-y-4 text-center">
+        <div className="panel panel-stitched p-5 sm:p-6 space-y-4 text-center">
           <ErrorBoundary>
             <KanjiWritingCanvas
               kanjiChar={item.character}

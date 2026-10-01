@@ -216,7 +216,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
       {activeTab === 'materi' ? (
         <div className="space-y-4">
           {/* Sub-navigation: Choose which Materi */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin">
+          <div className="flex flex-wrap items-center gap-2 pb-1">
             {bunpouIds.map((id, index) => {
               const item = BUNPOU_DATABASE[id];
               if (!item) return null;
@@ -256,7 +256,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
           </div>
 
           {/* Theory Card */}
-          <div className="panel p-5 sm:p-6 space-y-5 shadow-lg">
+          <div className="panel panel-stitched p-5 sm:p-6 space-y-5 shadow-lg">
             {/* Title, Level, Functions & Meaning */}
             <div className="space-y-2">
               <div className="flex flex-wrap items-center gap-2">
@@ -362,7 +362,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
 
                   {/* Sub-branch pill tabs */}
                   {subBranches.length > 1 && (
-                    <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-thin">
+                    <div className="flex flex-wrap items-center gap-1.5 pb-1">
                       {subBranches.map((sub, idx) => {
                         const isSelected = activeSubIndex === idx;
                         return (
@@ -610,7 +610,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
         />
       ) : (
         /* Mixed Set View */
-        <div className="panel p-6 text-center space-y-4 shadow-xl border border-border-subtle">
+        <div className="panel panel-stitched p-6 text-center space-y-4 shadow-xl border border-border-subtle">
           <div className="p-4 inline-flex rounded-full bg-surface-inset border border-border-subtle text-gold">
             <Swords className="w-8 h-8" />
           </div>

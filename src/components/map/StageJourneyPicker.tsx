@@ -95,7 +95,7 @@ export const StageJourneyPicker: React.FC<StageJourneyPickerProps> = ({
         </div>
 
         {/* 2. CATEGORY TABS */}
-        <div className="pt-3 border-t border-border-subtle flex items-center gap-2 overflow-x-auto scrollbar-none">
+        <div className="pt-3 border-t border-border-subtle flex flex-wrap items-center gap-2">
           <button
             type="button"
             onClick={() => {

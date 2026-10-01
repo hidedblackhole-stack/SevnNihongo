@@ -246,7 +246,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
     const diagnostic = generateBossBattleDiagnostic(pillarResults, missedItemIds);
 
     return (
-      <div className="w-full max-w-lg mx-auto p-5 sm:p-7 panel border border-border-subtle text-center space-y-5 shadow-2xl">
+      <div className="w-full max-w-lg mx-auto p-5 sm:p-7 panel panel-stitched border border-border-subtle text-center space-y-5 shadow-2xl">
         <div className="p-3.5 inline-flex rounded-full bg-surface-inset border border-border-subtle text-gold shadow-xl animate-bounce">
           <Trophy className="w-10 h-10" />
         </div>
@@ -345,7 +345,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
   return (
     <div className="w-full max-w-2xl mx-auto space-y-4 pb-6">
       {/* Boss Arena Banner & Status */}
-      <div className="relative p-5 sm:p-6 panel border border-border-subtle text-center shadow-xl overflow-hidden">
+      <div className="relative p-5 sm:p-6 panel panel-stitched border border-border-subtle text-center shadow-xl overflow-hidden">
         <div className="flex items-center justify-between gap-2 mb-2">
           <span className="text-[11px] font-bold text-wine-accent bg-surface-inset px-2.5 py-0.5 rounded-full border border-border-subtle font-heading flex items-center gap-1">
             <Flame className="w-3 h-3 text-wine-accent" />
@@ -472,7 +472,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
       </div>
 
       {/* Combat Question Card */}
-      <div className="p-5 sm:p-6 panel shadow-xl space-y-4">
+      <div className="p-5 sm:p-6 panel panel-stitched shadow-xl space-y-4">
         <div className="flex items-center justify-between">
           <span className="text-xs font-bold text-indigo uppercase font-heading">
             Tantangan {currentQIndex + 1} of {totalQuestions}

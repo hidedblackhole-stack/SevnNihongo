@@ -750,12 +750,12 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
                     type="text"
                     value={verbSearchQuery}
                     onChange={e => setVerbSearchQuery(e.target.value)}
-                    placeholder="Cari kanji, cara baca, romaji, atau arti..."
+                    placeholder="Cari kanji, bacaan, arti..."
                     className="w-full pl-10 pr-4 py-2 rounded-xl bg-surface-inset border border-border-subtle text-xs text-text-primary placeholder:text-text-muted focus:outline-none focus:border-border-primary"
                   />
                 </div>
 
-                <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+                <div className="flex flex-wrap items-center gap-1.5 pb-1">
                   {['all', 'N5', 'N4', 'N3', 'Kaigo'].map(lvl => (
                     <button
                       key={lvl}
@@ -861,7 +861,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
               </div>
 
               {/* Level Filter */}
-              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+              <div className="flex flex-wrap items-center gap-1.5 pb-1">
                 {['all', 'N5', 'N4', 'N3'].map(lvl => (
                   <button
                     key={lvl}

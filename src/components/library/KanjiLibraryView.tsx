@@ -447,7 +447,7 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
                 setSearchQuery(converted);
                 setVisibleCount(100);
               }}
-              placeholder={imeActive ? "Cari kanji/kana (ketik romaji otomatis jadi kana)..." : "Cari kanji, kana, angka, arti, onyomi, kunyomi..."}
+              placeholder={imeActive ? "Cari kanji/kana (romaji → kana)..." : "Cari kanji, arti, onyomi, kunyomi..."}
               className="w-full pl-10 pr-20 py-2.5 rounded-xl bg-surface-inset border border-border-subtle text-text-primary placeholder:text-text-muted text-sm font-medium focus:outline-hidden focus:border-border-muted font-jp"
             />
 
@@ -524,7 +524,7 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
         </div>
 
         {/* Level Quick Badges */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
+        <div className="flex flex-wrap items-center gap-1.5 pb-1">
           {LEVEL_OPTIONS.map((opt) => (
             <button
               key={opt.value}

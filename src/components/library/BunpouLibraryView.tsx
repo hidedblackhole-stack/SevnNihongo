@@ -210,7 +210,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted pointer-events-none" />
           <input
             type="text"
-            placeholder={imeActive ? "Cari rumus (ketik romaji otomatis jadi kana)..." : "Cari rumus (Vる+ように、Vている), arti, fungsi..."}
+            placeholder={imeActive ? "Cari rumus (romaji → kana)..." : "Cari rumus, arti, fungsi..."}
             value={searchQuery}
             onChange={(e) => {
               const raw = e.target.value;
@@ -319,7 +319,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
         <span className="text-[11px] font-bold text-text-secondary font-heading uppercase tracking-wider pl-1">
           Kategori Fungsi (機能):
         </span>
-        <div className="flex items-center gap-2 overflow-x-auto pb-1.5 scrollbar-thin">
+        <div className="flex flex-wrap items-center gap-2 pb-1.5">
           {ALL_GRAMMAR_FUNCTION_CATEGORIES.map((cat) => {
             const isSelected = functionFilter === cat;
             return (
