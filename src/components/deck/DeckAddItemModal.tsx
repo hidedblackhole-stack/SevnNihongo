@@ -435,7 +435,7 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
                   <div className="pt-2 text-center">
                     <button
                       onClick={() => setVisibleCount(prev => prev + 30)}
-                      className="px-4 py-2 rounded-xl text-xs font-bold text-text-primary bg-surface-inset border border-border-subtle hover:bg-surface-elevated transition-colors"
+                      className="btn-physical-secondary px-4 py-2 rounded-xl text-xs font-bold transition-colors"
                     >
                       Muat Lebih Banyak ({filteredItems.length - displayedItems.length} sisa)
                     </button>
@@ -470,7 +470,7 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
                 <button
                   type="button"
                   onClick={handleAddBatch}
-                  className="px-4 py-1.5 rounded-xl text-xs font-heading font-bold bg-surface-card hover:bg-surface-inset text-gold border border-border-subtle shadow-sm flex items-center gap-1.5"
+                  className="btn-physical-secondary px-4 py-1.5 rounded-xl text-xs font-heading font-bold text-gold flex items-center gap-1.5"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>Tambahkan Semua ({selectedKeys.size})</span>

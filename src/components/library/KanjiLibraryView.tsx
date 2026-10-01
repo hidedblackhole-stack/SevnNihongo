@@ -581,7 +581,7 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
                     }}
                     className={`px-3 py-1 rounded-xl text-xs font-medium shrink-0 flex items-center gap-1.5 transition-all cursor-pointer ${
                       kanaCategory === cat.value
-                        ? 'bg-wine-accent text-white font-bold shadow-sm'
+                        ? 'seg-active text-gold font-bold'
                         : 'bg-surface-inset text-text-secondary hover:text-text-primary border border-border-subtle'
                     }`}
                   >
@@ -792,7 +792,7 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
               setVisibleCount(prev => prev + 48);
               playSound('click', soundEnabled);
             }}
-            className="px-6 py-2.5 rounded-2xl bg-surface-inset border border-border-subtle hover:border-border-muted text-xs font-bold font-mono uppercase tracking-wider text-text-primary hover:shadow-sm transition-all cursor-pointer"
+            className="btn-physical-secondary px-6 py-2.5 rounded-2xl text-xs font-bold font-mono uppercase tracking-wider transition-all cursor-pointer"
           >
             Muat Lebih Banyak ({filteredKanji.length - visibleCount} Tersisa)
           </button>
@@ -906,7 +906,7 @@ const KanjiCardItem: React.FC<{
                 onRemoveItem(item.id || item.character, 'kanji');
                 playSound('click', soundEnabled);
               }}
-              className="p-0.5 sm:p-1 rounded border border-border-subtle bg-surface-inset text-text-muted hover:text-wine-accent transition-all cursor-pointer"
+              className="btn-physical-secondary p-0.5 sm:p-1 rounded hover:text-wine-accent transition-all cursor-pointer"
               title="Hapus dari deck ini"
             >
               <Trash2 className="w-3 h-3 sm:w-3.5 sm:h-3.5" />

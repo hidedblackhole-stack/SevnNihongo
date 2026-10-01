@@ -259,7 +259,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
               setIsDropdownOpen(!isDropdownOpen);
               playSound('click', soundEnabled);
             }}
-            className="flex items-center gap-2.5 bg-surface-card hover:bg-surface-elevated px-4 py-3 rounded-2xl border border-border-subtle hover:border-border-primary transition-all text-xs font-bold text-text-primary shadow-sm"
+            className="btn-physical-secondary flex items-center gap-2.5 px-4 py-3 rounded-2xl transition-all text-xs font-bold"
           >
             <Filter className="w-4 h-4 text-text-secondary" />
             <span>{levelFilter === 'all' ? 'Semua Level' : `Level ${levelFilter}`}</span>
@@ -432,7 +432,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
                         onRemoveItem(item.id, 'bunpou');
                         playSound('click', soundEnabled);
                       }}
-                      className="p-1.5 rounded-lg border border-border-subtle bg-surface-inset text-text-muted hover:text-wine-accent transition-all shrink-0"
+                      className="btn-physical-secondary p-1.5 rounded-lg hover:text-wine-accent transition-all shrink-0"
                       title="Hapus dari deck ini"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
@@ -491,7 +491,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
                           onRemoveItem(item.id, 'bunpou');
                           playSound('click', soundEnabled);
                         }}
-                        className="p-1.5 rounded-lg border border-border-subtle bg-surface-inset text-text-muted hover:text-wine-accent transition-all shrink-0 cursor-pointer"
+                        className="btn-physical-secondary p-1.5 rounded-lg hover:text-wine-accent transition-all shrink-0 cursor-pointer"
                         title="Hapus dari deck ini"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
@@ -566,7 +566,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
         <div className="flex justify-center pt-2">
           <button
             onClick={handleLoadMore}
-            className="btn-cta px-6 py-2.5 rounded-2xl text-xs font-bold transition-all shadow-md font-heading"
+            className="btn-cta px-6 py-2.5 rounded-2xl text-xs font-bold transition-all font-heading"
           >
             Muat Lebih Banyak ({filteredBunpou.length - displayedBunpou.length} tersisa)
           </button>

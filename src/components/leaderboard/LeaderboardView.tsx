@@ -353,7 +353,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
         <button
           onClick={() => fetchLeaderboard(true)}
           disabled={isRefreshing || isLoading}
-          className="py-2 px-3.5 rounded-xl bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-text-primary border border-border-subtle flex items-center gap-1.5 shrink-0 text-xs font-mono font-bold transition-all shadow-inner active:scale-95 cursor-pointer"
+          className="btn-physical-secondary py-2 px-3.5 rounded-xl flex items-center gap-1.5 shrink-0 text-xs font-mono font-bold transition-all cursor-pointer"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-gold' : ''}`} />
           <span>{isRefreshing ? 'SYNCING...' : 'REFRESH'}</span>
@@ -437,7 +437,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
                 <button
                   type="button"
                   onClick={() => fetchLeaderboard(true)}
-                  className="mt-4 px-4 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-border-subtle text-xs font-bold font-mono transition-all flex items-center gap-2 cursor-pointer"
+                  className="btn-physical-secondary mt-4 px-4 py-2 rounded-xl text-amber-300 text-xs font-bold font-mono transition-all flex items-center gap-2 cursor-pointer"
                 >
                   <RefreshCw className="w-3.5 h-3.5" />
                   <span>COBA MUAT ULANG</span>
@@ -561,7 +561,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
                       setDisplayLimit(prev => prev === 100 ? 500 : 100);
                       playSound('click', soundEnabled);
                     }}
-                    className="px-4 py-2 rounded-xl bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-text-primary border border-border-subtle text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-1.5 mx-auto cursor-pointer"
+                    className="btn-physical-secondary px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 mx-auto cursor-pointer"
                   >
                     {displayLimit === 100 ? (
                       <>

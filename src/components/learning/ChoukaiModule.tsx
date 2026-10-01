@@ -63,7 +63,7 @@ export const ChoukaiModule: React.FC<ChoukaiModuleProps> = ({
           <div className="flex items-center gap-2">
             <button
               onClick={handleTogglePlayAudio}
-              className="p-3 rounded-full bg-surface-card dark:bg-surface-elevated text-text-primary transition-all shadow-md active:scale-95 border border-border-primary"
+              className="btn-physical-secondary p-3 rounded-full transition-all"
             >
               {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current ml-0.5" />}
             </button>
@@ -161,7 +161,7 @@ export const ChoukaiModule: React.FC<ChoukaiModuleProps> = ({
         <div className="flex items-center justify-center gap-4">
           <button
             onClick={handleReplay}
-            className="p-3 rounded-2xl bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-colors border border-border-subtle"
+            className="btn-physical-secondary p-3 rounded-2xl transition-colors"
             title="Putar dari Awal"
           >
             <RotateCcw className="w-5 h-5" />
@@ -169,7 +169,7 @@ export const ChoukaiModule: React.FC<ChoukaiModuleProps> = ({
 
           <button
             onClick={handleTogglePlayAudio}
-            className="p-5 rounded-full bg-gold text-surface-base font-black shadow-xl active:scale-95 transition-all"
+            className="btn-physical-primary p-5 rounded-full font-black transition-all"
           >
             {isPlaying ? (
               <Pause className="w-8 h-8 fill-current" />
@@ -188,7 +188,7 @@ export const ChoukaiModule: React.FC<ChoukaiModuleProps> = ({
                 }}
                 className={`px-2.5 py-1 rounded-xl text-[11px] font-bold transition-all ${
                   speechRate === rate
-                    ? 'bg-gold text-surface-base shadow-md font-bold'
+                    ? 'seg-active text-gold font-bold'
                     : 'text-text-muted hover:text-text-primary'
                 }`}
               >
@@ -232,7 +232,7 @@ export const ChoukaiModule: React.FC<ChoukaiModuleProps> = ({
             playSound('click', soundEnabled);
             setIsQuizActive(true);
           }}
-          className="w-full py-3.5 rounded-2xl btn-cta font-bold text-sm shadow-md active:scale-95 transition-all flex items-center justify-center gap-2 font-heading"
+          className="w-full py-3.5 rounded-2xl btn-cta font-bold text-sm transition-all flex items-center justify-center gap-2 font-heading"
         >
           <span>Mulai Jawab 3 Soal Choukai</span>
         </button>

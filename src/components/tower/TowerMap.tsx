@@ -240,7 +240,7 @@ export const TowerMap: React.FC<TowerMapProps> = ({
             <button
               type="button"
               onClick={onBack}
-              className="p-1.5 rounded-xl bg-surface-elevated hover:bg-surface-inset border border-border-subtle text-text-primary transition-all cursor-pointer shrink-0"
+              className="btn-physical-secondary p-1.5 rounded-xl transition-all cursor-pointer shrink-0"
               title="Kembali"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -273,7 +273,7 @@ export const TowerMap: React.FC<TowerMapProps> = ({
           <button
             type="button"
             onClick={() => setIsShowcaseOpen(true)}
-            className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-surface-elevated hover:bg-surface-inset border border-border-subtle text-gold text-xs font-bold transition-all shadow-sm active:scale-95 cursor-pointer"
+            className="btn-physical-secondary flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-gold text-xs font-bold transition-all cursor-pointer"
             title="Kartu Prestise Petualangan"
           >
             <Trophy className="w-3.5 h-3.5 fill-gold/20" />
@@ -284,7 +284,7 @@ export const TowerMap: React.FC<TowerMapProps> = ({
           <button
             type="button"
             onClick={() => setIsSkillTreeOpen(true)}
-            className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-surface-elevated hover:bg-surface-inset border border-border-subtle text-wine-accent text-xs font-bold transition-all shadow-sm active:scale-95 cursor-pointer"
+            className="btn-physical-secondary flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-wine-accent text-xs font-bold transition-all cursor-pointer"
             title="Keahlian Pasif Menara"
           >
             <Sparkles className="w-3.5 h-3.5" />
@@ -295,7 +295,7 @@ export const TowerMap: React.FC<TowerMapProps> = ({
           <button
             type="button"
             onClick={scrollToCurrentFloor}
-            className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-surface-elevated hover:bg-surface-inset border border-border-subtle text-text-primary text-xs font-bold transition-all shadow-sm active:scale-95 cursor-pointer"
+            className="btn-physical-secondary flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
           >
             <Compass className="w-3.5 h-3.5 text-wine-accent animate-pulse" />
             <span className="text-[11px] font-heading font-black">F.{currentFloor}</span>
@@ -345,7 +345,7 @@ export const TowerMap: React.FC<TowerMapProps> = ({
               onClick={() => setSelectedPreviewFloor(lm.floor)}
               className={`px-2.5 py-1 rounded-xl text-xs font-mono font-bold shrink-0 transition-all border cursor-pointer ${
                 currentFloor === lm.floor
-                  ? 'bg-wine-accent text-white border-border-subtle shadow-sm'
+                  ? 'seg-active text-gold'
                   : lm.isBoss
                     ? 'bg-surface-elevated hover:bg-surface-inset text-wine-accent border-border-subtle hover:border-border-primary'
                     : 'bg-surface-elevated hover:bg-surface-inset text-text-primary border-border-subtle'
@@ -405,7 +405,7 @@ export const TowerMap: React.FC<TowerMapProps> = ({
                               : landmark.isBoss
                                 ? 'bg-surface-inset text-wine-accent border border-border-subtle shadow-inner'
                                 : isCurrent
-                                  ? 'bg-wine-accent text-white shadow-sm'
+                                  ? 'seg-active text-gold'
                                   : 'bg-surface-inset text-emerald-400 border border-border-subtle'
                           }`}
                         >
@@ -510,7 +510,7 @@ export const TowerMap: React.FC<TowerMapProps> = ({
                               : isCheckpoint
                                 ? 'bg-surface-inset text-gold border border-border-subtle shadow-inner'
                                 : isCurrent
-                                  ? 'bg-wine-accent text-white shadow-sm'
+                                  ? 'seg-active text-gold'
                                   : isCleared
                                     ? 'bg-surface-inset text-emerald-400 border border-border-subtle'
                                     : 'bg-surface-inset text-text-muted border border-border-subtle'
@@ -650,7 +650,7 @@ export const TowerMap: React.FC<TowerMapProps> = ({
                     setSelectedPreviewFloor(null);
                     onSelectFloor(target);
                   }}
-                  className="w-full py-3.5 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all cursor-pointer"
+                  className="btn-physical-primary w-full py-3.5 rounded-2xl font-black text-sm flex items-center justify-center gap-2 transition-all cursor-pointer"
                 >
                   <Play className="w-4 h-4 fill-white" />
                   <span>Mulai Uji Tantangan Lantai Ini</span>
@@ -675,7 +675,7 @@ export const TowerMap: React.FC<TowerMapProps> = ({
               <button
                 type="button"
                 onClick={() => setIsShowcaseOpen(false)}
-                className="absolute -top-3 -right-3 z-10 w-9 h-9 rounded-full bg-surface-card border border-border-subtle text-text-primary flex items-center justify-center shadow-lg hover:bg-surface-elevated transition-colors cursor-pointer"
+                className="btn-physical-secondary absolute -top-3 -right-3 z-10 w-9 h-9 rounded-full flex items-center justify-center transition-colors cursor-pointer p-0"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -792,7 +792,7 @@ export const TowerMap: React.FC<TowerMapProps> = ({
                             onClick={() => handleUpgradeSkill(skill.id)}
                             className={`px-3 py-1 rounded-xl text-xs font-bold transition-all flex items-center gap-1 cursor-pointer ${
                               canAfford
-                                ? 'bg-wine-accent hover:opacity-95 text-white active:scale-95 shadow-sm'
+                                ? 'btn-physical-primary'
                                 : 'bg-surface-elevated text-text-muted border border-border-subtle cursor-not-allowed opacity-60'
                             }`}
                           >

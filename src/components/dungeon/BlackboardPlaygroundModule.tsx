@@ -369,7 +369,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
           <button
             type="button"
             onClick={handleShuffleBoth}
-            className="btn-skeuo-gold px-2.5 py-1 sm:px-3 sm:py-1.5 text-[11px] sm:text-xs flex items-center gap-1 shadow-xs active:scale-95 transition-all cursor-pointer"
+            className="btn-skeuo-gold px-2.5 py-1 sm:px-3 sm:py-1.5 text-[11px] sm:text-xs flex items-center gap-1 transition-all cursor-pointer"
             title="Acak Kata Kerja & Pola Kalimat Sekaligus"
           >
             <Shuffle className="w-3.5 h-3.5" />
@@ -384,7 +384,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
                 playSound('victory', soundEnabled);
                 onFinishSession(exploredCount);
               }}
-              className="btn-skeuo-indigo px-3 py-1 sm:px-3.5 sm:py-1.5 text-[11px] sm:text-xs flex items-center gap-1.5 shadow-xs active:scale-95 transition-all cursor-pointer"
+              className="btn-skeuo-indigo px-3 py-1 sm:px-3.5 sm:py-1.5 text-[11px] sm:text-xs flex items-center gap-1.5 transition-all cursor-pointer"
               title="Selesai belajar dan panen hadiah EXP"
             >
               <Award className="w-3.5 h-3.5 text-gold" />
@@ -542,7 +542,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
                         type="button"
                         onClick={() => handlePlayAudio(transformation.fullJapanese)}
                         disabled={isSpeaking}
-                        className="p-2.5 sm:p-3 rounded-xl sm:rounded-2xl border border-border-subtle bg-surface-card hover:bg-surface-elevated active:scale-90 transition-all text-text-primary shadow-xs cursor-pointer shrink-0 ml-1.5 sm:ml-2"
+                        className="btn-physical-secondary p-2.5 sm:p-3 rounded-xl sm:rounded-2xl transition-all cursor-pointer shrink-0 ml-1.5 sm:ml-2"
                         title="Dengarkan pelafalan hasil perubahan"
                       >
                         <Volume2 className={`w-5 h-5 sm:w-5.5 sm:h-5.5 ${isSpeaking ? 'animate-bounce text-gold' : 'text-text-secondary'}`} />
@@ -639,7 +639,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
         <button
           type="button"
           onClick={handlePrevVerb}
-          className="btn-skeuo-indigo px-3 py-2 text-xs flex items-center gap-1.5 shadow-xs active:scale-95 transition-all cursor-pointer flex-1 sm:flex-none justify-center"
+          className="btn-skeuo-indigo px-3 py-2 text-xs flex items-center gap-1.5 transition-all cursor-pointer flex-1 sm:flex-none justify-center"
         >
           <ChevronLeft className="w-4 h-4 shrink-0" />
           <span className="truncate">Sebelumnya</span>
@@ -663,7 +663,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
         <button
           type="button"
           onClick={handleNextVerb}
-          className="btn-skeuo-indigo px-3 py-2 text-xs flex items-center gap-1.5 shadow-xs active:scale-95 transition-all cursor-pointer flex-1 sm:flex-none justify-center"
+          className="btn-skeuo-indigo px-3 py-2 text-xs flex items-center gap-1.5 transition-all cursor-pointer flex-1 sm:flex-none justify-center"
         >
           <span className="truncate">Berikutnya</span>
           <ChevronRight className="w-4 h-4 shrink-0" />
@@ -696,7 +696,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
               playSound('click', soundEnabled);
               setShowVerbPicker(true);
             }}
-            className="flex-1 sm:flex-none px-3 py-1.5 rounded-xl border border-border-subtle bg-indigo/10 hover:bg-indigo/20 text-indigo text-xs font-heading font-bold transition-all active:scale-95 shadow-2xs cursor-pointer"
+            className="btn-physical-secondary flex-1 sm:flex-none px-3 py-1.5 rounded-xl text-indigo text-xs font-heading font-bold transition-all cursor-pointer"
           >
             📖 Pilih Kata
           </button>
@@ -706,7 +706,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
               playSound('click', soundEnabled);
               setShowPatternPicker(true);
             }}
-            className="flex-1 sm:flex-none px-3 py-1.5 rounded-xl border border-border-subtle bg-gold/10 hover:bg-gold/20 text-gold text-xs font-heading font-bold transition-all active:scale-95 shadow-2xs cursor-pointer"
+            className="btn-physical-secondary flex-1 sm:flex-none px-3 py-1.5 rounded-xl text-gold text-xs font-heading font-bold transition-all cursor-pointer"
           >
             📑 Pilih Pola
           </button>
@@ -869,7 +869,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
                     onClick={() => setPatternLevelFilter(lvl)}
                     className={`px-3 py-1 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer ${
                       patternLevelFilter === lvl
-                        ? 'bg-gold text-surface-base shadow-xs font-black'
+                        ? 'seg-active text-gold font-black'
                         : 'bg-surface-inset text-text-muted hover:text-text-primary'
                     }`}
                   >

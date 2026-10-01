@@ -118,7 +118,7 @@ export const BossGateModal: React.FC<BossGateModalProps> = ({
               <button
                 type="button"
                 onClick={() => onJumpToTrainingFloor(recommendedFloors[0])}
-                className="w-full py-3.5 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer"
+                className="btn-physical-primary w-full py-3.5 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer"
               >
                 <BookOpen className="w-4 h-4" />
                 <span>Latih di Lantai {recommendedFloors[0]} - {recommendedFloors[1]}</span>
@@ -129,7 +129,7 @@ export const BossGateModal: React.FC<BossGateModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="w-full py-3 rounded-2xl bg-surface-inset hover:bg-surface-elevated border border-border-subtle text-text-secondary text-xs font-bold transition-all cursor-pointer"
+              className="btn-physical-secondary w-full py-3 rounded-2xl text-xs font-bold transition-all cursor-pointer"
             >
               Kembali ke Pemilihan Lantai
             </button>

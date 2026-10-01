@@ -108,7 +108,7 @@ export const PwaInstallModal: React.FC<PwaInstallModalProps> = ({
                 type="button"
                 disabled={isInstalling}
                 onClick={handleNativePrompt}
-                className="btn btn-primary text-xs gap-1.5 py-2 px-4 shrink-0 shadow-md font-bold"
+                className="btn btn-primary text-xs gap-1.5 py-2 px-4 shrink-0 font-bold"
               >
                 <Download className="w-4 h-4" />
                 <span>{isInstalling ? 'Memproses...' : 'Pasang Sekarang'}</span>

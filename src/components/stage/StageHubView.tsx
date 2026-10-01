@@ -508,7 +508,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
               playSound('click', soundEnabled);
               onBackToMap();
             }}
-            className="btn btn-pill text-xs gap-1.5 self-start shadow-sm border-border-subtle hover:border-border-primary cursor-pointer"
+            className="btn btn-pill text-xs gap-1.5 self-start cursor-pointer"
             title="Kembali ke daftar modul stage di world ini"
           >
             <ArrowLeft className="w-4 h-4 text-gold" />
@@ -544,7 +544,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
                   playSound('click', soundEnabled);
                   setIsStageListOpen(true);
                 }}
-                className="btn btn-pill text-xs py-1.5 px-3 gap-1.5 font-mono font-bold text-gold border-border-subtle hover:bg-gold/10 cursor-pointer"
+                className="btn btn-pill text-xs py-1.5 px-3 gap-1.5 font-mono font-bold text-gold cursor-pointer"
                 title="Buka daftar stage untuk berganti stage langsung"
               >
                 <ListFilter className="w-3.5 h-3.5" />
@@ -768,7 +768,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
                 Kalahkan penguasa wilayah dengan evaluasi 5 pilar ({availableModules.map(m => m.name.split('•')[0].trim()).join(', ')})!
               </p>
             </div>
-            <button className="btn btn-cta bg-wine hover:brightness-110 text-white gap-2 shadow-lg">
+            <button className="btn btn-cta text-white gap-2">
               <Swords className="w-4 h-4" /> Masuki Arena Pertarungan Boss
             </button>
           </motion.div>
@@ -794,7 +794,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
                 Evaluasi pemahaman komprehensif menguji gabungan materi stage ini ({availableModules.map(m => m.name.split('•')[0].trim()).join(', ')})!
               </p>
             </div>
-            <button className="btn btn-cta bg-gold hover:brightness-110 text-surface-base font-bold gap-2 shadow-lg mx-auto">
+            <button className="btn btn-cta text-surface-base font-bold gap-2 mx-auto">
               <BookCheck className="w-4 h-4" /> Mulai Ujian Stage ({stageExamQuestionCount} Soal)
             </button>
           </motion.div>
@@ -810,7 +810,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
                   playSound('click', soundEnabled);
                   onSelectStage(prevStage);
                 }}
-                className="btn btn-pill text-xs gap-1.5 cursor-pointer hover:border-border-primary"
+                className="btn btn-pill text-xs gap-1.5 cursor-pointer"
               >
                 <ChevronLeft className="w-4 h-4 text-gold" />
                 <span>Stage {prevStage.stageNumber}: {prevStage.title_jp || prevStage.title}</span>
@@ -824,7 +824,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
                   playSound('click', soundEnabled);
                   onSelectStage(nextStage);
                 }}
-                className="btn btn-pill text-xs gap-1.5 ml-auto cursor-pointer hover:border-border-primary"
+                className="btn btn-pill text-xs gap-1.5 ml-auto cursor-pointer"
               >
                 <span>Stage {nextStage.stageNumber}: {nextStage.title_jp || nextStage.title}</span>
                 <ChevronRight className="w-4 h-4 text-gold" />
@@ -891,7 +891,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
                       <span className={`w-7 h-7 rounded-lg flex items-center justify-center font-mono font-bold text-xs shrink-0 ${
-                        isCurrent ? 'bg-gold text-surface-base' : 'bg-surface-inset text-text-secondary'
+                        isCurrent ? 'seg-active text-gold' : 'bg-surface-inset text-text-secondary'
                       }`}>
                         {s.stageNumber || i + 1}
                       </span>

@@ -250,7 +250,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
           <div className="flex items-center gap-3">
             <button 
               onClick={onBack} 
-              className="p-2.5 rounded-xl bg-surface-card border border-border-subtle text-text-secondary hover:text-text-primary transition-colors"
+              className="btn-physical-secondary p-2.5 rounded-xl transition-colors"
               title="Kembali ke Peta"
             >
               <ChevronLeft className="w-5 h-5" />
@@ -389,7 +389,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
                 <button
                   type="button"
                   onClick={() => setLaunchModalPack(null)}
-                  className="absolute top-4 right-4 p-2 rounded-xl bg-surface-inset border border-border-subtle text-text-muted hover:text-text-primary transition-colors"
+                  className="btn-physical-secondary absolute top-4 right-4 p-2 rounded-xl transition-colors"
                   title="Tutup"
                 >
                   <X className="w-4 h-4" />
@@ -457,7 +457,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
                   <button
                     type="button"
                     onClick={() => handleLaunchExam(launchModalPack)}
-                    className="btn-physical-primary py-2.5 px-6 rounded-xl text-sm font-bold font-heading flex items-center gap-2 shadow-lg"
+                    className="btn-physical-primary py-2.5 px-6 rounded-xl text-sm font-bold font-heading flex items-center gap-2"
                   >
                     <RpgSwordsIcon className="w-4 h-4" />
                     <span>Mulai Ujian Sekarang</span>
@@ -485,7 +485,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
           </div>
           <button
             onClick={() => startSection(nextSectionKey as 'mojiGoi' | 'bunpouDokkai' | 'choukai')}
-            className="btn-cta w-full py-3.5 rounded-xl font-bold shadow-lg transition-transform hover:scale-102"
+            className="btn-cta w-full py-3.5 rounded-xl font-bold transition-transform"
           >
             Mulai Sesi Selanjutnya
           </button>
@@ -554,7 +554,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
               playSound('click', soundEnabled);
               handleSubmitScore();
             }}
-            className="btn-cta w-full sm:w-auto py-4 px-10 rounded-2xl font-bold shadow-lg text-base transition-transform hover:scale-105 font-heading"
+            className="btn-cta w-full sm:w-auto py-4 px-10 rounded-2xl font-bold text-base transition-transform font-heading"
           >
             Klaim Hadiah & Selesai
           </button>
@@ -563,7 +563,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
               setCurrentStep('intro');
               playSound('click', soundEnabled);
             }}
-            className="w-full sm:w-auto py-4 px-6 rounded-2xl bg-surface-inset hover:bg-surface-card border border-border-subtle text-text-secondary hover:text-text-primary font-bold text-sm transition-all"
+            className="btn-physical-secondary w-full sm:w-auto py-4 px-6 rounded-2xl font-bold text-sm transition-all"
           >
             Pilih Paket Ujian Lain
           </button>
@@ -595,7 +595,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
       {/* Top Header */}
       <div className="panel panel-stitched flex items-center justify-between p-4 rounded-2xl border border-border-subtle shadow-md shrink-0">
         <div className="flex items-center gap-3">
-          <button onClick={() => setShowGrid(!showGrid)} className="p-2 bg-surface-inset border border-border-subtle rounded-xl hover:bg-surface-card transition-colors">
+          <button onClick={() => setShowGrid(!showGrid)} className="btn-physical-secondary p-2 rounded-xl transition-colors">
             <span className="font-bold text-text-secondary text-xs">Grid Soal</span>
           </button>
           <div>
@@ -615,7 +615,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
                 handleFinishSection();
               }
             }}
-            className="btn-physical-primary py-1.5 px-3.5 rounded-xl text-xs font-bold font-heading cursor-pointer shadow-sm"
+            className="btn-physical-primary py-1.5 px-3.5 rounded-xl text-xs font-bold font-heading cursor-pointer"
           >
             Kumpul Sesi
           </button>
@@ -692,7 +692,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
                      }
                   }}
                   disabled={isAudioPlaying}
-                  className="btn-cta px-6 py-3 rounded-full font-bold flex items-center gap-2 shadow-lg disabled:opacity-50"
+                  className="btn-cta px-6 py-3 rounded-full font-bold flex items-center gap-2 disabled:opacity-50"
                 >
                   <Volume2 className="w-5 h-5" />
                   Mulai Audio
@@ -827,7 +827,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
                       }
                     }}
                     disabled={currentQuestionIndex === 0}
-                    className="p-2 rounded-xl bg-surface-inset border border-border-subtle disabled:opacity-40 text-text-secondary hover:text-text-primary transition-all"
+                    className="btn-physical-secondary p-2 rounded-xl disabled:opacity-40 transition-all"
                   >
                     <ChevronLeft className="w-5 h-5" />
                   </button>
@@ -839,7 +839,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
                       }
                     }}
                     disabled={currentQuestionIndex === totalQ - 1}
-                    className="btn-physical-primary py-2 px-4 rounded-xl text-xs font-bold font-heading flex items-center gap-1 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed shadow-sm"
+                    className="btn-physical-primary py-2 px-4 rounded-xl text-xs font-bold font-heading flex items-center gap-1 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
                   >
                     <span>Selanjutnya</span>
                     <ChevronRight className="w-4 h-4" />

@@ -400,7 +400,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                         playSound('click', soundEnabled);
                         onOpenAiCustomizer();
                       }}
-                      className="btn-physical-primary py-1.5 px-3 rounded-xl text-xs font-bold font-heading shrink-0 cursor-pointer shadow-xs"
+                      className="btn-physical-primary py-1.5 px-3 rounded-xl text-xs font-bold font-heading shrink-0 cursor-pointer"
                     >
                       Buka Studio AI
                     </button>
@@ -643,13 +643,13 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                 playSound('click', soundEnabled);
                 onClose();
               }}
-              className="px-4 py-2 rounded-xl text-xs font-bold text-text-secondary hover:bg-surface-card border border-transparent transition-colors"
+              className="btn-physical-secondary px-4 py-2 rounded-xl text-xs font-bold transition-colors"
             >
               Batal
             </button>
             <button
               type="submit"
-              className="px-5 py-2.5 rounded-xl text-xs font-heading font-bold bg-surface-elevated text-text-primary border border-border-primary shadow-sm hover:shadow transition-all flex items-center gap-2 hover:scale-102 active:scale-95"
+              className="btn-physical-secondary px-5 py-2.5 rounded-xl text-xs font-heading font-bold transition-all flex items-center gap-2"
             >
               <Check className="w-3.5 h-3.5 text-gold" />
               <span>

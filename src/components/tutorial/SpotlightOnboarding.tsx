@@ -464,7 +464,7 @@ export const SpotlightOnboarding: React.FC<SpotlightOnboardingProps> = ({
                 <button
                   type="button"
                   onClick={handleAuthCTA}
-                  className="btn-physical-primary w-full py-3 px-4 rounded-xl font-heading font-bold text-sm tracking-wide active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+                  className="btn-physical-primary w-full py-3 px-4 rounded-xl font-heading font-bold text-sm tracking-wide transition-all flex items-center justify-center gap-2"
                 >
                   <Swords className="w-4 h-4 fill-current" />
                   <span>Masuk / Daftar Akun Sekarang</span>
@@ -570,7 +570,7 @@ export const SpotlightOnboarding: React.FC<SpotlightOnboardingProps> = ({
                       <button
                         type="button"
                         onClick={handlePrev}
-                        className="p-1.5 sm:p-2 rounded-xl bg-surface-inset hover:bg-surface-elevated border border-border-subtle text-text-secondary hover:text-text-primary transition-all text-xs flex items-center justify-center"
+                        className="btn-physical-secondary p-1.5 sm:p-2 rounded-xl transition-all text-xs flex items-center justify-center"
                         title="Kembali"
                       >
                         <ChevronLeft className="w-4 h-4" />
@@ -580,7 +580,7 @@ export const SpotlightOnboarding: React.FC<SpotlightOnboardingProps> = ({
                     <button
                       type="button"
                       onClick={handleNext}
-                      className="py-1.5 sm:py-2 px-3 sm:px-3.5 rounded-xl bg-gold hover:bg-gold-light text-surface-base font-heading font-bold text-xs tracking-wide shadow-md hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5"
+                      className="btn-physical-primary py-1.5 sm:py-2 px-3 sm:px-3.5 rounded-xl font-heading font-bold text-xs tracking-wide transition-all flex items-center gap-1.5"
                     >
                       <span>Lanjut</span>
                       <ChevronRight className="w-3.5 h-3.5" />

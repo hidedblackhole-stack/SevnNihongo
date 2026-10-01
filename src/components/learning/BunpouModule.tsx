@@ -202,7 +202,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
             }}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 font-heading ${
               activeTab === 'mixed'
-                ? 'bg-gold text-surface-base shadow-md font-bold'
+                ? 'seg-active text-gold font-bold'
                 : 'text-text-muted hover:text-text-primary'
             }`}
           >
@@ -249,7 +249,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
 
             <button
               onClick={() => startSingleQuiz(currentBunpou)}
-              className="btn-cta px-4 py-1.5 rounded-xl text-xs font-bold shadow-sm transition-all flex items-center gap-1.5 font-heading"
+              className="btn-cta px-4 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 font-heading"
             >
               <span>Latihan 7 Soal</span>
             </button>
@@ -374,7 +374,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
                             }}
                             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border font-jp flex items-center gap-1 ${
                               isSelected
-                                ? 'bg-gold text-surface-base border-border-subtle shadow-sm font-bold'
+                                ? 'seg-active text-gold font-bold'
                                 : 'panel text-text-secondary hover:text-gold'
                             }`}
                           >
@@ -471,7 +471,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
                               </div>
                               <button
                                 onClick={() => handlePlaySentenceAudio(ex.japanese)}
-                                className="p-1.5 rounded-lg bg-surface-inset hover:bg-surface-card text-gold border border-border-subtle transition-colors shrink-0"
+                                className="btn-physical-secondary p-1.5 rounded-lg text-gold transition-colors shrink-0"
                                 title="Dengarkan Suara"
                               >
                                 <Volume2 className="w-3.5 h-3.5" />
@@ -563,7 +563,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
 
                     <button
                       onClick={() => handlePlaySentenceAudio(example.japanese)}
-                      className="p-2 rounded-xl bg-surface-inset hover:bg-surface-card text-gold border border-border-subtle transition-colors shrink-0"
+                      className="btn-physical-secondary p-2 rounded-xl text-gold transition-colors shrink-0"
                       title="Dengarkan Suara Bahasa Jepang"
                     >
                       <Volume2 className="w-4 h-4" />
@@ -581,7 +581,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
                   setActiveTab('sakubun');
                   playSound('click', soundEnabled);
                 }}
-                className="py-3 px-4 rounded-2xl bg-amber-500/15 border border-border-subtle text-amber-400 font-bold text-xs sm:text-sm shadow-sm flex items-center justify-center gap-2 active:scale-95 hover:bg-amber-500/25 transition-all font-heading cursor-pointer"
+                className="btn-physical-secondary py-3 px-4 rounded-2xl text-amber-400 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all font-heading cursor-pointer"
               >
                 <Edit3 className="w-4 h-4" />
                 <span>Susun Kalimat Pola Ini</span>
@@ -590,7 +590,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
               <button
                 type="button"
                 onClick={() => startSingleQuiz(currentBunpou)}
-                className="py-3 px-4 rounded-2xl btn-cta font-bold text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 active:scale-95 transition-all font-heading cursor-pointer"
+                className="py-3 px-4 rounded-2xl btn-cta font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all font-heading cursor-pointer"
               >
                 <span>Mulai Ujian 7 Soal</span>
               </button>
@@ -640,7 +640,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
 
           <button
             onClick={startMixedQuiz}
-            className="w-full max-w-sm mx-auto py-3 px-6 rounded-2xl btn-cta font-bold text-xs sm:text-sm shadow-md active:scale-95 transition-all flex items-center justify-center gap-2 font-heading"
+            className="w-full max-w-sm mx-auto py-3 px-6 rounded-2xl btn-cta font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 font-heading"
           >
             <Swords className="w-4 h-4" />
             <span>Mulai Tantangan Drill Campuran</span>

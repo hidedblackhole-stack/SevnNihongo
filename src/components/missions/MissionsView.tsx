@@ -149,7 +149,7 @@ export const MissionsView: React.FC<MissionsViewProps> = ({
                 ) : isComplete ? (
                   <button
                     onClick={() => handleClaim(mission)}
-                    className="btn-cta animate-pulse w-full sm:w-auto flex items-center justify-center gap-1.5 py-2.5 px-5 text-xs shadow-md"
+                    className="btn-cta animate-pulse w-full sm:w-auto flex items-center justify-center gap-1.5 py-2.5 px-5 text-xs"
                   >
                     <Trophy className="w-4 h-4" />
                     KLAIM HADIAH!

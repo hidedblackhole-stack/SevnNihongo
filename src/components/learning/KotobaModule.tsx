@@ -341,7 +341,7 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
             }}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
               activeTab === 'library'
-                ? 'bg-indigo text-white shadow-sm'
+                ? 'seg-active text-gold'
                 : 'text-text-secondary hover:text-text-primary'
             }`}
           >
@@ -355,7 +355,7 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
             }}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
               activeTab === 'flashcard'
-                ? 'bg-indigo text-white shadow-sm'
+                ? 'seg-active text-gold'
                 : 'text-text-secondary hover:text-text-primary'
             }`}
           >
@@ -369,7 +369,7 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
             }}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 ${
               activeTab === 'writing'
-                ? 'bg-wine-accent text-white shadow-sm'
+                ? 'seg-active text-gold'
                 : 'text-text-secondary hover:text-text-primary'
             }`}
           >
@@ -379,7 +379,7 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
 
           <button
             onClick={handleStartQuiz}
-            className="px-3 py-1.5 rounded-xl text-xs font-bold bg-surface-elevated text-gold border border-border-subtle hover:brightness-105 transition-all flex items-center gap-1.5 shadow-sm"
+            className="btn-physical-secondary px-3 py-1.5 rounded-xl text-xs font-bold text-gold transition-all flex items-center gap-1.5"
           >
             🎯 Latihan ({compiledQuizQuestions.length})
           </button>
@@ -423,7 +423,7 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
                         e.stopPropagation();
                         handlePlayAudio(item.word, item.reading);
                       }}
-                      className="p-1.5 rounded-lg bg-surface-inset text-text-secondary hover:text-indigo hover:bg-surface-elevated transition-colors"
+                      className="btn-physical-secondary p-1.5 rounded-lg hover:text-indigo transition-colors"
                       title="Dengar Audio"
                     >
                       <Volume2 className="w-3.5 h-3.5" />
@@ -497,7 +497,7 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
             </div>
             <button
               onClick={handleStartQuiz}
-              className="btn py-2 px-4 text-xs font-bold shadow-md shrink-0 text-gold border-border-subtle hover:border-border-primary"
+              className="btn py-2 px-4 text-xs font-bold shrink-0 text-gold"
             >
               Mulai Kuis ({compiledQuizQuestions.length})
             </button>
@@ -528,7 +528,7 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
                 }}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all flex items-center gap-1.5 shrink-0 ${
                   selectedWritingIndex === idx
-                    ? 'bg-wine-accent text-white border-border-subtle shadow-sm'
+                    ? 'seg-active text-gold'
                     : 'bg-surface-card text-text-secondary border-border-subtle hover:text-text-primary'
                 }`}
               >

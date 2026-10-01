@@ -126,7 +126,7 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
                 playSound('click', stats.soundEnabled);
                 onClose();
               }}
-              className="p-1.5 rounded-full bg-surface-inset hover:bg-surface-elevated text-text-muted hover:text-text-primary transition-colors shrink-0 ml-2"
+              className="btn-physical-secondary p-1.5 rounded-full transition-colors shrink-0 ml-2"
             >
               <X className="w-5 h-5" />
             </button>
@@ -388,7 +388,7 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
                         onAscendTier?.(ascensionProgress.nextTierIndex, ascensionProgress.targetJlpt);
                       }
                     }}
-                    className="btn-physical-primary w-full py-2.5 px-4 rounded-2xl font-bold font-heading text-xs uppercase tracking-wider text-white shadow-md active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    className="btn-physical-primary w-full py-2.5 px-4 rounded-2xl font-bold font-heading text-xs uppercase tracking-wider text-white transition-all flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <span>Lakukan Ascend ke {ascensionProgress.targetJlpt}!</span>
                   </button>

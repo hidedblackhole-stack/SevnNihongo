@@ -131,7 +131,7 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
         <button
           type="button"
           onClick={() => handleStartDrill('all')}
-          className="btn-skeuo-indigo self-stretch md:self-auto justify-center text-xs py-2.5 px-5 shadow-md active:scale-95 transition-all"
+          className="btn-skeuo-indigo self-stretch md:self-auto justify-center text-xs py-2.5 px-5 transition-all"
         >
           <Flame className="w-4 h-4 text-gold fill-gold shrink-0" />
           <span className="whitespace-nowrap font-bold">Mulai Latihan Konjugasi</span>
@@ -174,7 +174,7 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
               <button
                 type="button"
                 onClick={() => setIsDrillActive(false)}
-                className="text-xs text-text-muted hover:text-text-primary px-3 py-1.5 rounded-xl bg-surface-inset border border-border-subtle"
+                className="btn-physical-secondary text-xs px-3 py-1.5 rounded-xl"
               >
                 Tutup Drill
               </button>
@@ -220,7 +220,7 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
                   <button
                     type="button"
                     onClick={() => speakJapanese(currentQuestion.targetVerb?.reading || currentQuestion.ruby || '')}
-                    className="p-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-gold border border-border-subtle transition-colors shadow-2xs cursor-pointer shrink-0"
+                    className="btn-physical-secondary p-2 rounded-xl hover:text-gold transition-colors cursor-pointer shrink-0"
                     title="Dengarkan pelafalan kata dasar"
                   >
                     <Volume2 className="w-4 h-4" />
@@ -314,7 +314,7 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
                 <button
                   type="button"
                   onClick={handleNextQuestion}
-                  className="btn-skeuo-indigo py-2 px-4 text-xs shadow-sm active:scale-95 transition-all flex items-center gap-1.5"
+                  className="btn-skeuo-indigo py-2 px-4 text-xs transition-all flex items-center gap-1.5"
                 >
                   <span className="whitespace-nowrap font-bold">Soal Berikutnya</span>
                   <ArrowRight className="w-3.5 h-3.5 shrink-0" />
@@ -358,7 +358,7 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
                     <button
                       type="button"
                       onClick={() => speakJapanese(correctRuby || correctOption)}
-                      className="p-1.5 rounded-lg bg-surface-inset hover:bg-surface-elevated text-text-muted hover:text-emerald-400 transition-colors shrink-0"
+                      className="btn-physical-secondary p-1.5 rounded-lg hover:text-emerald-400 transition-colors shrink-0"
                       title="Dengarkan pelafalan hasil konjugasi"
                     >
                       <Volume2 className="w-4 h-4" />
@@ -475,7 +475,7 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
                   <button
                     type="button"
                     onClick={() => handleStartDrill(form.id)}
-                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold font-heading bg-surface-inset hover:bg-surface-elevated text-indigo border border-border-subtle transition-all self-start sm:self-auto"
+                    className="btn-physical-secondary flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold font-heading text-indigo transition-all self-start sm:self-auto"
                   >
                     <Flame className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
                     <span>Latih Bentuk Ini</span>
@@ -564,7 +564,7 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
                   <button
                     type="button"
                     onClick={() => handleStartDrill(form.id)}
-                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold font-heading bg-surface-inset hover:bg-surface-elevated text-wine-accent border border-border-subtle transition-all self-start sm:self-auto"
+                    className="btn-physical-secondary flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold font-heading text-wine-accent transition-all self-start sm:self-auto"
                   >
                     <Flame className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
                     <span>Latih Bentuk Ini</span>

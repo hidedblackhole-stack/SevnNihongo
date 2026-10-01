@@ -149,7 +149,7 @@ export const DokkaiModule: React.FC<DokkaiModuleProps> = ({
                 }}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all font-heading ${
                   isSelected
-                    ? 'bg-gold text-surface-base shadow-md font-bold'
+                    ? 'seg-active text-gold font-bold'
                     : 'text-text-muted hover:text-text-primary'
                 }`}
               >
@@ -240,7 +240,7 @@ export const DokkaiModule: React.FC<DokkaiModuleProps> = ({
             playSound('click', soundEnabled);
             setIsQuizActive(true);
           }}
-          className="w-full py-3.5 rounded-2xl btn-cta font-bold text-sm shadow-md active:scale-95 transition-all flex items-center justify-center gap-2 font-heading"
+          className="w-full py-3.5 rounded-2xl btn-cta font-bold text-sm transition-all flex items-center justify-center gap-2 font-heading"
         >
           <span>Jawab {currentReading.questions.length} Soal Pemahaman Dokkai</span>
         </button>

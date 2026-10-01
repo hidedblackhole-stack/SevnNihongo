@@ -278,7 +278,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
                 playSound('click', soundEnabled);
                 onClose();
               }}
-              className="w-8 h-8 rounded-xl bg-surface-inset hover:bg-surface-elevated border border-border-subtle text-text-muted hover:text-text-primary transition-colors flex items-center justify-center shrink-0"
+              className="btn-physical-secondary w-8 h-8 rounded-xl transition-colors flex items-center justify-center shrink-0 p-0"
               aria-label="Tutup"
             >
               <X className="w-4 h-4" />
@@ -464,7 +464,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
                                   setIsEditingSignature(false);
                                   playSound('click', soundEnabled);
                                 }}
-                                className="btn-physical-primary py-1 px-3 rounded-lg text-[10px] font-bold font-heading cursor-pointer shadow-xs"
+                                className="btn-physical-primary py-1 px-3 rounded-lg text-[10px] font-bold font-heading cursor-pointer"
                               >
                                 Simpan
                               </button>
@@ -552,7 +552,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
                       onClose();
                       onOpenFullStatusModal();
                     }}
-                    className="w-full btn-physical-primary py-2.5 px-4 rounded-xl text-xs font-bold font-heading flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                    className="w-full btn-physical-primary py-2.5 px-4 rounded-xl text-xs font-bold font-heading flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <span>Buka Alokasi Stat Karakter</span>
                     <ChevronRight className="w-4 h-4 shrink-0" />

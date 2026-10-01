@@ -299,7 +299,7 @@ export const StageJourneyPicker: React.FC<StageJourneyPickerProps> = ({
                         playSound('attack', soundEnabled);
                         onSelectBookStage(book);
                       }}
-                      className="btn-physical-primary text-xs py-2 px-3.5 rounded-xl flex items-center gap-1.5 font-heading cursor-pointer whitespace-nowrap shadow-xs"
+                      className="btn-physical-primary text-xs py-2 px-3.5 rounded-xl flex items-center gap-1.5 font-heading cursor-pointer whitespace-nowrap"
                     >
                       <Play className="w-3.5 h-3.5 fill-current" />
                       <span>Masuk Stage Seluruh Bab</span>

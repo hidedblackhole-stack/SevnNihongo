@@ -349,7 +349,7 @@ export const StarSentenceQuiz: React.FC<StarSentenceQuizProps> = ({
 
               <button
                 onClick={() => speakJapanese(constructedSentence)}
-                className="p-1.5 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-text-primary border border-border-subtle transition-colors"
+                className="btn-physical-secondary p-1.5 rounded-xl transition-colors"
                 title="Dengarkan pengucapan kalimat utuh"
               >
                 <Volume2 className="w-4 h-4" />

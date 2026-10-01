@@ -535,7 +535,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
                     setIsAiCustomizerOpen(true);
                     playSound('click', soundEnabled);
                   }}
-                  className="btn-physical-primary py-2.5 px-4 rounded-2xl text-xs font-heading font-bold shadow-sm flex items-center gap-2 cursor-pointer"
+                  className="btn-physical-primary py-2.5 px-4 rounded-2xl text-xs font-heading font-bold flex items-center gap-2 cursor-pointer"
                 >
                   <Sparkles className="w-4 h-4 text-gold" />
                   <span>Buat Deck AI</span>
@@ -548,7 +548,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
                     setIsCreateModalOpen(true);
                     playSound('click', soundEnabled);
                   }}
-                  className="btn-physical-secondary py-2.5 px-4 rounded-2xl text-xs font-heading font-bold shadow-sm flex items-center gap-2 cursor-pointer"
+                  className="btn-physical-secondary py-2.5 px-4 rounded-2xl text-xs font-heading font-bold flex items-center gap-2 cursor-pointer"
                 >
                   <Plus className="w-4 h-4 text-gold" />
                   <span>Buat Deck Baru</span>
@@ -858,7 +858,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
               <button
                 type="button"
                 onClick={handleApplyQuickPreset}
-                className="px-4 py-1.5 rounded-xl text-xs font-heading font-bold bg-surface-elevated text-text-primary border border-border-primary shadow-sm hover:scale-102 flex items-center gap-1.5"
+                className="btn-physical-secondary px-4 py-1.5 rounded-xl text-xs font-heading font-bold flex items-center gap-1.5"
               >
                 <Plus className="w-3.5 h-3.5 text-gold" />
                 <span>Tambahkan {quickPresetCount} Item</span>

@@ -165,7 +165,7 @@ export const GrammarFormulaBox: React.FC<GrammarFormulaBoxProps> = ({ item, clas
               onClick={() => setActiveGroupIndex(gIdx)}
               className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-bold transition-all text-center cursor-pointer ${
                 activeGroupIndex === gIdx
-                  ? 'bg-emerald-600 text-white shadow-sm font-black'
+                  ? 'seg-active text-gold font-black'
                   : 'text-text-secondary hover:text-text-primary'
               }`}
             >

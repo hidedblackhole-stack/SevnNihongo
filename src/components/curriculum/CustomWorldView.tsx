@@ -225,7 +225,7 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
                 playSound('click', soundEnabled);
                 onBack();
               }}
-              className="p-2.5 rounded-xl border border-border-subtle bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-colors"
+              className="btn-physical-secondary p-2.5 rounded-xl transition-colors"
               title="Kembali"
             >
               <ArrowLeft className="w-5 h-5" />
@@ -252,7 +252,7 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
                 playSound('click', soundEnabled);
                 onReconfigure();
               }}
-              className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold border border-border-subtle bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-indigo transition-all self-stretch sm:self-auto justify-center"
+              className="btn-physical-secondary flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold hover:text-indigo transition-all self-stretch sm:self-auto justify-center"
             >
               <Sliders className="w-3.5 h-3.5" />
               <span>Atur Ulang Stage</span>
@@ -333,7 +333,7 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
                         isCompleted
                           ? 'bg-emerald-500/15 text-emerald-400 border-border-subtle'
                           : isCurrent
-                          ? 'bg-indigo text-white border-border-subtle shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_2px_6px_rgba(0,0,0,0.3)]'
+                          ? 'seg-active text-gold'
                           : 'bg-surface-inset text-text-secondary border-border-subtle shadow-[inset_1px_1px_3px_var(--neu-d)]'
                       }`}
                     >
@@ -418,7 +418,7 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
                           e.stopPropagation();
                           handleStartStage(stage);
                         }}
-                        className="btn-skeuo-indigo w-full sm:w-auto text-xs py-2.5 px-5 shadow-md active:scale-95 transition-all"
+                        className="btn-skeuo-indigo w-full sm:w-auto text-xs py-2.5 px-5 transition-all"
                       >
                         <Play className="w-4 h-4 fill-current shrink-0" />
                         <span className="whitespace-nowrap font-bold">Mulai Stage</span>
@@ -430,7 +430,7 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
                           e.stopPropagation();
                           handleStartStage(stage);
                         }}
-                        className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl border border-border-subtle bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-heading font-bold text-xs hover:bg-emerald-500/20 transition-all"
+                        className="btn-physical-secondary w-full sm:w-auto flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-emerald-600 dark:text-emerald-400 font-heading font-bold text-xs transition-all"
                       >
                         <RotateCcw className="w-3.5 h-3.5" />
                         <span>Ulangi Stage</span>

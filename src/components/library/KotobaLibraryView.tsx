@@ -316,7 +316,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
               setIsDropdownOpen(!isDropdownOpen);
               playSound('click', soundEnabled);
             }}
-            className="flex items-center gap-2.5 bg-surface-card hover:bg-surface-elevated px-4 py-3 rounded-2xl border border-border-subtle hover:border-border-primary transition-all text-xs font-bold text-text-primary shadow-sm"
+            className="btn-physical-secondary flex items-center gap-2.5 px-4 py-3 rounded-2xl transition-all text-xs font-bold"
           >
             <Filter className="w-4 h-4 text-text-secondary" />
             <span>{levelFilter === 'all' ? 'Semua Level' : levelFilter === 'Kaigo' ? 'Kaigo (Caregiver)' : `Level ${levelFilter}`}</span>
@@ -425,7 +425,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
               }}
               className={`px-3 py-1 rounded-xl text-xs font-bold font-mono whitespace-nowrap transition-all border shrink-0 ${
                 selectedUnit === 'all'
-                  ? 'bg-emerald-600 text-white border-border-subtle shadow-sm'
+                  ? 'seg-active text-gold'
                   : 'bg-surface-card text-text-secondary border-border-subtle hover:border-border-primary hover:text-text-primary'
               }`}
             >
@@ -444,7 +444,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
                   }}
                   className={`px-3 py-1 rounded-xl text-xs font-bold font-mono whitespace-nowrap transition-all border shrink-0 ${
                     isSelected
-                      ? 'bg-emerald-600 text-white border-border-subtle shadow-sm'
+                      ? 'seg-active text-gold'
                       : 'bg-surface-card text-text-secondary border-border-subtle hover:border-border-primary hover:text-text-primary'
                   }`}
                 >
@@ -513,7 +513,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
                           onRemoveItem(item.id, 'kotoba');
                           playSound('click', soundEnabled);
                         }}
-                        className="p-2.5 rounded-xl bg-surface-inset text-text-muted hover:text-wine-accent hover:bg-surface-elevated transition-colors border border-border-subtle"
+                        className="btn-physical-secondary p-2.5 rounded-xl hover:text-wine-accent transition-colors"
                         title="Hapus dari deck ini"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -538,7 +538,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
                         e.stopPropagation();
                         speakJapanese(item.reading || item.word);
                       }}
-                      className="p-2.5 rounded-xl bg-surface-inset text-text-secondary hover:bg-surface-elevated hover:text-text-primary transition-colors border border-border-subtle"
+                      className="btn-physical-secondary p-2.5 rounded-xl transition-colors"
                       title="Dengarkan Pengucapan"
                     >
                       <Volume2 className="w-4 h-4" />
@@ -562,7 +562,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
         <div className="flex justify-center pt-4">
           <button
             onClick={handleLoadMore}
-            className="btn-cta max-w-xs mx-auto py-3 px-8 rounded-2xl font-heading text-xs font-bold shadow-md"
+            className="btn-cta max-w-xs mx-auto py-3 px-8 rounded-2xl font-heading text-xs font-bold"
           >
             Muat Lebih Banyak ({filteredKotoba.length - visibleCount} tersisa)
           </button>

@@ -827,7 +827,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
               <button
                 type="button"
                 onClick={() => handleStartDrill(activeSection, levelFilter)}
-                className="btn-skeuo-gold w-full sm:w-auto px-6 py-3 text-xs sm:text-sm shadow-md active:scale-95 transition-all"
+                className="btn-skeuo-gold w-full sm:w-auto px-6 py-3 text-xs sm:text-sm transition-all"
               >
                 <RotateCcw className="w-4 h-4 shrink-0" />
                 <span className="whitespace-nowrap">Latihan 10 Soal Baru (Acak)</span>
@@ -836,7 +836,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
               <button
                 type="button"
                 onClick={() => setIsDrillActive(false)}
-                className="btn-skeuo-indigo w-full sm:w-auto px-6 py-3 text-xs sm:text-sm shadow-md active:scale-95 transition-all"
+                className="btn-skeuo-indigo w-full sm:w-auto px-6 py-3 text-xs sm:text-sm transition-all"
               >
                 <ArrowLeft className="w-4 h-4 shrink-0" />
                 <span className="whitespace-nowrap">Kembali ke Bank Soal</span>
@@ -933,7 +933,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
           <div className="flex items-center justify-between gap-3 text-xs">
             <button
               onClick={() => setIsDrillActive(false)}
-              className="px-3 py-1.5 rounded-xl bg-surface-inset border border-border-subtle text-text-muted hover:text-text-primary text-xs font-bold flex items-center gap-1.5 transition-all"
+              className="btn-physical-secondary px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Keluar Latihan</span>
@@ -1004,7 +1004,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
               <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-surface-inset border border-border-subtle">
                 <button
                   onClick={() => speakJapanese(currentQ.audioText!)}
-                  className="px-4 py-2 rounded-xl bg-surface-card border border-border-subtle hover:border-border-primary text-text-primary text-xs font-bold flex items-center gap-2 shadow-sm transition-all"
+                  className="btn-physical-secondary px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all"
                 >
                   <Volume2 className="w-4 h-4 text-gold" />
                   Putar Audio Percakapan
@@ -1232,7 +1232,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
           <button
             type="button"
             onClick={() => handleStartDrill(activeSection, levelFilter)}
-            className="btn-skeuo-gold w-full py-3.5 px-4 text-xs sm:text-sm shadow-md active:scale-98 transition-all cursor-pointer"
+            className="btn-skeuo-gold w-full py-3.5 px-4 text-xs sm:text-sm transition-all cursor-pointer"
           >
             <Play className="w-4 h-4 fill-current shrink-0" />
             <span className="whitespace-nowrap">Mulai Latihan Harian (10 Soal)</span>
@@ -1269,7 +1269,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
               }
               playSound('click', soundEnabled);
             }}
-            className="btn-skeuo-indigo w-full py-3.5 px-4 text-xs sm:text-sm shadow-md active:scale-98 transition-all cursor-pointer"
+            className="btn-skeuo-indigo w-full py-3.5 px-4 text-xs sm:text-sm transition-all cursor-pointer"
           >
             <Compass className="w-4 h-4 shrink-0 text-gold" />
             <span className="whitespace-nowrap">
@@ -1337,7 +1337,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
                       setActiveDungeonTryout(to.data);
                       playSound('click', soundEnabled);
                     }}
-                    className="w-full py-2.5 px-4 rounded-xl bg-surface-inset border border-border-subtle hover:border-border-primary text-text-primary font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-sm"
+                    className="btn-physical-secondary w-full py-2.5 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all"
                   >
                     <Play className="w-3.5 h-3.5 text-gold fill-current" />
                     <span>Mulai Ujian Nyata</span>
@@ -1440,7 +1440,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
                       <div className="flex items-center gap-3 p-3 rounded-xl bg-surface-inset border border-border-subtle">
                         <button
                           onClick={() => speakJapanese(q.audioText!)}
-                          className="px-3.5 py-2 rounded-xl bg-surface-card border border-border-subtle hover:border-border-primary text-text-primary text-xs font-bold flex items-center gap-2 shadow-sm transition-all"
+                          className="btn-physical-secondary px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all"
                         >
                           <Volume2 className="w-4 h-4 text-gold" />
                           Putar Dialog / Suara Soal
@@ -1550,7 +1550,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
                   setVisibleCount((prev) => prev + 30);
                   playSound('click', soundEnabled);
                 }}
-                className="px-6 py-2.5 rounded-2xl bg-surface-inset border border-border-subtle hover:border-border-muted text-xs font-bold font-mono uppercase tracking-wider text-text-primary hover:shadow-sm transition-all"
+                className="btn-physical-secondary px-6 py-2.5 rounded-2xl text-xs font-bold font-mono uppercase tracking-wider transition-all"
               >
                 Muat Lebih Banyak ({filteredQuestions.length - visibleCount} Tersisa)
               </button>

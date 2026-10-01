@@ -248,7 +248,7 @@ export const RoundRenderer: React.FC<RoundRendererProps> = ({
             hpDamage: 0
           });
         }}
-        className="w-full py-3 rounded-xl bg-wine-accent text-white font-bold text-sm shadow-md active:scale-95 cursor-pointer transition-all"
+        className="btn-physical-primary w-full py-3 rounded-xl font-bold text-sm cursor-pointer transition-all"
       >
         Lanjutkan Ronde
       </button>
@@ -538,7 +538,7 @@ const AlchemyInteractiveRunner: React.FC<AlchemyInteractiveRunnerProps> = ({
               type="button"
               disabled={isChecked}
               onClick={() => handleSelectOption(opt)}
-              className={`py-3.5 px-3 rounded-2xl border text-sm font-bold transition-all active:scale-95 cursor-pointer shadow-sm ${btnStyle}`}
+              className={`btn-physical-secondary py-3.5 px-3 rounded-2xl text-sm font-bold transition-all cursor-pointer ${btnStyle}`}
             >
               {opt}
             </button>
@@ -551,7 +551,7 @@ const AlchemyInteractiveRunner: React.FC<AlchemyInteractiveRunnerProps> = ({
         <button
           type="button"
           onClick={handleNext}
-          className="w-full py-3.5 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer"
+          className="btn-physical-primary w-full py-3.5 rounded-2xl font-black text-sm flex items-center justify-center gap-2 transition-all cursor-pointer"
         >
           <span>{currentIndex + 1 < input.targets.length ? 'Lanjut Kata Berikutnya' : 'Selesaikan Ronde'}</span>
           <ArrowRight className="w-4 h-4" />
@@ -738,7 +738,7 @@ const SentenceInteractiveRunner: React.FC<SentenceInteractiveRunnerProps> = ({
               type="button"
               disabled={isSubmitted}
               onClick={() => handleRemoveToken(tok, idx)}
-              className="px-3.5 py-2 rounded-xl bg-surface-elevated text-wine-accent border border-border-subtle hover:border-border-strong text-base font-bold shadow-sm active:scale-95 cursor-pointer font-jp"
+              className="btn-physical-secondary px-3.5 py-2 rounded-xl text-wine-accent text-base font-bold cursor-pointer font-jp"
             >
               {tok}
             </motion.button>
@@ -754,7 +754,7 @@ const SentenceInteractiveRunner: React.FC<SentenceInteractiveRunnerProps> = ({
             type="button"
             disabled={isSubmitted}
             onClick={() => handlePickToken(tok, idx)}
-            className="px-4 py-2 rounded-xl bg-surface-elevated hover:bg-surface-inset border border-border-subtle text-text-primary text-base font-bold shadow-sm transition-all active:scale-95 cursor-pointer font-jp"
+            className="btn-physical-secondary px-4 py-2 rounded-xl text-base font-bold transition-all cursor-pointer font-jp"
           >
             {tok}
           </button>
@@ -767,7 +767,7 @@ const SentenceInteractiveRunner: React.FC<SentenceInteractiveRunnerProps> = ({
           type="button"
           onClick={handleReset}
           disabled={isSubmitted || selectedTokens.length === 0}
-          className="p-3 rounded-2xl bg-surface-inset hover:bg-surface-elevated border border-border-subtle text-text-secondary hover:text-text-primary disabled:opacity-40 transition-all cursor-pointer"
+          className="btn-physical-secondary p-3 rounded-2xl disabled:opacity-40 transition-all cursor-pointer"
           title="Ulangi susunan"
         >
           <RotateCcw className="w-5 h-5" />
@@ -777,7 +777,7 @@ const SentenceInteractiveRunner: React.FC<SentenceInteractiveRunnerProps> = ({
           type="button"
           onClick={handleSubmit}
           disabled={isSubmitted || availableTokens.length > 0}
-          className="flex-1 py-3 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-black text-sm flex items-center justify-center gap-2 shadow-md disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer transition-all"
+          className="btn-physical-primary flex-1 py-3 rounded-2xl font-black text-sm flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer transition-all"
         >
           <span>
             {currentIdx + 1 < exercises.length ? 'Periksa & Lanjut' : 'Selesaikan Susunan'}

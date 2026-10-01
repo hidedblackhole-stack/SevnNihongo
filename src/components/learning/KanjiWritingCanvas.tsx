@@ -1229,7 +1229,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                   speakJapanese(toSpeak);
                   playSound('click', soundEnabled);
                 }}
-                className="absolute -bottom-2 -right-2 p-2 rounded-full bg-surface-card border border-border-subtle text-text-muted hover:text-wine-accent shadow-md transition-all cursor-pointer"
+                className="btn-physical-secondary absolute -bottom-2 -right-2 p-2 rounded-full hover:text-wine-accent transition-all cursor-pointer"
                 title="Dengar pelafalan"
               >
                 <Volume2 className="w-4 h-4" />
@@ -1253,7 +1253,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                         speakJapanese(kanjiChar);
                         playSound('click', soundEnabled);
                       }}
-                      className="px-3 py-1.5 rounded-xl bg-surface-elevated text-wine-accent border border-border-subtle font-bold hover:bg-surface-inset flex items-center gap-1.5 text-xs font-mono transition-colors"
+                      className="btn-physical-secondary px-3 py-1.5 rounded-xl text-wine-accent font-bold flex items-center gap-1.5 text-xs font-mono transition-colors"
                     >
                       <Volume2 className="w-3.5 h-3.5" />
                       <span>Putar Audio</span>
@@ -1380,7 +1380,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
             <button
               type="button"
               onClick={clearCanvas}
-              className="flex-1 py-3 px-4 rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 bg-surface-inset hover:bg-surface-elevated text-text-primary border border-border-subtle transition-all active:scale-95 shadow-sm cursor-pointer"
+              className="btn-physical-secondary flex-1 py-3 px-4 rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all cursor-pointer"
             >
               <RotateCcw className="w-4 h-4 text-wine-accent" />
               <span>Ulangi Menulis</span>
@@ -1388,7 +1388,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
             <button
               type="button"
               onClick={handleProceedNext}
-              className="flex-1 btn btn-cta py-3 px-4 rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-md active:scale-95 cursor-pointer"
+              className="flex-1 btn btn-cta py-3 px-4 rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all cursor-pointer"
             >
               <span>{nextButtonLabel || (isKana ? 'Lanjut ke Aksara Berikutnya' : 'Lanjut ke Kanji Berikutnya')}</span>
               <ArrowRight className="w-4 h-4" />
@@ -1556,7 +1556,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
                   }}
                   className={`py-1 rounded-lg text-xs font-bold transition-all ${
                     isCurrent
-                      ? 'bg-wine-accent text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_3px_6px_rgba(0,0,0,0.3)] border border-border-subtle font-black scale-105'
+                      ? 'seg-active text-gold font-black scale-105'
                       : isCompleted
                         ? 'bg-surface-elevated text-wine-accent border border-border-subtle font-bold'
                         : 'bg-surface-inset text-text-muted hover:bg-surface-elevated'
@@ -1684,7 +1684,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
           type="button"
           onClick={animateOrder}
           disabled={isAnimating || !hasStrokeData}
-          className="py-2.5 px-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-primary text-xs font-bold flex items-center justify-center gap-1.5 transition-all border border-border-subtle hover:border-border-strong disabled:opacity-50 whitespace-nowrap shadow-sm select-none active:scale-95 cursor-pointer"
+          className="btn-physical-secondary py-2.5 px-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all disabled:opacity-50 whitespace-nowrap select-none cursor-pointer"
           title="Tampilkan animasi goresan"
         >
           <PlayCircle className="w-4 h-4 text-wine-accent shrink-0" />
@@ -1695,7 +1695,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
         <button
           type="button"
           onClick={clearCanvas}
-          className="py-2.5 px-2 rounded-xl bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-text-primary text-xs font-bold flex items-center justify-center gap-1.5 transition-all border border-border-subtle whitespace-nowrap shadow-sm select-none active:scale-95 cursor-pointer"
+          className="btn-physical-secondary py-2.5 px-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all whitespace-nowrap select-none cursor-pointer"
           title="Bersihkan kanvas untuk menulis ulang"
         >
           <RotateCcw className="w-4 h-4 shrink-0" />
@@ -1709,7 +1709,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
           disabled={(!isQuizComplete && hasStrokeData) && !completedSheets.includes(currentSheet)}
           className={`py-2.5 px-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-md active:scale-95 select-none cursor-pointer ${
             isQuizComplete || completedSheets.includes(currentSheet) || !hasStrokeData
-              ? 'bg-wine-accent hover:opacity-95 text-white font-black'
+              ? 'btn-physical-primary font-black'
               : 'bg-surface-inset text-text-muted cursor-not-allowed border border-border-subtle'
           }`}
           title="Simpan dan selesaikan kanji ini"

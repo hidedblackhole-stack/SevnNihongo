@@ -392,7 +392,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
       <button
         type="button"
         onClick={() => advanceToNextFloor(true, 15, 8)}
-        className="btn-skeuo-indigo px-6 py-2.5 text-xs shadow-md transition-all active:scale-95 cursor-pointer"
+        className="btn-skeuo-indigo px-6 py-2.5 text-xs transition-all cursor-pointer"
       >
         Lantai Berikutnya →
       </button>
@@ -475,7 +475,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                 playSound('click', soundEnabled);
                 onClose();
               }}
-              className="p-1.5 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-colors border border-border-subtle cursor-pointer"
+              className="btn-physical-secondary p-1.5 rounded-xl transition-colors cursor-pointer"
               title="Kabur dari Dungeon"
             >
               <X className="w-4 h-4" />
@@ -565,7 +565,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                     playSound('click', soundEnabled);
                     onRestart(config);
                   }}
-                  className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-surface-card hover:bg-surface-elevated border border-border-subtle text-xs font-bold text-text-primary transition-all flex items-center justify-center gap-2 font-heading"
+                  className="btn-physical-secondary w-full sm:w-auto px-6 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 font-heading"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
                   <span>Jelajahi Lagi</span>
@@ -577,7 +577,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                     playSound('click', soundEnabled);
                     onClose();
                   }}
-                  className="btn-skeuo-indigo w-full sm:w-auto px-8 py-2.5 text-xs shadow-md transition-all active:scale-95"
+                  className="btn-skeuo-indigo w-full sm:w-auto px-8 py-2.5 text-xs transition-all"
                 >
                   <span className="whitespace-nowrap">Kembali ke Gerbang</span>
                   <ChevronRight className="w-4 h-4 shrink-0" />
@@ -604,7 +604,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                           <button
                             type="button"
                             onClick={() => advanceToNextFloor(false, 10, 5)}
-                            className="btn-skeuo-indigo px-4 py-1.5 text-xs shadow-xs cursor-pointer"
+                            className="btn-skeuo-indigo px-4 py-1.5 text-xs cursor-pointer"
                           >
                             Lantai Berikutnya →
                           </button>
@@ -672,7 +672,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                           <button
                             type="button"
                             onClick={() => speakJapanese(jp)}
-                            className="p-3 rounded-2xl bg-surface-inset border border-border-subtle text-gold hover:bg-surface-elevated transition-colors shadow-xs cursor-pointer shrink-0"
+                            className="btn-physical-secondary p-3 rounded-2xl text-gold transition-colors cursor-pointer shrink-0"
                             title="Dengarkan Pelafalan"
                           >
                             <Volume2 className="w-5 h-5" />
@@ -682,7 +682,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                         <button
                           type="button"
                           onClick={() => handleFlashcardFlip(it)}
-                          className="flex-1 py-3 px-4 rounded-2xl bg-surface-card hover:bg-surface-elevated border border-border-subtle text-text-primary font-heading font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-xs cursor-pointer"
+                          className="btn-physical-secondary flex-1 py-3 px-4 rounded-2xl font-heading font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer"
                         >
                           <RotateCcw className="w-4 h-4 text-gold" />
                           <span>{isFlashcardFlipped ? 'Tutup Arti' : 'Balik Kartu'}</span>
@@ -694,7 +694,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                             playSound('click', soundEnabled);
                             advanceToNextFloor(true, 0, 1);
                           }}
-                          className="flex-1 btn-skeuo-indigo py-3 px-4 text-xs font-heading font-bold shadow-md transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
+                          className="flex-1 btn-skeuo-indigo py-3 px-4 text-xs font-heading font-bold transition-all flex items-center justify-center gap-2 cursor-pointer"
                         >
                           <span>{currentFloorIndex + 1 >= totalFloors ? 'Selesaikan' : 'Lantai Berikutnya'}</span>
                           <ChevronRight className="w-4 h-4 shrink-0" />
@@ -818,7 +818,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                                   key={t.id}
                                   type="button"
                                   onClick={() => handleRemoveTile(t)}
-                                  className="px-3 py-1.5 rounded-xl bg-surface-card hover:bg-rose-500/20 text-text-primary border border-border-primary text-xs sm:text-sm font-bold font-jp shadow-sm cursor-pointer transition-transform active:scale-95"
+                                  className="btn-physical-secondary px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold font-jp cursor-pointer transition-transform"
                                 >
                                   {t.text}
                                 </button>
@@ -833,7 +833,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                                 key={t.id}
                                 type="button"
                                 onClick={() => handleSelectTile(t)}
-                                className="px-3.5 py-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-primary border border-border-subtle text-xs sm:text-sm font-bold font-jp shadow-sm transition-transform active:scale-95 cursor-pointer"
+                                className="btn-physical-secondary px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold font-jp transition-transform cursor-pointer"
                               >
                                 {t.text}
                               </button>
@@ -913,7 +913,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                               <button
                                 type="button"
                                 onClick={() => advanceToNextFloor(true, 30, 15)}
-                                className="px-5 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold font-heading cursor-pointer"
+                                className="btn-physical-primary px-5 py-1.5 rounded-xl text-xs font-bold font-heading cursor-pointer"
                               >
                                 Lantai Berikutnya →
                               </button>
@@ -921,7 +921,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                               <button
                                 type="button"
                                 onClick={() => advanceToNextFloor(false, 10, 5)}
-                                className="px-4 py-1.5 rounded-xl bg-surface-card border border-border-subtle text-text-secondary hover:text-text-primary text-xs font-bold cursor-pointer"
+                                className="btn-physical-secondary px-4 py-1.5 rounded-xl text-xs font-bold cursor-pointer"
                               >
                                 Lewati →
                               </button>
@@ -937,7 +937,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                             type="button"
                             disabled={isCheckDisabled}
                             onClick={handleCheckSakubun}
-                            className="btn-skeuo-indigo px-8 py-2.5 disabled:opacity-40 text-xs shadow-md active:scale-95 transition-all cursor-pointer"
+                            className="btn-skeuo-indigo px-8 py-2.5 disabled:opacity-40 text-xs transition-all cursor-pointer"
                           >
                             <span className="whitespace-nowrap">Periksa Kalimat</span>
                           </button>
@@ -988,7 +988,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                               const textToSpeak = q.targetVerb?.reading || q.targetVerb?.kanji || (q as any).dictionaryWord || '';
                               if (textToSpeak) speakJapanese(textToSpeak);
                             }}
-                            className="p-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-gold border border-border-subtle transition-colors shadow-2xs cursor-pointer shrink-0"
+                            className="btn-physical-secondary p-2 rounded-xl hover:text-gold transition-colors cursor-pointer shrink-0"
                             title="Dengarkan pelafalan kata dasar"
                           >
                             <Volume2 className="w-4 h-4" />
@@ -1076,7 +1076,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                                   const textToSpeak = q.optionsRuby?.[q.correctIndex] || q.options[q.correctIndex] || '';
                                   if (textToSpeak) speakJapanese(textToSpeak);
                                 }}
-                                className="p-1 rounded-lg bg-surface-card hover:bg-surface-elevated text-text-muted hover:text-emerald-400 transition-colors shrink-0"
+                                className="btn-physical-secondary p-1 rounded-lg hover:text-emerald-400 transition-colors shrink-0"
                                 title="Dengarkan pelafalan hasil konjugasi"
                               >
                                 <Volume2 className="w-3.5 h-3.5" />
@@ -1086,7 +1086,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                             <button
                               type="button"
                               onClick={() => advanceToNextFloor(selectedAnswerIndex === q.correctIndex, 20, 10)}
-                              className="btn-skeuo-indigo px-5 py-2 text-xs shadow-sm active:scale-95 transition-all shrink-0 ml-auto"
+                              className="btn-skeuo-indigo px-5 py-2 text-xs transition-all shrink-0 ml-auto"
                             >
                               <span className="whitespace-nowrap">Lantai Berikutnya →</span>
                             </button>
@@ -1183,7 +1183,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                             <button
                               type="button"
                               onClick={() => advanceToNextFloor(selectedAnswerIndex === q.correctIndex, 15, 8)}
-                              className="btn-skeuo-indigo px-5 py-2 text-xs shadow-sm active:scale-95 transition-all shrink-0"
+                              className="btn-skeuo-indigo px-5 py-2 text-xs transition-all shrink-0"
                             >
                               <span className="whitespace-nowrap">Lantai Berikutnya →</span>
                             </button>
@@ -1248,7 +1248,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                               <button
                                 type="button"
                                 onClick={() => speakJapanese(primaryInsert || item.title)}
-                                className="p-1.5 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-gold border border-border-subtle transition-colors shadow-2xs cursor-pointer shrink-0"
+                                className="btn-physical-secondary p-1.5 rounded-xl hover:text-gold transition-colors cursor-pointer shrink-0"
                                 title="Dengarkan pelafalan pola"
                               >
                                 <Volume2 className="w-4 h-4" />
@@ -1260,7 +1260,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                           <button
                             type="button"
                             onClick={() => handleInsertText(primaryInsert)}
-                            className="px-3 py-1.5 rounded-xl bg-violet-500/15 hover:bg-violet-500/25 text-violet-800 dark:text-violet-300 border border-border-subtle text-xs font-bold font-jp shadow-xs transition-all active:scale-95 cursor-pointer flex items-center gap-1.5 shrink-0"
+                            className="btn-physical-secondary px-3 py-1.5 rounded-xl text-violet-800 dark:text-violet-300 text-xs font-bold font-jp transition-all cursor-pointer flex items-center gap-1.5 shrink-0"
                             title="Sisipkan pola ini ke kolom tulis"
                           >
                             <Plus className="w-3.5 h-3.5" />
@@ -1342,7 +1342,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                                         <button
                                           type="button"
                                           onClick={() => speakJapanese(ex.reading || ex.japanese)}
-                                          className="p-1 rounded-lg bg-surface-inset hover:bg-surface-elevated text-text-muted hover:text-gold transition-colors shrink-0"
+                                          className="btn-physical-secondary p-1 rounded-lg hover:text-gold transition-colors shrink-0"
                                           title="Dengarkan pelafalan contoh"
                                         >
                                           <Volume2 className="w-3.5 h-3.5" />
@@ -1460,7 +1460,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                                 <button
                                   type="button"
                                   onClick={() => advanceToNextFloor(true, 35, 18)}
-                                  className="btn-skeuo-indigo px-5 py-2 text-xs shadow-md active:scale-95 transition-all cursor-pointer flex items-center gap-1.5"
+                                  className="btn-skeuo-indigo px-5 py-2 text-xs transition-all cursor-pointer flex items-center gap-1.5"
                                 >
                                   <span>{currentFloorIndex + 1 >= totalFloors ? 'Selesaikan Dungeon 🏆' : 'Lantai Berikutnya →'}</span>
                                 </button>
@@ -1469,14 +1469,14 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                                   <button
                                     type="button"
                                     onClick={() => setCreationFeedback(null)}
-                                    className="px-3 py-1.5 rounded-xl bg-surface-card hover:bg-surface-elevated border border-border-subtle text-text-primary text-xs font-bold cursor-pointer"
+                                    className="btn-physical-secondary px-3 py-1.5 rounded-xl text-xs font-bold cursor-pointer"
                                   >
                                     Coba Edit
                                   </button>
                                   <button
                                     type="button"
                                     onClick={() => advanceToNextFloor(false, 10, 5)}
-                                    className="px-3.5 py-1.5 rounded-xl bg-surface-inset border border-border-subtle text-text-secondary hover:text-text-primary text-xs font-bold cursor-pointer"
+                                    className="btn-physical-secondary px-3.5 py-1.5 rounded-xl text-xs font-bold cursor-pointer"
                                     title="Lewati lantai ini dengan skor percobaan"
                                   >
                                     Lewati →
@@ -1501,7 +1501,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                               <button
                                 type="button"
                                 onClick={() => speakJapanese(creationTypedText)}
-                                className="p-2.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 transition-colors shrink-0 shadow-xs cursor-pointer flex items-center gap-1.5 text-xs font-bold"
+                                className="btn-physical-secondary p-2.5 rounded-xl text-emerald-300 transition-colors shrink-0 cursor-pointer flex items-center gap-1.5 text-xs font-bold"
                                 title="Dengarkan pelafalan kalimat kreasimu"
                               >
                                 <Volume2 className="w-4 h-4" />
@@ -1517,7 +1517,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                             type="button"
                             disabled={creationTypedText.trim().length === 0}
                             onClick={() => handleCheckCreation(item)}
-                            className="btn-skeuo-indigo px-8 py-2.5 disabled:opacity-40 text-xs shadow-md active:scale-95 transition-all cursor-pointer flex items-center gap-2"
+                            className="btn-skeuo-indigo px-8 py-2.5 disabled:opacity-40 text-xs transition-all cursor-pointer flex items-center gap-2"
                           >
                             <Send className="w-4 h-4" />
                             <span className="whitespace-nowrap font-heading font-bold">Periksa Kalimat</span>

@@ -349,7 +349,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
               playSound('click', soundEnabled);
               onClose();
             }}
-            className="w-9 h-9 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-all border border-border-subtle flex items-center justify-center shadow-[2px_2px_5px_var(--neu-d),-1px_-1px_3px_var(--neu-l)] active:translate-y-0.5 active:shadow-[inset_2px_2px_4px_var(--neu-d)] cursor-pointer shrink-0"
+            className="btn-physical-secondary w-9 h-9 rounded-xl transition-all flex items-center justify-center cursor-pointer shrink-0 p-0"
             title="Tutup"
           >
             <X className="w-4 h-4" />
@@ -425,7 +425,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                           type="button"
                           disabled={extremeStageNumber <= 1}
                           onClick={() => setExtremeStageNumber(p => Math.max(1, p - 1))}
-                          className="w-7 h-7 rounded-lg bg-surface-card border border-border-subtle text-text-primary font-bold disabled:opacity-30 cursor-pointer"
+                          className="btn-physical-secondary w-7 h-7 rounded-lg font-bold disabled:opacity-30 cursor-pointer p-0"
                         >
                           -
                         </button>
@@ -436,7 +436,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                           type="button"
                           disabled={extremeStageNumber >= 100}
                           onClick={() => setExtremeStageNumber(p => Math.min(100, p + 1))}
-                          className="w-7 h-7 rounded-lg bg-surface-card border border-border-subtle text-text-primary font-bold disabled:opacity-30 cursor-pointer"
+                          className="btn-physical-secondary w-7 h-7 rounded-lg font-bold disabled:opacity-30 cursor-pointer p-0"
                         >
                           +
                         </button>
@@ -991,7 +991,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                               onClose();
                               onNavigateTab('deck');
                             }}
-                            className="px-4 py-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-xs font-bold text-gold border border-border-subtle hover:border-border-primary shadow-[2px_2px_6px_var(--neu-d)] transition-all inline-flex items-center gap-1.5 cursor-pointer"
+                            className="btn-physical-secondary px-4 py-2 rounded-xl text-xs font-bold text-gold transition-all inline-flex items-center gap-1.5 cursor-pointer"
                           >
                             <BookOpen className="w-3.5 h-3.5" />
                             <span>Buka Buku Saku</span>
@@ -1140,7 +1140,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                         }}
                         className={`py-2 px-1 rounded-xl text-center transition-all cursor-pointer select-none ${
                           isSelected
-                            ? 'bg-rose-500 text-white font-bold shadow-md scale-[1.03]'
+                            ? 'seg-active text-gold font-bold scale-[1.03]'
                             : 'bg-surface-card hover:bg-surface-elevated text-text-secondary border border-border-subtle hover:text-text-primary'
                         }`}
                       >
@@ -1163,7 +1163,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                         playSound('click', soundEnabled);
                         setSurvivalSeconds(prev => Math.max(5, prev - 5));
                       }}
-                      className="w-7 h-7 rounded-lg bg-surface-card hover:bg-surface-elevated text-text-primary border border-border-subtle font-mono font-bold flex items-center justify-center cursor-pointer shadow-2xs active:scale-95"
+                      className="btn-physical-secondary w-7 h-7 rounded-lg font-mono font-bold flex items-center justify-center cursor-pointer p-0"
                     >
                       -5s
                     </button>
@@ -1176,7 +1176,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                         playSound('click', soundEnabled);
                         setSurvivalSeconds(prev => Math.min(180, prev + 5));
                       }}
-                      className="w-7 h-7 rounded-lg bg-surface-card hover:bg-surface-elevated text-text-primary border border-border-subtle font-mono font-bold flex items-center justify-center cursor-pointer shadow-2xs active:scale-95"
+                      className="btn-physical-secondary w-7 h-7 rounded-lg font-mono font-bold flex items-center justify-center cursor-pointer p-0"
                     >
                       +5s
                     </button>
@@ -1217,7 +1217,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
               playSound('click', soundEnabled);
               onClose();
             }}
-            className="shrink-0 whitespace-nowrap px-5 sm:px-6 py-3 rounded-2xl border border-border-subtle bg-surface-card hover:bg-surface-elevated text-xs sm:text-sm font-heading font-bold text-text-secondary hover:text-text-primary transition-all shadow-[2px_2px_5px_var(--neu-d),-1px_-1px_3px_var(--neu-l)] active:translate-y-0.5 active:shadow-[inset_2px_2px_4px_var(--neu-d)] cursor-pointer"
+            className="btn-physical-secondary shrink-0 whitespace-nowrap px-5 sm:px-6 py-3 rounded-2xl text-xs sm:text-sm font-heading font-bold transition-all cursor-pointer"
           >
             Batal
           </button>

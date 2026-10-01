@@ -182,7 +182,7 @@ export const FloorResultModal: React.FC<FloorResultModalProps> = ({
               <button
                 type="button"
                 onClick={onNextFloor}
-                className="w-full py-3.5 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer active:scale-95"
+                className="btn-physical-primary w-full py-3.5 rounded-2xl font-black text-sm flex items-center justify-center gap-2 transition-all cursor-pointer"
               >
                 <span>Lanjut Lantai {report.floor + 1}</span>
                 <ArrowRight className="w-4 h-4" />
@@ -191,7 +191,7 @@ export const FloorResultModal: React.FC<FloorResultModalProps> = ({
               <button
                 type="button"
                 onClick={onRetry}
-                className="w-full py-3.5 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer active:scale-95"
+                className="btn-physical-primary w-full py-3.5 rounded-2xl font-black text-sm flex items-center justify-center gap-2 transition-all cursor-pointer"
               >
                 <RotateCcw className="w-4 h-4" />
                 <span>Coba Lagi Lantai {report.floor}</span>
@@ -201,7 +201,7 @@ export const FloorResultModal: React.FC<FloorResultModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="w-full py-3 rounded-2xl bg-surface-inset hover:bg-surface-elevated border border-border-subtle text-text-secondary text-xs font-bold transition-all cursor-pointer"
+              className="btn-physical-secondary w-full py-3 rounded-2xl text-xs font-bold transition-all cursor-pointer"
             >
               Tutup
             </button>

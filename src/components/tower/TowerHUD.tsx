@@ -83,7 +83,7 @@ export const TowerHUD: React.FC<TowerHUDProps> = ({
                   key={`${p}_${idx}`}
                   className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold transition-all ${
                     isCurrent
-                      ? 'bg-wine-accent text-white shadow-sm scale-105'
+                      ? 'seg-active text-gold scale-105'
                       : isPast
                         ? 'bg-surface-elevated text-emerald-400 border border-border-subtle'
                         : 'text-text-muted opacity-50'
@@ -136,7 +136,7 @@ export const TowerHUD: React.FC<TowerHUDProps> = ({
             <button
               type="button"
               onClick={onPauseToggle}
-              className="p-2 rounded-xl bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-text-primary border border-border-subtle transition-all active:scale-95 cursor-pointer shadow-sm"
+              className="btn-physical-secondary p-2 rounded-xl transition-all cursor-pointer"
               title={isPaused ? 'Lanjutkan tantangan' : 'Jeda tantangan'}
             >
               {isPaused ? <Play className="w-4 h-4 text-emerald-400" /> : <Pause className="w-4 h-4" />}

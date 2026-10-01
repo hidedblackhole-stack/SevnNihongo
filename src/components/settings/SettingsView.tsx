@@ -194,7 +194,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                       window.location.reload();
                     }
                   }}
-                  className="btn btn-pill text-xs gap-2 text-wine-accent border-border-subtle hover:bg-wine-accent/10"
+                  className="btn btn-pill text-xs gap-2 text-wine-accent"
                 >
                   <LogOut className="w-3.5 h-3.5" />
                   <span>Keluar</span>
@@ -222,7 +222,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                   playSound('click', true);
                   onOpenAuth();
                 }}
-                className="btn btn-pill text-xs gap-2 shrink-0 text-indigo border-border-subtle hover:bg-indigo/10"
+                className="btn btn-pill text-xs gap-2 shrink-0 text-indigo"
               >
                 <User className="w-4 h-4" />
                 Login / Daftar
@@ -267,7 +267,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 isNameSaved
                   ? 'bg-emerald-500/20 text-emerald-400 border border-border-subtle'
                   : playerNameInput.trim() && playerNameInput.trim() !== stats.playerName
-                  ? 'bg-wine-accent hover:opacity-95 text-white font-black shadow-md'
+                  ? 'btn-physical-primary font-black'
                   : 'bg-surface-inset text-text-muted border border-border-subtle cursor-not-allowed opacity-60'
               }`}
             >
@@ -414,42 +414,42 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               <button
                 type="button"
                 onClick={() => playSound('click', true)}
-                className="btn btn-pill text-[11px] py-1 px-2.5 hover:border-border-primary"
+                className="btn btn-pill text-[11px] py-1 px-2.5"
               >
                 🪵 Ketuk Kayu
               </button>
               <button
                 type="button"
                 onClick={() => playSound('correct', true)}
-                className="btn btn-pill text-[11px] py-1 px-2.5 hover:border-border-primary text-emerald-600 dark:text-emerald-400"
+                className="btn btn-pill text-[11px] py-1 px-2.5 text-emerald-600 dark:text-emerald-400"
               >
                 🔔 Genta Zen (Benar)
               </button>
               <button
                 type="button"
                 onClick={() => playSound('wrong', true)}
-                className="btn btn-pill text-[11px] py-1 px-2.5 hover:border-border-primary text-rose-600 dark:text-rose-400"
+                className="btn btn-pill text-[11px] py-1 px-2.5 text-rose-600 dark:text-rose-400"
               >
                 🥁 Ketuk Lembut (Salah)
               </button>
               <button
                 type="button"
                 onClick={() => playSound('coin', true)}
-                className="btn btn-pill text-[11px] py-1 px-2.5 hover:border-border-primary text-gold"
+                className="btn btn-pill text-[11px] py-1 px-2.5 text-gold"
               >
                 💧 Suikinkutsu (Koin)
               </button>
               <button
                 type="button"
                 onClick={() => playSound('attack', true)}
-                className="btn btn-pill text-[11px] py-1 px-2.5 hover:border-border-primary text-wine-accent"
+                className="btn btn-pill text-[11px] py-1 px-2.5 text-wine-accent"
               >
                 🎋 Tebasan Bambu
               </button>
               <button
                 type="button"
                 onClick={() => playSound('levelup', true)}
-                className="btn btn-pill text-[11px] py-1 px-2.5 hover:border-border-primary text-indigo"
+                className="btn btn-pill text-[11px] py-1 px-2.5 text-indigo"
               >
                 🎐 Fūrin (Level Up)
               </button>
@@ -465,7 +465,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           </div>
           <button
             onClick={handleTestJapaneseVoice}
-            className="btn btn-pill text-xs gap-2 self-start sm:self-auto text-indigo border-border-subtle hover:bg-indigo/10"
+            className="btn btn-pill text-xs gap-2 self-start sm:self-auto text-indigo"
           >
             <Volume2 className="w-4 h-4" />
             <span>Uji Suara 「こんにちは」</span>
@@ -579,7 +579,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 playSound('click', stats.soundEnabled);
                 if (onReplayTutorial) onReplayTutorial();
               }}
-              className="px-3.5 py-1.5 rounded-xl text-xs font-bold inline-flex items-center gap-1.5 shrink-0 whitespace-nowrap select-none transition-all active:translate-y-[1px] text-amber-900 dark:text-gold border border-border-subtle hover:border-border-primary bg-surface-card hover:bg-gold/10 shadow-[0_2px_4px_var(--neu-d),inset_0_1px_0_rgba(255,255,255,0.9)] dark:shadow-[0_2px_4px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.1)] cursor-pointer"
+              className="btn-physical-secondary px-3.5 py-1.5 rounded-xl text-xs font-bold inline-flex items-center gap-1.5 shrink-0 whitespace-nowrap select-none transition-all text-amber-900 dark:text-gold cursor-pointer"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Ulangi Tur</span>
@@ -606,7 +606,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               <button
                 type="button"
                 onClick={handleInstallClick}
-                className="px-3.5 py-1.5 rounded-xl text-xs font-bold inline-flex items-center gap-1.5 shrink-0 whitespace-nowrap select-none transition-all active:translate-y-[1px] text-indigo border border-border-subtle hover:border-border-primary bg-surface-card hover:bg-indigo/10 shadow-[0_2px_4px_var(--neu-d),inset_0_1px_0_rgba(255,255,255,0.9)] dark:shadow-[0_2px_4px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.1)] cursor-pointer"
+                className="btn-physical-secondary px-3.5 py-1.5 rounded-xl text-xs font-bold inline-flex items-center gap-1.5 shrink-0 whitespace-nowrap select-none transition-all text-indigo cursor-pointer"
               >
                 <Download className="w-3.5 h-3.5" />
                 <span>Pasang App</span>
@@ -668,7 +668,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               onResetData();
             }
           }}
-          className="btn btn-pill text-xs gap-1.5 text-wine-accent border-border-subtle hover:bg-wine-accent/10"
+          className="btn btn-pill text-xs gap-1.5 text-wine-accent"
         >
           <RotateCcw className="w-3.5 h-3.5" />
           <span>Reset Progres Petualangan</span>

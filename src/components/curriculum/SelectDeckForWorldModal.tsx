@@ -104,7 +104,7 @@ export const SelectDeckForWorldModal: React.FC<SelectDeckForWorldModalProps> = (
                       onClose();
                       onGoToBukuSaku();
                     }}
-                    className="btn-skeuo-indigo w-full sm:w-auto text-xs py-2.5 px-5 shadow-md active:scale-95 transition-all"
+                    className="btn-skeuo-indigo w-full sm:w-auto text-xs py-2.5 px-5 transition-all"
                   >
                     <BookOpen className="w-4 h-4 shrink-0" />
                     <span className="whitespace-nowrap">Buka Buku Saku & Buat Deck</span>
@@ -116,7 +116,7 @@ export const SelectDeckForWorldModal: React.FC<SelectDeckForWorldModalProps> = (
                       playSound('click', soundEnabled);
                       onClose();
                     }}
-                    className="w-full sm:w-auto px-4 py-2.5 rounded-xl text-xs font-bold border border-border-subtle bg-surface-inset hover:bg-surface-elevated text-text-secondary"
+                    className="btn-physical-secondary w-full sm:w-auto px-4 py-2.5 rounded-xl text-xs font-bold"
                   >
                     Tutup
                   </button>

@@ -113,7 +113,7 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
           </p>
           <button
             onClick={onClose}
-            className="px-5 py-2 rounded-xl text-xs font-bold bg-surface-elevated text-text-primary border border-border-primary"
+            className="btn-physical-secondary px-5 py-2 rounded-xl text-xs font-bold"
           >
             Kembali ke Buku Saku
           </button>
@@ -149,7 +149,7 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
             playSound('click', soundEnabled);
             onClose();
           }}
-          className="p-2 rounded-xl text-text-secondary hover:text-text-primary hover:bg-surface-card border border-border-subtle transition-colors"
+          className="btn-physical-secondary p-2 rounded-xl transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
@@ -206,14 +206,14 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
                   setIsFinishedAll(false);
                   playSound('click', soundEnabled);
                 }}
-                className="px-4 py-2.5 rounded-xl text-xs font-bold text-text-secondary bg-surface-inset border border-border-subtle hover:text-text-primary flex items-center gap-1.5 transition-colors"
+                className="btn-physical-secondary px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors"
               >
                 <RotateCcw className="w-4 h-4" />
                 <span>Ulangi Sesi</span>
               </button>
               <button
                 onClick={onClose}
-                className="px-6 py-2.5 rounded-xl text-xs font-heading font-bold bg-surface-elevated text-text-primary border border-border-primary shadow-sm hover:scale-105 transition-all"
+                className="btn-physical-secondary px-6 py-2.5 rounded-xl text-xs font-heading font-bold transition-all"
               >
                 Selesai
               </button>
@@ -291,7 +291,7 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
 
               <button
                 onClick={() => handleNextItem()}
-                className="px-5 py-2 rounded-xl text-xs font-heading font-bold bg-surface-elevated text-text-primary border border-border-primary shadow-sm hover:scale-105 flex items-center gap-1.5 transition-all"
+                className="btn-physical-secondary px-5 py-2 rounded-xl text-xs font-heading font-bold flex items-center gap-1.5 transition-all"
               >
                 <span>{currentIndex + 1 === writableItems.length ? 'Selesaikan Drill' : 'Berikutnya'}</span>
                 <ArrowRight className="w-3.5 h-3.5" />

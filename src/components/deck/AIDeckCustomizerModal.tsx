@@ -944,7 +944,7 @@ export const AIDeckCustomizerModal: React.FC<AIDeckCustomizerModalProps> = ({
                     type="button"
                     disabled={!topic.trim()}
                     onClick={handleCopyAndOpenGemini}
-                    className="btn-physical-primary py-2.5 px-6 rounded-xl text-xs sm:text-sm font-bold font-heading flex items-center gap-2 cursor-pointer shadow-md group min-h-[42px] disabled:opacity-40 disabled:cursor-not-allowed"
+                    className="btn-physical-primary py-2.5 px-6 rounded-xl text-xs sm:text-sm font-bold font-heading flex items-center gap-2 cursor-pointer group min-h-[42px] disabled:opacity-40 disabled:cursor-not-allowed"
                   >
                     {copiedPrompt ? (
                       <>
@@ -965,7 +965,7 @@ export const AIDeckCustomizerModal: React.FC<AIDeckCustomizerModalProps> = ({
                   type="button"
                   disabled={!previewDeck}
                   onClick={handleSaveImportedDeck}
-                  className="btn-physical-primary py-2.5 px-6 rounded-xl text-xs sm:text-sm font-bold font-heading flex items-center gap-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed shadow-md min-h-[42px]"
+                  className="btn-physical-primary py-2.5 px-6 rounded-xl text-xs sm:text-sm font-bold font-heading flex items-center gap-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed min-h-[42px]"
                 >
                   <Check className="w-4 h-4 text-gold stroke-[3]" />
                   <span>Simpan ke Rak Buku</span>

@@ -263,7 +263,7 @@ export const UniversalEntityModal: React.FC<UniversalEntityModalProps> = ({
               {historyStack.length > 1 && (
                 <button
                   onClick={handlePopEntity}
-                  className="p-1.5 rounded-xl border border-border-subtle bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-text-primary flex items-center gap-1 text-xs font-bold transition-all"
+                  className="btn-physical-secondary p-1.5 rounded-xl flex items-center gap-1 text-xs font-bold transition-all"
                   title="Kembali ke materi sebelumnya"
                 >
                   <ArrowLeft className="w-3.5 h-3.5" />
@@ -303,7 +303,7 @@ export const UniversalEntityModal: React.FC<UniversalEntityModalProps> = ({
                   onClose();
                   playSound('click', soundEnabled);
                 }}
-                className="p-2 rounded-xl text-text-muted hover:text-text-primary hover:bg-surface-inset border border-border-subtle transition-all"
+                className="btn-physical-secondary p-2 rounded-xl transition-all"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -353,7 +353,7 @@ export const UniversalEntityModal: React.FC<UniversalEntityModalProps> = ({
                 <span>{unified.title}</span>
                 <button
                   onClick={handlePlayAudio}
-                  className="p-1.5 rounded-xl bg-surface-card hover:bg-surface-elevated text-gold border border-border-subtle hover:scale-105 transition-all"
+                  className="btn-physical-secondary p-1.5 rounded-xl text-gold transition-all"
                   title="Dengar Pelafalan"
                 >
                   <Volume2 className="w-4 h-4" />

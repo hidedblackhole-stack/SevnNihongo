@@ -226,7 +226,7 @@ export const DeckBookmarkPicker: React.FC<DeckBookmarkPickerProps> = ({
                     <div
                       className={`w-6 h-6 rounded-lg flex items-center justify-center border shrink-0 transition-all ${
                         isIncluded
-                          ? 'bg-gold border-border-subtle text-surface-base shadow-xs scale-105'
+                          ? 'seg-active text-gold scale-105'
                           : 'border-border-muted bg-surface-card/60'
                       }`}
                     >
@@ -268,7 +268,7 @@ export const DeckBookmarkPicker: React.FC<DeckBookmarkPickerProps> = ({
                       <button
                         type="submit"
                         disabled={!newDeckTitle.trim()}
-                        className="px-3.5 py-2 text-xs font-bold rounded-xl bg-gold hover:bg-gold-bright text-surface-base disabled:opacity-40 transition-all cursor-pointer shrink-0"
+                        className="btn-physical-primary px-3.5 py-2 text-xs font-bold rounded-xl disabled:opacity-40 transition-all cursor-pointer shrink-0"
                       >
                         Buat & Simpan
                       </button>
@@ -278,7 +278,7 @@ export const DeckBookmarkPicker: React.FC<DeckBookmarkPickerProps> = ({
                           setIsCreatingNew(false);
                           setNewDeckTitle('');
                         }}
-                        className="p-2 text-xs rounded-xl border border-border-subtle text-text-muted hover:text-text-primary"
+                        className="btn-physical-secondary p-2 text-xs rounded-xl"
                       >
                         Batal
                       </button>
@@ -296,7 +296,7 @@ export const DeckBookmarkPicker: React.FC<DeckBookmarkPickerProps> = ({
                 setIsCreatingNew(false);
                 playSound('click', soundEnabled);
               }}
-              className="w-full py-3 rounded-2xl bg-surface-card hover:bg-surface-elevated text-text-primary border border-border-subtle font-heading font-bold text-xs tracking-wider transition-colors cursor-pointer"
+              className="btn-physical-secondary w-full py-3 rounded-2xl font-heading font-bold text-xs tracking-wider transition-colors cursor-pointer"
             >
               Selesai
             </button>

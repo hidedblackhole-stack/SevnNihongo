@@ -114,7 +114,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
               playSound('click', soundEnabled);
               onClose();
             }}
-            className="w-8 h-8 rounded-xl hover:bg-surface-elevated text-text-muted hover:text-text-primary transition-all border border-border-subtle flex items-center justify-center shadow-xs cursor-pointer"
+            className="btn-physical-secondary w-8 h-8 rounded-xl transition-all flex items-center justify-center cursor-pointer p-0"
             title="Tutup / Lanjutkan tanpa login"
           >
             <X className="w-4 h-4" />
@@ -172,7 +172,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
             <button
               type="submit"
               disabled={isLoading}
-              className="btn-cta w-full py-3.5 text-xs sm:text-sm font-heading font-black mt-6 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-[4px_4px_14px_var(--neu-d)] cursor-pointer"
+              className="btn-cta w-full py-3.5 text-xs sm:text-sm font-heading font-black mt-6 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
               {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : isLogin ? 'Masuk ke Akun' : 'Daftar Akun Baru'}
             </button>

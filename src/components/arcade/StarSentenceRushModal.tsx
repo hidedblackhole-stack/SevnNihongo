@@ -359,7 +359,7 @@ export const StarSentenceRushModal: React.FC<StarSentenceRushModalProps> = ({
 
           <button
             onClick={onClose}
-            className="w-9 h-9 rounded-xl bg-surface-inset hover:bg-surface-elevated text-text-muted hover:text-text-primary flex items-center justify-center border border-border-subtle transition-all cursor-pointer"
+            className="btn-physical-secondary w-9 h-9 rounded-xl flex items-center justify-center transition-all cursor-pointer p-0"
           >
             <X className="w-5 h-5" />
           </button>
@@ -448,7 +448,7 @@ export const StarSentenceRushModal: React.FC<StarSentenceRushModalProps> = ({
               <button
                 type="button"
                 onClick={handleStartGame}
-                className="btn-physical-primary w-full py-3.5 sm:py-4 rounded-2xl font-bold font-heading text-base tracking-wide flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer"
+                className="btn-physical-primary w-full py-3.5 sm:py-4 rounded-2xl font-bold font-heading text-base tracking-wide flex items-center justify-center gap-2 transition-all cursor-pointer"
               >
                 <Zap className="w-5 h-5 fill-current" />
                 <span>MULAI TANTANGAN (60 DETIK)</span>
@@ -528,7 +528,7 @@ export const StarSentenceRushModal: React.FC<StarSentenceRushModalProps> = ({
                       const fullSentence = `${currentQuestion.prefix} ${currentQuestion.options.join(' ')} ${currentQuestion.suffix}`;
                       speakJapanese(fullSentence);
                     }}
-                    className="p-1.5 rounded-xl bg-surface-inset hover:bg-surface-elevated border border-border-subtle text-text-secondary hover:text-text-primary transition-all cursor-pointer"
+                    className="btn-physical-secondary p-1.5 rounded-xl transition-all cursor-pointer"
                     title="Dengarkan pengucapan kalimat"
                   >
                     <Volume2 className="w-4 h-4" />
@@ -673,7 +673,7 @@ export const StarSentenceRushModal: React.FC<StarSentenceRushModalProps> = ({
                     type="button"
                     onClick={handleSkipQuestion}
                     disabled={isAnswerChecked}
-                    className="py-1.5 px-3 rounded-xl bg-surface-inset hover:bg-surface-elevated border border-border-subtle text-xs text-text-secondary hover:text-text-primary font-bold flex items-center gap-1.5 transition-all cursor-pointer disabled:opacity-30"
+                    className="btn-physical-secondary py-1.5 px-3 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer disabled:opacity-30"
                   >
                     <SkipForward className="w-3.5 h-3.5" />
                     <span>Lewati Soal</span>
@@ -813,7 +813,7 @@ export const StarSentenceRushModal: React.FC<StarSentenceRushModalProps> = ({
                 <button
                   type="button"
                   onClick={handleStartGame}
-                  className="flex-1 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold font-heading text-sm flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-all cursor-pointer"
+                  className="btn-physical-primary flex-1 py-3 rounded-xl font-bold font-heading text-sm flex items-center justify-center gap-1.5 transition-all cursor-pointer"
                 >
                   <RotateCcw className="w-4 h-4" />
                   <span>MAIN LAGI</span>
@@ -822,7 +822,7 @@ export const StarSentenceRushModal: React.FC<StarSentenceRushModalProps> = ({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="py-3 px-5 rounded-xl bg-surface-inset hover:bg-surface-elevated border border-border-subtle text-text-secondary hover:text-text-primary font-bold text-sm transition-all cursor-pointer"
+                  className="btn-physical-secondary py-3 px-5 rounded-xl font-bold text-sm transition-all cursor-pointer"
                 >
                   KELUAR
                 </button>

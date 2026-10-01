@@ -150,7 +150,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                         norm.displayTitle;
                       speakJapanese(readingToSpeak);
                     }}
-                    className="p-2 rounded-xl bg-surface-inset hover:bg-surface-elevated text-wine-accent border border-border-subtle transition-colors shadow-sm"
+                    className="btn-physical-secondary p-2 rounded-xl text-wine-accent transition-colors"
                     title="Dengar pelafalan"
                   >
                     <Volume2 className="w-4 h-4" />
@@ -191,7 +191,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                       e.stopPropagation();
                       speakJapanese(norm.bunpou?.title || norm.displayTitle);
                     }}
-                    className="p-2 rounded-xl bg-surface-inset hover:bg-surface-elevated text-purple-400 border border-border-subtle transition-colors shadow-sm"
+                    className="btn-physical-secondary p-2 rounded-xl text-purple-400 transition-colors"
                     title="Dengar pelafalan"
                   >
                     <Volume2 className="w-4 h-4" />
@@ -240,7 +240,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                       e.stopPropagation();
                       speakJapanese(norm.kotoba?.word || norm.displayTitle);
                     }}
-                    className="p-2 rounded-xl bg-surface-inset hover:bg-surface-elevated text-gold border border-border-subtle transition-colors shadow-sm"
+                    className="btn-physical-secondary p-2 rounded-xl text-gold transition-colors"
                     title="Dengar pelafalan"
                   >
                     <Volume2 className="w-4 h-4" />
@@ -306,7 +306,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                       norm.displayTitle;
                     speakJapanese(readingToSpeak);
                   }}
-                  className="p-2 rounded-xl bg-surface-inset hover:bg-surface-elevated text-wine-accent border border-border-subtle transition-colors shadow-sm"
+                  className="btn-physical-secondary p-2 rounded-xl text-wine-accent transition-colors"
                   title="Dengar pelafalan"
                 >
                   <Volume2 className="w-4 h-4" />
@@ -437,7 +437,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                     e.stopPropagation();
                     speakJapanese(norm.bunpou?.title || norm.displayTitle);
                   }}
-                  className="p-2 rounded-xl bg-surface-inset hover:bg-surface-elevated text-purple-400 border border-border-subtle transition-colors shadow-sm"
+                  className="btn-physical-secondary p-2 rounded-xl text-purple-400 transition-colors"
                   title="Dengar pelafalan"
                 >
                   <Volume2 className="w-4 h-4" />
@@ -515,7 +515,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                     e.stopPropagation();
                     speakJapanese(norm.kotoba?.word || norm.displayTitle);
                   }}
-                  className="p-2 rounded-xl bg-surface-inset hover:bg-surface-elevated text-gold border border-border-subtle transition-colors shadow-sm"
+                  className="btn-physical-secondary p-2 rounded-xl text-gold transition-colors"
                   title="Dengar pelafalan"
                 >
                   <Volume2 className="w-4 h-4" />
@@ -591,7 +591,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                           e.stopPropagation();
                           speakJapanese(norm.kotoba!.exampleSentence!.japanese);
                         }}
-                        className="p-1.5 rounded-lg bg-surface-card hover:bg-surface-elevated text-gold border border-border-subtle shrink-0 transition-colors"
+                        className="btn-physical-secondary p-1.5 rounded-lg text-gold shrink-0 transition-colors"
                         title="Dengarkan kalimat contoh"
                       >
                         <Volume2 className="w-3.5 h-3.5" />

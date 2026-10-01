@@ -337,7 +337,7 @@ export const JapaneseImeInput: React.FC<JapaneseImeInputProps> = ({
                   onSubmit();
                 }
               }}
-              className="w-7 h-7 rounded-lg bg-surface-card hover:bg-gold/20 text-text-muted hover:text-gold border border-border-subtle flex items-center justify-center transition-all cursor-pointer shadow-xs"
+              className="btn-physical-secondary w-7 h-7 rounded-lg hover:text-gold flex items-center justify-center transition-all cursor-pointer p-0"
               title="Konfirmasi / Kirim Kalimat (Enter)"
             >
               <CornerDownLeft className="w-3.5 h-3.5" />
@@ -366,7 +366,7 @@ export const JapaneseImeInput: React.FC<JapaneseImeInputProps> = ({
                   }}
                   className={`px-3 py-1.5 rounded-xl text-xs font-jp font-bold flex items-center gap-1.5 transition-all select-none cursor-pointer ${
                     isSelected
-                      ? 'bg-gold text-surface-base border border-border-subtle font-black shadow-md scale-105'
+                      ? 'seg-active text-gold font-black scale-105'
                       : 'bg-surface-inset hover:bg-surface-elevated text-text-primary border border-border-subtle hover:border-border-primary'
                   }`}
                 >

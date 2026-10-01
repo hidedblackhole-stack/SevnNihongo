@@ -190,7 +190,7 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
           </p>
           <button
             onClick={onClose}
-            className="px-5 py-2 rounded-xl text-xs font-bold bg-surface-elevated text-text-primary border border-border-primary"
+            className="btn-physical-secondary px-5 py-2 rounded-xl text-xs font-bold"
           >
             Kembali
           </button>
@@ -224,7 +224,7 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
             playSound('click', soundEnabled);
             onClose();
           }}
-          className="p-2 rounded-xl text-text-secondary hover:text-text-primary hover:bg-surface-card border border-border-subtle transition-colors"
+          className="btn-physical-secondary p-2 rounded-xl transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
@@ -308,14 +308,14 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
             <div className="flex items-center justify-center gap-3 pt-2">
               <button
                 onClick={handleRestart}
-                className="px-4 py-2.5 rounded-xl text-xs font-bold text-text-secondary bg-surface-inset border border-border-subtle hover:text-text-primary flex items-center gap-1.5 transition-colors"
+                className="btn-physical-secondary px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors"
               >
                 <RotateCcw className="w-4 h-4" />
                 <span>Ulangi Drill</span>
               </button>
               <button
                 onClick={onClose}
-                className="px-6 py-2.5 rounded-xl text-xs font-heading font-bold bg-surface-elevated text-text-primary border border-border-primary shadow-sm hover:scale-105 transition-all"
+                className="btn-physical-secondary px-6 py-2.5 rounded-xl text-xs font-heading font-bold transition-all"
               >
                 Kembali ke Buku Saku
               </button>
@@ -365,7 +365,7 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
                 <button
                   onClick={handlePrev}
                   disabled={currentIndex === 0}
-                  className="flex-1 py-3 px-3 sm:px-4 rounded-2xl bg-surface-card border border-border-subtle hover:bg-surface-elevated text-text-secondary hover:text-text-primary font-heading font-bold text-xs flex items-center justify-center gap-1.5 sm:gap-2 transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-sm"
+                  className="btn-physical-secondary flex-1 py-3 px-3 sm:px-4 rounded-2xl font-heading font-bold text-xs flex items-center justify-center gap-1.5 sm:gap-2 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   <span>Sebelumnya</span>
@@ -373,7 +373,7 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
 
                 <button
                   onClick={handleCardFlip}
-                  className="flex-1 py-3 px-3 sm:px-4 rounded-2xl bg-surface-inset hover:bg-surface-elevated border border-border-subtle text-text-primary font-heading font-bold text-xs flex items-center justify-center gap-1.5 sm:gap-2 transition-all shadow-sm"
+                  className="btn-physical-secondary flex-1 py-3 px-3 sm:px-4 rounded-2xl font-heading font-bold text-xs flex items-center justify-center gap-1.5 sm:gap-2 transition-all"
                 >
                   <RotateCw className="w-3.5 h-3.5 text-gold" />
                   <span>{isFlipped ? 'Tutup Arti' : 'Balik Kartu'}</span>
@@ -381,7 +381,7 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
 
                 <button
                   onClick={handleNext}
-                  className="flex-1 py-3 px-3 sm:px-4 rounded-2xl btn-cta text-text-primary font-heading font-bold text-xs flex items-center justify-center gap-1.5 sm:gap-2 transition-all shadow-md hover:scale-[1.01]"
+                  className="flex-1 py-3 px-3 sm:px-4 rounded-2xl btn-cta text-text-primary font-heading font-bold text-xs flex items-center justify-center gap-1.5 sm:gap-2 transition-all"
                 >
                   <span>{currentIndex + 1 === queue.length ? 'Selesai' : 'Berikutnya'}</span>
                   <ArrowRight className="w-4 h-4" />

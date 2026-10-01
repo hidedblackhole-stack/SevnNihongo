@@ -66,7 +66,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
             playSound('open_modal', stats.soundEnabled);
             onOpenStatusModal();
           }}
-          className="btn btn-pill flex items-center gap-1.5 shadow-md hover:scale-105 transition-transform"
+          className="btn btn-pill flex items-center gap-1.5 transition-transform"
         >
           <span className="font-mono text-xs text-gold-soft font-bold tracking-wider">
             {stats.playerName || 'Pelajar'} · {stats.totalExp.toLocaleString()} EXP
@@ -76,7 +76,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
         <button
           type="button"
           onClick={() => onNavigateTab('daily')}
-          className="btn btn-pill flex items-center gap-1.5 shadow-md hover:scale-105 transition-transform"
+          className="btn btn-pill flex items-center gap-1.5 transition-transform"
         >
           <Flame className="w-3.5 h-3.5 fill-gold text-gold animate-pulse shrink-0" />
           <span className="font-mono text-xs text-gold-soft font-bold tracking-wider">{stats.streakDays} HARI STREAK</span>

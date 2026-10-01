@@ -124,7 +124,7 @@ export const KanjiDetailModal: React.FC<KanjiDetailModalProps> = ({
                       playSound('click', soundEnabled);
                     }}
                     disabled={!hasPrev}
-                    className="p-1.5 rounded-xl border border-border-subtle bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-text-primary disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                    className="btn-physical-secondary p-1.5 rounded-xl disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                     title="Aksara/Kanji Sebelumnya"
                   >
                     <ChevronLeft className="w-4 h-4" />
@@ -136,7 +136,7 @@ export const KanjiDetailModal: React.FC<KanjiDetailModalProps> = ({
                       playSound('click', soundEnabled);
                     }}
                     disabled={!hasNext}
-                    className="p-1.5 rounded-xl border border-border-subtle bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-text-primary disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                    className="btn-physical-secondary p-1.5 rounded-xl disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                     title="Aksara/Kanji Berikutnya"
                   >
                     <ChevronRight className="w-4 h-4" />

@@ -102,7 +102,7 @@ export const TowerSessionRunner: React.FC<TowerSessionRunnerProps> = ({
               <button
                 type="button"
                 onClick={tower.resume}
-                className="py-3 px-6 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all cursor-pointer"
+                className="btn-physical-primary py-3 px-6 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer"
               >
                 <Play className="w-4 h-4 fill-white" />
                 <span>Lanjutkan</span>
@@ -111,7 +111,7 @@ export const TowerSessionRunner: React.FC<TowerSessionRunnerProps> = ({
                 <button
                   type="button"
                   onClick={onExit}
-                  className="py-3 px-6 rounded-2xl bg-surface-inset hover:bg-surface-elevated border border-border-subtle text-text-secondary text-sm font-bold flex items-center justify-center gap-2 active:scale-95 transition-all cursor-pointer"
+                  className="btn-physical-secondary py-3 px-6 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 transition-all cursor-pointer"
                 >
                   <LogOut className="w-4 h-4" />
                   <span>Keluar</span>

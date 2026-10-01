@@ -2264,3 +2264,184 @@ input:not([type="checkbox"]):not([type="radio"]) {
 .overflow-x-auto > * {
   scroll-snap-align: start;
 }
+
+/* ==========================================================================
+   UNIFIED PHYSICAL BUTTONS (DESIGN.md: "Tombol Aksi Fisik")
+   Semua kelas tombol lama (.btn, .rpg-btn, .btn-cta, .btn-skeuo-*, .skeuo-btn, .btn-pill)
+   memakai bahan yang sama dengan .btn-physical-*: permukaan timbul + tepi bawah 3-4px yang
+   "tertekan" saat :active. Tidak ada tombol aksi datar, tidak ada outline berwarna.
+   ========================================================================== */
+@layer components {
+  /* ---------- PRIMER (gelap) ---------- */
+  html:not(.theme-light) :is(
+    .btn:not(.btn-secondary):not(.btn-pill),
+    .rpg-btn:not(.rpg-btn-secondary):not(.rpg-btn-danger),
+    .rpg-btn-primary, .btn-primary, .btn-cta, .btn-skeuo-indigo, .btn-skeuo-gold, .skeuo-btn-gold
+  ) {
+    background: linear-gradient(180deg, #3d5885 0%, #253959 100%);
+    color: #ffffff;
+    border: 1px solid #1b2940;
+    box-shadow:
+      0 4px 0 #121c2c,
+      0 6px 12px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    transform: translateY(0);
+    transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.08s ease;
+  }
+  html:not(.theme-light) :is(
+    .btn:not(.btn-secondary):not(.btn-pill),
+    .rpg-btn:not(.rpg-btn-secondary):not(.rpg-btn-danger),
+    .rpg-btn-primary, .btn-primary, .btn-cta, .btn-skeuo-indigo, .btn-skeuo-gold, .skeuo-btn-gold,
+    .btn-physical-primary
+  ):hover {
+    filter: brightness(1.08);
+    transform: translateY(0);
+  }
+  html:not(.theme-light) :is(
+    .btn:not(.btn-secondary):not(.btn-pill),
+    .rpg-btn:not(.rpg-btn-secondary):not(.rpg-btn-danger),
+    .rpg-btn-primary, .btn-primary, .btn-cta, .btn-skeuo-indigo, .btn-skeuo-gold, .skeuo-btn-gold
+  ):active {
+    transform: translateY(3px);
+    box-shadow:
+      0 1px 0 #121c2c,
+      0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  /* Label emas pada tombol "klaim" dipertahankan sebagai aksen TEKS, bukan outline */
+  html:not(.theme-light) :is(.btn-skeuo-gold, .skeuo-btn-gold) {
+    color: var(--gold-soft, #f0be52);
+  }
+
+  /* ---------- SEKUNDER / NETRAL (gelap) ---------- */
+  html:not(.theme-light) :is(
+    .btn-secondary, .rpg-btn-secondary, .btn.btn-pill, .skeuo-btn, .dungeon-btn
+  ) {
+    background: linear-gradient(180deg, #242a36 0%, #1a1e27 100%);
+    color: #d1d8e6;
+    border: 1px solid #363d4e;
+    box-shadow:
+      0 3px 0 #101319,
+      0 5px 8px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(0);
+    transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.08s ease;
+  }
+  html:not(.theme-light) :is(
+    .btn-secondary, .rpg-btn-secondary, .btn.btn-pill, .skeuo-btn, .dungeon-btn, .btn-physical-secondary
+  ):hover {
+    filter: brightness(1.12);
+    transform: translateY(0);
+  }
+  html:not(.theme-light) :is(
+    .btn-secondary, .rpg-btn-secondary, .btn.btn-pill, .skeuo-btn, .dungeon-btn
+  ):active {
+    transform: translateY(2px);
+    box-shadow:
+      0 1px 0 #101319,
+      0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  /* ---------- SEKUNDER (terang) ---------- */
+  html.theme-light :is(.btn-secondary, .rpg-btn-secondary) {
+    background: linear-gradient(180deg, #faf7f0 0%, #ede6d8 100%);
+    color: #3b3528;
+    border: 1px solid #bbb19e;
+    box-shadow:
+      0 3px 0 #9c927f,
+      0 5px 8px rgba(45, 35, 20, 0.10),
+      inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  }
+  html.theme-light :is(.btn-secondary, .rpg-btn-secondary):active {
+    transform: translateY(2px);
+    box-shadow:
+      0 1px 0 #9c927f,
+      0 2px 4px rgba(45, 35, 20, 0.10),
+      inset 0 1px 2px rgba(0, 0, 0, 0.12);
+  }
+
+  /* .btn-secondary berdiri sendiri (tanpa .btn) tetap berbentuk tombol */
+  .btn-secondary:not(.btn) {
+    font-family: var(--font-body);
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 8px 14px;
+    border-radius: 13px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  /* ---------- BAHAYA (hapus / reset / keluar) ---------- */
+  .btn-physical-danger,
+  .rpg-btn-danger {
+    font-family: var(--font-body);
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 8px 14px;
+    border-radius: 13px;
+    cursor: pointer;
+    user-select: none;
+    background: linear-gradient(180deg, #96343a 0%, #6d2227 100%);
+    color: #fdf3f2;
+    border: 1px solid #4d171b;
+    box-shadow:
+      0 4px 0 #3a1013,
+      0 6px 12px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    transform: translateY(0);
+    transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.08s ease;
+  }
+  .btn-physical-danger:hover,
+  .rpg-btn-danger:hover {
+    filter: brightness(1.08);
+  }
+  .btn-physical-danger:active,
+  .rpg-btn-danger:active {
+    transform: translateY(3px);
+    box-shadow:
+      0 1px 0 #3a1013,
+      0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  /* ---------- Tombol nonaktif: tetap fisik, tetapi "mati" (tidak bisa ditekan) ---------- */
+  :is(.btn, .rpg-btn, .btn-cta, .btn-secondary, .btn-skeuo-indigo, .btn-skeuo-gold, .skeuo-btn, .skeuo-btn-gold,
+      .btn-physical-primary, .btn-physical-secondary, .btn-physical-danger):disabled {
+    filter: saturate(0.45) brightness(0.8);
+    cursor: not-allowed;
+    transform: none !important;
+  }
+
+  /* ---------- Kunci segmen aktif (tab / filter terpilih): tombol kecil yang timbul ---------- */
+  .seg-active {
+    border-color: transparent;
+    background: linear-gradient(180deg, #313a4d 0%, #262d3c 100%);
+    color: var(--text-primary);
+    /* cincin 1px lewat box-shadow (bukan border) supaya tidak menggeser tata letak saat aktif */
+    box-shadow:
+      0 0 0 1px #3d465a,
+      0 2px 0 #12151c,
+      0 3px 6px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+  html.theme-light .seg-active {
+    background: linear-gradient(180deg, #ffffff 0%, #f2ede1 100%);
+    color: #3b3528;
+    box-shadow:
+      0 0 0 1px #bbb19e,
+      0 2px 0 #a59b88,
+      0 3px 6px rgba(45, 35, 20, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  }
+
+  /* ---------- Wadah cekung: semua bg-surface-inset tanpa shadow sendiri mendapat ukiran dalam ---------- */
+  :is(div, section, span, ul, li, label, p)[class~="bg-surface-inset"]:not([class*="shadow"]) {
+    box-shadow:
+      inset 1.5px 1.5px 4px var(--neu-d),
+      inset -1px -1px 2px var(--neu-l);
+  }
+}

@@ -212,7 +212,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
               playSound('click', soundEnabled);
               onExit();
             }}
-            className="btn-cta py-2.5 px-5 rounded-xl text-xs font-bold shadow-md active:scale-95 transition-all"
+            className="btn-cta py-2.5 px-5 rounded-xl text-xs font-bold transition-all"
           >
             Kembali ke Modul
           </button>
@@ -314,7 +314,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
                 <button
                   type="button"
                   onClick={() => handlePlayAudio(currentQ.audioPrompt || currentQ.prompt)}
-                  className="p-1.5 rounded-lg bg-surface-card hover:bg-surface-elevated border border-border-subtle text-indigo transition-colors"
+                  className="btn-physical-secondary p-1.5 rounded-lg text-indigo transition-colors"
                   title="Dengarkan Pengucapan Asli"
                 >
                   <Volume2 className="w-4 h-4" />
@@ -481,7 +481,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           onClick={handleNext}
-          className="w-full py-3.5 rounded-xl btn-cta font-bold text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 active:scale-95 transition-all font-heading"
+          className="w-full py-3.5 rounded-xl btn-cta font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all font-heading"
         >
           <span>{currentIndex < totalQ - 1 ? 'Lanjut ke Soal Berikutnya' : 'Lihat Hasil Akhir'}</span>
           <ArrowRight className="w-4 h-4" />

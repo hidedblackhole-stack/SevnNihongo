@@ -321,7 +321,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
                 playSound('click', soundEnabled);
                 onStartRemediationRecall(diagnostic.remediationItemIds);
               }}
-              className="w-full py-3 rounded-xl btn-cta font-bold text-xs sm:text-sm shadow-md active:scale-95 transition-all flex items-center justify-center gap-2"
+              className="w-full py-3 rounded-xl btn-cta font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2"
             >
               <Flame className="w-4 h-4 fill-current" />
               <span>Tinjau & Latih Kelemahan Sekarang (Recall)</span>
@@ -437,7 +437,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
           <button
             onClick={handleUseHint}
             disabled={hiddenOptions.length > 0 || isAnswered || playerMp < 15}
-            className="btn btn-pill px-2.5 py-1 text-indigo border-border-subtle text-[11px] font-bold disabled:opacity-40"
+            className="btn btn-pill px-2.5 py-1 text-indigo text-[11px] font-bold disabled:opacity-40"
             title="Hilangkan 2 opsi salah (15 MP)"
           >
             Hint 50/50
@@ -448,7 +448,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
             disabled={isCriticalBuffActive || isAnswered || playerMp < 20}
             className={`btn btn-pill px-2.5 py-1 text-[11px] font-bold disabled:opacity-40 transition-all ${
               isCriticalBuffActive
-                ? 'bg-gold text-surface-base border-border-subtle animate-pulse'
+                ? 'seg-active text-gold'
                 : 'text-gold border-border-subtle'
             }`}
             title="Serangan Crit x1.8 (20 MP)"
@@ -461,7 +461,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
             disabled={isShieldActive || isAnswered || playerMp < 15}
             className={`btn btn-pill px-2.5 py-1 text-[11px] font-bold disabled:opacity-40 transition-all ${
               isShieldActive
-                ? 'bg-state-success text-surface-base border-state-success animate-pulse'
+                ? 'seg-active text-gold border-state-success'
                 : 'text-state-success border-state-success/40'
             }`}
             title="Kebal 1 Serangan Keliru (15 MP)"
@@ -583,7 +583,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             onClick={handleNextTurn}
-            className="w-full py-3.5 rounded-xl btn-cta font-bold text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 active:scale-95 transition-all font-heading"
+            className="w-full py-3.5 rounded-xl btn-cta font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all font-heading"
           >
             <span>{currentQIndex < totalQuestions - 1 ? 'Giliran Pertarungan Berikutnya' : 'Selesaikan Ujian & Lihat Hasil'}</span>
             <ArrowRight className="w-4 h-4" />

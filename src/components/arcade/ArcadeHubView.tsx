@@ -104,7 +104,7 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
           <button
             type="button"
             onClick={onOpenTower}
-            className="w-full sm:w-auto px-5 py-3 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-bold text-xs font-heading flex items-center justify-center gap-2 shadow-md active:scale-95 transition-all cursor-pointer shrink-0"
+            className="btn-physical-primary w-full sm:w-auto px-5 py-3 rounded-2xl font-bold text-xs font-heading flex items-center justify-center gap-2 transition-all cursor-pointer shrink-0"
           >
             <span>Daki Menara Sekarang</span>
             <ChevronRight className="w-4 h-4" />
@@ -162,7 +162,7 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
               playSound('click', soundEnabled);
               setActiveModal('kanji_speed');
             }}
-            className="w-full btn-physical-primary py-2.5 rounded-xl text-xs font-bold font-heading flex items-center justify-center gap-2 cursor-pointer shadow-sm relative z-10"
+            className="w-full btn-physical-primary py-2.5 rounded-xl text-xs font-bold font-heading flex items-center justify-center gap-2 cursor-pointer relative z-10"
           >
             <Play className="w-3.5 h-3.5 fill-current" />
             <span className="whitespace-nowrap">Mulai Nulis (60s)</span>
@@ -217,7 +217,7 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
               playSound('click', soundEnabled);
               setActiveModal('sudden_death');
             }}
-            className="w-full btn-physical-primary py-2.5 rounded-xl text-xs font-bold font-heading flex items-center justify-center gap-2 cursor-pointer shadow-sm relative z-10"
+            className="w-full btn-physical-primary py-2.5 rounded-xl text-xs font-bold font-heading flex items-center justify-center gap-2 cursor-pointer relative z-10"
           >
             <Play className="w-3.5 h-3.5 fill-current" />
             <span className="whitespace-nowrap">Uji Nyawa Sekarang</span>
@@ -272,7 +272,7 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
               playSound('click', soundEnabled);
               setActiveModal('kotoba_guess');
             }}
-            className="w-full btn-physical-primary py-2.5 rounded-xl text-xs font-bold font-heading flex items-center justify-center gap-2 cursor-pointer shadow-sm relative z-10"
+            className="w-full btn-physical-primary py-2.5 rounded-xl text-xs font-bold font-heading flex items-center justify-center gap-2 cursor-pointer relative z-10"
           >
             <Play className="w-3.5 h-3.5 fill-current" />
             <span className="whitespace-nowrap">Mulai Sprint (45s)</span>
@@ -327,7 +327,7 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
               playSound('click', soundEnabled);
               setActiveModal('conjugation_rush');
             }}
-            className="w-full btn-physical-primary py-2.5 rounded-xl text-xs font-bold font-heading flex items-center justify-center gap-2 cursor-pointer shadow-sm relative z-10"
+            className="w-full btn-physical-primary py-2.5 rounded-xl text-xs font-bold font-heading flex items-center justify-center gap-2 cursor-pointer relative z-10"
           >
             <Play className="w-3.5 h-3.5 fill-current" />
             <span className="whitespace-nowrap">Mulai Konjugasi (60s)</span>
@@ -383,7 +383,7 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
               playSound('click', soundEnabled);
               setActiveModal('star_rush');
             }}
-            className="w-full btn-physical-primary py-2.5 rounded-xl text-xs font-bold font-heading flex items-center justify-center gap-2 cursor-pointer shadow-sm relative z-10"
+            className="w-full btn-physical-primary py-2.5 rounded-xl text-xs font-bold font-heading flex items-center justify-center gap-2 cursor-pointer relative z-10"
           >
             <Play className="w-3.5 h-3.5 fill-current" />
             <span className="whitespace-nowrap">Mulai Susun (60s)</span>

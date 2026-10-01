@@ -461,7 +461,7 @@ export const CurriculumConfigModal: React.FC<CurriculumConfigModalProps> = ({
               type="button"
               disabled={refs.totalCount === 0 || previewTotalItems === 0}
               onClick={handleGenerate}
-              className="btn-skeuo-indigo text-xs py-2.5 px-5 shadow-md active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-skeuo-indigo text-xs py-2.5 px-5 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Layers className="w-4 h-4 text-accent shrink-0" />
               <span className="whitespace-nowrap font-bold">Generate Kurikulum & Buka World</span>

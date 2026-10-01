@@ -188,7 +188,7 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
           </button>
           <button
             onClick={handleStartQuiz}
-            className="btn btn-pill flex items-center gap-1.5 shadow-md text-gold border-border-subtle hover:border-border-primary"
+            className="btn btn-pill flex items-center gap-1.5 text-gold"
           >
             <span>🎯 Latihan ({compiledQuestions.length})</span>
           </button>
@@ -267,7 +267,7 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
             </div>
             <button
               onClick={handleStartQuiz}
-              className="btn btn-pill py-3 px-6 text-wine-accent border-border-subtle hover:bg-wine-accent/10 font-bold text-xs shadow-md shrink-0"
+              className="btn btn-pill py-3 px-6 text-wine-accent font-bold text-xs shrink-0"
             >
               Mulai Quiz Kanji
             </button>

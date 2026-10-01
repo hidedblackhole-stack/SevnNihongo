@@ -221,7 +221,7 @@ export const SakubunStudio: React.FC<SakubunStudioProps> = ({
                   playSound('click', soundEnabled);
                   onClose();
                 }}
-                className="px-3 py-1.5 rounded-xl bg-surface-inset border border-border-subtle text-xs font-bold text-text-muted hover:text-text-primary transition-colors cursor-pointer"
+                className="btn-physical-secondary px-3 py-1.5 rounded-xl text-xs font-bold transition-colors cursor-pointer"
               >
                 Keluar
               </button>
@@ -384,7 +384,7 @@ export const SakubunStudio: React.FC<SakubunStudioProps> = ({
             type="button"
             onClick={handleUseMpHint}
             disabled={playerMp < 5 || feedback?.isCorrect}
-            className="px-3.5 py-2.5 rounded-2xl bg-surface-inset border border-border-subtle text-blue-400 hover:bg-blue-500/10 text-xs font-bold flex items-center gap-1.5 transition-colors disabled:opacity-40 cursor-pointer"
+            className="btn-physical-secondary px-3.5 py-2.5 rounded-2xl text-blue-400 text-xs font-bold flex items-center gap-1.5 transition-colors disabled:opacity-40 cursor-pointer"
             title="Gunakan 5 MP untuk membuang ubin pengecoh"
           >
             <Lightbulb className="w-4 h-4" />
@@ -394,7 +394,7 @@ export const SakubunStudio: React.FC<SakubunStudioProps> = ({
           <button
             type="button"
             onClick={() => setShowHintModal(true)}
-            className="px-3 py-2.5 rounded-2xl bg-surface-inset border border-border-subtle text-text-muted hover:text-text-primary text-xs font-bold flex items-center gap-1 transition-colors cursor-pointer"
+            className="btn-physical-secondary px-3 py-2.5 rounded-2xl text-xs font-bold flex items-center gap-1 transition-colors cursor-pointer"
           >
             <HelpCircle className="w-4 h-4" />
             <span>Kaidah Pola</span>
@@ -407,7 +407,7 @@ export const SakubunStudio: React.FC<SakubunStudioProps> = ({
             <button
               type="button"
               onClick={() => startNewExercise(selectedPatternId)}
-              className="px-6 py-2.5 rounded-2xl bg-gold text-surface-base font-heading font-bold text-sm shadow-md hover:bg-gold-light flex items-center gap-2 transition-all cursor-pointer hover:scale-105 active:scale-95"
+              className="btn-physical-primary px-6 py-2.5 rounded-2xl font-heading font-bold text-sm flex items-center gap-2 transition-all cursor-pointer"
             >
               <span>Kalimat Berikutnya</span>
               <ArrowRight className="w-4 h-4" />
@@ -417,7 +417,7 @@ export const SakubunStudio: React.FC<SakubunStudioProps> = ({
               type="button"
               onClick={handleVerify}
               disabled={selectedTileIds.length === 0}
-              className="px-6 py-2.5 rounded-2xl bg-gold text-surface-base font-heading font-bold text-sm shadow-md hover:bg-gold-light flex items-center gap-2 transition-all cursor-pointer disabled:opacity-40 disabled:hover:scale-100 hover:scale-105 active:scale-95"
+              className="btn-physical-primary px-6 py-2.5 rounded-2xl font-heading font-bold text-sm flex items-center gap-2 transition-all cursor-pointer disabled:opacity-40"
             >
               <Send className="w-4 h-4" />
               <span>Periksa Kalimat</span>
@@ -462,7 +462,7 @@ export const SakubunStudio: React.FC<SakubunStudioProps> = ({
             <button
               type="button"
               onClick={() => setShowHintModal(false)}
-              className="w-full py-2 rounded-2xl bg-surface-inset border border-border-subtle text-gold text-xs font-bold hover:bg-gold/10 transition-colors"
+              className="btn-physical-secondary w-full py-2 rounded-2xl text-gold text-xs font-bold transition-colors"
             >
               Mengerti
             </button>

@@ -110,7 +110,7 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
 
           <button
             onClick={onClose}
-            className="p-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-colors border border-border-subtle shrink-0"
+            className="btn-physical-secondary p-2 rounded-xl transition-colors shrink-0"
           >
             <X className="w-4 h-4" />
           </button>
@@ -172,7 +172,7 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
                   onClick={() => setActivePatternId(p.id)}
                   className={`px-2.5 py-1 rounded-lg text-xs font-mono font-bold whitespace-nowrap transition-all border ${
                     isActive
-                      ? 'bg-indigo text-white border-border-subtle shadow-xs'
+                      ? 'seg-active text-gold'
                       : 'bg-surface-card border-border-subtle text-text-secondary hover:text-text-primary'
                   }`}
                 >
@@ -196,7 +196,7 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
                   onClick={() => setActiveAuxId(aux.id)}
                   className={`px-2.5 py-1 rounded-lg text-xs font-jp font-bold whitespace-nowrap transition-all border ${
                     isActive
-                      ? 'bg-gold text-surface-ground border-border-subtle shadow-xs font-black'
+                      ? 'seg-active text-gold font-black'
                       : 'bg-surface-card border-border-subtle text-text-secondary hover:text-text-primary'
                   }`}
                 >
@@ -317,7 +317,7 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
                       <button
                         type="button"
                         onClick={() => speakJapanese(row.example.split(' ')[0] || row.japanese)}
-                        className="p-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-gold border border-border-subtle transition-colors shrink-0"
+                        className="btn-physical-secondary p-2 rounded-xl text-gold transition-colors shrink-0"
                         title="Dengarkan Pengucapan"
                       >
                         <Volume2 className="w-3.5 h-3.5" />

@@ -252,7 +252,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                 <button
                   type="button"
                   onClick={handleBackInHistory}
-                  className="p-1.5 -ml-1 rounded-xl text-text-secondary hover:text-wine-accent hover:bg-surface-card border border-border-subtle transition-all flex items-center gap-1 text-xs font-bold mr-1 cursor-pointer"
+                  className="btn-physical-secondary p-1.5 -ml-1 rounded-xl hover:text-wine-accent transition-all flex items-center gap-1 text-xs font-bold mr-1 cursor-pointer"
                   title="Kembali ke kata sebelumnya"
                 >
                   <ArrowLeft className="w-4 h-4" />
@@ -274,7 +274,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                       playSound('click', soundEnabled);
                     }}
                     disabled={!hasPrev}
-                    className="p-1.5 rounded-xl border border-border-subtle bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-text-primary disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                    className="btn-physical-secondary p-1.5 rounded-xl disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                     title="Kata Sebelumnya"
                   >
                     <ChevronLeft className="w-4 h-4" />
@@ -286,7 +286,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                       playSound('click', soundEnabled);
                     }}
                     disabled={!hasNext}
-                    className="p-1.5 rounded-xl border border-border-subtle bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-text-primary disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                    className="btn-physical-secondary p-1.5 rounded-xl disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                     title="Kata Berikutnya"
                   >
                     <ChevronRight className="w-4 h-4" />
@@ -310,7 +310,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                   onClose();
                   playSound('click', soundEnabled);
                 }}
-                className="p-1.5 rounded-xl bg-surface-card border border-border-subtle hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-colors cursor-pointer"
+                className="btn-physical-secondary p-1.5 rounded-xl transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -451,7 +451,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                 ) : (
                   <button
                     onClick={() => speakJapanese(effectiveItem.reading || effectiveItem.word)}
-                    className="mx-auto mt-2 flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-colors text-xs font-bold border border-border-subtle cursor-pointer"
+                    className="btn-physical-secondary mx-auto mt-2 flex items-center gap-1.5 px-3 py-1.5 rounded-xl transition-colors text-xs font-bold cursor-pointer"
                   >
                     <Volume2 className="w-3.5 h-3.5" />
                     Dengarkan
@@ -483,7 +483,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                   setIsWritingMode(true);
                   playSound('click', soundEnabled);
                 }}
-                className="btn-cta mt-2 w-full max-w-xs mx-auto py-3 rounded-2xl font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 font-heading cursor-pointer active:scale-95"
+                className="btn-cta mt-2 w-full max-w-xs mx-auto py-3 rounded-2xl font-bold text-sm transition-all flex items-center justify-center gap-2 font-heading cursor-pointer"
               >
                 <Edit3 className="w-4 h-4" />
                 <span>Latih dengan Menulis (Active Recall)</span>
@@ -505,7 +505,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                         setSelectedKanjiChar(k);
                         playSound('click', soundEnabled);
                       }}
-                      className="px-3 py-1.5 rounded-xl bg-surface-inset hover:bg-surface-elevated text-text-primary hover:text-wine-accent border border-border-subtle hover:border-border-primary text-sm font-jp font-bold transition-all cursor-pointer shadow-xs active:scale-95 flex items-center gap-1"
+                      className="btn-physical-secondary px-3 py-1.5 rounded-xl hover:text-wine-accent text-sm font-jp font-bold transition-all cursor-pointer flex items-center gap-1"
                       title={`Buka detail kanji 「${k}」 di ensiklopedi`}
                     >
                       <span>{k}</span>

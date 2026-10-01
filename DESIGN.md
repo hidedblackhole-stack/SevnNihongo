@@ -118,3 +118,17 @@ Warna **TIDAK BOLEH** meluap menjadi outline kartu atau background gradasi wadah
 - **Dilarang di semua layar:** gradient pada wadah, outline/ring berwarna (gold, amber, indigo, teal, dst.), glow, blob blur, `backdrop-blur`. Aksen warna hanya pada teks, ikon, isi badge/stempel, dan bar progres.
 - Satu-satunya pengecualian outline berwarna: umpan balik jawaban benar/salah pada tombol pilihan kuis.
 - Tidak diberi jahitan: elemen `sticky`/`absolute`, kontainer yang bisa di-scroll (`overflow-y-auto`), chip/badge kecil, dan tombol (tombol memakai `btn-physical-*`).
+
+---
+
+## 🔘 Peta Kelas Tombol (semua tombol aksi harus fisik)
+| Peran | Kelas | Catatan |
+|---|---|---|
+| Aksi utama | `btn-physical-primary` (setara: `btn`, `btn-cta`, `rpg-btn`, `btn-skeuo-indigo`) | permukaan timbul + tepi bawah 4px, turun saat ditekan |
+| Aksi sekunder / netral / batal / tombol ikon berbingkai | `btn-physical-secondary` (setara: `btn btn-secondary`, `btn btn-pill`, `skeuo-btn`) | tepi bawah 3px |
+| Aksi berbahaya (hapus/reset/keluar) | `btn-physical-danger` | |
+| Tab / filter / pilihan **terpilih** | `seg-active` + aksen di teks (`text-gold`) | jangan memakai `bg-indigo text-white` atau `bg-gold` datar |
+| Wadah cekung | `bg-surface-inset` | otomatis mendapat ukiran dalam bila tidak punya `shadow-*` sendiri |
+
+- **Jangan** menambahkan `bg-*`, `border-*`, `shadow-*`, `hover:scale-*`, atau `active:scale-*` pada tombol berkelas di atas: utilitas itu menimpa bahan tombol dan membuatnya datar.
+- Yang boleh tetap tanpa bahan tombol: tautan teks, tombol ikon tanpa bingkai, baris daftar, dan opsi jawaban kuis.

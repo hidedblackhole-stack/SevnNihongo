@@ -182,7 +182,7 @@ export const PlayerShowcaseCard: React.FC<PlayerShowcaseCardProps> = ({
         <button
           type="button"
           onClick={handleCopySummary}
-          className="w-full py-3 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all cursor-pointer"
+          className="btn-physical-primary w-full py-3 rounded-2xl font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer"
         >
           {copied ? (
             <>

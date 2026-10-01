@@ -160,7 +160,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
             playSound('click', soundEnabled);
             onBack();
           }}
-          className="px-3.5 py-2 rounded-xl text-xs font-bold font-heading text-text-secondary hover:text-text-primary bg-surface-card border border-border-subtle hover:border-border-primary flex items-center gap-2 transition-all cursor-pointer"
+          className="btn-physical-secondary px-3.5 py-2 rounded-xl text-xs font-bold font-heading flex items-center gap-2 transition-all cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>{isTemplate ? 'Kembali ke Daftar Deck Template' : 'Kembali ke Daftar Buku Saku'}</span>
@@ -176,7 +176,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                   playSound('click', soundEnabled);
                   onEditDeck(deck);
                 }}
-                className="px-3 py-1.5 rounded-xl text-xs font-bold text-text-secondary hover:text-text-primary bg-surface-card border border-border-subtle hover:border-border-primary flex items-center gap-1.5 transition-colors cursor-pointer"
+                className="btn-physical-secondary px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer"
               >
                 <Edit2 className="w-3.5 h-3.5" />
                 <span>Edit Info Deck</span>
@@ -186,7 +186,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
               <button
                 type="button"
                 onClick={() => onDeleteDeck(deck.id)}
-                className="px-3 py-1.5 rounded-xl text-xs font-bold text-wine-accent hover:bg-surface-inset border border-border-subtle flex items-center gap-1.5 transition-colors cursor-pointer"
+                className="btn-physical-secondary px-3 py-1.5 rounded-xl text-xs font-bold text-wine-accent flex items-center gap-1.5 transition-colors cursor-pointer"
               >
                 <Trash2 className="w-3.5 h-3.5" />
                 <span>Hapus</span>
@@ -248,7 +248,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                 playSound('click', soundEnabled);
                 onPlayWorld();
               }}
-              className="px-4 py-2.5 rounded-2xl font-sans font-bold text-xs flex items-center gap-2 transition-all btn-skeuo-indigo shadow-md hover:scale-[1.02] cursor-pointer"
+              className="px-4 py-2.5 rounded-2xl font-sans font-bold text-xs flex items-center gap-2 transition-all btn-skeuo-indigo cursor-pointer"
               title="Mainkan deck kurikulum ini dalam mode petualangan stage World"
             >
               <Compass className="w-3.5 h-3.5 text-gold shrink-0" />
@@ -263,7 +263,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                 playSound('click', soundEnabled);
                 setActiveRunner('flashcard');
               }}
-              className="px-4 py-2.5 rounded-2xl font-heading font-bold text-xs flex items-center gap-2 transition-all bg-surface-elevated text-text-primary border border-border-primary shadow-sm hover:scale-105 cursor-pointer"
+              className="btn-physical-secondary px-4 py-2.5 rounded-2xl font-heading font-bold text-xs flex items-center gap-2 transition-all cursor-pointer"
             >
               <Play className="w-3.5 h-3.5 text-gold fill-gold" />
               <span>Mulai Flashcard</span>
@@ -318,7 +318,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
               <button
                 type="button"
                 onClick={onOpenAddItemModal}
-                className="px-4 py-2.5 rounded-2xl bg-surface-inset hover:bg-surface-elevated text-text-primary font-heading font-bold text-xs border border-border-subtle hover:border-border-primary flex items-center gap-2 transition-all cursor-pointer"
+                className="btn-physical-secondary px-4 py-2.5 rounded-2xl font-heading font-bold text-xs flex items-center gap-2 transition-all cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5 text-gold" />
                 <span>Cari Materi</span>
@@ -335,7 +335,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                 <button
                   type="button"
                   onClick={onOpenQuickPresetModal}
-                  className="px-3 py-1.5 rounded-xl text-xs font-bold text-text-secondary hover:text-text-primary bg-surface-inset hover:bg-surface-elevated border border-border-subtle flex items-center gap-1.5 transition-colors cursor-pointer"
+                  className="btn-physical-secondary px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer"
                   title="Isi Cepat Berdasarkan Level JLPT"
                 >
                   <span>Isi Preset JLPT</span>
@@ -346,7 +346,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                 <button
                   type="button"
                   onClick={onImportBookmarks}
-                  className="px-3 py-1.5 rounded-xl text-xs font-bold text-text-secondary hover:text-text-primary bg-surface-inset hover:bg-surface-elevated border border-border-subtle flex items-center gap-1.5 transition-colors cursor-pointer"
+                  className="btn-physical-secondary px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer"
                   title="Salin materi dari Bookmark ke deck ini"
                 >
                   <Bookmark className="w-3.5 h-3.5 text-gold" />
@@ -358,7 +358,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                 <button
                   type="button"
                   onClick={onClearDeck}
-                  className="px-2.5 py-1.5 rounded-xl text-xs text-text-muted hover:text-wine-accent hover:bg-surface-inset border border-transparent hover:border-border-subtle transition-colors cursor-pointer flex items-center gap-1"
+                  className="btn-physical-secondary px-2.5 py-1.5 rounded-xl text-xs hover:text-wine-accent transition-colors cursor-pointer flex items-center gap-1"
                   title="Kosongkan semua materi dari deck ini"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
@@ -478,7 +478,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                   <button
                     type="button"
                     onClick={onOpenAddItemModal}
-                    className="px-4 py-2.5 rounded-2xl bg-surface-inset hover:bg-surface-elevated text-text-primary font-heading font-bold text-xs border border-border-subtle hover:border-border-primary inline-flex items-center gap-2 transition-all cursor-pointer"
+                    className="btn-physical-secondary px-4 py-2.5 rounded-2xl font-heading font-bold text-xs inline-flex items-center gap-2 transition-all cursor-pointer"
                   >
                     <Plus className="w-3.5 h-3.5 text-gold" />
                     <span>Cari & Tambah Kosakata</span>
@@ -522,7 +522,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                   <button
                     type="button"
                     onClick={onOpenAddItemModal}
-                    className="px-4 py-2.5 rounded-2xl bg-surface-inset hover:bg-surface-elevated text-text-primary font-heading font-bold text-xs border border-border-subtle hover:border-border-primary inline-flex items-center gap-2 transition-all cursor-pointer"
+                    className="btn-physical-secondary px-4 py-2.5 rounded-2xl font-heading font-bold text-xs inline-flex items-center gap-2 transition-all cursor-pointer"
                   >
                     <Plus className="w-3.5 h-3.5 text-gold" />
                     <span>Cari & Tambah Kanji</span>
@@ -566,7 +566,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                   <button
                     type="button"
                     onClick={onOpenAddItemModal}
-                    className="px-4 py-2.5 rounded-2xl bg-surface-inset hover:bg-surface-elevated text-text-primary font-heading font-bold text-xs border border-border-subtle hover:border-border-primary inline-flex items-center gap-2 transition-all cursor-pointer"
+                    className="btn-physical-secondary px-4 py-2.5 rounded-2xl font-heading font-bold text-xs inline-flex items-center gap-2 transition-all cursor-pointer"
                   >
                     <Plus className="w-3.5 h-3.5 text-gold" />
                     <span>Cari & Tambah Tata Bahasa</span>
@@ -599,7 +599,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                   <button
                     type="button"
                     onClick={onOpenQuickPresetModal}
-                    className="px-4 py-2.5 rounded-2xl font-heading font-bold text-xs bg-gold/15 text-gold border border-border-subtle hover:bg-gold/25 inline-flex items-center gap-2 transition-all cursor-pointer"
+                    className="btn-physical-secondary px-4 py-2.5 rounded-2xl font-heading font-bold text-xs text-gold inline-flex items-center gap-2 transition-all cursor-pointer"
                   >
                     <span>Isi Otomatis Preset JLPT</span>
                   </button>
@@ -609,7 +609,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                   <button
                     type="button"
                     onClick={onOpenAddItemModal}
-                    className="px-4 py-2.5 rounded-2xl font-heading font-bold text-xs bg-surface-inset hover:bg-surface-elevated text-text-primary border border-border-subtle inline-flex items-center gap-2 transition-all cursor-pointer"
+                    className="btn-physical-secondary px-4 py-2.5 rounded-2xl font-heading font-bold text-xs inline-flex items-center gap-2 transition-all cursor-pointer"
                   >
                     <Plus className="w-4 h-4 text-gold" />
                     <span>Cari Materi di Perpustakaan</span>
@@ -620,7 +620,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                   <button
                     type="button"
                     onClick={onImportBookmarks}
-                    className="px-4 py-2.5 rounded-2xl font-heading font-bold text-xs bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-text-primary border border-border-subtle inline-flex items-center gap-2 transition-all cursor-pointer"
+                    className="btn-physical-secondary px-4 py-2.5 rounded-2xl font-heading font-bold text-xs inline-flex items-center gap-2 transition-all cursor-pointer"
                   >
                     <Bookmark className="w-4 h-4 text-gold" />
                     <span>Impor dari Bookmark</span>

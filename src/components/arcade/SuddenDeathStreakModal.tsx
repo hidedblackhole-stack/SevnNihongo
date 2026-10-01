@@ -344,7 +344,7 @@ export const SuddenDeathStreakModal: React.FC<SuddenDeathStreakModalProps> = ({
           <button
             type="button"
             onClick={handleClose}
-            className="w-8 h-8 rounded-full bg-surface-card border border-border-subtle flex items-center justify-center text-text-muted hover:text-text-primary hover:bg-surface-elevated transition-all"
+            className="btn-physical-secondary w-8 h-8 rounded-full flex items-center justify-center transition-all p-0"
           >
             <X className="w-4 h-4" />
           </button>
@@ -389,7 +389,7 @@ export const SuddenDeathStreakModal: React.FC<SuddenDeathStreakModalProps> = ({
               <button
                 type="button"
                 onClick={handleStartGame}
-                className="w-full btn-physical-primary py-3.5 rounded-2xl text-sm font-bold font-heading flex items-center justify-center gap-2 cursor-pointer shadow-lg"
+                className="w-full btn-physical-primary py-3.5 rounded-2xl text-sm font-bold font-heading flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Flame className="w-4 h-4 fill-current" />
                 <span>Mulai Uji 3 Nyawa</span>
@@ -440,7 +440,7 @@ export const SuddenDeathStreakModal: React.FC<SuddenDeathStreakModalProps> = ({
                 <button
                   type="button"
                   onClick={() => speakJapanese(currentQ.word)}
-                  className="p-2 rounded-xl bg-surface-card border border-border-subtle text-text-muted hover:text-gold transition-colors"
+                  className="btn-physical-secondary p-2 rounded-xl hover:text-gold transition-colors"
                 >
                   <Volume2 className="w-4 h-4" />
                 </button>
@@ -560,7 +560,7 @@ export const SuddenDeathStreakModal: React.FC<SuddenDeathStreakModalProps> = ({
                 <button
                   type="button"
                   onClick={handleStartGame}
-                  className="flex-1 btn-physical-primary py-3 rounded-2xl text-xs sm:text-sm font-bold font-heading flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                  className="flex-1 btn-physical-primary py-3 rounded-2xl text-xs sm:text-sm font-bold font-heading flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <RotateCcw className="w-4 h-4" />
                   <span className="truncate">Main Lagi ({activeSourceLabel})</span>

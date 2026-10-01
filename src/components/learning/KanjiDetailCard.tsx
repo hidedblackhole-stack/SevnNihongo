@@ -163,7 +163,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
                     item.kunyomi?.[0]?.replace(/[.-]/g, '') || item.onyomi?.[0] || item.character;
                   speakJapanese(readingToSpeak);
                 }}
-                className="absolute -bottom-2 -right-2 p-2.5 rounded-full bg-surface-card border border-border-subtle text-text-muted hover:text-wine-accent shadow-md transition-all"
+                className="btn-physical-secondary absolute -bottom-2 -right-2 p-2.5 rounded-full hover:text-wine-accent transition-all"
                 title="Dengar pelafalan"
               >
                 <Volume2 className="w-4 h-4" />
@@ -214,7 +214,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
                 </div>
                 <button
                   onClick={() => speakJapanese(item.character)}
-                  className="px-3 py-1.5 rounded-xl bg-wine-accent/15 text-wine-accent border border-border-subtle font-bold hover:bg-wine-accent/25 flex items-center gap-2 transition-colors text-xs font-mono"
+                  className="btn-physical-secondary px-3 py-1.5 rounded-xl text-wine-accent font-bold flex items-center gap-2 transition-colors text-xs font-mono"
                 >
                   <Volume2 className="w-3.5 h-3.5" />
                   <span>Putar Suara</span>
@@ -351,7 +351,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
                         e.stopPropagation();
                         speakJapanese(rw.reading || rw.word);
                       }}
-                      className="p-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-wine-accent border border-border-subtle transition-colors shrink-0"
+                      className="btn-physical-secondary p-2 rounded-xl text-wine-accent transition-colors shrink-0"
                       title="Dengar pengucapan"
                     >
                       <Volume2 className="w-3.5 h-3.5" />
@@ -406,7 +406,7 @@ export const KanjiDetailCard: React.FC<KanjiDetailCardProps> = ({
               setDetailSubTab('writing');
               playSound('click', soundEnabled);
             }}
-            className="w-full py-3.5 rounded-2xl btn-cta font-bold text-sm shadow-md active:scale-95 transition-all flex items-center justify-center gap-2"
+            className="w-full py-3.5 rounded-2xl btn-cta font-bold text-sm transition-all flex items-center justify-center gap-2"
           >
             <Edit3 className="w-4 h-4" />
             <span>Buka Kanvas Latihan Menulis</span>

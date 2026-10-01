@@ -378,7 +378,7 @@ export const ConjugationSpeedRushModal: React.FC<ConjugationSpeedRushModalProps>
           <button
             type="button"
             onClick={handleClose}
-            className="w-8 h-8 rounded-full bg-surface-card border border-border-subtle flex items-center justify-center text-text-muted hover:text-text-primary hover:bg-surface-elevated transition-all cursor-pointer"
+            className="btn-physical-secondary w-8 h-8 rounded-full flex items-center justify-center transition-all cursor-pointer p-0"
           >
             <X className="w-4 h-4" />
           </button>
@@ -421,7 +421,7 @@ export const ConjugationSpeedRushModal: React.FC<ConjugationSpeedRushModalProps>
               <button
                 type="button"
                 onClick={handleStartGame}
-                className="w-full btn-physical-primary py-3.5 rounded-2xl text-sm font-bold font-heading flex items-center justify-center gap-2 cursor-pointer shadow-lg"
+                className="w-full btn-physical-primary py-3.5 rounded-2xl text-sm font-bold font-heading flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Zap className="w-4 h-4 fill-current text-amber-300" />
                 <span>Mulai Uji Konjugasi (60 Detik)</span>
@@ -531,7 +531,7 @@ export const ConjugationSpeedRushModal: React.FC<ConjugationSpeedRushModalProps>
                       const textToSpeak = currentQuestion.targetVerb.reading || currentQuestion.targetVerb.kanji;
                       if (textToSpeak) speakJapanese(textToSpeak);
                     }}
-                    className="p-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-gold border border-border-subtle transition-colors shadow-2xs cursor-pointer shrink-0"
+                    className="btn-physical-secondary p-2 rounded-xl hover:text-gold transition-colors cursor-pointer shrink-0"
                     title="Dengarkan pelafalan kata dasar"
                   >
                     <Volume2 className="w-4 h-4" />
@@ -698,7 +698,7 @@ export const ConjugationSpeedRushModal: React.FC<ConjugationSpeedRushModalProps>
                 <button
                   type="button"
                   onClick={handleStartGame}
-                  className="flex-1 btn-physical-primary py-3 rounded-2xl text-xs sm:text-sm font-bold font-heading flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                  className="flex-1 btn-physical-primary py-3 rounded-2xl text-xs sm:text-sm font-bold font-heading flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <RotateCcw className="w-4 h-4" />
                   <span className="truncate">Main Lagi ({activeSourceLabel})</span>

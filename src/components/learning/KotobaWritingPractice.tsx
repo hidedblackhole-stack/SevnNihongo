@@ -313,7 +313,7 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
             ) : (
               <button
                 onClick={() => speakJapanese(displayPracticeReading || kotoba.reading || kotoba.word)}
-                className="mx-auto flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-colors text-xs font-bold border border-border-subtle shadow-sm"
+                className="btn-physical-secondary mx-auto flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl transition-colors text-xs font-bold"
                 title="Dengarkan pelafalan"
               >
                 <Volume2 className="w-3.5 h-3.5 text-wine-accent" />
@@ -431,7 +431,7 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
             <button
               type="button"
               onClick={handleReset}
-              className="flex-1 py-3 px-4 rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 bg-surface-inset hover:bg-surface-elevated text-text-primary border border-border-subtle transition-all active:scale-95 shadow-sm"
+              className="btn-physical-secondary flex-1 py-3 px-4 rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all"
             >
               <RotateCcw className="w-4 h-4 text-wine-accent" />
               <span>Ulangi Menulis</span>
@@ -444,7 +444,7 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
                 triggerWordCompletion(score, lastReward || undefined);
                 onFinishWord?.(score, lastReward || undefined);
               }}
-              className="flex-1 btn btn-cta py-3 px-4 rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-md active:scale-95"
+              className="flex-1 btn btn-cta py-3 px-4 rounded-2xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all"
             >
               <span>{nextButtonLabel || 'Lanjut ke Kata Berikutnya'}</span>
               <ArrowRight className="w-4 h-4" />

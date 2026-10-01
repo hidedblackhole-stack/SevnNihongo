@@ -463,7 +463,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="p-1.5 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-secondary hover:text-text-primary transition-colors cursor-pointer border border-border-subtle shadow-xs"
+              className="btn-physical-secondary p-1.5 rounded-xl transition-colors cursor-pointer"
               title="Tutup Scrapbook"
             >
               <X className="w-4 h-4" />
@@ -495,7 +495,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                   <button
                     type="button"
                     onClick={() => speakJapanese(titleInfo.audioTarget || titleInfo.mainTitle.replace(/^[〜~]/, ''))}
-                    className="p-1 sm:p-1.5 rounded-lg bg-surface-card hover:bg-surface-elevated text-indigo hover:text-indigo-light transition-all border border-border-subtle cursor-pointer shrink-0 shadow-xs active:scale-95"
+                    className="btn-physical-secondary p-1 sm:p-1.5 rounded-lg text-indigo hover:text-indigo-light transition-all cursor-pointer shrink-0"
                     title="Dengarkan pelafalan pola kalimat"
                   >
                     <Volume2 className="w-3.5 h-3.5" />

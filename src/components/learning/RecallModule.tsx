@@ -258,7 +258,7 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
           onClick={() => { setActiveFilter('ALL'); setCurrentIndex(0); }}
           className={`px-3 py-1.5 rounded-xl font-bold transition-all shrink-0 ${
             activeFilter === 'ALL'
-              ? 'bg-gold text-surface-base font-mono shadow-md'
+              ? 'seg-active text-gold font-mono'
               : 'bg-surface-inset text-text-secondary hover:text-text-primary border border-border-subtle hover:border-border-primary'
           }`}
         >
@@ -269,7 +269,7 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
             onClick={() => { setActiveFilter('CRITICAL'); setCurrentIndex(0); }}
             className={`px-3 py-1.5 rounded-xl font-bold transition-all shrink-0 flex items-center gap-1 ${
               activeFilter === 'CRITICAL'
-                ? 'bg-gold text-surface-base font-mono shadow-md'
+                ? 'seg-active text-gold font-mono'
                 : 'bg-surface-inset text-text-secondary hover:text-text-primary border border-border-subtle hover:border-border-primary'
             }`}
           >
@@ -282,7 +282,7 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
             onClick={() => { setActiveFilter('WEAK'); setCurrentIndex(0); }}
             className={`px-3 py-1.5 rounded-xl font-bold transition-all shrink-0 flex items-center gap-1 ${
               activeFilter === 'WEAK'
-                ? 'bg-gold text-surface-base font-mono shadow-md'
+                ? 'seg-active text-gold font-mono'
                 : 'bg-surface-inset text-text-secondary hover:text-text-primary border border-border-subtle hover:border-border-primary'
             }`}
           >
@@ -295,7 +295,7 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
             onClick={() => { setActiveFilter('REVIEW'); setCurrentIndex(0); }}
             className={`px-3 py-1.5 rounded-xl font-bold transition-all shrink-0 flex items-center gap-1 ${
               activeFilter === 'REVIEW'
-                ? 'bg-gold text-surface-base font-mono shadow-md'
+                ? 'seg-active text-gold font-mono'
                 : 'bg-surface-inset text-text-secondary hover:text-text-primary border border-border-subtle hover:border-border-primary'
             }`}
           >
@@ -308,7 +308,7 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
             onClick={() => { setActiveFilter('MAINTAIN'); setCurrentIndex(0); }}
             className={`px-3 py-1.5 rounded-xl font-bold transition-all shrink-0 flex items-center gap-1 ${
               activeFilter === 'MAINTAIN'
-                ? 'bg-gold text-surface-base font-mono shadow-md'
+                ? 'seg-active text-gold font-mono'
                 : 'bg-surface-inset text-text-secondary hover:text-text-primary border border-border-subtle hover:border-border-primary'
             }`}
           >
@@ -399,7 +399,7 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
 
             <button
               onClick={() => speakJapanese(currentQ.prompt)}
-              className="p-1.5 rounded-lg bg-surface-inset hover:bg-surface-elevated text-text-secondary hover:text-text-primary border border-border-subtle transition-colors"
+              className="btn-physical-secondary p-1.5 rounded-lg transition-colors"
             >
               <Volume2 className="w-3.5 h-3.5 text-gold" />
             </button>
@@ -435,7 +435,7 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
                     animate={{ scale: 1, opacity: 1 }}
                     onClick={() => handleRemoveWord(word, idx)}
                     disabled={isAnswered}
-                    className="px-3 py-1.5 rounded-xl bg-gold/15 hover:bg-surface-elevated text-gold hover:text-text-primary border border-border-subtle text-xs sm:text-sm font-bold flex items-center gap-1 transition-all"
+                    className="btn-physical-secondary px-3 py-1.5 rounded-xl text-gold text-xs sm:text-sm font-bold flex items-center gap-1 transition-all"
                   >
                     <span>{word}</span>
                     <span className="text-[10px] opacity-60">×</span>
@@ -453,7 +453,7 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
                   whileTap={{ scale: 0.95 }}
                   onClick={() => handleWordClick(item)}
                   disabled={isAnswered}
-                  className="px-3.5 py-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-primary border border-border-subtle hover:border-border-primary text-xs sm:text-sm font-bold shadow-sm transition-all"
+                  className="btn-physical-secondary px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all"
                 >
                   {item.word}
                 </motion.button>
