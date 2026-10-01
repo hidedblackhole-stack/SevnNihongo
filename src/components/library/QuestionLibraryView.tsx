@@ -1211,7 +1211,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
       {/* Hero Action Modes Grid (Latihan Harian 10 Soal + Simulasi Ujian Nyata) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Mode 1: Latihan Harian (10 Soal) */}
-        <div className="panel p-5 sm:p-6 rounded-3xl border border-border-subtle shadow-sm flex flex-col justify-between space-y-4 hover:border-gold/40 transition-colors">
+        <div className="panel p-5 sm:p-6 rounded-3xl border border-border-subtle shadow-sm flex flex-col justify-between space-y-4 hover:border-border-primary transition-colors">
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase bg-gold/15 text-gold border border-gold/30 flex items-center gap-1">
@@ -1241,7 +1241,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
         </div>
 
         {/* Mode 2: Paket Simulasi Ujian Nyata (Dungeon Battle) */}
-        <div className="panel p-5 sm:p-6 rounded-3xl border border-border-subtle shadow-sm flex flex-col justify-between space-y-4 hover:border-indigo/40 transition-colors">
+        <div className="panel p-5 sm:p-6 rounded-3xl border border-border-subtle shadow-sm flex flex-col justify-between space-y-4 hover:border-border-primary transition-colors">
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase bg-indigo/15 text-indigo border border-indigo/30 flex items-center gap-1">

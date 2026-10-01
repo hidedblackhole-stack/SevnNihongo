@@ -286,7 +286,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
         {/* ================================================================== */}
         {/* BACK OF CARD                                                       */}
         {/* ================================================================== */}
-        <div className="face back rounded-3xl border border-gold/30 bg-surface-elevated p-6 sm:p-8 flex flex-col items-center justify-between shadow-xl overflow-y-auto no-scrollbar">
+        <div className="face back rounded-3xl border border-border-subtle bg-surface-elevated p-6 sm:p-8 flex flex-col items-center justify-between shadow-xl overflow-y-auto no-scrollbar">
           
           {norm.category === 'kanji' ? (
             <>

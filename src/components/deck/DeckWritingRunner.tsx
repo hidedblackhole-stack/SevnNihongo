@@ -102,7 +102,7 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
 
   if (writableItems.length === 0) {
     const emptyContent = (
-      <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-surface-ground/90 backdrop-blur-md">
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-surface-ground/90">
         <div className="panel p-6 rounded-3xl max-w-md w-full border border-border-subtle text-center space-y-4">
           <div className="w-12 h-12 rounded-2xl bg-surface-inset text-gold border border-border-subtle flex items-center justify-center mx-auto">
             <PenTool className="w-6 h-6" />
@@ -125,7 +125,7 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
 
   const runnerContent = (
     <div
-      className="fixed inset-0 z-[9999] flex flex-col bg-surface-ground/98 backdrop-blur-md overflow-y-auto overscroll-contain"
+      className="fixed inset-0 z-[9999] flex flex-col bg-surface-ground/98 overflow-y-auto overscroll-contain"
       style={{ minHeight: '100dvh' }}
     >
       {/* Header */}

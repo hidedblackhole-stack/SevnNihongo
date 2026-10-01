@@ -329,7 +329,7 @@ export const StageJourneyPicker: React.FC<StageJourneyPickerProps> = ({
                         {book.chapters.map(chapter => (
                           <div
                             key={chapter.id}
-                            className="p-3.5 rounded-2xl bg-surface-card border border-border-subtle hover:border-gold/50 shadow-2xs flex items-center justify-between gap-3 group transition-all"
+                            className="p-3.5 rounded-2xl bg-surface-card border border-border-subtle hover:border-border-primary shadow-2xs flex items-center justify-between gap-3 group transition-all"
                           >
                             <div className="min-w-0">
                               <span className="text-[10px] font-mono text-gold font-bold uppercase block">

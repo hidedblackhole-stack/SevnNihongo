@@ -57,7 +57,7 @@ export const PwaInstallModal: React.FC<PwaInstallModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 backdrop-blur-sm animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 animate-fade-in">
       <div 
         className="panel panel-stitched w-full max-w-lg overflow-hidden relative shadow-2xl border border-border-primary text-text-primary animate-scale-in"
         onClick={(e) => e.stopPropagation()}

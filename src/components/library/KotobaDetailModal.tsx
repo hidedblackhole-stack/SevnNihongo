@@ -235,7 +235,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
             onClose();
             playSound('click', soundEnabled);
           }}
-          className="fixed inset-0 bg-black/75 backdrop-blur-sm"
+          className="fixed inset-0 bg-black/75"
         />
 
         {/* Modal Window */}

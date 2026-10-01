@@ -397,7 +397,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
       {/* ─────────────────────────────────────────────────────────────
           2. THE AUTHENTIC JAPANESE RPG ALTAR / STUDY DESK (Skeuomorphic)
           ───────────────────────────────────────────────────────────── */}
-      <div className="relative rounded-2xl sm:rounded-3xl p-2.5 sm:p-4 bg-surface-elevated border border-gold/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_6px_20px_rgba(0,0,0,0.4)] overflow-hidden">
+      <div className="relative rounded-2xl sm:rounded-3xl p-2.5 sm:p-4 bg-surface-elevated border border-border-subtle shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_6px_20px_rgba(0,0,0,0.4)] overflow-hidden">
         {/* The Desk Surface (Sumi-e Charcoal Slate in Dark Mode, Antique Washi in Light Mode) */}
         <div
           className="relative rounded-xl sm:rounded-2xl p-3.5 sm:p-6 flex flex-col justify-between overflow-hidden bg-surface-inset border border-border-subtle shadow-[inset_1.5px_1.5px_6px_var(--neu-d)] transition-colors"
@@ -718,7 +718,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
           ───────────────────────────────────────────────────────────── */}
       <AnimatePresence>
         {showVerbPicker && (
-          <div className="fixed inset-0 z-[90] flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs">
+          <div className="fixed inset-0 z-[90] flex items-center justify-center p-3 sm:p-4 bg-black/60">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -836,7 +836,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
           ───────────────────────────────────────────────────────────── */}
       <AnimatePresence>
         {showPatternPicker && (
-          <div className="fixed inset-0 z-[90] flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs">
+          <div className="fixed inset-0 z-[90] flex items-center justify-center p-3 sm:p-4 bg-black/60">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}

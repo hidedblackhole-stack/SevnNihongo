@@ -707,7 +707,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
                   playSound('click', soundEnabled);
                   setActiveModule(mod.id as any);
                 }}
-                className="panel p-4 sm:p-4.5 cursor-pointer flex items-center justify-between gap-4 transition-all shadow-md group hover:border-gold/50"
+                className="panel p-4 sm:p-4.5 cursor-pointer flex items-center justify-between gap-4 transition-all shadow-md group hover:border-border-primary"
               >
                 <div className="flex items-center gap-3.5">
                   <div className="p-2.5 rounded-xl bg-surface-inset/70 border border-border-subtle text-gold shrink-0">
@@ -780,7 +780,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
               playSound('click', soundEnabled);
               setActiveModule('exam');
             }}
-            className="panel p-5 sm:p-6 border border-gold/40 text-center space-y-3 shadow-xl group transition-all bg-surface-card cursor-pointer hover:border-gold"
+            className="panel p-5 sm:p-6 border border-border-subtle text-center space-y-3 shadow-xl group transition-all bg-surface-card cursor-pointer hover:border-border-primary"
           >
             <div className="p-3 inline-flex rounded-full bg-gold/20 border border-gold text-gold">
               <Trophy className="w-6 h-6 animate-pulse" />
@@ -837,7 +837,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
       {/* Quick Stage Switcher Modal */}
       {isStageListOpen && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 backdrop-blur-sm animate-fade-in"
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 animate-fade-in"
           onClick={() => setIsStageListOpen(false)}
         >
           <div 

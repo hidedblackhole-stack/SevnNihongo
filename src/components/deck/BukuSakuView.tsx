@@ -780,7 +780,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
 
       {/* Quick Preset Generator Modal for Active Deck */}
       {isQuickPresetModalOpen && activeDeck && (
-        <div className="fixed inset-0 z-[80] flex items-center justify-center p-4 bg-surface-ground/80 backdrop-blur-sm animate-fade-in">
+        <div className="fixed inset-0 z-[80] flex items-center justify-center p-4 bg-surface-ground/80 animate-fade-in">
           <div className="panel w-full max-w-md border border-border-subtle rounded-3xl shadow-2xl p-5 space-y-4">
             <div className="flex items-center justify-between border-b border-border-subtle pb-3">
               <div className="flex items-center gap-2">

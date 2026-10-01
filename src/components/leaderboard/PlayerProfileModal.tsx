@@ -242,7 +242,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
   const modalContent = (
     <AnimatePresence>
       <div
-        className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm overflow-y-auto"
+        className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 bg-black/80 overflow-y-auto"
         onClick={() => {
           playSound('click', soundEnabled);
           onClose();

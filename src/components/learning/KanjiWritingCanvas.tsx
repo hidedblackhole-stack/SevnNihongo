@@ -1670,7 +1670,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
 
         {/* Loading Indicator */}
         {isLoading && (
-          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-surface-card/80 backdrop-blur-sm rounded-3xl">
+          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-surface-card/80 rounded-3xl">
             <Loader2 className="w-8 h-8 text-wine-accent animate-spin mb-2" />
             <span className="text-xs font-bold text-wine-accent font-heading tracking-widest animate-pulse">Menyiapkan Karakter...</span>
           </div>

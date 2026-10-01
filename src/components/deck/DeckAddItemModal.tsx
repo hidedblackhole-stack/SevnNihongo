@@ -176,7 +176,7 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
   const modalContent = (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] p-3 sm:p-4 bg-surface-ground/80 backdrop-blur-sm flex justify-center items-center animate-fade-in">
+        <div className="fixed inset-0 z-[100] p-3 sm:p-4 bg-surface-ground/80 flex justify-center items-center animate-fade-in">
           {/* Backdrop Click */}
           <div
             className="fixed inset-0 -z-10"
@@ -451,7 +451,7 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 20, opacity: 0 }}
-              className="absolute bottom-3 left-4 right-4 p-3 rounded-2xl bg-surface-elevated border border-border-primary shadow-2xl flex items-center justify-between gap-3 z-10 backdrop-blur-md"
+              className="absolute bottom-3 left-4 right-4 p-3 rounded-2xl bg-surface-elevated border border-border-primary shadow-2xl flex items-center justify-between gap-3 z-10"
             >
               <div className="flex items-center gap-2">
                 <span className="text-xs font-heading font-bold text-text-primary">

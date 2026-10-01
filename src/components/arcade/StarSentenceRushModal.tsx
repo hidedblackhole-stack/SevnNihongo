@@ -331,7 +331,7 @@ export const StarSentenceRushModal: React.FC<StarSentenceRushModalProps> = ({
   if (!isOpen) return null;
 
   return createPortal(
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 animate-fade-in">
       <div 
         className="w-full max-w-2xl bg-surface-card border border-border-primary rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh]"
         onClick={e => e.stopPropagation()}

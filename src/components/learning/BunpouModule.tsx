@@ -316,7 +316,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
 
             {/* Nuansa & Kata Terkait (Kolokasi) */}
             {(currentBunpou.nuance || (currentBunpou.relatedKeywords && currentBunpou.relatedKeywords.length > 0)) && (
-              <div className="p-4 rounded-2xl bg-surface-inset border border-gold/30 space-y-3">
+              <div className="p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-3">
                 {currentBunpou.nuance && (
                   <div className="space-y-1">
                     <span className="text-[11px] font-bold uppercase tracking-wider text-gold font-heading">
@@ -344,7 +344,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
 
             {/* Cabang Rumus & Kondisi Penggunaan (Sub-Rumus) */}
             {subBranches && subBranches.length > 0 && (
-              <div className="p-4 sm:p-5 rounded-2xl bg-surface-inset border border-gold/30 space-y-4 shadow-md">
+              <div className="p-4 sm:p-5 rounded-2xl bg-surface-inset border border-border-subtle space-y-4 shadow-md">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-2.5 border-b border-border-subtle">
                   <div className="flex items-center gap-2">
                     <span className="p-1.5 rounded-lg bg-surface-card text-gold">
@@ -488,7 +488,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
 
             {/* Perbandingan Pola Mirip (使い分け) */}
             {currentBunpou.comparisonNotes && currentBunpou.comparisonNotes.length > 0 && (
-              <div className="p-4 sm:p-5 rounded-2xl bg-surface-inset border border-indigo/30 space-y-3 shadow-md">
+              <div className="p-4 sm:p-5 rounded-2xl bg-surface-inset border border-border-subtle space-y-3 shadow-md">
                 <div className="flex items-center gap-2 pb-2 border-b border-border-subtle">
                   <span className="p-1.5 rounded-lg bg-surface-card text-indigo">
                     <Swords className="w-4 h-4" />
@@ -527,7 +527,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
                 {currentBunpou.examples.map((example, i) => (
                   <div
                     key={i}
-                    className="p-4 rounded-2xl panel border border-border-subtle flex items-start justify-between gap-3 hover:border-gold/40 transition-colors"
+                    className="p-4 rounded-2xl panel border border-border-subtle flex items-start justify-between gap-3 hover:border-border-primary transition-colors"
                   >
                     <div className="space-y-1.5 flex-1">
                       <p className="text-sm sm:text-base font-bold text-text-primary flex flex-wrap items-baseline gap-1">
@@ -610,7 +610,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
         />
       ) : (
         /* Mixed Set View */
-        <div className="panel p-6 text-center space-y-4 shadow-xl border border-gold/30">
+        <div className="panel p-6 text-center space-y-4 shadow-xl border border-border-subtle">
           <div className="p-4 inline-flex rounded-full bg-surface-inset border border-gold/40 text-gold">
             <Swords className="w-8 h-8" />
           </div>

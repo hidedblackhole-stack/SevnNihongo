@@ -274,7 +274,7 @@ export const KanjiSpeedRushModal: React.FC<KanjiSpeedRushModalProps> = ({
   const currentKanji = kanjiQueue[currentIndex];
 
   const modalContent = (
-    <div className="fixed inset-0 z-[100] flex flex-col justify-end sm:justify-center items-center p-0 sm:p-4 bg-black/85 backdrop-blur-md animate-fade-in overflow-hidden">
+    <div className="fixed inset-0 z-[100] flex flex-col justify-end sm:justify-center items-center p-0 sm:p-4 bg-black/85 animate-fade-in overflow-hidden">
       {/* Dark backdrop click dismiss on desktop */}
       <div 
         className="fixed inset-0" 
@@ -346,7 +346,7 @@ export const KanjiSpeedRushModal: React.FC<KanjiSpeedRushModalProps> = ({
             </div>
 
             {/* Sticky Bottom CTA */}
-            <div className="p-4 sm:p-5 border-t border-border-subtle bg-surface-inset/80 backdrop-blur-sm shrink-0 pb-[max(1rem,env(safe-area-inset-bottom))] sm:pb-5">
+            <div className="p-4 sm:p-5 border-t border-border-subtle bg-surface-inset/80 shrink-0 pb-[max(1rem,env(safe-area-inset-bottom))] sm:pb-5">
               <button
                 type="button"
                 onClick={handleStartGame}

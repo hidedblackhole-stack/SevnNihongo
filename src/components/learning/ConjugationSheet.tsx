@@ -53,7 +53,7 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end justify-center bg-black/75 backdrop-blur-sm animate-fade-in"
+      className="fixed inset-0 z-50 flex items-end justify-center bg-black/75 animate-fade-in"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -291,7 +291,7 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
                   {auxiliaryInfo.inflections.map((row, idx) => (
                     <div
                       key={idx}
-                      className="p-3 rounded-2xl bg-surface-inset border border-border-subtle flex items-start justify-between gap-3 hover:border-gold/40 transition-colors"
+                      className="p-3 rounded-2xl bg-surface-inset border border-border-subtle flex items-start justify-between gap-3 hover:border-border-primary transition-colors"
                     >
                       <div className="space-y-1 flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">

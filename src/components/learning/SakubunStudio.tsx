@@ -230,7 +230,7 @@ export const SakubunStudio: React.FC<SakubunStudioProps> = ({
         </div>
 
         {/* Target Translation Prompt */}
-        <div className="mt-3.5 p-4 rounded-2xl bg-surface-inset border border-gold/20 relative overflow-hidden">
+        <div className="mt-3.5 p-4 rounded-2xl bg-surface-inset border border-border-subtle relative overflow-hidden">
           <div className="text-[11px] font-bold text-gold uppercase tracking-wider mb-1 flex items-center justify-between">
             <span>Tantangan Kalimat:</span>
             <button
@@ -428,8 +428,8 @@ export const SakubunStudio: React.FC<SakubunStudioProps> = ({
 
       {/* Grammar Rule Dialog Modal */}
       {showHintModal && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-4 animate-fadeIn">
-          <div className="w-full max-w-md p-5 rounded-3xl bg-surface-base border border-gold/40 shadow-xl space-y-4">
+        <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4 animate-fadeIn">
+          <div className="w-full max-w-md p-5 rounded-3xl bg-surface-base border border-border-subtle shadow-xl space-y-4">
             <div className="flex items-center justify-between border-b border-border-subtle pb-2">
               <h3 className="font-heading font-bold text-base text-gold flex items-center gap-2">
                 <BookOpen className="w-4 h-4" />

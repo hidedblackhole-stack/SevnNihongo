@@ -227,7 +227,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
   const modalContent = (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] p-3 sm:p-4 bg-surface-ground/80 backdrop-blur-sm flex justify-center items-center animate-fade-in">
+        <div className="fixed inset-0 z-[100] p-3 sm:p-4 bg-surface-ground/80 flex justify-center items-center animate-fade-in">
           {/* Backdrop Click */}
           <div
             className="fixed inset-0 -z-10"

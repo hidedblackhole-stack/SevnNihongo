@@ -402,7 +402,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
   return createPortal(
     <motion.div
       key="dungeon-runner-container"
-      className="fixed inset-0 z-[80] flex items-center justify-center p-2 sm:p-4 bg-black/85 backdrop-blur-md select-none"
+      className="fixed inset-0 z-[80] flex items-center justify-center p-2 sm:p-4 bg-black/85 select-none"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -650,7 +650,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                               animate={{ opacity: 1, y: -36, scale: 1.1 }}
                               exit={{ opacity: 0, y: -50 }}
                               transition={{ duration: 0.5, ease: 'easeOut' }}
-                              className="absolute top-3 right-3 sm:top-6 sm:right-6 z-50 text-emerald-400 font-mono font-black text-sm sm:text-base drop-shadow-md pointer-events-none flex items-center gap-1 bg-surface-card/90 px-2.5 py-1 rounded-full border border-emerald-500/40 backdrop-blur-xs"
+                              className="absolute top-3 right-3 sm:top-6 sm:right-6 z-50 text-emerald-400 font-mono font-black text-sm sm:text-base drop-shadow-md pointer-events-none flex items-center gap-1 bg-surface-card/90 px-2.5 py-1 rounded-full border border-emerald-500/40"
                             >
                               +{flashcardExpPopup} EXP
                             </motion.div>
@@ -1488,7 +1488,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
 
                           {/* Read User's sentence back to them via TTS */}
                           {creationFeedback.isValid && (
-                            <div className="p-3 rounded-2xl bg-surface-card/80 border border-emerald-500/30 flex items-center justify-between gap-3">
+                            <div className="p-3 rounded-2xl bg-surface-card/80 border border-border-subtle flex items-center justify-between gap-3">
                               <div className="space-y-0.5">
                                 <div className="text-[10px] font-mono text-emerald-400/80 font-bold uppercase">
                                   Kalimat Kreasimu:

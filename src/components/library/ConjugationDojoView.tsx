@@ -144,7 +144,7 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
         <div
           ref={drillSectionRef}
           id="conjugation-drill-panel"
-          className="panel p-5 sm:p-6 rounded-3xl border border-indigo/40 bg-surface-card shadow-xl space-y-5 animate-scale-up scroll-mt-20 sm:scroll-mt-24"
+          className="panel p-5 sm:p-6 rounded-3xl border border-border-subtle bg-surface-card shadow-xl space-y-5 animate-scale-up scroll-mt-20 sm:scroll-mt-24"
         >
           {/* Top Bar Drill */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 border-b border-border-subtle">

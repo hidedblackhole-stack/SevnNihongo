@@ -93,7 +93,7 @@ export const TowerSessionRunner: React.FC<TowerSessionRunnerProps> = ({
       <main className="flex-1 flex flex-col justify-center items-center p-4 sm:p-6 max-w-4xl w-full mx-auto relative">
         {/* Pause Overlay */}
         {tower.isPaused && (
-          <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-surface-base/80 backdrop-blur-md p-6 text-center">
+          <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-surface-base/80 p-6 text-center">
             <h3 className="text-2xl font-black text-text-primary font-heading mb-2">Tantangan Dijeda</h3>
             <p className="text-xs text-text-secondary max-w-xs mb-6">
               Progres ronde saat ini telah tersimpan secara otomatis. Kamu dapat melanjutkan kapan saja.

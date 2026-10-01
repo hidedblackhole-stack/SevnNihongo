@@ -275,7 +275,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
                 className="fixed inset-0 z-40" 
                 onClick={() => setIsDropdownOpen(false)} 
               />
-              <div className="absolute right-0 top-full mt-2 w-56 rounded-2xl bg-surface-card border border-border-subtle shadow-xl z-50 p-1.5 space-y-1 animate-fade-in backdrop-blur-xl">
+              <div className="absolute right-0 top-full mt-2 w-56 rounded-2xl bg-surface-card border border-border-subtle shadow-xl z-50 p-1.5 space-y-1 animate-fade-in">
                 {LEVEL_OPTIONS.map((opt) => {
                   const isSelected = levelFilter === opt.value;
                   const count = levelCounts[opt.value] || 0;
@@ -399,7 +399,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
                   setSelectedItem(item);
                   playSound('click', soundEnabled);
                 }}
-                className="panel px-3.5 sm:px-4 py-2.5 sm:py-3 group shadow-sm hover:shadow-md transition-all cursor-pointer rounded-2xl border border-border-subtle hover:border-indigo/40 flex items-center justify-between gap-3 sm:gap-4"
+                className="panel px-3.5 sm:px-4 py-2.5 sm:py-3 group shadow-sm hover:shadow-md transition-all cursor-pointer rounded-2xl border border-border-subtle hover:border-border-primary flex items-center justify-between gap-3 sm:gap-4"
               >
                 {/* Left: Badge + Clean Title + Meaning */}
                 <div className="flex items-center gap-3 min-w-0 flex-1">
@@ -474,7 +474,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
                   setSelectedItem(item);
                   playSound('click', soundEnabled);
                 }}
-                className="panel flex flex-col justify-between p-4 sm:p-5 group shadow-sm hover:shadow-md transition-all cursor-pointer rounded-2xl border border-border-subtle hover:border-indigo/40 space-y-3.5"
+                className="panel flex flex-col justify-between p-4 sm:p-5 group shadow-sm hover:shadow-md transition-all cursor-pointer rounded-2xl border border-border-subtle hover:border-border-primary space-y-3.5"
               >
                 {/* Top row: Level Badge + Actions */}
                 <div className="flex items-center justify-between gap-2">

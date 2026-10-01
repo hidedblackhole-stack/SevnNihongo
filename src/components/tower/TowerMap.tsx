@@ -234,7 +234,7 @@ export const TowerMap: React.FC<TowerMapProps> = ({
   return (
     <div className={`relative flex flex-col h-full w-full bg-surface-base select-none overflow-hidden ${className}`}>
       {/* Top Floating Region Banner */}
-      <div className="sticky top-0 z-20 w-full bg-surface-card/90 backdrop-blur-md border-b border-border-subtle p-3 px-4 shadow-md flex items-center justify-between gap-2">
+      <div className="sticky top-0 z-20 w-full bg-surface-card/90 border-b border-border-subtle p-3 px-4 shadow-md flex items-center justify-between gap-2">
         <div className="flex items-center gap-2.5 min-w-0">
           {onBack && (
             <button
@@ -576,7 +576,7 @@ export const TowerMap: React.FC<TowerMapProps> = ({
           const region = getRegionForFloor(selectedPreviewFloor);
 
           return (
-            <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/75 backdrop-blur-sm">
+            <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/75">
               <motion.div
                 initial={{ y: 100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -665,7 +665,7 @@ export const TowerMap: React.FC<TowerMapProps> = ({
       {/* 1. Player Showcase Prestige Card Modal */}
       <AnimatePresence>
         {isShowcaseOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80">
             <motion.div
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -697,7 +697,7 @@ export const TowerMap: React.FC<TowerMapProps> = ({
       {/* 2. Passive Skill Tree & Economy Modal */}
       <AnimatePresence>
         {isSkillTreeOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80">
             <motion.div
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}

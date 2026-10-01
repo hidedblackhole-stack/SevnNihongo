@@ -129,7 +129,7 @@ export const DeckBookmarkPicker: React.FC<DeckBookmarkPickerProps> = ({
       {/* Deck Selection Modal / Bottom Sheet via Portal */}
       {isOpen && typeof document !== 'undefined' && createPortal(
         <div
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/65 backdrop-blur-sm animate-fade-in"
+          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/65 animate-fade-in"
           onClick={(e) => {
             e.stopPropagation();
             setIsOpen(false);

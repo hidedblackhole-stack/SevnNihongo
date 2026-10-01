@@ -129,7 +129,7 @@ export const BookDetailView: React.FC<BookDetailViewProps> = ({
                 onSelectChapterDeck(chapter);
                 playSound('click', soundEnabled);
               }}
-              className="panel p-5 rounded-3xl border border-border-subtle hover:border-gold/50 bg-surface-card cursor-pointer group transition-all duration-200 flex flex-col justify-between hover:shadow-xl hover:-translate-y-0.5 relative overflow-hidden"
+              className="panel p-5 rounded-3xl border border-border-subtle hover:border-border-primary bg-surface-card cursor-pointer group transition-all duration-200 flex flex-col justify-between hover:shadow-xl hover:-translate-y-0.5 relative overflow-hidden"
             >
               <div className="space-y-3">
                 {/* Top Row: Icon, Deck Badge, and Quick Clone */}

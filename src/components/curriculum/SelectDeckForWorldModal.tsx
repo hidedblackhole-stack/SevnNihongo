@@ -39,7 +39,7 @@ export const SelectDeckForWorldModal: React.FC<SelectDeckForWorldModalProps> = (
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 backdrop-blur-xs animate-fade-in">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 animate-fade-in">
         <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 12 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -145,7 +145,7 @@ export const SelectDeckForWorldModal: React.FC<SelectDeckForWorldModalProps> = (
                           playSound('click', soundEnabled);
                           onSelectDeck(deck);
                         }}
-                        className="panel p-4 rounded-2xl border border-border-subtle hover:border-indigo/50 bg-surface-card hover:bg-surface-elevated transition-all cursor-pointer flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs group"
+                        className="panel p-4 rounded-2xl border border-border-subtle hover:border-border-primary bg-surface-card hover:bg-surface-elevated transition-all cursor-pointer flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs group"
                       >
                         <div className="flex items-start gap-3">
                           <div className="w-10 h-10 rounded-xl bg-surface-inset border border-border-subtle flex items-center justify-center shrink-0 text-indigo group-hover:border-indigo/40 group-hover:text-amber-300 transition-colors">

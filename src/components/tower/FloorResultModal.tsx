@@ -28,7 +28,7 @@ export const FloorResultModal: React.FC<FloorResultModalProps> = ({
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80">
         <motion.div
           initial={{ scale: 0.85, opacity: 0, y: 25 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}

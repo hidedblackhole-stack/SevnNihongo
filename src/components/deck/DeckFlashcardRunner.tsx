@@ -182,7 +182,7 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
 
   if (resolvedItems.length === 0) {
     const emptyContent = (
-      <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-surface-ground/90 backdrop-blur-md">
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-surface-ground/90">
         <div className="panel p-6 rounded-3xl max-w-md w-full border border-border-subtle text-center space-y-4">
           <h3 className="text-lg font-heading font-bold text-text-primary">Deck Masih Kosong</h3>
           <p className="text-xs text-text-secondary">
@@ -202,7 +202,7 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
 
   const runnerContent = (
     <div
-      className="fixed inset-0 z-[9999] flex flex-col bg-surface-ground/98 backdrop-blur-md overflow-y-auto overscroll-contain"
+      className="fixed inset-0 z-[9999] flex flex-col bg-surface-ground/98 overflow-y-auto overscroll-contain"
       style={{ minHeight: '100dvh' }}
     >
       {/* Top Header */}
@@ -343,7 +343,7 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
                       animate={{ opacity: 1, y: -36, scale: 1.1 }}
                       exit={{ opacity: 0, y: -50 }}
                       transition={{ duration: 0.5, ease: 'easeOut' }}
-                      className="absolute top-3 right-3 sm:top-6 sm:right-6 z-50 text-emerald-400 font-mono font-black text-sm sm:text-base drop-shadow-md pointer-events-none flex items-center gap-1 bg-surface-card/90 px-2.5 py-1 rounded-full border border-emerald-500/40 backdrop-blur-xs shadow-lg"
+                      className="absolute top-3 right-3 sm:top-6 sm:right-6 z-50 text-emerald-400 font-mono font-black text-sm sm:text-base drop-shadow-md pointer-events-none flex items-center gap-1 bg-surface-card/90 px-2.5 py-1 rounded-full border border-emerald-500/40 shadow-lg"
                     >
                       +{flashcardExpPopup} EXP
                     </motion.div>

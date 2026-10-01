@@ -374,7 +374,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
         <AnimatePresence>
           {launchModalPack && (
             <div 
-              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/65 backdrop-blur-xs animate-fade-in"
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/65 animate-fade-in"
               onClick={() => setLaunchModalPack(null)}
             >
               <motion.div

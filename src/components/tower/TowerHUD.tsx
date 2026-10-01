@@ -39,7 +39,7 @@ export const TowerHUD: React.FC<TowerHUDProps> = ({
   className = ''
 }) => {
   return (
-    <header className={`w-full bg-surface-card/95 backdrop-blur-md border-b border-border-subtle px-4 py-3 select-none transition-all ${className}`}>
+    <header className={`w-full bg-surface-card/95 border-b border-border-subtle px-4 py-3 select-none transition-all ${className}`}>
       <div className="max-w-4xl mx-auto flex items-center justify-between gap-3">
         {/* Left: Floor & Theme Info */}
         <div className="flex items-center gap-2.5 min-w-0">

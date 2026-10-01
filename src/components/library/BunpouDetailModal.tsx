@@ -364,7 +364,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
     >
       {/* Dimmed Ambient Backdrop with warm desk atmosphere */}
       <motion.div
-        className="fixed inset-0 bg-black/80 backdrop-blur-sm"
+        className="fixed inset-0 bg-black/80"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -999,7 +999,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                   transition={{ duration: 0.16 }}
                   className="space-y-3 sm:space-y-3.5"
                 >
-                  <div className="p-3.5 sm:p-4 rounded-2xl bg-surface-inset border border-gold/30 shadow-xs space-y-3">
+                  <div className="p-3.5 sm:p-4 rounded-2xl bg-surface-inset border border-border-subtle shadow-xs space-y-3">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-1.5 text-gold font-heading font-bold text-xs uppercase tracking-wider">
                         <Flame className="w-3.5 h-3.5 text-gold" />

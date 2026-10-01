@@ -654,7 +654,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       </div>
 
       {/* Reset Progress Section */}
-      <div className="panel p-4 sm:p-5 space-y-3 border border-wine-accent/40 shadow-md">
+      <div className="panel p-4 sm:p-5 space-y-3 border border-border-subtle shadow-md">
         <div className="flex items-center gap-2 text-wine-accent font-bold text-xs sm:text-sm font-heading">
           <ShieldAlert className="w-4 h-4" />
           <span>Zona Riset Data</span>

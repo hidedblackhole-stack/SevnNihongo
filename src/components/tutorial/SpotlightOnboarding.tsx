@@ -377,7 +377,7 @@ export const SpotlightOnboarding: React.FC<SpotlightOnboardingProps> = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-[9991]"
+          className="fixed inset-0 bg-slate-950/85 z-[9991]"
           onClick={handleSkip}
         />
       )}
@@ -498,7 +498,7 @@ export const SpotlightOnboarding: React.FC<SpotlightOnboardingProps> = ({
                 animate={{ opacity: 1, y: 0, x: 0, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.97 }}
                 transition={{ duration: 0.2, ease: 'easeOut' }}
-                className="panel panel-stitched p-4 sm:p-5 shadow-2xl border border-gold/50 space-y-3 bg-surface-card relative overflow-visible flex flex-col"
+                className="panel panel-stitched p-4 sm:p-5 shadow-2xl border border-border-subtle space-y-3 bg-surface-card relative overflow-visible flex flex-col"
               >
                 {/* Visual Arrow Pointer pointing directly at the target */}
                 <div className={tooltipLayout.arrowStyle} />

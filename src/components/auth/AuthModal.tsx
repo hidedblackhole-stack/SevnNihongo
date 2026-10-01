@@ -94,7 +94,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75">
       <div className="w-full max-w-md panel panel-stitched bg-surface-card border border-border-subtle rounded-3xl overflow-hidden shadow-[6px_6px_24px_var(--neu-d),-4px_-4px_16px_var(--neu-l)] relative animate-in fade-in zoom-in duration-200">
         {/* Washi Texture Overlay */}
         <div className="skeuo-grain" />

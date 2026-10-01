@@ -332,7 +332,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
                 className="fixed inset-0 z-40" 
                 onClick={() => setIsDropdownOpen(false)} 
               />
-              <div className="absolute right-0 top-full mt-2 w-56 rounded-2xl bg-surface-card border border-border-subtle shadow-xl z-50 p-1.5 space-y-1 animate-fade-in backdrop-blur-xl">
+              <div className="absolute right-0 top-full mt-2 w-56 rounded-2xl bg-surface-card border border-border-subtle shadow-xl z-50 p-1.5 space-y-1 animate-fade-in">
                 {LEVEL_OPTIONS.map((opt) => {
                   const isSelected = levelFilter === opt.value;
                   const count = levelCounts[opt.value] || 0;
@@ -406,7 +406,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
 
       {/* Kaigo Specific Unit Filter Chips */}
       {levelFilter === 'Kaigo' && (
-        <div className="panel p-3.5 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 space-y-2">
+        <div className="panel p-3.5 rounded-2xl border border-border-subtle bg-emerald-500/5 space-y-2">
           <div className="flex items-center justify-between text-xs">
             <span className="font-bold text-emerald-600 dark:text-emerald-400 font-heading flex items-center gap-1.5">
               <span>🩺</span> Unit Bidang Keperawatan ({kaigoUnits.length} Unit)

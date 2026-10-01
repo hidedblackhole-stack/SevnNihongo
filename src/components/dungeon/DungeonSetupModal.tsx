@@ -292,7 +292,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
     >
       {/* Dark Ambient Vignette Backdrop */}
       <motion.div
-        className="fixed inset-0 bg-black/80 backdrop-blur-sm"
+        className="fixed inset-0 bg-black/80"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -314,7 +314,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
         <div className="skeuo-grain" />
 
         {/* ================= SKEUOMORPHIC HEADER ================= */}
-        <div className="relative z-10 p-4 sm:p-5 border-b border-border-subtle flex items-center justify-between gap-3 bg-surface-inset/80 backdrop-blur-xs shadow-[0_3px_10px_rgba(0,0,0,0.3)]">
+        <div className="relative z-10 p-4 sm:p-5 border-b border-border-subtle flex items-center justify-between gap-3 bg-surface-inset/80 shadow-[0_3px_10px_rgba(0,0,0,0.3)]">
           <div className="flex items-center gap-3.5">
             {/* Tactile Engraved Emblem Frame */}
             <div
@@ -361,7 +361,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
           {/* SECTION 1: MATERI TANTANGAN (PRESET VS DECK VS EXTREME STAGES) */}
           <div className="space-y-3">
             {dungeonType === 'extreme' ? (
-              <div className="space-y-3 p-4 rounded-2xl bg-surface-inset border border-rose-500/30">
+              <div className="space-y-3 p-4 rounded-2xl bg-surface-inset border border-border-subtle">
                 <div className="flex items-center justify-between">
                   <label className="text-xs font-bold uppercase tracking-wider text-rose-400 font-heading flex items-center gap-1.5">
                     <Flame className="w-3.5 h-3.5 text-rose-400" />
@@ -452,7 +452,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
               <>
                 {/* ================= FLASHCARD MATERIAL CUSTOMIZATION ================= */}
                 {dungeonType === 'flashcard' && (
-                  <div className="space-y-2.5 p-3.5 rounded-2xl bg-surface-inset border border-teal/35 shadow-[inset_1.5px_1.5px_4px_var(--neu-d)] mb-3 animate-fade-in">
+                  <div className="space-y-2.5 p-3.5 rounded-2xl bg-surface-inset border border-border-subtle shadow-[inset_1.5px_1.5px_4px_var(--neu-d)] mb-3 animate-fade-in">
                     <div className="flex items-center justify-between gap-2 flex-wrap">
                       <label className="text-xs font-bold uppercase tracking-wider text-teal font-heading flex items-center gap-1.5">
                         <SlidersHorizontal className="w-3.5 h-3.5 text-teal" />
@@ -635,7 +635,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
 
                 {dungeonType === 'conjugation' && (
                   /* ================= CONJUGATION MODE SWITCHER ================= */
-                  <div className="space-y-2.5 p-3 rounded-2xl bg-surface-inset border border-indigo/30 shadow-[inset_1.5px_1.5px_4px_var(--neu-d)] mb-2">
+                  <div className="space-y-2.5 p-3 rounded-2xl bg-surface-inset border border-border-subtle shadow-[inset_1.5px_1.5px_4px_var(--neu-d)] mb-2">
                     <div className="flex items-center justify-between">
                       <label className="text-xs font-bold uppercase tracking-wider text-indigo font-heading flex items-center gap-1.5">
                         <SlidersHorizontal className="w-3.5 h-3.5 text-indigo" />
@@ -1108,7 +1108,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
-                className="p-3.5 rounded-2xl bg-surface-inset border border-rose-500/30 space-y-2.5 shadow-inner mt-2.5"
+                className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle space-y-2.5 shadow-inner mt-2.5"
               >
                 <div className="flex items-center justify-between text-xs">
                   <span className="font-heading font-bold text-rose-400 flex items-center gap-1.5">
@@ -1187,7 +1187,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
           </div>
 
           {/* SECTION 4: CARVED TREASURE REWARD PLAQUE */}
-          <div className="p-3.5 rounded-2xl bg-surface-inset border border-gold/30 flex flex-wrap items-center justify-between gap-2.5 text-xs shadow-[inset_2px_2px_6px_var(--neu-d),inset_-1px_-1px_3px_var(--neu-l)]">
+          <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle flex flex-wrap items-center justify-between gap-2.5 text-xs shadow-[inset_2px_2px_6px_var(--neu-d),inset_-1px_-1px_3px_var(--neu-l)]">
             <div className="flex items-center gap-2 text-text-secondary min-w-0">
               <div className="w-7 h-7 rounded-lg bg-surface-card border border-gold/40 flex items-center justify-center text-gold shadow-xs shrink-0">
                 <Trophy className="w-3.5 h-3.5" />
@@ -1209,7 +1209,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
         </div>
 
         {/* ================= SKEUOMORPHIC FOOTER ================= */}
-        <div className="relative z-10 p-3.5 sm:p-4 border-t border-border-subtle flex items-center justify-between gap-3 bg-surface-inset/90 backdrop-blur-xs shadow-[0_-3px_10px_rgba(0,0,0,0.2)]">
+        <div className="relative z-10 p-3.5 sm:p-4 border-t border-border-subtle flex items-center justify-between gap-3 bg-surface-inset/90 shadow-[0_-3px_10px_rgba(0,0,0,0.2)]">
           {/* Debossed Wooden Button */}
           <button
             type="button"
