@@ -2,6 +2,24 @@ import { createClient } from '@supabase/supabase-js';
 import { PlayerStats } from '../types/rpg';
 import { UserMasteryEntity, UserActivityEntity } from '../types/identity';
 import { getTierForExp } from '../data/tiers';
+import type { TowerCloudState } from '../engine/tower/world/towerCloudState';
+
+/**
+ * true => tulis leaderboard/skor lewat RPC aman berbasis auth.uid()
+ * (lihat supabase/migrations/20261001_secure_leaderboard_and_saves.sql). Default false agar
+ * klien tetap kompatibel dengan skema lama sampai migrasi dijalankan.
+ */
+const SECURE_LEADERBOARD =
+  (import.meta as unknown as { env?: Record<string, string | undefined> }).env?.VITE_SECURE_LEADERBOARD === 'true';
+
+/** Tabel/fungsi belum ada di proyek (migrasi belum dijalankan) -> fallback ke jalur lama. */
+function isMissingRelation(err: { code?: string; message?: string } | null | undefined): boolean {
+  if (!err) return false;
+  return (
+    err.code === '42P01' || err.code === 'PGRST205' || err.code === 'PGRST202' || err.code === '42883' ||
+    /does not exist|schema cache|Could not find the (table|function)/i.test(err.message || '')
+  );
+}
 
 const directUrl = (import.meta as any).env?.VITE_SUPABASE_URL || 'https://iokhdhqnpslpwsxspvaj.supabase.co';
 const supabaseKey = (import.meta as any).env?.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlva2hkaHFucHNscHdzeHNwdmFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg0MjQyMDUsImV4cCI6MjEwNDAwMDIwNX0.8o2UFh4VXRUObjvBq_rVRxIar7yZSU7vrCgaHutYyPE';
@@ -228,14 +246,24 @@ export async function sendScoreEvent(eventType: 'quiz_answer' | 'kanji_write', r
     const rawExp = Number(stats.totalExp) || 0;
     const effectiveTierIndex = Math.round(getTierForExp(Math.round(rawExp)).tierIndex || 0);
 
-    const { error } = await supabase.rpc('submit_score_event', {
-      p_user_id: userId,
-      p_player_name: stats.playerName || 'Unknown Player',
-      p_tier_index: effectiveTierIndex,
-      p_event_type: eventType,
-      p_ref_id: refId,
-      p_is_correct: isCorrect
-    });
+    // Jalur aman: identitas dari auth.uid() di server (p_user_id tidak dikirim). Jalur lama menerima
+    // p_user_id dari klien sehingga dapat dipalsukan.
+    const { error } = SECURE_LEADERBOARD
+      ? await supabase.rpc('submit_score_event_v2', {
+          p_event_type: eventType,
+          p_ref_id: refId,
+          p_is_correct: isCorrect,
+          p_player_name: stats.playerName || 'Unknown Player',
+          p_tier_index: effectiveTierIndex
+        })
+      : await supabase.rpc('submit_score_event', {
+          p_user_id: userId,
+          p_player_name: stats.playerName || 'Unknown Player',
+          p_tier_index: effectiveTierIndex,
+          p_event_type: eventType,
+          p_ref_id: refId,
+          p_is_correct: isCorrect
+        });
 
     if (error) {
       console.error('Error submitting score event:', error);
@@ -265,6 +293,23 @@ export async function upsertLeaderboard(stats: PlayerStats) {
   try {
     const roundedExp = Math.round(Number(stats.totalExp) || 0);
     const effectiveTierIndex = Math.round(getTierForExp(roundedExp).tierIndex || 0);
+
+    if (SECURE_LEADERBOARD) {
+      // Hanya pemain login (auth.uid() ada). Server menolak EXP turun dan membatasi laju kenaikan.
+      if (!(await getSession())) return;
+      const { error: rpcError } = await supabase.rpc('upsert_leaderboard_entry', {
+        p_player_name: stats.playerName || 'Unknown Player',
+        p_level: Math.round(Number(stats.level) || 1),
+        p_total_exp: roundedExp,
+        p_avatar_url: stats.avatar || null,
+        p_stat_tryout: Math.round(Number(stats.studyStats?.tryOuts?.total) || 0),
+        p_stat_flashcard: Math.round(Number(stats.studyStats?.flashcards?.total) || 0),
+        p_stat_kanji: Math.round(Number(stats.studyStats?.kanjiWriting?.total) || 0),
+        p_stat_boss: Math.round(Number(stats.studyStats?.bossBattles?.total) || 0)
+      });
+      if (rpcError) console.error('Error upserting leaderboard (rpc):', rpcError);
+      return;
+    }
 
     const { error } = await supabase
       .from('leaderboard')
@@ -468,6 +513,8 @@ export interface CloudSavePayload {
   stageProgress: Record<string, any>;
   dailyMissions: any[];
   weeklyMissions: any[];
+  /** Progres Tower (lantai, skill tree, achievement). Opsional untuk kompatibilitas save lama. */
+  towerState?: TowerCloudState;
   updatedAt: string;
 }
 
@@ -486,18 +533,37 @@ export async function saveGameToCloud(saveData: CloudSavePayload): Promise<boole
       return false;
     }
 
-    // 1. Save full game state to user_metadata
-    const { error: updateError } = await supabase.auth.updateUser({
-      data: {
-        cloud_save: saveData,
-        cloud_save_updated_at: saveData.updatedAt
-      }
-    });
+    // 1. Simpan save penuh. Utama: tabel user_saves (tidak ikut JWT). Fallback: user_metadata
+    //    (dipakai selama migrasi SQL belum dijalankan / tabel belum ada).
+    let metadataSaved = false;
+    const { error: saveError } = await supabase
+      .from('user_saves')
+      .upsert({ user_id: targetUser.id, payload: saveData, updated_at: saveData.updatedAt }, { onConflict: 'user_id' });
 
-    if (updateError) {
-      console.warn('Failed to update cloud_save metadata:', updateError.message);
+    if (!saveError) {
+      metadataSaved = true;
+      // Lazy migration: setelah tersimpan di tabel, kosongkan save besar di user_metadata (ikut JWT).
+      if (targetUser.user_metadata?.cloud_save) {
+        const { error: clearError } = await supabase.auth.updateUser({
+          data: { cloud_save: null, cloud_save_updated_at: saveData.updatedAt, cloud_save_migrated: true }
+        });
+        if (clearError) console.warn('Failed to clear legacy cloud_save metadata:', clearError.message);
+      }
+    } else {
+      if (!isMissingRelation(saveError)) {
+        console.warn('Failed to upsert user_saves, falling back to metadata:', saveError.message);
+      }
+      const { error: updateError } = await supabase.auth.updateUser({
+        data: {
+          cloud_save: saveData,
+          cloud_save_updated_at: saveData.updatedAt
+        }
+      });
+      if (updateError) {
+        console.warn('Failed to update cloud_save metadata:', updateError.message);
+      }
+      metadataSaved = !updateError;
     }
-    const metadataSaved = !updateError;
 
     // 2. Also ensure leaderboard row is synced
     if (saveData.stats && (saveData.stats.level || saveData.stats.totalExp)) {
@@ -554,9 +620,23 @@ export async function loadGameFromCloud(): Promise<CloudSavePayload | null> {
   const targetUser = user || (await getSession())?.user;
   if (!targetUser) return null;
 
-  // 1. Check user_metadata for full cloud_save
-  if (targetUser.user_metadata?.cloud_save) {
-    return targetUser.user_metadata.cloud_save as CloudSavePayload;
+  // 1. Dual-read: tabel user_saves + user_metadata (legacy). Yang updatedAt-nya lebih baru menang;
+  //    kegagalan selain "tabel belum ada" dilempar supaya cloud tidak ditimpa.
+  const legacySave = (targetUser.user_metadata?.cloud_save as CloudSavePayload | undefined) || null;
+  const { data: savedRow, error: savedError } = await supabase
+    .from('user_saves')
+    .select('payload, updated_at')
+    .eq('user_id', targetUser.id)
+    .maybeSingle();
+  if (savedError && !isMissingRelation(savedError)) {
+    throw new Error(`Gagal membaca user_saves: ${savedError.message}`);
+  }
+  const tableSave = (savedRow?.payload as CloudSavePayload | undefined) || null;
+  if (tableSave && legacySave) {
+    return Date.parse(legacySave.updatedAt || '') > Date.parse(tableSave.updatedAt || '') ? legacySave : tableSave;
+  }
+  if (tableSave || legacySave) {
+    return (tableSave || legacySave) as CloudSavePayload;
   }
 
   // 2. Fallback: check leaderboard table for level & exp
