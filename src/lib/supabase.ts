@@ -497,6 +497,7 @@ export async function saveGameToCloud(saveData: CloudSavePayload): Promise<boole
     if (updateError) {
       console.warn('Failed to update cloud_save metadata:', updateError.message);
     }
+    const metadataSaved = !updateError;
 
     // 2. Also ensure leaderboard row is synced
     if (saveData.stats && (saveData.stats.level || saveData.stats.totalExp)) {
@@ -535,7 +536,7 @@ export async function saveGameToCloud(saveData: CloudSavePayload): Promise<boole
       syncUserMasteryRelational(masteryRecords).catch(() => {});
     }
 
-    return true;
+    return metadataSaved;
   } catch (err) {
     console.warn('Failed to save game to cloud:', err);
     return false;
@@ -546,56 +547,59 @@ export async function saveGameToCloud(saveData: CloudSavePayload): Promise<boole
  * Load complete game progress from Supabase user_metadata or fallback to leaderboard
  */
 export async function loadGameFromCloud(): Promise<CloudSavePayload | null> {
-  try {
-    const { data: { user } } = await supabase.auth.getUser();
-    const targetUser = user || (await getSession())?.user;
-    if (!targetUser) return null;
+  // Catatan: `null` berarti "benar-benar tidak ada save di cloud". Kegagalan jaringan / server
+  // WAJIB dilempar (throw) agar pemanggil tidak menganggap cloud kosong lalu menimpanya
+  // dengan data lokal.
+  const { data: { user } } = await supabase.auth.getUser();
+  const targetUser = user || (await getSession())?.user;
+  if (!targetUser) return null;
 
-    // 1. Check user_metadata for full cloud_save
-    if (targetUser.user_metadata?.cloud_save) {
-      return targetUser.user_metadata.cloud_save as CloudSavePayload;
-    }
-
-    // 2. Fallback: check leaderboard table for level & exp
-    const { data: lbData } = await supabase
-      .from('leaderboard')
-      .select('*')
-      .eq('user_id', targetUser.id)
-      .single();
-
-    if (lbData && (lbData.level || lbData.total_exp)) {
-      return {
-        stats: {
-          level: lbData.level || 1,
-          totalExp: lbData.total_exp || 0,
-          playerName: lbData.player_name,
-          avatar: lbData.avatar_url,
-          characterGender: lbData.character_gender || 'male',
-          tierIndex: lbData.tier_index || 0,
-          studyStats: {
-            questions: { total: 0, uniqueIds: [] },
-            flashcards: { total: lbData.stat_flashcard || 0, uniqueIds: [] },
-            kanjiWriting: { total: lbData.stat_kanji || 0, uniqueIds: [] },
-            tryOuts: { total: lbData.stat_tryout || 0, uniqueIds: [] },
-            dokkai: { total: 0, uniqueIds: [] },
-            choukai: { total: 0, uniqueIds: [] },
-            bunpou: { total: 0, uniqueIds: [] },
-            stages: { total: 0, uniqueIds: [] },
-            bossBattles: { total: lbData.stat_boss || 0, uniqueIds: [] }
-          }
-        },
-        stageProgress: {},
-        dailyMissions: [],
-        weeklyMissions: [],
-        updatedAt: lbData.last_updated || new Date().toISOString()
-      };
-    }
-
-    return null;
-  } catch (err) {
-    console.warn('Failed to load game from cloud:', err);
-    return null;
+  // 1. Check user_metadata for full cloud_save
+  if (targetUser.user_metadata?.cloud_save) {
+    return targetUser.user_metadata.cloud_save as CloudSavePayload;
   }
+
+  // 2. Fallback: check leaderboard table for level & exp
+  // maybeSingle(): 0 baris => data null tanpa error (PGRST116 tidak dilempar).
+  const { data: lbData, error: lbError } = await supabase
+    .from('leaderboard')
+    .select('*')
+    .eq('user_id', targetUser.id)
+    .maybeSingle();
+
+  if (lbError) {
+    throw new Error(`Gagal membaca leaderboard: ${lbError.message}`);
+  }
+
+  if (lbData && (lbData.level || lbData.total_exp)) {
+    return {
+      stats: {
+        level: lbData.level || 1,
+        totalExp: lbData.total_exp || 0,
+        playerName: lbData.player_name,
+        avatar: lbData.avatar_url,
+        characterGender: lbData.character_gender || 'male',
+        tierIndex: lbData.tier_index || 0,
+        studyStats: {
+          questions: { total: 0, uniqueIds: [] },
+          flashcards: { total: lbData.stat_flashcard || 0, uniqueIds: [] },
+          kanjiWriting: { total: lbData.stat_kanji || 0, uniqueIds: [] },
+          tryOuts: { total: lbData.stat_tryout || 0, uniqueIds: [] },
+          dokkai: { total: 0, uniqueIds: [] },
+          choukai: { total: 0, uniqueIds: [] },
+          bunpou: { total: 0, uniqueIds: [] },
+          stages: { total: 0, uniqueIds: [] },
+          bossBattles: { total: lbData.stat_boss || 0, uniqueIds: [] }
+        }
+      },
+      stageProgress: {},
+      dailyMissions: [],
+      weeklyMissions: [],
+      updatedAt: lbData.last_updated || new Date().toISOString()
+    };
+  }
+
+  return null;
 }
 
 // ==========================================

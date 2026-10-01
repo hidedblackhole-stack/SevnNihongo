@@ -15,6 +15,19 @@ export function getTodayLocalDate(): string {
 }
 
 /**
+ * Returns the ISO-8601 week id (e.g. "2026-W40") of the given date using LOCAL calendar fields.
+ * Dipakai untuk reset misi mingguan (Senin 00:00 waktu lokal).
+ */
+export function getLocalIsoWeekId(date: Date = new Date()): string {
+  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  const dayNum = d.getUTCDay() || 7; // Senin=1 ... Minggu=7
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum); // Kamis pada minggu yang sama menentukan tahun ISO
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  const week = Math.ceil(((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
+  return `${d.getUTCFullYear()}-W${String(week).padStart(2, '0')}`;
+}
+
+/**
  * Formats seconds into a compact string suitable for HUD display.
  * - Under 1 min: "45s"
  * - Under 1 hour: "15m"

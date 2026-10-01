@@ -3,38 +3,43 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect, useRef, useCallback, Suspense, lazy } from 'react';
+import { useState, useEffect, useRef, useCallback, lazy } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
-import { Swords, Cloud, Clock } from 'lucide-react';
+import { Swords, Cloud } from 'lucide-react';
 import { PlayerStats, StageClearData, Mission, DEFAULT_NAMES, DeckItemCategory, UserDeck } from './types/rpg';
 import { Stage, ItemMasteryRecord } from './types/content';
 import { getTierForExp, calculateMaxHp, calculateMaxMp, getLevelInfo, calculateLevelFromExp } from './data/tiers';
 import { getEffectiveTier, getJlptLevelForTierIndex } from './utils/ascension';
 import { MAP_REGIONS, getStagesForMap } from './data/maps';
 import { INITIAL_DAILY_MISSIONS, INITIAL_WEEKLY_MISSIONS } from './data/missions';
-import { useStudyTimeTracker } from './hooks/useStudyTimeTracker';
-import { formatStudyTime, formatDetailedStudyTime, getTodayLocalDate } from './utils/time';
+import { StudyTimerBadge } from './components/layout/StudyTimerBadge';
+import { getTodayLocalDate, getLocalIsoWeekId } from './utils/time';
+import { safeSetItem, safeGetItem } from './utils/storage';
+import { mergeStatsCollections, mergeStageProgress } from './utils/cloudMerge';
 import { HomeView } from './components/home/HomeView';
-import { WorldView } from './components/map/WorldView';
-import { StageHubView } from './components/stage/StageHubView';
 import { MissionsView } from './components/missions/MissionsView';
-import { SettingsView } from './components/settings/SettingsView';
 import { BottomNavigation, TabType } from './components/layout/BottomNavigation';
 import { CharacterStatusModal } from './components/modals/CharacterStatusModal';
-import { RecallModule } from './components/learning/RecallModule';
+// Modul berat di-lazy-load: tidak ikut chunk awal (kode + dataset tryout, hanzi-writer, dst.).
+// Semuanya berada di dalam <ModuleBoundary> yang menyediakan Suspense + ErrorBoundary per modul.
+const WorldView = lazy(() => import('./components/map/WorldView').then(m => ({ default: m.WorldView })));
+const StageHubView = lazy(() => import('./components/stage/StageHubView').then(m => ({ default: m.StageHubView })));
+const SettingsView = lazy(() => import('./components/settings/SettingsView').then(m => ({ default: m.SettingsView })));
+const RecallModule = lazy(() => import('./components/learning/RecallModule').then(m => ({ default: m.RecallModule })));
+const LibraryView = lazy(() => import('./components/library/LibraryView').then(m => ({ default: m.LibraryView })));
+const BukuSakuView = lazy(() => import('./components/deck/BukuSakuView').then(m => ({ default: m.BukuSakuView })));
+const LeaderboardView = lazy(() => import('./components/leaderboard/LeaderboardView').then(m => ({ default: m.LeaderboardView })));
 const DungeonBattleModule = lazy(() => import('./components/dungeon/DungeonBattleModule').then(m => ({ default: m.DungeonBattleModule })));
-import { LibraryView } from './components/library/LibraryView';
-import { BukuSakuView } from './components/deck/BukuSakuView';
 import { ensureUserDecks, createDefaultBookmarkDeck, toggleBookmarkItem, toggleItemInDeck, DEFAULT_BOOKMARK_DECK_ID } from './utils/decks';
 import { playSound } from './utils/audio';
 import { recordItemAttempt, recordItemInteraction, buildSmartRecallQueue } from './utils/mastery';
 import { recordStudyActivity, INITIAL_STUDY_STATS } from './utils/activity';
 import { v4 as uuidv4 } from 'uuid';
-import { LeaderboardView } from './components/leaderboard/LeaderboardView';
+import type { AuthChangeEvent, Session } from '@supabase/supabase-js';
 import { AuthModal } from './components/auth/AuthModal';
 import { supabase, getSession, saveGameToCloud, loadGameFromCloud, upsertLeaderboard } from './lib/supabase';
-import { ErrorBoundary } from './components/ErrorBoundary';
+import { ModuleBoundary } from './components/common/ModuleBoundary';
 import { SpotlightOnboarding } from './components/tutorial/SpotlightOnboarding';
 import { useBackButton } from './hooks/useBackButton';
 
@@ -43,6 +48,10 @@ const STORAGE_KEY_STAGES = 'nihongo_quest_stage_progress_v2';
 const STORAGE_KEY_DAILY = 'nihongo_quest_daily_missions_v2';
 const STORAGE_KEY_WEEKLY = 'nihongo_quest_weekly_missions_v2';
 const STORAGE_KEY_ONBOARDING = 'nihongo_quest_onboarding_completed';
+const STORAGE_KEY_LAST_SYNC = 'n3quest_last_cloud_sync';
+const STORAGE_KEY_LAST_DAILY_RESET = 'n3quest_last_daily_reset';
+const STORAGE_KEY_LAST_WEEKLY_RESET = 'n3quest_last_weekly_reset';
+const CLOUD_SAVE_MIN_INTERVAL_MS = 30_000;
 
 // Seed initial item mastery for an authentic start
 const INITIAL_ITEM_MASTERY: Record<string, ItemMasteryRecord> = {};
@@ -320,20 +329,15 @@ export default function App() {
   // Active Study Tracking (Stage Hub / Learning Modules, Recall SRS, Boss Battles, and Library)
   const isStudying = Boolean(selectedStage || isRecallActive || isBossBattleActive || activeTab === 'library');
 
-  const { todaySeconds: activeTodayStudySeconds, isTimerActive } = useStudyTimeTracker({
-    isStudying,
-    initialTodaySeconds: stats.todayStudySeconds || 0,
-    initialTotalSeconds: stats.totalStudySeconds || 0,
-    lastStudyDate: stats.lastStudyDate,
-    onSave: (todaySec, totalSec, studyDate) => {
-      setStats(prev => ({
-        ...prev,
-        todayStudySeconds: todaySec,
-        totalStudySeconds: totalSec,
-        lastStudyDate: studyDate,
-      }));
-    },
-  });
+  // Pelacak waktu hidup di <StudyTimerBadge> (re-render per detik terisolasi dari App).
+  const handleStudyTimeSave = useCallback((todaySec: number, totalSec: number, studyDate: string) => {
+    setStats(prev => ({
+      ...prev,
+      todayStudySeconds: todaySec,
+      totalStudySeconds: totalSec,
+      lastStudyDate: studyDate,
+    }));
+  }, []);
 
   // Cloud Sync Refs to eliminate stale closures
   const statsRef = useRef(stats);
@@ -347,12 +351,27 @@ export default function App() {
 
   const [cloudSyncStatus, setCloudSyncStatus] = useState<'idle' | 'syncing' | 'synced' | 'error'>('idle');
   const [cloudSyncMessage, setCloudSyncMessage] = useState<string | null>(null);
-  const [lastSyncedAt, setLastSyncedAt] = useState<string | null>(() => localStorage.getItem('n3quest_last_cloud_sync'));
+  const [lastSyncedAt, setLastSyncedAt] = useState<string | null>(() => safeGetItem(STORAGE_KEY_LAST_SYNC));
+  // Auto-save ke cloud TIDAK boleh jalan sebelum rekonsiliasi awal selesai; kalau tidak, state lokal
+  // yang masih kosong (perangkat baru / koneksi lambat) bisa menimpa save di cloud.
+  const [cloudHydrated, setCloudHydrated] = useState(false);
+
+  const showToast = useCallback((message: string, ms = 4000) => {
+    setCloudSyncMessage(message);
+    window.setTimeout(() => setCloudSyncMessage(null), ms);
+  }, []);
+
+  const markSynced = useCallback(() => {
+    const nowStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    setLastSyncedAt(nowStr);
+    safeSetItem(STORAGE_KEY_LAST_SYNC, nowStr);
+  }, []);
 
   // Cloud Sync Handler
   const handleCloudSync = useCallback(async (userIdParam?: string): Promise<boolean> => {
     try {
       setCloudSyncStatus('syncing');
+      // Melempar error bila jaringan/server gagal => masuk catch, tidak ada yang ditimpa.
       const cloudData = await loadGameFromCloud();
       const currentStats = statsRef.current;
       const currentStages = stageProgressRef.current;
@@ -371,152 +390,167 @@ export default function App() {
             updatedAt: new Date().toISOString()
           });
         }
-        const nowStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        setLastSyncedAt(nowStr);
-        localStorage.setItem('n3quest_last_cloud_sync', nowStr);
+        markSynced();
         setCloudSyncStatus('synced');
         return true;
       }
 
       // We have cloud data! Compare progress
-      const cloudExp = cloudData.stats?.totalExp || 0;
-      const cloudLevel = cloudData.stats?.level || 1;
+      const cloudStats = cloudData.stats || {};
+      const cloudExp = cloudStats.totalExp || 0;
+      const cloudLevel = cloudStats.level || 1;
       const localExp = currentStats.totalExp || 0;
       const localLevel = currentStats.level || 1;
 
       console.log(`[CloudSync] Cloud: Lv.${cloudLevel} (${cloudExp} EXP) vs Local: Lv.${localLevel} (${localExp} EXP)`);
 
-      if (cloudExp > localExp || cloudLevel > localLevel) {
-        // Cloud has more progress! Adopt Cloud Save
-        const finalLevel = cloudData.stats?.level || calculateLevelFromExp(cloudExp);
-        const finalHp = calculateMaxHp(finalLevel, cloudData.stats?.vit || 0);
-        const finalMp = calculateMaxMp(finalLevel, cloudData.stats?.int || 0);
+      const cloudWins = cloudExp > localExp || cloudLevel > localLevel;
+      const localWins = !cloudWins && (localExp > cloudExp || localLevel > cloudLevel);
+
+      // Koleksi (itemMastery, userDecks, stageProgress) selalu di-union supaya progres yang hanya
+      // ada di satu sisi tidak hilang. Skalar (level/EXP/gold, dst.) mengikuti sisi yang lebih maju.
+      const mergedStages = mergeStageProgress(currentStages, cloudData.stageProgress);
+
+      let mergedStats: PlayerStats;
+      if (cloudWins) {
+        const finalLevel = cloudStats.level || calculateLevelFromExp(cloudExp);
+        const finalHp = calculateMaxHp(finalLevel, cloudStats.vit || 0);
+        const finalMp = calculateMaxMp(finalLevel, cloudStats.int || 0);
         const candidateMerged: PlayerStats = {
           ...DEFAULT_STATS,
           ...currentStats,
-          ...cloudData.stats,
+          ...cloudStats,
           userId: targetUserId || currentStats.userId,
           level: finalLevel,
           totalExp: cloudExp,
         };
         const { effectiveTierIndex } = getEffectiveTier(candidateMerged);
 
-        const mergedStats: PlayerStats = {
+        mergedStats = mergeStatsCollections({
           ...candidateMerged,
           tierIndex: effectiveTierIndex,
           hp: Math.max(currentStats.hp, finalHp),
           maxHp: finalHp,
           mp: Math.max(currentStats.mp, finalMp),
           maxMp: finalMp,
-          theme: currentStats.theme || cloudData.stats?.theme || 'dark',
+          theme: currentStats.theme || cloudStats.theme || 'dark',
           soundEnabled: currentStats.soundEnabled !== undefined ? currentStats.soundEnabled : true,
-        };
-
-        setStats(mergedStats);
-        localStorage.setItem(STORAGE_KEY_STATS, JSON.stringify(mergedStats));
-
-        if (cloudData.stageProgress && Object.keys(cloudData.stageProgress).length > 0) {
-          const mergedStages = { ...currentStages, ...cloudData.stageProgress };
-          setStageProgress(mergedStages);
-          localStorage.setItem(STORAGE_KEY_STAGES, JSON.stringify(mergedStages));
-        }
-
-        if (cloudData.dailyMissions && cloudData.dailyMissions.length > 0) {
-          setDailyMissions(cloudData.dailyMissions);
-          localStorage.setItem(STORAGE_KEY_DAILY, JSON.stringify(cloudData.dailyMissions));
-        }
-
-        if (cloudData.weeklyMissions && cloudData.weeklyMissions.length > 0) {
-          setWeeklyMissions(cloudData.weeklyMissions);
-          localStorage.setItem(STORAGE_KEY_WEEKLY, JSON.stringify(cloudData.weeklyMissions));
-        }
-
-        const nowStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        setLastSyncedAt(nowStr);
-        localStorage.setItem('n3quest_last_cloud_sync', nowStr);
-        setCloudSyncStatus('synced');
-        setCloudSyncMessage(`Progres dipulihkan dari Cloud (Level ${finalLevel} • ${cloudExp.toLocaleString()} EXP)!`);
-        setTimeout(() => setCloudSyncMessage(null), 5000);
-        return true;
-      } else if (localExp > cloudExp || localLevel > cloudLevel) {
-        // Local has newer progress! Push local save to cloud
-        await saveGameToCloud({
-          stats: { ...currentStats, userId: targetUserId || currentStats.userId },
-          stageProgress: currentStages,
-          dailyMissions: currentDaily,
-          weeklyMissions: currentWeekly,
-          updatedAt: new Date().toISOString()
-        });
-        const nowStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        setLastSyncedAt(nowStr);
-        localStorage.setItem('n3quest_last_cloud_sync', nowStr);
-        setCloudSyncStatus('synced');
-        setCloudSyncMessage(`Progres lokal (Level ${localLevel}) tersimpan ke Cloud!`);
-        setTimeout(() => setCloudSyncMessage(null), 4000);
-        return true;
+        }, currentStats, cloudStats);
       } else {
-        // Equal EXP: Merge stageProgress & ensure cloud has full snapshot
-        const mergedStages = { ...currentStages, ...(cloudData.stageProgress || {}) };
-        setStageProgress(mergedStages);
-        localStorage.setItem(STORAGE_KEY_STAGES, JSON.stringify(mergedStages));
+        mergedStats = mergeStatsCollections(
+          { ...currentStats, userId: targetUserId || currentStats.userId },
+          currentStats,
+          cloudStats
+        );
+      }
 
-        await saveGameToCloud({
-          stats: { ...currentStats, userId: targetUserId || currentStats.userId },
-          stageProgress: mergedStages,
-          dailyMissions: currentDaily,
-          weeklyMissions: currentWeekly,
-          updatedAt: new Date().toISOString()
-        });
+      setStats(mergedStats);
+      safeSetItem(STORAGE_KEY_STATS, JSON.stringify(mergedStats));
+      setStageProgress(mergedStages);
+      safeSetItem(STORAGE_KEY_STAGES, JSON.stringify(mergedStages));
 
-        const nowStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        setLastSyncedAt(nowStr);
-        localStorage.setItem('n3quest_last_cloud_sync', nowStr);
+      if (cloudWins) {
+        // Misi cloud hanya dipakai bila masih berlaku di periode yang sama (hari / minggu ISO ini).
+        const cloudDate = cloudData.updatedAt ? new Date(cloudData.updatedAt) : null;
+        if (cloudDate && !Number.isNaN(cloudDate.getTime())) {
+          if (cloudData.dailyMissions?.length && cloudDate.toDateString() === new Date().toDateString()) {
+            setDailyMissions(cloudData.dailyMissions);
+            safeSetItem(STORAGE_KEY_DAILY, JSON.stringify(cloudData.dailyMissions));
+          }
+          if (cloudData.weeklyMissions?.length && getLocalIsoWeekId(cloudDate) === getLocalIsoWeekId()) {
+            setWeeklyMissions(cloudData.weeklyMissions);
+            safeSetItem(STORAGE_KEY_WEEKLY, JSON.stringify(cloudData.weeklyMissions));
+          }
+        }
+        markSynced();
         setCloudSyncStatus('synced');
+        showToast(`Progres dipulihkan dari Cloud (Level ${mergedStats.level} • ${cloudExp.toLocaleString()} EXP)!`, 5000);
         return true;
       }
+
+      // Lokal lebih maju / sama: dorong snapshot gabungan ke cloud
+      await saveGameToCloud({
+        stats: mergedStats,
+        stageProgress: mergedStages,
+        dailyMissions: currentDaily,
+        weeklyMissions: currentWeekly,
+        updatedAt: new Date().toISOString()
+      });
+      markSynced();
+      setCloudSyncStatus('synced');
+      if (localWins) showToast(`Progres lokal (Level ${localLevel}) tersimpan ke Cloud!`);
+      return true;
     } catch (err) {
       console.error('[CloudSync] Error during sync:', err);
       setCloudSyncStatus('error');
-      setCloudSyncMessage('Gagal sinkronisasi dengan cloud.');
-      setTimeout(() => setCloudSyncMessage(null), 4000);
+      showToast('Gagal sinkronisasi dengan cloud. Progres lokal tetap aman.');
       return false;
     }
-  }, []);
+  }, [markSynced, showToast]);
 
   // Authentication Listener & Cloud Sync
   useEffect(() => {
+    let cancelled = false;
+    // Hanya satu rekonsiliasi pada satu waktu; event auth beruntun (INITIAL_SESSION + SIGNED_IN)
+    // tidak boleh menjalankan dua sync paralel.
+    let syncInFlight: Promise<boolean> | null = null;
+
+    const reconcile = (userId: string) => {
+      if (syncInFlight) return syncInFlight;
+      setCloudHydrated(false);
+      syncInFlight = handleCloudSync(userId).finally(() => {
+        syncInFlight = null;
+        // Sync gagal pun tetap membuka gerbang autosave: loadGameFromCloud melempar error,
+        // sehingga cloud tidak pernah ditimpa oleh state yang belum direkonsiliasi.
+        if (!cancelled) setCloudHydrated(true);
+      });
+      return syncInFlight;
+    };
+
     getSession().then((session) => {
+      if (cancelled) return;
       setIsAuthenticated(!!session);
       if (session?.user) {
         setStats(prev => ({ ...prev, userId: session.user.id }));
-        handleCloudSync(session.user.id);
+        reconcile(session.user.id);
+      } else {
+        setCloudHydrated(true); // tamu: tidak ada save cloud yang bisa tertimpa
       }
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event: AuthChangeEvent, session: Session | null) => {
       setIsAuthenticated(!!session);
       if (session?.user) {
         setStats(prev => ({ ...prev, userId: session.user.id }));
         if (event === 'SIGNED_IN' || event === 'INITIAL_SESSION' || event === 'USER_UPDATED') {
-          handleCloudSync(session.user.id);
+          reconcile(session.user.id);
         }
+      } else {
+        setCloudHydrated(true);
       }
     });
 
     return () => {
+      cancelled = true;
       subscription?.unsubscribe?.();
     };
   }, [handleCloudSync]);
 
 
-  // Daily midnight reset & streak tracking
-  useEffect(() => {
-    const now = new Date();
-    const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-    const lastReset = localStorage.getItem('n3quest_last_daily_reset');
-    if (lastReset !== today) {
+  // Rollover harian (misi harian + streak) & mingguan (misi mingguan, ISO week, Senin 00:00 lokal).
+  // Dijalankan saat mount, saat tab kembali terlihat, dan tiap menit supaya aplikasi yang dibiarkan
+  // terbuka melewati tengah malam tetap ter-reset.
+  const applyRollover = useCallback(() => {
+    const today = getTodayLocalDate();
+    if (safeGetItem(STORAGE_KEY_LAST_DAILY_RESET) !== today) {
       setDailyMissions(INITIAL_DAILY_MISSIONS);
-      localStorage.setItem('n3quest_last_daily_reset', today);
+      safeSetItem(STORAGE_KEY_LAST_DAILY_RESET, today);
+    }
+
+    const weekId = getLocalIsoWeekId();
+    if (safeGetItem(STORAGE_KEY_LAST_WEEKLY_RESET) !== weekId) {
+      setWeeklyMissions(INITIAL_WEEKLY_MISSIONS);
+      safeSetItem(STORAGE_KEY_LAST_WEEKLY_RESET, weekId);
     }
 
     setStats(prev => {
@@ -547,11 +581,24 @@ export default function App() {
         longestStreak: Math.max(prev.longestStreak || 0, newStreak),
         totalActiveDays: (prev.totalActiveDays || 0) + 1,
         lastActiveDate: today,
-        todayStudySeconds: (lastActive === today) ? (prev.todayStudySeconds || 0) : 0,
+        todayStudySeconds: 0,
         lastStudyDate: today,
       };
     });
   }, []);
+
+  useEffect(() => {
+    applyRollover();
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') applyRollover();
+    };
+    document.addEventListener('visibilitychange', onVisible);
+    const intervalId = window.setInterval(applyRollover, 60_000);
+    return () => {
+      document.removeEventListener('visibilitychange', onVisible);
+      window.clearInterval(intervalId);
+    };
+  }, [applyRollover]);
 
   // Theme Sync
   useEffect(() => {
@@ -567,24 +614,75 @@ export default function App() {
     }
   }, [stats.theme]);
 
+  // Tulis ke localStorage dengan penanganan QuotaExceededError (toast sekali per episode kuota penuh).
+  const quotaWarnedRef = useRef(false);
+  const persist = useCallback((key: string, value: unknown) => {
+    const result = safeSetItem(key, JSON.stringify(value));
+    if (result === 'quota') {
+      if (!quotaWarnedRef.current) {
+        quotaWarnedRef.current = true;
+        showToast('Penyimpanan perangkat penuh — progres terbaru mungkin tidak tersimpan secara lokal. Kosongkan ruang lalu coba lagi.', 7000);
+      }
+    } else if (result === 'ok') {
+      quotaWarnedRef.current = false;
+    }
+  }, [showToast]);
+
   // Sync to LocalStorage (debounced to avoid blocking main thread on every tiny state change)
   useEffect(() => {
-    const timerId = setTimeout(() => {
-      try {
-        localStorage.setItem(STORAGE_KEY_STATS, JSON.stringify(stats));
-      } catch (e) {
-        console.warn('Failed to save player stats', e);
-      }
-    }, 1000);
+    const timerId = setTimeout(() => persist(STORAGE_KEY_STATS, stats), 1000);
     return () => clearTimeout(timerId);
-  }, [stats]);
+  }, [stats, persist]);
 
-  // Sync to Cloud Save (debounced 3s to avoid excessive requests)
   useEffect(() => {
-    if (!stats.userId) return;
+    const timerId = setTimeout(() => persist(STORAGE_KEY_STAGES, stageProgress), 1000);
+    return () => clearTimeout(timerId);
+  }, [stageProgress, persist]);
+
+  useEffect(() => {
+    const timerId = setTimeout(() => persist(STORAGE_KEY_DAILY, dailyMissions), 1000);
+    return () => clearTimeout(timerId);
+  }, [dailyMissions, persist]);
+
+  useEffect(() => {
+    const timerId = setTimeout(() => persist(STORAGE_KEY_WEEKLY, weeklyMissions), 1000);
+    return () => clearTimeout(timerId);
+  }, [weeklyMissions, persist]);
+
+  // Flush sinkron saat tab disembunyikan / ditutup: debounce 1 detik di atas tidak sempat jalan
+  // pada kasus ini (terutama di mobile, di mana beforeunload tidak andal).
+  useEffect(() => {
+    const flush = () => {
+      persist(STORAGE_KEY_STATS, statsRef.current);
+      persist(STORAGE_KEY_STAGES, stageProgressRef.current);
+      persist(STORAGE_KEY_DAILY, dailyMissionsRef.current);
+      persist(STORAGE_KEY_WEEKLY, weeklyMissionsRef.current);
+    };
+    const onVisibility = () => {
+      if (document.visibilityState === 'hidden') flush();
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+    window.addEventListener('pagehide', flush);
+    return () => {
+      document.removeEventListener('visibilitychange', onVisibility);
+      window.removeEventListener('pagehide', flush);
+    };
+  }, [persist]);
+
+  // Sync to Cloud Save (debounced 3s to avoid excessive requests).
+  // Menunggu rekonsiliasi awal (cloudHydrated) agar state lokal yang belum final tidak menimpa cloud.
+  const lastCloudSaveAtRef = useRef(0);
+  useEffect(() => {
+    if (!stats.userId || !cloudHydrated) return;
+
+    // Debounce 3 dtk, tetapi minimal CLOUD_SAVE_MIN_INTERVAL_MS antar-simpan: pelacak waktu belajar
+    // mengubah stats tiap 10 detik, dan tiap simpan mengirim payload penuh + upsert seluruh mastery.
+    const sinceLast = Date.now() - lastCloudSaveAtRef.current;
+    const delay = Math.max(3000, CLOUD_SAVE_MIN_INTERVAL_MS - sinceLast);
 
     const timerId = setTimeout(async () => {
       try {
+        lastCloudSaveAtRef.current = Date.now();
         await saveGameToCloud({
           stats,
           stageProgress,
@@ -592,50 +690,24 @@ export default function App() {
           weeklyMissions,
           updatedAt: new Date().toISOString()
         });
-        const nowStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        setLastSyncedAt(nowStr);
-        localStorage.setItem('n3quest_last_cloud_sync', nowStr);
+        markSynced();
       } catch (err) {
         console.warn('Cloud auto-save error:', err);
       }
-    }, 3000);
+    }, delay);
 
     return () => clearTimeout(timerId);
-  }, [stats, stageProgress, dailyMissions, weeklyMissions, isAuthenticated]);
+  }, [stats, stageProgress, dailyMissions, weeklyMissions, isAuthenticated, cloudHydrated, markSynced]);
 
-
+  // Sinkron leaderboard cepat saat EXP / nama berubah. Efek samping ini sengaja dipisah dari
+  // updater setStats (updater harus murni; React dapat memanggilnya dua kali).
   useEffect(() => {
+    if (!stats.userId || !cloudHydrated) return;
     const timerId = setTimeout(() => {
-      try {
-        localStorage.setItem(STORAGE_KEY_STAGES, JSON.stringify(stageProgress));
-      } catch (e) {
-        console.warn('Failed to save stage progress', e);
-      }
-    }, 1000);
+      upsertLeaderboard(statsRef.current).catch(e => console.warn('Instant leaderboard sync warning:', e));
+    }, 1200);
     return () => clearTimeout(timerId);
-  }, [stageProgress]);
-
-  useEffect(() => {
-    const timerId = setTimeout(() => {
-      try {
-        localStorage.setItem(STORAGE_KEY_DAILY, JSON.stringify(dailyMissions));
-      } catch (e) {
-        console.warn('Failed to save daily missions', e);
-      }
-    }, 1000);
-    return () => clearTimeout(timerId);
-  }, [dailyMissions]);
-
-  useEffect(() => {
-    const timerId = setTimeout(() => {
-      try {
-        localStorage.setItem(STORAGE_KEY_WEEKLY, JSON.stringify(weeklyMissions));
-      } catch (e) {
-        console.warn('Failed to save weekly missions', e);
-      }
-    }, 1000);
-    return () => clearTimeout(timerId);
-  }, [weeklyMissions]);
+  }, [stats.totalExp, stats.playerName, stats.userId, cloudHydrated]);
 
   // Give EXP & Gold reward directly (pure base EXP, respects JLPT Ascension gates)
   const handleRewardPlayer = (expGained: number, goldGained: number = 0) => {
@@ -646,7 +718,7 @@ export default function App() {
         totalExp: newTotalExp,
       });
 
-      const updated = {
+      return {
         ...prev,
         totalExp: newTotalExp,
         tierIndex: Math.max(0, effectiveTierIndex),
@@ -654,13 +726,6 @@ export default function App() {
         gatedReason: gatedReason,
         gold: Math.round(Math.max(0, (prev.gold || 0) + goldGained)),
       };
-
-      // Immediately sync to Supabase Leaderboard without waiting for 3s debounce
-      if (updated.userId) {
-        upsertLeaderboard(updated).catch(e => console.warn('Instant leaderboard sync warning:', e));
-      }
-
-      return updated;
     });
   };
 
@@ -740,6 +805,13 @@ export default function App() {
     const effectiveInteraction: 'writing' | 'flashcard' | 'quiz' =
       interactionTypeOverride || (moduleId === 'kanji' ? 'writing' : (moduleId === 'kotoba' ? 'flashcard' : 'quiz'));
 
+    // ID agregat sesi (drill/tryout/dungeon/star_rush) bukan item materi: jangan dibuat record mastery,
+    // kalau tidak itemMastery membengkak (ID dungeon unik per sesi) dan antrean recall berisi item hantu.
+    const isSessionAggregate =
+      moduleId === 'questions' ||
+      moduleId === 'tryOuts' ||
+      (itemId !== undefined && /^(dungeon_|drill_|tryout_|star_rush)/.test(itemId));
+
     // Advance mission progress based on completed module
     if (effectiveInteraction === 'writing' || moduleId === 'kanji') advanceMissions('kanji', 1);
     if (moduleId === 'bunpou') advanceMissions('bunpou', 1);
@@ -762,8 +834,8 @@ export default function App() {
       let updatedMastery = prev.itemMastery || {};
       let updatedRecallQueue = prev.recallQueue || [];
 
-      if (itemId && score !== undefined && total !== undefined) {
-        const cat = moduleId === 'boss' ? 'bunpou' : (moduleId === 'questions' || moduleId === 'tryOuts' ? 'kotoba' : moduleId);
+      if (itemId && !isSessionAggregate && score !== undefined && total !== undefined) {
+        const cat = moduleId === 'boss' ? 'bunpou' : moduleId;
         const currentItem = prev.itemMastery ? prev.itemMastery[itemId] : undefined;
         const isContextual = moduleId === 'dokkai' || moduleId === 'boss';
         const updatedRecord = recordItemAttempt(
@@ -1040,7 +1112,14 @@ export default function App() {
   };
 
   const handleResetData = () => {
-    setStats(DEFAULT_STATS);
+    // userId dipertahankan: identitas leaderboard/cloud tidak boleh hilang saat progres di-reset,
+    // dan autosave (yang membutuhkan userId) akan menimpa save cloud dengan state yang sudah bersih.
+    setStats(prev => ({
+      ...DEFAULT_STATS,
+      userId: prev.userId,
+      lastStudyDate: getTodayLocalDate(),
+      userDecks: [createDefaultBookmarkDeck()],
+    }));
     setStageProgress({});
     setDailyMissions(INITIAL_DAILY_MISSIONS);
     setWeeklyMissions(INITIAL_WEEKLY_MISSIONS);
@@ -1092,25 +1171,14 @@ export default function App() {
   const handleUpdateName = (newName: string) => {
     const trimmed = newName.trim().slice(0, 30);
     if (!trimmed) return;
-    setStats(prev => {
-      const updated = { ...prev, playerName: trimmed };
-      if (isAuthenticated && updated.userId) {
-        upsertLeaderboard(updated);
-      }
-      return updated;
-    });
+    setStats(prev => ({ ...prev, playerName: trimmed }));
   };
 
   // Handle Player Signature / Bio Motto Update
   const handleUpdateSignature = (newSignature: string) => {
     const trimmed = newSignature.trim().slice(0, 60);
-    setStats(prev => {
-      const updated = { ...prev, signature: trimmed };
-      try {
-        localStorage.setItem('nihongo_quest_player_signature', trimmed);
-      } catch {}
-      return updated;
-    });
+    safeSetItem('nihongo_quest_player_signature', trimmed);
+    setStats(prev => ({ ...prev, signature: trimmed }));
   };
 
   const handleToggleBookmark = useCallback((id: string, category: DeckItemCategory, notes?: string, targetDeckId?: string) => {
@@ -1123,19 +1191,15 @@ export default function App() {
         const { userDecks } = toggleBookmarkItem(prev.userDecks, id, category, notes);
         updatedDecks = userDecks;
       }
-      const updated = { ...prev, userDecks: updatedDecks };
-      if (isAuthenticated && updated.userId) {
-        saveGameToCloud({
-          stats: updated,
-          stageProgress: stageProgressRef.current,
-          dailyMissions: dailyMissionsRef.current,
-          weeklyMissions: weeklyMissionsRef.current,
-          updatedAt: new Date().toISOString()
-        });
-      }
-      return updated;
+      return { ...prev, userDecks: updatedDecks };
     });
-  }, [isAuthenticated]);
+  }, []);
+
+  // Pembaruan deck dari semua tab. Persistensi lokal & cloud ditangani efek debounce + flush di atas,
+  // bukan di dalam updater state.
+  const handleUpdateDecks = useCallback((updatedDecks: UserDeck[]) => {
+    setStats(prev => ({ ...prev, userDecks: updatedDecks }));
+  }, []);
 
   return (
     <div 
@@ -1192,21 +1256,13 @@ export default function App() {
           {/* Quick HUD in Header */}
           <div className="flex items-center gap-1.5 sm:gap-2.5 text-xs">
             {/* Today's Study Time Tracker */}
-            <div
-              className={`py-1.5 px-3 rounded-xl bg-surface-inset border text-xs font-mono font-bold flex items-center gap-1.5 shadow-inner transition-all select-none ${
-                isTimerActive
-                  ? 'border-gold/50 text-gold'
-                  : 'border-border-subtle text-text-secondary'
-              }`}
-              title={`Waktu Belajar Hari Ini: ${formatDetailedStudyTime(activeTodayStudySeconds)}${
-                isTimerActive ? ' • Sesi belajar sedang aktif' : ' • Jeda'
-              }`}
-            >
-              <Clock className={`w-3.5 h-3.5 shrink-0 ${isTimerActive ? 'text-gold animate-pulse' : 'text-text-muted'}`} />
-              <span className="font-mono text-[11px] sm:text-xs">
-                {formatStudyTime(activeTodayStudySeconds)}
-              </span>
-            </div>
+            <StudyTimerBadge
+              isStudying={isStudying}
+              initialTodaySeconds={stats.todayStudySeconds || 0}
+              initialTotalSeconds={stats.totalStudySeconds || 0}
+              lastStudyDate={stats.lastStudyDate}
+              onSave={handleStudyTimeSave}
+            />
           </div>
         </div>
       </header>
@@ -1214,6 +1270,7 @@ export default function App() {
       {/* Main Content Area */}
       <main className="flex-1 max-w-4xl w-full mx-auto px-3.5 sm:px-4 py-4 sm:py-5">
         {isRecallActive && (
+          <ModuleBoundary label="Recall SRS" onReset={() => setIsRecallActive(false)}>
           <RecallModule
             recallQueue={stats.recallQueue || []}
             playerMp={stats.mp}
@@ -1225,10 +1282,11 @@ export default function App() {
             soundEnabled={stats.soundEnabled}
             furiganaEnabled={stats.furiganaEnabled ?? true}
           />
+          </ModuleBoundary>
         )}
 
         {isBossBattleActive && !isRecallActive && (
-          <Suspense fallback={<div className="flex items-center justify-center h-full text-stone-400">Loading Boss Battle...</div>}>
+          <ModuleBoundary label="Boss Battle" onReset={() => setIsBossBattleActive(false)}>
             <DungeonBattleModule
               onComplete={(_score, _total, exp, gold, tryoutId) => {
                 handleRewardPlayer(exp, gold);
@@ -1238,11 +1296,11 @@ export default function App() {
               onBack={() => setIsBossBattleActive(false)}
               soundEnabled={stats.soundEnabled}
             />
-          </Suspense>
+          </ModuleBoundary>
         )}
 
         {selectedStage && !isRecallActive && !isBossBattleActive && (
-          <ErrorBoundary>
+          <ModuleBoundary label="Stage" onReset={() => setSelectedStage(null)}>
             <StageHubView
               stage={selectedStage}
               stageProgress={stageProgress[selectedStage.id]}
@@ -1267,7 +1325,7 @@ export default function App() {
               soundEnabled={stats.soundEnabled}
               furiganaEnabled={stats.furiganaEnabled ?? true}
             />
-          </ErrorBoundary>
+          </ModuleBoundary>
         )}
 
         {/* Standard Tab Views (Keep-Alive Container for 0ms Instant Tab Switching) */}
@@ -1279,6 +1337,7 @@ export default function App() {
               aria-hidden={activeTab !== 'home'}
             >
               {visitedTabs.has('home') && (
+                <ModuleBoundary label="Beranda">
                 <HomeView
                   stats={stats}
                   dailyMissions={dailyMissions}
@@ -1288,6 +1347,7 @@ export default function App() {
                   onNavigateTab={(tab) => handleTabChange(tab as TabType)}
                   onStartRecall={() => setIsRecallActive(true)}
                 />
+                </ModuleBoundary>
               )}
             </div>
 
@@ -1297,7 +1357,7 @@ export default function App() {
               aria-hidden={activeTab !== 'maps'}
             >
               {visitedTabs.has('maps') && (
-                <ErrorBoundary>
+                <ModuleBoundary label="Peta Dunia">
                   <WorldView
                     currentMapId={stats.currentMapId}
                     currentWorldId={stats.currentWorldId || ''}
@@ -1318,17 +1378,7 @@ export default function App() {
                     onStartBoss={() => setIsBossBattleActive(true)}
                     soundEnabled={stats.soundEnabled}
                     userDecks={stats.userDecks}
-                    onUpdateDecks={(updatedDecks) => {
-                      setStats(prev => {
-                        const next = { ...prev, userDecks: updatedDecks };
-                        try {
-                          localStorage.setItem(STORAGE_KEY_STATS, JSON.stringify(next));
-                        } catch (e) {
-                          console.warn('Failed to persist user decks', e);
-                        }
-                        return next;
-                      });
-                    }}
+                    onUpdateDecks={handleUpdateDecks}
                     onNavigateTab={(tab) => handleTabChange(tab as TabType)}
                     onNavigateToOfficialBooks={handleNavigateToOfficialBooks}
                     onRewardPlayer={handleRewardPlayer}
@@ -1346,7 +1396,7 @@ export default function App() {
                     itemMastery={stats.itemMastery || {}}
                     furiganaEnabled={stats.furiganaEnabled ?? true}
                   />
-                </ErrorBoundary>
+                </ModuleBoundary>
               )}
             </div>
 
@@ -1356,12 +1406,14 @@ export default function App() {
               aria-hidden={activeTab !== 'daily' && activeTab !== 'weekly'}
             >
               {(visitedTabs.has('daily') || visitedTabs.has('weekly')) && (
+                <ModuleBoundary label="Misi">
                 <MissionsView
                   dailyMissions={dailyMissions}
                   weeklyMissions={weeklyMissions}
                   onClaimReward={handleClaimMission}
                   soundEnabled={stats.soundEnabled}
                 />
+                </ModuleBoundary>
               )}
             </div>
 
@@ -1371,6 +1423,7 @@ export default function App() {
               aria-hidden={activeTab !== 'leaderboard'}
             >
               {visitedTabs.has('leaderboard') && (
+                <ModuleBoundary label="Papan Peringkat">
                 <LeaderboardView
                   currentUserId={stats.userId!}
                   currentUserStats={stats}
@@ -1379,6 +1432,7 @@ export default function App() {
                   onUpdateSignature={handleUpdateSignature}
                   isActive={activeTab === 'leaderboard'}
                 />
+                </ModuleBoundary>
               )}
             </div>
 
@@ -1388,6 +1442,7 @@ export default function App() {
               aria-hidden={activeTab !== 'library'}
             >
               {visitedTabs.has('library') && (
+                <ModuleBoundary label="Perpustakaan">
                 <LibraryView
                   soundEnabled={stats.soundEnabled}
                   itemMastery={stats.itemMastery}
@@ -1397,22 +1452,9 @@ export default function App() {
                   onCompleteStudyItem={handleStudyComplete}
                   userDecks={stats.userDecks}
                   onToggleBookmark={handleToggleBookmark}
-                  onUpdateDecks={(updatedDecks) => {
-                    setStats(prev => {
-                      const updated = { ...prev, userDecks: updatedDecks };
-                      if (isAuthenticated && updated.userId) {
-                        saveGameToCloud({
-                          stats: updated,
-                          stageProgress: stageProgressRef.current,
-                          dailyMissions: dailyMissionsRef.current,
-                          weeklyMissions: weeklyMissionsRef.current,
-                          updatedAt: new Date().toISOString()
-                        });
-                      }
-                      return updated;
-                    });
-                  }}
+                  onUpdateDecks={handleUpdateDecks}
                 />
+                </ModuleBoundary>
               )}
             </div>
 
@@ -1422,26 +1464,13 @@ export default function App() {
               aria-hidden={activeTab !== 'deck'}
             >
               {visitedTabs.has('deck') && (
+                <ModuleBoundary label="Buku Saku">
                 <BukuSakuView
                   userDecks={stats.userDecks}
                   resetSignal={deckResetCount}
                   initialSubTab={deckInitialSubTab}
                   onSubTabChange={(subTab) => setDeckInitialSubTab(subTab)}
-                  onUpdateDecks={(updatedDecks) => {
-                    setStats(prev => {
-                      const updated = { ...prev, userDecks: updatedDecks };
-                      if (isAuthenticated && updated.userId) {
-                        saveGameToCloud({
-                          stats: updated,
-                          stageProgress: stageProgressRef.current,
-                          dailyMissions: dailyMissionsRef.current,
-                          weeklyMissions: weeklyMissionsRef.current,
-                          updatedAt: new Date().toISOString()
-                        });
-                      }
-                      return updated;
-                    });
-                  }}
+                  onUpdateDecks={handleUpdateDecks}
                   onRewardPlayer={handleRewardPlayer}
                   onCompleteStudyItem={handleStudyComplete}
                   soundEnabled={stats.soundEnabled}
@@ -1458,6 +1487,7 @@ export default function App() {
                   itemMastery={stats.itemMastery || {}}
                   furiganaEnabled={stats.furiganaEnabled ?? true}
                 />
+                </ModuleBoundary>
               )}
             </div>
 
@@ -1467,6 +1497,7 @@ export default function App() {
               aria-hidden={activeTab !== 'settings'}
             >
               {visitedTabs.has('settings') && (
+                <ModuleBoundary label="Pengaturan">
                 <SettingsView
                   stats={stats}
                   onUpdateSettings={(newSettings) => setStats(prev => ({ ...prev, ...newSettings }))}
@@ -1489,6 +1520,7 @@ export default function App() {
                   onUpdateName={handleUpdateName}
                   onReplayTutorial={handleReplayOnboarding}
                 />
+                </ModuleBoundary>
               )}
             </div>
           </div>
