@@ -106,10 +106,10 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
     score?: number,
     total?: number
   ) => {
+    // onCompleteStudyItem (App.handleStudyComplete) sudah memberi EXP/Gold; jangan panggil keduanya.
     if (onCompleteStudyItem) {
       onCompleteStudyItem(moduleId, expGained, goldGained, itemId, score, total);
-    }
-    if (onRewardPlayer) {
+    } else if (onRewardPlayer) {
       onRewardPlayer(expGained, goldGained);
     }
 

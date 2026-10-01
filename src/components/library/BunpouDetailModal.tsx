@@ -323,9 +323,10 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
       playSound('correct', soundEnabled);
       if (!rewardClaimed) {
         setRewardClaimed(true);
-        if (onRewardPlayer) onRewardPlayer(15, 10);
         if (onCompleteStudyItem) {
           onCompleteStudyItem('bunpou', 15, 10, item.id, 1, 1);
+        } else {
+          onRewardPlayer?.(15, 10);
         }
       }
     } else {

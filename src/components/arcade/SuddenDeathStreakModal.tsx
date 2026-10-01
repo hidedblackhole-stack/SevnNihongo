@@ -239,9 +239,11 @@ export const SuddenDeathStreakModal: React.FC<SuddenDeathStreakModalProps> = ({
       // Rewards
       const expGain = 10 + Math.min(newStreak, 10);
       const goldGain = 5 + Math.floor(newStreak / 2);
-      if (onRewardPlayer) onRewardPlayer(expGain, goldGain);
+      // Satu jalur reward saja: onCompleteStudyItem sudah memberi EXP/Gold di App.handleStudyComplete.
       if (onCompleteStudyItem) {
-        onCompleteStudyItem('kotoba', expGain, goldGain, currentQ.id, 100, 100);
+        onCompleteStudyItem('kotoba', expGain, goldGain, currentQ.id, 1, 1);
+      } else {
+        onRewardPlayer?.(expGain, goldGain);
       }
 
       // Next question after brief celebration
@@ -368,7 +370,7 @@ export const SuddenDeathStreakModal: React.FC<SuddenDeathStreakModalProps> = ({
               </div>
 
               {/* Unified Source & Bookshelf Selector */}
-              <ArcadeSourceSelector
+              <ArcadeSourceSelector<LevelFilter>
                 sourceType={sourceType}
                 onSourceTypeChange={setSourceType}
                 selectedLevel={selectedLevel}
@@ -410,7 +412,7 @@ export const SuddenDeathStreakModal: React.FC<SuddenDeathStreakModalProps> = ({
                     key={h}
                     className={`w-6 h-6 transition-all duration-300 ${
                       h <= lives 
-                        ? 'text-crimson fill-crimson drop-shadow-[0_0_8px_rgba(239,68,68,0.5)] scale-100' 
+                        ? 'text-crimson fill-crimson scale-100' 
                         : 'text-border-subtle fill-surface-inset scale-90 opacity-40'
                     }`}
                   />

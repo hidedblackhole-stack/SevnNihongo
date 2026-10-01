@@ -203,9 +203,11 @@ export const KanjiSpeedRushModal: React.FC<KanjiSpeedRushModalProps> = ({
     // Reward player EXP & Gold
     const expGain = 15;
     const goldGain = 10;
-    if (onRewardPlayer) onRewardPlayer(expGain, goldGain);
+    // Satu jalur reward saja (lihat catatan di SuddenDeathStreakModal).
     if (onCompleteStudyItem) {
-      onCompleteStudyItem('kanji', expGain, goldGain, currentItem.id || currentItem.character, 100, 100);
+      onCompleteStudyItem('kanji', expGain, goldGain, currentItem.id || currentItem.character, 1, 1);
+    } else {
+      onRewardPlayer?.(expGain, goldGain);
     }
 
     const primaryReading = Array.isArray(currentItem.onyomi) && currentItem.onyomi[0] 
@@ -230,7 +232,7 @@ export const KanjiSpeedRushModal: React.FC<KanjiSpeedRushModalProps> = ({
       setCurrentIndex(prev => prev + 1);
     } else {
       // Loop or replenish queue if player completes entire pool
-      const fresh = buildQueue(selectedLevel);
+      const fresh = buildQueue();
       setKanjiQueue(fresh);
       setCurrentIndex(0);
       setIsCanvasLoading(true);
@@ -329,7 +331,7 @@ export const KanjiSpeedRushModal: React.FC<KanjiSpeedRushModalProps> = ({
               </div>
 
               {/* Unified Source & Bookshelf Selector */}
-              <ArcadeSourceSelector
+              <ArcadeSourceSelector<LevelFilter>
                 sourceType={sourceType}
                 onSourceTypeChange={setSourceType}
                 selectedLevel={selectedLevel}

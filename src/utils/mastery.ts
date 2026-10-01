@@ -25,6 +25,18 @@ import { fisherYatesShuffle } from './smartRandomizer';
 // SRS Interval progression (in days)
 const SRS_INTERVALS_DAYS = [1, 2, 4, 7, 14, 30];
 
+// Batas mastery (%) yang bisa diraih hanya lewat interaksi ringan (flashcard flip, latihan tanpa nilai).
+const INTERACTION_MASTERY_CAP = 70;
+
+const STATUS_RANK: Record<MasteryStatus, number> = {
+  LOCKED: 0,
+  AVAILABLE: 1,
+  LEARNING: 2,
+  COMPLETED: 3,
+  MASTERED: 4,
+  PERFECTED: 5,
+};
+
 // Humanized diagnostic insights for each error type
 const ERROR_DIAGNOSTIC_INSIGHTS: Record<ErrorType, { label: string; explanation: string; advice: string }> = {
   PASSIVE_CONFUSION: {
@@ -96,6 +108,10 @@ export function recordItemAttempt(
 ): ItemMasteryRecord {
   const now = new Date();
   const dateStr = now.toISOString();
+  // Sanitasi: NaN / Infinity / nilai negatif tidak boleh masuk ke record (satu NaN membuat
+  // masteryPercentage & mistakeCount NaN selamanya). Skor di-clamp ke [0, total].
+  totalQuestions = Number.isFinite(totalQuestions) && totalQuestions > 0 ? totalQuestions : 0;
+  score = Number.isFinite(score) ? Math.min(Math.max(score, 0), totalQuestions) : 0;
   const ratio = totalQuestions > 0 ? score / totalQuestions : 0;
   const isPerfect = score === totalQuestions && totalQuestions > 0;
   const mistakesInThisAttempt = Math.max(0, totalQuestions - score);
@@ -262,6 +278,12 @@ export function recordItemAttempt(
     nextIntervalDays = SRS_INTERVALS_DAYS[srsIdx];
   } else if (ratio < 0.6) {
     nextIntervalDays = 1; // Reset to 1 day if struggling
+  } else {
+    // Salah sebagian (60%-99%): turun satu anak tangga SRS (minimal 1 hari). Sebelumnya interval
+    // dibiarkan (mis. 30 hari) sehingga item yang baru saja salah dijadwalkan ulang sebulan lagi.
+    const currentIdx = SRS_INTERVALS_DAYS.findIndex(d => d >= nextIntervalDays);
+    const stepDownIdx = Math.max(0, (currentIdx === -1 ? SRS_INTERVALS_DAYS.length - 1 : currentIdx) - 1);
+    nextIntervalDays = Math.min(nextIntervalDays, SRS_INTERVALS_DAYS[stepDownIdx]);
   }
 
   const nextDue = new Date(now.getTime() + nextIntervalDays * 24 * 60 * 60 * 1000).toISOString();
@@ -357,7 +379,10 @@ export function recordItemInteraction(
   // Gradual mastery boost on active interaction:
   // Writing gives up to +5%, Flashcard +2%, Quiz +4%
   const boost = interactionType === 'writing' ? 5 : (interactionType === 'quiz' ? 4 : 2);
-  const updatedPct = Math.min(100, Math.max(currentPct, currentPct + (success ? boost : 0)));
+  // Interaksi ringan (membuka kartu, menggambar tanpa penilaian) dibatasi di INTERACTION_MASTERY_CAP:
+  // status MASTERED/PERFECTED hanya bisa dicapai lewat recordItemAttempt (jawaban yang dinilai + SRS).
+  const boosted = success ? Math.min(INTERACTION_MASTERY_CAP, currentPct + boost) : currentPct;
+  const updatedPct = Math.min(100, Math.max(currentPct, boosted));
   
   let newLevel = existingRecord.masteryLevel;
   if (updatedPct >= 90) newLevel = 5;
@@ -371,6 +396,8 @@ export function recordItemInteraction(
   else if (updatedPct >= 80) newStatus = 'MASTERED';
   else if (updatedPct >= 50) newStatus = 'COMPLETED';
   else newStatus = 'LEARNING';
+  // Jangan menurunkan status yang sudah diraih lewat jawaban terinci hanya karena interaksi ringan.
+  if (STATUS_RANK[existingRecord.status] > STATUS_RANK[newStatus]) newStatus = existingRecord.status;
 
   return {
     ...existingRecord,
@@ -381,6 +408,9 @@ export function recordItemInteraction(
     writingCount: newWriting,
     flashcardCount: newFlashcard,
     quizCount: newQuiz,
+    // Kegagalan interaksi dicatat: sebelumnya success=false hanya menambah attemptsCount.
+    mistakeCount: success ? existingRecord.mistakeCount : (existingRecord.mistakeCount || 0) + 1,
+    consecutivePerfects: success ? existingRecord.consecutivePerfects : 0,
     lastReviewedAt: dateStr,
     decayFactor: 1.0
   };

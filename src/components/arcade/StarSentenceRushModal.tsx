@@ -304,12 +304,12 @@ export const StarSentenceRushModal: React.FC<StarSentenceRushModalProps> = ({
 
   // Calculate RPG Achievement Rank
   const achievementRank = useMemo(() => {
-    if (correctCount >= 14) return { rank: 'SSS', title: 'Kaisar Bintang', jp: '星の覇王', color: 'from-amber-400 to-yellow-500', exp: 200, gold: 150 };
-    if (correctCount >= 11) return { rank: 'SS', title: 'Master Sintaksis', jp: '構文の達人', color: 'from-purple-400 to-indigo-500', exp: 160, gold: 120 };
-    if (correctCount >= 8) return { rank: 'S', title: 'Penjelajah Kalimat', jp: '文の探究者', color: 'from-blue-400 to-cyan-500', exp: 120, gold: 90 };
-    if (correctCount >= 5) return { rank: 'A', title: 'Perangkai Kata', jp: '言葉の紡ぎ手', color: 'from-emerald-400 to-teal-500', exp: 90, gold: 65 };
-    if (correctCount >= 2) return { rank: 'B', title: 'Murid Rajin', jp: '熱心な修道士', color: 'from-orange-400 to-amber-600', exp: 60, gold: 40 };
-    return { rank: 'C', title: 'Langkah Awal', jp: '初めの一歩', color: 'from-gray-400 to-slate-500', exp: 30, gold: 20 };
+    if (correctCount >= 14) return { rank: 'SSS', title: 'Kaisar Bintang', jp: '星の覇王', color: 'text-amber-300', exp: 200, gold: 150 };
+    if (correctCount >= 11) return { rank: 'SS', title: 'Master Sintaksis', jp: '構文の達人', color: 'text-purple-300', exp: 160, gold: 120 };
+    if (correctCount >= 8) return { rank: 'S', title: 'Penjelajah Kalimat', jp: '文の探究者', color: 'text-sky-300', exp: 120, gold: 90 };
+    if (correctCount >= 5) return { rank: 'A', title: 'Perangkai Kata', jp: '言葉の紡ぎ手', color: 'text-emerald-300', exp: 90, gold: 65 };
+    if (correctCount >= 2) return { rank: 'B', title: 'Murid Rajin', jp: '熱心な修道士', color: 'text-orange-300', exp: 60, gold: 40 };
+    return { rank: 'C', title: 'Langkah Awal', jp: '初めの一歩', color: 'text-slate-300', exp: 30, gold: 20 };
   }, [correctCount]);
 
   // Claim Rewards
@@ -319,11 +319,12 @@ export const StarSentenceRushModal: React.FC<StarSentenceRushModalProps> = ({
     setHasClaimedReward(true);
     playSound('level_up', soundEnabled);
 
-    if (onRewardPlayer) {
-      onRewardPlayer(achievementRank.exp, achievementRank.gold);
-    }
+    // Satu jalur reward saja. score/total = jawaban benar / total dijawab (bukan poin permainan),
+    // supaya misi kuis & statistik pertanyaan tidak membengkak oleh poin.
     if (onCompleteStudyItem) {
-      onCompleteStudyItem('tryOuts', achievementRank.exp, achievementRank.gold, 'star_rush', score, correctCount);
+      onCompleteStudyItem('tryOuts', achievementRank.exp, achievementRank.gold, 'star_rush', correctCount, correctCount + wrongCount);
+    } else {
+      onRewardPlayer?.(achievementRank.exp, achievementRank.gold);
     }
   };
 
@@ -370,7 +371,7 @@ export const StarSentenceRushModal: React.FC<StarSentenceRushModalProps> = ({
           {gameState === 'ready' && (
             <div className="space-y-5 animate-fade-in">
               {/* Hero Banner */}
-              <div className="p-5 rounded-2xl bg-gradient-to-br from-amber-500/10 via-surface-elevated to-surface-card border border-amber-500/30 text-center relative overflow-hidden shadow-inner">
+              <div className="p-5 rounded-2xl bg-surface-elevated border border-border-subtle text-center relative overflow-hidden shadow-inner">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-bold font-mono mb-2">
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>SPEED RUSH 60 DETIK</span>
@@ -422,7 +423,7 @@ export const StarSentenceRushModal: React.FC<StarSentenceRushModalProps> = ({
                       }}
                       className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex items-center justify-between ${
                         selectedLevel === opt.id
-                          ? 'bg-amber-500/15 border-amber-500/60 shadow-md ring-1 ring-amber-500/30'
+                          ? 'bg-surface-elevated border-border-primary text-text-primary shadow-md'
                           : 'bg-surface-inset hover:bg-surface-elevated border-border-subtle text-text-secondary'
                       }`}
                     >
@@ -447,9 +448,9 @@ export const StarSentenceRushModal: React.FC<StarSentenceRushModalProps> = ({
               <button
                 type="button"
                 onClick={handleStartGame}
-                className="w-full py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-stone-950 font-bold font-heading text-base tracking-wide flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 active:scale-[0.98] transition-all cursor-pointer"
+                className="btn-physical-primary w-full py-3.5 sm:py-4 rounded-2xl font-bold font-heading text-base tracking-wide flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer"
               >
-                <Zap className="w-5 h-5 fill-stone-950" />
+                <Zap className="w-5 h-5 fill-current" />
                 <span>MULAI TANTANGAN (60 DETIK)</span>
               </button>
             </div>
@@ -475,7 +476,7 @@ export const StarSentenceRushModal: React.FC<StarSentenceRushModalProps> = ({
                 {/* Score & Combo */}
                 <div className="flex items-center gap-3">
                   {combo > 1 && (
-                    <div className="flex items-center gap-1 px-2.5 py-1 rounded-xl bg-gradient-to-r from-orange-500/20 to-amber-500/20 border border-orange-500/30 text-orange-300 text-xs font-bold font-mono animate-scale-up">
+                    <div className="flex items-center gap-1 px-2.5 py-1 rounded-xl bg-surface-inset border border-border-subtle text-orange-300 text-xs font-bold font-mono animate-scale-up">
                       <Flame className="w-3.5 h-3.5 fill-orange-400 text-orange-400" />
                       <span>{combo}x COMBO</span>
                     </div>
@@ -686,18 +687,21 @@ export const StarSentenceRushModal: React.FC<StarSentenceRushModalProps> = ({
           {gameState === 'finished' && (
             <div className="space-y-5 animate-fade-in">
               {/* Achievement Badge Banner */}
-              <div className={`p-5 rounded-2xl bg-gradient-to-br ${achievementRank.color} text-stone-950 text-center relative overflow-hidden shadow-xl`}>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/20 text-xs font-bold font-mono mb-2">
-                  <Trophy className="w-3.5 h-3.5" />
+              <div className="p-5 rounded-2xl bg-surface-card border border-border-subtle text-center relative overflow-hidden shadow-md">
+                {/* Stempel rank di pojok kanan (plakat skor, sesuai DESIGN.md) */}
+                <div className="absolute top-3 right-3 w-14 h-14 rounded-xl bg-surface-inset border border-border-subtle shadow-inner flex items-center justify-center">
+                  <span className={`text-3xl font-black font-heading ${achievementRank.color}`}>
+                    {achievementRank.rank}
+                  </span>
+                </div>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-inset border border-border-subtle text-xs font-bold font-mono text-text-secondary mb-2">
+                  <Trophy className="w-3.5 h-3.5 text-gold" />
                   <span>WAKTU HABIS!</span>
                 </div>
-                <div className="text-4xl sm:text-5xl font-black font-heading tracking-tight">
-                  {achievementRank.rank}
-                </div>
-                <div className="text-lg font-bold font-heading mt-1">
+                <div className="text-lg font-bold font-heading mt-1 text-text-primary">
                   {achievementRank.title}
                 </div>
-                <div className="text-xs font-mono opacity-80">
+                <div className="text-xs font-mono text-text-muted">
                   {achievementRank.jp}
                 </div>
               </div>

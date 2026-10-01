@@ -220,15 +220,18 @@ export const ConjugationSpeedRushModal: React.FC<ConjugationSpeedRushModalProps>
     if (gameState === 'finished' && correctCount > 0) {
       const expReward = Math.max(30, correctCount * 30 + maxCombo * 10);
       const goldReward = Math.max(20, correctCount * 25 + Math.floor(score / 50));
-      onRewardPlayer?.(expReward, goldReward);
-      onCompleteStudyItem?.(
-        'bunpou',
-        expReward,
-        goldReward,
-        undefined,
-        correctCount,
-        correctCount + wrongCount
-      );
+      if (onCompleteStudyItem) {
+        onCompleteStudyItem(
+          'bunpou',
+          expReward,
+          goldReward,
+          undefined,
+          correctCount,
+          correctCount + wrongCount
+        );
+      } else {
+        onRewardPlayer?.(expReward, goldReward);
+      }
     }
   }, [gameState]);
 
@@ -399,7 +402,7 @@ export const ConjugationSpeedRushModal: React.FC<ConjugationSpeedRushModalProps>
               </div>
 
               {/* Unified Source & Bookshelf Selector */}
-              <ArcadeSourceSelector
+              <ArcadeSourceSelector<LevelFilter>
                 sourceType={sourceType}
                 onSourceTypeChange={setSourceType}
                 selectedLevel={selectedLevel}

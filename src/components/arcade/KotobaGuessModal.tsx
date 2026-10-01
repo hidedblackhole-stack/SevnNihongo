@@ -259,9 +259,11 @@ export const KotobaGuessModal: React.FC<KotobaGuessModalProps> = ({
       // Rewards
       const expGain = 8;
       const goldGain = 5;
-      if (onRewardPlayer) onRewardPlayer(expGain, goldGain);
+      // Satu jalur reward saja (lihat catatan di SuddenDeathStreakModal).
       if (onCompleteStudyItem) {
-        onCompleteStudyItem('kotoba', expGain, goldGain, currentWord.id, 100, 100);
+        onCompleteStudyItem('kotoba', expGain, goldGain, currentWord.id, 1, 1);
+      } else {
+        onRewardPlayer?.(expGain, goldGain);
       }
 
       setTimeout(() => {
@@ -416,7 +418,7 @@ export const KotobaGuessModal: React.FC<KotobaGuessModalProps> = ({
               </div>
 
               {/* Unified Source & Bookshelf Selector */}
-              <ArcadeSourceSelector
+              <ArcadeSourceSelector<LevelFilter>
                 sourceType={sourceType}
                 onSourceTypeChange={setSourceType}
                 selectedLevel={selectedLevel}
