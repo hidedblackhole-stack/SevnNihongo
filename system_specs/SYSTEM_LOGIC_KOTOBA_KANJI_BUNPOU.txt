@@ -134,11 +134,17 @@ transitivity        | string?   | 'intransitive' (jidoushi) / 'transitive' (tado
 - Base EXP per flashcard flip : 5 EXP (maksimal 1x per kata per sesi).
 - Base EXP per kuis benar      : 15 EXP.
 - Bonus Atribut INT (PlayerStats.int):
-  expGained = baseExp * (1 + (playerInt * 0.02))  [Bonus +2% EXP per poin INT].
+  expGained = baseExp * (1 + (playerInt * 0.005))  [Bonus +0,5% EXP per poin INT; kode: utils/rewards.ts calculateQuizReward].
 - Gold didapat                 : 10 Gold per jawaban benar kuis.
 - Perekaman Aktivitas          : sendScoreEvent('quiz_answer', kotoba.id, isCorrect)
   yang otomatis menulis ke tabel Supabase 'user_activity'.
-- Mastery State                : LEARNING -> COMPLETED -> MASTERED (jika 3x berturut-turut benar).
+- Mastery State                : LEARNING -> COMPLETED -> MASTERED -> PERFECTED. Aturan (kode: utils/mastery.ts recordItemAttempt):
+    COMPLETED = akurasi percobaan >= 70% atau masteryPercentage >= 60;
+    MASTERED  = masteryPercentage >= 80 DAN attemptsCount >= 2;
+    PERFECTED = masteryPercentage >= 98 DAN attemptsCount >= 3 DAN consecutivePerfects >= 2 DAN interval SRS >= 4 hari.
+  Interaksi ringan (flip flashcard / latihan tanpa nilai, recordItemInteraction) dibatasi maks 70% dan tidak bisa mencapai MASTERED/PERFECTED.
+- SRS                          : tangga interval tetap [1,2,4,7,14,30] hari (tanpa ease factor).
+    Jawaban sempurna naik satu anak tangga; salah < 60% reset ke 1 hari; salah sebagian (60-99%) turun satu anak tangga.
 
 ================================================================================
 3. MODUL 2: KANJI (AKSARA & KALIGRAFI)
@@ -344,6 +350,10 @@ questions           | Question[]| 7 Soal kuis penguasaan pola ini
    - Application (35%): Kemampuan mengenali pola ini dalam teks Dokkai / Boss Battle.
    - Retention   (20%): Daya ingat jangka panjang yang diuji melalui interval SRS.
    -> True Mastery Score = (Knowledge*0.2) + (Recognition*0.25) + (App*0.35) + (Ret*0.20).
+      (kode: utils/mastery.ts calculateItemTrueMastery; dipakai untuk antrean Recall & label status)
+   -> Catatan: ada metrik TERPISAH `masteryPercentage` per item (recordItemAttempt) dengan 5 faktor:
+      akurasi terbaik terdecay 20%, akurasi terkini 25%, streak retensi 20%, kesegaran SRS 15%, aplikasi kontekstual 20%
+      (bila belum ada data kontekstual, empat faktor lain dinormalisasi ke 100%). Metrik inilah yang menentukan status MASTERED di atas.
 3. Status Label Otomatis:
    - True Mastery < 40%  : "Baru Dipelajari"
    - Recognition tinggi tapi Application rendah : "Tahu Rumus, Belum Terbiasa di Dokkai"
@@ -450,7 +460,7 @@ BAGIAN 7: SISTEM BASE EXP & EVENT MULTIPLIER (DINAMIKA REWARD & RPG PROGRESSION)
         * 100% Akurasi (Sempurna) : 1.30x
         * >= 80% Akurasi          : 1.15x
         * < 50% Akurasi           : 0.85x
-      - Bonus Stat INT Karakter: + (Base * INT * 4%).
+      - Bonus Stat INT Karakter: + 0,5% per poin INT (Base * (1 + INT * 0,005)).
 
 ================================================================================
 SELESAI DOKUMENTASI SYSTEM LOGIC

@@ -453,3 +453,35 @@ Total pelanggaran terhitung (R1 TSX 20 + R1 inline 3 + R2 `border-2/4` berwarna 
 | A-04 (kejadian) | Kondisi waktu: mekanisme terbukti dari kode; frekuensi di lapangan bergantung latensi jaringan |
 
 **Berkas yang diubah/ditambah dalam perbaikan** (belum di-commit; `git status`): `src/App.tsx`, `src/main.tsx`, `src/index.css`, `src/lib/supabase.ts`, `src/utils/{mastery,decks,time,audio,arcadeSourceUtils}.ts`, `src/utils/{storage,cloudMerge}.ts` (baru), `src/components/{common/BootSplash,common/ModuleBoundary,layout/StudyTimerBadge}.tsx` (baru), `src/components/ErrorBoundary.tsx`, ±40 komponen (DESIGN.md/reward/tipe), `index.html`, `public/{sw.js,manifest.webmanifest}`, `scripts/serve.js`, `scripts/test_srs.ts` (baru), `vite.config.ts`, `tsconfig.json`, `.env.example`, `package-lock.json`, `AUDIT_REPORT.md`.
+
+---
+
+## 9. Tindak Lanjut (sesi lanjutan, berdasarkan keputusan pemilik)
+
+Keputusan pemilik diterapkan sebagai berikut. Semua gerbang hijau setelahnya: `npm run lint` 0 error (strict), 22 tes `scripts/test_srs.ts`, 56 tes `scripts/test_engine.ts`, `vite build` sukses, dan smoke test browser (semua tab, tanpa error konsol).
+
+| Keputusan | Tindakan | Status |
+|---|---|---|
+| Commit tematik | 6 commit (`fd501a7` … `9dceb14`) + commit lanjutan; **tidak di-push** | ✅ |
+| D-02/D-04 border & blur | `backdrop-blur-*` dihapus total (57 → 0; semua sudah berlatar semi-transparan). Border berwarna pada kartu/panel diganti `border-border-subtle` (hover → `border-border-primary`) untuk 36 elemen statis. Badge/stempel/status benar-salah dipertahankan. Sisa ±610 kemunculan berada pada badge, chip, dan cabang kondisional (state) — sesuai kebijakan | ✅ |
+| A-19 game over | Auto-heal dihapus (hanya aktif saat `import.meta.env.DEV`); HP setelah kalah = 10% maks (min 1); **Profil Karakter** kini punya kartu pemulihan: *Gunakan Potion* (+30% HP, konsumsi 1 item) dan *Istirahat di Dojo* (1 koin/2 HP hilang, min 10 koin, pulihkan HP+MP). Logika murni di `src/utils/recovery.ts` + 4 tes. `alert()` pada game over diganti toast | ✅ |
+| A-18 spesifikasi | `system_specs/SYSTEM_LOGIC_KOTOBA_KANJI_BUNPOU.txt` diselaraskan ke kode (INT +0,5%/poin, aturan status, tangga SRS). **Koreksi atas laporan §3:** True Mastery 4D (20/25/35/20) di `calculateItemTrueMastery` *memang sesuai spesifikasi*; rumus 5-faktor 20/25/20/15/20 adalah metrik terpisah (`masteryPercentage`). Aturan MASTERED di kode adalah **`masteryPercentage ≥ 80` dan `attemptsCount ≥ 2`** (bukan ≥85% + interval 14 hari seperti yang tertulis di keputusan); spesifikasi mengikuti kode. Mohon konfirmasi bila angka 85%/14 hari memang diinginkan — itu perubahan perilaku, bukan sekadar dokumentasi | ✅ (konfirmasi angka) |
+| S-01 RLS/RPC | Draft `supabase/migrations/20261001_secure_leaderboard_and_saves.sql`: RLS `leaderboard`/`weekly_scores` baca-saja, RPC `upsert_leaderboard_entry` (identitas `auth.uid()`, EXP tidak boleh turun, laju dibatasi), `submit_score_event_v2` (anti-spam + idempotensi), tier dihitung server. Klien memakai RPC baru **hanya bila `VITE_SECURE_LEADERBOARD=true`**; default tetap jalur lama (non-breaking). Kunci tulis langsung (B.3) dan pencabutan fungsi lama (B.4) sengaja **dikomentari** — jalankan setelah klien diuji. Catatan: pemain tamu tidak lagi muncul di leaderboard setelah B.3; asumsi skor +10/jawaban benar dan `UNIQUE(user_id, week_id)` harus dicocokkan dengan skema asli | 🟡 menunggu review & eksekusi pemilik |
+| S-03 `user_saves` | Klien dual-read/lazy migration: simpan ke `user_saves` bila tabel ada, jika tidak jatuh ke `user_metadata`; setelah sukses menyimpan ke tabel, `cloud_save` di metadata dikosongkan; baca membandingkan `updatedAt` kedua sumber. Tabel dibuat di bagian A migrasi (idempotent, RLS per-user, batas 2 MB) | ✅ di kode; aktif setelah bagian A dijalankan |
+| E-04 Tower | `towerCloudState.ts`: progres lantai, skill tree, achievement masuk `CloudSavePayload.towerState`. Merge: lantai tertinggi menang, union lantai (yang lebih sedikit salah menang), skill level tertinggi dengan SP tidak digandakan, achievement OR. 3 tes. **Checkpoint sesi aktif (blueprint ronde) sengaja tidak disinkronkan** (sementara, besar, kedaluwarsa 7 hari) | ✅ |
+| A-01 pecah `App.tsx` | Tes dulu (`loadPlayerState`, merge, recovery, tower), lalu ekstraksi: **`App.tsx` 1.600 → 206 baris**. Modul baru: `state/{storageKeys,defaultStats,loadPlayerState}.ts`; `hooks/{useToast,useAppNavigation,useDailyRollover,useTheme,usePersistence,useCloudSync,usePlayerActions}.ts`; `app/MainContent.tsx`. Kode dipindah apa adanya (tanpa perubahan perilaku). **Belum:** `PlayerContext` untuk menghapus prop drilling (sisa temuan Medium) dan pemecahan `index.css` | 🟡 |
+| P-04 data-layer asinkron | **Belum dikerjakan, sengaja.** Hasil telaah: dataset diimpor di *scope modul* oleh `kanji.ts`, `bunpou.ts`, `officialBooks.ts`, `templateDecks.ts`, `arcadeSourceUtils.ts`, `imeEngine.ts`, `furiganaUtils.ts` (membangun indeks/turunan saat impor), dan `mastery.ts`/`ascension.ts`/`decks.ts` memakainya sinkron di jalur boot. Membuatnya asinkron tanpa mengubah semua pemakai hanya memindahkan waktu tunggu (semua dataset tetap dibutuhkan sebelum App render). Manfaat nyata butuh desain progresif (render Beranda dulu; `ContentGate` pada modul yang memerlukan konten; `buildSmartRecallQueue` tahan konten belum ada) dan uji E2E. Rekomendasi: kerjakan sebagai proyek terpisah | ⬜ |
+| Operasional | `npm run update-standalone` **tidak dijalankan** (sesuai keputusan) | ⬜ |
+
+**Hasil ukur akhir:** render pertama 62 KB gzip (entry), waktu-ke-interaktif 3.144 KB gzip (sebelum audit: 4.347 KB), chunk `App` 101 KB gzip.
+
+**Skor setelah tindak lanjut (hitung ulang):**
+| Pilar | Temuan terbuka | Skor |
+|---|---|---:|
+| 1 Design | D-02 (Medium, ±610 border badge/state), D-03, D-06, D-07 (Medium); D-09, D-10 (Low) | 100 − 12 − 2 = **86** |
+| 2 Arsitektur | prop drilling tanpa Context (Medium), A-15, A-16, A-21 (Medium); A-23, A-24 (Low) + `alert()` lain | 100 − 12 − 3 = **85** |
+| 3 Keamanan | S-01 (High, menunggu eksekusi SQL; `[DUGAAN]`), S-03 (Medium sampai bagian A dijalankan), S-04, S-07, S-09, S-13 (Low) | 100 − 8 − 3 − 4 = **85** |
+| 4 Performa | P-03 (Medium, upsert semua mastery), P-04, P-06, P-07, P-09 (Medium); P-05 (Low) | 100 − 15 − 1 = **84** |
+| 5 PWA/Error | E-05 (parsial), E-06, E-08, E-11 (Medium) | 100 − 12 = **88** |
+
+**Sisa yang butuh tindakan pemilik:** review dan jalankan migrasi SQL bertahap (bagian A → B.1/B.2 → set `VITE_SECURE_LEADERBOARD=true` → B.3/B.4); verifikasi manual di HP (viewport 320–360 px, PWA offline) dan login akun nyata untuk alur cloud; konfirmasi angka MASTERED; jalankan `npm run update-standalone` setelah semua terverifikasi.
