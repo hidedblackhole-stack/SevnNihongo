@@ -6,6 +6,12 @@ import { getLocalIsoWeekId } from '../src/utils/time';
 import { getGameOverHp, getDojoRestCost, applyDojoRest, applyPotion, countPotions } from '../src/utils/recovery';
 import { mergeTowerState, TowerCloudState } from '../src/engine/tower/world/towerCloudState';
 import type { PlayerStats } from '../src/types/rpg';
+import { KANJI_DATABASE } from '../src/data/kanji';
+import { BUNPOU_DATABASE } from '../src/data/bunpou';
+import { KOTOBA_DATABASE } from '../src/data/kotoba';
+import { canonicalEntityId, canonicalizeItemMastery, canonicalizeDecks, canonicalizeStats } from '../src/state/canonicalizeStats';
+import { toVocabularyEntity, toKanjiEntity, toGrammarEntity, getIdentityEntity } from '../src/data/entityAdapters';
+import { resolveDeckItem } from '../src/utils/decks';
 import { stripDerivedStats, withDerivedStats } from '../src/state/derivedState';
 import { STORAGE_KEY_STATS, STORAGE_KEY_STAGES, STORAGE_KEY_DAILY } from '../src/state/storageKeys';
 import type { ItemMasteryRecord } from '../src/types/content';
@@ -232,6 +238,75 @@ test('recallQueue tidak dipersistenkan, relasi mastery tetap; dihitung ulang dar
   const rebuilt = withDerivedStats(st);
   assert.ok(Array.isArray(rebuilt.recallQueue) && rebuilt.recallQueue!.length >= 1);
   assert.equal(rebuilt.recallQueue![0].itemId, 'kotoba_0001');
+});
+
+
+console.log('Identitas materi (satu materi = satu ID)');
+test('tiap kanji & bunpou hanya terhitung satu kali di Object.values; lookup alias tetap bekerja', () => {
+  const kv = Object.values(KANJI_DATABASE);
+  assert.equal(kv.length, new Set(kv.map(k => k.id)).size, 'kanji terhitung ganda');
+  const bv = Object.values(BUNPOU_DATABASE);
+  assert.equal(bv.length, new Set(bv.map(b => b.id)).size);
+  assert.equal(bv.length, 915);
+  const first = kv.find(k => k.character)!;
+  assert.equal(KANJI_DATABASE[first.character].id, first.id);          // alias karakter
+  assert.equal(BUNPOU_DATABASE['bunpou_001'], BUNPOU_DATABASE['w1d1g1']); // alias lama = objek yang sama
+  assert.equal(BUNPOU_DATABASE['bunpou_001'].id, 'w1d1g1');
+});
+test('canonicalEntityId: alias bunpou & karakter kanji -> ID kanonik; ID lain tetap', () => {
+  assert.equal(canonicalEntityId('bunpou_003'), 'w1d1g3');
+  const k = Object.values(KANJI_DATABASE)[0];
+  assert.equal(canonicalEntityId(k.character), k.id);
+  assert.equal(canonicalEntityId(k.id), k.id);
+  assert.equal(canonicalEntityId('kotoba_0001'), 'kotoba_0001');
+  assert.equal(canonicalEntityId('toString'), 'toString');
+});
+test('mastery di bawah alias & ID asli digabung (record terbaru menang), itemId dikanonikalkan', () => {
+  const a = { ...perfectRun(1), itemId: 'bunpou_001', category: 'bunpou' as const, lastReviewedAt: '2026-01-01T00:00:00Z' };
+  const b = { ...perfectRun(3), itemId: 'w1d1g1', category: 'bunpou' as const, lastReviewedAt: '2026-02-01T00:00:00Z' };
+  const out = canonicalizeItemMastery({ bunpou_001: a, w1d1g1: b })!;
+  assert.deepEqual(Object.keys(out), ['w1d1g1']);
+  assert.equal(out.w1d1g1.itemId, 'w1d1g1');
+  assert.equal(out.w1d1g1.lastReviewedAt, '2026-02-01T00:00:00Z');
+  const clean = { w1d1g2: { ...perfectRun(1), itemId: 'w1d1g2' } };
+  assert.equal(canonicalizeItemMastery(clean), clean);                   // tanpa perubahan -> referensi sama
+});
+test('deck: ref kanji berkarakter -> ID, customData duplikat master dibuang, item ganda dihapus', () => {
+  const k = Object.values(KANJI_DATABASE)[0];
+  const deck = { id: 'd', title: 't', type: 'mixed', createdAt: 'x', updatedAt: 'x', items: [
+    { id: k.character, category: 'kanji', addedAt: 'x', customData: { word: k.character, meaning: 'AI' } },
+    { id: k.id, category: 'kanji', addedAt: 'x' },
+    { id: 'custom_deck_1', category: 'kotoba', addedAt: 'x', customData: { word: 'zzz', meaning: 'unik' } },
+  ] } as unknown as UserDeck;
+  const [out] = canonicalizeDecks([deck])!;
+  assert.equal(out.items.length, 2);
+  assert.equal(out.items[0].id, k.id);
+  assert.ok(!out.items[0].customData);
+  assert.ok(out.items[1].customData);                                    // materi tanpa master tetap kustom
+  const same = [{ ...deck, items: [{ id: k.id, category: 'kanji', addedAt: 'x' }] }] as unknown as UserDeck[];
+  assert.equal(canonicalizeDecks(same), same);
+  assert.equal(canonicalizeStats({ itemMastery: {}, userDecks: undefined } as unknown as PlayerStats).userDecks, undefined);
+});
+test('resolveDeckItem: master menang atas customData; tanpa master customData dipakai', () => {
+  const kotoba = Object.values(KOTOBA_DATABASE)[0];
+  const withMaster = resolveDeckItem({ id: kotoba.id, category: 'kotoba', addedAt: 'x', customData: { word: 'PALSU', meaning: 'PALSU' } })!;
+  assert.equal(withMaster.displayTitle, kotoba.word);
+  const custom = resolveDeckItem({ id: 'custom_x_1', category: 'kotoba', addedAt: 'x', customData: { word: 'PALSU', meaning: 'arti' } })!;
+  assert.equal(custom.displayTitle, 'PALSU');
+  assert.equal(custom.kotoba!.exampleSentence, undefined);
+});
+test('adaptor identitas: relasi kanji lewat ID, bukan karakter', () => {
+  const kt = Object.values(KOTOBA_DATABASE).find(k => /[一-鿿]/.test(k.word) && k.word.length >= 2)!;
+  const v = toVocabularyEntity(kt);
+  assert.equal(v.id, kt.id);
+  assert.ok(v.kanjiIds.length >= 1);
+  for (const id of v.kanjiIds) assert.equal(KANJI_DATABASE[id].id, id);   // semua kanjiIds adalah ID valid
+  assert.equal(v.kanaOnly, false);
+  const k = Object.values(KANJI_DATABASE)[0];
+  assert.equal(toKanjiEntity(k).character, k.character);
+  assert.equal(toGrammarEntity(BUNPOU_DATABASE['w1d1g1']).id, 'w1d1g1');
+  assert.equal(getIdentityEntity('bunpou', 'bunpou_001')!.entity.id, 'w1d1g1');
+  assert.equal(getIdentityEntity('kotoba', 'tidak_ada'), null);
 });
 
 console.log('Waktu');

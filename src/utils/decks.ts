@@ -447,8 +447,13 @@ export interface ResolvedDeckItem {
 }
 
 export function resolveDeckItem(ref: DeckItemRef): ResolvedDeckItem | null {
-  // 1. Direct support for custom AI/User-generated items
-  if (ref.customData) {
+  // 1. Item kustom/AI hanya dipakai bila TIDAK ada materi master dengan ID tersebut. Bila ada, master
+  //    (identitas permanen) yang menang; salinan customData tidak boleh menggandakan materi.
+  const hasMaster =
+    (ref.category === 'kotoba' && Boolean(KOTOBA_DATABASE[ref.id])) ||
+    (ref.category === 'kanji' && Boolean(KANJI_DATABASE[ref.id])) ||
+    (ref.category === 'bunpou' && Boolean(BUNPOU_DATABASE[ref.id]));
+  if (ref.customData && !hasMaster) {
     const cd = ref.customData;
     const levelStr = cd.level || 'N5';
 

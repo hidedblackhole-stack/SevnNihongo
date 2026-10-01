@@ -3,6 +3,7 @@ import { getSubBranchesForBunpou } from './bunpouSubKnowledge';
 import { enrichBunpouItem } from './bunpouMetadata';
 import bunpouJson from './db/bunpou.json';
 import { BUNPOU_QUESTION_BANK as questionsJson } from './questionBank';
+import { LEGACY_BUNPOU_ID_ALIASES, defineLookupAlias } from './entityIds';
 import sentencesJson from './db/sentences.json';
 
 // Build sentence reading lookup map from canonical sentences database
@@ -120,21 +121,11 @@ export const BUNPOU_DATABASE: Record<string, BunpouItem> = {};
   BUNPOU_DATABASE[item.id] = enrichedItem;
 });
 
-// Legacy mapping support (bunpou_001 -> w1d1g1, etc.)
-if (BUNPOU_DATABASE['w1d1g1']) {
-  BUNPOU_DATABASE['bunpou_001'] = { ...BUNPOU_DATABASE['w1d1g1'], id: 'bunpou_001' };
-}
-if (BUNPOU_DATABASE['w1d1g2']) {
-  BUNPOU_DATABASE['bunpou_002'] = { ...BUNPOU_DATABASE['w1d1g2'], id: 'bunpou_002' };
-}
-if (BUNPOU_DATABASE['w1d1g3']) {
-  BUNPOU_DATABASE['bunpou_003'] = { ...BUNPOU_DATABASE['w1d1g3'], id: 'bunpou_003' };
-}
-if (BUNPOU_DATABASE['w1d2g1']) {
-  BUNPOU_DATABASE['bunpou_004'] = { ...BUNPOU_DATABASE['w1d2g1'], id: 'bunpou_004' };
-}
-if (BUNPOU_DATABASE['w1d2g2']) {
-  BUNPOU_DATABASE['bunpou_005'] = { ...BUNPOU_DATABASE['w1d2g2'], id: 'bunpou_005' };
+// Alias ID lama (bunpou_001 -> w1d1g1, dst.): kunci PENCARIAN non-enumerable yang menunjuk ke materi
+// kanonik yang sama (sebelumnya disalin sebagai 5 entri tambahan yang menggandakan materi).
+for (const [legacyId, canonicalId] of Object.entries(LEGACY_BUNPOU_ID_ALIASES)) {
+  const canonical = BUNPOU_DATABASE[canonicalId];
+  if (canonical) defineLookupAlias(BUNPOU_DATABASE, legacyId, canonical);
 }
 
 // Collect questions from all grammar points in a given week prefix

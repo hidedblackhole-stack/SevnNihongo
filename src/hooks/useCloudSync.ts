@@ -10,6 +10,7 @@ import { supabase, getSession, saveGameToCloud, loadGameFromCloud, upsertLeaderb
 import { collectTowerState, applyTowerState, mergeTowerState } from '../engine/tower/world/towerCloudState';
 import { DEFAULT_STATS } from '../state/defaultStats';
 import { stripDerivedStats, withDerivedStats } from '../state/derivedState';
+import { canonicalizeStats } from '../state/canonicalizeStats';
 import {
   STORAGE_KEY_STATS,
   STORAGE_KEY_STAGES,
@@ -147,7 +148,7 @@ const [cloudSyncStatus, setCloudSyncStatus] = useState<CloudSyncStatus>('idle');
       }
 
       // recallQueue (turunan) tidak ikut tersimpan/terkirim; hitung ulang dari itemMastery gabungan.
-      mergedStats = withDerivedStats(mergedStats);
+      mergedStats = withDerivedStats(canonicalizeStats(mergedStats));
       setStats(mergedStats);
       safeSetItem(STORAGE_KEY_STATS, JSON.stringify(stripDerivedStats(mergedStats)));
       setStageProgress(mergedStages);

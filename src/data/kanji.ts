@@ -1,6 +1,7 @@
 import kanjiDb from './db/kanji.json';
 import { KANJI_QUESTION_BANK as kanjiQuestionsDb } from './questionBank';
 import { KanjiItem } from '../types/content';
+import { defineLookupAlias } from './entityIds';
 
 const STATIC_KANJI: Record<string, KanjiItem> = {
   kanji_001: {
@@ -200,8 +201,9 @@ for (const k of rawKanjiList) {
       questions: kanjiQuestionsMap.get(k.id) || k.questions || []
     };
     indexedDb[k.id] = itemCopy;
-    if (k.character && !indexedDb[k.character]) {
-      indexedDb[k.character] = itemCopy;
+    // Alias pencarian per karakter (non-enumerable) agar Object.values() tidak menggandakan kanji.
+    if (k.character) {
+      defineLookupAlias(indexedDb, k.character, itemCopy);
     }
   }
 }

@@ -15,6 +15,7 @@ import { safeSetItem } from '../utils/storage';
 import { getTodayLocalDate } from '../utils/time';
 import { getGameOverHp } from '../utils/recovery';
 import { DEFAULT_STATS } from '../state/defaultStats';
+import { canonicalEntityId } from '../state/canonicalizeStats';
 import { STORAGE_KEY_SIGNATURE } from '../state/storageKeys';
 import type { TabType } from '../components/layout/BottomNavigation';
 import type { WorldNavView } from '../components/map/WorldView';
@@ -130,6 +131,8 @@ export function usePlayerActions({
     total?: number,
     interactionTypeOverride?: 'writing' | 'flashcard' | 'quiz'
   ) => {
+    // ID kanonik: alias lama / karakter kanji tidak boleh membuat record mastery ganda.
+    if (itemId) itemId = canonicalEntityId(itemId);
     if (expGained > 0 || goldGained > 0) {
       handleRewardPlayer(expGained, goldGained);
     }
@@ -222,6 +225,7 @@ export function usePlayerActions({
     interactionType: 'writing' | 'flashcard' | 'quiz',
     success: boolean = true
   ) => {
+    itemId = canonicalEntityId(itemId);
     setStats(prev => {
       const currentItem = prev.itemMastery ? prev.itemMastery[itemId] : undefined;
       const updatedRecord = recordItemInteraction(
@@ -318,6 +322,7 @@ export function usePlayerActions({
 
   // Recall handlers
   const handleItemReviewed = (itemId: string, category: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai', isCorrect: boolean) => {
+    itemId = canonicalEntityId(itemId);
     setStats(prev => {
       const currentMastery = { ...(prev.itemMastery || {}) };
       const existing = currentMastery[itemId];

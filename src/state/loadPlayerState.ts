@@ -7,6 +7,7 @@ import { buildSmartRecallQueue } from '../utils/mastery';
 import { INITIAL_STUDY_STATS } from '../utils/activity';
 import { getTodayLocalDate } from '../utils/time';
 import { DEFAULT_STATS, INITIAL_ITEM_MASTERY } from './defaultStats';
+import { canonicalizeStats } from './canonicalizeStats';
 import {
   STORAGE_KEY_STATS,
   STORAGE_KEY_STAGES,
@@ -15,8 +16,12 @@ import {
   STORAGE_KEY_SIGNATURE,
 } from './storageKeys';
 
-/** Muat PlayerStats dari localStorage (dengan migrasi/validasi) atau buat state baru. */
+/** Muat PlayerStats dari localStorage (migrasi/validasi + ID kanonik) atau buat state baru. */
 export function loadInitialStats(): PlayerStats {
+  return canonicalizeStats(loadInitialStatsRaw());
+}
+
+function loadInitialStatsRaw(): PlayerStats {
   try {
     const saved = localStorage.getItem(STORAGE_KEY_STATS);
     if (saved) {
