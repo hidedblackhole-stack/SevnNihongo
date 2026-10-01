@@ -25,6 +25,7 @@ import { calculateLanguageProfile, calculateCoverage } from '../../utils/mastery
 import { INITIAL_STUDY_STATS } from '../../utils/activity';
 import { calculateAscensionProgress, getEffectiveTier } from '../../utils/ascension';
 import { useBackButton } from '../../hooks/useBackButton';
+import { getDojoRestCost, canRestAtDojo, countPotions } from '../../utils/recovery';
 
 interface CharacterStatusModalProps {
   isOpen: boolean;
@@ -32,7 +33,8 @@ interface CharacterStatusModalProps {
   stats: PlayerStats;
   stageProgress?: Record<string, import('../../types/rpg').StageClearData>;
   onAllocateStat?: (statKey: 'str' | 'agi' | 'int' | 'vit') => void;
-  onRecoverHp?: () => void;
+  onRestAtDojo?: () => void;
+  onUsePotion?: () => void;
   onStartRecall?: () => void;
   onUpdateName?: (newName: string) => void;
   onUpdateGender?: (gender: 'male' | 'female') => void;
@@ -46,7 +48,12 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
   stageProgress: _stageProgress = {},
   onUpdateGender,
   onAscendTier,
+  onRestAtDojo,
+  onUsePotion,
 }) => {
+  const restCost = getDojoRestCost(stats.hp, stats.maxHp);
+  const potionCount = countPotions(stats.inventory);
+  const hpFull = stats.hp >= stats.maxHp;
   // Mobile/Hardware back button handler
   useBackButton(isOpen, () => {
     onClose();
@@ -85,7 +92,7 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
   const modalContent = (
     <AnimatePresence>
       <div
-        className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-4 bg-black/85 backdrop-blur-md overflow-y-auto"
+        className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-4 bg-black/85 overflow-y-auto"
         onClick={() => {
           playSound('click', stats.soundEnabled);
           onClose();
@@ -181,6 +188,37 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
                     {stats.totalExp.toLocaleString()} Akumulasi EXP Belajar
                   </span>
                 </div>
+              </div>
+            </div>
+
+            {/* 1b. PEMULIHAN: Istirahat di Dojo & Potion */}
+            <div className="p-3.5 sm:p-4 rounded-3xl bg-surface-inset border border-border-subtle shadow-inner space-y-3">
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-xs font-bold font-heading uppercase tracking-wider text-text-secondary">Kondisi Petualang</span>
+                <span className="text-xs font-mono font-bold text-text-primary">
+                  HP {stats.hp}/{stats.maxHp} · MP {stats.mp}/{stats.maxMp} · <span className="text-gold">{stats.gold.toLocaleString()} Koin</span>
+                </span>
+              </div>
+              <div className="w-full h-2 bg-surface-base rounded-full overflow-hidden border border-border-subtle">
+                <div className="h-full bg-state-danger rounded-full transition-all duration-300" style={{ width: `${Math.min(100, Math.max(0, (stats.hp / Math.max(1, stats.maxHp)) * 100))}%` }} />
+              </div>
+              <div className="flex flex-col sm:flex-row gap-2">
+                <button
+                  type="button"
+                  disabled={hpFull || potionCount === 0}
+                  onClick={() => { playSound('coin', stats.soundEnabled); onUsePotion?.(); }}
+                  className="btn-physical-secondary flex-1 min-h-[44px] py-2.5 px-4 rounded-xl text-xs font-bold font-heading disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Gunakan Potion ({potionCount}) · +30% HP
+                </button>
+                <button
+                  type="button"
+                  disabled={!canRestAtDojo(stats)}
+                  onClick={() => { playSound('coin', stats.soundEnabled); onRestAtDojo?.(); }}
+                  className="btn-physical-primary flex-1 min-h-[44px] py-2.5 px-4 rounded-xl text-xs font-bold font-heading disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {hpFull ? 'Sudah Bugar' : `Istirahat di Dojo · ${restCost} Koin`}
+                </button>
               </div>
             </div>
 
