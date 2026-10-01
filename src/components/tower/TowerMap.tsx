@@ -311,7 +311,7 @@ export const TowerMap: React.FC<TowerMapProps> = ({
             onClick={() => setViewMode('landmarks')}
             className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
               viewMode === 'landmarks'
-                ? 'bg-surface-elevated text-wine-accent shadow-sm border border-wine-accent/30'
+                ? 'bg-surface-elevated text-wine-accent shadow-sm border border-border-subtle'
                 : 'text-text-muted hover:text-text-primary'
             }`}
           >
@@ -323,7 +323,7 @@ export const TowerMap: React.FC<TowerMapProps> = ({
             onClick={() => setViewMode('foundation')}
             className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
               viewMode === 'foundation'
-                ? 'bg-surface-elevated text-wine-accent shadow-sm border border-wine-accent/30'
+                ? 'bg-surface-elevated text-wine-accent shadow-sm border border-border-subtle'
                 : 'text-text-muted hover:text-text-primary'
             }`}
           >
@@ -345,9 +345,9 @@ export const TowerMap: React.FC<TowerMapProps> = ({
               onClick={() => setSelectedPreviewFloor(lm.floor)}
               className={`px-2.5 py-1 rounded-xl text-xs font-mono font-bold shrink-0 transition-all border cursor-pointer ${
                 currentFloor === lm.floor
-                  ? 'bg-wine-accent text-white border-wine-accent shadow-sm'
+                  ? 'bg-wine-accent text-white border-border-subtle shadow-sm'
                   : lm.isBoss
-                    ? 'bg-surface-elevated hover:bg-surface-inset text-wine-accent border-border-subtle hover:border-wine-accent/50'
+                    ? 'bg-surface-elevated hover:bg-surface-inset text-wine-accent border-border-subtle hover:border-border-primary'
                     : 'bg-surface-elevated hover:bg-surface-inset text-text-primary border-border-subtle'
               }`}
               title={`${lm.label} (${lm.jlpt})`}
@@ -389,9 +389,9 @@ export const TowerMap: React.FC<TowerMapProps> = ({
                       isCurrent
                         ? 'bg-surface-elevated border-border-strong shadow-md'
                         : landmark.floor === 1000
-                          ? 'bg-surface-card border-gold/40 hover:bg-surface-elevated'
+                          ? 'bg-surface-card border-border-subtle hover:bg-surface-elevated'
                           : landmark.isBoss
-                            ? 'bg-surface-card border-wine-accent/30 hover:bg-surface-elevated'
+                            ? 'bg-surface-card border-border-subtle hover:bg-surface-elevated'
                             : 'bg-surface-card border-border-subtle hover:bg-surface-elevated hover:border-border-strong'
                     }`}
                   >
@@ -401,9 +401,9 @@ export const TowerMap: React.FC<TowerMapProps> = ({
                         <div
                           className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 font-heading font-black text-sm ${
                             landmark.floor === 1000
-                              ? 'bg-gold/15 text-gold border border-gold/40 shadow-inner'
+                              ? 'bg-gold/15 text-gold border border-border-subtle shadow-inner'
                               : landmark.isBoss
-                                ? 'bg-surface-inset text-wine-accent border border-wine-accent/30 shadow-inner'
+                                ? 'bg-surface-inset text-wine-accent border border-border-subtle shadow-inner'
                                 : isCurrent
                                   ? 'bg-wine-accent text-white shadow-sm'
                                   : 'bg-surface-inset text-emerald-400 border border-border-subtle'
@@ -581,7 +581,7 @@ export const TowerMap: React.FC<TowerMapProps> = ({
                 initial={{ y: 100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: 100, opacity: 0 }}
-                className="w-full max-w-md bg-surface-card rounded-t-3xl sm:rounded-3xl p-6 border border-border-subtle shadow-2xl relative"
+                className="w-full max-w-md bg-surface-card panel-stitched rounded-t-3xl sm:rounded-3xl p-6 border border-border-subtle shadow-2xl relative"
               >
                 <div className="flex items-center justify-between mb-4 pb-3 border-b border-border-subtle">
                   <div className="flex items-center gap-2.5">
@@ -702,7 +702,7 @@ export const TowerMap: React.FC<TowerMapProps> = ({
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              className="w-full max-w-md bg-surface-card rounded-3xl p-6 border border-border-subtle shadow-2xl relative max-h-[85vh] flex flex-col overflow-hidden"
+              className="w-full max-w-md bg-surface-card panel-stitched rounded-3xl p-6 border border-border-subtle shadow-2xl relative max-h-[85vh] flex flex-col overflow-hidden"
             >
               {/* Header */}
               <div className="flex items-center justify-between pb-3 border-b border-border-subtle mb-4 shrink-0">
@@ -782,7 +782,7 @@ export const TowerMap: React.FC<TowerMapProps> = ({
                         </div>
 
                         {isMax ? (
-                          <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20">
+                          <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-border-subtle">
                             Tingkat Maksimal
                           </span>
                         ) : (

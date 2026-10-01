@@ -141,7 +141,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
     <div className="w-full max-w-5xl mx-auto space-y-6 animate-fade-in pb-10">
       {/* Header Banner */}
       {!hideHeader && (
-        <div className="panel p-4 sm:p-5 rounded-3xl border border-border-subtle shadow-sm flex items-center justify-between gap-4">
+        <div className="panel panel-stitched p-4 sm:p-5 rounded-3xl border border-border-subtle shadow-sm flex items-center justify-between gap-4">
           <div className="flex items-center gap-3.5">
             <div className="w-12 h-12 rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-center text-text-primary shrink-0 shadow-inner">
               <ScrollIcon className="w-6 h-6 text-text-primary" />
@@ -241,7 +241,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
               }}
               className={`px-2 py-1 rounded-lg text-xs font-mono font-bold flex items-center gap-1 transition-all cursor-pointer select-none ${
                 imeActive
-                  ? 'bg-gold/20 text-gold border border-gold/40 shadow-xs'
+                  ? 'bg-gold/20 text-gold border border-border-subtle shadow-xs'
                   : 'bg-surface-card text-text-muted border border-border-subtle hover:text-text-primary'
               }`}
               title={imeActive ? 'IME Jepang Aktif (Romaji -> Kana)' : 'Mode Huruf Latin'}
@@ -403,7 +403,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
               >
                 {/* Left: Badge + Clean Title + Meaning */}
                 <div className="flex items-center gap-3 min-w-0 flex-1">
-                  <span className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg sm:rounded-xl bg-surface-inset text-indigo text-[11px] sm:text-xs font-mono font-bold border border-indigo/20 shrink-0">
+                  <span className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg sm:rounded-xl bg-surface-inset text-indigo text-[11px] sm:text-xs font-mono font-bold border border-border-subtle shrink-0">
                     {item.baseLevel ? item.baseLevel : item.level}
                   </span>
 
@@ -474,11 +474,11 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
                   setSelectedItem(item);
                   playSound('click', soundEnabled);
                 }}
-                className="panel flex flex-col justify-between p-4 sm:p-5 group shadow-sm hover:shadow-md transition-all cursor-pointer rounded-2xl border border-border-subtle hover:border-border-primary space-y-3.5"
+                className="panel panel-stitched flex flex-col justify-between p-4 sm:p-5 group shadow-sm hover:shadow-md transition-all cursor-pointer rounded-2xl border border-border-subtle hover:border-border-primary space-y-3.5"
               >
                 {/* Top row: Level Badge + Actions */}
                 <div className="flex items-center justify-between gap-2">
-                  <span className="px-2.5 py-1 rounded-xl bg-surface-inset text-indigo text-xs font-mono font-bold border border-indigo/20 shadow-xs">
+                  <span className="px-2.5 py-1 rounded-xl bg-surface-inset text-indigo text-xs font-mono font-bold border border-border-subtle shadow-xs">
                     {levelLabel}
                   </span>
 
@@ -555,7 +555,7 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
 
       {/* Empty State */}
       {displayedBunpou.length === 0 && (
-        <div className="panel p-12 text-center rounded-3xl space-y-2">
+        <div className="panel panel-stitched p-12 text-center rounded-3xl space-y-2">
           <p className="text-sm font-bold text-text-primary">Tidak ada tata bahasa yang cocok.</p>
           <p className="text-xs text-text-muted">Coba ubah kata kunci pencarian atau reset filter fungsi.</p>
         </div>

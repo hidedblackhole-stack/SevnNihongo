@@ -43,7 +43,7 @@ export const RoundRenderer: React.FC<RoundRendererProps> = ({
   if (!phase || !input) {
     return (
       <div className="flex flex-col items-center justify-center p-12 text-center text-text-muted">
-        <div className="w-8 h-8 rounded-full border-2 border-wine-accent border-t-transparent animate-spin mb-3" />
+        <div className="w-8 h-8 rounded-full border-2 border-border-subtle border-t-transparent animate-spin mb-3" />
         <p className="text-sm font-bold font-heading">Menyiapkan tantangan ronde...</p>
       </div>
     );
@@ -202,7 +202,7 @@ export const RoundRenderer: React.FC<RoundRendererProps> = ({
 
     return (
       <div className={`w-full max-w-2xl mx-auto ${className}`}>
-        <div className="bg-surface-elevated border border-border-subtle rounded-2xl p-4 mb-4 text-center">
+        <div className="bg-surface-elevated panel-stitched border border-border-subtle rounded-2xl p-4 mb-4 text-center">
           <span className="text-xs font-black text-wine-accent uppercase tracking-widest font-heading">
             Ujian Bos JLPT {jlptInput.jlptLevel}
           </span>
@@ -497,7 +497,7 @@ const AlchemyInteractiveRunner: React.FC<AlchemyInteractiveRunnerProps> = ({
   if (!currentTarget) return null;
 
   return (
-    <div className={`w-full max-w-lg mx-auto bg-surface-card rounded-3xl p-6 border border-border-subtle shadow-xl ${className}`}>
+    <div className={`w-full max-w-lg mx-auto bg-surface-card panel-stitched rounded-3xl p-6 border border-border-subtle shadow-xl ${className}`}>
       <div className="flex items-center justify-between text-xs text-text-secondary mb-4 pb-3 border-b border-border-subtle">
         <span className="font-bold text-wine-accent uppercase tracking-wider font-heading">
           Alkemia Konjugasi • Tingkat {input.tier}
@@ -695,7 +695,7 @@ const SentenceInteractiveRunner: React.FC<SentenceInteractiveRunnerProps> = ({
   };
 
   return (
-    <div className={`w-full max-w-lg mx-auto bg-surface-card rounded-3xl p-6 border border-border-subtle shadow-xl ${className}`}>
+    <div className={`w-full max-w-lg mx-auto bg-surface-card panel-stitched rounded-3xl p-6 border border-border-subtle shadow-xl ${className}`}>
       {/* Exercise progress header */}
       <div className="flex items-center justify-between text-xs text-text-secondary mb-3 pb-2 border-b border-border-subtle">
         <span className="font-bold text-wine-accent uppercase tracking-wider font-heading">

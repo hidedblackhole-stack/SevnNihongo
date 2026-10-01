@@ -110,7 +110,7 @@ export const GrammarChecklist: React.FC<GrammarChecklistProps> = ({ item, classN
     <div
       className={`p-3.5 sm:p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-2.5 shadow-inner ${className}`}
     >
-      <div className="flex items-center gap-2 pb-1.5 border-b border-emerald-600/20 dark:border-emerald-500/20">
+      <div className="flex items-center gap-2 pb-1.5 border-b border-border-subtle">
         <CheckCircle2 className="w-4 h-4 text-emerald-800 dark:text-emerald-400 shrink-0" />
         <span className="text-[11px] font-extrabold uppercase tracking-wider text-emerald-950 dark:text-emerald-300 font-heading">
           Fungsi & Situasi Penggunaan (使い分け)
@@ -121,11 +121,11 @@ export const GrammarChecklist: React.FC<GrammarChecklistProps> = ({ item, classN
         {checkpoints.map((cp, idx) => (
           <div key={idx} className="flex items-start gap-2.5">
             {cp.type === 'note' ? (
-              <div className="w-4 h-4 mt-0.5 rounded-full bg-amber-100 dark:bg-amber-500/20 text-amber-900 dark:text-amber-400 border border-amber-400/50 dark:border-amber-500/30 flex items-center justify-center shrink-0 text-[10px] font-bold font-mono">
+              <div className="w-4 h-4 mt-0.5 rounded-full bg-amber-100 dark:bg-amber-500/20 text-amber-900 dark:text-amber-400 border border-border-subtle flex items-center justify-center shrink-0 text-[10px] font-bold font-mono">
                 💡
               </div>
             ) : (
-              <div className="w-4 h-4 mt-0.5 rounded-md bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-400 border border-emerald-400/50 dark:border-emerald-500/30 flex items-center justify-center shrink-0">
+              <div className="w-4 h-4 mt-0.5 rounded-md bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-400 border border-border-subtle flex items-center justify-center shrink-0">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-800 dark:text-emerald-400" />
               </div>
             )}

@@ -111,12 +111,12 @@ export const DeckBookmarkPicker: React.FC<DeckBookmarkPickerProps> = ({
         className={className || (compact
           ? `p-1 sm:p-1.5 rounded-lg border transition-all cursor-pointer ${
               isInAnyDeck
-                ? 'bg-surface-elevated text-gold border-gold/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_6px_rgba(0,0,0,0.3)]'
+                ? 'bg-surface-elevated text-gold border-border-subtle shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_6px_rgba(0,0,0,0.3)]'
                 : 'bg-surface-inset text-text-muted hover:text-gold border-border-subtle'
             }`
           : `p-2 rounded-xl border flex items-center gap-1.5 transition-all cursor-pointer ${
               isInAnyDeck
-                ? 'bg-surface-elevated text-gold border-gold/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_6px_rgba(0,0,0,0.3)]'
+                ? 'bg-surface-elevated text-gold border-border-subtle shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_6px_rgba(0,0,0,0.3)]'
                 : 'bg-surface-card border-border-subtle text-text-muted hover:text-gold'
             }`
         )}
@@ -137,7 +137,7 @@ export const DeckBookmarkPicker: React.FC<DeckBookmarkPickerProps> = ({
           }}
         >
           <div
-            className="w-full sm:max-w-md bg-surface-elevated border border-border-primary rounded-t-3xl sm:rounded-3xl shadow-2xl p-5 sm:p-6 space-y-4 max-h-[85vh] sm:max-h-[80vh] flex flex-col overflow-hidden animate-slide-up"
+            className="w-full sm:max-w-md bg-surface-elevated panel-stitched border border-border-primary rounded-t-3xl sm:rounded-3xl shadow-2xl p-5 sm:p-6 space-y-4 max-h-[85vh] sm:max-h-[80vh] flex flex-col overflow-hidden animate-slide-up"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Mobile Sheet Handle */}
@@ -146,7 +146,7 @@ export const DeckBookmarkPicker: React.FC<DeckBookmarkPickerProps> = ({
             {/* Header */}
             <div className="flex items-start justify-between gap-3 border-b border-border-subtle pb-3">
               <div className="flex items-center gap-2.5 min-w-0">
-                <div className="w-9 h-9 rounded-xl bg-gold/15 border border-gold/30 flex items-center justify-center text-gold shrink-0">
+                <div className="w-9 h-9 rounded-xl bg-gold/15 border border-border-subtle flex items-center justify-center text-gold shrink-0">
                   <Bookmark className="w-5 h-5 fill-gold" />
                 </div>
                 <div className="min-w-0">
@@ -197,7 +197,7 @@ export const DeckBookmarkPicker: React.FC<DeckBookmarkPickerProps> = ({
                     onClick={() => handleToggle(deck)}
                     className={`p-3 rounded-2xl border flex items-center justify-between gap-3 cursor-pointer transition-all select-none ${
                       isIncluded
-                        ? 'bg-surface-elevated border border-gold/35 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_8px_rgba(0,0,0,0.3)]'
+                        ? 'bg-surface-elevated border border-border-subtle shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_8px_rgba(0,0,0,0.3)]'
                         : 'bg-surface-inset/80 border-border-subtle hover:border-border-muted hover:bg-surface-card text-text-secondary'
                     }`}
                   >
@@ -226,7 +226,7 @@ export const DeckBookmarkPicker: React.FC<DeckBookmarkPickerProps> = ({
                     <div
                       className={`w-6 h-6 rounded-lg flex items-center justify-center border shrink-0 transition-all ${
                         isIncluded
-                          ? 'bg-gold border-gold text-surface-base shadow-xs scale-105'
+                          ? 'bg-gold border-border-subtle text-surface-base shadow-xs scale-105'
                           : 'border-border-muted bg-surface-card/60'
                       }`}
                     >
@@ -247,7 +247,7 @@ export const DeckBookmarkPicker: React.FC<DeckBookmarkPickerProps> = ({
                       setIsCreatingNew(true);
                       playSound('click', soundEnabled);
                     }}
-                    className="w-full py-2.5 px-3 rounded-xl border border-dashed border-border-muted hover:border-gold/50 text-text-secondary hover:text-gold text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer bg-surface-inset/50"
+                    className="w-full py-2.5 px-3 rounded-xl border border-dashed border-border-muted hover:border-border-primary text-text-secondary hover:text-gold text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer bg-surface-inset/50"
                   >
                     <Plus className="w-4 h-4" />
                     <span>+ Buat Buku Saku Baru</span>
@@ -262,7 +262,7 @@ export const DeckBookmarkPicker: React.FC<DeckBookmarkPickerProps> = ({
                         placeholder="Contoh: Kanji Sulit N5..."
                         value={newDeckTitle}
                         onChange={(e) => setNewDeckTitle(e.target.value)}
-                        className="flex-1 px-3 py-2 text-xs rounded-xl bg-surface-inset border border-border-subtle focus:border-gold focus:outline-hidden text-text-primary"
+                        className="flex-1 px-3 py-2 text-xs rounded-xl bg-surface-inset border border-border-subtle focus:border-border-primary focus:outline-hidden text-text-primary"
                         maxLength={40}
                       />
                       <button

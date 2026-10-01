@@ -145,7 +145,7 @@ export const StarSentenceQuiz: React.FC<StarSentenceQuizProps> = ({
       {/* Header Info */}
       <div className="flex items-center justify-between gap-2 px-1">
         <div className="flex items-center gap-2">
-          <span className="px-2.5 py-1 rounded-xl bg-surface-inset border border-gold/30 text-gold text-xs font-bold font-heading flex items-center gap-1.5 shadow-sm">
+          <span className="px-2.5 py-1 rounded-xl bg-surface-inset border border-border-subtle text-gold text-xs font-bold font-heading flex items-center gap-1.5 shadow-sm">
             <Star className="w-3.5 h-3.5 fill-gold text-gold" />
             <span>文の組み立て (Susun Kalimat Bintang)</span>
           </span>
@@ -198,13 +198,13 @@ export const StarSentenceQuiz: React.FC<StarSentenceQuizProps> = ({
                           ? submitted
                             ? isFilled && slot.originalIndex === question.correctIndex
                               ? 'bg-state-success/20 text-state-success border-state-success'
-                              : 'bg-wine-accent/20 text-wine-accent border-wine-accent'
-                            : 'bg-surface-elevated text-gold border-gold/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_6px_rgba(0,0,0,0.25)]'
+                              : 'bg-wine-accent/20 text-wine-accent border-border-subtle'
+                            : 'bg-surface-elevated text-gold border-border-subtle shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_6px_rgba(0,0,0,0.25)]'
                           : submitted
                             ? 'bg-surface-inset text-text-secondary border-border-subtle'
                             : 'bg-surface-card text-text-primary border-border-subtle hover:border-border-muted'
                         : isStarSlot
-                          ? 'border border-dashed border-gold/50 bg-gold/5 text-gold shadow-[inset_1px_1px_3px_var(--neu-d)]'
+                          ? 'border border-dashed border-border-subtle bg-gold/5 text-gold shadow-[inset_1px_1px_3px_var(--neu-d)]'
                           : 'border border-dashed border-border-subtle bg-surface-inset text-text-muted shadow-[inset_1px_1px_3px_var(--neu-d)]'
                     }`}
                   >
@@ -279,7 +279,7 @@ export const StarSentenceQuiz: React.FC<StarSentenceQuizProps> = ({
                   disabled={!isAvailable}
                   className={`p-3 rounded-2xl text-left border transition-all flex items-center gap-2.5 ${
                     isAvailable
-                      ? 'panel hover:border-indigo/50 text-text-primary shadow-sm cursor-pointer'
+                      ? 'panel hover:border-border-primary text-text-primary shadow-sm cursor-pointer'
                       : 'bg-surface-inset text-text-muted border-border-subtle cursor-not-allowed opacity-30'
                   }`}
                 >
@@ -324,7 +324,7 @@ export const StarSentenceQuiz: React.FC<StarSentenceQuizProps> = ({
             className={`p-4 sm:p-5 rounded-2xl border shadow-lg space-y-3 ${
               slots[starPosition]?.originalIndex === question.correctIndex
                 ? 'bg-state-success/15 border-state-success/40 text-text-primary'
-                : 'bg-wine-accent/15 border-wine-accent/40 text-text-primary'
+                : 'bg-wine-accent/15 border-border-subtle text-text-primary'
             }`}
           >
             {/* Status Header */}

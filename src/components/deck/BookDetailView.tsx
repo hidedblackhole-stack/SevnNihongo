@@ -74,7 +74,7 @@ export const BookDetailView: React.FC<BookDetailViewProps> = ({
       </div>
 
       {/* Book Cover Banner */}
-      <div className={`panel p-5 sm:p-6 rounded-3xl border border-border-subtle bg-surface-card space-y-4 shadow-sm relative overflow-hidden`}>
+      <div className={`panel panel-stitched p-5 sm:p-6 rounded-3xl border border-border-subtle bg-surface-card space-y-4 shadow-sm relative overflow-hidden`}>
 
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-start gap-4">
@@ -129,19 +129,19 @@ export const BookDetailView: React.FC<BookDetailViewProps> = ({
                 onSelectChapterDeck(chapter);
                 playSound('click', soundEnabled);
               }}
-              className="panel p-5 rounded-3xl border border-border-subtle hover:border-border-primary bg-surface-card cursor-pointer group transition-all duration-200 flex flex-col justify-between hover:shadow-xl hover:-translate-y-0.5 relative overflow-hidden"
+              className="panel panel-stitched p-5 rounded-3xl border border-border-subtle hover:border-border-primary bg-surface-card cursor-pointer group transition-all duration-200 flex flex-col justify-between hover:shadow-xl hover:-translate-y-0.5 relative overflow-hidden"
             >
               <div className="space-y-3">
                 {/* Top Row: Icon, Deck Badge, and Quick Clone */}
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-10 h-10 rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-center group-hover:scale-105 group-hover:border-gold/40 transition-all shadow-inner shrink-0">
+                    <div className="w-10 h-10 rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-center group-hover:scale-105 group-hover:border-border-primary transition-all shadow-inner shrink-0">
                       <span className="font-jp font-bold text-base text-text-primary group-hover:text-gold transition-colors">
                         {chapter.coverIcon || book.coverIcon}
                       </span>
                     </div>
                     <div className="flex items-center gap-1.5 flex-wrap">
-                      <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider font-mono text-gold bg-gold/10 px-2 py-0.5 rounded-md border border-gold/30">
+                      <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider font-mono text-gold bg-gold/10 px-2 py-0.5 rounded-md border border-border-subtle">
                         Deck Bab {chapter.chapterNumber}
                       </span>
                       <span className="text-[10px] font-mono text-text-muted">
@@ -160,8 +160,8 @@ export const BookDetailView: React.FC<BookDetailViewProps> = ({
                     disabled={isCloned}
                     className={`p-2 rounded-xl border transition-all shrink-0 ${
                       isCloned
-                        ? 'bg-emerald-500/15 text-emerald-500 border-emerald-500/30'
-                        : 'bg-surface-inset text-text-muted hover:text-gold hover:border-gold/30 border-border-subtle'
+                        ? 'bg-emerald-500/15 text-emerald-500 border-border-subtle'
+                        : 'bg-surface-inset text-text-muted hover:text-gold hover:border-border-primary border-border-subtle'
                     }`}
                     title={isCloned ? 'Sudah tersalin ke Buku Saku Saya' : 'Salin deck bab ini ke Buku Saku Saya'}
                   >
@@ -186,17 +186,17 @@ export const BookDetailView: React.FC<BookDetailViewProps> = ({
                     {stats.total} Kartu:
                   </span>
                   {stats.kanjiCount > 0 && (
-                    <span className="px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    <span className="px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-emerald-500/10 text-emerald-400 border border-border-subtle">
                       {stats.kanjiCount} Kanji
                     </span>
                   )}
                   {stats.kotobaCount > 0 && (
-                    <span className="px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                    <span className="px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-amber-500/10 text-amber-400 border border-border-subtle">
                       {stats.kotobaCount} Kotoba
                     </span>
                   )}
                   {stats.bunpouCount > 0 && (
-                    <span className="px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                    <span className="px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-indigo-500/10 text-indigo-400 border border-border-subtle">
                       {stats.bunpouCount} Bunpou
                     </span>
                   )}

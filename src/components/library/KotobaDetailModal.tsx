@@ -243,7 +243,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
           initial={{ opacity: 0, scale: 0.95, y: 10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 10 }}
-          className="panel relative w-full max-w-lg border border-border-subtle rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
+          className="panel panel-stitched relative w-full max-w-lg border border-border-subtle rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
         >
           {/* Header */}
           <div className="flex items-center justify-between p-4 sm:p-5 border-b border-border-subtle bg-surface-inset">
@@ -348,7 +348,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                   {effectiveItem.jlpt.startsWith('N') ? `JLPT ${effectiveItem.jlpt}` : effectiveItem.jlpt}
                 </span>
                 {effectiveItem.tags?.includes('Kaigo') && effectiveItem.jlpt !== 'Kaigo' && (
-                  <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-bold border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 shadow-sm">
+                  <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-bold border border-border-subtle text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 shadow-sm">
                     🩺 Kaigo
                   </span>
                 )}
@@ -368,7 +368,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                   {effectiveItem.wordType}
                 </span>
                 {hasMultipleReadings && (
-                  <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-bold border border-red-700/25 dark:border-amber-400/30 text-red-700 dark:text-amber-400 bg-surface-inset shadow-sm flex items-center gap-1.5">
+                  <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-bold border border-border-subtle text-red-700 dark:text-amber-400 bg-surface-inset shadow-sm flex items-center gap-1.5">
                     <Zap className="w-3.5 h-3.5 text-red-700 dark:text-amber-400 fill-red-700/20 dark:fill-amber-400/25 shrink-0" />
                     <span>{readingVariations.length} Cara Baca Alternatif</span>
                   </span>
@@ -422,7 +422,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                             }}
                             className={`px-3 py-1.5 rounded-xl text-xs font-bold font-jp border transition-all flex items-center gap-1.5 ${
                               isSelected
-                                ? 'bg-surface-elevated text-gold border-gold/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_4px_rgba(0,0,0,0.25)] font-black'
+                                ? 'bg-surface-elevated text-gold border-border-subtle shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_4px_rgba(0,0,0,0.25)] font-black'
                                 : 'bg-surface-inset text-text-secondary border-border-subtle hover:border-border-muted hover:text-text-primary'
                             }`}
                             title={`Pilih bacaan #${idx + 1} (${v}) & putar suara`}
@@ -505,7 +505,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                         setSelectedKanjiChar(k);
                         playSound('click', soundEnabled);
                       }}
-                      className="px-3 py-1.5 rounded-xl bg-surface-inset hover:bg-surface-elevated text-text-primary hover:text-wine-accent border border-border-subtle hover:border-wine-accent/50 text-sm font-jp font-bold transition-all cursor-pointer shadow-xs active:scale-95 flex items-center gap-1"
+                      className="px-3 py-1.5 rounded-xl bg-surface-inset hover:bg-surface-elevated text-text-primary hover:text-wine-accent border border-border-subtle hover:border-border-primary text-sm font-jp font-bold transition-all cursor-pointer shadow-xs active:scale-95 flex items-center gap-1"
                       title={`Buka detail kanji 「${k}」 di ensiklopedi`}
                     >
                       <span>{k}</span>
@@ -557,7 +557,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                         <li
                           key={i}
                           onClick={() => handleSelectRelatedWord(word)}
-                          className="text-sm text-text-primary font-jp bg-surface-inset hover:bg-surface-elevated px-2.5 py-1.5 rounded-lg border border-border-subtle hover:border-gold/40 transition-all cursor-pointer flex items-center justify-between group active:scale-98"
+                          className="text-sm text-text-primary font-jp bg-surface-inset hover:bg-surface-elevated px-2.5 py-1.5 rounded-lg border border-border-subtle hover:border-border-primary transition-all cursor-pointer flex items-center justify-between group active:scale-98"
                           title={`Lihat detail kosakata 「${word}」`}
                         >
                           <div className="flex items-center gap-1.5 min-w-0">

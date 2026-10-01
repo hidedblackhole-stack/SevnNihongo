@@ -176,7 +176,7 @@ export const GrammarFormulaBox: React.FC<GrammarFormulaBoxProps> = ({ item, clas
       )}
 
       {/* Main Slide-Style Formula Card */}
-      <div className="relative rounded-2xl p-4 sm:p-5 bg-surface-card border border-border-subtle shadow-md text-text-primary select-none overflow-hidden">
+      <div className="relative rounded-2xl p-4 sm:p-5 bg-surface-card panel-stitched border border-border-subtle shadow-md text-text-primary select-none overflow-hidden">
         {/* Subtle decorative background watermark */}
         <div className="absolute right-3 top-2 text-emerald-900/10 dark:text-emerald-500/10 font-black font-jp text-5xl pointer-events-none">
           接続
@@ -199,11 +199,11 @@ export const GrammarFormulaBox: React.FC<GrammarFormulaBoxProps> = ({ item, clas
 
           {/* Center: Visual Connecting Bracket */}
           <div className="hidden sm:flex items-center justify-center px-1">
-            <div className="w-3.5 h-28 border-r-2 border-t-2 border-b-2 border-emerald-700 dark:border-emerald-400 rounded-r-lg" />
+            <div className="w-3.5 h-28 border-r-2 border-t-2 border-b-2 border-border-subtle rounded-r-lg" />
           </div>
 
           {/* Right: Suffix tokens (e.g. んですが、 / のですが、) */}
-          <div className="flex flex-col sm:items-start justify-center gap-1.5 pl-0 sm:pl-2 w-full sm:w-auto border-t sm:border-t-0 border-emerald-600/30 dark:border-emerald-500/30 pt-3 sm:pt-0">
+          <div className="flex flex-col sm:items-start justify-center gap-1.5 pl-0 sm:pl-2 w-full sm:w-auto border-t sm:border-t-0 border-border-subtle pt-3 sm:pt-0">
             {currentGroup.sharedSuffix.map((suf, sIdx) => (
               <div
                 key={sIdx}
@@ -217,7 +217,7 @@ export const GrammarFormulaBox: React.FC<GrammarFormulaBoxProps> = ({ item, clas
         </div>
 
         {/* Bottom Hint */}
-        <div className="mt-3 pt-2.5 border-t border-emerald-600/20 dark:border-emerald-500/30 flex items-center justify-between text-xs text-emerald-950 dark:text-emerald-200/90 font-bold">
+        <div className="mt-3 pt-2.5 border-t border-border-subtle flex items-center justify-between text-xs text-emerald-950 dark:text-emerald-200/90 font-bold">
           <span className="flex items-center gap-1.5">
             <span>💡</span>
             <span>Sambungkan kata depan dalam bentuk di atas dengan akhiran pola</span>

@@ -31,7 +31,7 @@ export const BossGateModal: React.FC<BossGateModalProps> = ({
           initial={{ scale: 0.9, opacity: 0, y: 20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.9, opacity: 0, y: 20 }}
-          className="w-full max-w-md bg-surface-card rounded-3xl p-6 border border-border-subtle shadow-2xl relative overflow-hidden"
+          className="w-full max-w-md bg-surface-card panel-stitched rounded-3xl p-6 border border-border-subtle shadow-2xl relative overflow-hidden"
         >
           {/* Top Decorative Banner */}
           <div className="absolute top-0 left-0 right-0 h-2 bg-wine-accent" />

@@ -251,7 +251,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                   <h3 className="font-heading font-bold text-base sm:text-lg text-text-primary flex items-center gap-2">
                     <span>{editingDeck ? 'Edit Buku Saku' : 'Buat Buku Saku Baru'}</span>
                     {!editingDeck && estimatedCount > 0 && (
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-gold/15 text-gold border border-gold/30">
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-gold/15 text-gold border border-border-subtle">
                         +{estimatedCount} materi siap
                       </span>
                     )}
@@ -329,7 +329,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                     }}
                     className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl text-base sm:text-lg flex items-center justify-center transition-all border ${
                       coverIcon === icon
-                        ? 'bg-surface-elevated border border-gold/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_2px_8px_rgba(0,0,0,0.35)] scale-105'
+                        ? 'bg-surface-elevated border border-border-subtle shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_2px_8px_rgba(0,0,0,0.35)] scale-105'
                         : 'bg-surface-inset border-border-subtle hover:bg-surface-elevated'
                     }`}
                   >
@@ -466,7 +466,7 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                             }}
                             className={`px-2.5 py-1 rounded-lg text-xs font-mono font-bold transition-all border ${
                               presetLevel === lvl
-                                ? 'bg-surface-elevated text-gold border-gold/40'
+                                ? 'bg-surface-elevated text-gold border-border-subtle'
                                 : 'bg-surface-card text-text-muted border-border-subtle hover:text-text-secondary'
                             }`}
                           >

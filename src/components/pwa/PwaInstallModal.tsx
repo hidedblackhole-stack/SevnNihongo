@@ -65,7 +65,7 @@ export const PwaInstallModal: React.FC<PwaInstallModalProps> = ({
         {/* Header */}
         <div className="p-4 sm:p-5 border-b border-border-subtle flex items-center justify-between gap-3 bg-surface-elevated/60">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-surface-inset border border-indigo/40 text-indigo flex items-center justify-center shadow-inner">
+            <div className="w-9 h-9 rounded-xl bg-surface-inset border border-border-subtle text-indigo flex items-center justify-center shadow-inner">
               <Smartphone className="w-5 h-5" />
             </div>
             <div>
@@ -94,7 +94,7 @@ export const PwaInstallModal: React.FC<PwaInstallModalProps> = ({
         <div className="p-4 sm:p-5 space-y-4 max-h-[80vh] overflow-y-auto">
           {/* Quick Native Install Button if available */}
           {Boolean(deferredPrompt || (typeof window !== 'undefined' && (window as any).__pwaInstallPrompt)) && (
-            <div className="p-3.5 rounded-2xl bg-indigo/10 border border-indigo/40 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left shadow-sm">
+            <div className="p-3.5 rounded-2xl bg-indigo/10 border border-border-subtle flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left shadow-sm">
               <div>
                 <div className="text-xs font-bold text-indigo font-heading flex items-center gap-1.5 justify-center sm:justify-start">
                   <Check className="w-3.5 h-3.5 text-state-success" /> Perangkat Siap Mendukung Instalasi
@@ -168,7 +168,7 @@ export const PwaInstallModal: React.FC<PwaInstallModalProps> = ({
           {/* Guide Content: iOS Safari */}
           {deviceTab === 'ios' && (
             <div className="space-y-3 animate-fade-in text-xs">
-              <div className="p-2.5 rounded-xl bg-gold/10 border border-gold/30 text-gold-soft text-[11px] font-medium flex items-center gap-2">
+              <div className="p-2.5 rounded-xl bg-gold/10 border border-border-subtle text-gold-soft text-[11px] font-medium flex items-center gap-2">
                 <span>ℹ️</span>
                 <span>Di iOS, pastikan Anda membuka tautan di browser resmi <strong>Safari</strong>.</span>
               </div>

@@ -59,7 +59,7 @@ export const ChoukaiModule: React.FC<ChoukaiModuleProps> = ({
     return (
       <div className="w-full space-y-4">
         {/* Compact audio controller during quiz */}
-        <div className="panel p-4 rounded-2xl border border-border-subtle flex items-center justify-between gap-3 shadow-md">
+        <div className="panel panel-stitched p-4 rounded-2xl border border-border-subtle flex items-center justify-between gap-3 shadow-md">
           <div className="flex items-center gap-2">
             <button
               onClick={handleTogglePlayAudio}
@@ -131,7 +131,7 @@ export const ChoukaiModule: React.FC<ChoukaiModuleProps> = ({
       </div>
 
       {/* Audio Player Station Card */}
-      <div className="panel p-6 rounded-3xl space-y-6 text-center shadow-xl border border-border-subtle">
+      <div className="panel panel-stitched p-6 rounded-3xl space-y-6 text-center shadow-xl border border-border-subtle">
         <div className="space-y-1">
           <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-surface-inset text-text-primary border border-border-subtle font-bold">
             {currentChoukai.level} • {currentChoukai.dialogueSpeaker}

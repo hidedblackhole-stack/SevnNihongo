@@ -194,7 +194,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                       window.location.reload();
                     }
                   }}
-                  className="btn btn-pill text-xs gap-2 text-wine-accent border-wine-accent/40 hover:bg-wine-accent/10"
+                  className="btn btn-pill text-xs gap-2 text-wine-accent border-border-subtle hover:bg-wine-accent/10"
                 >
                   <LogOut className="w-3.5 h-3.5" />
                   <span>Keluar</span>
@@ -222,7 +222,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                   playSound('click', true);
                   onOpenAuth();
                 }}
-                className="btn btn-pill text-xs gap-2 shrink-0 text-indigo border-indigo/40 hover:bg-indigo/10"
+                className="btn btn-pill text-xs gap-2 shrink-0 text-indigo border-border-subtle hover:bg-indigo/10"
               >
                 <User className="w-4 h-4" />
                 Login / Daftar
@@ -256,7 +256,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                   if (e.key === 'Enter') handleSaveName();
                 }}
                 placeholder="Masukkan nama petualang..."
-                className="w-full bg-surface-inset border border-border-subtle focus:border-wine-accent rounded-xl px-3.5 py-2.5 text-sm font-bold font-heading text-text-primary outline-none transition-colors shadow-inner"
+                className="w-full bg-surface-inset border border-border-subtle focus:border-border-primary rounded-xl px-3.5 py-2.5 text-sm font-bold font-heading text-text-primary outline-none transition-colors shadow-inner"
               />
             </div>
             <button
@@ -265,7 +265,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               disabled={!playerNameInput.trim() || playerNameInput.trim() === stats.playerName}
               className={`px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm select-none active:scale-95 shrink-0 ${
                 isNameSaved
-                  ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
+                  ? 'bg-emerald-500/20 text-emerald-400 border border-border-subtle'
                   : playerNameInput.trim() && playerNameInput.trim() !== stats.playerName
                   ? 'bg-wine-accent hover:opacity-95 text-white font-black shadow-md'
                   : 'bg-surface-inset text-text-muted border border-border-subtle cursor-not-allowed opacity-60'
@@ -294,7 +294,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               }}
               className={`p-3.5 rounded-2xl border flex flex-col items-center text-center gap-2 transition-all ${
                 (stats.characterGender || 'male') === 'male'
-                  ? 'bg-surface-elevated border-gold/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_4px_12px_rgba(0,0,0,0.35)]'
+                  ? 'bg-surface-elevated border-border-subtle shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_4px_12px_rgba(0,0,0,0.35)]'
                   : 'bg-surface-inset border-border-subtle shadow-[inset_1px_1px_3px_var(--neu-d)] hover:border-border-muted opacity-75 hover:opacity-100'
               }`}
             >
@@ -308,7 +308,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 </span>
               </div>
               {(stats.characterGender || 'male') === 'male' && (
-                <span className="px-2 py-0.5 rounded-full bg-gold/20 border border-gold/50 text-[10px] font-bold text-gold shadow-xs">
+                <span className="px-2 py-0.5 rounded-full bg-gold/20 border border-border-subtle text-[10px] font-bold text-gold shadow-xs">
                   Aktif
                 </span>
               )}
@@ -322,7 +322,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               }}
               className={`p-3.5 rounded-2xl border flex flex-col items-center text-center gap-2 transition-all ${
                 stats.characterGender === 'female'
-                  ? 'bg-surface-elevated border-gold/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_4px_12px_rgba(0,0,0,0.35)]'
+                  ? 'bg-surface-elevated border-border-subtle shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_4px_12px_rgba(0,0,0,0.35)]'
                   : 'bg-surface-inset border-border-subtle shadow-[inset_1px_1px_3px_var(--neu-d)] hover:border-border-muted opacity-75 hover:opacity-100'
               }`}
             >
@@ -336,7 +336,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 </span>
               </div>
               {stats.characterGender === 'female' && (
-                <span className="px-2 py-0.5 rounded-full bg-gold/20 border border-gold/50 text-[10px] font-bold text-gold shadow-xs">
+                <span className="px-2 py-0.5 rounded-full bg-gold/20 border border-border-subtle text-[10px] font-bold text-gold shadow-xs">
                   Aktif
                 </span>
               )}
@@ -362,7 +362,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 }}
                 className={`w-12 h-12 flex items-center justify-center text-2xl rounded-xl border transition-all ${
                   stats.avatar === emoji || (!stats.avatar && emoji === '🦊')
-                    ? 'bg-surface-elevated border-gold/50 scale-105 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_4px_10px_rgba(0,0,0,0.35)]'
+                    ? 'bg-surface-elevated border-border-subtle scale-105 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_4px_10px_rgba(0,0,0,0.35)]'
                     : 'bg-surface-inset border-border-subtle shadow-[inset_1px_1px_3px_var(--neu-d)] hover:border-border-muted opacity-70 hover:opacity-100'
                 }`}
               >
@@ -396,7 +396,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             }}
             className={`p-2.5 rounded-xl border transition-all ${
               stats.soundEnabled
-                ? 'bg-surface-elevated text-indigo border-indigo/40 shadow-sm'
+                ? 'bg-surface-elevated text-indigo border-border-subtle shadow-sm'
                 : 'bg-surface-inset text-text-muted border-border-subtle'
             }`}
           >
@@ -414,42 +414,42 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               <button
                 type="button"
                 onClick={() => playSound('click', true)}
-                className="btn btn-pill text-[11px] py-1 px-2.5 hover:border-indigo/50"
+                className="btn btn-pill text-[11px] py-1 px-2.5 hover:border-border-primary"
               >
                 🪵 Ketuk Kayu
               </button>
               <button
                 type="button"
                 onClick={() => playSound('correct', true)}
-                className="btn btn-pill text-[11px] py-1 px-2.5 hover:border-emerald-500/50 text-emerald-600 dark:text-emerald-400"
+                className="btn btn-pill text-[11px] py-1 px-2.5 hover:border-border-primary text-emerald-600 dark:text-emerald-400"
               >
                 🔔 Genta Zen (Benar)
               </button>
               <button
                 type="button"
                 onClick={() => playSound('wrong', true)}
-                className="btn btn-pill text-[11px] py-1 px-2.5 hover:border-rose-500/50 text-rose-600 dark:text-rose-400"
+                className="btn btn-pill text-[11px] py-1 px-2.5 hover:border-border-primary text-rose-600 dark:text-rose-400"
               >
                 🥁 Ketuk Lembut (Salah)
               </button>
               <button
                 type="button"
                 onClick={() => playSound('coin', true)}
-                className="btn btn-pill text-[11px] py-1 px-2.5 hover:border-gold/50 text-gold"
+                className="btn btn-pill text-[11px] py-1 px-2.5 hover:border-border-primary text-gold"
               >
                 💧 Suikinkutsu (Koin)
               </button>
               <button
                 type="button"
                 onClick={() => playSound('attack', true)}
-                className="btn btn-pill text-[11px] py-1 px-2.5 hover:border-wine-accent/50 text-wine-accent"
+                className="btn btn-pill text-[11px] py-1 px-2.5 hover:border-border-primary text-wine-accent"
               >
                 🎋 Tebasan Bambu
               </button>
               <button
                 type="button"
                 onClick={() => playSound('levelup', true)}
-                className="btn btn-pill text-[11px] py-1 px-2.5 hover:border-indigo/50 text-indigo"
+                className="btn btn-pill text-[11px] py-1 px-2.5 hover:border-border-primary text-indigo"
               >
                 🎐 Fūrin (Level Up)
               </button>
@@ -465,7 +465,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           </div>
           <button
             onClick={handleTestJapaneseVoice}
-            className="btn btn-pill text-xs gap-2 self-start sm:self-auto text-indigo border-indigo/40 hover:bg-indigo/10"
+            className="btn btn-pill text-xs gap-2 self-start sm:self-auto text-indigo border-border-subtle hover:bg-indigo/10"
           >
             <Volume2 className="w-4 h-4" />
             <span>Uji Suara 「こんにちは」</span>
@@ -501,7 +501,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 }}
                 className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all inline-flex items-center gap-1.5 whitespace-nowrap cursor-pointer select-none ${
                   stats.theme !== 'light'
-                    ? 'bg-surface-elevated text-gold border border-gold/40 shadow-[0_2px_4px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.12)]'
+                    ? 'bg-surface-elevated text-gold border border-border-subtle shadow-[0_2px_4px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.12)]'
                     : 'text-text-muted hover:text-text-primary'
                 }`}
               >
@@ -546,7 +546,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               }}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all inline-flex items-center gap-2 shrink-0 select-none cursor-pointer border active:translate-y-[1px] ${
                 (stats.furiganaEnabled ?? true)
-                  ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-700 dark:text-emerald-400 shadow-[0_2px_4px_var(--neu-d),inset_0_1px_0_rgba(255,255,255,0.7)]'
+                  ? 'bg-emerald-500/15 border-border-subtle text-emerald-700 dark:text-emerald-400 shadow-[0_2px_4px_var(--neu-d),inset_0_1px_0_rgba(255,255,255,0.7)]'
                   : 'bg-surface-inset text-text-muted border-border-subtle hover:text-text-primary hover:border-border-primary'
               }`}
               title="Klik untuk menyalakan atau mematikan Furigana"
@@ -579,7 +579,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 playSound('click', stats.soundEnabled);
                 if (onReplayTutorial) onReplayTutorial();
               }}
-              className="px-3.5 py-1.5 rounded-xl text-xs font-bold inline-flex items-center gap-1.5 shrink-0 whitespace-nowrap select-none transition-all active:translate-y-[1px] text-amber-900 dark:text-gold border border-gold/40 hover:border-gold bg-surface-card hover:bg-gold/10 shadow-[0_2px_4px_var(--neu-d),inset_0_1px_0_rgba(255,255,255,0.9)] dark:shadow-[0_2px_4px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.1)] cursor-pointer"
+              className="px-3.5 py-1.5 rounded-xl text-xs font-bold inline-flex items-center gap-1.5 shrink-0 whitespace-nowrap select-none transition-all active:translate-y-[1px] text-amber-900 dark:text-gold border border-border-subtle hover:border-border-primary bg-surface-card hover:bg-gold/10 shadow-[0_2px_4px_var(--neu-d),inset_0_1px_0_rgba(255,255,255,0.9)] dark:shadow-[0_2px_4px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.1)] cursor-pointer"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Ulangi Tur</span>
@@ -598,7 +598,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               </p>
             </div>
             {isStandalone ? (
-              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-700 dark:text-emerald-400 font-bold text-xs shrink-0 whitespace-nowrap shadow-sm">
+              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-emerald-500/15 border border-border-subtle text-emerald-700 dark:text-emerald-400 font-bold text-xs shrink-0 whitespace-nowrap shadow-sm">
                 <Check className="w-3.5 h-3.5 stroke-[2.5]" />
                 <span>Terpasang</span>
               </span>
@@ -606,7 +606,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               <button
                 type="button"
                 onClick={handleInstallClick}
-                className="px-3.5 py-1.5 rounded-xl text-xs font-bold inline-flex items-center gap-1.5 shrink-0 whitespace-nowrap select-none transition-all active:translate-y-[1px] text-indigo border border-indigo/40 hover:border-indigo bg-surface-card hover:bg-indigo/10 shadow-[0_2px_4px_var(--neu-d),inset_0_1px_0_rgba(255,255,255,0.9)] dark:shadow-[0_2px_4px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.1)] cursor-pointer"
+                className="px-3.5 py-1.5 rounded-xl text-xs font-bold inline-flex items-center gap-1.5 shrink-0 whitespace-nowrap select-none transition-all active:translate-y-[1px] text-indigo border border-border-subtle hover:border-border-primary bg-surface-card hover:bg-indigo/10 shadow-[0_2px_4px_var(--neu-d),inset_0_1px_0_rgba(255,255,255,0.9)] dark:shadow-[0_2px_4px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.1)] cursor-pointer"
               >
                 <Download className="w-3.5 h-3.5" />
                 <span>Pasang App</span>
@@ -628,7 +628,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => playSound('click')}
-            className="flex-1 py-3 px-4 rounded-xl bg-surface-inset hover:bg-surface-elevated border border-border-subtle hover:border-gold flex flex-col items-center justify-center gap-2 transition-all group shadow-sm"
+            className="flex-1 py-3 px-4 rounded-xl bg-surface-inset hover:bg-surface-elevated border border-border-subtle hover:border-border-primary flex flex-col items-center justify-center gap-2 transition-all group shadow-sm"
           >
             <Coffee className="w-5 h-5 text-gold group-hover:scale-110 transition-transform" />
             <div className="text-center">
@@ -642,7 +642,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => playSound('click')}
-            className="flex-1 py-3 px-4 rounded-xl bg-surface-inset hover:bg-surface-elevated border border-border-subtle hover:border-indigo flex flex-col items-center justify-center gap-2 transition-all group shadow-sm"
+            className="flex-1 py-3 px-4 rounded-xl bg-surface-inset hover:bg-surface-elevated border border-border-subtle hover:border-border-primary flex flex-col items-center justify-center gap-2 transition-all group shadow-sm"
           >
             <MessageCircle className="w-5 h-5 text-indigo group-hover:scale-110 transition-transform" />
             <div className="text-center">
@@ -668,7 +668,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               onResetData();
             }
           }}
-          className="btn btn-pill text-xs gap-1.5 text-wine-accent border-wine-accent/40 hover:bg-wine-accent/10"
+          className="btn btn-pill text-xs gap-1.5 text-wine-accent border-border-subtle hover:bg-wine-accent/10"
         >
           <RotateCcw className="w-3.5 h-3.5" />
           <span>Reset Progres Petualangan</span>

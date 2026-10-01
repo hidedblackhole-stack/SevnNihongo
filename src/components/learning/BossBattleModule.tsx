@@ -98,11 +98,11 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
   const getCategoryBadge = (cat: string) => {
     switch (cat) {
       case 'bunpou':
-        return { label: <><BookOpen className="inline w-3 h-3 mr-1" /> BUNPOU (25%)</>, color: 'bg-gold/15 text-gold border-gold/30' };
+        return { label: <><BookOpen className="inline w-3 h-3 mr-1" /> BUNPOU (25%)</>, color: 'bg-gold/15 text-gold border-border-subtle' };
       case 'kotoba':
-        return { label: <><Layers className="inline w-3 h-3 mr-1" /> KOTOBA (20%)</>, color: 'bg-indigo/15 text-indigo border-indigo/30' };
+        return { label: <><Layers className="inline w-3 h-3 mr-1" /> KOTOBA (20%)</>, color: 'bg-indigo/15 text-indigo border-border-subtle' };
       case 'kanji':
-        return { label: <><Feather className="inline w-3 h-3 mr-1" /> KANJI (20%)</>, color: 'bg-wine-accent/15 text-wine-accent border-wine-accent/30' };
+        return { label: <><Feather className="inline w-3 h-3 mr-1" /> KANJI (20%)</>, color: 'bg-wine-accent/15 text-wine-accent border-border-subtle' };
       case 'dokkai':
         return { label: <><BookMarked className="inline w-3 h-3 mr-1" /> DOKKAI (20%)</>, color: 'bg-dokkai/15 text-dokkai border-dokkai/30' };
       case 'choukai':
@@ -247,7 +247,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
 
     return (
       <div className="w-full max-w-lg mx-auto p-5 sm:p-7 panel border border-border-subtle text-center space-y-5 shadow-2xl">
-        <div className="p-3.5 inline-flex rounded-full bg-surface-inset border border-gold/50 text-gold shadow-xl animate-bounce">
+        <div className="p-3.5 inline-flex rounded-full bg-surface-inset border border-border-subtle text-gold shadow-xl animate-bounce">
           <Trophy className="w-10 h-10" />
         </div>
 
@@ -283,7 +283,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
                   </span>
                   <div className="flex items-center gap-2">
                     {p.isWeak && (
-                      <span className="text-[10px] px-1.5 py-0.5 bg-wine-accent/15 border border-wine-accent/40 text-wine-accent rounded font-bold">
+                      <span className="text-[10px] px-1.5 py-0.5 bg-wine-accent/15 border border-border-subtle text-wine-accent rounded font-bold">
                         Butuh Penguatan ⚠
                       </span>
                     )}
@@ -305,7 +305,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
           </div>
 
           {/* Diagnostic Summary Message */}
-          <div className="p-2.5 rounded-xl bg-surface-card border border-gold/30 text-[11px] text-text-secondary flex items-start gap-2 mt-2">
+          <div className="p-2.5 rounded-xl bg-surface-card border border-border-subtle text-[11px] text-text-secondary flex items-start gap-2 mt-2">
             <AlertTriangle className="w-4 h-4 text-gold shrink-0 mt-0.5" />
             <p className="leading-relaxed">
               {diagnostic.diagnosticSummary}
@@ -347,7 +347,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
       {/* Boss Arena Banner & Status */}
       <div className="relative p-5 sm:p-6 panel border border-border-subtle text-center shadow-xl overflow-hidden">
         <div className="flex items-center justify-between gap-2 mb-2">
-          <span className="text-[11px] font-bold text-wine-accent bg-surface-inset px-2.5 py-0.5 rounded-full border border-wine-accent/30 font-heading flex items-center gap-1">
+          <span className="text-[11px] font-bold text-wine-accent bg-surface-inset px-2.5 py-0.5 rounded-full border border-border-subtle font-heading flex items-center gap-1">
             <Flame className="w-3 h-3 text-wine-accent" />
             UJIAN DIAGNOSTIK & BOSS BATTLE
           </span>
@@ -366,7 +366,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
           transition={{ duration: isBossHurt ? 0.3 : 2, repeat: isBossHurt ? 0 : Infinity }}
           className="relative inline-block my-2"
         >
-          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border border-wine-accent/40 bg-surface-inset flex items-center justify-center text-4xl sm:text-5xl shadow-lg">
+          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border border-border-subtle bg-surface-inset flex items-center justify-center text-4xl sm:text-5xl shadow-lg">
             👹
           </div>
 
@@ -437,7 +437,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
           <button
             onClick={handleUseHint}
             disabled={hiddenOptions.length > 0 || isAnswered || playerMp < 15}
-            className="btn btn-pill px-2.5 py-1 text-indigo border-indigo/40 text-[11px] font-bold disabled:opacity-40"
+            className="btn btn-pill px-2.5 py-1 text-indigo border-border-subtle text-[11px] font-bold disabled:opacity-40"
             title="Hilangkan 2 opsi salah (15 MP)"
           >
             Hint 50/50
@@ -448,8 +448,8 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
             disabled={isCriticalBuffActive || isAnswered || playerMp < 20}
             className={`btn btn-pill px-2.5 py-1 text-[11px] font-bold disabled:opacity-40 transition-all ${
               isCriticalBuffActive
-                ? 'bg-gold text-surface-base border-gold animate-pulse'
-                : 'text-gold border-gold/40'
+                ? 'bg-gold text-surface-base border-border-subtle animate-pulse'
+                : 'text-gold border-border-subtle'
             }`}
             title="Serangan Crit x1.8 (20 MP)"
           >
@@ -507,13 +507,13 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
               );
             }
 
-            let btnStyle = 'panel hover:border-indigo/50 text-text-primary';
+            let btnStyle = 'panel hover:border-border-primary text-text-primary';
 
             if (isAnswered) {
               if (idx === currentQ.correctIndex) {
                 btnStyle = 'bg-state-success/15 border-state-success text-state-success shadow-md font-bold';
               } else if (idx === selectedOption) {
-                btnStyle = 'bg-wine-accent/15 border-wine-accent text-wine-accent font-bold';
+                btnStyle = 'bg-wine-accent/15 border-border-subtle text-wine-accent font-bold';
               } else {
                 btnStyle = 'bg-surface-inset border-border-subtle text-text-muted opacity-40';
               }
@@ -554,7 +554,7 @@ export const BossBattleModule: React.FC<BossBattleModuleProps> = ({
               className={`p-3.5 rounded-xl border text-xs space-y-1.5 ${
                 selectedOption === currentQ.correctIndex
                   ? 'bg-state-success/15 border-state-success/40 text-text-primary'
-                  : 'bg-wine-accent/15 border-wine-accent/40 text-text-primary'
+                  : 'bg-wine-accent/15 border-border-subtle text-text-primary'
               }`}
             >
               <div className="font-bold flex items-center gap-1.5 font-heading">

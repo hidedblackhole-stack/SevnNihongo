@@ -301,11 +301,11 @@ export const SuddenDeathStreakModal: React.FC<SuddenDeathStreakModalProps> = ({
 
   // Rank determination
   const rankInfo = useMemo(() => {
-    if (maxStreak >= 30) return { rank: 'SSS', title: 'Legenda Hidup Nihongo', color: 'text-amber-300 border-amber-400 bg-amber-500/10' };
+    if (maxStreak >= 30) return { rank: 'SSS', title: 'Legenda Hidup Nihongo', color: 'text-amber-300 border-border-subtle bg-amber-500/10' };
     if (maxStreak >= 20) return { rank: 'SS', title: 'Dewa Hafalan Kotoba', color: 'text-rose-400 border-rose-500 bg-rose-500/10' };
-    if (maxStreak >= 12) return { rank: 'S', title: 'Pendekar Memori', color: 'text-purple-400 border-purple-500 bg-purple-500/10' };
-    if (maxStreak >= 7) return { rank: 'A', title: 'Murid Tangguh', color: 'text-teal border-teal bg-teal/10' };
-    if (maxStreak >= 3) return { rank: 'B', title: 'Petualang Gigih', color: 'text-blue-400 border-blue-500 bg-blue-500/10' };
+    if (maxStreak >= 12) return { rank: 'S', title: 'Pendekar Memori', color: 'text-purple-400 border-border-subtle bg-purple-500/10' };
+    if (maxStreak >= 7) return { rank: 'A', title: 'Murid Tangguh', color: 'text-teal border-border-subtle bg-teal/10' };
+    if (maxStreak >= 3) return { rank: 'B', title: 'Petualang Gigih', color: 'text-blue-400 border-border-subtle bg-blue-500/10' };
     return { rank: 'C', title: 'Pemula Berani', color: 'text-stone-400 border-stone-500 bg-stone-500/10' };
   }, [maxStreak]);
 
@@ -462,7 +462,7 @@ export const SuddenDeathStreakModal: React.FC<SuddenDeathStreakModalProps> = ({
                   if (idx === currentQ.correctIndex) {
                     btnStyle = 'bg-emerald-500/15 border-emerald-500 text-emerald-400 font-bold ring-1 ring-emerald-500/40';
                   } else if (idx === selectedOption) {
-                    btnStyle = 'bg-crimson/20 border-crimson text-crimson font-bold';
+                    btnStyle = 'bg-crimson/20 border-border-subtle text-crimson font-bold';
                   } else {
                     btnStyle = 'opacity-40 bg-surface-inset border-border-subtle text-text-muted';
                   }
@@ -495,7 +495,7 @@ export const SuddenDeathStreakModal: React.FC<SuddenDeathStreakModalProps> = ({
         {gameState === 'gameover' && (
           <div className="flex-1 p-5 sm:p-6 space-y-5 overflow-y-auto overscroll-contain custom-scrollbar min-h-0 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:pb-6">
             {/* Scorecard Component */}
-            <div className="p-5 rounded-3xl bg-surface-card border border-border-subtle shadow-md space-y-5 relative overflow-hidden">
+            <div className="p-5 rounded-3xl bg-surface-card panel-stitched border border-border-subtle shadow-md space-y-5 relative overflow-hidden">
 
               {/* Card Header */}
               <div className="flex items-center justify-between border-b border-border-subtle/80 pb-3">

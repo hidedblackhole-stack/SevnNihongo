@@ -102,7 +102,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
         {/* Header */}
         <div className="flex justify-between items-center p-4 sm:p-5 border-b border-border-subtle bg-surface-inset/80 relative z-10 shadow-xs">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-surface-card border border-gold/40 flex items-center justify-center text-gold shadow-xs">
+            <div className="w-8 h-8 rounded-xl bg-surface-card border border-border-subtle flex items-center justify-center text-gold shadow-xs">
               <Lock className="w-4 h-4" />
             </div>
             <h2 className="font-bold text-text-primary text-base sm:text-lg font-heading tracking-wide">
@@ -124,14 +124,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
         {/* Form */}
         <div className="p-5 sm:p-6 relative z-10 space-y-4">
           {error && (
-            <div className="flex items-start gap-2.5 p-3.5 bg-rose-500/15 border border-rose-500/40 rounded-2xl text-rose-400 text-xs shadow-xs leading-relaxed">
+            <div className="flex items-start gap-2.5 p-3.5 bg-rose-500/15 border border-border-subtle rounded-2xl text-rose-400 text-xs shadow-xs leading-relaxed">
               <AlertCircle className="w-4 h-4 shrink-0 text-rose-400 mt-0.5" />
               <p>{error}</p>
             </div>
           )}
 
           {successMessage && (
-            <div className="flex items-start gap-2.5 p-3.5 bg-emerald-500/15 border border-emerald-500/40 rounded-2xl text-emerald-300 text-xs shadow-xs leading-relaxed">
+            <div className="flex items-start gap-2.5 p-3.5 bg-emerald-500/15 border border-border-subtle rounded-2xl text-emerald-300 text-xs shadow-xs leading-relaxed">
               <div className="w-2 h-2 rounded-full bg-emerald-400 mt-1.5 shrink-0" />
               <p>{successMessage}</p>
             </div>
@@ -146,7 +146,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-surface-inset border border-border-subtle rounded-xl py-3 pl-10 pr-4 text-xs sm:text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-gold/60 transition-all shadow-[inset_1.5px_1.5px_4px_var(--neu-d)]"
+                  className="w-full bg-surface-inset border border-border-subtle rounded-xl py-3 pl-10 pr-4 text-xs sm:text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-border-primary transition-all shadow-[inset_1.5px_1.5px_4px_var(--neu-d)]"
                   placeholder="nama@gmail.com"
                   required
                 />
@@ -161,7 +161,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-surface-inset border border-border-subtle rounded-xl py-3 pl-10 pr-4 text-xs sm:text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-gold/60 transition-all shadow-[inset_1.5px_1.5px_4px_var(--neu-d)]"
+                  className="w-full bg-surface-inset border border-border-subtle rounded-xl py-3 pl-10 pr-4 text-xs sm:text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-border-primary transition-all shadow-[inset_1.5px_1.5px_4px_var(--neu-d)]"
                   placeholder="Minimal 6 karakter"
                   required
                   minLength={6}

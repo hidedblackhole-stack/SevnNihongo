@@ -92,7 +92,7 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Banner / Header */}
-      <div className="panel p-5 sm:p-6 rounded-3xl space-y-5 shadow-sm border border-border-subtle bg-surface-card">
+      <div className="panel panel-stitched p-5 sm:p-6 rounded-3xl space-y-5 shadow-sm border border-border-subtle bg-surface-card">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="space-y-1">
             <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-gold flex items-center gap-1.5">
@@ -107,7 +107,7 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
           </div>
 
           <div className="p-3 rounded-2xl bg-surface-inset border border-border-subtle flex items-center gap-3 shrink-0">
-            <div className="w-10 h-10 rounded-xl bg-gold/15 text-gold border border-gold/30 flex items-center justify-center font-bold font-mono text-base">
+            <div className="w-10 h-10 rounded-xl bg-gold/15 text-gold border border-border-subtle flex items-center justify-center font-bold font-mono text-base">
               {OFFICIAL_BOOKS.length}
             </div>
             <div>
@@ -145,7 +145,7 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
               }}
               className={`flex-1 sm:flex-none px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 whitespace-nowrap ${
                 activeCategory === 'THEMATIC'
-                  ? 'bg-rose-500/15 text-rose-500 shadow-sm border border-rose-500/30 font-bold'
+                  ? 'bg-rose-500/15 text-rose-500 shadow-sm border border-border-subtle font-bold'
                   : 'text-text-muted hover:text-text-primary'
               }`}
             >
@@ -165,7 +165,7 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
               }}
               className={`flex-1 sm:flex-none px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 whitespace-nowrap ${
                 activeCategory === 'CURRICULUM'
-                  ? 'bg-teal/15 text-teal shadow-sm border border-teal/30 font-bold'
+                  ? 'bg-teal/15 text-teal shadow-sm border border-border-subtle font-bold'
                   : 'text-text-muted hover:text-text-primary'
               }`}
             >
@@ -237,7 +237,7 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
                 onSelectBook(book);
                 playSound('click', soundEnabled);
               }}
-              className={`panel p-5 sm:p-6 rounded-3xl border border-border-subtle bg-surface-card hover:shadow-xl transition-all duration-200 cursor-pointer group flex flex-col justify-between relative overflow-hidden`}
+              className={`panel panel-stitched p-5 sm:p-6 rounded-3xl border border-border-subtle bg-surface-card hover:shadow-xl transition-all duration-200 cursor-pointer group flex flex-col justify-between relative overflow-hidden`}
             >
               <div className="space-y-3">
                 {/* Header Row: Book Spine Icon + Badge */}

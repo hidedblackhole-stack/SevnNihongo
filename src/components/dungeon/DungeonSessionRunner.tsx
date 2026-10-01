@@ -365,16 +365,16 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
   // Compute percentage accuracy & Rank
   const accuracyPct = Math.round((correctCount / Math.max(1, totalFloors)) * 100);
   let rankGrade = 'A';
-  let rankColor = 'text-gold border-gold/40 bg-gold/15';
+  let rankColor = 'text-gold border-border-subtle bg-gold/15';
   if (accuracyPct === 100) {
     rankGrade = 'S';
-    rankColor = 'text-amber-400 border-amber-400/50 bg-amber-400/20';
+    rankColor = 'text-amber-400 border-border-subtle bg-amber-400/20';
   } else if (accuracyPct >= 75) {
     rankGrade = 'A';
-    rankColor = 'text-gold border-gold/40 bg-gold/15';
+    rankColor = 'text-gold border-border-subtle bg-gold/15';
   } else if (accuracyPct >= 50) {
     rankGrade = 'B';
-    rankColor = 'text-indigo border-indigo/40 bg-indigo/15';
+    rankColor = 'text-indigo border-border-subtle bg-indigo/15';
   } else {
     rankGrade = 'C';
     rankColor = 'text-text-muted border-border-subtle bg-surface-inset';
@@ -449,7 +449,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                   timeLeft <= 5
                     ? 'bg-rose-500/25 text-rose-400 border-rose-500/60 animate-pulse scale-105'
                     : timeLeft <= 10
-                    ? 'bg-amber-500/15 text-amber-400 border-amber-500/40'
+                    ? 'bg-amber-500/15 text-amber-400 border-border-subtle'
                     : 'bg-surface-card text-rose-400 border-rose-500/30 shadow-2xs'
                 }`}
                 title={`Sisa waktu: ${timeLeft} detik`}
@@ -518,7 +518,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
             /* ================= VICTORY SCREEN ================= */
             <div className="text-center space-y-6 my-auto py-6 animate-fade-in">
               <div className="relative inline-block">
-                <div className="w-20 h-20 mx-auto rounded-3xl bg-gold/15 border border-gold/40 flex items-center justify-center text-gold shadow-xl">
+                <div className="w-20 h-20 mx-auto rounded-3xl bg-gold/15 border border-border-subtle flex items-center justify-center text-gold shadow-xl">
                   <Trophy className="w-10 h-10" />
                 </div>
                 <div className={`absolute -bottom-2 -right-2 px-3 py-0.5 rounded-xl border font-mono font-black text-sm shadow-md ${rankColor}`}>
@@ -610,7 +610,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                           </button>
                         </div>
                       )}
-                      <div className="panel p-4 sm:p-5 rounded-3xl border border-border-subtle shadow-lg">
+                      <div className="panel panel-stitched p-4 sm:p-5 rounded-3xl border border-border-subtle shadow-lg">
                         <UniversalWritingCard
                           item={it}
                           soundEnabled={soundEnabled}
@@ -773,7 +773,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                             }}
                             className={`px-3 py-1.5 rounded-xl text-xs font-heading font-bold transition-all flex items-center gap-1.5 cursor-pointer select-none ${
                               sakubunMode === 'tiles'
-                                ? 'bg-indigo-deep text-gold border border-gold/40 shadow-xs'
+                                ? 'bg-indigo-deep text-gold border border-border-subtle shadow-xs'
                                 : 'text-text-muted hover:text-text-primary hover:bg-surface-card/40'
                             }`}
                           >
@@ -789,7 +789,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                             }}
                             className={`px-3 py-1.5 rounded-xl text-xs font-heading font-bold transition-all flex items-center gap-1.5 cursor-pointer select-none ${
                               sakubunMode === 'typing'
-                                ? 'bg-indigo-deep text-gold border border-gold/40 shadow-xs'
+                                ? 'bg-indigo-deep text-gold border border-border-subtle shadow-xs'
                                 : 'text-text-muted hover:text-text-primary hover:bg-surface-card/40'
                             }`}
                           >
@@ -891,7 +891,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                                     setSakubunTypedText(prev => prev + t.text);
                                     if (sakubunFeedback) setSakubunFeedback(null);
                                   }}
-                                  className="px-2.5 py-1 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-primary border border-border-subtle text-xs font-bold font-jp shadow-2xs hover:border-gold/30 transition-all active:scale-95 cursor-pointer"
+                                  className="px-2.5 py-1 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-primary border border-border-subtle text-xs font-bold font-jp shadow-2xs hover:border-border-primary transition-all active:scale-95 cursor-pointer"
                                   title={`Sisipkan 「${t.text}」`}
                                 >
                                   {t.text}
@@ -977,7 +977,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                             <span className="text-gold font-jp font-black text-3xl sm:text-4xl drop-shadow-sm">
                               {formDisplay.suffix}
                             </span>
-                            <span className="px-2.5 py-0.5 rounded-lg bg-gold/15 text-gold border border-gold/30 text-xs font-mono font-bold">
+                            <span className="px-2.5 py-0.5 rounded-lg bg-gold/15 text-gold border border-border-subtle text-xs font-mono font-bold">
                               {formDisplay.badge}
                             </span>
                           </div>
@@ -1227,7 +1227,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                         <div className="flex items-start justify-between gap-3 flex-wrap">
                           <div className="space-y-1">
                             <div className="flex items-center gap-2 flex-wrap">
-                              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-violet-500/15 text-violet-400 border border-violet-500/30">
+                              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-violet-500/15 text-violet-400 border border-border-subtle">
                                 {item.level || config.levelCategory || 'Tata Bahasa'}
                               </span>
                               <span className="text-[10px] font-mono text-text-muted uppercase">
@@ -1260,7 +1260,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                           <button
                             type="button"
                             onClick={() => handleInsertText(primaryInsert)}
-                            className="px-3 py-1.5 rounded-xl bg-violet-500/15 hover:bg-violet-500/25 text-violet-800 dark:text-violet-300 border border-violet-500/40 text-xs font-bold font-jp shadow-xs transition-all active:scale-95 cursor-pointer flex items-center gap-1.5 shrink-0"
+                            className="px-3 py-1.5 rounded-xl bg-violet-500/15 hover:bg-violet-500/25 text-violet-800 dark:text-violet-300 border border-border-subtle text-xs font-bold font-jp shadow-xs transition-all active:scale-95 cursor-pointer flex items-center gap-1.5 shrink-0"
                             title="Sisipkan pola ini ke kolom tulis"
                           >
                             <Plus className="w-3.5 h-3.5" />
@@ -1414,7 +1414,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                               <button
                                 type="button"
                                 onClick={() => handleInsertText(primaryInsert)}
-                                className="px-2.5 py-1 rounded-xl bg-violet-500/20 text-violet-300 hover:bg-violet-500/30 border border-violet-500/40 text-xs font-bold font-jp shadow-2xs transition-all active:scale-95 cursor-pointer"
+                                className="px-2.5 py-1 rounded-xl bg-violet-500/20 text-violet-300 hover:bg-violet-500/30 border border-border-subtle text-xs font-bold font-jp shadow-2xs transition-all active:scale-95 cursor-pointer"
                               >
                                 ＋ {primaryInsert}
                               </button>
@@ -1423,7 +1423,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                                   key={wIdx}
                                   type="button"
                                   onClick={() => handleInsertText(w)}
-                                  className="px-2 py-1 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-primary border border-border-subtle text-xs font-jp font-medium shadow-2xs hover:border-gold/40 transition-all active:scale-95 cursor-pointer"
+                                  className="px-2 py-1 rounded-xl bg-surface-card hover:bg-surface-elevated text-text-primary border border-border-subtle text-xs font-jp font-medium shadow-2xs hover:border-border-primary transition-all active:scale-95 cursor-pointer"
                                 >
                                   {w}
                                 </button>

@@ -152,7 +152,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-border-subtle">
         <div>
           <div className="flex items-center gap-2.5">
-            <span className="p-2 rounded-xl bg-surface-inset border border-gold/30 text-gold">
+            <span className="p-2 rounded-xl bg-surface-inset border border-border-subtle text-gold">
               <BookOpen className="w-5 h-5" />
             </span>
             <div>
@@ -175,7 +175,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
             }}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all font-heading ${
               activeTab === 'materi'
-                ? 'bg-surface-elevated text-gold border border-gold/40 shadow-sm'
+                ? 'bg-surface-elevated text-gold border border-border-subtle shadow-sm'
                 : 'text-text-muted hover:text-text-primary'
             }`}
           >
@@ -188,7 +188,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
             }}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 font-heading ${
               activeTab === 'sakubun'
-                ? 'bg-amber-500/20 text-amber-400 border border-amber-500/40 shadow-sm'
+                ? 'bg-amber-500/20 text-amber-400 border border-border-subtle shadow-sm'
                 : 'text-text-muted hover:text-text-primary'
             }`}
           >
@@ -231,7 +231,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
                   }}
                   className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all border font-jp ${
                     isSelected
-                      ? 'bg-surface-elevated border-gold/50 text-gold shadow-sm'
+                      ? 'bg-surface-elevated border-border-subtle text-gold shadow-sm'
                       : 'bg-surface-inset border-border-subtle text-text-secondary hover:text-text-primary'
                   }`}
                 >
@@ -260,7 +260,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
             {/* Title, Level, Functions & Meaning */}
             <div className="space-y-2">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded-lg bg-surface-inset text-amber-900 dark:text-gold text-xs font-mono font-bold border border-amber-600/30 dark:border-gold/30">
+                <span className="px-2.5 py-0.5 rounded-lg bg-surface-inset text-amber-900 dark:text-gold text-xs font-mono font-bold border border-border-subtle">
                   {currentBunpou.baseLevel ? `Fondasi ${currentBunpou.baseLevel}` : `Level ${currentBunpou.level}`}
                 </span>
                 {currentBunpou.functions && currentBunpou.functions.map((fn, idx) => (
@@ -374,7 +374,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
                             }}
                             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border font-jp flex items-center gap-1 ${
                               isSelected
-                                ? 'bg-gold text-surface-base border-gold shadow-sm font-bold'
+                                ? 'bg-gold text-surface-base border-border-subtle shadow-sm font-bold'
                                 : 'panel text-text-secondary hover:text-gold'
                             }`}
                           >
@@ -401,7 +401,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
                     </div>
 
                     {/* Lokasi Penggunaan Badge / Box */}
-                    <div className="p-3 rounded-xl bg-surface-card border border-gold/30 flex items-start gap-2.5">
+                    <div className="p-3 rounded-xl bg-surface-card border border-border-subtle flex items-start gap-2.5">
                       <MapPin className="w-4 h-4 text-gold shrink-0 mt-0.5" />
                       <div className="space-y-0.5">
                         <span className="text-[10px] font-bold uppercase tracking-wider text-gold font-heading">
@@ -424,7 +424,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
                           {currentSubBranch.connectionConditions.map((cond, cIdx) => (
                             <div
                               key={cIdx}
-                              className="p-2.5 rounded-xl bg-surface-card border border-border-subtle space-y-1 hover:border-gold/30 transition-colors"
+                              className="p-2.5 rounded-xl bg-surface-card border border-border-subtle space-y-1 hover:border-border-primary transition-colors"
                             >
                               <div className="flex items-center gap-2">
                                 <span className="px-1.5 py-0.5 rounded-md bg-surface-inset text-[10px] font-bold text-gold border border-border-subtle">
@@ -506,7 +506,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
                 <div className="space-y-2.5">
                   {currentBunpou.comparisonNotes.map((comp, idx) => (
                     <div key={idx} className="p-3 rounded-xl bg-surface-card border border-border-subtle space-y-1">
-                      <span className="px-2 py-0.5 rounded-md bg-surface-inset border border-indigo/40 text-indigo text-xs font-jp font-bold inline-block">
+                      <span className="px-2 py-0.5 rounded-md bg-surface-inset border border-border-subtle text-indigo text-xs font-jp font-bold inline-block">
                         VS {comp.targetGrammar}
                       </span>
                       <p className="text-xs sm:text-sm text-text-secondary leading-relaxed pt-1">
@@ -527,7 +527,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
                 {currentBunpou.examples.map((example, i) => (
                   <div
                     key={i}
-                    className="p-4 rounded-2xl panel border border-border-subtle flex items-start justify-between gap-3 hover:border-border-primary transition-colors"
+                    className="p-4 rounded-2xl panel panel-stitched border border-border-subtle flex items-start justify-between gap-3 hover:border-border-primary transition-colors"
                   >
                     <div className="space-y-1.5 flex-1">
                       <p className="text-sm sm:text-base font-bold text-text-primary flex flex-wrap items-baseline gap-1">
@@ -581,7 +581,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
                   setActiveTab('sakubun');
                   playSound('click', soundEnabled);
                 }}
-                className="py-3 px-4 rounded-2xl bg-amber-500/15 border border-amber-500/40 text-amber-400 font-bold text-xs sm:text-sm shadow-sm flex items-center justify-center gap-2 active:scale-95 hover:bg-amber-500/25 transition-all font-heading cursor-pointer"
+                className="py-3 px-4 rounded-2xl bg-amber-500/15 border border-border-subtle text-amber-400 font-bold text-xs sm:text-sm shadow-sm flex items-center justify-center gap-2 active:scale-95 hover:bg-amber-500/25 transition-all font-heading cursor-pointer"
               >
                 <Edit3 className="w-4 h-4" />
                 <span>Susun Kalimat Pola Ini</span>
@@ -611,7 +611,7 @@ export const BunpouModule: React.FC<BunpouModuleProps> = ({
       ) : (
         /* Mixed Set View */
         <div className="panel p-6 text-center space-y-4 shadow-xl border border-border-subtle">
-          <div className="p-4 inline-flex rounded-full bg-surface-inset border border-gold/40 text-gold">
+          <div className="p-4 inline-flex rounded-full bg-surface-inset border border-border-subtle text-gold">
             <Swords className="w-8 h-8" />
           </div>
 

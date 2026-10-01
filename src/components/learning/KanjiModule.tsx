@@ -188,7 +188,7 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
           </button>
           <button
             onClick={handleStartQuiz}
-            className="btn btn-pill flex items-center gap-1.5 shadow-md text-gold border-gold/40 hover:border-gold"
+            className="btn btn-pill flex items-center gap-1.5 shadow-md text-gold border-border-subtle hover:border-border-primary"
           >
             <span>🎯 Latihan ({compiledQuestions.length})</span>
           </button>
@@ -237,7 +237,7 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
                 }}
                 className="panel p-4 cursor-pointer text-center space-y-2 group transition-all shadow-md hover:border-border-primary"
               >
-                <div className="w-16 h-16 mx-auto rounded-2xl bg-surface-inset border border-wine-accent/30 flex items-center justify-center text-3xl font-bold text-wine-accent font-jp group-hover:scale-105 transition-transform">
+                <div className="w-16 h-16 mx-auto rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-center text-3xl font-bold text-wine-accent font-jp group-hover:scale-105 transition-transform">
                   {kanji.character}
                 </div>
                 <div>
@@ -267,7 +267,7 @@ export const KanjiModule: React.FC<KanjiModuleProps> = ({
             </div>
             <button
               onClick={handleStartQuiz}
-              className="btn btn-pill py-3 px-6 text-wine-accent border-wine-accent/40 hover:bg-wine-accent/10 font-bold text-xs shadow-md shrink-0"
+              className="btn btn-pill py-3 px-6 text-wine-accent border-border-subtle hover:bg-wine-accent/10 font-bold text-xs shadow-md shrink-0"
             >
               Mulai Quiz Kanji
             </button>

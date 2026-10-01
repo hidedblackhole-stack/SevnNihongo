@@ -433,7 +433,7 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
   return (
     <div className="space-y-6">
       {/* Search & Level Filters Toolbar */}
-      <div className="panel p-4 sm:p-5 rounded-2xl border border-border-subtle shadow-sm space-y-4">
+      <div className="panel panel-stitched p-4 sm:p-5 rounded-2xl border border-border-subtle shadow-sm space-y-4">
         <div className="flex flex-col md:flex-row gap-3">
           {/* Search Input with Japanese IME Toggle */}
           <div className="relative flex-1 flex items-center">
@@ -471,7 +471,7 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
                 }}
                 className={`px-2 py-1 rounded-lg text-xs font-mono font-bold flex items-center gap-1 transition-all cursor-pointer select-none ${
                   imeActive
-                    ? 'bg-gold/20 text-gold border border-gold/40 shadow-xs'
+                    ? 'bg-gold/20 text-gold border border-border-subtle shadow-xs'
                     : 'bg-surface-card text-text-muted border border-border-subtle hover:text-text-primary'
                 }`}
                 title={imeActive ? 'IME Jepang Aktif (Romaji -> Kana)' : 'Mode Huruf Latin'}
@@ -535,7 +535,7 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
               }}
               className={`px-3 py-1.5 rounded-xl text-xs font-medium shrink-0 flex items-center gap-1.5 transition-all cursor-pointer ${
                 levelFilter === opt.value
-                  ? 'bg-surface-inset border border-wine-accent/40 text-wine-accent font-bold shadow-sm'
+                  ? 'bg-surface-inset border border-border-subtle text-wine-accent font-bold shadow-sm'
                   : 'text-text-muted hover:text-text-primary hover:bg-surface-inset/60 border border-transparent'
               }`}
             >
@@ -866,11 +866,11 @@ const KanjiCardItem: React.FC<{
 
   const badgeLabel = isHira ? 'Hiragana' : isKata ? 'Katakana' : isNum ? 'Angka' : item.jlpt || 'N3';
   const badgeColor = isHira
-    ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
+    ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-border-subtle'
     : isKata
-      ? 'bg-sky-500/15 text-sky-600 dark:text-sky-400 border-sky-500/30'
+      ? 'bg-sky-500/15 text-sky-600 dark:text-sky-400 border-border-subtle'
       : isNum
-        ? 'bg-indigo/15 text-indigo dark:text-indigo-soft border-indigo/30'
+        ? 'bg-indigo/15 text-indigo dark:text-indigo-soft border-border-subtle'
         : 'bg-surface-inset text-text-primary border-border-subtle';
 
   return (
@@ -929,7 +929,7 @@ const KanjiCardItem: React.FC<{
       </div>
 
       {/* Glyph Box */}
-      <div className={`rounded-xl sm:rounded-2xl bg-surface-inset flex items-center justify-center border border-border-subtle group-hover:border-wine-accent/40 transition-colors shadow-inner ${
+      <div className={`rounded-xl sm:rounded-2xl bg-surface-inset flex items-center justify-center border border-border-subtle group-hover:border-border-primary transition-colors shadow-inner ${
         compact ? 'w-10 h-10 sm:w-14 sm:h-14' : 'w-14 h-14 sm:w-16 sm:h-16'
       }`}>
         <span className={`font-jp font-bold text-text-primary select-none group-hover:scale-105 transition-transform ${

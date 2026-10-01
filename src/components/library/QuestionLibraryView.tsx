@@ -55,15 +55,15 @@ export const SUBCATEGORY_CONFIG: Record<
   { label: string; jp: string; section: JlptSection; color: string; bg: string }
 > = {
   all: { label: 'Semua Format', jp: '全て', section: 'all', color: 'text-text-primary', bg: 'bg-surface-inset border-border-subtle' },
-  kanji_reading: { label: 'Cara Baca Kanji', jp: '漢字読み', section: 'mojiGoi', color: 'text-indigo dark:text-indigo-soft', bg: 'bg-indigo/15 border-indigo/30' },
-  kanji_writing: { label: 'Penulisan Aksara', jp: '表記', section: 'mojiGoi', color: 'text-blue-500 dark:text-blue-400', bg: 'bg-blue-500/15 border-blue-500/30' },
-  vocab_context: { label: 'Konteks Kosakata', jp: '文脈規定', section: 'mojiGoi', color: 'text-emerald-800 dark:text-emerald-400', bg: 'bg-emerald-500/15 border-emerald-500/30' },
-  synonym: { label: 'Sinonim / Semakna', jp: '言い換え', section: 'mojiGoi', color: 'text-teal-600 dark:text-teal-400', bg: 'bg-teal-500/15 border-teal-500/30' },
-  vocab_usage: { label: 'Penggunaan Kata', jp: '用法', section: 'mojiGoi', color: 'text-red-700 dark:text-amber-400', bg: 'bg-red-700/15 border-red-700/30' },
-  grammar_form: { label: 'Pola & Konjugasi', jp: '文法形式', section: 'bunpou', color: 'text-purple-500 dark:text-purple-400', bg: 'bg-purple-500/15 border-purple-500/30' },
-  sentence_star: { label: 'Susun Kalimat (★)', jp: '文の組み立て', section: 'bunpou', color: 'text-gold dark:text-gold', bg: 'bg-gold/15 border-gold/30' },
-  dokkai_reading: { label: 'Wacana Bacaan', jp: '読解', section: 'dokkai', color: 'text-rose-500 dark:text-rose-400', bg: 'bg-rose-500/15 border-rose-500/30' },
-  choukai_audio: { label: 'Dialog Menyimak', jp: '聴解', section: 'choukai', color: 'text-cyan-500 dark:text-cyan-400', bg: 'bg-cyan-500/15 border-cyan-500/30' },
+  kanji_reading: { label: 'Cara Baca Kanji', jp: '漢字読み', section: 'mojiGoi', color: 'text-indigo dark:text-indigo-soft', bg: 'bg-indigo/15 border-border-subtle' },
+  kanji_writing: { label: 'Penulisan Aksara', jp: '表記', section: 'mojiGoi', color: 'text-blue-500 dark:text-blue-400', bg: 'bg-blue-500/15 border-border-subtle' },
+  vocab_context: { label: 'Konteks Kosakata', jp: '文脈規定', section: 'mojiGoi', color: 'text-emerald-800 dark:text-emerald-400', bg: 'bg-emerald-500/15 border-border-subtle' },
+  synonym: { label: 'Sinonim / Semakna', jp: '言い換え', section: 'mojiGoi', color: 'text-teal-600 dark:text-teal-400', bg: 'bg-teal-500/15 border-border-subtle' },
+  vocab_usage: { label: 'Penggunaan Kata', jp: '用法', section: 'mojiGoi', color: 'text-red-700 dark:text-amber-400', bg: 'bg-red-700/15 border-border-subtle' },
+  grammar_form: { label: 'Pola & Konjugasi', jp: '文法形式', section: 'bunpou', color: 'text-purple-500 dark:text-purple-400', bg: 'bg-purple-500/15 border-border-subtle' },
+  sentence_star: { label: 'Susun Kalimat (★)', jp: '文の組み立て', section: 'bunpou', color: 'text-gold dark:text-gold', bg: 'bg-gold/15 border-border-subtle' },
+  dokkai_reading: { label: 'Wacana Bacaan', jp: '読解', section: 'dokkai', color: 'text-rose-500 dark:text-rose-400', bg: 'bg-rose-500/15 border-border-subtle' },
+  choukai_audio: { label: 'Dialog Menyimak', jp: '聴解', section: 'choukai', color: 'text-cyan-500 dark:text-cyan-400', bg: 'bg-cyan-500/15 border-border-subtle' },
 };
 
 export function detectQuestionSubCategory(
@@ -270,19 +270,19 @@ const LEVEL_OPTIONS = [
 ];
 
 const SECTION_BADGE_STYLE: Record<string, { bg: string; text: string; label: string }> = {
-  mojiGoi: { bg: 'bg-indigo/15 border-indigo/30', text: 'text-indigo', label: '文字・語彙 (Moji & Goi)' },
-  bunpou: { bg: 'bg-purple-500/10 border-purple-500/30', text: 'text-purple-400', label: '文法 (Bunpou)' },
-  dokkai: { bg: 'bg-emerald-500/10 border-emerald-500/30', text: 'text-emerald-400', label: '読解 (Dokkai)' },
-  choukai: { bg: 'bg-cyan-500/10 border-cyan-500/30', text: 'text-cyan-400', label: '聴解 (Choukai)' },
-  tryout: { bg: 'bg-gold/15 border-gold/40', text: 'text-gold', label: '模擬試験 (Simulasi Ujian)' },
+  mojiGoi: { bg: 'bg-indigo/15 border-border-subtle', text: 'text-indigo', label: '文字・語彙 (Moji & Goi)' },
+  bunpou: { bg: 'bg-purple-500/10 border-border-subtle', text: 'text-purple-400', label: '文法 (Bunpou)' },
+  dokkai: { bg: 'bg-emerald-500/10 border-border-subtle', text: 'text-emerald-400', label: '読解 (Dokkai)' },
+  choukai: { bg: 'bg-cyan-500/10 border-border-subtle', text: 'text-cyan-400', label: '聴解 (Choukai)' },
+  tryout: { bg: 'bg-gold/15 border-border-subtle', text: 'text-gold', label: '模擬試験 (Simulasi Ujian)' },
 };
 
 const LEVEL_COLORS: Record<string, { bg: string; text: string; border: string }> = {
-  N1: { bg: 'bg-rose-500/15', text: 'text-rose-400', border: 'border-rose-500/30' },
-  N2: { bg: 'bg-indigo/15', text: 'text-indigo', border: 'border-indigo/30' },
-  N3: { bg: 'bg-gold/15', text: 'text-gold', border: 'border-gold/30' },
+  N1: { bg: 'bg-rose-500/15', text: 'text-rose-400', border: 'border-border-subtle' },
+  N2: { bg: 'bg-indigo/15', text: 'text-indigo', border: 'border-border-subtle' },
+  N3: { bg: 'bg-gold/15', text: 'text-gold', border: 'border-border-subtle' },
   N4: { bg: 'bg-surface-inset', text: 'text-emerald-800 dark:text-emerald-400', border: 'border-border-subtle' },
-  N5: { bg: 'bg-cyan-500/15', text: 'text-cyan-600 dark:text-cyan-400', border: 'border-cyan-500/30' },
+  N5: { bg: 'bg-cyan-500/15', text: 'text-cyan-600 dark:text-cyan-400', border: 'border-border-subtle' },
   JFT: { bg: 'bg-surface-inset', text: 'text-red-700 dark:text-amber-400', border: 'border-border-subtle' },
 };
 
@@ -751,26 +751,26 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
       const percentage = Math.round((drillCorrectScore / 10) * 100);
       let grade = 'C';
       let gradeText = 'Perlu Lebih Banyak Latihan';
-      let gradeColor = 'text-amber-400 border-amber-400/40 bg-amber-400/10';
+      let gradeColor = 'text-amber-400 border-border-subtle bg-amber-400/10';
 
       if (percentage >= 90) {
         grade = 'S';
         gradeText = 'Sempurna! Penguasaan Luar Biasa';
-        gradeColor = 'text-gold border-gold/40 bg-gold/10';
+        gradeColor = 'text-gold border-border-subtle bg-gold/10';
       } else if (percentage >= 80) {
         grade = 'A';
         gradeText = 'Luar Biasa! Kemampuan Sangat Mantap';
-        gradeColor = 'text-emerald-400 border-emerald-500/40 bg-emerald-500/10';
+        gradeColor = 'text-emerald-400 border-border-subtle bg-emerald-500/10';
       } else if (percentage >= 60) {
         grade = 'B';
         gradeText = 'Bagus! Sudah Menguasai Dasar';
-        gradeColor = 'text-cyan-400 border-cyan-500/40 bg-cyan-500/10';
+        gradeColor = 'text-cyan-400 border-border-subtle bg-cyan-500/10';
       }
 
       return (
         <div className="w-full max-w-4xl mx-auto space-y-6 animate-fade-in">
           {/* Result Card */}
-          <div className="panel p-6 sm:p-8 rounded-3xl border border-border-subtle shadow-md text-center space-y-6">
+          <div className="panel panel-stitched p-6 sm:p-8 rounded-3xl border border-border-subtle shadow-md text-center space-y-6">
             <div className="w-16 h-16 mx-auto rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-center">
               <Trophy className="w-8 h-8 text-gold" />
             </div>
@@ -845,7 +845,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
           </div>
 
           {/* Detailed Question Review List */}
-          <div className="panel p-5 sm:p-6 rounded-3xl border border-border-subtle space-y-4">
+          <div className="panel panel-stitched p-5 sm:p-6 rounded-3xl border border-border-subtle space-y-4">
             <h3 className="text-sm sm:text-base font-bold text-text-primary flex items-center gap-2">
               <Layers className="w-4 h-4 text-text-muted" />
               Tinjauan & Pembahasan Soal Latihan (10 Soal)
@@ -887,9 +887,9 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
 
                         let style = 'bg-surface-card border-border-subtle text-text-secondary opacity-70';
                         if (isRightAnswer) {
-                          style = 'bg-emerald-500/10 border-emerald-500 text-emerald-400 font-bold opacity-100';
+                          style = 'bg-emerald-500/10 border-border-subtle text-emerald-400 font-bold opacity-100';
                         } else if (isChosen && !isRightAnswer) {
-                          style = 'bg-rose-500/10 border-rose-500 text-rose-400 font-bold opacity-100';
+                          style = 'bg-rose-500/10 border-border-subtle text-rose-400 font-bold opacity-100';
                         }
 
                         return (
@@ -929,7 +929,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
     return (
       <div className="w-full max-w-4xl mx-auto space-y-6 animate-fade-in">
         {/* Drill Progress & Control Header */}
-        <div className="panel p-4 sm:p-5 rounded-3xl border border-border-subtle shadow-sm space-y-3">
+        <div className="panel panel-stitched p-4 sm:p-5 rounded-3xl border border-border-subtle shadow-sm space-y-3">
           <div className="flex items-center justify-between gap-3 text-xs">
             <button
               onClick={() => setIsDrillActive(false)}
@@ -966,7 +966,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
 
         {/* Question Card */}
         {currentQ && (
-          <div className="panel p-6 sm:p-8 rounded-3xl border border-border-subtle shadow-sm space-y-5 animate-fade-in">
+          <div className="panel panel-stitched p-6 sm:p-8 rounded-3xl border border-border-subtle shadow-sm space-y-5 animate-fade-in">
             {/* Header badges */}
             <div className="flex items-center justify-between gap-2 border-b border-border-subtle pb-3">
               <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold border ${SECTION_BADGE_STYLE[currentQ.section]?.bg} ${SECTION_BADGE_STYLE[currentQ.section]?.text}`}>
@@ -980,7 +980,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
             {/* Instruction */}
             {currentQ.instruction && (
               <div className="p-3 rounded-xl bg-surface-card border border-border-subtle flex items-start gap-2.5 shadow-sm">
-                <div className="w-5 h-5 rounded-lg bg-indigo/10 border border-indigo/20 text-indigo flex items-center justify-center shrink-0 mt-0.5">
+                <div className="w-5 h-5 rounded-lg bg-indigo/10 border border-border-subtle text-indigo flex items-center justify-center shrink-0 mt-0.5">
                   <BookOpen className="w-3 h-3" />
                 </div>
                 <div className="text-xs sm:text-sm font-bold text-text-primary font-jp leading-snug">
@@ -1004,7 +1004,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
               <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-surface-inset border border-border-subtle">
                 <button
                   onClick={() => speakJapanese(currentQ.audioText!)}
-                  className="px-4 py-2 rounded-xl bg-surface-card border border-border-subtle hover:border-gold/50 text-text-primary text-xs font-bold flex items-center gap-2 shadow-sm transition-all"
+                  className="px-4 py-2 rounded-xl bg-surface-card border border-border-subtle hover:border-border-primary text-text-primary text-xs font-bold flex items-center gap-2 shadow-sm transition-all"
                 >
                   <Volume2 className="w-4 h-4 text-gold" />
                   Putar Audio Percakapan
@@ -1029,9 +1029,9 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
                 let btnStyle = 'bg-surface-card border-border-subtle hover:border-border-muted text-text-primary';
                 if (isAnswered) {
                   if (isRight) {
-                    btnStyle = 'bg-emerald-500/15 border-emerald-500 text-emerald-400 font-bold';
+                    btnStyle = 'bg-emerald-500/15 border-border-subtle text-emerald-400 font-bold';
                   } else if (isSelected && !isRight) {
-                    btnStyle = 'bg-rose-500/15 border-rose-500 text-rose-400 font-bold';
+                    btnStyle = 'bg-rose-500/15 border-border-subtle text-rose-400 font-bold';
                   } else {
                     btnStyle = 'bg-surface-card border-border-subtle opacity-50 text-text-muted';
                   }
@@ -1109,7 +1109,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
   return (
     <div className="space-y-6">
       {/* Top JLPT Section Navigation Tabs (Now including Simulasi Ujian beside Choukai) */}
-      <div className="panel p-3 sm:p-4 rounded-3xl border border-border-subtle shadow-sm space-y-3">
+      <div className="panel panel-stitched p-3 sm:p-4 rounded-3xl border border-border-subtle shadow-sm space-y-3">
         <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
           {SECTION_TABS.map((tab) => {
             const Icon = tab.icon;
@@ -1210,10 +1210,10 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
       {/* Hero Action Modes Grid (Latihan Harian 10 Soal + Simulasi Ujian Nyata) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Mode 1: Latihan Harian (10 Soal) */}
-        <div className="panel p-5 sm:p-6 rounded-3xl border border-border-subtle shadow-sm flex flex-col justify-between space-y-4 hover:border-border-primary transition-colors">
+        <div className="panel panel-stitched p-5 sm:p-6 rounded-3xl border border-border-subtle shadow-sm flex flex-col justify-between space-y-4 hover:border-border-primary transition-colors">
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase bg-gold/15 text-gold border border-gold/30 flex items-center gap-1">
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase bg-gold/15 text-gold border border-border-subtle flex items-center gap-1">
                 <Flame className="w-3 h-3" />
                 Mode Latihan Cepat
               </span>
@@ -1240,10 +1240,10 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
         </div>
 
         {/* Mode 2: Paket Simulasi Ujian Nyata (Dungeon Battle) */}
-        <div className="panel p-5 sm:p-6 rounded-3xl border border-border-subtle shadow-sm flex flex-col justify-between space-y-4 hover:border-border-primary transition-colors">
+        <div className="panel panel-stitched p-5 sm:p-6 rounded-3xl border border-border-subtle shadow-sm flex flex-col justify-between space-y-4 hover:border-border-primary transition-colors">
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase bg-indigo/15 text-indigo border border-indigo/30 flex items-center gap-1">
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase bg-indigo/15 text-indigo border border-border-subtle flex items-center gap-1">
                 <Swords className="w-3 h-3" />
                 Ujian Nyata (Dungeon)
               </span>
@@ -1299,7 +1299,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
               return (
                 <div
                   key={to.id}
-                  className="panel p-5 rounded-3xl border border-border-subtle shadow-sm flex flex-col justify-between space-y-4 hover:border-border-muted transition-all"
+                  className="panel panel-stitched p-5 rounded-3xl border border-border-subtle shadow-sm flex flex-col justify-between space-y-4 hover:border-border-muted transition-all"
                 >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
@@ -1337,7 +1337,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
                       setActiveDungeonTryout(to.data);
                       playSound('click', soundEnabled);
                     }}
-                    className="w-full py-2.5 px-4 rounded-xl bg-surface-inset border border-border-subtle hover:border-gold/50 text-text-primary font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-sm"
+                    className="w-full py-2.5 px-4 rounded-xl bg-surface-inset border border-border-subtle hover:border-border-primary text-text-primary font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-sm"
                   >
                     <Play className="w-3.5 h-3.5 text-gold fill-current" />
                     <span>Mulai Ujian Nyata</span>
@@ -1351,7 +1351,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
         /* VIEW B: QUESTION EXPLORER (Moji-Goi, Bunpou, Dokkai, Choukai, or All) */
         <div className="space-y-4">
           {/* Search Bar & Explorer Summary */}
-          <div className="panel p-4 rounded-2xl border border-border-subtle shadow-sm flex flex-col sm:flex-row gap-3 items-center justify-between">
+          <div className="panel panel-stitched p-4 rounded-2xl border border-border-subtle shadow-sm flex flex-col sm:flex-row gap-3 items-center justify-between">
             <div className="relative w-full sm:max-w-md">
               <Search className="w-4 h-4 text-text-muted absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
@@ -1396,7 +1396,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
                 return (
                   <div
                     key={q.id}
-                    className="panel p-5 sm:p-6 rounded-2xl border border-border-subtle shadow-sm space-y-4 hover:border-border-muted transition-colors"
+                    className="panel panel-stitched p-5 sm:p-6 rounded-2xl border border-border-subtle shadow-sm space-y-4 hover:border-border-muted transition-colors"
                   >
                     {/* Header: Level Badge, Section Badge, Sub-Category Badge & Number */}
                     <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border-subtle pb-3 text-xs">
@@ -1440,7 +1440,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
                       <div className="flex items-center gap-3 p-3 rounded-xl bg-surface-inset border border-border-subtle">
                         <button
                           onClick={() => speakJapanese(q.audioText!)}
-                          className="px-3.5 py-2 rounded-xl bg-surface-card border border-border-subtle hover:border-gold/50 text-text-primary text-xs font-bold flex items-center gap-2 shadow-sm transition-all"
+                          className="px-3.5 py-2 rounded-xl bg-surface-card border border-border-subtle hover:border-border-primary text-text-primary text-xs font-bold flex items-center gap-2 shadow-sm transition-all"
                         >
                           <Volume2 className="w-4 h-4 text-gold" />
                           Putar Dialog / Suara Soal
@@ -1465,9 +1465,9 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
                         let btnStyle = 'bg-surface-card border-border-subtle hover:border-border-muted text-text-primary';
                         if (isAnswered) {
                           if (isCorrect) {
-                            btnStyle = 'bg-emerald-500/10 border-emerald-500 text-emerald-400 font-bold';
+                            btnStyle = 'bg-emerald-500/10 border-border-subtle text-emerald-400 font-bold';
                           } else if (isSelected && !isCorrect) {
-                            btnStyle = 'bg-rose-500/10 border-rose-500 text-rose-400 font-bold';
+                            btnStyle = 'bg-rose-500/10 border-border-subtle text-rose-400 font-bold';
                           } else {
                             btnStyle = 'bg-surface-card border-border-subtle opacity-50 text-text-muted';
                           }

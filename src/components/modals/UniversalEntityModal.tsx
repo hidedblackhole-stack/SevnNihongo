@@ -216,10 +216,10 @@ export const UniversalEntityModal: React.FC<UniversalEntityModalProps> = ({
 
   const categoryColor =
     unified.category === 'kanji'
-      ? 'text-wine-accent bg-wine-accent/10 border-wine-accent/30'
+      ? 'text-wine-accent bg-wine-accent/10 border-border-subtle'
       : unified.category === 'bunpou'
-      ? 'text-indigo bg-indigo/10 border-indigo/30'
-      : 'text-gold bg-gold/10 border-gold/30';
+      ? 'text-indigo bg-indigo/10 border-border-subtle'
+      : 'text-gold bg-gold/10 border-border-subtle';
 
   const categoryLabel =
     unified.category === 'kanji'
@@ -288,7 +288,7 @@ export const UniversalEntityModal: React.FC<UniversalEntityModalProps> = ({
                   }}
                   className={`p-2 rounded-xl border transition-all ${
                     isBookmarked
-                      ? 'bg-gold/20 border-gold/40 text-gold shadow-sm'
+                      ? 'bg-gold/20 border-border-subtle text-gold shadow-sm'
                       : 'border-border-subtle hover:border-border-primary text-text-muted hover:text-text-primary'
                   }`}
                   title={isBookmarked ? 'Ditandai di Buku Saku' : 'Simpan ke Buku Saku'}
@@ -319,7 +319,7 @@ export const UniversalEntityModal: React.FC<UniversalEntityModalProps> = ({
                   return (
                     <div className="space-y-1">
                       <div className="flex items-center gap-1.5 flex-wrap">
-                        <span className="text-xs font-mono font-bold text-red-700 dark:text-amber-400 bg-surface-inset border border-red-700/25 dark:border-amber-400/30 px-2 py-0.5 rounded-full flex items-center gap-1">
+                        <span className="text-xs font-mono font-bold text-red-700 dark:text-amber-400 bg-surface-inset border border-border-subtle px-2 py-0.5 rounded-full flex items-center gap-1">
                           <Zap className="w-3 h-3 text-red-700 dark:text-amber-400 fill-red-700/20 dark:fill-amber-400/25 shrink-0" />
                           <span>{readingVars.length} Cara Baca Alternatif</span>
                         </span>
@@ -328,7 +328,7 @@ export const UniversalEntityModal: React.FC<UniversalEntityModalProps> = ({
                             key={i}
                             type="button"
                             onClick={() => speakJapanese(v)}
-                            className="px-2 py-0.5 rounded-lg bg-surface-card border border-border-subtle text-text-primary text-xs font-jp font-bold flex items-center gap-1 hover:border-red-700/40 dark:hover:border-amber-400/40 transition-colors"
+                            className="px-2 py-0.5 rounded-lg bg-surface-card border border-border-subtle text-text-primary text-xs font-jp font-bold flex items-center gap-1 hover:border-border-primary transition-colors"
                             title={`Dengar cara baca #${i + 1}: ${v}`}
                           >
                             <span className="text-[10px] text-red-700 dark:text-amber-400 font-mono font-bold">#{i + 1}</span>
@@ -402,7 +402,7 @@ export const UniversalEntityModal: React.FC<UniversalEntityModalProps> = ({
                 }}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shrink-0 ${
                   activeTab === 'writing'
-                    ? 'bg-surface-elevated text-indigo border border-indigo/40 shadow-sm'
+                    ? 'bg-surface-elevated text-indigo border border-border-subtle shadow-sm'
                     : 'text-text-muted hover:text-indigo'
                 }`}
               >
@@ -420,7 +420,7 @@ export const UniversalEntityModal: React.FC<UniversalEntityModalProps> = ({
                 }}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shrink-0 ${
                   activeTab === 'grammar'
-                    ? 'bg-surface-elevated text-gold border border-gold/40 shadow-sm'
+                    ? 'bg-surface-elevated text-gold border border-border-subtle shadow-sm'
                     : 'text-text-muted hover:text-gold'
                 }`}
               >
@@ -456,7 +456,7 @@ export const UniversalEntityModal: React.FC<UniversalEntityModalProps> = ({
                 }}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shrink-0 ${
                   activeTab === 'quiz'
-                    ? 'bg-surface-elevated text-wine-accent border border-wine-accent/40 shadow-sm'
+                    ? 'bg-surface-elevated text-wine-accent border border-border-subtle shadow-sm'
                     : 'text-text-muted hover:text-wine-accent'
                 }`}
               >
@@ -682,7 +682,7 @@ export const UniversalEntityModal: React.FC<UniversalEntityModalProps> = ({
                       <button
                         key={kj.id || kj.character}
                         onClick={() => handlePushEntity(kj)}
-                        className="p-3 rounded-xl bg-surface-card hover:bg-surface-elevated border border-border-subtle hover:border-gold/50 flex items-center gap-2.5 text-left transition-all group"
+                        className="p-3 rounded-xl bg-surface-card hover:bg-surface-elevated border border-border-subtle hover:border-border-primary flex items-center gap-2.5 text-left transition-all group"
                       >
                         <span className="text-2xl font-jp font-bold text-text-primary group-hover:text-gold transition-colors">
                           {kj.character}
@@ -751,9 +751,9 @@ export const UniversalEntityModal: React.FC<UniversalEntityModalProps> = ({
 
                     if (quizAnswered !== null) {
                       if (isCorrect) {
-                        optStyle = 'bg-emerald-500/20 border-emerald-500/50 text-emerald-300';
+                        optStyle = 'bg-emerald-500/20 border-border-subtle text-emerald-300';
                       } else if (isSelected) {
-                        optStyle = 'bg-rose-500/20 border-rose-500/50 text-rose-300';
+                        optStyle = 'bg-rose-500/20 border-border-subtle text-rose-300';
                       } else {
                         optStyle = 'opacity-40 bg-surface-card border-border-subtle text-text-muted';
                       }

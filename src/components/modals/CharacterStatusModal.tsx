@@ -103,7 +103,7 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 15 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className="relative w-full max-w-2xl panel border border-border-subtle rounded-3xl p-4 sm:p-6 text-text-primary shadow-2xl overflow-hidden my-auto max-h-[92dvh] sm:max-h-[90vh] flex flex-col"
+          className="relative w-full max-w-2xl panel panel-stitched border border-border-subtle rounded-3xl p-4 sm:p-6 text-text-primary shadow-2xl overflow-hidden my-auto max-h-[92dvh] sm:max-h-[90vh] flex flex-col"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Modal Header */}
@@ -153,7 +153,7 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
                   }}
                   className={`flex-1 sm:flex-initial px-3 py-1.5 rounded-xl text-xs font-bold font-heading flex items-center justify-center gap-1.5 transition-all whitespace-nowrap ${
                     (stats.characterGender || 'male') === 'male'
-                      ? 'bg-blue-600/20 text-blue-400 border border-blue-500/40 shadow-sm'
+                      ? 'bg-blue-600/20 text-blue-400 border border-border-subtle shadow-sm'
                       : 'text-text-muted hover:text-text-primary hover:bg-surface-elevated/40'
                   }`}
                 >
@@ -168,7 +168,7 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
                   }}
                   className={`flex-1 sm:flex-initial px-3 py-1.5 rounded-xl text-xs font-bold font-heading flex items-center justify-center gap-1.5 transition-all whitespace-nowrap ${
                     stats.characterGender === 'female'
-                      ? 'bg-rose-600/20 text-rose-400 border border-rose-500/40 shadow-sm'
+                      ? 'bg-rose-600/20 text-rose-400 border border-border-subtle shadow-sm'
                       : 'text-text-muted hover:text-text-primary hover:bg-surface-elevated/40'
                   }`}
                 >
@@ -229,9 +229,9 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
                 <div className="flex items-center gap-2.5 min-w-0">
                   <div className={`p-2 rounded-xl border shrink-0 ${
                     ascensionProgress.canAscend
-                      ? 'bg-state-success/15 border-state-success/30 text-state-success'
+                      ? 'bg-state-success/15 border-border-subtle text-state-success'
                       : ascensionProgress.isGated
-                      ? 'bg-amber-500/15 border-amber-500/30 text-amber-400'
+                      ? 'bg-amber-500/15 border-border-subtle text-amber-400'
                       : 'bg-surface-card border-border-subtle text-indigo'
                   }`}>
                     {ascensionProgress.canAscend ? (
@@ -260,16 +260,16 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
                 {/* Status Badge */}
                 <div className="shrink-0 self-start sm:self-auto">
                   {ascensionProgress.canAscend ? (
-                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold font-mono bg-state-success/20 text-state-success border border-state-success/40 shadow-sm whitespace-nowrap">
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold font-mono bg-state-success/20 text-state-success border border-border-subtle shadow-sm whitespace-nowrap">
                       Siap Ascend
                     </span>
                   ) : ascensionProgress.isGated ? (
-                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold font-mono bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1 whitespace-nowrap">
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold font-mono bg-amber-500/20 text-amber-300 border border-border-subtle flex items-center gap-1 whitespace-nowrap">
                       <AlertTriangle className="w-3 h-3" />
                       Tertahan (&lt;75%)
                     </span>
                   ) : ascensionProgress.isAscended ? (
-                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold font-mono bg-indigo/20 text-indigo border border-indigo/40 flex items-center gap-1 whitespace-nowrap">
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold font-mono bg-indigo/20 text-indigo border border-border-subtle flex items-center gap-1 whitespace-nowrap">
                       <CheckCircle2 className="w-3 h-3" />
                       Tercapai
                     </span>

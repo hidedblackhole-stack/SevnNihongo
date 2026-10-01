@@ -135,14 +135,14 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
   };
 
   return (
-    <div className="w-full max-w-lg mx-auto flex flex-col items-center space-y-5 animate-fade-in panel p-4 sm:p-6 rounded-3xl border border-border-subtle bg-surface-card">
+    <div className="w-full max-w-lg mx-auto flex flex-col items-center space-y-5 animate-fade-in panel panel-stitched p-4 sm:p-6 rounded-3xl border border-border-subtle bg-surface-card">
       {!isWordFinished ? (
         <>
           {/* Active Recall Clue Header */}
           <div className="text-center space-y-3 w-full">
             <div className="flex justify-between items-center w-full">
               <div className="flex items-center gap-2">
-                <span className="px-3 py-1 rounded-full bg-indigo/15 text-indigo border border-indigo/30 text-xs font-bold flex items-center gap-1.5 shadow-sm font-heading">
+                <span className="px-3 py-1 rounded-full bg-indigo/15 text-indigo border border-border-subtle text-xs font-bold flex items-center gap-1.5 shadow-sm font-heading">
                   <Edit3 className="w-3.5 h-3.5 text-indigo" /> Active Recall
                 </span>
                 <span className="px-2.5 py-1 rounded-full bg-surface-inset border border-border-subtle text-text-primary text-xs font-bold font-mono flex items-center gap-1.5 shadow-sm" title="Stopwatch Waktu Menulis Kotoba">
@@ -162,7 +162,7 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
             
             {/* Yomikata / Reading Card with dynamic syllable highlight per character (matching KanjiWritingCanvas layout) */}
             <div
-              className="flex flex-col items-center justify-between px-4 py-3 rounded-2xl bg-surface-inset hover:bg-surface-card border border-border-subtle hover:border-wine-accent/40 transition-all shadow-inner group cursor-pointer w-full text-center"
+              className="flex flex-col items-center justify-between px-4 py-3 rounded-2xl bg-surface-inset hover:bg-surface-card border border-border-subtle hover:border-border-primary transition-all shadow-inner group cursor-pointer w-full text-center"
               onClick={() => speakJapanese(displayPracticeReading || kotoba.reading || kotoba.word)}
               title="Klik untuk mendengar audio kata ini"
             >
@@ -191,7 +191,7 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
                 <div key={i} className="flex flex-col items-center gap-2">
                   <div 
                     className={`w-12 h-12 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center border transition-all relative
-                      ${isDone ? 'bg-indigo/15 border-indigo/40 shadow-sm' : 
+                      ${isDone ? 'bg-indigo/15 border-border-subtle shadow-sm' : 
                         isActive ? 'bg-surface-elevated border-border-muted shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_2px_8px_rgba(0,0,0,0.3)]' : 
                         'bg-surface-inset border-border-subtle shadow-[inset_1px_1px_3px_var(--neu-d)]'}
                     `}
@@ -295,7 +295,7 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
                       }}
                       className={`px-2.5 py-1 rounded-xl text-xs font-bold font-jp border transition-all flex items-center gap-1.5 ${
                         selectedReadingIdx === i
-                          ? 'bg-surface-elevated text-gold border-gold/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_4px_rgba(0,0,0,0.25)] font-black'
+                          ? 'bg-surface-elevated text-gold border-border-subtle shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_4px_rgba(0,0,0,0.25)] font-black'
                           : 'bg-surface-inset text-text-secondary border-border-subtle hover:border-border-muted hover:text-text-primary'
                       }`}
                       title={`Putar pelafalan #${i + 1}: ${v}`}

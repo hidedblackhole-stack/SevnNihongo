@@ -120,7 +120,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
               {/* Kanji Top Meta Bar */}
               <div className="w-full flex justify-between items-center text-xs">
                 <div className="flex items-center gap-1.5 flex-wrap">
-                  <span className="px-2.5 py-1 rounded-full bg-surface-inset text-wine-accent border border-wine-accent/30 text-[11px] font-mono font-bold">
+                  <span className="px-2.5 py-1 rounded-full bg-surface-inset text-wine-accent border border-border-subtle text-[11px] font-mono font-bold">
                     Kanji • {norm.kanji?.jlpt || norm.level}
                   </span>
                   <span className="px-2.5 py-1 rounded-full bg-surface-inset text-text-secondary border border-border-subtle text-[11px] font-mono">
@@ -160,7 +160,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
 
               {/* Giant Kanji Center */}
               <div className="text-center space-y-2 my-auto">
-                <div className="w-24 h-24 sm:w-28 sm:h-28 mx-auto rounded-3xl bg-surface-inset border border-wine-accent/40 flex items-center justify-center text-6xl sm:text-7xl font-bold text-wine-accent font-jp shadow-inner select-none group-hover:scale-105 transition-transform">
+                <div className="w-24 h-24 sm:w-28 sm:h-28 mx-auto rounded-3xl bg-surface-inset border border-border-subtle flex items-center justify-center text-6xl sm:text-7xl font-bold text-wine-accent font-jp shadow-inner select-none group-hover:scale-105 transition-transform">
                   {norm.kanji?.character || norm.displayTitle}
                 </div>
                 <p className="text-xs font-mono text-text-secondary pt-1">
@@ -180,7 +180,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
             <>
               {/* Bunpou Top Meta Bar */}
               <div className="w-full flex justify-between items-center text-xs">
-                <span className="px-2.5 py-1 rounded-full bg-surface-inset text-purple-400 border border-purple-400/30 text-[11px] font-mono font-bold">
+                <span className="px-2.5 py-1 rounded-full bg-surface-inset text-purple-400 border border-border-subtle text-[11px] font-mono font-bold">
                   Bunpou • {norm.bunpou?.level || norm.level}
                 </span>
                 <div className="flex items-center gap-1.5">
@@ -204,7 +204,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                 <h3 className="text-3xl sm:text-4xl font-black text-text-primary tracking-wide font-jp drop-shadow-sm">
                   {norm.bunpou?.title || norm.displayTitle}
                 </h3>
-                <div className="inline-block px-3.5 py-1.5 rounded-xl bg-surface-inset border border-purple-400/30 text-purple-300 font-mono text-xs font-bold shadow-sm">
+                <div className="inline-block px-3.5 py-1.5 rounded-xl bg-surface-inset border border-border-subtle text-purple-300 font-mono text-xs font-bold shadow-sm">
                   {norm.bunpou?.formula || norm.displayReading}
                 </div>
                 <p className="text-xs text-text-muted pt-2 font-mono">
@@ -340,7 +340,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                               e.stopPropagation();
                               speakJapanese(on.split(' ')[0]);
                             }}
-                            className="px-1.5 py-0.5 rounded bg-surface-card border border-wine-accent/20 hover:border-wine-accent text-wine-accent flex items-center gap-1 text-xs transition-colors"
+                            className="px-1.5 py-0.5 rounded bg-surface-card border border-border-subtle hover:border-border-primary text-wine-accent flex items-center gap-1 text-xs transition-colors"
                             title="Dengar bacaan Onyomi"
                           >
                             <span>{on}</span>
@@ -407,7 +407,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                               e.stopPropagation();
                               speakJapanese(rw.word);
                             }}
-                            className="px-2 py-1 rounded-lg bg-surface-card border border-border-subtle hover:border-gold/40 flex items-center gap-1.5 text-[11px] transition-colors"
+                            className="px-2 py-1 rounded-lg bg-surface-card border border-border-subtle hover:border-border-primary flex items-center gap-1.5 text-[11px] transition-colors"
                           >
                             <span className="font-jp font-bold text-text-primary">{rw.word}</span>
                             <span className="text-text-muted font-mono">({rw.reading})</span>
@@ -559,7 +559,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
                             e.stopPropagation();
                             speakJapanese(v);
                           }}
-                          className="px-2.5 py-1 rounded-xl bg-surface-card border border-border-subtle hover:border-red-700/40 dark:hover:border-amber-400/40 text-text-primary text-xs font-jp font-bold flex items-center gap-1.5 transition-colors shadow-xs"
+                          className="px-2.5 py-1 rounded-xl bg-surface-card border border-border-subtle hover:border-red-700/40 text-text-primary text-xs font-jp font-bold flex items-center gap-1.5 transition-colors shadow-xs"
                           title={`Dengarkan bacaan #${i + 1}: ${v}`}
                         >
                           <span className="text-[10px] font-mono text-red-700 dark:text-amber-400 font-bold">#{i + 1}</span>

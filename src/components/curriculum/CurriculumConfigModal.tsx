@@ -118,12 +118,12 @@ export const CurriculumConfigModal: React.FC<CurriculumConfigModalProps> = ({
           {/* Header */}
           <div className="flex items-start justify-between gap-4 border-b border-border-subtle pb-4">
             <div className="flex items-center gap-3.5">
-              <div className="w-12 h-12 rounded-2xl bg-indigo/15 text-indigo border border-indigo/30 flex items-center justify-center text-2xl shadow-sm">
+              <div className="w-12 h-12 rounded-2xl bg-indigo/15 text-indigo border border-border-subtle flex items-center justify-center text-2xl shadow-sm">
                 {deck.coverIcon || '🗺️'}
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded-md bg-indigo/15 text-indigo border border-indigo/30">
+                  <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded-md bg-indigo/15 text-indigo border border-border-subtle">
                     Curriculum Engine
                   </span>
                   <span className="text-xs text-text-secondary font-mono">
@@ -213,10 +213,10 @@ export const CurriculumConfigModal: React.FC<CurriculumConfigModalProps> = ({
                     onClick={() => handleToggleType('kanji')}
                     className={`p-3 rounded-2xl border text-left flex items-start justify-between transition-all ${
                       selectedTypes.includes('kanji')
-                        ? 'border-indigo bg-indigo/10 text-text-primary shadow-xs'
+                        ? 'border-border-subtle bg-indigo/10 text-text-primary shadow-xs'
                         : refs.kanjiIds.length === 0
                         ? 'opacity-40 border-border-subtle bg-surface-card cursor-not-allowed'
-                        : 'border-border-subtle bg-surface-card text-text-secondary hover:border-indigo/40'
+                        : 'border-border-subtle bg-surface-card text-text-secondary hover:border-border-primary'
                     }`}
                   >
                     <div>
@@ -239,10 +239,10 @@ export const CurriculumConfigModal: React.FC<CurriculumConfigModalProps> = ({
                     onClick={() => handleToggleType('kotoba')}
                     className={`p-3 rounded-2xl border text-left flex items-start justify-between transition-all ${
                       selectedTypes.includes('kotoba')
-                        ? 'border-indigo bg-indigo/10 text-text-primary shadow-xs'
+                        ? 'border-border-subtle bg-indigo/10 text-text-primary shadow-xs'
                         : refs.kotobaIds.length === 0
                         ? 'opacity-40 border-border-subtle bg-surface-card cursor-not-allowed'
-                        : 'border-border-subtle bg-surface-card text-text-secondary hover:border-indigo/40'
+                        : 'border-border-subtle bg-surface-card text-text-secondary hover:border-border-primary'
                     }`}
                   >
                     <div>
@@ -265,10 +265,10 @@ export const CurriculumConfigModal: React.FC<CurriculumConfigModalProps> = ({
                     onClick={() => handleToggleType('bunpou')}
                     className={`p-3 rounded-2xl border text-left flex items-start justify-between transition-all ${
                       selectedTypes.includes('bunpou')
-                        ? 'border-indigo bg-indigo/10 text-text-primary shadow-xs'
+                        ? 'border-border-subtle bg-indigo/10 text-text-primary shadow-xs'
                         : refs.polaIds.length === 0
                         ? 'opacity-40 border-border-subtle bg-surface-card cursor-not-allowed'
-                        : 'border-border-subtle bg-surface-card text-text-secondary hover:border-indigo/40'
+                        : 'border-border-subtle bg-surface-card text-text-secondary hover:border-border-primary'
                     }`}
                   >
                     <div>
@@ -433,7 +433,7 @@ export const CurriculumConfigModal: React.FC<CurriculumConfigModalProps> = ({
                   </p>
                 </div>
                 {willHaveMixedExam ? (
-                  <span className="text-[10px] font-bold px-2.5 py-1 rounded-xl bg-gold/15 text-gold border border-gold/30 flex items-center gap-1 shrink-0">
+                  <span className="text-[10px] font-bold px-2.5 py-1 rounded-xl bg-gold/15 text-gold border border-border-subtle flex items-center gap-1 shrink-0">
                     <span>⚡ Final Mixed Exam Aktif</span>
                   </span>
                 ) : (

@@ -444,13 +444,13 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
   const getStatusBadge = (status: import('../../types/content').MasteryStatus) => {
     switch (status) {
       case 'PERFECTED':
-        return <span className="rpg-badge bg-gold/20 text-gold-soft border-gold">PERFECTED ★</span>;
+        return <span className="rpg-badge bg-gold/20 text-gold-soft border-border-subtle">PERFECTED ★</span>;
       case 'MASTERED':
-        return <span className="rpg-badge bg-state-success/20 text-state-success border-state-success">MASTERED</span>;
+        return <span className="rpg-badge bg-state-success/20 text-state-success border-border-subtle">MASTERED</span>;
       case 'COMPLETED':
-        return <span className="rpg-badge bg-indigo/20 text-indigo border-indigo">COMPLETED</span>;
+        return <span className="rpg-badge bg-indigo/20 text-indigo border-border-subtle">COMPLETED</span>;
       case 'LEARNING':
-        return <span className="rpg-badge bg-sky-500/15 text-sky-400 border-sky-500/30">LEARNING</span>;
+        return <span className="rpg-badge bg-sky-500/15 text-sky-400 border-border-subtle">LEARNING</span>;
       default:
         return <span className="rpg-badge bg-surface-inset text-text-muted border-border-subtle">AVAILABLE</span>;
     }
@@ -508,7 +508,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
               playSound('click', soundEnabled);
               onBackToMap();
             }}
-            className="btn btn-pill text-xs gap-1.5 self-start shadow-sm border-gold/30 hover:border-gold cursor-pointer"
+            className="btn btn-pill text-xs gap-1.5 self-start shadow-sm border-border-subtle hover:border-border-primary cursor-pointer"
             title="Kembali ke daftar modul stage di world ini"
           >
             <ArrowLeft className="w-4 h-4 text-gold" />
@@ -544,7 +544,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
                   playSound('click', soundEnabled);
                   setIsStageListOpen(true);
                 }}
-                className="btn btn-pill text-xs py-1.5 px-3 gap-1.5 font-mono font-bold text-gold border-gold/40 hover:bg-gold/10 cursor-pointer"
+                className="btn btn-pill text-xs py-1.5 px-3 gap-1.5 font-mono font-bold text-gold border-border-subtle hover:bg-gold/10 cursor-pointer"
                 title="Buka daftar stage untuk berganti stage langsung"
               >
                 <ListFilter className="w-3.5 h-3.5" />
@@ -754,9 +754,9 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
               playSound('attack', soundEnabled);
               setActiveModule('boss');
             }}
-            className="rpg-card p-5 sm:p-6 border border-wine-accent/40 cursor-pointer text-center space-y-3 shadow-xl group transition-all"
+            className="rpg-card p-5 sm:p-6 border border-border-subtle cursor-pointer text-center space-y-3 shadow-xl group transition-all"
           >
-            <div className="p-3 inline-flex rounded-full bg-wine/30 border border-wine-accent text-wine-accent">
+            <div className="p-3 inline-flex rounded-full bg-wine/30 border border-border-subtle text-wine-accent">
               <Swords className="w-7 h-7 animate-pulse" />
             </div>
             <div>
@@ -782,7 +782,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
             }}
             className="panel p-5 sm:p-6 border border-border-subtle text-center space-y-3 shadow-xl group transition-all bg-surface-card cursor-pointer hover:border-border-primary"
           >
-            <div className="p-3 inline-flex rounded-full bg-gold/20 border border-gold text-gold">
+            <div className="p-3 inline-flex rounded-full bg-gold/20 border border-border-subtle text-gold">
               <Trophy className="w-6 h-6 animate-pulse" />
             </div>
             <div>
@@ -810,7 +810,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
                   playSound('click', soundEnabled);
                   onSelectStage(prevStage);
                 }}
-                className="btn btn-pill text-xs gap-1.5 cursor-pointer hover:border-gold"
+                className="btn btn-pill text-xs gap-1.5 cursor-pointer hover:border-border-primary"
               >
                 <ChevronLeft className="w-4 h-4 text-gold" />
                 <span>Stage {prevStage.stageNumber}: {prevStage.title_jp || prevStage.title}</span>
@@ -824,7 +824,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
                   playSound('click', soundEnabled);
                   onSelectStage(nextStage);
                 }}
-                className="btn btn-pill text-xs gap-1.5 ml-auto cursor-pointer hover:border-gold"
+                className="btn btn-pill text-xs gap-1.5 ml-auto cursor-pointer hover:border-border-primary"
               >
                 <span>Stage {nextStage.stageNumber}: {nextStage.title_jp || nextStage.title}</span>
                 <ChevronRight className="w-4 h-4 text-gold" />
@@ -885,7 +885,7 @@ export const StageHubView: React.FC<StageHubViewProps> = ({
                     }}
                     className={`w-full text-left p-3 rounded-xl border flex items-center justify-between gap-3 transition-all cursor-pointer ${
                       isCurrent
-                        ? 'bg-surface-elevated border-gold/40 text-gold shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_6px_rgba(0,0,0,0.25)]'
+                        ? 'bg-surface-elevated border-border-subtle text-gold shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_6px_rgba(0,0,0,0.25)]'
                         : 'bg-surface-card hover:bg-surface-elevated border-border-subtle text-text-primary'
                     }`}
                   >

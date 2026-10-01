@@ -109,3 +109,12 @@ Warna **TIDAK BOLEH** meluap menjadi outline kartu atau background gradasi wadah
 - [ ] Apakah ada `blur-2xl` atau neon glow? Jika ada, **HAPUS**.
 - [ ] Apakah ada kata "medsos", "viral", atau tombol "salin format"? Jika ada, **HAPUS**.
 - [ ] Apakah tombol menggunakan style fisik (`btn-physical-primary` dsb)? Jika belum, **SESUAIKAN**.
+
+---
+
+## 🧵 Sampul Kulit & Jahitan (Leather Panel)
+- Semua **kartu/panel besar** memakai `panel` + `panel-stitched` (bahan kulit solid `bg-surface-card`, bevel/emboss lewat `--neu-d/--neu-l`, **jahitan putus-putus** di dalam via `::after`). Jangan menggantinya dengan outline atau gradient.
+- Wadah cekung (`bg-surface-inset`) **tidak** dijahit: itu lubang/inset, bukan sampul.
+- **Dilarang di semua layar:** gradient pada wadah, outline/ring berwarna (gold, amber, indigo, teal, dst.), glow, blob blur, `backdrop-blur`. Aksen warna hanya pada teks, ikon, isi badge/stempel, dan bar progres.
+- Satu-satunya pengecualian outline berwarna: umpan balik jawaban benar/salah pada tombol pilihan kuis.
+- Tidak diberi jahitan: elemen `sticky`/`absolute`, kontainer yang bisa di-scroll (`overflow-y-auto`), chip/badge kecil, dan tombol (tombol memakai `btn-physical-*`).

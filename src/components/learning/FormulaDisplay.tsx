@@ -63,7 +63,7 @@ export const FormulaDisplay: React.FC<FormulaDisplayProps> = ({ formula, item })
         return (
           <div
             key={vIndex}
-            className="rounded-2xl bg-surface-inset border border-border-subtle transition-all duration-200 overflow-hidden shadow-xs hover:border-indigo/40"
+            className="rounded-2xl bg-surface-inset border border-border-subtle transition-all duration-200 overflow-hidden shadow-xs hover:border-border-primary"
           >
             {/* Clickable Header Area */}
             <div
@@ -106,8 +106,8 @@ export const FormulaDisplay: React.FC<FormulaDisplayProps> = ({ formula, item })
                           cursor-pointer transition-all duration-150 rounded-sm px-1.5 py-0.5 active:scale-95
                           ${
                             isAuxiliary
-                              ? 'text-gold hover:opacity-90 border-b border-dashed border-gold/50 hover:border-gold hover:bg-gold/10'
-                              : 'text-indigo hover:opacity-90 border-b border-dashed border-indigo/50 hover:border-indigo hover:bg-indigo/10'
+                              ? 'text-gold hover:opacity-90 border-b border-dashed border-border-subtle hover:border-border-primary hover:bg-gold/10'
+                              : 'text-indigo hover:opacity-90 border-b border-dashed border-border-subtle hover:border-border-primary hover:bg-indigo/10'
                           }
                         `}
                         title={
@@ -162,7 +162,7 @@ export const FormulaDisplay: React.FC<FormulaDisplayProps> = ({ formula, item })
                       >
                         {/* 1. Rumus kombinasi */}
                         <div className="flex items-center gap-1.5 shrink-0">
-                          <span className="px-2 py-0.5 rounded-lg bg-surface-inset border border-indigo/20 text-indigo text-xs font-mono font-bold">
+                          <span className="px-2 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-indigo text-xs font-mono font-bold">
                             {ex.formula}
                           </span>
                           <span className="text-text-muted text-xs font-mono">=</span>

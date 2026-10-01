@@ -63,7 +63,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
     return (
       <div
         role="alert"
-        className="panel flex flex-col items-center justify-center min-h-[320px] p-6 m-3 rounded-3xl bg-surface-card border border-border-subtle shadow-md text-center"
+        className="panel panel-stitched flex flex-col items-center justify-center min-h-[320px] p-6 m-3 rounded-3xl bg-surface-card border border-border-subtle shadow-md text-center"
       >
         <h2 className="font-heading font-bold text-lg mb-2 text-text-primary">
           {label ? `Modul ${label} sedang bermasalah` : 'Terjadi kendala tak terduga'}

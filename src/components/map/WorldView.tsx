@@ -362,16 +362,16 @@ export const WorldView: React.FC<WorldViewProps> = ({
     <div className="w-full max-w-4xl mx-auto space-y-6 pb-20 sm:pb-12 animate-fade-in px-2 sm:px-0">
       
       {/* 1. HEADER UTAMA: WORLD */}
-      <div className="panel p-4 sm:p-5 rounded-2xl sm:rounded-3xl shadow-md border border-border-subtle flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="panel panel-stitched p-4 sm:p-5 rounded-2xl sm:rounded-3xl shadow-md border border-border-subtle flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3.5">
           <div className={`w-11 h-11 rounded-2xl ${
             worldMode === 'arcade'
-              ? 'bg-amber-500/15 text-amber-400 border-amber-500/30'
+              ? 'bg-amber-500/15 text-amber-400 border-border-subtle'
               : worldMode === 'dungeon'
-                ? 'bg-crimson/15 text-crimson border-crimson/30'
+                ? 'bg-crimson/15 text-crimson border-border-subtle'
                 : worldMode === 'tower'
-                  ? 'bg-wine-accent/15 text-wine-accent border-wine-accent/30'
-                  : 'bg-gold/15 text-gold border-gold/30'
+                  ? 'bg-wine-accent/15 text-wine-accent border-border-subtle'
+                  : 'bg-gold/15 text-gold border-border-subtle'
           } border flex items-center justify-center shrink-0 shadow-sm`}>
             {worldMode === 'arcade' ? (
               <Zap className="w-6 h-6 fill-amber-400/20" />
@@ -415,7 +415,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
           onClick={() => handleSwitchMode('arcade')}
           className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 px-2.5 sm:px-3 rounded-xl text-xs sm:text-sm font-bold font-sans transition-all whitespace-nowrap ${
             worldMode === 'arcade'
-              ? 'bg-surface-card text-amber-400 shadow-sm border border-amber-500/30'
+              ? 'bg-surface-card text-amber-400 shadow-sm border border-border-subtle'
               : 'text-text-muted hover:text-text-primary'
           }`}
         >
@@ -432,7 +432,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
           onClick={() => handleSwitchMode('dungeon')}
           className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 px-2.5 sm:px-3 rounded-xl text-xs sm:text-sm font-bold font-sans transition-all whitespace-nowrap ${
             worldMode === 'dungeon'
-              ? 'bg-surface-card text-crimson shadow-sm border border-crimson/30'
+              ? 'bg-surface-card text-crimson shadow-sm border border-border-subtle'
               : 'text-text-muted hover:text-text-primary'
           }`}
         >
@@ -449,7 +449,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
           onClick={() => handleSwitchMode('stage')}
           className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 px-2.5 sm:px-3 rounded-xl text-xs sm:text-sm font-bold font-sans transition-all whitespace-nowrap ${
             worldMode === 'stage'
-              ? 'bg-surface-card text-gold shadow-sm border border-gold/30'
+              ? 'bg-surface-card text-gold shadow-sm border border-border-subtle'
               : 'text-text-muted hover:text-text-primary'
           }`}
         >
@@ -466,7 +466,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
           onClick={() => handleSwitchMode('tower')}
           className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 px-2.5 sm:px-3 rounded-xl text-xs sm:text-sm font-bold font-sans transition-all whitespace-nowrap ${
             worldMode === 'tower'
-              ? 'bg-surface-card text-wine-accent shadow-sm border border-wine-accent/35'
+              ? 'bg-surface-card text-wine-accent shadow-sm border border-border-subtle'
               : 'text-text-muted hover:text-text-primary'
           }`}
         >

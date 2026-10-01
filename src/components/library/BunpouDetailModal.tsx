@@ -380,7 +380,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.95, opacity: 0, y: 15 }}
         transition={{ duration: 0.2, ease: 'easeOut' }}
-        className="panel relative z-10 w-full max-w-2xl flex flex-col max-h-[92vh] sm:max-h-[88vh] overflow-hidden rounded-3xl shadow-2xl border border-border-primary/60 bg-surface-card"
+        className="panel panel-stitched relative z-10 w-full max-w-2xl flex flex-col max-h-[92vh] sm:max-h-[88vh] overflow-hidden rounded-3xl shadow-2xl border border-border-primary/60 bg-surface-card"
         onClick={(e) => e.stopPropagation()}
       >
         {/* ======================================================== */}
@@ -482,7 +482,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
           {/* Stationery Page Header Banner */}
           <div className="p-3.5 sm:p-5 border-b border-border-subtle bg-surface-elevated/40 relative">
             {/* Washi Tape Accent on Top-Left */}
-            <div className="absolute -top-1.5 left-5 sm:left-8 w-16 sm:w-20 h-3.5 bg-gold/25 border-y border-dashed border-gold/40 rotate-[-1.5deg] rounded-xs shadow-xs pointer-events-none z-10" />
+            <div className="absolute -top-1.5 left-5 sm:left-8 w-16 sm:w-20 h-3.5 bg-gold/25 border-y border-dashed border-border-subtle rotate-[-1.5deg] rounded-xs shadow-xs pointer-events-none z-10" />
 
             <div className="flex items-start justify-between gap-3 sm:gap-4 relative pt-0.5">
               {/* Left Column: Title + Pola + Meaning */}
@@ -505,7 +505,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                 {/* Pola Pembentukan (Formation Rule Subtitle) */}
                 {titleInfo.formationRule && (
                   <div className="flex items-center gap-2 text-xs font-mono">
-                    <span className="px-1.5 py-0.5 rounded bg-indigo/10 border border-indigo/25 text-[10px] font-bold tracking-wider text-indigo uppercase font-mono shrink-0">
+                    <span className="px-1.5 py-0.5 rounded bg-indigo/10 border border-border-subtle text-[10px] font-bold tracking-wider text-indigo uppercase font-mono shrink-0">
                       Pola
                     </span>
                     <span className="text-text-secondary font-medium">
@@ -522,7 +522,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
 
               {/* Right Column: JLPT Level Ink Stamp Seal (Cap) */}
               <div
-                className="shrink-0 flex flex-col items-center justify-center border-2 border-dashed border-indigo/40 dark:border-indigo/40 text-indigo dark:text-indigo-light rounded-xl px-2.5 sm:px-3 py-1 sm:py-1.5 rotate-[3.5deg] select-none shadow-xs bg-indigo/5 dark:bg-indigo/10 hover:rotate-0 transition-transform duration-200"
+                className="shrink-0 flex flex-col items-center justify-center border-2 border-dashed border-border-subtle text-indigo dark:text-indigo-light rounded-xl px-2.5 sm:px-3 py-1 sm:py-1.5 rotate-[3.5deg] select-none shadow-xs bg-indigo/5 dark:bg-indigo/10 hover:rotate-0 transition-transform duration-200"
                 title={`JLPT ${cleanLevel}`}
               >
                 <span className="text-[8px] sm:text-[9px] font-mono uppercase tracking-widest font-extrabold opacity-75 leading-none">
@@ -559,7 +559,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                         <Lightbulb className="w-3.5 h-3.5 text-gold" />
                         <span>Esensi Maksud & Logika Berpikir</span>
                       </div>
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-gold/15 text-gold border border-gold/30">
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-gold/15 text-gold border border-border-subtle">
                         Wajib Paham ★★★★★
                       </span>
                     </div>
@@ -588,7 +588,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                         </div>
 
                         {/* Note 2: Dengan Pola Ini */}
-                        <div className="p-2.5 rounded-xl bg-indigo/10 border border-indigo/25 space-y-1">
+                        <div className="p-2.5 rounded-xl bg-indigo/10 border border-border-subtle space-y-1">
                           <span className="text-[10px] font-bold text-indigo uppercase tracking-wider block font-mono">
                             Dengan Pola Ini (Nuansa Alami)
                           </span>
@@ -646,7 +646,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
 
                   {/* Grid Paper Memo Pad Accent (Matching Reference Photo) */}
                   <div
-                    className="p-3 sm:p-4 rounded-xl bg-surface-elevated/70 border border-gold/25 shadow-xs relative overflow-hidden"
+                    className="p-3 sm:p-4 rounded-xl bg-surface-elevated/70 border border-border-subtle shadow-xs relative overflow-hidden"
                     style={{
                       backgroundImage: `
                         linear-gradient(to right, var(--color-border-subtle) 1px, transparent 1px),
@@ -716,7 +716,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                                       key={pIdx}
                                       className="flex flex-wrap items-center gap-2 p-2 rounded-xl bg-surface-card border border-border-subtle/80 text-xs"
                                     >
-                                      <span className="px-2 py-0.5 rounded-md bg-indigo/10 border border-indigo/20 text-indigo font-bold text-[11px] font-heading shrink-0">
+                                      <span className="px-2 py-0.5 rounded-md bg-indigo/10 border border-border-subtle text-indigo font-bold text-[11px] font-heading shrink-0">
                                         {posLabel}
                                       </span>
                                       <span className="font-mono text-text-primary font-semibold text-xs tracking-wide">
@@ -761,7 +761,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                                 <span
                                   className={`px-2 py-0.5 rounded-md ${
                                     sIdx === form.progression!.length - 1
-                                      ? 'bg-indigo/20 text-indigo border border-indigo/30 font-bold'
+                                      ? 'bg-indigo/20 text-indigo border border-border-subtle font-bold'
                                       : 'bg-surface-inset text-text-secondary font-medium'
                                   }`}
                                 >
@@ -1005,7 +1005,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                         <Flame className="w-3.5 h-3.5 text-gold" />
                         <span>Tantangan Uji Pemahaman</span>
                       </div>
-                      <span className="px-2 py-0.5 rounded-lg bg-gold/15 text-gold text-[10px] font-bold font-mono border border-gold/30">
+                      <span className="px-2 py-0.5 rounded-lg bg-gold/15 text-gold text-[10px] font-bold font-mono border border-border-subtle">
                         +15 EXP & +10 Gold
                       </span>
                     </div>
@@ -1033,10 +1033,10 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                               'bg-surface-card hover:bg-surface-elevated border-border-subtle text-text-primary';
                             if (isCorrect) {
                               btnStyle =
-                                'bg-emerald-500/20 border-emerald-500/60 text-emerald-400';
+                                'bg-emerald-500/20 border-border-subtle text-emerald-400';
                             } else if (isWrong) {
                               btnStyle =
-                                'bg-rose-500/20 border-rose-500/60 text-rose-400';
+                                'bg-rose-500/20 border-border-subtle text-rose-400';
                             } else if (isSelected) {
                               btnStyle =
                                 'bg-surface-elevated border-border-muted text-text-primary';
@@ -1064,7 +1064,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                         {isAnswerChecked && (
                           <div className="space-y-2.5 pt-1">
                             {selectedAnswerIndex === activeQuestion.correctIndex ? (
-                              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between gap-2">
+                              <div className="p-3 rounded-xl bg-emerald-500/10 border border-border-subtle flex items-center justify-between gap-2">
                                 <div className="flex items-center gap-1.5 text-emerald-400 font-bold text-xs sm:text-sm font-heading">
                                   <CheckCircle2 className="w-4 h-4 shrink-0" />
                                   <span>Tepat Sekali! Skill Pola Kalimat Berhasil Diuji.</span>
@@ -1074,7 +1074,7 @@ export const BunpouDetailModal: React.FC<BunpouDetailModalProps> = ({
                                 </span>
                               </div>
                             ) : (
-                              <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center gap-1.5 text-rose-400 font-bold text-xs sm:text-sm font-heading">
+                              <div className="p-3 rounded-xl bg-rose-500/10 border border-border-subtle flex items-center gap-1.5 text-rose-400 font-bold text-xs sm:text-sm font-heading">
                                 <XCircle className="w-4 h-4 shrink-0" />
                                 <span>Kurang Tepat. Simak catatan penjelasan berikut:</span>
                               </div>

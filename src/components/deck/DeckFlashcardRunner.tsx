@@ -183,7 +183,7 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
   if (resolvedItems.length === 0) {
     const emptyContent = (
       <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-surface-ground/90">
-        <div className="panel p-6 rounded-3xl max-w-md w-full border border-border-subtle text-center space-y-4">
+        <div className="panel panel-stitched p-6 rounded-3xl max-w-md w-full border border-border-subtle text-center space-y-4">
           <h3 className="text-lg font-heading font-bold text-text-primary">Deck Masih Kosong</h3>
           <p className="text-xs text-text-secondary">
             Tambahkan materi ke dalam deck ini terlebih dahulu sebelum memulai latihan flashcard.
@@ -246,7 +246,7 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
                 onClick={() => toggleCategory(cat)}
                 className={`px-2.5 py-1 rounded-xl text-xs font-heading font-bold transition-all flex items-center gap-1.5 border cursor-pointer select-none ${
                   isChecked
-                    ? 'bg-surface-elevated text-gold border-gold/40 shadow-xs'
+                    ? 'bg-surface-elevated text-gold border-border-subtle shadow-xs'
                     : 'bg-surface-card text-text-muted border-border-subtle hover:text-text-primary opacity-60'
                 }`}
               >
@@ -266,9 +266,9 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="panel p-6 sm:p-8 rounded-3xl border border-border-subtle shadow-2xl text-center space-y-5 w-full"
+            className="panel panel-stitched p-6 sm:p-8 rounded-3xl border border-border-subtle shadow-2xl text-center space-y-5 w-full"
           >
-            <div className="w-16 h-16 rounded-2xl bg-surface-inset border border-gold/40 text-gold flex items-center justify-center mx-auto shadow-inner">
+            <div className="w-16 h-16 rounded-2xl bg-surface-inset border border-border-subtle text-gold flex items-center justify-center mx-auto shadow-inner">
               <Trophy className="w-8 h-8 stroke-[2.5]" />
             </div>
 
@@ -292,7 +292,7 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
 
             {/* Dynamic EXP & Gold Reward Banner */}
             {finalRewards && (
-              <div className="flex items-center justify-center gap-3 py-2 px-4 rounded-2xl bg-surface-inset border border-gold/30">
+              <div className="flex items-center justify-center gap-3 py-2 px-4 rounded-2xl bg-surface-inset border border-border-subtle">
                 <span className="font-bold text-wine-accent font-mono text-sm">
                   +{finalRewards.exp} EXP
                 </span>
@@ -343,7 +343,7 @@ export const DeckFlashcardRunner: React.FC<DeckFlashcardRunnerProps> = ({
                       animate={{ opacity: 1, y: -36, scale: 1.1 }}
                       exit={{ opacity: 0, y: -50 }}
                       transition={{ duration: 0.5, ease: 'easeOut' }}
-                      className="absolute top-3 right-3 sm:top-6 sm:right-6 z-50 text-emerald-400 font-mono font-black text-sm sm:text-base drop-shadow-md pointer-events-none flex items-center gap-1 bg-surface-card/90 px-2.5 py-1 rounded-full border border-emerald-500/40 shadow-lg"
+                      className="absolute top-3 right-3 sm:top-6 sm:right-6 z-50 text-emerald-400 font-mono font-black text-sm sm:text-base drop-shadow-md pointer-events-none flex items-center gap-1 bg-surface-card/90 px-2.5 py-1 rounded-full border border-border-subtle shadow-lg"
                     >
                       +{flashcardExpPopup} EXP
                     </motion.div>

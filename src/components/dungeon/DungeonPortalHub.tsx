@@ -41,8 +41,8 @@ const DUNGEON_GATES: DungeonGateInfo[] = [
     title: 'Dungeon Menulis Aksara',
     jpTitle: '書道の試練 (Kanji & Kotoba Writing)',
     badge: 'Menulis',
-    badgeColor: 'bg-wine-accent/15 text-wine-accent border-wine-accent/30',
-    accentColor: 'hover:border-wine-accent/50',
+    badgeColor: 'bg-wine-accent/15 text-wine-accent border-border-subtle',
+    accentColor: 'hover:border-border-primary',
     icon: PenTool,
     description: 'Latih ketelitian goresan kanji dan kosakata urutan demi urutan langsung di layar. Latih memori motorik tanganmu.',
     tags: ['Kanji', 'Kosakata', 'Urutan Goresan', 'Onyomi & Kunyomi'],
@@ -54,8 +54,8 @@ const DUNGEON_GATES: DungeonGateInfo[] = [
     title: 'Dungeon Gerbang Ingatan',
     jpTitle: '記憶の回廊 (Speed Flashcard Drill)',
     badge: 'Flashcard Kilat',
-    badgeColor: 'bg-teal/15 text-teal border-teal/30',
-    accentColor: 'hover:border-teal/50',
+    badgeColor: 'bg-teal/15 text-teal border-border-subtle',
+    accentColor: 'hover:border-border-primary',
     icon: Layers,
     description: 'Hafalan kilat bolak-balik arti, bacaan furigana, dan suara pengucapan native speaker. Cocok untuk mengulang banyak materi.',
     tags: ['Kosakata', 'Kanji', 'Audio Pengucapan', 'Bolak-Balik'],
@@ -67,8 +67,8 @@ const DUNGEON_GATES: DungeonGateInfo[] = [
     title: 'Dungeon Kuil Tata Bahasa',
     jpTitle: '作文の神殿 (Sakubun Sentence Builder)',
     badge: 'Susun Pola Kalimat',
-    badgeColor: 'bg-gold/15 text-gold border-gold/30',
-    accentColor: 'hover:border-gold/50',
+    badgeColor: 'bg-gold/15 text-gold border-border-subtle',
+    accentColor: 'hover:border-border-primary',
     icon: BookOpen,
     description: 'Susun potongan kata dan partikel menjadi kalimat utuh dengan tata bahasa Jepang yang tepat.',
     tags: ['Pola Kalimat', 'Partikel', 'Sintaksis', 'Tata Bahasa'],
@@ -80,8 +80,8 @@ const DUNGEON_GATES: DungeonGateInfo[] = [
     title: 'Dungeon Altar Konjugasi',
     jpTitle: '活用の祭壇 (Conjugation Drill)',
     badge: 'Ubah Bentuk Kata',
-    badgeColor: 'bg-indigo/15 text-indigo border-indigo/30',
-    accentColor: 'hover:border-indigo/50',
+    badgeColor: 'bg-indigo/15 text-indigo border-border-subtle',
+    accentColor: 'hover:border-border-primary',
     icon: Zap,
     description: 'Uji kecepatan refleks mengubah kata kerja & kata sifat ke bentuk Te, Nai, Ta, Masu, Potensial, hingga Pasif/Kausatif.',
     tags: ['Godan/Ichidan', 'Bentuk Te/Nai', 'Bentuk Potensial', 'Kata Sifat'],
@@ -93,8 +93,8 @@ const DUNGEON_GATES: DungeonGateInfo[] = [
     title: 'Dungeon Arena Kuis Cepat',
     jpTitle: '闘技場の戦い (Rapid Battle Quiz)',
     badge: 'Kuis Pilihan Ganda',
-    badgeColor: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
-    accentColor: 'hover:border-emerald-500/50',
+    badgeColor: 'bg-emerald-500/15 text-emerald-400 border-border-subtle',
+    accentColor: 'hover:border-border-primary',
     icon: Swords,
     description: 'Kuis pilihan ganda acak dari bank soal berstandar resmi JLPT untuk menguji pemahaman komprehensif secara cepat.',
     tags: ['Huruf & Kosakata', 'Tata Bahasa', 'Penjelasan Lengkap', 'Pilihan Ganda'],
@@ -106,8 +106,8 @@ const DUNGEON_GATES: DungeonGateInfo[] = [
     title: 'Dungeon Gerbang Kanji Extreme',
     jpTitle: '極・漢字の百連試練 (100 Extreme Stages)',
     badge: '100 Stage (3.000 Soal)',
-    badgeColor: 'bg-rose-500/15 text-rose-400 border-rose-500/30',
-    accentColor: 'hover:border-rose-500/50',
+    badgeColor: 'bg-rose-500/15 text-rose-400 border-border-subtle',
+    accentColor: 'hover:border-border-primary',
     icon: Flame,
     description: 'Uji ketahanan mental dan kecepatan membaca 3.000 soal tebak Onyomi & Kunyomi bergradasi 100 stage.',
     tags: ['3.000 Soal', '100 Stage', 'Onyomi & Kunyomi', 'Refleks Cepat'],
@@ -119,8 +119,8 @@ const DUNGEON_GATES: DungeonGateInfo[] = [
     title: 'Dungeon Kreasi Kalimat Pola',
     jpTitle: '文法創作の道場 (Grammar Sentence Construction)',
     badge: 'Kreasi Bebas',
-    badgeColor: 'bg-violet-500/15 text-violet-400 border-violet-500/30',
-    accentColor: 'hover:border-violet-500/50',
+    badgeColor: 'bg-violet-500/15 text-violet-400 border-border-subtle',
+    accentColor: 'hover:border-border-primary',
     icon: ScrollText,
     description: 'Latih kemampuan merangkai kalimat bebas bahasa Jepang. Amati pola tata bahasa, arti, dan rumus di atas, lalu tulis kalimat lengkapmu.',
     tags: ['Pola Kalimat', 'Kreasi Bebas', 'Ketik Kalimat', 'Tata Bahasa'],
@@ -132,8 +132,8 @@ const DUNGEON_GATES: DungeonGateInfo[] = [
     title: 'Dungeon Papan Tulis Pola',
     jpTitle: '黒板の実験室 (Pattern Blackboard Playground)',
     badge: 'Playground Bebas',
-    badgeColor: 'bg-teal/15 text-teal border-teal/30',
-    accentColor: 'hover:border-teal/50',
+    badgeColor: 'bg-teal/15 text-teal border-border-subtle',
+    accentColor: 'hover:border-border-primary',
     icon: Presentation,
     description: 'Laboratorium visual bebas! Amati langsung bagaimana kosakata bertransformasi saat disandingkan dengan aneka pola kalimat di papan tulis interaktif.',
     tags: ['Papan Tulis', 'Hasil Pola', 'Dekonstruksi Rumus', 'Bebas Eksplorasi'],
@@ -149,10 +149,10 @@ export const DungeonPortalHub: React.FC<DungeonPortalHubProps> = ({
   return (
     <div className="space-y-6">
       {/* Hero Header Banner */}
-      <div className="panel p-5 sm:p-6 rounded-3xl border border-border-subtle shadow-md bg-surface-card relative overflow-hidden space-y-3">
+      <div className="panel panel-stitched p-5 sm:p-6 rounded-3xl border border-border-subtle shadow-md bg-surface-card relative overflow-hidden space-y-3">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
           <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-crimson/15 text-crimson border border-crimson/30 flex items-center justify-center shrink-0 shadow-sm">
+            <div className="w-12 h-12 rounded-2xl bg-crimson/15 text-crimson border border-border-subtle flex items-center justify-center shrink-0 shadow-sm">
               <Swords className="w-6 h-6" />
             </div>
             <div>
@@ -160,7 +160,7 @@ export const DungeonPortalHub: React.FC<DungeonPortalHubProps> = ({
                 <h2 className="text-xl sm:text-2xl font-black text-text-primary font-heading tracking-wide">
                   Gerbang Dungeon Latihan Bebas
                 </h2>
-                <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-crimson/20 text-crimson border border-crimson/30 uppercase tracking-wider">
+                <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-crimson/20 text-crimson border border-border-subtle uppercase tracking-wider">
                   Grinding & Drill
                 </span>
               </div>
@@ -206,7 +206,7 @@ export const DungeonPortalHub: React.FC<DungeonPortalHubProps> = ({
                 playSound('click', soundEnabled);
                 onSelectDungeon(gate.type);
               }}
-              className={`panel p-5 rounded-3xl border border-border-subtle ${gate.accentColor} bg-surface-card hover:bg-surface-elevated transition-all cursor-pointer shadow-sm hover:shadow-xl flex flex-col justify-between space-y-4 group`}
+              className={`panel panel-stitched p-5 rounded-3xl border border-border-subtle ${gate.accentColor} bg-surface-card hover:bg-surface-elevated transition-all cursor-pointer shadow-sm hover:shadow-xl flex flex-col justify-between space-y-4 group`}
             >
               {/* Top Row: Icon + Badge */}
               <div className="flex items-start justify-between gap-3">

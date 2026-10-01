@@ -123,7 +123,7 @@ export const DokkaiModule: React.FC<DokkaiModuleProps> = ({
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-border-subtle">
         <div className="flex items-center gap-2.5">
-          <span className="p-2 rounded-xl bg-teal-500/15 border border-teal-500/40 text-teal-400 shadow-md">
+          <span className="p-2 rounded-xl bg-teal-500/15 border border-border-subtle text-teal-400 shadow-md">
             <BookMarked className="w-5 h-5" />
           </span>
           <div>
@@ -161,7 +161,7 @@ export const DokkaiModule: React.FC<DokkaiModuleProps> = ({
       </div>
 
       {/* Reading Text Card */}
-      <div className="panel p-6 sm:p-7 rounded-3xl space-y-5 shadow-xl border border-border-subtle">
+      <div className="panel panel-stitched p-6 sm:p-7 rounded-3xl space-y-5 shadow-xl border border-border-subtle">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-border-subtle">
           <div>
             <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-surface-inset text-gold border border-border-subtle font-bold">

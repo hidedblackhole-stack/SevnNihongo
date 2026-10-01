@@ -60,7 +60,7 @@ const DUNGEON_META: Record<
     subtitle: 'Latihan menulis aksara goresan demi goresan',
     iconEmoji: '✍️',
     requirementHint: 'Memerlukan materi aksara (Kanji atau Kosakata)',
-    themeColor: 'border-wine-accent/40 text-wine-accent',
+    themeColor: 'border-border-subtle text-wine-accent',
     glowColor: 'rgba(226, 85, 91, 0.25)',
   },
   flashcard: {
@@ -69,7 +69,7 @@ const DUNGEON_META: Record<
     subtitle: 'Hafalan kilat bolak-balik arti, bacaan & audio',
     iconEmoji: '🎴',
     requirementHint: 'Mendukung semua tipe materi (Kanji, Kosakata, Tata Bahasa)',
-    themeColor: 'border-teal/40 text-teal',
+    themeColor: 'border-border-subtle text-teal',
     glowColor: 'rgba(38, 166, 154, 0.25)',
   },
   sakubun: {
@@ -78,7 +78,7 @@ const DUNGEON_META: Record<
     subtitle: 'Menyusun potongan kata dan pola menjadi kalimat utuh',
     iconEmoji: '🧩',
     requirementHint: 'Memerlukan materi pola tata bahasa (Bunpou)',
-    themeColor: 'border-gold/40 text-gold',
+    themeColor: 'border-border-subtle text-gold',
     glowColor: 'rgba(240, 190, 82, 0.25)',
   },
   conjugation: {
@@ -87,7 +87,7 @@ const DUNGEON_META: Record<
     subtitle: 'Latihan cepat mengubah bentuk kata kerja & kata sifat',
     iconEmoji: '⚡',
     requirementHint: 'Memerlukan materi kosakata kata kerja/sifat (Kotoba)',
-    themeColor: 'border-indigo/40 text-indigo',
+    themeColor: 'border-border-subtle text-indigo',
     glowColor: 'rgba(111, 147, 207, 0.25)',
   },
   quiz: {
@@ -96,7 +96,7 @@ const DUNGEON_META: Record<
     subtitle: 'Latihan kuis pilihan ganda acak standar JLPT',
     iconEmoji: '🎯',
     requirementHint: 'Mendukung materi Kanji, Kosakata, atau Tata Bahasa',
-    themeColor: 'border-emerald-500/40 text-emerald-400',
+    themeColor: 'border-border-subtle text-emerald-400',
     glowColor: 'rgba(79, 174, 134, 0.25)',
   },
   extreme: {
@@ -105,7 +105,7 @@ const DUNGEON_META: Record<
     subtitle: 'Tantangan 3.000 soal tebak Onyomi & Kunyomi dari 100 stage bertingkat',
     iconEmoji: '🔥',
     requirementHint: 'Tersedia 100 stage penuh terstruktur (30 soal per stage)',
-    themeColor: 'border-rose-500/40 text-rose-400',
+    themeColor: 'border-border-subtle text-rose-400',
     glowColor: 'rgba(244, 63, 94, 0.25)',
   },
   sentence_creation: {
@@ -114,7 +114,7 @@ const DUNGEON_META: Record<
     subtitle: 'Rangkai kalimat bebas bahasa Jepang menggunakan pola tata bahasa yang ditentukan',
     iconEmoji: '📜',
     requirementHint: 'Memerlukan materi pola tata bahasa (Bunpou)',
-    themeColor: 'border-violet-500/40 text-violet-400',
+    themeColor: 'border-border-subtle text-violet-400',
     glowColor: 'rgba(139, 92, 246, 0.25)',
   },
   blackboard: {
@@ -123,7 +123,7 @@ const DUNGEON_META: Record<
     subtitle: 'Laboratorium visual bebas mengamati hasil transformasi kata dengan aneka pola kalimat',
     iconEmoji: '🏫',
     requirementHint: 'Mendukung kata kerja (Kotoba) dan pola kalimat (Bunpou)',
-    themeColor: 'border-teal/40 text-teal',
+    themeColor: 'border-border-subtle text-teal',
     glowColor: 'rgba(38, 166, 154, 0.25)',
   },
 };
@@ -318,7 +318,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
           <div className="flex items-center gap-3.5">
             {/* Tactile Engraved Emblem Frame */}
             <div
-              className="w-12 h-12 rounded-2xl bg-surface-elevated border border-gold/40 flex items-center justify-center text-2xl shrink-0 shadow-[2px_2px_6px_var(--neu-d),-1px_-1px_3px_var(--neu-l)] relative"
+              className="w-12 h-12 rounded-2xl bg-surface-elevated border border-border-subtle flex items-center justify-center text-2xl shrink-0 shadow-[2px_2px_6px_var(--neu-d),-1px_-1px_3px_var(--neu-l)] relative"
               style={{ boxShadow: `0 0 16px ${meta.glowColor}` }}
             >
               <span className="select-none filter drop-shadow-xs">{meta.iconEmoji}</span>
@@ -367,7 +367,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                     <Flame className="w-3.5 h-3.5 text-rose-400" />
                     <span>Pilih Stage Kanji Extreme (1 - 100):</span>
                   </label>
-                  <span className="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-lg bg-rose-500/15 border border-rose-500/30 text-rose-300">
+                  <span className="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-lg bg-rose-500/15 border border-border-subtle text-rose-300">
                     {isRandomExtreme ? 'Mode Acak Campuran' : `Stage ${extremeStageNumber}`}
                   </span>
                 </div>
@@ -385,7 +385,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                       }}
                       className={`py-1.5 px-2 rounded-xl text-xs font-mono font-bold transition-all text-center cursor-pointer border ${
                         !isRandomExtreme && extremeStageNumber === stg
-                          ? 'bg-surface-elevated text-gold border border-gold/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_2px_6px_rgba(0,0,0,0.3)] font-black'
+                          ? 'bg-surface-elevated text-gold border border-border-subtle shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_2px_6px_rgba(0,0,0,0.3)] font-black'
                           : 'bg-surface-inset border-border-subtle/60 text-text-secondary hover:text-text-primary shadow-[inset_1px_1px_3px_var(--neu-d)]'
                       }`}
                     >
@@ -400,7 +400,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                     }}
                     className={`py-1.5 px-2 rounded-xl text-xs font-heading font-bold transition-all text-center cursor-pointer border col-span-2 sm:col-span-1 ${
                       isRandomExtreme
-                        ? 'bg-surface-elevated text-gold border border-gold/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_2px_6px_rgba(0,0,0,0.3)] font-black'
+                        ? 'bg-surface-elevated text-gold border border-border-subtle shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_2px_6px_rgba(0,0,0,0.3)] font-black'
                         : 'bg-surface-inset border-border-subtle/60 text-text-secondary hover:text-text-primary shadow-[inset_1px_1px_3px_var(--neu-d)]'
                     }`}
                   >
@@ -462,10 +462,10 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                       <div className="flex items-center gap-2">
                         <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-md border ${
                           selectedFlashcardTypes.length === 3
-                            ? 'bg-teal/15 text-teal border-teal/30'
+                            ? 'bg-teal/15 text-teal border-border-subtle'
                             : selectedFlashcardTypes.length > 0
-                            ? 'bg-amber-500/15 text-gold border-amber-500/30'
-                            : 'bg-rose-500/15 text-rose-400 border-rose-500/30'
+                            ? 'bg-amber-500/15 text-gold border-border-subtle'
+                            : 'bg-rose-500/15 text-rose-400 border-border-subtle'
                         }`}>
                           {selectedFlashcardTypes.length === 3
                             ? 'Semua Tipe (3/3)'
@@ -508,7 +508,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                               <div className="flex items-center gap-2">
                                 <span className={`w-6 h-6 rounded-lg font-serif font-black text-xs flex items-center justify-center border shadow-xs ${
                                   isSelected
-                                    ? 'bg-teal/15 border-teal/30 text-teal'
+                                    ? 'bg-teal/15 border-border-subtle text-teal'
                                     : 'bg-surface-inset border-border-subtle text-text-muted'
                                 }`}>
                                   語
@@ -518,7 +518,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                                 </span>
                               </div>
                               <div className={`w-4 h-4 rounded-full flex items-center justify-center border transition-all ${
-                                isSelected ? 'bg-teal/20 border-teal/50 text-teal shadow-xs' : 'border-border-subtle bg-surface-inset text-transparent'
+                                isSelected ? 'bg-teal/20 border-border-subtle text-teal shadow-xs' : 'border-border-subtle bg-surface-inset text-transparent'
                               }`}>
                                 {isSelected && <Check className="w-2.5 h-2.5 stroke-[3]" />}
                               </div>
@@ -552,7 +552,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                               <div className="flex items-center gap-2">
                                 <span className={`w-6 h-6 rounded-lg font-serif font-black text-xs flex items-center justify-center border shadow-xs ${
                                   isSelected
-                                    ? 'bg-gold/15 border-gold/30 text-gold'
+                                    ? 'bg-gold/15 border-border-subtle text-gold'
                                     : 'bg-surface-inset border-border-subtle text-text-muted'
                                 }`}>
                                   字
@@ -562,7 +562,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                                 </span>
                               </div>
                               <div className={`w-4 h-4 rounded-full flex items-center justify-center border transition-all ${
-                                isSelected ? 'bg-gold/20 border-gold/50 text-gold shadow-xs' : 'border-border-subtle bg-surface-inset text-transparent'
+                                isSelected ? 'bg-gold/20 border-border-subtle text-gold shadow-xs' : 'border-border-subtle bg-surface-inset text-transparent'
                               }`}>
                                 {isSelected && <Check className="w-2.5 h-2.5 stroke-[3]" />}
                               </div>
@@ -596,7 +596,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                               <div className="flex items-center gap-2">
                                 <span className={`w-6 h-6 rounded-lg font-serif font-black text-xs flex items-center justify-center border shadow-xs ${
                                   isSelected
-                                    ? 'bg-indigo/15 border-indigo/30 text-indigo'
+                                    ? 'bg-indigo/15 border-border-subtle text-indigo'
                                     : 'bg-surface-inset border-border-subtle text-text-muted'
                                 }`}>
                                   文
@@ -606,7 +606,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                                 </span>
                               </div>
                               <div className={`w-4 h-4 rounded-full flex items-center justify-center border transition-all ${
-                                isSelected ? 'bg-indigo/20 border-indigo/50 text-indigo shadow-xs' : 'border-border-subtle bg-surface-inset text-transparent'
+                                isSelected ? 'bg-indigo/20 border-border-subtle text-indigo shadow-xs' : 'border-border-subtle bg-surface-inset text-transparent'
                               }`}>
                                 {isSelected && <Check className="w-2.5 h-2.5 stroke-[3]" />}
                               </div>
@@ -641,7 +641,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                         <SlidersHorizontal className="w-3.5 h-3.5 text-indigo" />
                         <span>Mode Latihan Pola Konjugasi:</span>
                       </label>
-                      <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-md bg-indigo/15 text-indigo border border-indigo/30">
+                      <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-md bg-indigo/15 text-indigo border border-border-subtle">
                         {conjugationMode === 'random' ? '🎲 Pola Kurikulum' : `🎯 Kustom (${selectedConjugationForms.length} Pola)`}
                       </span>
                     </div>
@@ -655,7 +655,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                         }}
                         className={`py-2 px-2 rounded-lg text-xs font-heading font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer select-none ${
                           conjugationMode === 'random'
-                            ? 'bg-indigo-deep text-gold border border-gold/40 shadow-sm font-black'
+                            ? 'bg-indigo-deep text-gold border border-border-subtle shadow-sm font-black'
                             : 'text-text-muted hover:text-text-primary hover:bg-surface-elevated/40'
                         }`}
                       >
@@ -671,7 +671,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                         }}
                         className={`py-2 px-2 rounded-lg text-xs font-heading font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer select-none ${
                           conjugationMode === 'custom'
-                            ? 'bg-indigo-deep text-gold border border-gold/40 shadow-sm font-black'
+                            ? 'bg-indigo-deep text-gold border border-border-subtle shadow-sm font-black'
                             : 'text-text-muted hover:text-text-primary hover:bg-surface-elevated/40'
                         }`}
                       >
@@ -723,7 +723,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                         placeholder="Cari pola (contoh: te, lampau, pasif, nai, ます)..."
                         value={patternSearchQuery}
                         onChange={(e) => setPatternSearchQuery(e.target.value)}
-                        className="w-full bg-surface-card border border-border-subtle rounded-xl pl-9 pr-8 py-2 text-xs text-text-primary placeholder:text-text-muted focus:outline-none focus:border-gold/60 shadow-[inset_1px_1px_3px_var(--neu-d)]"
+                        className="w-full bg-surface-card border border-border-subtle rounded-xl pl-9 pr-8 py-2 text-xs text-text-primary placeholder:text-text-muted focus:outline-none focus:border-border-primary shadow-[inset_1px_1px_3px_var(--neu-d)]"
                       />
                       {patternSearchQuery && (
                         <button
@@ -747,18 +747,18 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                             onClick={() => toggleConjugationForm(form.id)}
                             className={`p-2.5 rounded-xl text-left transition-all border relative flex flex-col justify-between select-none cursor-pointer ${
                               isSelected
-                                ? 'bg-surface-elevated border border-gold/30 text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_3px_8px_rgba(0,0,0,0.35)]'
+                                ? 'bg-surface-elevated border border-border-subtle text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_3px_8px_rgba(0,0,0,0.35)]'
                                 : 'bg-surface-inset hover:bg-surface-card/60 border border-border-subtle/60 shadow-[inset_1px_1px_3px_var(--neu-d)] text-text-muted hover:text-text-primary'
                             }`}
                           >
                             <div className="flex items-center justify-between gap-1">
                               <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded ${
-                                isSelected ? 'bg-gold/15 text-gold border border-gold/30' : 'bg-surface-inset text-text-muted border border-border-subtle'
+                                isSelected ? 'bg-gold/15 text-gold border border-border-subtle' : 'bg-surface-inset text-text-muted border border-border-subtle'
                               }`}>
                                 {form.badge}
                               </span>
                               <div className={`w-4 h-4 rounded-full flex items-center justify-center border transition-all ${
-                                isSelected ? 'bg-gold/20 border-gold/50 text-gold shadow-xs' : 'border-border-subtle bg-surface-inset text-transparent'
+                                isSelected ? 'bg-gold/20 border-border-subtle text-gold shadow-xs' : 'border-border-subtle bg-surface-inset text-transparent'
                               }`}>
                                 {isSelected && <Check className="w-2.5 h-2.5 stroke-[3]" />}
                               </div>
@@ -859,7 +859,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                           }}
                           className={`p-2.5 sm:p-3 rounded-2xl text-left transition-all relative flex flex-col justify-between min-h-[74px] sm:min-h-[78px] select-none cursor-pointer overflow-hidden ${
                             isSelected
-                              ? 'bg-surface-elevated border border-gold/30 text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_4px_12px_rgba(0,0,0,0.4)]'
+                              ? 'bg-surface-elevated border border-border-subtle text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_4px_12px_rgba(0,0,0,0.4)]'
                               : 'bg-surface-inset hover:bg-surface-card/60 border border-border-subtle/60 shadow-[inset_1px_1px_3px_var(--neu-d)] hover:border-border-muted'
                           }`}
                         >
@@ -868,7 +868,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                               {opt.label}
                             </span>
                             {isSelected ? (
-                              <div className="w-4 h-4 rounded-full bg-gold/20 border border-gold/50 text-gold flex items-center justify-center shrink-0 shadow-xs">
+                              <div className="w-4 h-4 rounded-full bg-gold/20 border border-border-subtle text-gold flex items-center justify-center shrink-0 shadow-xs">
                                 <Check className="w-2.5 h-2.5 stroke-[3]" />
                               </div>
                             ) : (
@@ -903,7 +903,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                               }}
                               className={`w-full p-3.5 rounded-2xl text-left transition-all flex items-center justify-between gap-3 select-none cursor-pointer ${
                                 isSelected
-                                  ? 'bg-surface-elevated border border-gold/30 text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_4px_12px_rgba(0,0,0,0.4)]'
+                                  ? 'bg-surface-elevated border border-border-subtle text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_4px_12px_rgba(0,0,0,0.4)]'
                                   : 'bg-surface-inset hover:bg-surface-card/60 border border-border-subtle/60 shadow-[inset_1px_1px_3px_var(--neu-d)] hover:border-border-muted'
                               }`}
                             >
@@ -918,7 +918,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                                       {deck.title}
                                     </span>
                                     {deck.isDefault && (
-                                      <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-amber-500/20 text-gold border border-gold/40 font-bold font-mono">
+                                      <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-amber-500/20 text-gold border border-border-subtle font-bold font-mono">
                                         Bookmark
                                       </span>
                                     )}
@@ -927,12 +927,12 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                               </div>
 
                               <div className="flex items-center gap-2.5 shrink-0">
-                                <span className="text-[11px] font-mono font-bold px-2.5 py-1 rounded-xl bg-indigo/15 text-indigo border border-indigo/30 shadow-xs">
+                                <span className="text-[11px] font-mono font-bold px-2.5 py-1 rounded-xl bg-indigo/15 text-indigo border border-border-subtle shadow-xs">
                                   {matchedCount} Materi
                                 </span>
                                 <div className={`w-5 h-5 rounded-full flex items-center justify-center border transition-all ${
                                   isSelected
-                                    ? 'bg-gold/20 border-gold/50 text-gold shadow-xs'
+                                    ? 'bg-gold/20 border-border-subtle text-gold shadow-xs'
                                     : 'border-border-subtle bg-surface-card text-transparent'
                                 }`}>
                                   {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
@@ -960,7 +960,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                                     <span className="text-base opacity-70">{deck.coverIcon || '📖'}</span>
                                     <span className="text-xs font-medium truncate text-text-secondary">{deck.title}</span>
                                   </div>
-                                  <span className="text-[10px] text-rose-400 bg-rose-500/10 border border-rose-500/25 px-2 py-0.5 rounded-md shrink-0">
+                                  <span className="text-[10px] text-rose-400 bg-rose-500/10 border border-border-subtle px-2 py-0.5 rounded-md shrink-0">
                                     {reason}
                                   </span>
                                 </div>
@@ -972,7 +972,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                     ) : (
                       /* Empty state when no decks are compatible */
                       <div className="p-5 rounded-2xl bg-surface-inset border border-border-subtle shadow-[inset_2px_2px_6px_var(--neu-d),inset_-2px_-2px_6px_var(--neu-l)] text-center space-y-3">
-                        <div className="w-11 h-11 rounded-2xl bg-amber-500/10 text-gold border border-amber-500/30 flex items-center justify-center mx-auto shadow-xs">
+                        <div className="w-11 h-11 rounded-2xl bg-amber-500/10 text-gold border border-border-subtle flex items-center justify-center mx-auto shadow-xs">
                           <AlertCircle className="w-6 h-6" />
                         </div>
                         <div>
@@ -991,7 +991,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                               onClose();
                               onNavigateTab('deck');
                             }}
-                            className="px-4 py-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-xs font-bold text-gold border border-gold/30 hover:border-gold/60 shadow-[2px_2px_6px_var(--neu-d)] transition-all inline-flex items-center gap-1.5 cursor-pointer"
+                            className="px-4 py-2 rounded-xl bg-surface-card hover:bg-surface-elevated text-xs font-bold text-gold border border-border-subtle hover:border-border-primary shadow-[2px_2px_6px_var(--neu-d)] transition-all inline-flex items-center gap-1.5 cursor-pointer"
                           >
                             <BookOpen className="w-3.5 h-3.5" />
                             <span>Buka Buku Saku</span>
@@ -1025,7 +1025,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                     }}
                     className={`py-3 px-2 rounded-2xl text-center transition-all select-none cursor-pointer ${
                       isSelected
-                        ? 'bg-surface-elevated border border-gold/35 text-gold shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_4px_12px_rgba(0,0,0,0.4)]'
+                        ? 'bg-surface-elevated border border-border-subtle text-gold shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_4px_12px_rgba(0,0,0,0.4)]'
                         : 'bg-surface-inset hover:bg-surface-card/60 border border-border-subtle/60 shadow-[inset_1px_1px_3px_var(--neu-d)] hover:border-border-muted'
                     }`}
                   >
@@ -1115,7 +1115,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                     <Clock className="w-3.5 h-3.5" />
                     <span>Batas Waktu Per Soal:</span>
                   </span>
-                  <span className="font-mono font-black text-rose-300 text-xs sm:text-sm bg-rose-500/15 px-2.5 py-0.5 rounded-lg border border-rose-500/30">
+                  <span className="font-mono font-black text-rose-300 text-xs sm:text-sm bg-rose-500/15 px-2.5 py-0.5 rounded-lg border border-border-subtle">
                     ⏱️ {survivalSeconds} Detik
                   </span>
                 </div>
@@ -1189,7 +1189,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
           {/* SECTION 4: CARVED TREASURE REWARD PLAQUE */}
           <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle flex flex-wrap items-center justify-between gap-2.5 text-xs shadow-[inset_2px_2px_6px_var(--neu-d),inset_-1px_-1px_3px_var(--neu-l)]">
             <div className="flex items-center gap-2 text-text-secondary min-w-0">
-              <div className="w-7 h-7 rounded-lg bg-surface-card border border-gold/40 flex items-center justify-center text-gold shadow-xs shrink-0">
+              <div className="w-7 h-7 rounded-lg bg-surface-card border border-border-subtle flex items-center justify-center text-gold shadow-xs shrink-0">
                 <Trophy className="w-3.5 h-3.5" />
               </div>
               <span className="font-heading font-bold text-text-secondary truncate">
@@ -1197,10 +1197,10 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
               </span>
             </div>
             <div className="flex items-center gap-2.5 font-mono font-bold shrink-0">
-              <span className="text-indigo bg-indigo/10 px-2.5 py-1 rounded-xl border border-indigo/25 shadow-2xs">
+              <span className="text-indigo bg-indigo/10 px-2.5 py-1 rounded-xl border border-border-subtle shadow-2xs">
                 +{estimatedExp} EXP
               </span>
-              <span className="text-gold bg-gold/10 px-2.5 py-1 rounded-xl border border-gold/25 flex items-center gap-1 shadow-2xs">
+              <span className="text-gold bg-gold/10 px-2.5 py-1 rounded-xl border border-border-subtle flex items-center gap-1 shadow-2xs">
                 <Coins className="w-3 h-3 text-gold shrink-0" />
                 +{estimatedGold} G
               </span>

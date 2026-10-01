@@ -68,7 +68,7 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
         <div className="flex items-center justify-between p-4 pb-3 border-b border-border-subtle shrink-0 bg-surface-inset">
           <div className="space-y-1 flex-1 pr-2">
             <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded-lg bg-indigo/15 border border-indigo/30 text-indigo text-xs font-mono font-bold">
+              <span className="px-2 py-0.5 rounded-lg bg-indigo/15 border border-border-subtle text-indigo text-xs font-mono font-bold">
                 {activeTab === 'auxiliary'
                   ? 'Kata Akhiran Bantu'
                   : activeTab === 'groups'
@@ -123,7 +123,7 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
             onClick={() => setActiveTab('conjugation')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
               activeTab === 'conjugation'
-                ? 'bg-indigo/20 text-indigo border border-indigo/40 shadow-xs'
+                ? 'bg-indigo/20 text-indigo border border-border-subtle shadow-xs'
                 : 'text-text-secondary hover:text-text-primary hover:bg-surface-card'
             }`}
           >
@@ -136,7 +136,7 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
             onClick={() => setActiveTab('auxiliary')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
               activeTab === 'auxiliary'
-                ? 'bg-gold/20 text-gold border border-gold/40 shadow-xs'
+                ? 'bg-gold/20 text-gold border border-border-subtle shadow-xs'
                 : 'text-text-secondary hover:text-text-primary hover:bg-surface-card'
             }`}
           >
@@ -172,7 +172,7 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
                   onClick={() => setActivePatternId(p.id)}
                   className={`px-2.5 py-1 rounded-lg text-xs font-mono font-bold whitespace-nowrap transition-all border ${
                     isActive
-                      ? 'bg-indigo text-white border-indigo shadow-xs'
+                      ? 'bg-indigo text-white border-border-subtle shadow-xs'
                       : 'bg-surface-card border-border-subtle text-text-secondary hover:text-text-primary'
                   }`}
                 >
@@ -196,7 +196,7 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
                   onClick={() => setActiveAuxId(aux.id)}
                   className={`px-2.5 py-1 rounded-lg text-xs font-jp font-bold whitespace-nowrap transition-all border ${
                     isActive
-                      ? 'bg-gold text-surface-ground border-gold shadow-xs font-black'
+                      ? 'bg-gold text-surface-ground border-border-subtle shadow-xs font-black'
                       : 'bg-surface-card border-border-subtle text-text-secondary hover:text-text-primary'
                   }`}
                 >
@@ -389,7 +389,7 @@ export const ConjugationSheet: React.FC<ConjugationSheetProps> = ({
                     </div>
 
                     {group.exceptions && (
-                      <div className="p-2.5 rounded-xl bg-gold/10 border border-gold/30 space-y-1">
+                      <div className="p-2.5 rounded-xl bg-gold/10 border border-border-subtle space-y-1">
                         {group.exceptions.map((exc, excIdx) => (
                           <p
                             key={excIdx}

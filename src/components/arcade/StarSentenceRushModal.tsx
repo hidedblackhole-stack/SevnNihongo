@@ -339,7 +339,7 @@ export const StarSentenceRushModal: React.FC<StarSentenceRushModalProps> = ({
         {/* HEADER BAR */}
         <div className="p-4 sm:px-6 border-b border-border-subtle flex items-center justify-between bg-surface-elevated/70">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-inner">
+            <div className="w-9 h-9 rounded-2xl bg-amber-500/10 border border-border-subtle flex items-center justify-center text-amber-400 shadow-inner">
               <Star className="w-5 h-5 fill-amber-400" />
             </div>
             <div>
@@ -347,7 +347,7 @@ export const StarSentenceRushModal: React.FC<StarSentenceRushModalProps> = ({
                 <h3 className="font-heading font-bold text-base sm:text-lg text-text-primary leading-tight">
                   Susun Bintang Kilat (60s)
                 </h3>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/15 border border-amber-500/30 text-amber-300">
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/15 border border-border-subtle text-amber-300">
                   文の組み立て
                 </span>
               </div>
@@ -371,8 +371,8 @@ export const StarSentenceRushModal: React.FC<StarSentenceRushModalProps> = ({
           {gameState === 'ready' && (
             <div className="space-y-5 animate-fade-in">
               {/* Hero Banner */}
-              <div className="p-5 rounded-2xl bg-surface-elevated border border-border-subtle text-center relative overflow-hidden shadow-inner">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-bold font-mono mb-2">
+              <div className="p-5 rounded-2xl bg-surface-elevated panel-stitched border border-border-subtle text-center relative overflow-hidden shadow-inner">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-border-subtle text-amber-300 text-xs font-bold font-mono mb-2">
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>SPEED RUSH 60 DETIK</span>
                 </div>
@@ -466,7 +466,7 @@ export const StarSentenceRushModal: React.FC<StarSentenceRushModalProps> = ({
                   timeLeft <= 10 
                     ? 'bg-rose-500/20 border border-rose-500/50 text-rose-400 animate-pulse'
                     : timeLeft <= 20
-                    ? 'bg-amber-500/20 border border-amber-500/40 text-amber-300'
+                    ? 'bg-amber-500/20 border border-border-subtle text-amber-300'
                     : 'bg-surface-elevated text-text-primary border border-border-subtle'
                 }`}>
                   <Clock className={`w-4 h-4 ${timeLeft <= 10 ? 'text-rose-400 animate-spin' : 'text-gold'}`} />
@@ -492,7 +492,7 @@ export const StarSentenceRushModal: React.FC<StarSentenceRushModalProps> = ({
               </div>
 
               {/* QUESTION CARD */}
-              <div className="p-4 sm:p-5 rounded-2xl bg-surface-card border border-border-primary shadow-md space-y-4 relative overflow-hidden">
+              <div className="p-4 sm:p-5 rounded-2xl bg-surface-card panel-stitched border border-border-primary shadow-md space-y-4 relative overflow-hidden">
                 {/* Score feedback popup */}
                 <AnimatePresence>
                   {scoreFeedback && (
@@ -514,7 +514,7 @@ export const StarSentenceRushModal: React.FC<StarSentenceRushModalProps> = ({
                 {/* Subheader: Level Badge & Audio */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="px-2 py-0.5 rounded-lg text-xs font-bold bg-amber-500/15 border border-amber-500/30 text-amber-300">
+                    <span className="px-2 py-0.5 rounded-lg text-xs font-bold bg-amber-500/15 border border-border-subtle text-amber-300">
                       JLPT {currentQuestion.level}
                     </span>
                     <span className="text-xs text-text-secondary">
@@ -563,10 +563,10 @@ export const StarSentenceRushModal: React.FC<StarSentenceRushModalProps> = ({
                                     : 'bg-rose-500/20 border-2 border-rose-500 text-rose-300 shadow-md'
                                   : 'bg-surface-card border border-border-subtle text-text-primary'
                                 : isStarSlot
-                                ? 'bg-amber-500/15 border-2 border-amber-400 text-amber-200 shadow-md ring-1 ring-amber-400/40'
+                                ? 'bg-amber-500/15 border-2 border-border-subtle text-amber-200 shadow-md ring-1 ring-border-primary'
                                 : 'bg-surface-card border border-border-subtle text-text-primary hover:border-border-primary'
                               : isStarSlot
-                              ? 'border-2 border-dashed border-amber-400/60 bg-amber-500/5 text-amber-400/60'
+                              ? 'border-2 border-dashed border-border-subtle bg-amber-500/5 text-amber-400/60'
                               : 'border-2 border-dashed border-border-subtle/80 bg-surface-elevated/40 text-text-muted/60'
                           }`}
                         >
@@ -652,7 +652,7 @@ export const StarSentenceRushModal: React.FC<StarSentenceRushModalProps> = ({
                           className={`p-3 rounded-xl border text-left font-jp font-bold transition-all flex items-center gap-2.5 cursor-pointer ${
                             isPlaced
                               ? 'opacity-25 bg-surface-inset border-border-subtle/40 pointer-events-none'
-                              : 'bg-surface-elevated hover:bg-surface-inset border-border-subtle hover:border-gold/50 shadow-sm active:scale-[0.98]'
+                              : 'bg-surface-elevated hover:bg-surface-inset border-border-subtle hover:border-border-primary shadow-sm active:scale-[0.98]'
                           }`}
                         >
                           <span className="w-5 h-5 rounded-md bg-surface-inset border border-border-subtle text-[11px] font-mono text-text-secondary flex items-center justify-center shrink-0">
@@ -687,7 +687,7 @@ export const StarSentenceRushModal: React.FC<StarSentenceRushModalProps> = ({
           {gameState === 'finished' && (
             <div className="space-y-5 animate-fade-in">
               {/* Achievement Badge Banner */}
-              <div className="p-5 rounded-2xl bg-surface-card border border-border-subtle text-center relative overflow-hidden shadow-md">
+              <div className="p-5 rounded-2xl bg-surface-card panel-stitched border border-border-subtle text-center relative overflow-hidden shadow-md">
                 {/* Stempel rank di pojok kanan (plakat skor, sesuai DESIGN.md) */}
                 <div className="absolute top-3 right-3 w-14 h-14 rounded-xl bg-surface-inset border border-border-subtle shadow-inner flex items-center justify-center">
                   <span className={`text-3xl font-black font-heading ${achievementRank.color}`}>

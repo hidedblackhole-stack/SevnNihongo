@@ -181,11 +181,11 @@ export const SakubunStudio: React.FC<SakubunStudioProps> = ({
                 <h2 className="text-base sm:text-lg font-bold text-text-primary font-heading">
                   Sakubun Studio
                 </h2>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-gold/15 text-gold border border-gold/30">
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-gold/15 text-gold border border-border-subtle">
                   {exercise.patternTitle.split(':')[0] || 'N5/N4'}
                 </span>
                 {streak > 1 && (
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-orange-500/20 text-orange-400 border border-orange-500/40 flex items-center gap-1">
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-orange-500/20 text-orange-400 border border-border-subtle flex items-center gap-1">
                     🔥 {streak}x Streak
                   </span>
                 )}
@@ -205,7 +205,7 @@ export const SakubunStudio: React.FC<SakubunStudioProps> = ({
                 setSelectedPatternId(nextId);
                 startNewExercise(nextId);
               }}
-              className="px-3 py-1.5 rounded-xl bg-surface-inset border border-border-subtle text-xs font-bold text-text-primary cursor-pointer hover:border-gold/40 transition-colors focus:outline-none"
+              className="px-3 py-1.5 rounded-xl bg-surface-inset border border-border-subtle text-xs font-bold text-text-primary cursor-pointer hover:border-border-primary transition-colors focus:outline-none"
             >
               {patternList.map((p) => (
                 <option key={p.id} value={p.id} className="bg-surface-base text-text-primary">
@@ -292,8 +292,8 @@ export const SakubunStudio: React.FC<SakubunStudioProps> = ({
                       isParticle
                         ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/40 hover:bg-emerald-500/25'
                         : isSuffix
-                        ? 'bg-purple-500/15 text-purple-300 border-purple-500/40 hover:bg-purple-500/25'
-                        : 'bg-surface-elevated text-text-primary border-gold/30 hover:border-gold/60'
+                        ? 'bg-purple-500/15 text-purple-300 border-border-subtle hover:bg-purple-500/25'
+                        : 'bg-surface-elevated text-text-primary border-border-subtle hover:border-border-primary'
                     }`}
                   >
                     <RubyText japanese={tile.text} reading={tile.reading} showFurigana={furiganaEnabled} />
@@ -333,7 +333,7 @@ export const SakubunStudio: React.FC<SakubunStudioProps> = ({
                 className={`px-3.5 sm:px-4 py-2.5 rounded-2xl text-sm sm:text-base font-bold transition-all border shadow-sm cursor-pointer hover:-translate-y-0.5 active:translate-y-0 active:scale-95 ${
                   isParticle
                     ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:border-emerald-500/60'
-                    : 'bg-surface-inset text-text-primary border-border-subtle hover:border-gold/50 hover:bg-surface-elevated'
+                    : 'bg-surface-inset text-text-primary border-border-subtle hover:border-border-primary hover:bg-surface-elevated'
                 }`}
               >
                 <RubyText japanese={tile.text} reading={tile.reading} showFurigana={furiganaEnabled} />
@@ -384,7 +384,7 @@ export const SakubunStudio: React.FC<SakubunStudioProps> = ({
             type="button"
             onClick={handleUseMpHint}
             disabled={playerMp < 5 || feedback?.isCorrect}
-            className="px-3.5 py-2.5 rounded-2xl bg-surface-inset border border-blue-500/30 text-blue-400 hover:bg-blue-500/10 text-xs font-bold flex items-center gap-1.5 transition-colors disabled:opacity-40 cursor-pointer"
+            className="px-3.5 py-2.5 rounded-2xl bg-surface-inset border border-border-subtle text-blue-400 hover:bg-blue-500/10 text-xs font-bold flex items-center gap-1.5 transition-colors disabled:opacity-40 cursor-pointer"
             title="Gunakan 5 MP untuk membuang ubin pengecoh"
           >
             <Lightbulb className="w-4 h-4" />
@@ -462,7 +462,7 @@ export const SakubunStudio: React.FC<SakubunStudioProps> = ({
             <button
               type="button"
               onClick={() => setShowHintModal(false)}
-              className="w-full py-2 rounded-2xl bg-surface-inset border border-gold/30 text-gold text-xs font-bold hover:bg-gold/10 transition-colors"
+              className="w-full py-2 rounded-2xl bg-surface-inset border border-border-subtle text-gold text-xs font-bold hover:bg-gold/10 transition-colors"
             >
               Mengerti
             </button>

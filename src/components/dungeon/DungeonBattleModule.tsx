@@ -30,14 +30,14 @@ const LEVEL_COLORS: Record<string, { bg: string; text: string; border: string; b
   N2: { 
     bg: 'bg-blue-500/10', 
     text: 'text-blue-700 dark:text-blue-400', 
-    border: 'border-blue-500/30', 
-    badge: 'bg-blue-100 text-blue-900 border border-blue-300 dark:bg-blue-950/70 dark:text-blue-300 dark:border-blue-800/40 font-bold' 
+    border: 'border-border-subtle', 
+    badge: 'bg-blue-100 text-blue-900 border border-border-subtle dark:bg-blue-950/70 dark:text-blue-300 font-bold' 
   },
   N3: { 
     bg: 'bg-amber-500/10', 
     text: 'text-amber-800 dark:text-amber-400', 
-    border: 'border-amber-500/30', 
-    badge: 'bg-amber-100 text-amber-900 border border-amber-300 dark:bg-amber-950/70 dark:text-amber-300 dark:border-amber-800/40 font-bold' 
+    border: 'border-border-subtle', 
+    badge: 'bg-amber-100 text-amber-900 border border-border-subtle dark:bg-amber-950/70 dark:text-amber-300 font-bold' 
   },
   N4: { 
     bg: 'bg-emerald-500/10', 
@@ -48,8 +48,8 @@ const LEVEL_COLORS: Record<string, { bg: string; text: string; border: string; b
   N5: { 
     bg: 'bg-teal-500/10', 
     text: 'text-teal-800 dark:text-teal-400', 
-    border: 'border-teal-500/30', 
-    badge: 'bg-teal-100 text-teal-900 border border-teal-300 dark:bg-teal-950/70 dark:text-teal-300 dark:border-teal-800/40 font-bold' 
+    border: 'border-border-subtle', 
+    badge: 'bg-teal-100 text-teal-900 border border-border-subtle dark:bg-teal-950/70 dark:text-teal-300 font-bold' 
   },
   JFT: { 
     bg: 'bg-stone-500/10', 
@@ -295,7 +295,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
                 <span>{lvl === 'ALL' ? 'Semua Level' : lvl}</span>
                 <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold font-mono transition-colors ${
                   isSelected
-                    ? 'bg-red-100 text-red-800 dark:bg-gold/20 dark:text-gold border border-red-200 dark:border-gold/30'
+                    ? 'bg-red-100 text-red-800 dark:bg-gold/20 dark:text-gold border border-red-200'
                     : 'bg-surface-inset text-text-muted border border-border-subtle'
                 }`}>
                   {count}
@@ -319,7 +319,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
                   setLaunchModalPack(pack.data);
                   playSound('click', soundEnabled);
                 }}
-                className="panel p-4 rounded-2xl cursor-pointer transition-all border border-border-subtle hover:border-border-strong bg-surface-card hover:bg-surface-elevated shadow-sm flex flex-col justify-between group"
+                className="panel panel-stitched p-4 rounded-2xl cursor-pointer transition-all border border-border-subtle hover:border-border-strong bg-surface-card hover:bg-surface-elevated shadow-sm flex flex-col justify-between group"
               >
                 {/* Level badge + Package Code */}
                 <div className="flex items-center justify-between mb-3">
@@ -383,7 +383,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
                 exit={{ scale: 0.95, opacity: 0, y: 8 }}
                 transition={{ duration: 0.15 }}
                 onClick={(e) => e.stopPropagation()}
-                className="panel p-6 sm:p-7 rounded-3xl bg-surface-card border border-border-subtle shadow-2xl max-w-lg w-full relative space-y-5"
+                className="panel panel-stitched p-6 sm:p-7 rounded-3xl bg-surface-card border border-border-subtle shadow-2xl max-w-lg w-full relative space-y-5"
               >
                 {/* Close Button */}
                 <button
@@ -475,7 +475,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
     const nextSectionObj = activeTryOut.sections[nextSectionKey as 'mojiGoi' | 'bunpouDokkai' | 'choukai'];
     return (
       <div className="w-full max-w-4xl mx-auto flex items-center justify-center h-[60vh] animate-fade-in">
-        <div className="panel p-8 rounded-3xl border border-border-subtle shadow-2xl text-center space-y-6 w-full max-w-md">
+        <div className="panel panel-stitched p-8 rounded-3xl border border-border-subtle shadow-2xl text-center space-y-6 w-full max-w-md">
           <CheckCircle2 className="w-16 h-16 text-matcha mx-auto" />
           <div>
             <h2 className="text-2xl font-bold text-text-primary font-heading mb-2">Sesi Selesai!</h2>
@@ -498,7 +498,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
     const { totalScore, maxTotalScore, passingScore, isSuccess, breakdown, totalQuestionsCount, totalCorrectCount } = calculateJLPTScore();
 
     return (
-      <div className="panel w-full max-w-3xl mx-auto p-6 md:p-10 rounded-3xl border border-border-subtle text-center space-y-8 shadow-2xl animate-fade-in">
+      <div className="panel panel-stitched w-full max-w-3xl mx-auto p-6 md:p-10 rounded-3xl border border-border-subtle text-center space-y-8 shadow-2xl animate-fade-in">
         {isSuccess ? (
           <Trophy className="w-20 h-20 mx-auto text-gold animate-bounce" />
         ) : (
@@ -593,7 +593,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
   return (
     <div className="w-full max-w-5xl mx-auto flex flex-col h-[85vh] animate-fade-in space-y-4">
       {/* Top Header */}
-      <div className="panel flex items-center justify-between p-4 rounded-2xl border border-border-subtle shadow-md shrink-0">
+      <div className="panel panel-stitched flex items-center justify-between p-4 rounded-2xl border border-border-subtle shadow-md shrink-0">
         <div className="flex items-center gap-3">
           <button onClick={() => setShowGrid(!showGrid)} className="p-2 bg-surface-inset border border-border-subtle rounded-xl hover:bg-surface-card transition-colors">
             <span className="font-bold text-text-secondary text-xs">Grid Soal</span>
@@ -605,7 +605,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
         </div>
         
         <div className="flex items-center gap-4">
-          <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-mono font-bold text-sm ${timeLeft < 300 ? 'bg-crimson/15 text-crimson border border-crimson/30 animate-pulse' : 'bg-surface-inset border border-border-subtle text-gold'}`}>
+          <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-mono font-bold text-sm ${timeLeft < 300 ? 'bg-crimson/15 text-crimson border border-border-subtle animate-pulse' : 'bg-surface-inset border border-border-subtle text-gold'}`}>
             <Clock className="w-4 h-4" />
             {formatTime(timeLeft)}
           </div>
@@ -719,7 +719,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
                         <button
                           type="button"
                           onClick={() => speakJapanese((q as any).audio)}
-                          className="px-3 py-1 rounded-lg bg-surface-card hover:bg-surface-elevated text-gold border border-gold/30 hover:border-gold text-xs font-bold font-mono flex items-center gap-1.5 transition-all shadow-xs active:scale-95 cursor-pointer"
+                          className="px-3 py-1 rounded-lg bg-surface-card hover:bg-surface-elevated text-gold border border-border-subtle hover:border-border-primary text-xs font-bold font-mono flex items-center gap-1.5 transition-all shadow-xs active:scale-95 cursor-pointer"
                           title="Putar audio soal percakapan"
                         >
                           <Volume2 className="w-3.5 h-3.5" />
@@ -740,7 +740,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
                            onClick={() => handleSelectAnswer(q.id, optIdx)}
                            className={`w-full text-left p-3 rounded-lg border font-jp transition-all flex items-center justify-between ${
                              isSelected 
-                               ? 'bg-gold/15 border-gold text-gold font-bold shadow-sm' 
+                               ? 'bg-gold/15 border-border-subtle text-gold font-bold shadow-sm' 
                                : 'bg-surface-card border-border-subtle text-text-primary hover:border-border-strong'
                            }`}
                          >
@@ -794,7 +794,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
                         onClick={() => handleSelectAnswer(currentQ.id, i)}
                         className={`w-full text-left p-4 rounded-xl border font-jp transition-all flex items-center justify-between ${
                           isSelected 
-                            ? 'bg-crimson/15 border-crimson text-crimson font-bold shadow-sm' 
+                            ? 'bg-crimson/15 border-border-subtle text-crimson font-bold shadow-sm' 
                             : 'bg-surface-inset border-border-subtle text-text-primary hover:border-border-strong'
                         }`}
                       >
@@ -811,7 +811,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
                 <button
                   onClick={() => handleToggleFlag(currentQ.id)}
                   className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold transition-colors ${
-                    flags[currentQ.id] ? 'text-crimson bg-crimson/15 border border-crimson/30' : 'text-text-muted hover:text-text-primary bg-surface-inset border border-border-subtle'
+                    flags[currentQ.id] ? 'text-crimson bg-crimson/15 border border-border-subtle' : 'text-text-muted hover:text-text-primary bg-surface-inset border border-border-subtle'
                   }`}
                 >
                   <Flag className={`w-4 h-4 ${flags[currentQ.id] ? 'fill-crimson' : ''}`} />

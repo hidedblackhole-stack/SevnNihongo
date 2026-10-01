@@ -58,7 +58,7 @@ export const UniversalWritingCard: React.FC<UniversalWritingCardProps> = ({
   // If item cannot be written, provide a safe fallback or return null
   if (!writableTrait) {
     return (
-      <div className={`w-full text-center p-6 panel rounded-2xl text-text-muted ${className}`}>
+      <div className={`w-full text-center p-6 panel panel-stitched rounded-2xl text-text-muted ${className}`}>
         Materi ini tidak memiliki data goresan untuk ditulis.
       </div>
     );

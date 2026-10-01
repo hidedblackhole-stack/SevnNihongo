@@ -310,7 +310,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
       <div className="panel p-2.5 sm:p-3.5 rounded-2xl border border-border-subtle bg-surface-card shadow-xs flex flex-wrap items-center justify-between gap-2.5">
         {/* Left: Title & Progress Counter */}
         <div className="flex items-center gap-2.5 min-w-0">
-          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-indigo/15 text-indigo border border-indigo/30 flex items-center justify-center shrink-0 shadow-inner">
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-indigo/15 text-indigo border border-border-subtle flex items-center justify-center shrink-0 shadow-inner">
             <BookOpen className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
           </div>
           <div className="min-w-0">
@@ -318,7 +318,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
               <span className="font-heading font-black text-xs sm:text-sm text-text-primary tracking-wide truncate">
                 文法実験室 · Altar Pola & Kata
               </span>
-              <span className="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-gold/15 text-gold border border-gold/30 shrink-0">
+              <span className="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-gold/15 text-gold border border-border-subtle shrink-0">
                 {levelCategory === 'all' ? 'Semua Level' : levelCategory.toUpperCase()}
               </span>
             </div>
@@ -339,7 +339,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
             }}
             className={`px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-xl border text-[11px] font-mono font-semibold transition-all flex items-center gap-1 shadow-2xs ${
               showFurigana
-                ? 'bg-gold/15 text-gold border-gold/40 shadow-xs'
+                ? 'bg-gold/15 text-gold border-border-subtle shadow-xs'
                 : 'bg-surface-inset text-text-muted border-border-subtle hover:text-text-primary'
             }`}
             title="Tampilkan / Sembunyikan Furigana"
@@ -357,7 +357,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
             }}
             className={`px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-xl border text-[11px] font-mono font-semibold transition-all shadow-2xs ${
               showRomaji
-                ? 'bg-indigo/15 text-indigo border-indigo/40 shadow-xs'
+                ? 'bg-indigo/15 text-indigo border-border-subtle shadow-xs'
                 : 'bg-surface-inset text-text-muted border-border-subtle hover:text-text-primary'
             }`}
             title="Tampilkan / Sembunyikan Romaji"
@@ -397,7 +397,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
       {/* ─────────────────────────────────────────────────────────────
           2. THE AUTHENTIC JAPANESE RPG ALTAR / STUDY DESK (Skeuomorphic)
           ───────────────────────────────────────────────────────────── */}
-      <div className="relative rounded-2xl sm:rounded-3xl p-2.5 sm:p-4 bg-surface-elevated border border-border-subtle shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_6px_20px_rgba(0,0,0,0.4)] overflow-hidden">
+      <div className="relative rounded-2xl sm:rounded-3xl p-2.5 sm:p-4 bg-surface-elevated panel-stitched border border-border-subtle shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_6px_20px_rgba(0,0,0,0.4)] overflow-hidden">
         {/* The Desk Surface (Sumi-e Charcoal Slate in Dark Mode, Antique Washi in Light Mode) */}
         <div
           className="relative rounded-xl sm:rounded-2xl p-3.5 sm:p-6 flex flex-col justify-between overflow-hidden bg-surface-inset border border-border-subtle shadow-[inset_1.5px_1.5px_6px_var(--neu-d)] transition-colors"
@@ -414,7 +414,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
                     playSound('click', soundEnabled);
                     setShowVerbPicker(true);
                   }}
-                  className="px-2 py-0.5 rounded-md bg-indigo/15 border border-indigo/40 text-indigo font-bold hover:bg-indigo/25 transition-all cursor-pointer flex items-center gap-1"
+                  className="px-2 py-0.5 rounded-md bg-indigo/15 border border-border-subtle text-indigo font-bold hover:bg-indigo/25 transition-all cursor-pointer flex items-center gap-1"
                   title="Klik untuk memilih kata kerja lain"
                 >
                   <span>{activeVerb.kanji}</span>
@@ -430,7 +430,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
                     playSound('click', soundEnabled);
                     setShowPatternPicker(true);
                   }}
-                  className="px-2 py-0.5 rounded-md bg-gold/15 border border-gold/40 text-gold font-bold hover:bg-gold/25 transition-all cursor-pointer flex items-center gap-1"
+                  className="px-2 py-0.5 rounded-md bg-gold/15 border border-border-subtle text-gold font-bold hover:bg-gold/25 transition-all cursor-pointer flex items-center gap-1"
                   title="Klik untuk memilih pola kalimat lain"
                 >
                   <span>{activePattern.pattern}</span>
@@ -477,7 +477,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
                   className="space-y-2.5"
                 >
                   {/* Badge: Level & Pattern Title */}
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gold/40 bg-gold/10 text-xs font-mono text-text-primary shadow-xs">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border-subtle bg-gold/10 text-xs font-mono text-text-primary shadow-xs">
                     <span className="font-mono font-black text-gold px-1.5 py-0.2 rounded bg-gold/20 whitespace-nowrap">
                       {activePattern.jlpt || 'N5'}
                     </span>
@@ -496,7 +496,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
                           playSound('click', soundEnabled);
                           setShowVerbPicker(true);
                         }}
-                        className="group/verb inline-flex flex-col items-center cursor-pointer transition-all duration-150 hover:scale-105 active:scale-95 px-2 sm:px-3 py-1 -my-1 rounded-xl border border-transparent hover:border-indigo/40 hover:bg-indigo/10"
+                        className="group/verb inline-flex flex-col items-center cursor-pointer transition-all duration-150 hover:scale-105 active:scale-95 px-2 sm:px-3 py-1 -my-1 rounded-xl border border-transparent hover:border-border-primary hover:bg-indigo/10"
                         title={`Klik untuk mengganti kata kerja dasar (${activeVerb.kanji})`}
                       >
                         <RubyText
@@ -520,7 +520,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
                           playSound('click', soundEnabled);
                           setShowPatternPicker(true);
                         }}
-                        className="group/pola inline-flex flex-col items-center cursor-pointer transition-all duration-150 hover:scale-105 active:scale-95 px-2 sm:px-3 py-1 -my-1 rounded-xl border border-transparent hover:border-gold/40 hover:bg-gold/10"
+                        className="group/pola inline-flex flex-col items-center cursor-pointer transition-all duration-150 hover:scale-105 active:scale-95 px-2 sm:px-3 py-1 -my-1 rounded-xl border border-transparent hover:border-border-primary hover:bg-gold/10"
                         title={`Klik untuk mengganti pola kalimat (${activePattern.pattern})`}
                       >
                         <RubyText
@@ -651,7 +651,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
             onClick={handleBookmark}
             className={`px-3 py-2 rounded-xl border text-xs font-heading font-bold flex items-center gap-1.5 shadow-xs transition-all active:scale-95 cursor-pointer shrink-0 ${
               bookmarkSuccess
-                ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40'
+                ? 'bg-emerald-500/20 text-emerald-400 border-border-subtle'
                 : 'bg-surface-card hover:bg-surface-elevated text-text-primary border-border-subtle'
             }`}
           >
@@ -676,7 +676,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
           ───────────────────────────────────────────────────────────── */}
       <div className="panel p-3 sm:p-3.5 rounded-2xl border border-border-subtle bg-surface-card shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div className="flex items-start sm:items-center gap-2.5 min-w-0">
-          <div className="w-7 h-7 rounded-lg bg-indigo/15 text-indigo border border-indigo/30 flex items-center justify-center shrink-0 shadow-inner mt-0.5 sm:mt-0">
+          <div className="w-7 h-7 rounded-lg bg-indigo/15 text-indigo border border-border-subtle flex items-center justify-center shrink-0 shadow-inner mt-0.5 sm:mt-0">
             <Layers className="w-3.5 h-3.5" />
           </div>
           <div className="text-xs">
@@ -696,7 +696,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
               playSound('click', soundEnabled);
               setShowVerbPicker(true);
             }}
-            className="flex-1 sm:flex-none px-3 py-1.5 rounded-xl border border-indigo/40 bg-indigo/10 hover:bg-indigo/20 text-indigo text-xs font-heading font-bold transition-all active:scale-95 shadow-2xs cursor-pointer"
+            className="flex-1 sm:flex-none px-3 py-1.5 rounded-xl border border-border-subtle bg-indigo/10 hover:bg-indigo/20 text-indigo text-xs font-heading font-bold transition-all active:scale-95 shadow-2xs cursor-pointer"
           >
             📖 Pilih Kata
           </button>
@@ -706,7 +706,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
               playSound('click', soundEnabled);
               setShowPatternPicker(true);
             }}
-            className="flex-1 sm:flex-none px-3 py-1.5 rounded-xl border border-gold/40 bg-gold/10 hover:bg-gold/20 text-gold text-xs font-heading font-bold transition-all active:scale-95 shadow-2xs cursor-pointer"
+            className="flex-1 sm:flex-none px-3 py-1.5 rounded-xl border border-border-subtle bg-gold/10 hover:bg-gold/20 text-gold text-xs font-heading font-bold transition-all active:scale-95 shadow-2xs cursor-pointer"
           >
             📑 Pilih Pola
           </button>
@@ -723,7 +723,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="panel p-4 sm:p-5 rounded-2xl sm:rounded-3xl border border-border-subtle bg-surface-card w-full max-w-xl max-h-[85vh] flex flex-col space-y-3.5 shadow-2xl"
+              className="panel panel-stitched p-4 sm:p-5 rounded-2xl sm:rounded-3xl border border-border-subtle bg-surface-card w-full max-w-xl max-h-[85vh] flex flex-col space-y-3.5 shadow-2xl"
             >
               {/* Modal Header */}
               <div className="flex items-center justify-between pb-2.5 border-b border-border-subtle">
@@ -751,7 +751,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
                     value={verbSearchQuery}
                     onChange={e => setVerbSearchQuery(e.target.value)}
                     placeholder="Cari kanji, cara baca, romaji, atau arti..."
-                    className="w-full pl-10 pr-4 py-2 rounded-xl bg-surface-inset border border-border-subtle text-xs text-text-primary placeholder:text-text-muted focus:outline-none focus:border-indigo"
+                    className="w-full pl-10 pr-4 py-2 rounded-xl bg-surface-inset border border-border-subtle text-xs text-text-primary placeholder:text-text-muted focus:outline-none focus:border-border-primary"
                   />
                 </div>
 
@@ -795,7 +795,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
                           }}
                           className={`p-2.5 sm:p-3 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
                             isSelected
-                              ? 'bg-indigo/15 border-indigo/50 text-text-primary shadow-xs'
+                              ? 'bg-indigo/15 border-border-subtle text-text-primary shadow-xs'
                               : 'bg-surface-inset border-border-subtle hover:bg-surface-elevated text-text-secondary hover:text-text-primary'
                           }`}
                         >
@@ -841,7 +841,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="panel p-4 sm:p-5 rounded-2xl sm:rounded-3xl border border-border-subtle bg-surface-card w-full max-w-xl max-h-[85vh] flex flex-col space-y-3.5 shadow-2xl"
+              className="panel panel-stitched p-4 sm:p-5 rounded-2xl sm:rounded-3xl border border-border-subtle bg-surface-card w-full max-w-xl max-h-[85vh] flex flex-col space-y-3.5 shadow-2xl"
             >
               {/* Modal Header */}
               <div className="flex items-center justify-between pb-2.5 border-b border-border-subtle">
@@ -893,7 +893,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
                       }}
                       className={`p-2.5 sm:p-3 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
                         isSelected
-                          ? 'bg-gold/15 border-gold/50 text-text-primary shadow-xs'
+                          ? 'bg-gold/15 border-border-subtle text-text-primary shadow-xs'
                           : 'bg-surface-inset border-border-subtle hover:bg-surface-elevated text-text-secondary hover:text-text-primary'
                       }`}
                     >

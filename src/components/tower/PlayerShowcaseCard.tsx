@@ -72,7 +72,7 @@ export const PlayerShowcaseCard: React.FC<PlayerShowcaseCardProps> = ({
       {/* Showcase Trading Card Container */}
       <motion.div
         whileHover={{ y: -4 }}
-        className="rounded-3xl p-6 bg-surface-card border border-border-subtle shadow-md relative overflow-hidden"
+        className="rounded-3xl p-6 bg-surface-card panel-stitched border border-border-subtle shadow-md relative overflow-hidden"
       >
         {/* Decorative Background Kanji Watermark */}
         <div className="absolute -right-6 -bottom-10 text-[140px] font-black text-white/5 pointer-events-none font-heading leading-none select-none">

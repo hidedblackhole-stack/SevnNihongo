@@ -379,7 +379,7 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
 
           <button
             onClick={handleStartQuiz}
-            className="px-3 py-1.5 rounded-xl text-xs font-bold bg-surface-elevated text-gold border border-gold/40 hover:brightness-105 transition-all flex items-center gap-1.5 shadow-sm"
+            className="px-3 py-1.5 rounded-xl text-xs font-bold bg-surface-elevated text-gold border border-border-subtle hover:brightness-105 transition-all flex items-center gap-1.5 shadow-sm"
           >
             🎯 Latihan ({compiledQuizQuestions.length})
           </button>
@@ -389,7 +389,7 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
       {/* Main Content Area */}
       {activeTab === 'library' && (
         <div className="space-y-3">
-          <div className="p-4 rounded-2xl bg-surface-card border border-border-subtle">
+          <div className="p-4 rounded-2xl bg-surface-card panel-stitched border border-border-subtle">
             <h3 className="text-sm font-bold text-text-primary font-heading mb-1">Materi Kosakata (Kotoba)</h3>
             <p className="text-xs text-text-secondary">
               Pelajari daftar kosakata di bawah ini dengan saksama. Anda dapat mendengar pengucapan asli, melihat cara baca, maupun beralih ke Mode Tulis Canvas atau Latihan ({compiledQuizQuestions.length} Soal) untuk mendapatkan EXP!
@@ -490,14 +490,14 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
           </div>
 
           {/* Quick Quiz CTA Banner */}
-          <div className="p-4 rounded-2xl bg-surface-card border border-border-subtle flex items-center justify-between gap-3">
+          <div className="p-4 rounded-2xl bg-surface-card panel-stitched border border-border-subtle flex items-center justify-between gap-3">
             <div>
               <h4 className="text-xs font-bold text-text-primary font-heading">Siap Menguji Ingatan Kotoba?</h4>
               <p className="text-[11px] text-text-secondary">Jawab kuis arti & cara baca kata dengan {compiledQuizQuestions.length} tantangan pilihan ganda</p>
             </div>
             <button
               onClick={handleStartQuiz}
-              className="btn py-2 px-4 text-xs font-bold shadow-md shrink-0 text-gold border-gold/40 hover:border-gold"
+              className="btn py-2 px-4 text-xs font-bold shadow-md shrink-0 text-gold border-border-subtle hover:border-border-primary"
             >
               Mulai Kuis ({compiledQuizQuestions.length})
             </button>
@@ -507,7 +507,7 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
 
       {activeTab === 'writing' && (
         <div className="space-y-4">
-          <div className="p-4 rounded-2xl bg-surface-card border border-border-subtle">
+          <div className="p-4 rounded-2xl bg-surface-card panel-stitched border border-border-subtle">
             <h3 className="text-sm font-bold text-text-primary font-heading flex items-center gap-2 mb-1">
               <Edit3 className="w-4 h-4 text-wine-accent" />
               Latihan Menulis Aksara (Kanji/Kana Canvas)
@@ -528,7 +528,7 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
                 }}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all flex items-center gap-1.5 shrink-0 ${
                   selectedWritingIndex === idx
-                    ? 'bg-wine-accent text-white border-wine-accent shadow-sm'
+                    ? 'bg-wine-accent text-white border-border-subtle shadow-sm'
                     : 'bg-surface-card text-text-secondary border-border-subtle hover:text-text-primary'
                 }`}
               >
@@ -539,7 +539,7 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
           </div>
 
           {/* Writing Canvas Practice Module */}
-          <div className="rounded-2xl bg-surface-card border border-border-subtle p-3 sm:p-5 shadow-md">
+          <div className="rounded-2xl bg-surface-card panel-stitched border border-border-subtle p-3 sm:p-5 shadow-md">
             <KotobaWritingPractice
               key={currentWritingItem.id}
               kotoba={currentWritingItem}

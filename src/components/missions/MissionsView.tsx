@@ -95,7 +95,7 @@ export const MissionsView: React.FC<MissionsViewProps> = ({
               key={mission.id}
               whileHover={{ y: -1 }}
               className={`panel p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border border-border-subtle shadow-md ${
-                mission.claimed ? 'opacity-60' : isComplete ? 'border-gold/50' : ''
+                mission.claimed ? 'opacity-60' : isComplete ? 'border-border-subtle' : ''
               }`}
             >
               <div className="space-y-1.5 flex-1 w-full relative z-10">
@@ -104,7 +104,7 @@ export const MissionsView: React.FC<MissionsViewProps> = ({
                     {mission.title}
                   </h3>
                   {mission.claimed && (
-                    <span className="text-[10px] px-2 py-0.5 rounded-md bg-surface-inset text-gold border border-gold/30 font-mono">
+                    <span className="text-[10px] px-2 py-0.5 rounded-md bg-surface-inset text-gold border border-border-subtle font-mono">
                       Selesai
                     </span>
                   )}

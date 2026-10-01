@@ -29,7 +29,7 @@ export const FloorNarrativeModal: React.FC<FloorNarrativeModalProps> = ({
           initial={{ scale: 0.9, opacity: 0, y: 20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.9, opacity: 0, y: 20 }}
-          className="w-full max-w-md bg-surface-card rounded-3xl p-6 border border-border-subtle shadow-2xl relative overflow-hidden"
+          className="w-full max-w-md bg-surface-card panel-stitched rounded-3xl p-6 border border-border-subtle shadow-2xl relative overflow-hidden"
         >
           {/* Header */}
           <div className="flex items-center justify-between mb-4 pb-3 border-b border-border-subtle">

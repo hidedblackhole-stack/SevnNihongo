@@ -36,7 +36,7 @@ export const StudyTimerBadge = memo(function StudyTimerBadge({
     <div
       className={`py-1.5 px-3 rounded-xl bg-surface-inset border text-xs font-mono font-bold flex items-center gap-1.5 shadow-inner transition-all select-none ${
         isTimerActive
-          ? 'border-gold/50 text-gold'
+          ? 'border-border-subtle text-gold'
           : 'border-border-subtle text-text-secondary'
       }`}
       title={`Waktu Belajar Hari Ini: ${formatDetailedStudyTime(todaySeconds)}${

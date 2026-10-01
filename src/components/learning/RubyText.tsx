@@ -65,7 +65,7 @@ export const RubyText: React.FC<RubyTextProps> = ({
       return parts.map((part, i) => (
         <React.Fragment key={i}>
           {i > 0 && (
-            <span className="text-amber-800 dark:text-amber-300 font-bold underline decoration-amber-600/80 dark:decoration-amber-300/80 decoration-[2.5px] underline-offset-[5px] bg-amber-500/15 dark:bg-amber-400/15 px-1.5 py-0.5 rounded-lg shadow-sm inline-block mx-0.5 border border-amber-600/25 dark:border-amber-400/25">
+            <span className="text-amber-800 dark:text-amber-300 font-bold underline decoration-amber-600/80 dark:decoration-amber-300/80 decoration-[2.5px] underline-offset-[5px] bg-amber-500/15 dark:bg-amber-400/15 px-1.5 py-0.5 rounded-lg shadow-sm inline-block mx-0.5 border border-border-subtle">
               {targetWord}
             </span>
           )}

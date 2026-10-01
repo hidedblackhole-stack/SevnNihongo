@@ -1180,17 +1180,17 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-          className="w-full space-y-4 sm:space-y-5 text-left panel p-4 sm:p-6 rounded-3xl border border-border-subtle bg-surface-card shadow-xl"
+          className="w-full space-y-4 sm:space-y-5 text-left panel panel-stitched p-4 sm:p-6 rounded-3xl border border-border-subtle bg-surface-card shadow-xl"
         >
           {/* Top Meta Bar */}
           <div className="flex items-center justify-between gap-2 flex-wrap pb-2 border-b border-border-subtle text-xs font-mono">
             <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
               <span className={`px-2.5 py-0.5 rounded-lg border font-bold ${
                 isHiragana
-                  ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
+                  ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-border-subtle'
                   : isKatakana
-                    ? 'bg-sky-500/15 text-sky-600 dark:text-sky-400 border-sky-500/30'
-                    : 'bg-surface-inset text-wine-accent border-wine-accent/30'
+                    ? 'bg-sky-500/15 text-sky-600 dark:text-sky-400 border-border-subtle'
+                    : 'bg-surface-inset text-wine-accent border-border-subtle'
               }`}>
                 {isHiragana ? 'Hiragana' : isKatakana ? 'Katakana' : `JLPT ${level || promptKanjiItem.jlpt || 'N5'} Kanji`}
               </span>

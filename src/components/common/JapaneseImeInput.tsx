@@ -263,7 +263,7 @@ export const JapaneseImeInput: React.FC<JapaneseImeInputProps> = ({
       <div
         className={`relative flex items-center rounded-2xl bg-surface-inset border transition-all ${
           focused
-            ? 'border-gold/60 shadow-[inset_2px_2px_5px_var(--neu-d)]'
+            ? 'border-border-subtle shadow-[inset_2px_2px_5px_var(--neu-d)]'
             : 'border-border-subtle shadow-[inset_2px_2px_5px_var(--neu-d),inset_-1px_-1px_3px_var(--neu-l)]'
         }`}
       >
@@ -316,7 +316,7 @@ export const JapaneseImeInput: React.FC<JapaneseImeInputProps> = ({
               }}
               className={`px-2 py-1 rounded-lg text-xs font-mono font-bold flex items-center gap-1 transition-all cursor-pointer select-none ${
                 imeActive
-                  ? 'bg-gold/20 text-gold border border-gold/40 shadow-xs'
+                  ? 'bg-gold/20 text-gold border border-border-subtle shadow-xs'
                   : 'bg-surface-card text-text-muted border border-border-subtle hover:text-text-primary'
               }`}
               title={imeActive ? 'Input Jepang Aktif (Romaji -> Kana)' : 'Mode Huruf Latin'}
@@ -348,7 +348,7 @@ export const JapaneseImeInput: React.FC<JapaneseImeInputProps> = ({
 
       {/* Floating Candidate Bar (Pilihan Kata) */}
       {showCandidates && candidates.length > 0 && (
-        <div className="flex items-center gap-1.5 flex-wrap p-2 bg-surface-card border border-gold/40 rounded-2xl shadow-[3px_3px_10px_var(--neu-d)] animate-fade-in z-20">
+        <div className="flex items-center gap-1.5 flex-wrap p-2 bg-surface-card border border-border-subtle rounded-2xl shadow-[3px_3px_10px_var(--neu-d)] animate-fade-in z-20">
           <div className="flex items-center gap-1 text-[10px] font-mono font-bold text-text-muted px-1.5 shrink-0">
             <span>Pilihan Kata:</span>
           </div>
@@ -366,8 +366,8 @@ export const JapaneseImeInput: React.FC<JapaneseImeInputProps> = ({
                   }}
                   className={`px-3 py-1.5 rounded-xl text-xs font-jp font-bold flex items-center gap-1.5 transition-all select-none cursor-pointer ${
                     isSelected
-                      ? 'bg-gold text-surface-base border border-gold font-black shadow-md scale-105'
-                      : 'bg-surface-inset hover:bg-surface-elevated text-text-primary border border-border-subtle hover:border-gold/40'
+                      ? 'bg-gold text-surface-base border border-border-subtle font-black shadow-md scale-105'
+                      : 'bg-surface-inset hover:bg-surface-elevated text-text-primary border border-border-subtle hover:border-border-primary'
                   }`}
                 >
                   <span className={`text-[10px] font-mono ${isSelected ? 'opacity-80' : 'text-text-muted'}`}>

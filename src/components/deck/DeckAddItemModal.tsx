@@ -282,7 +282,7 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
                     }}
                     className={`px-2.5 py-1 rounded-lg text-xs font-mono font-bold whitespace-nowrap transition-all border shrink-0 ${
                       isSelected
-                        ? 'bg-surface-elevated text-gold border-gold/40'
+                        ? 'bg-surface-elevated text-gold border-border-subtle'
                         : 'bg-surface-inset/60 text-text-muted border-border-subtle hover:text-text-secondary'
                     }`}
                   >
@@ -351,7 +351,7 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
                           isAlreadyInDeck
                             ? 'border-border-subtle opacity-65 cursor-default'
                             : isSelected
-                            ? 'bg-surface-elevated border border-gold/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_8px_rgba(0,0,0,0.3)] cursor-pointer'
+                            ? 'bg-surface-elevated border border-border-subtle shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_8px_rgba(0,0,0,0.3)] cursor-pointer'
                             : 'border-border-subtle hover:border-border-primary cursor-pointer'
                         }`}
                       >
@@ -470,7 +470,7 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
                 <button
                   type="button"
                   onClick={handleAddBatch}
-                  className="px-4 py-1.5 rounded-xl text-xs font-heading font-bold bg-surface-card hover:bg-surface-inset text-gold border border-gold/40 shadow-sm flex items-center gap-1.5"
+                  className="px-4 py-1.5 rounded-xl text-xs font-heading font-bold bg-surface-card hover:bg-surface-inset text-gold border border-border-subtle shadow-sm flex items-center gap-1.5"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>Tambahkan Semua ({selectedKeys.size})</span>

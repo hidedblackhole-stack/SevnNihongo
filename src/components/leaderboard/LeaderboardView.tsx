@@ -331,7 +331,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
   };
 
   const getRankStyle = (index: number) => {
-    if (index === 0) return 'panel border border-gold/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_4px_12px_rgba(0,0,0,0.3)] text-text-primary';
+    if (index === 0) return 'panel border border-border-subtle shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_4px_12px_rgba(0,0,0,0.3)] text-text-primary';
     if (index === 1) return 'panel border border-border-primary shadow-sm text-text-primary';
     if (index === 2) return 'panel border border-border-subtle shadow-sm text-text-primary';
     return 'panel border border-border-subtle/50 shadow-sm text-text-primary';
@@ -427,7 +427,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
           ) : currentEntries.length === 0 ? (
             hasError ? (
               <div className="py-16 px-4 flex flex-col items-center justify-center text-center text-text-secondary">
-                <div className="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center mb-3">
+                <div className="w-14 h-14 rounded-2xl bg-amber-500/10 border border-border-subtle flex items-center justify-center mb-3">
                   <WifiOff className="w-7 h-7 text-amber-400" />
                 </div>
                 <p className="font-bold font-heading text-text-primary text-base">Gagal Memuat Arena</p>
@@ -437,7 +437,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
                 <button
                   type="button"
                   onClick={() => fetchLeaderboard(true)}
-                  className="mt-4 px-4 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/50 text-xs font-bold font-mono transition-all flex items-center gap-2 cursor-pointer"
+                  className="mt-4 px-4 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-border-subtle text-xs font-bold font-mono transition-all flex items-center gap-2 cursor-pointer"
                 >
                   <RefreshCw className="w-3.5 h-3.5" />
                   <span>COBA MUAT ULANG</span>
@@ -445,7 +445,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
               </div>
             ) : activeTab === 'weekly' ? (
               <div className="py-16 px-4 flex flex-col items-center justify-center text-center text-text-secondary">
-                <div className="w-14 h-14 rounded-2xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center mb-3">
+                <div className="w-14 h-14 rounded-2xl bg-rose-500/10 border border-border-subtle flex items-center justify-center mb-3">
                   <Flame className="w-7 h-7 text-rose-400" />
                 </div>
                 <p className="font-bold font-heading text-text-primary text-base">Arena Mingguan Baru Dimulai!</p>
@@ -485,7 +485,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
                   <div
                     key={entry.user_id}
                     onClick={() => handleSelectPlayer(entry, index)}
-                    className={`flex items-center gap-3 p-3 sm:px-4 rounded-2xl transition-all border shadow-sm cursor-pointer hover:scale-[1.01] active:scale-[0.99] ${getRankStyle(index)} ${isMe ? 'border-gold/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_4px_12px_rgba(0,0,0,0.35)] scale-[1.01]' : ''}`}
+                    className={`flex items-center gap-3 p-3 sm:px-4 rounded-2xl transition-all border shadow-sm cursor-pointer hover:scale-[1.01] active:scale-[0.99] ${getRankStyle(index)} ${isMe ? 'border-border-subtle shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_4px_12px_rgba(0,0,0,0.35)] scale-[1.01]' : ''}`}
                     title="Klik untuk melihat profil karakter petualang"
                   >
                     {/* Rank */}
@@ -594,7 +594,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
           >
             {/* Rank badge */}
             <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-500/50 flex items-center justify-center shrink-0 text-amber-400 font-mono font-black text-xs shadow-inner">
+              <div className="w-9 h-9 rounded-xl bg-amber-500/20 border border-border-subtle flex items-center justify-center shrink-0 text-amber-400 font-mono font-black text-xs shadow-inner">
                 #{myRankInfo.rank}
               </div>
               <div className="min-w-0">

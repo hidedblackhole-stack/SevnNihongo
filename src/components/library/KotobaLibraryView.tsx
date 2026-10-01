@@ -32,8 +32,8 @@ const LEVEL_BADGE_STYLE: Record<string, string> = {
   N3: 'border-border-subtle text-text-primary bg-surface-inset shadow-sm',
   N2: 'border-border-subtle text-text-primary bg-surface-inset shadow-sm',
   N1: 'border-border-subtle text-text-primary bg-surface-inset shadow-sm',
-  Kaigo: 'border-emerald-800/30 dark:border-emerald-500/40 text-emerald-800 dark:text-emerald-400 bg-surface-inset shadow-sm font-bold',
-  SSW: 'border-red-700/25 dark:border-amber-500/40 text-red-700 dark:text-amber-400 bg-surface-inset shadow-sm font-bold',
+  Kaigo: 'border-border-subtle text-emerald-800 dark:text-emerald-400 bg-surface-inset shadow-sm font-bold',
+  SSW: 'border-border-subtle text-red-700 dark:text-amber-400 bg-surface-inset shadow-sm font-bold',
 };
 
 export type PriorityTier = 'all' | 'essential' | 'important' | 'supplementary';
@@ -240,7 +240,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
     <div className="w-full max-w-5xl mx-auto space-y-6 animate-fade-in pb-10">
       {/* Header Banner */}
       {!hideHeader && (
-        <div className="panel p-4 sm:p-5 rounded-3xl border border-border-subtle shadow-sm flex items-center justify-between gap-4">
+        <div className="panel panel-stitched p-4 sm:p-5 rounded-3xl border border-border-subtle shadow-sm flex items-center justify-between gap-4">
           <div className="flex items-center gap-3.5">
             <div className="w-12 h-12 rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-center text-text-primary shrink-0 shadow-inner">
               <BookIcon className="w-6 h-6 text-text-primary" />
@@ -298,7 +298,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
               }}
               className={`px-2 py-1 rounded-lg text-xs font-mono font-bold flex items-center gap-1 transition-all cursor-pointer select-none ${
                 imeActive
-                  ? 'bg-gold/20 text-gold border border-gold/40 shadow-xs'
+                  ? 'bg-gold/20 text-gold border border-border-subtle shadow-xs'
                   : 'bg-surface-card text-text-muted border border-border-subtle hover:text-text-primary'
               }`}
               title={imeActive ? 'IME Jepang Aktif (Romaji -> Kana)' : 'Mode Huruf Latin'}
@@ -425,8 +425,8 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
               }}
               className={`px-3 py-1 rounded-xl text-xs font-bold font-mono whitespace-nowrap transition-all border shrink-0 ${
                 selectedUnit === 'all'
-                  ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm'
-                  : 'bg-surface-card text-text-secondary border-border-subtle hover:border-emerald-500/40 hover:text-text-primary'
+                  ? 'bg-emerald-600 text-white border-border-subtle shadow-sm'
+                  : 'bg-surface-card text-text-secondary border-border-subtle hover:border-border-primary hover:text-text-primary'
               }`}
             >
               Semua Unit ({levelCounts.Kaigo})
@@ -444,8 +444,8 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
                   }}
                   className={`px-3 py-1 rounded-xl text-xs font-bold font-mono whitespace-nowrap transition-all border shrink-0 ${
                     isSelected
-                      ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm'
-                      : 'bg-surface-card text-text-secondary border-border-subtle hover:border-emerald-500/40 hover:text-text-primary'
+                      ? 'bg-emerald-600 text-white border-border-subtle shadow-sm'
+                      : 'bg-surface-card text-text-secondary border-border-subtle hover:border-border-primary hover:text-text-primary'
                   }`}
                 >
                   {u.name} ({u.count})
@@ -472,7 +472,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
                 setSelectedItem(item);
                 playSound('click', soundEnabled);
               }}
-              className="panel p-4 sm:p-5 flex items-start gap-3.5 group shadow-sm hover:shadow-md transition-all cursor-pointer rounded-2xl border border-border-subtle hover:border-border-primary"
+              className="panel panel-stitched p-4 sm:p-5 flex items-start gap-3.5 group shadow-sm hover:shadow-md transition-all cursor-pointer rounded-2xl border border-border-subtle hover:border-border-primary"
             >
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between gap-2">
@@ -482,7 +482,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
                         {item.jlpt}
                       </span>
                       {isKaigoTagged && item.jlpt !== 'Kaigo' && (
-                        <span className="px-2 py-0.5 rounded-lg text-[10px] font-mono font-bold border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 shadow-sm">
+                        <span className="px-2 py-0.5 rounded-lg text-[10px] font-mono font-bold border border-border-subtle text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 shadow-sm">
                           Kaigo
                         </span>
                       )}
@@ -551,7 +551,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
         })}
         
         {filteredKotoba.length === 0 && (
-          <div className="col-span-1 md:col-span-2 py-12 text-center panel rounded-3xl space-y-2">
+          <div className="col-span-1 md:col-span-2 py-12 text-center panel panel-stitched rounded-3xl space-y-2">
             <p className="font-bold text-text-primary text-sm font-heading">Kosakata tidak ditemukan di dalam grimoire.</p>
             <p className="text-xs text-text-muted">Coba ubah kata kunci pencarian atau filter prioritas level.</p>
           </div>

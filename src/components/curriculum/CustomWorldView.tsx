@@ -216,7 +216,7 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
   return (
     <div className="space-y-6 animate-fade-in">
       {/* 1. HEADER BANNER */}
-      <div className="panel p-5 sm:p-6 rounded-3xl space-y-4 border border-border-subtle shadow-sm">
+      <div className="panel panel-stitched p-5 sm:p-6 rounded-3xl space-y-4 border border-border-subtle shadow-sm">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <button
@@ -232,7 +232,7 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
             </button>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-md bg-indigo/15 text-indigo border border-indigo/30 uppercase">
+                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-md bg-indigo/15 text-indigo border border-border-subtle uppercase">
                   {isTemplate ? 'Template World' : 'Custom World'}
                 </span>
                 <span className="text-xs text-text-secondary font-mono">
@@ -314,13 +314,13 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
                 onClick={() => {
                   if (!isLocked) handleStartStage(stage);
                 }}
-                className={`panel p-4 sm:p-5 rounded-2xl border transition-all ${
+                className={`panel panel-stitched p-4 sm:p-5 rounded-2xl border transition-all ${
                   !isLocked ? 'cursor-pointer' : ''
                 } ${
                   isCurrent
                     ? 'border border-border-muted shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_4px_12px_rgba(0,0,0,0.35)] bg-surface-elevated'
                     : isCompleted
-                    ? 'border-emerald-500/30 bg-surface-card/90'
+                    ? 'border-border-subtle bg-surface-card/90'
                     : 'border-border-subtle bg-surface-inset/60 opacity-60'
                 }`}
               >
@@ -331,9 +331,9 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
                     <div
                       className={`w-11 h-11 rounded-2xl flex items-center justify-center font-heading font-bold text-sm shrink-0 border shadow-xs ${
                         isCompleted
-                          ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/40'
+                          ? 'bg-emerald-500/15 text-emerald-400 border-border-subtle'
                           : isCurrent
-                          ? 'bg-indigo text-white border-indigo/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_2px_6px_rgba(0,0,0,0.3)]'
+                          ? 'bg-indigo text-white border-border-subtle shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_2px_6px_rgba(0,0,0,0.3)]'
                           : 'bg-surface-inset text-text-secondary border-border-subtle shadow-[inset_1px_1px_3px_var(--neu-d)]'
                       }`}
                     >
@@ -351,11 +351,11 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
                         <span
                           className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-md border ${
                             stage.isExam
-                              ? 'bg-gold/15 text-gold border-gold/30'
+                              ? 'bg-gold/15 text-gold border-border-subtle'
                               : isCurrent
-                              ? 'bg-indigo/15 text-indigo border-indigo/30'
+                              ? 'bg-indigo/15 text-indigo border-border-subtle'
                               : isCompleted
-                              ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30'
+                              ? 'bg-emerald-500/15 text-emerald-400 border-border-subtle'
                               : 'bg-surface-inset text-text-secondary border-border-subtle'
                           }`}
                         >
@@ -430,7 +430,7 @@ export const CustomWorldView: React.FC<CustomWorldViewProps> = ({
                           e.stopPropagation();
                           handleStartStage(stage);
                         }}
-                        className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl border border-emerald-500/40 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-heading font-bold text-xs hover:bg-emerald-500/20 transition-all"
+                        className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl border border-border-subtle bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-heading font-bold text-xs hover:bg-emerald-500/20 transition-all"
                       >
                         <RotateCcw className="w-3.5 h-3.5" />
                         <span>Ulangi Stage</span>

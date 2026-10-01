@@ -325,11 +325,11 @@ export const KotobaGuessModal: React.FC<KotobaGuessModalProps> = ({
 
   // Rank Info (Tuned for penalized scoring)
   const rankInfo = useMemo(() => {
-    if (score >= 2500) return { rank: 'SSS', title: 'Radar Vocab Dewa', color: 'text-amber-800 dark:text-amber-300 border-amber-600/40 dark:border-amber-400 bg-amber-500/10' };
+    if (score >= 2500) return { rank: 'SSS', title: 'Radar Vocab Dewa', color: 'text-amber-800 dark:text-amber-300 border-border-subtle bg-amber-500/10' };
     if (score >= 1800) return { rank: 'SS', title: 'Sprint Master', color: 'text-red-700 dark:text-rose-400 border-red-700/40 dark:border-rose-500 bg-red-700/10 dark:bg-rose-500/10' };
-    if (score >= 1200) return { rank: 'S', title: 'Jawara Kosakata', color: 'text-purple-700 dark:text-purple-400 border-purple-700/40 dark:border-purple-500 bg-purple-500/10' };
+    if (score >= 1200) return { rank: 'S', title: 'Jawara Kosakata', color: 'text-purple-700 dark:text-purple-400 border-border-subtle bg-purple-500/10' };
     if (score >= 700) return { rank: 'A', title: 'Kilat Tanggap', color: 'text-emerald-800 dark:text-emerald-400 border-emerald-800/40 dark:border-emerald-500 bg-emerald-500/10' };
-    if (score >= 350) return { rank: 'B', title: 'Pelari Rajin', color: 'text-blue-700 dark:text-blue-400 border-blue-700/40 dark:border-blue-500 bg-blue-500/10' };
+    if (score >= 350) return { rank: 'B', title: 'Pelari Rajin', color: 'text-blue-700 dark:text-blue-400 border-border-subtle bg-blue-500/10' };
     return { rank: 'C', title: 'Pemanasan', color: 'text-text-muted border-border-subtle bg-surface-inset' };
   }, [score]);
 
@@ -566,7 +566,7 @@ export const KotobaGuessModal: React.FC<KotobaGuessModalProps> = ({
                   if (idx === currentWord.correctIndex) {
                     btnStyle = 'bg-emerald-500/15 border-emerald-500 text-emerald-400 font-bold ring-1 ring-emerald-500/40';
                   } else if (idx === selectedOption) {
-                    btnStyle = 'bg-crimson/20 border-crimson text-crimson font-bold';
+                    btnStyle = 'bg-crimson/20 border-border-subtle text-crimson font-bold';
                   } else {
                     btnStyle = 'opacity-40 bg-surface-inset border-border-subtle text-text-muted';
                   }
@@ -599,7 +599,7 @@ export const KotobaGuessModal: React.FC<KotobaGuessModalProps> = ({
         {gameState === 'finished' && (
           <div className="flex-1 p-5 sm:p-6 space-y-5 overflow-y-auto overscroll-contain custom-scrollbar min-h-0 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:pb-6">
             {/* Scorecard Component */}
-            <div className="p-5 rounded-3xl bg-surface-card border border-border-subtle shadow-md space-y-5 relative overflow-hidden">
+            <div className="p-5 rounded-3xl bg-surface-card panel-stitched border border-border-subtle shadow-md space-y-5 relative overflow-hidden">
 
               {/* Card Header */}
               <div className="flex items-center justify-between border-b border-border-subtle/80 pb-3">

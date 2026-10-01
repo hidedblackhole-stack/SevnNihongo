@@ -33,7 +33,7 @@ export const FloorResultModal: React.FC<FloorResultModalProps> = ({
           initial={{ scale: 0.85, opacity: 0, y: 25 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.85, opacity: 0, y: 25 }}
-          className="w-full max-w-md bg-surface-card rounded-3xl p-6 border border-border-subtle shadow-2xl relative overflow-hidden"
+          className="w-full max-w-md bg-surface-card panel-stitched rounded-3xl p-6 border border-border-subtle shadow-2xl relative overflow-hidden"
         >
           {/* Top Decorative Stripe */}
           <div
@@ -149,7 +149,7 @@ export const FloorResultModal: React.FC<FloorResultModalProps> = ({
             return (
               <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle mb-5 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 flex items-center justify-center shrink-0">
+                  <div className="w-9 h-9 rounded-xl bg-emerald-500/15 border border-border-subtle text-emerald-400 flex items-center justify-center shrink-0">
                     <Sparkles className="w-4 h-4" />
                   </div>
                   <div>
@@ -165,8 +165,8 @@ export const FloorResultModal: React.FC<FloorResultModalProps> = ({
                   <span
                     className={`text-xs font-mono font-bold px-2.5 py-1 rounded-xl border shrink-0 ${
                       totalDelta > 0
-                        ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/25'
-                        : 'text-rose-400 bg-rose-500/10 border-rose-500/25'
+                        ? 'text-emerald-400 bg-emerald-500/10 border-border-subtle'
+                        : 'text-rose-400 bg-rose-500/10 border-border-subtle'
                     }`}
                   >
                     {totalDelta > 0 ? `+${totalDelta}` : totalDelta} Mastery

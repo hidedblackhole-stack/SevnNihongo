@@ -186,7 +186,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
               <button
                 type="button"
                 onClick={() => onDeleteDeck(deck.id)}
-                className="px-3 py-1.5 rounded-xl text-xs font-bold text-wine-accent hover:bg-surface-inset border border-wine-accent/30 flex items-center gap-1.5 transition-colors cursor-pointer"
+                className="px-3 py-1.5 rounded-xl text-xs font-bold text-wine-accent hover:bg-surface-inset border border-border-subtle flex items-center gap-1.5 transition-colors cursor-pointer"
               >
                 <Trash2 className="w-3.5 h-3.5" />
                 <span>Hapus</span>
@@ -197,7 +197,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
       </div>
 
       {/* 2. Deck Header Banner (Skeuomorphic Japanese Adventure Notebook) */}
-      <div className="panel p-5 sm:p-6 rounded-3xl border border-border-subtle space-y-4 shadow-sm">
+      <div className="panel panel-stitched p-5 sm:p-6 rounded-3xl border border-border-subtle space-y-4 shadow-sm">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="flex items-start gap-3.5">
             <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-center shrink-0 shadow-inner">
@@ -206,11 +206,11 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
             <div className="space-y-1">
               <div className="flex items-center gap-2 flex-wrap">
                 {isTemplate ? (
-                  <span className="text-[10px] font-bold uppercase tracking-wider font-mono text-gold bg-gold/10 px-2 py-0.5 rounded-md border border-gold/30">
+                  <span className="text-[10px] font-bold uppercase tracking-wider font-mono text-gold bg-gold/10 px-2 py-0.5 rounded-md border border-border-subtle">
                     Template Resmi
                   </span>
                 ) : deck.isDefault ? (
-                  <span className="text-[10px] font-bold uppercase tracking-wider font-mono text-gold bg-gold/10 px-2 py-0.5 rounded-md border border-gold/30 flex items-center gap-1">
+                  <span className="text-[10px] font-bold uppercase tracking-wider font-mono text-gold bg-gold/10 px-2 py-0.5 rounded-md border border-border-subtle flex items-center gap-1">
                     <Bookmark className="w-3 h-3 text-gold" />
                     <span>Bookmark Utama</span>
                   </span>
@@ -221,7 +221,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                 )}
 
                 {deck.level && (
-                  <span className="text-[10px] font-bold uppercase tracking-wider font-mono text-indigo bg-indigo/10 px-2 py-0.5 rounded-md border border-indigo/25">
+                  <span className="text-[10px] font-bold uppercase tracking-wider font-mono text-indigo bg-indigo/10 px-2 py-0.5 rounded-md border border-border-subtle">
                     {deck.level}
                   </span>
                 )}
@@ -294,7 +294,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                 onClick={() => onCloneTemplate()}
                 className={`px-4 py-2.5 rounded-2xl font-heading font-bold text-xs border flex items-center gap-2 transition-all cursor-pointer ${
                   isCloned
-                    ? 'bg-emerald-500/15 text-emerald-700 border-emerald-500/40'
+                    ? 'bg-emerald-500/15 text-emerald-700 border-border-subtle'
                     : 'bg-surface-inset hover:bg-surface-elevated text-text-primary border-border-subtle hover:border-border-primary'
                 }`}
                 title="Salin deck template ini ke koleksi Buku Saku kamu"
@@ -459,7 +459,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
               onRemoveItem={onRemoveItemFromDeck ? (id) => onRemoveItemFromDeck(id, 'kotoba') : undefined}
             />
           ) : (
-            <div className="panel p-8 sm:p-12 rounded-3xl border border-border-subtle text-center space-y-4 shadow-sm">
+            <div className="panel panel-stitched p-8 sm:p-12 rounded-3xl border border-border-subtle text-center space-y-4 shadow-sm">
               <div className="w-14 h-14 rounded-2xl bg-surface-inset text-gold border border-border-subtle flex items-center justify-center mx-auto shadow-inner">
                 <BookOpen className="w-7 h-7" />
               </div>
@@ -503,7 +503,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
               onRemoveItem={onRemoveItemFromDeck ? (id) => onRemoveItemFromDeck(id, 'kanji') : undefined}
             />
           ) : (
-            <div className="panel p-8 sm:p-12 rounded-3xl border border-border-subtle text-center space-y-4 shadow-sm">
+            <div className="panel panel-stitched p-8 sm:p-12 rounded-3xl border border-border-subtle text-center space-y-4 shadow-sm">
               <div className="w-14 h-14 rounded-2xl bg-surface-inset text-gold border border-border-subtle flex items-center justify-center mx-auto shadow-inner">
                 <BookOpen className="w-7 h-7" />
               </div>
@@ -547,7 +547,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
               onRemoveItem={onRemoveItemFromDeck ? (id) => onRemoveItemFromDeck(id, 'bunpou') : undefined}
             />
           ) : (
-            <div className="panel p-8 sm:p-12 rounded-3xl border border-border-subtle text-center space-y-4 shadow-sm">
+            <div className="panel panel-stitched p-8 sm:p-12 rounded-3xl border border-border-subtle text-center space-y-4 shadow-sm">
               <div className="w-14 h-14 rounded-2xl bg-surface-inset text-gold border border-border-subtle flex items-center justify-center mx-auto shadow-inner">
                 <BookOpen className="w-7 h-7" />
               </div>
@@ -578,7 +578,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
         )}
 
         {totalItemCount === 0 && (
-          <div className="panel p-8 sm:p-12 rounded-3xl border border-border-subtle text-center space-y-5">
+          <div className="panel panel-stitched p-8 sm:p-12 rounded-3xl border border-border-subtle text-center space-y-5">
             <div className="w-14 h-14 rounded-2xl bg-surface-inset text-gold border border-border-subtle flex items-center justify-center mx-auto shadow-inner">
               <BookOpen className="w-7 h-7" />
             </div>
@@ -599,7 +599,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
                   <button
                     type="button"
                     onClick={onOpenQuickPresetModal}
-                    className="px-4 py-2.5 rounded-2xl font-heading font-bold text-xs bg-gold/15 text-gold border border-gold/40 hover:bg-gold/25 inline-flex items-center gap-2 transition-all cursor-pointer"
+                    className="px-4 py-2.5 rounded-2xl font-heading font-bold text-xs bg-gold/15 text-gold border border-border-subtle hover:bg-gold/25 inline-flex items-center gap-2 transition-all cursor-pointer"
                   >
                     <span>Isi Otomatis Preset JLPT</span>
                   </button>

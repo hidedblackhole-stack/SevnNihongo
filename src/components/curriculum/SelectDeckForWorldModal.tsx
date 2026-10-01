@@ -49,7 +49,7 @@ export const SelectDeckForWorldModal: React.FC<SelectDeckForWorldModalProps> = (
           {/* Header */}
           <div className="p-4 sm:p-5 border-b border-border-subtle flex items-center justify-between gap-3 bg-surface-elevated/40">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-indigo/15 text-indigo border border-indigo/30 flex items-center justify-center shrink-0 shadow-xs">
+              <div className="w-10 h-10 rounded-2xl bg-indigo/15 text-indigo border border-border-subtle flex items-center justify-center shrink-0 shadow-xs">
                 <Compass className="w-5 h-5 text-indigo" />
               </div>
               <div>
@@ -81,7 +81,7 @@ export const SelectDeckForWorldModal: React.FC<SelectDeckForWorldModalProps> = (
             {hasNoValidDecks ? (
               /* EMPTY STATE: USER HAS NO DECKS */
               <div className="text-center py-6 sm:py-8 space-y-4">
-                <div className="w-16 h-16 rounded-3xl bg-amber-500/10 text-amber-400 border border-amber-500/25 flex items-center justify-center mx-auto shadow-sm">
+                <div className="w-16 h-16 rounded-3xl bg-amber-500/10 text-amber-400 border border-border-subtle flex items-center justify-center mx-auto shadow-sm">
                   <AlertCircle className="w-8 h-8" />
                 </div>
 
@@ -145,10 +145,10 @@ export const SelectDeckForWorldModal: React.FC<SelectDeckForWorldModalProps> = (
                           playSound('click', soundEnabled);
                           onSelectDeck(deck);
                         }}
-                        className="panel p-4 rounded-2xl border border-border-subtle hover:border-border-primary bg-surface-card hover:bg-surface-elevated transition-all cursor-pointer flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs group"
+                        className="panel panel-stitched p-4 rounded-2xl border border-border-subtle hover:border-border-primary bg-surface-card hover:bg-surface-elevated transition-all cursor-pointer flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs group"
                       >
                         <div className="flex items-start gap-3">
-                          <div className="w-10 h-10 rounded-xl bg-surface-inset border border-border-subtle flex items-center justify-center shrink-0 text-indigo group-hover:border-indigo/40 group-hover:text-amber-300 transition-colors">
+                          <div className="w-10 h-10 rounded-xl bg-surface-inset border border-border-subtle flex items-center justify-center shrink-0 text-indigo group-hover:border-border-primary group-hover:text-amber-300 transition-colors">
                             <Compass className="w-5 h-5" />
                           </div>
 
@@ -158,7 +158,7 @@ export const SelectDeckForWorldModal: React.FC<SelectDeckForWorldModalProps> = (
                                 {deck.title}
                               </h4>
                               {hasCurriculum && (
-                                <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 font-bold inline-flex items-center gap-1">
+                                <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-border-subtle font-bold inline-flex items-center gap-1">
                                   <Compass className="w-3 h-3" />
                                   <span>World Siap</span>
                                 </span>
@@ -195,7 +195,7 @@ export const SelectDeckForWorldModal: React.FC<SelectDeckForWorldModalProps> = (
                         </div>
 
                         <div className="w-full sm:w-auto flex justify-end shrink-0 pt-2 sm:pt-0">
-                          <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo/10 text-indigo border border-indigo/25 text-xs font-bold font-heading group-hover:bg-indigo group-hover:text-white transition-all">
+                          <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo/10 text-indigo border border-border-subtle text-xs font-bold font-heading group-hover:bg-indigo group-hover:text-white transition-all">
                             <span>Kustomisasi Stage</span>
                             <ArrowRight className="w-3.5 h-3.5" />
                           </span>

@@ -54,7 +54,7 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
     <div className="space-y-6">
       
       {/* 1. HERO BANNER: ARENA ARCADE */}
-      <div className="panel p-5 sm:p-6 rounded-3xl bg-surface-card border border-border-subtle shadow-md space-y-3 relative overflow-hidden">
+      <div className="panel panel-stitched p-5 sm:p-6 rounded-3xl bg-surface-card border border-border-subtle shadow-md space-y-3 relative overflow-hidden">
         <div className="space-y-1.5 max-w-2xl relative z-10">
           <div className="flex items-center gap-2">
             <span className="text-[11px] font-mono uppercase tracking-wider text-gold font-bold">
@@ -72,17 +72,17 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
 
       {/* FEATURED: NIHONGO TOWER 1.000 FLOORS BANNER */}
       {onOpenTower && (
-        <div className="panel p-5 rounded-3xl bg-surface-card border border-border-subtle shadow-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="panel panel-stitched p-5 rounded-3xl bg-surface-card border border-border-subtle shadow-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3.5">
             <div className="w-12 h-12 rounded-2xl bg-wine-accent text-white flex items-center justify-center font-heading font-black text-xl shrink-0 shadow-md">
               <Castle className="w-6 h-6" />
             </div>
             <div>
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="px-2 py-0.5 rounded-full bg-wine-accent/15 border border-wine-accent/30 text-wine-accent text-[10px] font-black tracking-wider uppercase">
+                <span className="px-2 py-0.5 rounded-full bg-wine-accent/15 border border-border-subtle text-wine-accent text-[10px] font-black tracking-wider uppercase">
                   Mode Unggulan
                 </span>
-                <span className="px-2 py-0.5 rounded-full bg-gold/15 border border-gold/30 text-gold text-[10px] font-black tracking-wider uppercase font-mono">
+                <span className="px-2 py-0.5 rounded-full bg-gold/15 border border-border-subtle text-gold text-[10px] font-black tracking-wider uppercase font-mono">
                   Beta Test
                 </span>
                 <span className="text-xs text-text-muted font-bold font-mono">
@@ -118,7 +118,7 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
         {/* GAME 1: KANJI SPEED RUSH (60s) */}
         <motion.div
           whileHover={{ y: -3 }}
-          className="panel p-5 rounded-3xl bg-surface-card border border-border-subtle hover:border-border-primary shadow-md flex flex-col justify-between space-y-4 group transition-all relative overflow-hidden"
+          className="panel panel-stitched p-5 rounded-3xl bg-surface-card border border-border-subtle hover:border-border-primary shadow-md flex flex-col justify-between space-y-4 group transition-all relative overflow-hidden"
         >
           <div className="space-y-3 relative z-10">
             <div className="flex items-center justify-between">
@@ -173,7 +173,7 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
         {/* GAME 2: SUDDEN DEATH (3 NYAWA) */}
         <motion.div
           whileHover={{ y: -3 }}
-          className="panel p-5 rounded-3xl bg-surface-card border border-border-subtle hover:border-border-primary shadow-md flex flex-col justify-between space-y-4 group transition-all relative overflow-hidden"
+          className="panel panel-stitched p-5 rounded-3xl bg-surface-card border border-border-subtle hover:border-border-primary shadow-md flex flex-col justify-between space-y-4 group transition-all relative overflow-hidden"
         >
           <div className="space-y-3 relative z-10">
             <div className="flex items-center justify-between">
@@ -228,7 +228,7 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
         {/* GAME 3: KOTOBA GUESS RELAY (45s) */}
         <motion.div
           whileHover={{ y: -3 }}
-          className="panel p-5 rounded-3xl bg-surface-card border border-border-subtle hover:border-border-primary shadow-md flex flex-col justify-between space-y-4 group transition-all relative overflow-hidden"
+          className="panel panel-stitched p-5 rounded-3xl bg-surface-card border border-border-subtle hover:border-border-primary shadow-md flex flex-col justify-between space-y-4 group transition-all relative overflow-hidden"
         >
           <div className="space-y-3 relative z-10">
             <div className="flex items-center justify-between">
@@ -283,7 +283,7 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
         {/* GAME 4: ALTAR KONJUGASI KILAT (60s) */}
         <motion.div
           whileHover={{ y: -3 }}
-          className="panel p-5 rounded-3xl bg-surface-card border border-border-subtle hover:border-border-primary shadow-md flex flex-col justify-between space-y-4 group transition-all relative overflow-hidden"
+          className="panel panel-stitched p-5 rounded-3xl bg-surface-card border border-border-subtle hover:border-border-primary shadow-md flex flex-col justify-between space-y-4 group transition-all relative overflow-hidden"
         >
           <div className="space-y-3 relative z-10">
             <div className="flex items-center justify-between">
@@ -338,7 +338,7 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
         {/* GAME 5: SUSUN BINTANG KILAT (60s) */}
         <motion.div
           whileHover={{ y: -3 }}
-          className="panel p-5 rounded-3xl bg-surface-card border border-border-subtle hover:border-border-primary shadow-md flex flex-col justify-between space-y-4 group transition-all relative overflow-hidden"
+          className="panel panel-stitched p-5 rounded-3xl bg-surface-card border border-border-subtle hover:border-border-primary shadow-md flex flex-col justify-between space-y-4 group transition-all relative overflow-hidden"
         >
           <div className="space-y-3 relative z-10">
             <div className="flex items-center justify-between">

@@ -108,7 +108,7 @@ export const ArcadeSourceSelector = <T extends string>({
           >
             <BookOpen className={`w-3.5 h-3.5 ${sourceType === 'TEMPLATE_BOOK' ? 'text-gold' : 'text-text-muted'}`} />
             <span>Rak Buku Template</span>
-            <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-gold/15 text-gold border border-gold/25 font-mono">
+            <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-gold/15 text-gold border border-border-subtle font-mono">
               {OFFICIAL_BOOKS.length}
             </span>
           </button>
@@ -130,7 +130,7 @@ export const ArcadeSourceSelector = <T extends string>({
                 }}
                 className={`p-3 rounded-2xl border text-left transition-all flex flex-col justify-between cursor-pointer ${
                   isSelected
-                    ? 'bg-surface-elevated border-border-primary text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_8px_rgba(0,0,0,0.35)] ring-1 ring-gold/40'
+                    ? 'bg-surface-elevated border-border-primary text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_8px_rgba(0,0,0,0.35)] ring-1 ring-border-primary'
                     : 'bg-surface-inset border-border-subtle text-text-muted hover:text-text-primary hover:border-border-primary/60 shadow-inner'
                 }`}
               >
@@ -164,7 +164,7 @@ export const ArcadeSourceSelector = <T extends string>({
               }}
               className={`px-2.5 py-1 rounded-xl text-[11px] font-bold font-heading transition-all whitespace-nowrap ${
                 bookCategoryFilter === 'ALL'
-                  ? 'bg-gold/15 text-gold border border-gold/30'
+                  ? 'bg-gold/15 text-gold border border-border-subtle'
                   : 'bg-surface-inset text-text-muted border border-border-subtle hover:text-text-primary'
               }`}
             >
@@ -178,7 +178,7 @@ export const ArcadeSourceSelector = <T extends string>({
               }}
               className={`px-2.5 py-1 rounded-xl text-[11px] font-bold font-heading transition-all whitespace-nowrap ${
                 bookCategoryFilter === 'CURRICULUM'
-                  ? 'bg-teal/15 text-teal border border-teal/30'
+                  ? 'bg-teal/15 text-teal border border-border-subtle'
                   : 'bg-surface-inset text-text-muted border border-border-subtle hover:text-text-primary'
               }`}
             >
@@ -192,7 +192,7 @@ export const ArcadeSourceSelector = <T extends string>({
               }}
               className={`px-2.5 py-1 rounded-xl text-[11px] font-bold font-heading transition-all whitespace-nowrap ${
                 bookCategoryFilter === 'THEMATIC'
-                  ? 'bg-rose-500/15 text-rose-400 border border-rose-500/30'
+                  ? 'bg-rose-500/15 text-rose-400 border border-border-subtle'
                   : 'bg-surface-inset text-text-muted border border-border-subtle hover:text-text-primary'
               }`}
             >
@@ -221,7 +221,7 @@ export const ArcadeSourceSelector = <T extends string>({
                   }}
                   className={`p-2.5 sm:p-3 rounded-2xl border text-left transition-all flex items-start gap-2.5 cursor-pointer relative ${
                     isSelected
-                      ? 'bg-surface-elevated border-border-primary text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_8px_rgba(0,0,0,0.35)] ring-1 ring-gold/40'
+                      ? 'bg-surface-elevated border-border-primary text-text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_8px_rgba(0,0,0,0.35)] ring-1 ring-border-primary'
                       : 'bg-surface-inset border-border-subtle text-text-muted hover:text-text-primary hover:border-border-primary/60 shadow-inner'
                   }`}
                 >

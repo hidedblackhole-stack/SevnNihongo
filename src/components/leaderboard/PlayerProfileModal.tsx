@@ -253,7 +253,7 @@ export const PlayerProfileModal: React.FC<PlayerProfileModalProps> = ({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.96, y: 10 }}
           transition={{ duration: 0.16, ease: 'easeOut' }}
-          className="relative w-full max-w-md panel border border-border-subtle rounded-3xl p-4 sm:p-5 text-text-primary shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col bg-surface-card select-none"
+          className="relative w-full max-w-md panel panel-stitched border border-border-subtle rounded-3xl p-4 sm:p-5 text-text-primary shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col bg-surface-card select-none"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Modal Header */}

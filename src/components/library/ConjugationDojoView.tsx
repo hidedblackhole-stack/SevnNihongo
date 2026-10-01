@@ -104,14 +104,14 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
   return (
     <div className="w-full max-w-5xl mx-auto space-y-6 animate-fade-in pb-12">
       {/* 1. HEADER BANNER */}
-      <div className="panel p-5 sm:p-6 rounded-3xl border border-border-subtle shadow-md bg-surface-card flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="panel panel-stitched p-5 sm:p-6 rounded-3xl border border-border-subtle shadow-md bg-surface-card flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div className="flex items-center gap-3.5">
-          <div className="w-12 h-12 rounded-2xl bg-indigo/15 text-indigo border border-indigo/30 flex items-center justify-center shrink-0 shadow-sm">
+          <div className="w-12 h-12 rounded-2xl bg-indigo/15 text-indigo border border-border-subtle flex items-center justify-center shrink-0 shadow-sm">
             <Zap className="w-6 h-6 text-amber-300" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-md bg-indigo/15 text-indigo border border-indigo/30 uppercase">
+              <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-md bg-indigo/15 text-indigo border border-border-subtle uppercase">
                 Dojo Konjugasi
               </span>
               <span className="text-xs text-text-secondary font-mono">
@@ -144,12 +144,12 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
         <div
           ref={drillSectionRef}
           id="conjugation-drill-panel"
-          className="panel p-5 sm:p-6 rounded-3xl border border-border-subtle bg-surface-card shadow-xl space-y-5 animate-scale-up scroll-mt-20 sm:scroll-mt-24"
+          className="panel panel-stitched p-5 sm:p-6 rounded-3xl border border-border-subtle bg-surface-card shadow-xl space-y-5 animate-scale-up scroll-mt-20 sm:scroll-mt-24"
         >
           {/* Top Bar Drill */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 border-b border-border-subtle">
             <div className="flex items-center gap-3">
-              <span className="px-2.5 py-1 rounded-xl bg-indigo/15 text-indigo border border-indigo/30 font-mono text-xs font-bold flex items-center gap-1.5">
+              <span className="px-2.5 py-1 rounded-xl bg-indigo/15 text-indigo border border-border-subtle font-mono text-xs font-bold flex items-center gap-1.5">
                 <Flame className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
                 Streak: {streak}
               </span>
@@ -212,7 +212,7 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
                     <span className="text-gold font-jp font-black text-3xl sm:text-4xl drop-shadow-sm">
                       {formDisplay.suffix}
                     </span>
-                    <span className="px-2.5 py-0.5 rounded-lg bg-gold/15 text-gold border border-gold/30 text-xs font-mono font-bold">
+                    <span className="px-2.5 py-0.5 rounded-lg bg-gold/15 text-gold border border-border-subtle text-xs font-mono font-bold">
                       {formDisplay.badge}
                     </span>
                   </div>
@@ -244,12 +244,12 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
               const isCorrect = idx === currentQuestion.correctIndex;
               const optionReading = currentQuestion.optionsRuby?.[idx];
 
-              let btnStyle = 'bg-surface-card border-border-subtle hover:border-indigo/40 hover:bg-surface-elevated text-text-primary';
+              let btnStyle = 'bg-surface-card border-border-subtle hover:border-border-primary hover:bg-surface-elevated text-text-primary';
               if (isAnswerChecked) {
                 if (isCorrect) {
-                  btnStyle = 'bg-emerald-500/15 border-emerald-500 text-emerald-400 font-bold';
+                  btnStyle = 'bg-emerald-500/15 border-border-subtle text-emerald-400 font-bold';
                 } else if (isSelected) {
-                  btnStyle = 'bg-rose-500/15 border-rose-500 text-rose-400';
+                  btnStyle = 'bg-rose-500/15 border-border-subtle text-rose-400';
                 } else {
                   btnStyle = 'opacity-40 border-border-subtle text-text-muted';
                 }
@@ -295,8 +295,8 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
               animate={{ opacity: 1, y: 0 }}
               className={`p-4 sm:p-5 rounded-2xl border space-y-3.5 ${
                 selectedAnswerIndex === currentQuestion.correctIndex
-                  ? 'bg-emerald-500/10 border-emerald-500/30'
-                  : 'bg-rose-500/10 border-rose-500/30'
+                  ? 'bg-emerald-500/10 border-border-subtle'
+                  : 'bg-rose-500/10 border-border-subtle'
               }`}
             >
               <div className="flex items-center justify-between gap-3 flex-wrap">
@@ -455,12 +455,12 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
             {basicForms.map((form) => (
               <div
                 key={form.id}
-                className="panel p-5 rounded-3xl border border-border-subtle bg-surface-card space-y-4 shadow-sm"
+                className="panel panel-stitched p-5 rounded-3xl border border-border-subtle bg-surface-card space-y-4 shadow-sm"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="px-2.5 py-0.5 rounded-md bg-indigo/15 text-indigo border border-indigo/30 font-bold font-mono text-xs">
+                      <span className="px-2.5 py-0.5 rounded-md bg-indigo/15 text-indigo border border-border-subtle font-bold font-mono text-xs">
                         {form.badge}
                       </span>
                       <span className="text-xs font-mono text-text-muted">
@@ -544,12 +544,12 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
             {advancedForms.map((form) => (
               <div
                 key={form.id}
-                className="panel p-5 rounded-3xl border border-border-subtle bg-surface-card space-y-4 shadow-sm"
+                className="panel panel-stitched p-5 rounded-3xl border border-border-subtle bg-surface-card space-y-4 shadow-sm"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="px-2.5 py-0.5 rounded-md bg-wine-accent/15 text-wine-accent border border-wine-accent/30 font-bold font-mono text-xs">
+                      <span className="px-2.5 py-0.5 rounded-md bg-wine-accent/15 text-wine-accent border border-border-subtle font-bold font-mono text-xs">
                         {form.badge}
                       </span>
                       <span className="text-xs font-mono text-text-muted">
@@ -630,7 +630,7 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
       {activeTab === 'verb_groups' && (
         <div className="space-y-4">
           {WORD_CLASS_GUIDES.filter(g => g.id === 'doushi_groups').map(guide => (
-            <div key={guide.id} className="panel p-5 rounded-3xl border border-border-subtle bg-surface-card space-y-4">
+            <div key={guide.id} className="panel panel-stitched p-5 rounded-3xl border border-border-subtle bg-surface-card space-y-4">
               <div className="space-y-1">
                 <h3 className="text-lg font-bold text-text-primary font-heading">
                   {guide.title}
@@ -671,7 +671,7 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
           ))}
 
           {/* Master Table of Verbs */}
-          <div className="panel p-5 rounded-3xl border border-border-subtle bg-surface-card space-y-3">
+          <div className="panel panel-stitched p-5 rounded-3xl border border-border-subtle bg-surface-card space-y-3">
             <h3 className="text-sm font-bold text-text-primary font-heading">
               Tabel Komparasi Konjugasi Verba Contoh
             </h3>
@@ -727,7 +727,7 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {WORD_CLASS_GUIDES.filter(g => g.id !== 'doushi_groups').map(guide => (
-              <div key={guide.id} className="panel p-5 rounded-3xl border border-border-subtle bg-surface-card space-y-4 shadow-sm">
+              <div key={guide.id} className="panel panel-stitched p-5 rounded-3xl border border-border-subtle bg-surface-card space-y-4 shadow-sm">
                 <div className="space-y-1">
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-surface-inset text-text-muted border border-border-subtle font-bold">
                     {guide.japaneseTitle}

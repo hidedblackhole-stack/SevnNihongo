@@ -50,7 +50,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
   return (
     <div className="w-full max-w-6xl mx-auto space-y-6 animate-fade-in pb-16">
       {/* Clean Header & 4 Grimoire Volume Tabs */}
-      <div className="panel p-5 sm:p-6 rounded-3xl space-y-4 shadow-sm border border-border-subtle">
+      <div className="panel panel-stitched p-5 sm:p-6 rounded-3xl space-y-4 shadow-sm border border-border-subtle">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-5">
           <div className="text-center lg:text-left space-y-1">
             <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-text-muted">

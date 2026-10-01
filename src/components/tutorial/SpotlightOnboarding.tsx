@@ -298,7 +298,7 @@ export const SpotlightOnboarding: React.FC<SpotlightOnboardingProps> = ({
           width: 'min(380px, calc(100vw - 32px))',
           maxHeight: `${winHeight - 32}px`,
         },
-        arrowStyle: 'absolute -left-1.5 top-8 w-3.5 h-3.5 rotate-45 bg-surface-card border-b border-l border-gold/50 shadow-sm'
+        arrowStyle: 'absolute -left-1.5 top-8 w-3.5 h-3.5 rotate-45 bg-surface-card border-b border-l border-border-subtle shadow-sm'
       };
     }
 
@@ -322,7 +322,7 @@ export const SpotlightOnboarding: React.FC<SpotlightOnboardingProps> = ({
           bottom: 'auto',
           maxHeight: `${Math.max(160, spaceBelow - 24)}px`,
         },
-        arrowStyle: 'absolute -top-1.5 left-1/2 -translate-x-1/2 w-3.5 h-3.5 rotate-45 bg-surface-card border-t border-l border-gold/50 shadow-sm'
+        arrowStyle: 'absolute -top-1.5 left-1/2 -translate-x-1/2 w-3.5 h-3.5 rotate-45 bg-surface-card border-t border-l border-border-subtle shadow-sm'
       };
     } else {
       return {
@@ -333,7 +333,7 @@ export const SpotlightOnboarding: React.FC<SpotlightOnboardingProps> = ({
           top: 'auto',
           maxHeight: `${Math.max(160, spaceAbove - 24)}px`,
         },
-        arrowStyle: 'absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3.5 h-3.5 rotate-45 bg-surface-card border-b border-r border-gold/50 shadow-sm'
+        arrowStyle: 'absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3.5 h-3.5 rotate-45 bg-surface-card border-b border-r border-border-subtle shadow-sm'
       };
     }
   }, [targetRect, currentStep]);
@@ -366,7 +366,7 @@ export const SpotlightOnboarding: React.FC<SpotlightOnboardingProps> = ({
         >
           {/* Cincin sorot (tanpa glow neon) */}
           <div 
-            className="absolute -inset-1 rounded-[inherit] border-2 border-gold pointer-events-none animate-pulse"
+            className="absolute -inset-1 rounded-[inherit] border-2 border-border-subtle pointer-events-none animate-pulse"
           />
         </motion.div>
       )}

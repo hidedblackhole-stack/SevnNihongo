@@ -513,7 +513,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
           ) : (
             <>
               {/* Header & Stats Banner */}
-              <div className="panel p-5 sm:p-6 rounded-3xl space-y-4 shadow-sm border border-border-subtle">
+              <div className="panel panel-stitched p-5 sm:p-6 rounded-3xl space-y-4 shadow-sm border border-border-subtle">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="space-y-1">
                 <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-text-muted">
@@ -595,9 +595,9 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
                     setDeckSearch('');
                     playSound('click', soundEnabled);
                   }}
-                  className={`panel p-5 rounded-3xl border cursor-pointer group transition-all duration-200 flex flex-col justify-between hover:shadow-lg ${
+                  className={`panel panel-stitched p-5 rounded-3xl border cursor-pointer group transition-all duration-200 flex flex-col justify-between hover:shadow-lg ${
                     isDefault
-                      ? 'border-gold/40 bg-surface-card hover:border-gold/70'
+                      ? 'border-border-subtle bg-surface-card hover:border-border-primary'
                       : 'border-border-subtle hover:border-border-primary bg-surface-card'
                   }`}
                 >
@@ -614,7 +614,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
                         </div>
                         <div>
                           {isDefault ? (
-                            <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider font-mono text-gold bg-gold/10 px-2 py-0.5 rounded-md border border-gold/30">
+                            <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider font-mono text-gold bg-gold/10 px-2 py-0.5 rounded-md border border-border-subtle">
                               <Bookmark className="w-3 h-3 text-gold" />
                               <span>Bookmark Utama</span>
                             </span>
@@ -624,7 +624,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
                             </span>
                           )}
                           {curriculums[deck.id] && (
-                            <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider font-mono text-indigo bg-indigo/10 px-2 py-0.5 rounded-md border border-indigo/30">
+                            <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider font-mono text-indigo bg-indigo/10 px-2 py-0.5 rounded-md border border-border-subtle">
                               <Compass className="w-3 h-3 text-indigo" />
                               <span>World</span>
                             </span>
@@ -781,7 +781,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
       {/* Quick Preset Generator Modal for Active Deck */}
       {isQuickPresetModalOpen && activeDeck && (
         <div className="fixed inset-0 z-[80] flex items-center justify-center p-4 bg-surface-ground/80 animate-fade-in">
-          <div className="panel w-full max-w-md border border-border-subtle rounded-3xl shadow-2xl p-5 space-y-4">
+          <div className="panel panel-stitched w-full max-w-md border border-border-subtle rounded-3xl shadow-2xl p-5 space-y-4">
             <div className="flex items-center justify-between border-b border-border-subtle pb-3">
               <div className="flex items-center gap-2">
                 <Layers className="w-4 h-4 text-gold" />
@@ -810,7 +810,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
                       onClick={() => setQuickPresetLevel(lvl)}
                       className={`flex-1 min-w-[42px] py-1.5 rounded-lg text-xs font-mono font-bold border transition-all ${
                         quickPresetLevel === lvl
-                          ? 'bg-surface-elevated text-gold border-gold/40 shadow-sm'
+                          ? 'bg-surface-elevated text-gold border-border-subtle shadow-sm'
                           : 'bg-surface-inset text-text-muted border-border-subtle'
                       }`}
                     >

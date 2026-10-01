@@ -103,7 +103,7 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
   if (writableItems.length === 0) {
     const emptyContent = (
       <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-surface-ground/90">
-        <div className="panel p-6 rounded-3xl max-w-md w-full border border-border-subtle text-center space-y-4">
+        <div className="panel panel-stitched p-6 rounded-3xl max-w-md w-full border border-border-subtle text-center space-y-4">
           <div className="w-12 h-12 rounded-2xl bg-surface-inset text-gold border border-border-subtle flex items-center justify-center mx-auto">
             <PenTool className="w-6 h-6" />
           </div>
@@ -162,9 +162,9 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="panel p-6 sm:p-8 rounded-3xl border border-border-subtle shadow-2xl text-center space-y-5 max-w-md w-full"
+            className="panel panel-stitched p-6 sm:p-8 rounded-3xl border border-border-subtle shadow-2xl text-center space-y-5 max-w-md w-full"
           >
-            <div className="w-16 h-16 rounded-2xl bg-surface-inset border border-gold/40 text-gold flex items-center justify-center mx-auto shadow-inner">
+            <div className="w-16 h-16 rounded-2xl bg-surface-inset border border-border-subtle text-gold flex items-center justify-center mx-auto shadow-inner">
               <Trophy className="w-8 h-8 stroke-[2.5]" />
             </div>
 
@@ -182,7 +182,7 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
 
             {/* Dynamic EXP & Gold Reward Banner */}
             {finalRewards && (
-              <div className="flex items-center justify-center gap-3 py-2 px-4 rounded-2xl bg-surface-inset border border-wine-accent/30">
+              <div className="flex items-center justify-center gap-3 py-2 px-4 rounded-2xl bg-surface-inset border border-border-subtle">
                 <span className="font-bold text-wine-accent font-mono text-sm">
                   +{finalRewards.exp} EXP
                 </span>
@@ -224,7 +224,7 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
           <div className="w-full space-y-3">
             {/* Render Canvas using Unified UniversalWritingCard with Library-matched Card Framing */}
             {currentItem && (
-              <div className="panel p-4 sm:p-5 rounded-3xl border border-border-subtle bg-surface-card shadow-xl max-w-md w-full mx-auto space-y-3">
+              <div className="panel panel-stitched p-4 sm:p-5 rounded-3xl border border-border-subtle bg-surface-card shadow-xl max-w-md w-full mx-auto space-y-3">
                 {/* Meta Bar matching Library view */}
                 {(() => {
                   const trait = asWritable(currentItem);
@@ -234,8 +234,8 @@ export const DeckWritingRunner: React.FC<DeckWritingRunnerProps> = ({
                       <div className="flex items-center gap-1.5 flex-wrap text-xs">
                         <span className={`px-2.5 py-0.5 rounded-full font-mono font-bold uppercase tracking-wider text-[10px] border ${
                           isKana
-                            ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
-                            : 'bg-surface-inset text-wine-accent border-wine-accent/30'
+                            ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-border-subtle'
+                            : 'bg-surface-inset text-wine-accent border-border-subtle'
                         }`}>
                           {isKana ? 'Aksara Kana' : `${trait?.level || 'N5'} Kanji`}
                         </span>

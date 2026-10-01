@@ -167,7 +167,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
 
     return (
       <div className="w-full max-w-xl mx-auto p-6 panel text-center space-y-5 shadow-2xl">
-        <div className="p-4 inline-flex rounded-full bg-surface-inset border border-gold/40 text-gold">
+        <div className="p-4 inline-flex rounded-full bg-surface-inset border border-border-subtle text-gold">
           {isSuccess ? <CheckCircle2 className="w-9 h-9" /> : <RotateCcw className="w-9 h-9" />}
         </div>
 
@@ -242,7 +242,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
             hiddenOptions.length > 0
               ? 'opacity-40 cursor-not-allowed'
               : playerMp >= 15
-              ? 'text-indigo border-indigo/40 hover:bg-indigo/10'
+              ? 'text-indigo border-border-subtle hover:bg-indigo/10'
               : 'opacity-40 cursor-not-allowed'
           }`}
           title="Gunakan 15 MP untuk membuang 2 pilihan salah"
@@ -272,7 +272,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
         <>
           {/* Layer 1: Separate Instruction Bar (Kalimat Perintah) */}
           <div className="p-3 sm:p-3.5 rounded-xl bg-surface-card border border-border-subtle flex items-start gap-2.5 shadow-sm">
-            <div className="w-6 h-6 rounded-lg bg-indigo/10 border border-indigo/20 text-indigo flex items-center justify-center shrink-0 mt-0.5">
+            <div className="w-6 h-6 rounded-lg bg-indigo/10 border border-border-subtle text-indigo flex items-center justify-center shrink-0 mt-0.5">
               <BookOpen className="w-3.5 h-3.5" />
             </div>
             <div className="space-y-0.5 flex-1 min-w-0">
@@ -304,7 +304,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
                     isReadingQuestion
                       ? 'bg-surface-card text-text-muted/60 border-border-subtle cursor-not-allowed opacity-60'
                       : localFurigana
-                        ? 'bg-indigo/15 text-indigo border-indigo/30 shadow-sm'
+                        ? 'bg-indigo/15 text-indigo border-border-subtle shadow-sm'
                         : 'bg-surface-card text-text-muted border-border-subtle hover:text-text-primary'
                   }`}
                   title={isReadingQuestion ? 'Furigana dikunci (OFF) pada soal tebak cara baca agar jawaban tidak bocor' : 'Aktifkan / Nonaktifkan Furigana Hiragana'}
@@ -379,13 +379,13 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
                 );
               }
 
-              let btnStyle = 'panel hover:border-indigo/50 text-text-primary';
+              let btnStyle = 'panel hover:border-border-primary text-text-primary';
 
               if (isAnswered) {
                 if (idx === currentQ.correctIndex) {
                   btnStyle = 'bg-state-success/15 border-state-success text-state-success font-bold';
                 } else if (idx === selectedOption) {
-                  btnStyle = 'bg-wine-accent/15 border-wine-accent text-wine-accent font-bold';
+                  btnStyle = 'bg-wine-accent/15 border-border-subtle text-wine-accent font-bold';
                 } else {
                   btnStyle = 'bg-surface-inset border-border-subtle text-text-muted opacity-40';
                 }
@@ -432,7 +432,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
                 className={`p-4 rounded-xl border text-xs space-y-3 ${
                   selectedOption === currentQ.correctIndex
                     ? 'bg-state-success/10 border-state-success/30 text-text-primary'
-                    : 'bg-wine-accent/10 border-wine-accent/30 text-text-primary'
+                    : 'bg-wine-accent/10 border-border-subtle text-text-primary'
                 }`}
               >
                 <div className="font-bold flex items-center gap-1.5 font-heading">

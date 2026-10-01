@@ -333,11 +333,11 @@ export const ConjugationSpeedRushModal: React.FC<ConjugationSpeedRushModalProps>
   const accuracy = totalAnswered > 0 ? Math.round((correctCount / totalAnswered) * 100) : 0;
 
   const rankInfo = useMemo(() => {
-    if (correctCount >= 15) return { rank: 'SSS', title: 'Dewa Konjugasi', color: 'text-amber-300 border-amber-400 bg-amber-500/10' };
+    if (correctCount >= 15) return { rank: 'SSS', title: 'Dewa Konjugasi', color: 'text-amber-300 border-border-subtle bg-amber-500/10' };
     if (correctCount >= 12) return { rank: 'SS', title: 'Master Infleksi', color: 'text-rose-400 border-rose-500 bg-rose-500/10' };
-    if (correctCount >= 9) return { rank: 'S', title: 'Pendekar Bentuk Kata', color: 'text-purple-400 border-purple-500 bg-purple-500/10' };
-    if (correctCount >= 6) return { rank: 'A', title: 'Murid Berbakat', color: 'text-teal border-teal bg-teal/10' };
-    if (correctCount >= 3) return { rank: 'B', title: 'Pelajar Rajin', color: 'text-blue-400 border-blue-500 bg-blue-500/10' };
+    if (correctCount >= 9) return { rank: 'S', title: 'Pendekar Bentuk Kata', color: 'text-purple-400 border-border-subtle bg-purple-500/10' };
+    if (correctCount >= 6) return { rank: 'A', title: 'Murid Berbakat', color: 'text-teal border-border-subtle bg-teal/10' };
+    if (correctCount >= 3) return { rank: 'B', title: 'Pelajar Rajin', color: 'text-blue-400 border-border-subtle bg-blue-500/10' };
     return { rank: 'C', title: 'Langkah Awal', color: 'text-stone-400 border-stone-500 bg-stone-500/10' };
   }, [correctCount]);
 
@@ -456,7 +456,7 @@ export const ConjugationSpeedRushModal: React.FC<ConjugationSpeedRushModalProps>
               {/* Combo & Score */}
               <div className="flex items-center gap-2">
                 {combo > 1 && (
-                  <span className="flex items-center gap-1 px-2.5 py-1 rounded-xl bg-amber-500/15 text-amber-400 border border-amber-500/30 text-xs font-mono font-bold animate-bounce">
+                  <span className="flex items-center gap-1 px-2.5 py-1 rounded-xl bg-amber-500/15 text-amber-400 border border-border-subtle text-xs font-mono font-bold animate-bounce">
                     <Flame className="w-3.5 h-3.5 fill-amber-400" />
                     <span>{combo}x Combo</span>
                   </span>
@@ -520,7 +520,7 @@ export const ConjugationSpeedRushModal: React.FC<ConjugationSpeedRushModalProps>
                     <span className="text-gold font-jp font-black text-3xl sm:text-4xl drop-shadow-sm">
                       {activeFormDisplay.suffix}
                     </span>
-                    <span className="px-2.5 py-0.5 rounded-lg bg-gold/15 text-gold border border-gold/30 text-xs font-mono font-bold">
+                    <span className="px-2.5 py-0.5 rounded-lg bg-gold/15 text-gold border border-border-subtle text-xs font-mono font-bold">
                       {activeFormDisplay.badge}
                     </span>
                   </div>
@@ -599,7 +599,7 @@ export const ConjugationSpeedRushModal: React.FC<ConjugationSpeedRushModalProps>
               
               {/* Header Trophy Banner */}
               <div className="text-center space-y-1">
-                <div className="w-14 h-14 rounded-3xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center mx-auto shadow-inner">
+                <div className="w-14 h-14 rounded-3xl bg-amber-500/10 border border-border-subtle text-amber-400 flex items-center justify-center mx-auto shadow-inner">
                   <Trophy className="w-7 h-7" />
                 </div>
                 <span className="text-[11px] font-mono uppercase text-amber-400 font-bold block pt-1">

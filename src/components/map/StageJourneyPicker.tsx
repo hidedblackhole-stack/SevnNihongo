@@ -63,7 +63,7 @@ export const StageJourneyPicker: React.FC<StageJourneyPickerProps> = ({
     <div className="space-y-6">
       
       {/* 1. HEADER: PERJALANAN PETUALANGAN */}
-      <div className="panel p-5 rounded-3xl bg-surface-card border border-border-subtle shadow-xs space-y-3">
+      <div className="panel panel-stitched p-5 rounded-3xl bg-surface-card border border-border-subtle shadow-xs space-y-3">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="space-y-1">
             <span className="text-[11px] font-mono uppercase tracking-wider text-gold font-bold flex items-center gap-1.5">
@@ -104,7 +104,7 @@ export const StageJourneyPicker: React.FC<StageJourneyPickerProps> = ({
             }}
             className={`px-4 py-2 rounded-xl text-xs font-bold font-heading transition-all whitespace-nowrap flex items-center gap-1.5 ${
               activeTab === 'curriculum'
-                ? 'bg-gold/15 text-gold border border-gold/30 shadow-xs'
+                ? 'bg-gold/15 text-gold border border-border-subtle shadow-xs'
                 : 'text-text-muted hover:text-text-primary'
             }`}
           >
@@ -120,7 +120,7 @@ export const StageJourneyPicker: React.FC<StageJourneyPickerProps> = ({
             }}
             className={`px-4 py-2 rounded-xl text-xs font-bold font-heading transition-all whitespace-nowrap flex items-center gap-1.5 ${
               activeTab === 'thematic'
-                ? 'bg-rose-500/15 text-rose-400 border border-rose-500/30 shadow-xs'
+                ? 'bg-rose-500/15 text-rose-400 border border-border-subtle shadow-xs'
                 : 'text-text-muted hover:text-text-primary'
             }`}
           >
@@ -136,7 +136,7 @@ export const StageJourneyPicker: React.FC<StageJourneyPickerProps> = ({
             }}
             className={`px-4 py-2 rounded-xl text-xs font-bold font-heading transition-all whitespace-nowrap flex items-center gap-1.5 ${
               activeTab === 'custom'
-                ? 'bg-indigo/15 text-indigo border border-indigo/30 shadow-xs'
+                ? 'bg-indigo/15 text-indigo border border-border-subtle shadow-xs'
                 : 'text-text-muted hover:text-text-primary'
             }`}
           >
@@ -230,8 +230,8 @@ export const StageJourneyPicker: React.FC<StageJourneyPickerProps> = ({
               })}
             </div>
           ) : (
-            <div className="p-8 text-center panel rounded-3xl border border-dashed border-border-subtle bg-surface-card/40 space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-indigo/10 border border-indigo/25 flex items-center justify-center text-indigo mx-auto">
+            <div className="p-8 text-center panel panel-stitched rounded-3xl border border-dashed border-border-subtle bg-surface-card/40 space-y-3">
+              <div className="w-12 h-12 rounded-2xl bg-indigo/10 border border-border-subtle flex items-center justify-center text-indigo mx-auto">
                 <Bookmark className="w-6 h-6" />
               </div>
               <h3 className="text-sm font-bold font-heading text-text-primary">
@@ -261,7 +261,7 @@ export const StageJourneyPicker: React.FC<StageJourneyPickerProps> = ({
             return (
               <div
                 key={book.id}
-                className="panel rounded-3xl bg-surface-card border border-border-subtle shadow-xs overflow-hidden transition-all"
+                className="panel panel-stitched rounded-3xl bg-surface-card border border-border-subtle shadow-xs overflow-hidden transition-all"
               >
                 {/* Book Card Header */}
                 <div 
@@ -269,7 +269,7 @@ export const StageJourneyPicker: React.FC<StageJourneyPickerProps> = ({
                   className="p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 cursor-pointer hover:bg-surface-inset/40 transition-colors"
                 >
                   <div className="flex items-center gap-3.5 min-w-0">
-                    <div className="w-12 h-12 rounded-2xl bg-gold/15 text-gold border border-gold/30 flex items-center justify-center text-2xl shrink-0 shadow-xs">
+                    <div className="w-12 h-12 rounded-2xl bg-gold/15 text-gold border border-border-subtle flex items-center justify-center text-2xl shrink-0 shadow-xs">
                       {book.coverIcon || '📖'}
                     </div>
 
