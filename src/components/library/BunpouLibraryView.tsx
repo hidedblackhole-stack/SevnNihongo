@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import type { DeckItemCategory } from '../../types/rpg';
 import { AnimatePresence } from 'motion/react';
 import { Search, Filter, ChevronDown, Bookmark, LayoutGrid, List, BookOpen, Zap, Languages, X, Trash2, ChevronRight } from 'lucide-react';
 import { ScrollIcon } from '../ui/EngravingIcons';
@@ -31,7 +32,7 @@ interface BunpouLibraryViewProps {
   soundEnabled?: boolean;
   itemMastery?: Record<string, ItemMasteryRecord>;
   userDecks?: UserDeck[];
-  onToggleBookmark?: (id: string, category: 'bunpou', notes?: string, targetDeckId?: string) => void;
+  onToggleBookmark?: (id: string, category: DeckItemCategory, notes?: string, targetDeckId?: string) => void;
   onUpdateDecks?: (decks: UserDeck[]) => void;
   onRemoveItem?: (id: string, category: 'bunpou') => void;
   onRewardPlayer?: (exp: number, gold: number) => void;

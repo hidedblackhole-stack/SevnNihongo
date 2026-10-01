@@ -108,7 +108,10 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
 
     const w = activeVerb.kanji;
     const r = activeVerb.reading;
-    const group = activeVerb.group || detectVerbGroup(w, r);
+    // Data kamus memakai grup 'irregular'; engine membedakan 'suru' / 'kuru'. Deteksi ulang untuk 'irregular'.
+    const group = !activeVerb.group || activeVerb.group === 'irregular'
+      ? detectVerbGroup(w, r)
+      : activeVerb.group;
     const conjResult = conjugateVerb(w, r);
 
     const reqForm = (activePattern.requiredConjugation || 'jisho') as ConjugationForm;
@@ -398,9 +401,6 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
         {/* The Desk Surface (Sumi-e Charcoal Slate in Dark Mode, Antique Washi in Light Mode) */}
         <div
           className="relative rounded-xl sm:rounded-2xl p-3.5 sm:p-6 flex flex-col justify-between overflow-hidden bg-surface-inset border border-border-subtle shadow-[inset_1.5px_1.5px_6px_var(--neu-d)] transition-colors"
-          style={{
-            backgroundImage: `radial-gradient(ellipse at 50% 20%, rgba(217,119,6,0.05) 0%, transparent 80%)`,
-          }}
         >
           {/* Top Board Bar: Header & Shuffles */}
           <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-border-subtle/70">

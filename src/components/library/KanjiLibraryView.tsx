@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useDeferredValue } from 'react';
+import type { DeckItemCategory } from '../../types/rpg';
 import { Search, Filter, ChevronDown, BookOpen, Bookmark, Languages, X, Trash2, LayoutGrid, Table } from 'lucide-react';
 import { KANJI_DATABASE } from '../../data/kanji';
 import { KanjiItem, ItemMasteryRecord } from '../../types/content';
@@ -163,7 +164,7 @@ interface KanjiLibraryViewProps {
   soundEnabled?: boolean;
   itemMastery?: Record<string, ItemMasteryRecord>;
   userDecks?: UserDeck[];
-  onToggleBookmark?: (id: string, category: 'kanji', notes?: string, targetDeckId?: string) => void;
+  onToggleBookmark?: (id: string, category: DeckItemCategory, notes?: string, targetDeckId?: string) => void;
   onUpdateDecks?: (decks: UserDeck[]) => void;
   onRemoveItem?: (id: string, category: 'kanji') => void;
   onRewardPlayer?: (exp: number, gold: number) => void;
@@ -841,7 +842,7 @@ const KanjiCardItem: React.FC<{
   item: KanjiItem;
   soundEnabled: boolean;
   userDecks?: UserDeck[];
-  onToggleBookmark?: (id: string, category: 'kanji', notes?: string, targetDeckId?: string) => void;
+  onToggleBookmark?: (id: string, category: DeckItemCategory, notes?: string, targetDeckId?: string) => void;
   onUpdateDecks?: (decks: UserDeck[]) => void;
   onRemoveItem?: (id: string, category: 'kanji') => void;
   onSelect: (item: KanjiItem) => void;

@@ -41,12 +41,13 @@ export function generateSentenceExercise(options: ExerciseOptions = {}): Sentenc
   const tiles: SentenceTile[] = [];
   let tileCounter = 1;
 
-  let locTile: SentenceTile | null = null;
-  let locPartTile: SentenceTile | null = null;
-  let objTile: SentenceTile | null = null;
-  let objPartTile: SentenceTile | null = null;
-  let predTile: SentenceTile | null = null;
-  let suffixTile: SentenceTile | null = null;
+  // 'as' mencegah TS mempersempit tipe ke `null` (variabel hanya diisi di dalam callback di bawah).
+  let locTile = null as SentenceTile | null;
+  let locPartTile = null as SentenceTile | null;
+  let objTile = null as SentenceTile | null;
+  let objPartTile = null as SentenceTile | null;
+  let predTile = null as SentenceTile | null;
+  let suffixTile = null as SentenceTile | null;
 
   synth.breakdown.forEach(item => {
     const tile: SentenceTile = {

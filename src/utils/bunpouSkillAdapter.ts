@@ -1945,7 +1945,7 @@ function generateFallbackFunctions(item: BunpouItem): GrammarSkillFunction[] {
       const kanjiKey = parts[0]?.trim() || '';
       const indoTag = parts[1]?.trim() || '';
 
-      let descriptor = FUNCTION_KNOWLEDGE_MAP[kanjiKey];
+      let descriptor: (typeof FUNCTION_KNOWLEDGE_MAP)[string] | undefined = FUNCTION_KNOWLEDGE_MAP[kanjiKey];
       if (!descriptor) {
         const subKeys = kanjiKey.split(/[・、/]/).map(k => k.trim()).filter(Boolean);
         for (const sk of subKeys) {

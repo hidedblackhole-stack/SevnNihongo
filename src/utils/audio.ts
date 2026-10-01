@@ -64,7 +64,9 @@ export type SoundType =
   | 'attack'
   | 'fanfare'
   | 'victory'
-  | 'open_modal';
+  | 'open_modal'
+  | 'start_game'
+  | 'game_over';
 
 export function playSound(type: SoundType, soundEnabled: boolean = true) {
   if (!soundEnabled) return;
@@ -73,7 +75,10 @@ export function playSound(type: SoundType, soundEnabled: boolean = true) {
     if (!ctx) return;
 
     // Normalize sound alias
-    const normalizedType = type === 'victory' ? 'fanfare' : (type === 'levelUp' || type === 'level_up') ? 'levelup' : type;
+    const normalizedType =
+      type === 'victory' || type === 'game_over' ? 'fanfare' :
+      type === 'start_game' ? 'attack' :
+      (type === 'levelUp' || type === 'level_up') ? 'levelup' : type;
 
     const now = ctx.currentTime;
     const master = getMasterOutput(ctx);
@@ -101,7 +106,7 @@ export function playSound(type: SoundType, soundEnabled: boolean = true) {
 
       osc.start(now);
       osc.stop(now + 0.03);
-    } else if (type === 'correct') {
+    } else if (normalizedType === 'correct') {
       // Warm Zen Singing Bowl / Bronze Bell (Rin) chime
       // Fundamental (D5) + subtle harmonic overtone (A5) with smooth attack and long warm decay
       const tones = [
@@ -132,7 +137,7 @@ export function playSound(type: SoundType, soundEnabled: boolean = true) {
         osc.start(now);
         osc.stop(now + decay);
       });
-    } else if (type === 'wrong') {
+    } else if (normalizedType === 'wrong') {
       // Soft muted wooden drum tap (tatami / low taiko rim) - warm & non-punitive
       const subTones = [
         { delay: 0.0, startFreq: 140, endFreq: 95, duration: 0.1 },
@@ -162,7 +167,7 @@ export function playSound(type: SoundType, soundEnabled: boolean = true) {
         osc.start(now + delay);
         osc.stop(now + delay + duration);
       });
-    } else if (type === 'coin') {
+    } else if (normalizedType === 'coin') {
       // Water droplet in garden stone basin (Suikinkutsu 水琴窟)
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
@@ -198,7 +203,7 @@ export function playSound(type: SoundType, soundEnabled: boolean = true) {
       rippleGain.connect(master);
       ripple.start(now + 0.015);
       ripple.stop(now + 0.17);
-    } else if (type === 'attack') {
+    } else if (normalizedType === 'attack') {
       // Bamboo shinai / wooden sword swift air sweep (acoustic whoosh + soft wooden thud)
       const noiseBuffer = getNoiseBuffer(ctx);
       const noiseSource = ctx.createBufferSource();
@@ -243,7 +248,7 @@ export function playSound(type: SoundType, soundEnabled: boolean = true) {
 
       sub.start(now + 0.04);
       sub.stop(now + 0.14);
-    } else if (type === 'levelup' || type === 'fanfare') {
+    } else if (normalizedType === 'levelup' || normalizedType === 'fanfare') {
       // Japanese Pentatonic Temple Chimes (Fūrin 風鈴 wind chimes arpeggio)
       // D5, G5, A5, C6, D6 (Yo scale - ethereal, noble, calm)
       const notes = [587.33, 783.99, 880.00, 1046.50, 1174.66];
@@ -272,7 +277,7 @@ export function playSound(type: SoundType, soundEnabled: boolean = true) {
         osc.start(noteStart);
         osc.stop(noteStart + decay);
       });
-    } else if (type === 'open_modal') {
+    } else if (normalizedType === 'open_modal') {
       // Soft Washi sheet unfold / ambient warm breath
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();

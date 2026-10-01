@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Layers, BookOpen, Check, Sparkles, Compass } from 'lucide-react';
-import { OFFICIAL_BOOKS, OfficialBook } from '../../data/officialBooks';
+import { OFFICIAL_BOOKS } from '../../data/officialBooks';
+import type { OfficialBook } from '../../types/books';
 import { getBookStatsMap } from '../../utils/arcadeSourceUtils';
 import { playSound } from '../../utils/audio';
 

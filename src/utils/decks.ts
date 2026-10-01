@@ -452,6 +452,11 @@ export function resolveDeckItem(ref: DeckItemRef): ResolvedDeckItem | null {
     const cd = ref.customData;
     const levelStr = cd.level || 'N5';
 
+    // Contoh kalimat kustom -> bentuk sesuai tipe konten (exampleSentence / ExampleSentence / RelatedWord).
+    const exampleJp = cd.exampleJp;
+    const exampleReading = cd.exampleReading || cd.exampleJp || '';
+    const exampleTranslation = cd.exampleId || '';
+
     if (ref.category === 'kotoba') {
       const pseudoKotoba: KotobaItem = {
         id: ref.id,
@@ -459,17 +464,13 @@ export function resolveDeckItem(ref: DeckItemRef): ResolvedDeckItem | null {
         reading: cd.reading || cd.word,
         meaningId: cd.meaning,
         meaningEn: cd.meaning,
-        jlpt: (levelStr as any) || 'N5',
-        examples: cd.exampleJp
-          ? [
-              {
-                jp: cd.exampleJp,
-                reading: cd.exampleReading || cd.exampleJp,
-                id: cd.exampleId || 'Contoh kalimat',
-                en: '',
-              },
-            ]
-          : [],
+        meaningJa: '',
+        jlpt: levelStr,
+        wordType: 'expression',
+        kanjiComponents: [],
+        exampleSentence: exampleJp
+          ? { japanese: exampleJp, reading: exampleReading, meaningId: exampleTranslation }
+          : undefined,
       };
 
       return {
@@ -488,20 +489,17 @@ export function resolveDeckItem(ref: DeckItemRef): ResolvedDeckItem | null {
         id: ref.id,
         character: cd.word,
         meaningId: cd.meaning,
+        meaningEn: cd.meaning,
         onyomi: cd.reading ? [cd.reading] : [],
         kunyomi: [],
         strokeCount: 1,
         jlpt: levelStr,
-        examples: cd.exampleJp
-          ? [
-              {
-                jp: cd.exampleJp,
-                reading: cd.exampleReading || cd.exampleJp,
-                id: cd.exampleId || 'Contoh kalimat',
-                en: '',
-              },
-            ]
+        radical: '',
+        radicalName: '',
+        relatedWords: exampleJp
+          ? [{ word: exampleJp, reading: exampleReading, meaningId: exampleTranslation }]
           : [],
+        questions: [],
       };
 
       return {
@@ -519,19 +517,16 @@ export function resolveDeckItem(ref: DeckItemRef): ResolvedDeckItem | null {
       const pseudoBunpou: BunpouItem = {
         id: ref.id,
         title: cd.word,
+        reading: cd.reading || '',
         formula: cd.reading || cd.word,
-        meaning_id: cd.meaning,
+        meaningId: cd.meaning,
+        meaningEn: cd.meaning,
+        explanation: cd.meaning,
         level: levelStr,
-        examples: cd.exampleJp
-          ? [
-              {
-                jp: cd.exampleJp,
-                reading: cd.exampleReading || cd.exampleJp,
-                id: cd.exampleId || 'Contoh penerapan',
-                en: '',
-              },
-            ]
+        examples: exampleJp
+          ? [{ japanese: exampleJp, reading: exampleReading, meaningId: exampleTranslation }]
           : [],
+        questions: [],
       };
 
       return {
@@ -540,7 +535,7 @@ export function resolveDeckItem(ref: DeckItemRef): ResolvedDeckItem | null {
         bunpou: pseudoBunpou,
         displayTitle: pseudoBunpou.title,
         displayReading: pseudoBunpou.formula,
-        displayMeaning: pseudoBunpou.meaning_id || '',
+        displayMeaning: pseudoBunpou.meaningId || '',
         level: pseudoBunpou.level || 'N3',
       };
     }

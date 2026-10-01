@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useDeferredValue } from 'react';
+import type { DeckItemCategory } from '../../types/rpg';
 import { AnimatePresence } from 'motion/react';
 import { Search, Volume2, Filter, ChevronDown, Bookmark, Languages, X, Trash2 } from 'lucide-react';
 import { BookIcon } from '../ui/EngravingIcons';
@@ -72,7 +73,7 @@ interface KotobaLibraryViewProps {
   soundEnabled?: boolean;
   itemMastery?: Record<string, ItemMasteryRecord>;
   userDecks?: UserDeck[];
-  onToggleBookmark?: (id: string, category: 'kotoba', notes?: string, targetDeckId?: string) => void;
+  onToggleBookmark?: (id: string, category: DeckItemCategory, notes?: string, targetDeckId?: string) => void;
   onUpdateDecks?: (decks: UserDeck[]) => void;
   onRemoveItem?: (id: string, category: 'kotoba') => void;
   onRewardPlayer?: (exp: number, gold: number) => void;

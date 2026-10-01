@@ -1,4 +1,5 @@
-import { OFFICIAL_BOOKS, OfficialBook } from '../data/officialBooks';
+import { OFFICIAL_BOOKS } from '../data/officialBooks';
+import type { OfficialBook } from '../types/books';
 import { KANJI_DATABASE } from '../data/kanji';
 import { KanjiItem } from '../types/content';
 import { VerbItem, VERB_CONJUGATION_DATABASE, kotobaItemToVerbItem } from '../data/conjugationRules';

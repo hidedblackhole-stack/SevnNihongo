@@ -59,7 +59,7 @@ function getBunpouPatternKeywords(item: BunpouItem): string[] {
   if (cleanTitle.length >= 2) keywords.add(cleanTitle);
 
   // 2. Parentheses contents in title
-  const parenMatches = title.match(/[\(（]([^\)）]+)[\)）]/g) || [];
+  const parenMatches: string[] = title.match(/[\(（]([^\)）]+)[\)）]/g) || [];
   parenMatches.forEach(pm => {
     const inner = pm.slice(1, -1);
     inner.split(/[\/\+＋／、]+/).forEach(tok => {
@@ -447,7 +447,7 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
               <div
                 className={`flex items-center gap-1.5 px-2.5 py-1 rounded-xl font-mono font-black text-xs border transition-all select-none ${
                   timeLeft <= 5
-                    ? 'bg-rose-500/25 text-rose-400 border-rose-500/60 animate-pulse scale-105 shadow-[0_0_12px_rgba(244,63,94,0.35)]'
+                    ? 'bg-rose-500/25 text-rose-400 border-rose-500/60 animate-pulse scale-105'
                     : timeLeft <= 10
                     ? 'bg-amber-500/15 text-amber-400 border-amber-500/40'
                     : 'bg-surface-card text-rose-400 border-rose-500/30 shadow-2xs'

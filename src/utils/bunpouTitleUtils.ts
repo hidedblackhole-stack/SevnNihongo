@@ -80,7 +80,7 @@ export function getGrammarTitleInfo(item: Pick<BunpouItem, 'title' | 'formula'>)
 
   // If there are no fullwidth or halfwidth parentheses, title is already direct
   if (!rawTitle.includes('（') && !rawTitle.includes('(')) {
-    let cleanFormula = rawFormula
+    let cleanFormula: string | undefined = rawFormula
       .replace(/[\uff0b+]/g, ' + ')
       .replace(/[\uff0f/]/g, ' / ')
       .replace(/\s+/g, ' ')
