@@ -13,9 +13,11 @@ import {
 } from '../data/conjugationRules';
 import { fisherYatesShuffle, smartSample } from './smartRandomizer';
 import { Question, BunpouItem } from '../types/content';
-import kanjiQuestionsDb from '../data/db/kanji_questions.json';
-import bunpouQuestionsDb from '../data/db/bunpou_questions.json';
-import kanjiExtremeStagesDb from '../data/db/kanji_extreme_100_stages.json';
+import {
+  KANJI_QUESTION_BANK as kanjiQuestionsDb,
+  BUNPOU_QUESTION_BANK as bunpouQuestionsDb,
+  KANJI_EXTREME_STAGES as kanjiExtremeStagesDb,
+} from '../data/questionBank';
 
 export type DungeonType = 'writing' | 'flashcard' | 'sakubun' | 'conjugation' | 'quiz' | 'extreme' | 'sentence_creation' | 'blackboard';
 export type DungeonLevelCategory = 'all' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'Kaigo' | 'PM' | 'SSW';

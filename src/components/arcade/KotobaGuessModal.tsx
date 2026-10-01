@@ -16,7 +16,7 @@ import {
   Award,
   ShieldAlert
 } from 'lucide-react';
-import kotobaDb from '../../data/db/kotoba.json';
+import { KOTOBA_DATABASE as kotobaDb } from '../../data/kotoba';
 import { playSound, speakJapanese } from '../../utils/audio';
 import { UserDeck } from '../../types/rpg';
 import { OFFICIAL_BOOKS } from '../../data/officialBooks';

@@ -1,5 +1,5 @@
 import kanjiDb from './db/kanji.json';
-import kanjiQuestionsDb from './db/kanji_questions.json';
+import { KANJI_QUESTION_BANK as kanjiQuestionsDb } from './questionBank';
 import { KanjiItem } from '../types/content';
 
 const STATIC_KANJI: Record<string, KanjiItem> = {

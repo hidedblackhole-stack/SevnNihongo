@@ -7,8 +7,7 @@ import {
 } from 'lucide-react';
 import { ALL_TRYOUTS } from '../../data/tryouts';
 import { TryOutData } from '../../types/content';
-import kanjiQuestionsDb from '../../data/db/kanji_questions.json';
-import bunpouQuestionsDb from '../../data/db/bunpou_questions.json';
+import { KANJI_QUESTION_BANK as kanjiQuestionsDb, BUNPOU_QUESTION_BANK as bunpouQuestionsDb } from '../../data/questionBank';
 import { CHOUKAI_DATABASE } from '../../data/choukai';
 import { DOKKAI_DATABASE } from '../../data/dokkai';
 import { playSound, speakJapanese } from '../../utils/audio';

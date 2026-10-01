@@ -15,7 +15,7 @@ import {
   Zap,
   ShieldAlert
 } from 'lucide-react';
-import kotobaDb from '../../data/db/kotoba.json';
+import { KOTOBA_DATABASE as kotobaDb } from '../../data/kotoba';
 import { playSound, speakJapanese } from '../../utils/audio';
 import { RPG_TIERS } from '../../data/rpg/tiers';
 import { UserDeck } from '../../types/rpg';

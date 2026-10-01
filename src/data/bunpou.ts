@@ -2,7 +2,7 @@ import { BunpouItem, BunpouMixedSet, Question } from '../types/content';
 import { getSubBranchesForBunpou } from './bunpouSubKnowledge';
 import { enrichBunpouItem } from './bunpouMetadata';
 import bunpouJson from './db/bunpou.json';
-import questionsJson from './db/bunpou_questions.json';
+import { BUNPOU_QUESTION_BANK as questionsJson } from './questionBank';
 import sentencesJson from './db/sentences.json';
 
 // Build sentence reading lookup map from canonical sentences database

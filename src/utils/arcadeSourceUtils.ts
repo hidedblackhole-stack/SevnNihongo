@@ -3,7 +3,7 @@ import type { OfficialBook } from '../types/books';
 import { KANJI_DATABASE } from '../data/kanji';
 import { KanjiItem } from '../types/content';
 import { VerbItem, VERB_CONJUGATION_DATABASE, kotobaItemToVerbItem } from '../data/conjugationRules';
-import kotobaDb from '../data/db/kotoba.json';
+import { KOTOBA_DATABASE as kotobaDb } from '../data/kotoba';
 
 const kotobaMap = kotobaDb as Record<string, any>;
 const rawKotobaList = Object.values(kotobaMap);

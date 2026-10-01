@@ -1,4 +1,4 @@
-import kotobaDb from '../data/db/kotoba.json';
+import { KOTOBA_DATABASE as kotobaDb } from '../data/kotoba';
 
 export interface EnrichedRelatedWord {
   word: string;
