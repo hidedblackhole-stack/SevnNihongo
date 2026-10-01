@@ -9,6 +9,7 @@ import { mergeStatsCollections, mergeStageProgress } from '../utils/cloudMerge';
 import { supabase, getSession, saveGameToCloud, loadGameFromCloud, upsertLeaderboard, type CloudSavePayload } from '../lib/supabase';
 import { collectTowerState, applyTowerState, mergeTowerState } from '../engine/tower/world/towerCloudState';
 import { DEFAULT_STATS } from '../state/defaultStats';
+import { stripDerivedStats, withDerivedStats } from '../state/derivedState';
 import {
   STORAGE_KEY_STATS,
   STORAGE_KEY_STAGES,
@@ -54,7 +55,11 @@ const [cloudSyncStatus, setCloudSyncStatus] = useState<CloudSyncStatus>('idle');
   const [cloudHydrated, setCloudHydrated] = useState(false);
 
   // Selalu sertakan progres Tower saat menyimpan ke cloud.
-  const saveToCloud = useCallback((payload: CloudSavePayload) => saveGameToCloud({ ...payload, towerState: collectTowerState() }), []);
+  const saveToCloud = useCallback(
+    (payload: CloudSavePayload) =>
+      saveGameToCloud({ ...payload, stats: stripDerivedStats(payload.stats), towerState: collectTowerState() }),
+    []
+  );
 
   const markSynced = useCallback(() => {
     const nowStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -141,8 +146,10 @@ const [cloudSyncStatus, setCloudSyncStatus] = useState<CloudSyncStatus>('idle');
         );
       }
 
+      // recallQueue (turunan) tidak ikut tersimpan/terkirim; hitung ulang dari itemMastery gabungan.
+      mergedStats = withDerivedStats(mergedStats);
       setStats(mergedStats);
-      safeSetItem(STORAGE_KEY_STATS, JSON.stringify(mergedStats));
+      safeSetItem(STORAGE_KEY_STATS, JSON.stringify(stripDerivedStats(mergedStats)));
       setStageProgress(mergedStages);
       safeSetItem(STORAGE_KEY_STAGES, JSON.stringify(mergedStages));
 

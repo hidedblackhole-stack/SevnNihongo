@@ -1,6 +1,7 @@
 import { useEffect, useRef, useCallback, type MutableRefObject } from 'react';
 import type { PlayerStats, StageClearData, Mission } from '../types/rpg';
 import { safeSetItem } from '../utils/storage';
+import { stripDerivedStats } from '../state/derivedState';
 import {
   STORAGE_KEY_STATS,
   STORAGE_KEY_STAGES,
@@ -42,7 +43,7 @@ export function usePersistence({
 
   // Sync to LocalStorage (debounced to avoid blocking main thread on every tiny state change)
   useEffect(() => {
-    const timerId = setTimeout(() => persist(STORAGE_KEY_STATS, stats), 1000);
+    const timerId = setTimeout(() => persist(STORAGE_KEY_STATS, stripDerivedStats(stats)), 1000);
     return () => clearTimeout(timerId);
   }, [stats, persist]);
 
@@ -65,7 +66,7 @@ export function usePersistence({
   // pada kasus ini (terutama di mobile, di mana beforeunload tidak andal).
   useEffect(() => {
     const flush = () => {
-      persist(STORAGE_KEY_STATS, statsRef.current);
+      persist(STORAGE_KEY_STATS, stripDerivedStats(statsRef.current));
       persist(STORAGE_KEY_STAGES, stageProgressRef.current);
       persist(STORAGE_KEY_DAILY, dailyMissionsRef.current);
       persist(STORAGE_KEY_WEEKLY, weeklyMissionsRef.current);

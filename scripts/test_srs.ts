@@ -6,6 +6,7 @@ import { getLocalIsoWeekId } from '../src/utils/time';
 import { getGameOverHp, getDojoRestCost, applyDojoRest, applyPotion, countPotions } from '../src/utils/recovery';
 import { mergeTowerState, TowerCloudState } from '../src/engine/tower/world/towerCloudState';
 import type { PlayerStats } from '../src/types/rpg';
+import { stripDerivedStats, withDerivedStats } from '../src/state/derivedState';
 import { STORAGE_KEY_STATS, STORAGE_KEY_STAGES, STORAGE_KEY_DAILY } from '../src/state/storageKeys';
 import type { ItemMasteryRecord } from '../src/types/content';
 import type { UserDeck } from '../src/types/rpg';
@@ -217,6 +218,20 @@ test('EXP/level/gold dibulatkan & NaN dibersihkan; userId yang ada dipertahankan
 test('nama lama Pemilik WebApp dimigrasi ke nama acak', () => {
   mem.set(STORAGE_KEY_STATS, JSON.stringify({ playerName: 'Pemilik WebApp', userId: 'u-2' }));
   assert.notEqual(loadInitialStats().playerName, 'Pemilik WebApp');
+});
+
+
+console.log('State turunan');
+test('recallQueue tidak dipersistenkan, relasi mastery tetap; dihitung ulang dari itemMastery', () => {
+  let rec: ItemMasteryRecord | undefined;
+  for (let i = 0; i < 3; i++) rec = recordItemAttempt(rec, 'kotoba_0001', 'kotoba', 1, 5);
+  const st = { level: 3, itemMastery: { kotoba_0001: rec! }, recallQueue: [{ id: 'x' }] } as unknown as PlayerStats;
+  const persisted = stripDerivedStats(st) as Record<string, unknown>;
+  assert.ok(!('recallQueue' in persisted));
+  assert.equal((persisted.itemMastery as Record<string, unknown>).kotoba_0001, rec);
+  const rebuilt = withDerivedStats(st);
+  assert.ok(Array.isArray(rebuilt.recallQueue) && rebuilt.recallQueue!.length >= 1);
+  assert.equal(rebuilt.recallQueue![0].itemId, 'kotoba_0001');
 });
 
 console.log('Waktu');
