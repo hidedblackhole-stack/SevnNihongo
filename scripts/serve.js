@@ -3,6 +3,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const zlib = require('zlib');
 const { exec } = require('child_process');
 
 const PORT = 4173;
@@ -29,6 +30,24 @@ const MIME_TYPES = {
   '.woff2': 'font/woff2',
   '.ttf': 'font/ttf'
 };
+
+// Tipe teks yang layak dikompres. Bundle JS ~22 MB tanpa gzip sangat lambat lewat Wi-Fi ke HP.
+const COMPRESSIBLE = new Set(['.html', '.js', '.mjs', '.css', '.json', '.svg', '.webmanifest']);
+const gzipCache = new Map(); // key: path|mtimeMs -> Buffer
+
+function safeMtime(filePath) {
+  try { return fs.statSync(filePath).mtimeMs; } catch (_) { return 0; }
+}
+
+function gzipCached(filePath, mtimeMs, content) {
+  const key = filePath + '|' + mtimeMs;
+  let buf = gzipCache.get(key);
+  if (!buf) {
+    buf = zlib.gzipSync(content, { level: 6 });
+    gzipCache.set(key, buf);
+  }
+  return buf;
+}
 
 const server = http.createServer((req, res) => {
   let decodedUrl = '/';
@@ -70,7 +89,7 @@ const server = http.createServer((req, res) => {
   const cleanPath = path.normalize(decodedUrl).replace(/^(\.\.[\/\\])+/, '');
   let filePath = path.resolve(ROOT, cleanPath === '.' || cleanPath === '/' || cleanPath === '\\' ? 'index.html' : '.' + path.sep + cleanPath);
 
-  if (!filePath.startsWith(ROOT)) {
+  if (filePath !== ROOT && !filePath.startsWith(ROOT + path.sep)) {
     res.writeHead(403, { 'Content-Type': 'text/plain; charset=UTF-8' });
     res.end('403 Forbidden');
     return;
@@ -91,11 +110,28 @@ const server = http.createServer((req, res) => {
         res.end('500 Internal Server Error');
         return;
       }
-      res.writeHead(200, {
+
+      // 'immutable' hanya untuk berkas ber-hash di /assets/. sw.js, manifest, ikon, dan /data/* TIDAK
+      // boleh immutable: SW lama yang tersangkut 1 tahun di cache tidak akan pernah memperbarui aplikasi.
+      const relPath = path.relative(ROOT, filePath).split(path.sep).join('/');
+      const isHashedAsset = relPath.startsWith('assets/');
+      const headers = {
         'Content-Type': contentType,
-        'Cache-Control': ext === '.html' ? 'no-cache' : 'public, max-age=31536000, immutable'
-      });
-      res.end(content);
+        'Cache-Control': isHashedAsset ? 'public, max-age=31536000, immutable' : 'no-cache',
+        'Vary': 'Accept-Encoding',
+        'X-Content-Type-Options': 'nosniff'
+      };
+      if (relPath === 'sw.js') headers['Service-Worker-Allowed'] = '/';
+
+      let body = content;
+      const acceptsGzip = /\bgzip\b/.test(req.headers['accept-encoding'] || '');
+      if (acceptsGzip && COMPRESSIBLE.has(ext) && content.length > 1024) {
+        body = gzipCached(filePath, safeMtime(filePath), content);
+        headers['Content-Encoding'] = 'gzip';
+      }
+      headers['Content-Length'] = body.length;
+      res.writeHead(200, headers);
+      res.end(body);
     });
   });
 });

@@ -2228,5 +2228,25 @@ button, a, input, select, textarea, [role="button"] {
   transform: rotateY(180deg);
 }
 
+/* ==========================================================================
+   BOOT SPLASH (src/components/common/BootSplash.tsx) & AKSESIBILITAS GERAK
+   ========================================================================== */
+@keyframes bootSplashSlide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(300%); }
+}
+.boot-splash-bar {
+  animation: bootSplashSlide 1.2s ease-in-out infinite;
+}
 
-
+/* Hormati preferensi pengguna: kurangi gerak (vestibular / kenyamanan). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

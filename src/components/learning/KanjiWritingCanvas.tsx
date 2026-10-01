@@ -299,12 +299,15 @@ async function fetchFastest(urls: string[], timeoutMs = 10000): Promise<any> {
 const getLocalStrokePaths = (dir: 'kanji-strokes' | 'kana-strokes', filename: string): string[] => {
   const base = import.meta.env.BASE_URL || '/';
   const cleanBase = base.endsWith('/') ? base : `${base}/`;
-  return [
+  // Set: dengan base './' kandidat pertama dan ketiga identik; dulu keduanya di-fetch dua kali (2,5 dtk timeout masing-masing).
+  return Array.from(new Set([
     `${cleanBase}data/${dir}/${filename}`,
     `/data/${dir}/${filename}`,
     `./data/${dir}/${filename}`,
-  ];
+  ]));
 };
+
+const isOffline = () => typeof navigator !== 'undefined' && navigator.onLine === false;
 
 async function tryFetchLocal(dir: 'kanji-strokes' | 'kana-strokes', filename: string): Promise<any | null> {
   const paths = getLocalStrokePaths(dir, filename);
@@ -349,7 +352,10 @@ export const fetchSingleCharStrokeData = async (char: string): Promise<any> => {
       if (!rawData) {
         rawData = await tryFetchLocal('kanji-strokes', `${hex}.json`);
       }
-      // 2. Fallback to fast CDN mirrors with 10s timeout if local missing
+      // 2. Fallback to fast CDN mirrors with 10s timeout if local missing (dilewati saat offline)
+      if (!rawData && isOffline()) {
+        throw new Error(`Data goresan "${char}" tidak tersedia offline`);
+      }
       if (!rawData) {
         rawData = await fetchFastest([
           `https://unpkg.com/hanzi-writer-data-jp@0.0.1/${encoded}.json`,
@@ -364,7 +370,10 @@ export const fetchSingleCharStrokeData = async (char: string): Promise<any> => {
         rawData = await tryFetchLocal('kanji-strokes', `${hex}.json`);
       }
 
-      // 2. Fallback to CDNs only if character is not bundled locally
+      // 2. Fallback to CDNs only if character is not bundled locally (dilewati saat offline)
+      if (!rawData && isOffline()) {
+        throw new Error(`Data goresan "${char}" tidak tersedia offline`);
+      }
       if (!rawData) {
         const primaryMirrors = [
           `https://unpkg.com/hanzi-writer-data-jp@0.0.1/${encoded}.json`,
@@ -1700,7 +1709,7 @@ export const KanjiWritingCanvas: React.FC<KanjiWritingCanvasProps> = ({
           disabled={(!isQuizComplete && hasStrokeData) && !completedSheets.includes(currentSheet)}
           className={`py-2.5 px-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-md active:scale-95 select-none cursor-pointer ${
             isQuizComplete || completedSheets.includes(currentSheet) || !hasStrokeData
-              ? 'bg-wine-accent hover:opacity-95 text-white font-black shadow-wine-accent/25'
+              ? 'bg-wine-accent hover:opacity-95 text-white font-black'
               : 'bg-surface-inset text-text-muted cursor-not-allowed border border-border-subtle'
           }`}
           title="Simpan dan selesaikan kanji ini"

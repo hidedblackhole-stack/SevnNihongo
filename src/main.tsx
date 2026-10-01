@@ -1,13 +1,30 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './App.tsx';
 import './index.css';
 import { ErrorBoundary } from './components/ErrorBoundary.tsx';
+import { BootSplash } from './components/common/BootSplash.tsx';
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <ErrorBoundary>
-      <App />
-    </ErrorBoundary>
-  </StrictMode>,
-);
+const root = createRoot(document.getElementById('root')!);
+
+// Tampilkan splash dulu; App + dataset materi (beberapa MB) dimuat sebagai chunk terpisah.
+root.render(<BootSplash />);
+
+function loadApp() {
+  root.render(<BootSplash />);
+  import('./App.tsx')
+    .then(({ default: App }) => {
+      root.render(
+        <StrictMode>
+          <ErrorBoundary>
+            <App />
+          </ErrorBoundary>
+        </StrictMode>,
+      );
+    })
+    .catch((err) => {
+      console.error('Gagal memuat modul utama aplikasi:', err);
+      root.render(<BootSplash failed onRetry={loadApp} />);
+    });
+}
+
+loadApp();

@@ -1,14 +1,16 @@
-// SevnQuest Service Worker for PWA Support (v2.4)
-const CACHE_NAME = 'sevnquest-v2.4';
+// SevnQuest Service Worker for PWA Support (v2.5)
+const CACHE_NAME = 'sevnquest-v2.5';
+// Path relatif terhadap scope SW supaya benar di root (Vercel/standalone) maupun sub-path (GitHub Pages).
 const STATIC_ASSETS = [
-  '/manifest.webmanifest',
-  '/favicon.ico',
-  '/favicon-32x32.png',
-  '/favicon-16x16.png',
-  '/apple-touch-icon.png',
-  '/icon-192.png',
-  '/icon-512.png'
-];
+  'manifest.webmanifest',
+  'favicon.ico',
+  'favicon-32x32.png',
+  'favicon-16x16.png',
+  'apple-touch-icon.png',
+  'icon-192.png',
+  'icon-512.png'
+].map((p) => new URL(p, self.registration.scope).href);
+const INDEX_URL = new URL('index.html', self.registration.scope).href;
 
 // 1. Install: Pre-cache core branding icons only (DO NOT pre-cache index.html to avoid stale chunk mismatches)
 self.addEventListener('install', (event) => {
@@ -90,7 +92,7 @@ self.addEventListener('fetch', (event) => {
         })
         .catch(() => {
           // Offline fallback
-          return caches.match(request).then((cached) => cached || caches.match('/index.html'));
+          return caches.match(request).then((cached) => cached || caches.match(INDEX_URL).then((idx) => idx || caches.match(self.registration.scope)));
         })
     );
     return;
