@@ -72,9 +72,9 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
 
       {/* FEATURED: NIHONGO TOWER 1.000 FLOORS BANNER */}
       {onOpenTower && (
-        <div className="panel p-5 rounded-3xl bg-gradient-to-r from-wine-accent/20 via-surface-card to-surface-card border-2 border-wine-accent/35 shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="panel p-5 rounded-3xl bg-surface-card border border-border-subtle shadow-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-wine-accent text-white flex items-center justify-center font-heading font-black text-xl shrink-0 shadow-md shadow-wine-accent/25">
+            <div className="w-12 h-12 rounded-2xl bg-wine-accent text-white flex items-center justify-center font-heading font-black text-xl shrink-0 shadow-md">
               <Castle className="w-6 h-6" />
             </div>
             <div>
@@ -104,7 +104,7 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
           <button
             type="button"
             onClick={onOpenTower}
-            className="w-full sm:w-auto px-5 py-3 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-bold text-xs font-heading flex items-center justify-center gap-2 shadow-md shadow-wine-accent/30 active:scale-95 transition-all cursor-pointer shrink-0"
+            className="w-full sm:w-auto px-5 py-3 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-bold text-xs font-heading flex items-center justify-center gap-2 shadow-md active:scale-95 transition-all cursor-pointer shrink-0"
           >
             <span>Daki Menara Sekarang</span>
             <ChevronRight className="w-4 h-4" />

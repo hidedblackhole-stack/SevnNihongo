@@ -176,7 +176,7 @@ export const GrammarFormulaBox: React.FC<GrammarFormulaBoxProps> = ({ item, clas
       )}
 
       {/* Main Slide-Style Formula Card */}
-      <div className="relative rounded-2xl p-4 sm:p-5 bg-emerald-50/90 dark:bg-gradient-to-br dark:from-emerald-950/80 dark:via-emerald-900/60 dark:to-emerald-950/90 border-2 border-emerald-600/40 dark:border-emerald-500/50 shadow-md text-emerald-950 dark:text-white select-none overflow-hidden">
+      <div className="relative rounded-2xl p-4 sm:p-5 bg-surface-card border border-border-subtle shadow-md text-text-primary select-none overflow-hidden">
         {/* Subtle decorative background watermark */}
         <div className="absolute right-3 top-2 text-emerald-900/10 dark:text-emerald-500/10 font-black font-jp text-5xl pointer-events-none">
           接続
@@ -190,7 +190,7 @@ export const GrammarFormulaBox: React.FC<GrammarFormulaBoxProps> = ({ item, clas
                 <span className="w-24 sm:w-28 font-black text-emerald-950 dark:text-amber-300 font-heading shrink-0 flex items-center gap-1">
                   <span>{row.partOfSpeech}</span>
                 </span>
-                <span className="text-emerald-950 dark:text-emerald-100 font-black px-2.5 py-1 rounded-lg bg-white dark:bg-emerald-950/80 border-2 border-emerald-600/30 dark:border-emerald-500/40 shadow-xs">
+                <span className="text-emerald-950 dark:text-emerald-100 font-black px-2.5 py-1 rounded-lg bg-surface-inset border border-border-subtle shadow-inner">
                   {row.formHint}
                 </span>
               </div>
@@ -207,7 +207,7 @@ export const GrammarFormulaBox: React.FC<GrammarFormulaBoxProps> = ({ item, clas
             {currentGroup.sharedSuffix.map((suf, sIdx) => (
               <div
                 key={sIdx}
-                className="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 dark:bg-emerald-500/25 border-2 border-emerald-800 dark:border-emerald-400/60 text-white dark:text-emerald-100 font-jp font-extrabold text-base sm:text-lg tracking-wide shadow-xs flex items-center gap-2"
+                className="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 border border-border-subtle text-white font-jp font-extrabold text-base sm:text-lg tracking-wide shadow-xs flex items-center gap-2"
               >
                 <span className="text-emerald-200 dark:text-emerald-300 font-bold text-xs sm:text-sm font-mono">+</span>
                 <span>{suf}</span>

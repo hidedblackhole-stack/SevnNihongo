@@ -1140,7 +1140,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
                         }}
                         className={`py-2 px-1 rounded-xl text-center transition-all cursor-pointer select-none ${
                           isSelected
-                            ? 'bg-rose-500 text-white font-bold shadow-md shadow-rose-500/30 scale-[1.03]'
+                            ? 'bg-rose-500 text-white font-bold shadow-md scale-[1.03]'
                             : 'bg-surface-card hover:bg-surface-elevated text-text-secondary border border-border-subtle hover:text-text-primary'
                         }`}
                       >
@@ -1230,7 +1230,7 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
             className={`flex-1 min-w-0 whitespace-nowrap flex items-center justify-center gap-2 sm:gap-2.5 px-4 sm:px-7 py-3 rounded-2xl font-heading font-black text-xs sm:text-sm transition-all select-none cursor-pointer ${
               isStartDisabled
                 ? 'bg-surface-inset text-text-muted border border-border-subtle shadow-[inset_2px_2px_5px_var(--neu-d)] cursor-not-allowed opacity-50'
-                : 'btn-cta hover:scale-[1.01] active:scale-[0.99] shadow-[4px_4px_14px_var(--neu-d),-2px_-2px_6px_var(--neu-l),0_0_18px_rgba(111,147,207,0.35)]'
+                : 'btn-cta hover:scale-[1.01] active:scale-[0.99] shadow-[4px_4px_14px_var(--neu-d),-2px_-2px_6px_var(--neu-l)]'
             }`}
           >
             <Swords className="w-4 h-4 text-gold shrink-0" />

@@ -551,7 +551,7 @@ const AlchemyInteractiveRunner: React.FC<AlchemyInteractiveRunnerProps> = ({
         <button
           type="button"
           onClick={handleNext}
-          className="w-full py-3.5 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-wine-accent/25 transition-all cursor-pointer"
+          className="w-full py-3.5 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer"
         >
           <span>{currentIndex + 1 < input.targets.length ? 'Lanjut Kata Berikutnya' : 'Selesaikan Ronde'}</span>
           <ArrowRight className="w-4 h-4" />
@@ -777,7 +777,7 @@ const SentenceInteractiveRunner: React.FC<SentenceInteractiveRunnerProps> = ({
           type="button"
           onClick={handleSubmit}
           disabled={isSubmitted || availableTokens.length > 0}
-          className="flex-1 py-3 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-black text-sm flex items-center justify-center gap-2 shadow-md shadow-wine-accent/25 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer transition-all"
+          className="flex-1 py-3 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-black text-sm flex items-center justify-center gap-2 shadow-md disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer transition-all"
         >
           <span>
             {currentIdx + 1 < exercises.length ? 'Periksa & Lanjut' : 'Selesaikan Susunan'}

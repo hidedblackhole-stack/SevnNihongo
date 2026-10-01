@@ -312,7 +312,7 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
   };
 
   const getRankIcon = (index: number) => {
-    if (index === 0) return <Crown className="w-5 h-5 text-yellow-400 drop-shadow-[0_0_8px_rgba(250,204,21,0.6)] shrink-0" fill="currentColor" />;
+    if (index === 0) return <Crown className="w-5 h-5 text-yellow-400 shrink-0" fill="currentColor" />;
     if (index === 1) return <Medal className="w-5 h-5 text-gray-300 shrink-0" fill="currentColor" />;
     if (index === 2) return <Medal className="w-5 h-5 text-amber-700 shrink-0" fill="currentColor" />;
 

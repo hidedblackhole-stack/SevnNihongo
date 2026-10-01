@@ -72,7 +72,7 @@ export const PlayerShowcaseCard: React.FC<PlayerShowcaseCardProps> = ({
       {/* Showcase Trading Card Container */}
       <motion.div
         whileHover={{ y: -4 }}
-        className="rounded-3xl p-6 bg-gradient-to-b from-surface-card via-surface-elevated to-surface-card border border-border-subtle shadow-2xl relative overflow-hidden"
+        className="rounded-3xl p-6 bg-surface-card border border-border-subtle shadow-md relative overflow-hidden"
       >
         {/* Decorative Background Kanji Watermark */}
         <div className="absolute -right-6 -bottom-10 text-[140px] font-black text-white/5 pointer-events-none font-heading leading-none select-none">
@@ -99,7 +99,7 @@ export const PlayerShowcaseCard: React.FC<PlayerShowcaseCardProps> = ({
             {avatarUrl ? (
               <img src={avatarUrl} alt={playerName} className="w-full h-full object-cover" />
             ) : (
-              <div className="w-full h-full bg-gradient-to-tr from-wine-accent to-amber-600 flex items-center justify-center text-white font-black text-2xl font-heading">
+              <div className="w-full h-full bg-wine-accent flex items-center justify-center text-white font-black text-2xl font-heading">
                 {playerName.charAt(0).toUpperCase()}
               </div>
             )}
@@ -182,7 +182,7 @@ export const PlayerShowcaseCard: React.FC<PlayerShowcaseCardProps> = ({
         <button
           type="button"
           onClick={handleCopySummary}
-          className="w-full py-3 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-wine-accent/25 active:scale-95 transition-all cursor-pointer"
+          className="w-full py-3 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all cursor-pointer"
         >
           {copied ? (
             <>

@@ -149,7 +149,7 @@ export const TierAvatar: React.FC<TierAvatarProps> = ({
   };
 
   const renderFallbackIcon = () => {
-    const iconClass = "w-16 h-16 sm:w-20 sm:h-20 text-gold drop-shadow-[0_0_12px_rgba(251,191,36,0.5)]";
+    const iconClass = "w-16 h-16 sm:w-20 sm:h-20 text-gold";
     switch (tierNum) {
       case 1: return <User className={iconClass} />;
       case 2: return <Shield className={iconClass} />;
@@ -176,19 +176,6 @@ export const TierAvatar: React.FC<TierAvatarProps> = ({
       {/* Background Aura & Light Rings */}
       <div className={`relative ${sizeClasses} flex items-center justify-center`}>
         
-        {/* Tier 8-10 Floating or Mythic Wings Aura */}
-        {isHero && (
-          <motion.div
-            animate={{ rotate: 360, scale: [1, 1.1, 1] }}
-            transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
-            className={`absolute inset-[-15%] rounded-full ${
-              isMythic ? 'bg-amber-400/20' :
-              isChampion ? 'bg-fuchsia-500/20' :
-              'bg-sky-400/20'
-            } blur-xl pointer-events-none`}
-          />
-        )}
-
         {/* Tier 10 Angelic Light Wings */}
         {isMythic && (
           <motion.div
@@ -197,33 +184,20 @@ export const TierAvatar: React.FC<TierAvatarProps> = ({
             className="absolute -top-8 inset-x-[-20%] h-full flex justify-between pointer-events-none opacity-80"
           >
             {/* Left Wing */}
-            <svg viewBox="0 0 100 100" className="w-24 h-24 text-amber-300 drop-shadow-[0_0_15px_rgba(251,191,36,0.8)] fill-current -scale-x-100">
+            <svg viewBox="0 0 100 100" className="w-24 h-24 text-amber-300 fill-current -scale-x-100">
               <path d="M10,90 Q40,30 90,10 Q60,40 70,60 Q50,60 50,80 Z" opacity="0.9" />
               <path d="M20,95 Q50,45 95,25 Q70,55 75,75 Z" opacity="0.7" fill="var(--color-amber-300)" />
             </svg>
             {/* Right Wing */}
-            <svg viewBox="0 0 100 100" className="w-24 h-24 text-amber-300 drop-shadow-[0_0_15px_rgba(251,191,36,0.8)] fill-current">
+            <svg viewBox="0 0 100 100" className="w-24 h-24 text-amber-300 fill-current">
               <path d="M10,90 Q40,30 90,10 Q60,40 70,60 Q50,60 50,80 Z" opacity="0.9" />
               <path d="M20,95 Q50,45 95,25 Q70,55 75,75 Z" opacity="0.7" fill="var(--color-amber-300)" />
             </svg>
           </motion.div>
         )}
 
-        {/* Ambient Glow / Splash Background */}
-        <div
-          className={`absolute inset-0 rounded-3xl ${
-            isMythic ? 'bg-amber-400/20 blur-2xl' :
-            isChampion ? 'bg-fuchsia-500/20 blur-2xl' :
-            isHero ? 'bg-sky-400/20 blur-2xl' :
-            isPaladin ? 'bg-amber-400/20 blur-2xl' :
-            isEliteKnight ? 'bg-rose-500/20 blur-2xl' :
-            isKnight ? 'bg-violet-500/20 blur-2xl' :
-            isSquire ? 'bg-blue-500/20 blur-2xl' :
-            isApprentice ? 'bg-cyan-600/20 blur-xl' :
-            isNovice ? 'bg-emerald-600/20 blur-xl' :
-            'bg-surface-elevated/20 blur-xl'
-          } pointer-events-none`}
-        />
+        {/* Alas patung (solid inset, tanpa glow blur) */}
+        <div className="absolute inset-0 rounded-3xl bg-surface-inset/50 border border-border-subtle shadow-inner pointer-events-none" />
 
         {/* Character Visual Image (Splash Art) */}
         <div className="relative w-full h-full flex items-center justify-center pointer-events-none z-10">

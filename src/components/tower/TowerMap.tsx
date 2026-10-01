@@ -389,7 +389,7 @@ export const TowerMap: React.FC<TowerMapProps> = ({
                       isCurrent
                         ? 'bg-surface-elevated border-border-strong shadow-md'
                         : landmark.floor === 1000
-                          ? 'bg-surface-card border-gold/40 hover:bg-surface-elevated shadow-gold/5'
+                          ? 'bg-surface-card border-gold/40 hover:bg-surface-elevated'
                           : landmark.isBoss
                             ? 'bg-surface-card border-wine-accent/30 hover:bg-surface-elevated'
                             : 'bg-surface-card border-border-subtle hover:bg-surface-elevated hover:border-border-strong'
@@ -650,7 +650,7 @@ export const TowerMap: React.FC<TowerMapProps> = ({
                     setSelectedPreviewFloor(null);
                     onSelectFloor(target);
                   }}
-                  className="w-full py-3.5 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-wine-accent/25 active:scale-95 transition-all cursor-pointer"
+                  className="w-full py-3.5 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all cursor-pointer"
                 >
                   <Play className="w-4 h-4 fill-white" />
                   <span>Mulai Uji Tantangan Lantai Ini</span>

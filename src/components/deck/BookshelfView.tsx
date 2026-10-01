@@ -237,11 +237,8 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
                 onSelectBook(book);
                 playSound('click', soundEnabled);
               }}
-              className={`panel p-5 sm:p-6 rounded-3xl border ${book.colorTheme.borderAccent} bg-surface-card hover:shadow-xl transition-all duration-200 cursor-pointer group flex flex-col justify-between relative overflow-hidden`}
+              className={`panel p-5 sm:p-6 rounded-3xl border border-border-subtle bg-surface-card hover:shadow-xl transition-all duration-200 cursor-pointer group flex flex-col justify-between relative overflow-hidden`}
             >
-              {/* Top Accent Gradient Bar */}
-              <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${book.colorTheme.cardBg}`} />
-
               <div className="space-y-3">
                 {/* Header Row: Book Spine Icon + Badge */}
                 <div className="flex items-start justify-between gap-3">
@@ -304,7 +301,7 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
                 {/* Progress bar */}
                 <div className="w-full h-1.5 bg-surface-inset rounded-full overflow-hidden border border-border-subtle">
                   <div
-                    className="h-full bg-gradient-to-r from-gold to-amber-500 rounded-full transition-all duration-300"
+                    className="h-full bg-gold rounded-full transition-all duration-300"
                     style={{ width: `${Math.max(pct, 4)}%` }}
                   />
                 </div>

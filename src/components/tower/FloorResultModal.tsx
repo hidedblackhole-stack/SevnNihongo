@@ -39,8 +39,8 @@ export const FloorResultModal: React.FC<FloorResultModalProps> = ({
           <div
             className={`absolute top-0 left-0 right-0 h-2 ${
               isClear
-                ? 'bg-gradient-to-r from-emerald-400 via-amber-400 to-wine-accent'
-                : 'bg-gradient-to-r from-red-600 to-gray-800'
+                ? 'bg-state-success'
+                : 'bg-wine-accent'
             }`}
           />
 
@@ -182,7 +182,7 @@ export const FloorResultModal: React.FC<FloorResultModalProps> = ({
               <button
                 type="button"
                 onClick={onNextFloor}
-                className="w-full py-3.5 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-wine-accent/25 transition-all cursor-pointer active:scale-95"
+                className="w-full py-3.5 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer active:scale-95"
               >
                 <span>Lanjut Lantai {report.floor + 1}</span>
                 <ArrowRight className="w-4 h-4" />
@@ -191,7 +191,7 @@ export const FloorResultModal: React.FC<FloorResultModalProps> = ({
               <button
                 type="button"
                 onClick={onRetry}
-                className="w-full py-3.5 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-wine-accent/25 transition-all cursor-pointer active:scale-95"
+                className="w-full py-3.5 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer active:scale-95"
               >
                 <RotateCcw className="w-4 h-4" />
                 <span>Coba Lagi Lantai {report.floor}</span>

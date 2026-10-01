@@ -74,8 +74,7 @@ export const BookDetailView: React.FC<BookDetailViewProps> = ({
       </div>
 
       {/* Book Cover Banner */}
-      <div className={`panel p-5 sm:p-6 rounded-3xl border ${book.colorTheme.borderAccent} bg-surface-card space-y-4 shadow-sm relative overflow-hidden`}>
-        <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${book.colorTheme.cardBg}`} />
+      <div className={`panel p-5 sm:p-6 rounded-3xl border border-border-subtle bg-surface-card space-y-4 shadow-sm relative overflow-hidden`}>
 
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-start gap-4">
@@ -224,7 +223,7 @@ export const BookDetailView: React.FC<BookDetailViewProps> = ({
                 {/* Progress bar */}
                 <div className="w-full h-1.5 bg-surface-inset rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-gradient-to-r from-amber-500 to-gold rounded-full transition-all duration-300"
+                    className="h-full bg-gold rounded-full transition-all duration-300"
                     style={{ width: `${stats.pct}%` }}
                   />
                 </div>

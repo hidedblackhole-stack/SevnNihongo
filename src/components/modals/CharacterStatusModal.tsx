@@ -186,14 +186,6 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
 
             {/* 2. ASCENSION TIER PROGRESSION CARD */}
             <div className="p-3.5 sm:p-4 rounded-3xl bg-surface-inset border border-border-subtle space-y-3.5 sm:space-y-4 shadow-sm relative overflow-hidden">
-              {/* Background ambient glow if ready to ascend */}
-              {ascensionProgress.canAscend && (
-                <div className="absolute -top-12 -right-12 w-44 h-44 bg-state-success/15 rounded-full blur-3xl pointer-events-none animate-pulse" />
-              )}
-              {ascensionProgress.isGated && (
-                <div className="absolute -top-12 -right-12 w-44 h-44 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-              )}
-
               {/* Header */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
                 <div className="flex items-center gap-2.5 min-w-0">
@@ -275,8 +267,8 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
                   <div
                     className={`h-full rounded-full transition-all duration-500 ${
                       ascensionProgress.overallPassed
-                        ? 'bg-gradient-to-r from-state-success to-emerald-400 shadow-sm shadow-state-success/40'
-                        : 'bg-gradient-to-r from-indigo to-cyan-500'
+                        ? 'bg-state-success'
+                        : 'bg-indigo'
                     }`}
                     style={{ width: `${Math.min(100, ascensionProgress.overallAccumulationPct)}%` }}
                   />

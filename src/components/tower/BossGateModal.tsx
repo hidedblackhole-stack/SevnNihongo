@@ -34,7 +34,7 @@ export const BossGateModal: React.FC<BossGateModalProps> = ({
           className="w-full max-w-md bg-surface-card rounded-3xl p-6 border border-border-subtle shadow-2xl relative overflow-hidden"
         >
           {/* Top Decorative Banner */}
-          <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-red-600 via-wine-accent to-amber-500" />
+          <div className="absolute top-0 left-0 right-0 h-2 bg-wine-accent" />
 
           {/* Close button */}
           <button
@@ -118,7 +118,7 @@ export const BossGateModal: React.FC<BossGateModalProps> = ({
               <button
                 type="button"
                 onClick={() => onJumpToTrainingFloor(recommendedFloors[0])}
-                className="w-full py-3.5 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-wine-accent/25 transition-all cursor-pointer"
+                className="w-full py-3.5 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer"
               >
                 <BookOpen className="w-4 h-4" />
                 <span>Latih di Lantai {recommendedFloors[0]} - {recommendedFloors[1]}</span>

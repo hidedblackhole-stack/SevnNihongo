@@ -108,7 +108,7 @@ export const GrammarChecklist: React.FC<GrammarChecklistProps> = ({ item, classN
 
   return (
     <div
-      className={`p-3.5 sm:p-4 rounded-2xl bg-emerald-50/80 dark:bg-emerald-950/30 border-2 border-emerald-600/30 dark:border-emerald-500/30 space-y-2.5 shadow-xs ${className}`}
+      className={`p-3.5 sm:p-4 rounded-2xl bg-surface-inset border border-border-subtle space-y-2.5 shadow-inner ${className}`}
     >
       <div className="flex items-center gap-2 pb-1.5 border-b border-emerald-600/20 dark:border-emerald-500/20">
         <CheckCircle2 className="w-4 h-4 text-emerald-800 dark:text-emerald-400 shrink-0" />

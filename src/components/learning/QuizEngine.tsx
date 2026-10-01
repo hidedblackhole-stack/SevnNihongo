@@ -383,7 +383,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
 
               if (isAnswered) {
                 if (idx === currentQ.correctIndex) {
-                  btnStyle = 'bg-state-success/15 border-state-success text-state-success shadow-[0_0_15px_rgba(79,174,134,0.2)] font-bold';
+                  btnStyle = 'bg-state-success/15 border-state-success text-state-success font-bold';
                 } else if (idx === selectedOption) {
                   btnStyle = 'bg-wine-accent/15 border-wine-accent text-wine-accent font-bold';
                 } else {

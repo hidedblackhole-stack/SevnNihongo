@@ -95,7 +95,7 @@ export const FloorNarrativeModal: React.FC<FloorNarrativeModalProps> = ({
           <button
             type="button"
             onClick={onStartFloor}
-            className="w-full py-3.5 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-wine-accent/25 active:scale-95 transition-all cursor-pointer"
+            className="w-full py-3.5 rounded-2xl bg-wine-accent hover:opacity-95 text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all cursor-pointer"
           >
             <span>Mulai Membuka Tantangan</span>
             <ArrowRight className="w-4 h-4" />

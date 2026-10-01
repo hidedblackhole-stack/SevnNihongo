@@ -364,9 +364,9 @@ export const SpotlightOnboarding: React.FC<SpotlightOnboardingProps> = ({
             zIndex: 9992,
           }}
         >
-          {/* Radiant RPG Aureole Glowing Ring */}
+          {/* Cincin sorot (tanpa glow neon) */}
           <div 
-            className="absolute -inset-1 rounded-[inherit] border-2 border-gold/90 shadow-[0_0_20px_rgba(234,179,8,0.65)] pointer-events-none animate-pulse"
+            className="absolute -inset-1 rounded-[inherit] border-2 border-gold pointer-events-none animate-pulse"
           />
         </motion.div>
       )}
@@ -401,11 +401,8 @@ export const SpotlightOnboarding: React.FC<SpotlightOnboardingProps> = ({
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="w-full max-w-md panel panel-stitched p-6 sm:p-7 shadow-2xl border-2 border-gold/60 text-center space-y-4 relative overflow-hidden bg-surface-card"
+              className="w-full max-w-md panel panel-stitched p-6 sm:p-7 shadow-md border border-border-subtle text-center space-y-4 relative overflow-hidden bg-surface-card"
             >
-              {/* Background Ambient Glow */}
-              <div className="absolute -top-16 -left-16 w-36 h-36 bg-gold/15 rounded-full blur-2xl pointer-events-none" />
-              <div className="absolute -bottom-16 -right-16 w-36 h-36 bg-indigo/20 rounded-full blur-2xl pointer-events-none" />
 
               {/* Top Badge & Close button */}
               <div className="flex items-center justify-between relative z-10">
@@ -424,7 +421,7 @@ export const SpotlightOnboarding: React.FC<SpotlightOnboardingProps> = ({
 
               {/* Hero Icon */}
               <div className="flex justify-center relative z-10">
-                <div className="w-16 h-16 rounded-2xl bg-surface-inset border-2 border-gold/40 flex items-center justify-center text-gold shadow-lg shadow-gold/20 relative">
+                <div className="w-16 h-16 rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-center text-gold shadow-inner relative">
                   <Cloud className="w-8 h-8 animate-pulse text-gold" />
                   <div className="absolute -bottom-1 -right-1 p-1 rounded-full bg-state-success text-white shadow">
                     <ShieldCheck className="w-3.5 h-3.5" />
@@ -467,7 +464,7 @@ export const SpotlightOnboarding: React.FC<SpotlightOnboardingProps> = ({
                 <button
                   type="button"
                   onClick={handleAuthCTA}
-                  className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-gold via-amber-400 to-amber-500 hover:from-amber-400 hover:to-gold text-surface-base font-heading font-bold text-sm tracking-wide shadow-lg shadow-gold/30 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+                  className="btn-physical-primary w-full py-3 px-4 rounded-xl font-heading font-bold text-sm tracking-wide active:scale-[0.98] transition-all flex items-center justify-center gap-2"
                 >
                   <Swords className="w-4 h-4 fill-current" />
                   <span>Masuk / Daftar Akun Sekarang</span>
@@ -555,7 +552,7 @@ export const SpotlightOnboarding: React.FC<SpotlightOnboardingProps> = ({
                         key={step.id}
                         className={`h-1.5 rounded-full transition-all duration-300 ${
                           idx === currentStepIndex
-                            ? 'w-5 bg-gold shadow-[0_0_8px_rgba(234,179,8,0.7)]'
+                            ? 'w-5 bg-gold'
                             : idx < currentStepIndex
                             ? 'w-1.5 bg-gold/40'
                             : 'w-1.5 bg-border-subtle'

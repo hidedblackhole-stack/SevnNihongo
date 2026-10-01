@@ -83,7 +83,7 @@ export const TowerHUD: React.FC<TowerHUDProps> = ({
                   key={`${p}_${idx}`}
                   className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold transition-all ${
                     isCurrent
-                      ? 'bg-wine-accent text-white shadow-sm shadow-wine-accent/30 scale-105'
+                      ? 'bg-wine-accent text-white shadow-sm scale-105'
                       : isPast
                         ? 'bg-surface-elevated text-emerald-400 border border-border-subtle'
                         : 'text-text-muted opacity-50'
@@ -114,7 +114,7 @@ export const TowerHUD: React.FC<TowerHUDProps> = ({
                   <Heart
                     className={`w-5 h-5 transition-colors ${
                       isFilled
-                        ? 'text-red-500 fill-red-500 drop-shadow-[0_0_6px_rgba(239,68,68,0.5)]'
+                        ? 'text-red-500 fill-red-500'
                         : 'text-text-muted fill-transparent'
                     }`}
                   />
