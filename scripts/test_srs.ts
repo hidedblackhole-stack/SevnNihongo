@@ -3,8 +3,21 @@ import assert from 'node:assert/strict';
 import { recordItemAttempt, recordItemInteraction } from '../src/utils/mastery';
 import { mergeItemMastery, mergeUserDecks, mergeStageProgress } from '../src/utils/cloudMerge';
 import { getLocalIsoWeekId } from '../src/utils/time';
+import { getGameOverHp, getDojoRestCost, applyDojoRest, applyPotion, countPotions } from '../src/utils/recovery';
+import { mergeTowerState, TowerCloudState } from '../src/engine/tower/world/towerCloudState';
+import type { PlayerStats } from '../src/types/rpg';
+import { STORAGE_KEY_STATS, STORAGE_KEY_STAGES, STORAGE_KEY_DAILY } from '../src/state/storageKeys';
 import type { ItemMasteryRecord } from '../src/types/content';
 import type { UserDeck } from '../src/types/rpg';
+
+// localStorage palsu (Node) untuk tes loadPlayerState
+const mem = new Map<string, string>();
+(globalThis as any).localStorage = {
+  getItem: (k: string) => (mem.has(k) ? mem.get(k)! : null),
+  setItem: (k: string, v: string) => void mem.set(k, String(v)),
+  removeItem: (k: string) => void mem.delete(k),
+  clear: () => mem.clear(),
+};
 
 let passed = 0;
 function test(name: string, fn: () => void) {
@@ -118,6 +131,92 @@ test('mergeStageProgress: cleared & stars diambil nilai tertinggi, modul di-unio
   assert.equal(merged.s1.cleared, true);
   assert.equal(merged.s1.stars, 3);
   assert.deepEqual([...merged.s1.clearedModules].sort(), ['bunpou', 'kanji']);
+});
+
+
+console.log('Pemulihan HP');
+const base = (o: Partial<PlayerStats>) => ({ hp: 10, maxHp: 100, mp: 0, maxMp: 40, gold: 100, inventory: ['pot_hp_small', 'pot_hp_small', 'scroll_exp_sm'] , ...o }) as PlayerStats;
+test('HP setelah kalah = 10% maks (minimal 1)', () => {
+  assert.equal(getGameOverHp(110), 11);
+  assert.equal(getGameOverHp(0), 1);
+});
+test('biaya dojo: 0 bila penuh, minimal 10, 1 koin per 2 HP hilang', () => {
+  assert.equal(getDojoRestCost(100, 100), 0);
+  assert.equal(getDojoRestCost(98, 100), 10);
+  assert.equal(getDojoRestCost(10, 100), 45);
+});
+test('istirahat memotong koin & memulihkan HP/MP; gagal bila koin kurang', () => {
+  const ok = applyDojoRest(base({}));
+  assert.equal(ok.hp, 100); assert.equal(ok.mp, 40); assert.equal(ok.gold, 55);
+  const poor = base({ gold: 5 });
+  assert.equal(applyDojoRest(poor), poor);
+});
+test('potion: hapus tepat satu ID, +30% HP, tidak melebihi maks', () => {
+  const after = applyPotion(base({}));
+  assert.equal(after.hp, 40); assert.equal(countPotions(after.inventory), 1);
+  assert.deepEqual(after.inventory.filter(i => i !== 'pot_hp_small'), ['scroll_exp_sm']);
+  const near = applyPotion(base({ hp: 95 }));
+  assert.equal(near.hp, 100);
+  const full = base({ hp: 100 });
+  assert.equal(applyPotion(full), full);
+});
+
+console.log('Tower cloud merge');
+const tower = (o: Partial<TowerCloudState['progress']>, eco: Partial<TowerCloudState['economy']>, ach: TowerCloudState['achievements'], at = '2026-01-01T00:00:00Z'): TowerCloudState => ({
+  progress: { currentFloor: 1, highestFloorCleared: 0, flawlessFloorCount: 0, clearedFloors: {}, ...o },
+  economy: { skillPoints: 3, allocatedSkills: {}, reviveTokens: 1, ...eco },
+  achievements: ach, updatedAt: at,
+});
+test('lantai tertinggi menang & union lantai (yang lebih sedikit salah menang)', () => {
+  const a = tower({ highestFloorCleared: 12, currentFloor: 13, clearedFloors: { 1: { clearedAt: 'x', mistakes: 2, score: 50 }, 12: { clearedAt: 'x', mistakes: 0, score: 90 } } }, {}, {});
+  const b = tower({ highestFloorCleared: 30, currentFloor: 31, clearedFloors: { 1: { clearedAt: 'y', mistakes: 0, score: 40 }, 30: { clearedAt: 'y', mistakes: 1, score: 70 } } }, {}, {});
+  const m = mergeTowerState(a, b)!;
+  assert.equal(m.progress.highestFloorCleared, 30);
+  assert.deepEqual(Object.keys(m.progress.clearedFloors).sort(), ['1', '12', '30']);
+  assert.equal(m.progress.clearedFloors[1].mistakes, 0);
+});
+test('skill tree: level tertinggi per skill, SP sisa tidak digandakan', () => {
+  const a = tower({}, { skillPoints: 2, allocatedSkills: { kanji_vision: 1 } }, {});     // total didapat 3 (1 terpakai + 2)
+  const b = tower({}, { skillPoints: 0, allocatedSkills: { kanji_vision: 2 } }, {});     // total didapat 3 (1+2 terpakai)
+  const m = mergeTowerState(a, b)!;
+  assert.equal(m.economy.allocatedSkills.kanji_vision, 2);
+  assert.equal(m.economy.skillPoints, 0);
+});
+test('achievement: unlocked bersifat OR, nilai maksimum; null aman', () => {
+  const a = tower({}, {}, { x: { currentValue: 3, isUnlocked: false } });
+  const b = tower({}, {}, { x: { currentValue: 1, isUnlocked: true } });
+  const m = mergeTowerState(a, b)!;
+  assert.deepEqual(m.achievements.x, { currentValue: 3, isUnlocked: true });
+  assert.equal(mergeTowerState(null, null), null);
+  assert.equal(mergeTowerState(a, null), a);
+});
+
+
+console.log('loadPlayerState');
+const { loadInitialStats, loadStageProgress, loadDailyMissions } = await import('../src/state/loadPlayerState');
+test('storage kosong -> state baru dengan userId unik', () => {
+  mem.clear();
+  const a = loadInitialStats(); const b = loadInitialStats();
+  assert.ok(a.userId && b.userId && a.userId !== b.userId);
+  assert.equal(a.level, 1); assert.equal(a.totalExp, 0);
+  assert.ok(Array.isArray(a.userDecks) && a.userDecks.length >= 1);
+});
+test('JSON rusak -> fallback aman (tidak melempar)', () => {
+  mem.set(STORAGE_KEY_STATS, '{not json'); mem.set(STORAGE_KEY_STAGES, '###'); mem.set(STORAGE_KEY_DAILY, '[[');
+  assert.equal(loadInitialStats().level, 1);
+  assert.deepEqual(loadStageProgress(), {});
+  assert.ok(Array.isArray(loadDailyMissions()));
+});
+test('EXP/level/gold dibulatkan & NaN dibersihkan; userId yang ada dipertahankan', () => {
+  mem.set(STORAGE_KEY_STATS, JSON.stringify({ totalExp: 123.7, level: 'abc', gold: null, userId: 'u-1', playerName: 'Aki', currentMapId: 'map_tidak_ada' }));
+  const st = loadInitialStats();
+  assert.equal(st.totalExp, 124); assert.equal(st.level, 1); assert.equal(st.gold, 0);
+  assert.equal(st.userId, 'u-1'); assert.equal(st.playerName, 'Aki');
+  assert.equal(st.currentMapId, 'map_kana_hiragana');   // peta tidak valid -> peta awal
+});
+test('nama lama Pemilik WebApp dimigrasi ke nama acak', () => {
+  mem.set(STORAGE_KEY_STATS, JSON.stringify({ playerName: 'Pemilik WebApp', userId: 'u-2' }));
+  assert.notEqual(loadInitialStats().playerName, 'Pemilik WebApp');
 });
 
 console.log('Waktu');
