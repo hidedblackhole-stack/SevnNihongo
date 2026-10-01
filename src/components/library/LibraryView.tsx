@@ -46,6 +46,18 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
   onUpdateDecks,
 }) => {
   const [libraryTab, setLibraryTab] = useState<LibraryTab>('kotoba');
+  const [visitedTabs, setVisitedTabs] = useState<Record<LibraryTab, boolean>>({
+    kotoba: true,
+    kanji: false,
+    bunpou: false,
+    soal: false,
+  });
+
+  const handleTabChange = (tab: LibraryTab) => {
+    setLibraryTab(tab);
+    setVisitedTabs(prev => (prev[tab] ? prev : { ...prev, [tab]: true }));
+    playSound('click', soundEnabled);
+  };
 
   return (
     <div className="w-full max-w-6xl mx-auto space-y-6 animate-fade-in pb-16">
@@ -68,10 +80,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
           <div className="book-tab-nav flex-wrap justify-center sm:justify-start shrink-0">
             {/* Jilid I: Kosakata */}
             <button
-              onClick={() => {
-                setLibraryTab('kotoba');
-                playSound('click', soundEnabled);
-              }}
+              onClick={() => handleTabChange('kotoba')}
               className={`book-tab-btn ${
                 libraryTab === 'kotoba' ? 'active' : 'inactive'
               }`}
@@ -87,10 +96,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
 
             {/* Jilid II: Kanji */}
             <button
-              onClick={() => {
-                setLibraryTab('kanji');
-                playSound('click', soundEnabled);
-              }}
+              onClick={() => handleTabChange('kanji')}
               className={`book-tab-btn ${
                 libraryTab === 'kanji' ? 'active' : 'inactive'
               }`}
@@ -106,10 +112,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
 
             {/* Jilid III: Tata Bahasa */}
             <button
-              onClick={() => {
-                setLibraryTab('bunpou');
-                playSound('click', soundEnabled);
-              }}
+              onClick={() => handleTabChange('bunpou')}
               className={`book-tab-btn ${
                 libraryTab === 'bunpou' ? 'active' : 'inactive'
               }`}
@@ -125,10 +128,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
 
             {/* Jilid IV: Bank Soal JLPT */}
             <button
-              onClick={() => {
-                setLibraryTab('soal');
-                playSound('click', soundEnabled);
-              }}
+              onClick={() => handleTabChange('soal')}
               className={`book-tab-btn ${
                 libraryTab === 'soal' ? 'active' : 'inactive'
               }`}
@@ -145,52 +145,60 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
         </div>
       </div>
 
-      {/* Active Grimoire View */}
-      {libraryTab === 'kotoba' && (
-        <KotobaLibraryView
-          soundEnabled={soundEnabled}
-          itemMastery={itemMastery}
-          userDecks={userDecks}
-          onToggleBookmark={onToggleBookmark}
-          onUpdateDecks={onUpdateDecks}
-          onRewardPlayer={onRewardPlayer}
-          onRecordStudy={onRecordStudy as any}
-          onRecordInteraction={onRecordInteraction}
-          onCompleteStudyItem={onCompleteStudyItem}
-        />
+      {/* Active Grimoire Views with Lazy Keep-Alive for 0ms Tab Switching */}
+      {visitedTabs.kotoba && (
+        <div className={libraryTab === 'kotoba' ? 'block' : 'hidden'}>
+          <KotobaLibraryView
+            soundEnabled={soundEnabled}
+            itemMastery={itemMastery}
+            userDecks={userDecks}
+            onToggleBookmark={onToggleBookmark}
+            onUpdateDecks={onUpdateDecks}
+            onRewardPlayer={onRewardPlayer}
+            onRecordStudy={onRecordStudy as any}
+            onRecordInteraction={onRecordInteraction}
+            onCompleteStudyItem={onCompleteStudyItem}
+          />
+        </div>
       )}
-      {libraryTab === 'kanji' && (
-        <KanjiLibraryView
-          soundEnabled={soundEnabled}
-          itemMastery={itemMastery}
-          userDecks={userDecks}
-          onToggleBookmark={onToggleBookmark}
-          onUpdateDecks={onUpdateDecks}
-          onRewardPlayer={onRewardPlayer}
-          onRecordStudy={onRecordStudy as any}
-          onRecordInteraction={onRecordInteraction}
-          onCompleteStudyItem={onCompleteStudyItem}
-        />
+      {visitedTabs.kanji && (
+        <div className={libraryTab === 'kanji' ? 'block' : 'hidden'}>
+          <KanjiLibraryView
+            soundEnabled={soundEnabled}
+            itemMastery={itemMastery}
+            userDecks={userDecks}
+            onToggleBookmark={onToggleBookmark}
+            onUpdateDecks={onUpdateDecks}
+            onRewardPlayer={onRewardPlayer}
+            onRecordStudy={onRecordStudy as any}
+            onRecordInteraction={onRecordInteraction}
+            onCompleteStudyItem={onCompleteStudyItem}
+          />
+        </div>
       )}
-      {libraryTab === 'bunpou' && (
-        <BunpouLibraryView
-          soundEnabled={soundEnabled}
-          itemMastery={itemMastery}
-          userDecks={userDecks}
-          onToggleBookmark={onToggleBookmark}
-          onUpdateDecks={onUpdateDecks}
-          onRewardPlayer={onRewardPlayer}
-          onRecordInteraction={onRecordInteraction}
-          onCompleteStudyItem={onCompleteStudyItem}
-        />
+      {visitedTabs.bunpou && (
+        <div className={libraryTab === 'bunpou' ? 'block' : 'hidden'}>
+          <BunpouLibraryView
+            soundEnabled={soundEnabled}
+            itemMastery={itemMastery}
+            userDecks={userDecks}
+            onToggleBookmark={onToggleBookmark}
+            onUpdateDecks={onUpdateDecks}
+            onRewardPlayer={onRewardPlayer}
+            onRecordInteraction={onRecordInteraction}
+            onCompleteStudyItem={onCompleteStudyItem}
+          />
+        </div>
       )}
-      {libraryTab === 'soal' && (
-        <QuestionLibraryView
-          soundEnabled={soundEnabled}
-          onRewardPlayer={onRewardPlayer}
-          onRecordStudy={onRecordStudy as any}
-          onCompleteStudyItem={onCompleteStudyItem}
-        />
+      {visitedTabs.soal && (
+        <div className={libraryTab === 'soal' ? 'block' : 'hidden'}>
+          <QuestionLibraryView
+            soundEnabled={soundEnabled}
+            onRewardPlayer={onRewardPlayer}
+            onRecordStudy={onRecordStudy as any}
+            onCompleteStudyItem={onCompleteStudyItem}
+          />
+        </div>
       )}
     </div>
   );
