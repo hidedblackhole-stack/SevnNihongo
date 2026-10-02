@@ -2445,3 +2445,188 @@ input:not([type="checkbox"]):not([type="radio"]) {
       inset -1px -1px 2px var(--neu-l);
   }
 }
+
+/* ==========================================================================
+   UNIFIED SURFACE: "dark layered / inset-outlined skeuomorphism" (acuan: kartu Buku Saku)
+   Satu material untuk semua tombol, filter, tab, dan item navigasi (tema gelap):
+   permukaan navy gelap + border luar tipis + garis dalam (inset) halus + shadow lembut.
+   Biru & emas hanya aksen (border/ikon/teks), bukan fill. Yang berbeda hanya hierarki:
+     primer  = border luar lebih kuat   | sekunder = border standar
+     emas    = teks/ikon emas           | bahaya   = border/teks merah
+     aktif   = permukaan sedikit lebih terang + border kuat
+   ========================================================================== */
+:root {
+  --ui-surface: #171d28;
+  --ui-surface-hi: #1c2433;
+  --ui-surface-well: #121824;
+  --ui-line: rgba(120, 150, 200, 0.28);
+  --ui-line-strong: rgba(120, 150, 200, 0.5);
+  --ui-line-inner: rgba(120, 150, 200, 0.16);
+  --ui-radius: 16px;
+}
+
+@layer components {
+  /* ---------- Permukaan dasar (kartu / panel) ---------- */
+  .ui-surface {
+    position: relative;
+    background: var(--ui-surface);
+    border: 1px solid var(--ui-line);
+    border-radius: 18px;
+    box-shadow:
+      0 8px 20px rgba(0, 0, 0, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.035);
+  }
+  .ui-surface::after {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border: 1px dashed var(--ui-line-inner);
+    border-radius: 14px;
+    pointer-events: none;
+  }
+  .ui-accent { color: #e5b93f; }
+  .ui-icon-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--ui-surface-well);
+    border: 1px solid rgba(110, 145, 205, 0.24);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+  }
+  .ui-icon-box.is-active {
+    background: var(--ui-surface-hi);
+    border-color: var(--ui-line-strong);
+  }
+
+  /* ---------- Kunci (tombol aksi) & chip filter / tab: satu keluarga ---------- */
+  html:not(.theme-light) :is(
+    .btn, .rpg-btn, .rpg-btn-primary, .btn-primary, .btn-cta, .btn-skeuo-indigo, .btn-skeuo-gold,
+    .skeuo-btn-gold, .btn-secondary, .rpg-btn-secondary, .skeuo-btn, .dungeon-btn,
+    .btn-physical-primary, .btn-physical-secondary, .btn-physical-danger, .rpg-btn-danger,
+    .skeuo-tier-pill, .notebook-filter-tab, .ui-chip
+  ) {
+    --k-bg: var(--ui-surface);
+    --k-line: var(--ui-line);
+    background: var(--k-bg);
+    color: #d6dcea;
+    border: 1px solid var(--k-line);
+    border-radius: var(--ui-radius);
+    text-shadow: none;
+    box-shadow:
+      inset 0 0 0 4px var(--k-bg),
+      inset 0 0 0 5px var(--ui-line-inner),
+      0 8px 20px rgba(0, 0, 0, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.035);
+    transform: translateY(0);
+    filter: none;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease,
+      box-shadow 0.15s ease, transform 0.08s ease;
+  }
+
+  /* Hierarki: primer = border luar lebih kuat, teks terang */
+  html:not(.theme-light) :is(
+    .btn:not(.btn-secondary):not(.btn-pill), .rpg-btn:not(.rpg-btn-secondary):not(.rpg-btn-danger),
+    .rpg-btn-primary, .btn-primary, .btn-cta, .btn-skeuo-indigo, .btn-physical-primary
+  ) {
+    --k-bg: var(--ui-surface-hi);
+    --k-line: var(--ui-line-strong);
+    color: #f1f4fa;
+  }
+
+  /* Hierarki: emas = aksen teks + border emas tipis (fill tetap navy) */
+  html:not(.theme-light) :is(.btn-skeuo-gold, .skeuo-btn-gold) {
+    --k-bg: var(--ui-surface-hi);
+    --k-line: rgba(229, 185, 63, 0.42);
+    color: #e5b93f;
+  }
+
+  /* Hierarki: bahaya = aksen merah, fill tetap gelap */
+  html:not(.theme-light) :is(.btn-physical-danger, .rpg-btn-danger) {
+    --k-bg: #1c161c;
+    --k-line: rgba(226, 85, 91, 0.45);
+    color: #f2a3a7;
+  }
+
+  /* Hover: sedikit lebih terang + border lebih kuat (tanpa filter / gerak) */
+  html:not(.theme-light) :is(
+    .btn, .rpg-btn, .rpg-btn-primary, .btn-primary, .btn-cta, .btn-skeuo-indigo, .btn-skeuo-gold,
+    .skeuo-btn-gold, .btn-secondary, .rpg-btn-secondary, .skeuo-btn, .dungeon-btn,
+    .btn-physical-primary, .btn-physical-secondary, .btn-physical-danger, .rpg-btn-danger,
+    .skeuo-tier-pill, .notebook-filter-tab, .ui-chip
+  ):hover:not(:disabled) {
+    --k-bg: #1d2535;
+    --k-line: var(--ui-line-strong);
+    color: #f1f4fa;
+    filter: none;
+    transform: translateY(0);
+  }
+
+  /* Active (ditekan): permukaan lebih gelap, tenggelam 1px */
+  html:not(.theme-light) :is(
+    .btn, .rpg-btn, .rpg-btn-primary, .btn-primary, .btn-cta, .btn-skeuo-indigo, .btn-skeuo-gold,
+    .skeuo-btn-gold, .btn-secondary, .rpg-btn-secondary, .skeuo-btn, .dungeon-btn,
+    .btn-physical-primary, .btn-physical-secondary, .btn-physical-danger, .rpg-btn-danger,
+    .skeuo-tier-pill, .notebook-filter-tab, .ui-chip
+  ):active:not(:disabled) {
+    --k-bg: #141a25;
+    transform: translateY(1px);
+    box-shadow:
+      inset 0 0 0 4px var(--k-bg),
+      inset 0 0 0 5px var(--ui-line-inner),
+      inset 0 2px 6px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Terpilih (tab / filter aktif): lebih terang + border kuat + ikon beraksen emas */
+  html:not(.theme-light) :is(
+    .skeuo-tier-pill.active, .notebook-filter-tab.active, .ui-chip.is-active, .seg-active
+  ) {
+    --k-bg: var(--ui-surface-hi);
+    --k-line: var(--ui-line-strong);
+    background: var(--k-bg);
+    color: #f1f4fa;
+    border: 1px solid var(--k-line);
+    transform: translateY(0);
+    box-shadow:
+      inset 0 0 0 4px var(--k-bg),
+      inset 0 0 0 5px var(--ui-line-inner),
+      0 8px 20px rgba(0, 0, 0, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+  html:not(.theme-light) :is(.skeuo-tier-pill.active, .ui-chip.is-active) svg { color: #e5b93f; }
+
+  /* Chip filter tidak aktif: sumur tenang (lebih gelap, border redup) */
+  html:not(.theme-light) :is(.skeuo-tier-pill:not(.active), .notebook-filter-tab:not(.active), .ui-chip:not(.is-active)) {
+    --k-bg: var(--ui-surface-well);
+    --k-line: var(--ui-line-inner);
+    color: #98a2b8;
+  }
+  html:not(.theme-light) :is(.skeuo-tier-pill:not(.active), .notebook-filter-tab:not(.active), .ui-chip:not(.is-active)):hover:not(:disabled) {
+    --k-bg: var(--ui-surface);
+    --k-line: var(--ui-line);
+    color: #d6dcea;
+  }
+
+  .ui-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  /* Disabled: tetap satu material, hanya redup */
+  html:not(.theme-light) :is(.btn, .rpg-btn, .btn-cta, .btn-secondary, .btn-skeuo-indigo, .btn-skeuo-gold, .skeuo-btn,
+    .skeuo-btn-gold, .btn-physical-primary, .btn-physical-secondary, .btn-physical-danger, .ui-chip):disabled {
+    filter: none;
+    opacity: 0.5;
+  }
+
+  /* Bar navigasi: permukaan yang sama */
+  html:not(.theme-light) .skeuo-navbar {
+    background: var(--ui-surface);
+    border-color: var(--ui-line);
+    box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.035);
+  }
+}

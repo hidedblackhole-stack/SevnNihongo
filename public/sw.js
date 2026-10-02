@@ -1,5 +1,5 @@
 // SevnQuest Service Worker for PWA Support (v2.5)
-const CACHE_NAME = 'sevnquest-v2.5';
+const CACHE_NAME = 'sevnquest-v2.6';
 // Path relatif terhadap scope SW supaya benar di root (Vercel/standalone) maupun sub-path (GitHub Pages).
 const STATIC_ASSETS = [
   'manifest.webmanifest',

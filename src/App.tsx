@@ -117,7 +117,7 @@ export default function App() {
           paddingTop: 'max(0.625rem, env(safe-area-inset-top))',
         }}
       >
-        <div className="max-w-4xl mx-auto w-full flex items-center justify-between relative z-10">
+        <div className="max-w-4xl lg:max-w-6xl mx-auto w-full flex items-center justify-between relative z-10">
           <div
             onClick={() => {
               setSelectedStage(null);

@@ -60,10 +60,8 @@ const BottomNavigationComponent: React.FC<BottomNavigationProps> = ({
               }`}
             >
               <div
-                className={`p-1.5 sm:p-2 rounded-xl transition-[background-color,border-color,box-shadow] duration-150 ${
-                  isActive
-                    ? 'bg-surface-elevated text-indigo border border-border-muted shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_4px_rgba(0,0,0,0.2)]'
-                    : 'bg-surface-inset/40 text-text-secondary border border-transparent'
+                className={`ui-icon-box p-1.5 sm:p-2 rounded-xl ${
+                  isActive ? 'is-active text-indigo' : 'text-text-secondary'
                 }`}
               >
                 <Icon className="w-4 h-4 sm:w-5 sm:h-5" />

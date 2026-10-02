@@ -1125,11 +1125,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
                   setVisibleCount(30);
                   playSound('click', soundEnabled);
                 }}
-                className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 shrink-0 transition-all ${
-                  isActive
-                    ? 'bg-surface-inset border border-border-subtle text-text-primary shadow-sm'
-                    : 'text-text-muted hover:text-text-primary hover:bg-surface-inset/60 border border-transparent'
-                }`}
+                className={`ui-chip px-4 py-2.5 text-xs sm:text-sm font-bold gap-2 shrink-0 ${isActive ? 'is-active' : ''}`}
               >
                 <Icon className="w-4 h-4 opacity-75" />
                 <span>{tab.label}</span>
@@ -1155,11 +1151,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
                 setVisibleCount(30);
                 playSound('click', soundEnabled);
               }}
-              className={`px-3 py-1 rounded-lg text-xs font-medium shrink-0 flex items-center gap-1.5 transition-all ${
-                levelFilter === opt.value
-                  ? 'bg-surface-inset border border-border-subtle text-text-primary font-bold shadow-sm'
-                  : 'text-text-muted hover:text-text-primary hover:bg-surface-inset/60 border border-transparent'
-              }`}
+              className={`ui-chip px-3 py-1 text-xs font-medium shrink-0 ${levelFilter === opt.value ? 'is-active font-bold' : ''}`}
             >
               <span>{opt.label}</span>
               <span className="font-mono text-[10px] opacity-60">
@@ -1189,11 +1181,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
                     setVisibleCount(30);
                     playSound('click', soundEnabled);
                   }}
-                  className={`px-3 py-1 rounded-lg text-xs font-medium shrink-0 flex items-center gap-1.5 transition-all ${
-                    isSubActive
-                      ? 'bg-surface-elevated border border-border-muted text-gold font-bold shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_4px_rgba(0,0,0,0.25)]'
-                      : 'text-text-muted hover:text-text-primary hover:bg-surface-inset/60 border border-transparent'
-                  }`}
+                  className={`ui-chip px-3 py-1 text-xs font-medium shrink-0 ${isSubActive ? 'is-active font-bold' : ''}`}
                 >
                   <span>{meta.label}</span>
                   <span className="font-jp text-[10px] opacity-65">({meta.jp})</span>
