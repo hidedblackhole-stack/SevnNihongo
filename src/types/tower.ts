@@ -143,6 +143,8 @@ export interface PlayerMastery {
   correct: number;
   lastSeen: number; // Floor number or epoch timestamp
   masteryScore: number; // 0 to 100
+  /** Kategori materi dari itemMastery (kotoba/kanji/bunpou/...); dipakai gerbang boss agar tidak menebak dari awalan ID. */
+  category?: string;
   memoryState?: MemoryState;
 }
 

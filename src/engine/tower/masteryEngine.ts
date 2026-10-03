@@ -155,7 +155,8 @@ export function extractPlayerWeaknesses(
         attempt: attempts,
         correct,
         lastSeen: profile.currentFloor || 1,
-        masteryScore: score
+        masteryScore: score,
+        category: record.category
       };
 
       // Categorize weakness
@@ -173,7 +174,9 @@ export function extractPlayerWeaknesses(
 
   // 3. Evaluate any records in masteryMap for low score or due status
   for (const [wordId, m] of Object.entries(masteryMap)) {
-    if (m.masteryScore < 70 && !weakWords.includes(wordId)) {
+    // Hanya kosakata (atau record tanpa kategori); kanji/bunpou rawan sudah dikategorikan di atas.
+    const isVocab = !m.category || m.category === 'kotoba';
+    if (isVocab && m.masteryScore < 70 && !weakWords.includes(wordId)) {
       weakWords.push(wordId);
     }
   }

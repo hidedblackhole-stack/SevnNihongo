@@ -15,6 +15,13 @@ export interface TowerSavedProgress {
 
 const STORAGE_KEY = 'nq_tower_progression';
 
+/**
+ * Gerbang boss Tower (lantai 100, 200, …) menuntut rata-rata mastery kanji/tata bahasa/kosakata (lihat bossGate.ts).
+ * false = gerbang selalu terbuka (mode uji, perilaku sebelumnya). Ubah ke true setelah ambang di
+ * BOSS_GATE_REQUIREMENTS dikalibrasi terhadap data pemain nyata.
+ */
+export const TOWER_BOSS_GATE_ENFORCED = false;
+
 const DEFAULT_PROGRESS: TowerSavedProgress = {
   currentFloor: 1,
   highestFloorCleared: 0,
@@ -122,7 +129,7 @@ export function buildTowerPlayerProfile(
     masteryRecords: masteryMap,
     clearedFloors: progress.clearedFloors,
     activeStreak: stats?.streakDays || 0,
-    isTestMode: true,
-    bypassBossGate: true
+    isTestMode: !TOWER_BOSS_GATE_ENFORCED,
+    bypassBossGate: !TOWER_BOSS_GATE_ENFORCED
   };
 }

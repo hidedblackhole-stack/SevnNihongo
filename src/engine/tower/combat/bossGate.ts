@@ -117,16 +117,22 @@ export function checkBossGate(
   let grammarCount = 0;
 
   for (const [id, m] of Object.entries(masteryMap)) {
-    if (id.startsWith('kj_') || id.length === 1) {
+    // Kategori dari record mastery adalah sumber kebenaran; tebakan dari awalan ID hanya cadangan.
+    const category = m.category
+      || (/^(kj_|kanji_|kana_)/.test(id) || id.length === 1 ? 'kanji'
+        : /^bp_|^w[0-9]+d[0-9]+g[0-9]+/.test(id) || id.includes('grammar') ? 'bunpou'
+        : 'kotoba');
+    if (category === 'kanji') {
       totalKanjiScore += m.masteryScore;
       kanjiCount++;
-    } else if (id.startsWith('bp_') || id.includes('grammar')) {
+    } else if (category === 'bunpou') {
       totalGrammarScore += m.masteryScore;
       grammarCount++;
-    } else {
+    } else if (category === 'kotoba') {
       totalVocabScore += m.masteryScore;
       vocabCount++;
     }
+    // dokkai/choukai tidak termasuk tiga pilar gerbang
   }
 
   // Base fallback if fresh or unindexed (gives reasonable defaults or uses profile)
@@ -151,12 +157,12 @@ export function checkBossGate(
     weaknesses.push(`Penguasaan Kosakata (${currentVocab}% / Min ${gateRequirement.minVocabularyMastery}%)`);
   }
 
-  // Also include specific weak tags
+  // Syarat masuk hanya rata-rata penguasaan tiga pilar; daftar item rawan bersifat informasi saja
+  // (sebelumnya satu kata rawan saja sudah mengunci gerbang selamanya).
+  const canEnter = weaknesses.length === 0;
   if (weakWords.length > 0) weaknesses.push(`Kosakata rawan: ${weakWords.slice(0, 3).join(', ')}`);
   if (weakGrammar.length > 0) weaknesses.push(`Pola rawan: ${weakGrammar.slice(0, 2).join(', ')}`);
   if (weakKanji.length > 0) weaknesses.push(`Kanji rawan: ${weakKanji.slice(0, 3).join(', ')}`);
-
-  const canEnter = weaknesses.length === 0;
   const recommendedStart = Math.max(1, floor - 25);
   const recommendedEnd = Math.max(1, floor - 1);
 
