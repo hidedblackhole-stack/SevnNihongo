@@ -51,9 +51,10 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
   onRestAtDojo,
   onUsePotion,
 }) => {
-  const restCost = getDojoRestCost(stats.hp, stats.maxHp);
+  const restCost = getDojoRestCost(stats.hp, stats.maxHp, stats.mp, stats.maxMp);
   const potionCount = countPotions(stats.inventory);
   const hpFull = stats.hp >= stats.maxHp;
+  const fullyRested = hpFull && stats.mp >= stats.maxMp;
   // Mobile/Hardware back button handler
   useBackButton(isOpen, () => {
     onClose();
@@ -217,7 +218,7 @@ export const CharacterStatusModal: React.FC<CharacterStatusModalProps> = ({
                   onClick={() => { playSound('coin', stats.soundEnabled); onRestAtDojo?.(); }}
                   className="btn-physical-primary flex-1 min-h-[44px] py-2.5 px-4 rounded-xl text-xs font-bold font-heading disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {hpFull ? 'Sudah Bugar' : `Istirahat di Dojo · ${restCost} Koin`}
+                  {fullyRested ? 'Sudah Bugar' : `Istirahat di Dojo · ${restCost} Koin`}
                 </button>
               </div>
             </div>
