@@ -8,6 +8,7 @@ import { INITIAL_STUDY_STATS } from '../utils/activity';
 import { getTodayLocalDate } from '../utils/time';
 import { DEFAULT_STATS, INITIAL_ITEM_MASTERY } from './defaultStats';
 import { canonicalizeStats } from './canonicalizeStats';
+import { applyLevelFromExp } from './derivedState';
 import {
   STORAGE_KEY_STATS,
   STORAGE_KEY_STAGES,
@@ -18,7 +19,7 @@ import {
 
 /** Muat PlayerStats dari localStorage (migrasi/validasi + ID kanonik) atau buat state baru. */
 export function loadInitialStats(): PlayerStats {
-  return canonicalizeStats(loadInitialStatsRaw());
+  return applyLevelFromExp(canonicalizeStats(loadInitialStatsRaw())).stats;
 }
 
 function loadInitialStatsRaw(): PlayerStats {

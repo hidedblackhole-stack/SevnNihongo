@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { PlayerStats } from '../types/rpg';
 import { UserMasteryEntity, UserActivityEntity } from '../types/identity';
-import { getTierForExp } from '../data/tiers';
+import { getTierForExp, calculateLevelFromExp } from '../data/tiers';
 import type { TowerCloudState } from '../engine/tower/world/towerCloudState';
 
 /**
@@ -320,7 +320,7 @@ export async function upsertLeaderboard(stats: PlayerStats) {
       if (!(await getSession())) return;
       const { error: rpcError } = await supabase.rpc('upsert_leaderboard_entry', {
         p_player_name: stats.playerName || 'Unknown Player',
-        p_level: Math.round(Number(stats.level) || 1),
+        p_level: Math.max(Math.round(Number(stats.level) || 1), calculateLevelFromExp(roundedExp)),
         p_total_exp: roundedExp,
         p_avatar_url: stats.avatar || null,
         p_stat_tryout: Math.round(Number(stats.studyStats?.tryOuts?.total) || 0),
@@ -337,7 +337,7 @@ export async function upsertLeaderboard(stats: PlayerStats) {
       .upsert({
         user_id: stats.userId,
         player_name: stats.playerName || 'Unknown Player',
-        level: Math.round(Number(stats.level) || 1),
+        level: Math.max(Math.round(Number(stats.level) || 1), calculateLevelFromExp(roundedExp)),
         total_exp: roundedExp,
         tier_index: effectiveTierIndex,
         avatar_url: stats.avatar || null,

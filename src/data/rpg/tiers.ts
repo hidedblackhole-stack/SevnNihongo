@@ -293,3 +293,6 @@ export function getTierForExp(
     remainingExpToNextTier
   };
 }
+
+/** Poin atribut (STR/AGI/INT/VIT) yang didapat setiap naik 1 level. */
+export const ATTRIBUTE_POINTS_PER_LEVEL = 3;

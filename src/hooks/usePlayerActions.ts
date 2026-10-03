@@ -17,6 +17,7 @@ import { getGameOverHp } from '../utils/recovery';
 import { DEFAULT_STATS } from '../state/defaultStats';
 import { canonicalEntityId } from '../state/canonicalizeStats';
 import { STORAGE_KEY_SIGNATURE } from '../state/storageKeys';
+import { applyLevelFromExp } from '../state/derivedState';
 import type { TabType } from '../components/layout/BottomNavigation';
 import type { WorldNavView } from '../components/map/WorldView';
 
@@ -44,6 +45,11 @@ export function usePlayerActions({
 }: Params) {
 // Give EXP & Gold reward directly (pure base EXP, respects JLPT Ascension gates)
   const handleRewardPlayer = (expGained: number, goldGained: number = 0) => {
+    const preview = applyLevelFromExp({ ...stats, totalExp: Math.round(Math.max(0, (stats.totalExp || 0) + expGained)) });
+    if (preview.levelsGained > 0) {
+      playSound('levelup', stats.soundEnabled);
+      showToast(`Naik ke Level ${preview.stats.level}! +${preview.stats.unallocatedPoints - (stats.unallocatedPoints || 0)} poin atribut`, 4000);
+    }
     setStats(prev => {
       const newTotalExp = Math.round(Math.max(0, (prev.totalExp || 0) + expGained));
       const { effectiveTierIndex, isGated, gatedReason } = getEffectiveTier({
@@ -51,14 +57,16 @@ export function usePlayerActions({
         totalExp: newTotalExp,
       });
 
-      return {
+      // Level adalah fungsi dari totalExp: naik level memberi poin atribut dan menambah HP/MP maksimum.
+      const { stats: leveled } = applyLevelFromExp({
         ...prev,
         totalExp: newTotalExp,
         tierIndex: Math.max(0, effectiveTierIndex),
         tierPromotionGated: isGated,
         gatedReason: gatedReason,
         gold: Math.round(Math.max(0, (prev.gold || 0) + goldGained)),
-      };
+      });
+      return leveled;
     });
   };
 

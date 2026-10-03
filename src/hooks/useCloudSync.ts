@@ -116,7 +116,7 @@ const [cloudSyncStatus, setCloudSyncStatus] = useState<CloudSyncStatus>('idle');
 
       let mergedStats: PlayerStats;
       if (cloudWins) {
-        const finalLevel = cloudStats.level || calculateLevelFromExp(cloudExp);
+        const finalLevel = Math.max(cloudStats.level || 1, calculateLevelFromExp(cloudExp));
         const finalHp = calculateMaxHp(finalLevel, cloudStats.vit || 0);
         const finalMp = calculateMaxMp(finalLevel, cloudStats.int || 0);
         const candidateMerged: PlayerStats = {
