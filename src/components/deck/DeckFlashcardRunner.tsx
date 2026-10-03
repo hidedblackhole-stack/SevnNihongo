@@ -7,10 +7,10 @@ import { UserDeck } from '../../types/rpg';
 import { ResolvedDeckItem, resolveDeckItem } from '../../utils/decks';
 import { playSound } from '../../utils/audio';
 import { UniversalFlashcard } from '../learning/UniversalFlashcard';
-import { getKanjiBaseExp, getKotobaBaseExp, getBunpouBaseExp, calculateFlashcardReward } from '../../utils/rewards';
+import { ENGINE_EXP_MULTIPLIER, getKanjiBaseExp, getKotobaBaseExp, getBunpouBaseExp, calculateFlashcardReward } from '../../utils/rewards';
 
 // Dynamic micro-multiplier for flashcard flips: Base EXP * 0.005
-const FLASHCARD_FLIP_MULTIPLIER = 0.005;
+const FLASHCARD_FLIP_MULTIPLIER = ENGINE_EXP_MULTIPLIER.flashcard_flip;
 
 interface DeckFlashcardRunnerProps {
   deck: UserDeck;

@@ -29,7 +29,7 @@ import { UniversalWritingCard } from '../learning/UniversalWritingCard';
 import { SentenceTile, validateSentenceSubmission, validateSentenceTextSubmission, ValidationFeedback } from '../../engine';
 import { JapaneseImeInput } from '../common/JapaneseImeInput';
 import { RubyText } from '../learning/RubyText';
-import { getKanjiBaseExp, getKotobaBaseExp, getBunpouBaseExp } from '../../utils/rewards';
+import { ENGINE_EXP_MULTIPLIER, getKanjiBaseExp, getKotobaBaseExp, getBunpouBaseExp } from '../../utils/rewards';
 import { ResolvedDeckItem, toggleBookmarkItem } from '../../utils/decks';
 import { getTargetFormDisplay, getConjugatedMeaningId } from '../../data/conjugationRules';
 import { BunpouItem } from '../../types/content';
@@ -37,7 +37,7 @@ import { BlackboardPlaygroundModule } from './BlackboardPlaygroundModule';
 import { UserDeck } from '../../types/rpg';
 
 // Dynamic micro-multiplier for flashcard flips: Base EXP * 0.005
-const FLASHCARD_FLIP_MULTIPLIER = 0.005;
+const FLASHCARD_FLIP_MULTIPLIER = ENGINE_EXP_MULTIPLIER.flashcard_flip;
 
 function cleanPatternToken(s: string): string {
   return s

@@ -1,3 +1,44 @@
+import { KOTOBA_DATABASE } from '../data/kotoba';
+import { KANJI_DATABASE } from '../data/kanji';
+import { BUNPOU_DATABASE } from '../data/bunpou';
+
+/**
+ * EXP = Base EXP item × multiplier engine (× faktor performa, bila ada).
+ * Base EXP berasal dari identitas materi (getKotobaBaseExp / getKanjiBaseExp / getBunpouBaseExp);
+ * setiap engine/mode latihan hanya menentukan multiplier-nya di tabel ini — jangan menulis angka EXP per mode.
+ */
+export type ExpEngineId =
+  | 'flashcard_flip'  // membalik kartu (mikro-EXP per balik)
+  | 'flashcard'       // menyelesaikan kartu
+  | 'quiz'            // pilihan ganda
+  | 'writing'         // menulis (kanji / kosakata)
+  | 'sentence'        // menyusun kalimat
+  | 'recall'          // tinjau SRS
+  | 'arcade';         // mode arcade cepat (kecepatan > kedalaman)
+
+export const ENGINE_EXP_MULTIPLIER: Readonly<Record<ExpEngineId, number>> = {
+  flashcard_flip: 0.005,
+  flashcard: 1.0,
+  quiz: 1.2,
+  writing: 1.5,
+  sentence: 2.0,
+  recall: 1.0,
+  arcade: 0.35,
+};
+
+/** EXP akhir untuk satu materi pada satu engine. `performanceFactor` ≈ 1 (bonus/penalti performa). */
+export function calcEngineExp(baseExp: number, engine: ExpEngineId, performanceFactor = 1): number {
+  return Math.max(0, Math.round(baseExp * ENGINE_EXP_MULTIPLIER[engine] * performanceFactor));
+}
+
+/** Base EXP materi berdasarkan kategori + ID kanonik; null bila materi tidak dikenal. */
+export function getEntityBaseExp(category: string, id: string): number | null {
+  if (category === 'kotoba') { const k = KOTOBA_DATABASE[id]; return k ? getKotobaBaseExp(k) : null; }
+  if (category === 'kanji') { const k = KANJI_DATABASE[id]; return k ? getKanjiBaseExp(k) : null; }
+  if (category === 'bunpou') { const b = BUNPOU_DATABASE[id]; return b ? getBunpouBaseExp(b) : null; }
+  return null;
+}
+
 /**
  * Base EXP constants based on JLPT tier difficulty.
  */
@@ -198,10 +239,12 @@ export function calculateWritingReward(
     bonusReasons.push('Fokus Cepat (+10%)');
   }
 
-  // Sandbox Mode: Pure Base EXP of the component is retained
-  const expGained = baseExp;
+  // Mode menulis: Base EXP × multiplier engine writing × faktor performa. Bonus/penalti di atas (basis 1.2)
+  // dinormalkan ke faktor 0.8–1.25 agar total tetap proporsional terhadap multiplier engine.
+  const performanceFactor = Math.min(1.25, Math.max(0.8, multiplier / 1.2));
+  const expGained = calcEngineExp(baseExp, 'writing', performanceFactor);
   const goldGained = 0;
-  const finalMultiplier = 1.0;
+  const finalMultiplier = Number((ENGINE_EXP_MULTIPLIER.writing * performanceFactor).toFixed(2));
 
   return {
     expGained,
@@ -223,13 +266,13 @@ export function calculateWritingReward(
 }
 
 /**
- * Flashcard event reward calculation: Pure Base EXP.
+ * Flashcard event reward calculation: Base EXP × multiplier engine flashcard.
  */
 export function calculateFlashcardReward(baseExp: number, _isMastered: boolean): {
   expGained: number;
   goldGained: number;
 } {
-  return { expGained: baseExp, goldGained: 0 };
+  return { expGained: calcEngineExp(baseExp, 'flashcard'), goldGained: 0 };
 }
 
 export interface QuizRewardOptions {
@@ -297,7 +340,8 @@ export function calculateQuizReward(
   // Optional INT stat bonus (+0.5% exp per INT point)
   const intMultiplier = 1 + (Math.max(0, playerInt) * 0.005);
 
-  const baseTotal = correctCount * basePerQuestion;
+  // Base EXP per soal (menurut level) × multiplier engine quiz.
+  const baseTotal = correctCount * basePerQuestion * ENGINE_EXP_MULTIPLIER.quiz;
   const expGained = Math.max(10, Math.round(baseTotal * accuracyBonusMultiplier * intMultiplier));
   const goldGained = Math.max(5, Math.round(expGained * 0.5));
 

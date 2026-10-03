@@ -24,6 +24,7 @@ import { UserDeck } from '../../types/rpg';
 import { OFFICIAL_BOOKS } from '../../data/officialBooks';
 import { getKanjiPoolForBook } from '../../utils/arcadeSourceUtils';
 import { ArcadeSourceSelector } from './ArcadeSourceSelector';
+import { calcEngineExp, getKanjiBaseExp } from '../../utils/rewards';
 
 interface KanjiSpeedRushModalProps {
   isOpen: boolean;
@@ -201,7 +202,7 @@ export const KanjiSpeedRushModal: React.FC<KanjiSpeedRushModalProps> = ({
     playSound('coin', soundEnabled);
     
     // Reward player EXP & Gold
-    const expGain = 15;
+    const expGain = Math.max(1, calcEngineExp(getKanjiBaseExp(currentItem), 'arcade'));
     const goldGain = 10;
     // Satu jalur reward saja (lihat catatan di SuddenDeathStreakModal).
     if (onCompleteStudyItem) {

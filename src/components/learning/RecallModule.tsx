@@ -4,6 +4,7 @@ import { Flame, CheckCircle2, XCircle, Volume2, ArrowRight, Award, ShieldAlert, 
 import confetti from 'canvas-confetti';
 import { RecallQueueItem, RecallPriorityTier } from '../../types/content';
 import { playSound, speakJapanese } from '../../utils/audio';
+import { calcEngineExp, getEntityBaseExp } from '../../utils/rewards';
 import { RubyText } from './RubyText';
 
 interface RecallModuleProps {
@@ -34,6 +35,8 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [isAnswered, setIsAnswered] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
+  // EXP sesi = Σ (Base EXP materi × multiplier engine) untuk tiap jawaban benar
+  const [sessionExp, setSessionExp] = useState(0);
   const [hiddenOptions, setHiddenOptions] = useState<number[]>([]);
   const [isFinished, setIsFinished] = useState(false);
 
@@ -123,6 +126,7 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
     const isCorrect = idx === currentQ.correctIndex;
     if (isCorrect) {
       setCorrectCount(prev => prev + 1);
+      setSessionExp(prev => prev + calcEngineExp(getEntityBaseExp(currentItem.category, currentItem.itemId) ?? 25, 'recall'));
       playSound('correct', soundEnabled);
     } else {
       playSound('wrong', soundEnabled);
@@ -155,6 +159,7 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
     
     if (isCorrect) {
       setCorrectCount(prev => prev + 1);
+      setSessionExp(prev => prev + calcEngineExp(getEntityBaseExp(currentItem.category, currentItem.itemId) ?? 25, 'sentence'));
       playSound('correct', soundEnabled);
     } else {
       playSound('wrong', soundEnabled);
@@ -171,7 +176,7 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
       setHiddenOptions([]);
     } else {
       setIsFinished(true);
-      const expGained = correctCount * 25 + Math.round(playerInt * 2);
+      const expGained = sessionExp + Math.round(playerInt * 2);
       const goldGained = correctCount * 15;
 
       if (correctCount >= Math.ceil(totalItems * 0.7)) {

@@ -22,6 +22,7 @@ import { UserDeck } from '../../types/rpg';
 import { OFFICIAL_BOOKS } from '../../data/officialBooks';
 import { getKotobaPoolForBook } from '../../utils/arcadeSourceUtils';
 import { ArcadeSourceSelector } from './ArcadeSourceSelector';
+import { calcEngineExp, getEntityBaseExp } from '../../utils/rewards';
 
 interface SuddenDeathStreakModalProps {
   isOpen: boolean;
@@ -237,7 +238,9 @@ export const SuddenDeathStreakModal: React.FC<SuddenDeathStreakModalProps> = ({
       setTotalCorrect(prev => prev + 1);
 
       // Rewards
-      const expGain = 10 + Math.min(newStreak, 10);
+      // Base EXP kata × engine arcade, + bonus streak (maks +10).
+      const baseKotobaExp = getEntityBaseExp('kotoba', currentQ.id) ?? 30;
+      const expGain = Math.max(1, calcEngineExp(baseKotobaExp, 'arcade')) + Math.min(newStreak, 10);
       const goldGain = 5 + Math.floor(newStreak / 2);
       // Satu jalur reward saja: onCompleteStudyItem sudah memberi EXP/Gold di App.handleStudyComplete.
       if (onCompleteStudyItem) {

@@ -22,6 +22,7 @@ import { UserDeck } from '../../types/rpg';
 import { OFFICIAL_BOOKS } from '../../data/officialBooks';
 import { getKotobaPoolForBook } from '../../utils/arcadeSourceUtils';
 import { ArcadeSourceSelector } from './ArcadeSourceSelector';
+import { calcEngineExp, getKotobaBaseExp } from '../../utils/rewards';
 
 interface KotobaGuessModalProps {
   isOpen: boolean;
@@ -257,7 +258,7 @@ export const KotobaGuessModal: React.FC<KotobaGuessModalProps> = ({
       });
 
       // Rewards
-      const expGain = 8;
+      const expGain = Math.max(1, calcEngineExp(getKotobaBaseExp(currentWord), 'arcade'));
       const goldGain = 5;
       // Satu jalur reward saja (lihat catatan di SuddenDeathStreakModal).
       if (onCompleteStudyItem) {
