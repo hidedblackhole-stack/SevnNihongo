@@ -144,7 +144,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
           className="btn btn-cta flex items-center justify-between text-left group"
         >
           <div className="flex items-center gap-3.5 min-w-0 flex-1">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-surface-inset/80 text-gold flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform shrink-0 border border-border-subtle">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 ui-icon-box rounded-xl text-gold group-hover:scale-105 transition-transform shrink-0">
               <Play className="w-5 h-5 sm:w-6 sm:h-6 ml-0.5 fill-gold text-gold" />
             </div>
             <div className="space-y-0.5 min-w-0 flex-1">
@@ -157,7 +157,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
             </div>
           </div>
 
-          <div className="w-8 h-8 rounded-full bg-surface-inset/50 flex items-center justify-center shrink-0 group-hover:translate-x-1 transition-transform border border-border-subtle">
+          <div className="w-8 h-8 ui-icon-box rounded-full shrink-0 group-hover:translate-x-1 transition-transform">
             <ChevronRight className="w-5 h-5 text-gold-soft font-bold" />
           </div>
         </motion.button>
