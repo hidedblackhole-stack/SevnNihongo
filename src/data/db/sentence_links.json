@@ -15472,7 +15472,7 @@
     },
     {
       "sentence_id": "sen_kt_kotoba_n2_0004",
-      "vocabulary_id": "kotoba_n2_0004",
+      "vocabulary_id": "kotoba_0914",
       "role": "target_word"
     },
     {
@@ -15667,7 +15667,7 @@
     },
     {
       "sentence_id": "sen_kt_kotoba_n2_0043",
-      "vocabulary_id": "kotoba_n2_0043",
+      "vocabulary_id": "kotoba_0031",
       "role": "target_word"
     },
     {
@@ -15717,7 +15717,7 @@
     },
     {
       "sentence_id": "sen_kt_kotoba_n2_0053",
-      "vocabulary_id": "kotoba_n2_0053",
+      "vocabulary_id": "kt_train_06",
       "role": "target_word"
     },
     {
@@ -16032,7 +16032,7 @@
     },
     {
       "sentence_id": "sen_kt_kotoba_n2_0116",
-      "vocabulary_id": "kotoba_n2_0116",
+      "vocabulary_id": "kt_train_08",
       "role": "target_word"
     },
     {
@@ -17712,7 +17712,7 @@
     },
     {
       "sentence_id": "sen_kt_kotoba_n1_0052",
-      "vocabulary_id": "kotoba_n1_0052",
+      "vocabulary_id": "kotoba_n2_0042",
       "role": "target_word"
     },
     {
@@ -17752,7 +17752,7 @@
     },
     {
       "sentence_id": "sen_kt_kotoba_n1_0060",
-      "vocabulary_id": "kotoba_n1_0060",
+      "vocabulary_id": "kotoba_n2_0044",
       "role": "target_word"
     },
     {
@@ -19432,7 +19432,7 @@
     },
     {
       "sentence_id": "sen_kt_kotoba_n1_0396",
-      "vocabulary_id": "kotoba_n1_0396",
+      "vocabulary_id": "kotoba_n2_0022",
       "role": "target_word"
     },
     {
@@ -19517,22 +19517,22 @@
     },
     {
       "sentence_id": "sen_kt_kotoba_0308",
-      "vocabulary_id": "kt_train_13",
+      "vocabulary_id": "kotoba_0308",
       "role": "target_word"
     },
     {
       "sentence_id": "sen_kt_kotoba_0059",
-      "vocabulary_id": "kt_train_14",
+      "vocabulary_id": "kotoba_1970",
       "role": "target_word"
     },
     {
       "sentence_id": "sen_kt_kotoba_0488",
-      "vocabulary_id": "kt_train_15",
+      "vocabulary_id": "kotoba_0488",
       "role": "target_word"
     },
     {
       "sentence_id": "sen_kt_kotoba_0375",
-      "vocabulary_id": "kt_train_16",
+      "vocabulary_id": "kotoba_0375",
       "role": "target_word"
     },
     {
@@ -19547,12 +19547,12 @@
     },
     {
       "sentence_id": "sen_kt_kt_train_19",
-      "vocabulary_id": "kt_train_19",
+      "vocabulary_id": "kotoba_0144",
       "role": "target_word"
     },
     {
       "sentence_id": "sen_kt_kt_train_20",
-      "vocabulary_id": "kt_train_20",
+      "vocabulary_id": "kotoba_0564",
       "role": "target_word"
     },
     {
@@ -26657,7 +26657,7 @@
     },
     {
       "sentence_id": "sen_kt_kotoba_n1_0428",
-      "vocabulary_id": "kotoba_n1_0428",
+      "vocabulary_id": "kotoba_n2_0014",
       "role": "target_word"
     },
     {
@@ -27122,7 +27122,7 @@
     },
     {
       "sentence_id": "sen_kt_kotoba_n1_0521",
-      "vocabulary_id": "kotoba_n1_0521",
+      "vocabulary_id": "kotoba_n2_0084",
       "role": "target_word"
     },
     {
@@ -30797,12 +30797,12 @@
     },
     {
       "sentence_id": "sen_kt_kotoba_n1_1256",
-      "vocabulary_id": "kotoba_n1_1256",
+      "vocabulary_id": "kotoba_n2_0017",
       "role": "target_word"
     },
     {
       "sentence_id": "sen_kt_kotoba_n1_1257",
-      "vocabulary_id": "kotoba_n1_1257",
+      "vocabulary_id": "kotoba_n2_0018",
       "role": "target_word"
     },
     {
@@ -30927,7 +30927,7 @@
     },
     {
       "sentence_id": "sen_kt_kotoba_n1_1282",
-      "vocabulary_id": "kotoba_n1_1282",
+      "vocabulary_id": "kotoba_n2_0020",
       "role": "target_word"
     },
     {
@@ -35147,7 +35147,7 @@
     },
     {
       "sentence_id": "sen_kt_kotoba_n1_2126",
-      "vocabulary_id": "kotoba_n1_2126",
+      "vocabulary_id": "kotoba_n2_0015",
       "role": "target_word"
     },
     {
@@ -35317,7 +35317,7 @@
     },
     {
       "sentence_id": "sen_kt_kotoba_n1_2160",
-      "vocabulary_id": "kotoba_n1_2160",
+      "vocabulary_id": "kotoba_n2_0001",
       "role": "target_word"
     },
     {
@@ -35337,7 +35337,7 @@
     },
     {
       "sentence_id": "sen_kt_kotoba_n1_2164",
-      "vocabulary_id": "kotoba_n1_2164",
+      "vocabulary_id": "kotoba_n2_0083",
       "role": "target_word"
     },
     {
@@ -37317,7 +37317,7 @@
     },
     {
       "sentence_id": "sen_kt_kotoba_n1_2559",
-      "vocabulary_id": "kotoba_n1_2560",
+      "vocabulary_id": "kotoba_n2_0009",
       "role": "target_word"
     },
     {
@@ -37327,12 +37327,12 @@
     },
     {
       "sentence_id": "sen_kt_kotoba_n1_2562",
-      "vocabulary_id": "kotoba_n1_2562",
+      "vocabulary_id": "kotoba_n2_0011",
       "role": "target_word"
     },
     {
       "sentence_id": "sen_kt_kotoba_n1_2563",
-      "vocabulary_id": "kotoba_n1_2563",
+      "vocabulary_id": "kotoba_n2_0012",
       "role": "target_word"
     },
     {
@@ -39617,12 +39617,12 @@
     },
     {
       "sentence_id": "sen_kt_kotoba_n1_3020",
-      "vocabulary_id": "kotoba_n1_3020",
+      "vocabulary_id": "kotoba_n2_0089",
       "role": "target_word"
     },
     {
       "sentence_id": "sen_kt_kotoba_n1_3021",
-      "vocabulary_id": "kotoba_n1_3021",
+      "vocabulary_id": "kotoba_n2_0005",
       "role": "target_word"
     },
     {
@@ -40567,7 +40567,7 @@
     },
     {
       "sentence_id": "sen_kt_kotoba_n1_3210",
-      "vocabulary_id": "kotoba_n1_3210",
+      "vocabulary_id": "kotoba_n2_0024",
       "role": "target_word"
     },
     {
@@ -41257,7 +41257,7 @@
     },
     {
       "sentence_id": "sen_kt_kotoba_n1_3348",
-      "vocabulary_id": "kotoba_n1_3348",
+      "vocabulary_id": "kotoba_n2_0103",
       "role": "target_word"
     },
     {
@@ -41607,7 +41607,7 @@
     },
     {
       "sentence_id": "sen_kt_kotoba_n1_3418",
-      "vocabulary_id": "kotoba_n1_3418",
+      "vocabulary_id": "kotoba_n2_0073",
       "role": "target_word"
     },
     {
@@ -41617,7 +41617,7 @@
     },
     {
       "sentence_id": "sen_kt_kotoba_n1_3420",
-      "vocabulary_id": "kotoba_n1_3420",
+      "vocabulary_id": "kotoba_n2_0003",
       "role": "target_word"
     },
     {
@@ -41657,7 +41657,7 @@
     },
     {
       "sentence_id": "sen_kt_kotoba_n1_3428",
-      "vocabulary_id": "kotoba_n1_3428",
+      "vocabulary_id": "kotoba_n2_0013",
       "role": "target_word"
     },
     {
@@ -41772,12 +41772,12 @@
     },
     {
       "sentence_id": "sen_kt_kotoba_n1_3451",
-      "vocabulary_id": "kotoba_n1_3451",
+      "vocabulary_id": "kotoba_n2_0176",
       "role": "target_word"
     },
     {
       "sentence_id": "sen_kt_kotoba_n1_3452",
-      "vocabulary_id": "kotoba_n1_3452",
+      "vocabulary_id": "kotoba_n2_0183",
       "role": "target_word"
     },
     {
@@ -41817,12 +41817,12 @@
     },
     {
       "sentence_id": "sen_kt_kotoba_n1_3460",
-      "vocabulary_id": "kotoba_n1_3460",
+      "vocabulary_id": "kotoba_n2_0031",
       "role": "target_word"
     },
     {
       "sentence_id": "sen_kt_kotoba_n1_3461",
-      "vocabulary_id": "kotoba_n1_3461",
+      "vocabulary_id": "kotoba_n2_0174",
       "role": "target_word"
     },
     {

@@ -1,4 +1,5 @@
 import { OfficialBook, OfficialChapter } from '../types/books';
+import { kanaDojoKotobaIds } from './entityIds';
 import { UserDeck, DeckItemRef } from '../types/rpg';
 import { THEMATIC_BOOKS } from './thematicBooks';
 import bunpouDb from './db/bunpou.json';
@@ -59,7 +60,7 @@ const sswIds = kotobaList.filter(k => (k.tags && k.tags.includes('SSW')) || k.jl
 // 1. KANA DOJO
 // -------------------------------------------------------------
 const kanaKanji = kanjiList.filter(k => k.jlpt === 'KANA' || (k.id && k.id.startsWith('kana_'))).map(k => k.id || k.character);
-const kanaKotoba = kotobaList.filter(k => k.id.startsWith('kt_train_')).map(k => k.id);
+const kanaKotoba = kanaDojoKotobaIds(kotobaList.map(k => k.id));
 
 const kanaChapters: OfficialChapter[] = [
   {

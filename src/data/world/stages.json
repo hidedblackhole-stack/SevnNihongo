@@ -98,8 +98,8 @@
     ],
     "kotoba": [
       "kt_train_12",
-      "kt_train_13",
-      "kt_train_14"
+      "kotoba_0308",
+      "kotoba_1970"
     ],
     "bunpou": [],
     "dokkai": [],
@@ -126,12 +126,12 @@
       "kana_hira_n"
     ],
     "kotoba": [
-      "kt_train_15",
-      "kt_train_16",
+      "kotoba_0488",
+      "kotoba_0375",
       "kt_train_17",
       "kt_train_18",
-      "kt_train_19",
-      "kt_train_20"
+      "kotoba_0144",
+      "kotoba_0564"
     ],
     "bunpou": [],
     "dokkai": [],
@@ -269,8 +269,8 @@
     ],
     "kotoba": [
       "kt_train_12",
-      "kt_train_13",
-      "kt_train_14"
+      "kotoba_0308",
+      "kotoba_1970"
     ],
     "bunpou": [],
     "dokkai": [],
@@ -297,12 +297,12 @@
       "kana_kata_n"
     ],
     "kotoba": [
-      "kt_train_15",
-      "kt_train_16",
+      "kotoba_0488",
+      "kotoba_0375",
       "kt_train_17",
       "kt_train_18",
-      "kt_train_19",
-      "kt_train_20"
+      "kotoba_0144",
+      "kotoba_0564"
     ],
     "bunpou": [],
     "dokkai": [],
@@ -532,7 +532,7 @@
     ],
     "kotoba": [
       "kt_train_01",
-      "kt_train_19",
+      "kotoba_0144",
       "kotoba_0600"
     ],
     "kanji": [
@@ -559,8 +559,7 @@
       "bp_n5_097"
     ],
     "kotoba": [
-      "kt_train_14",
-      "kt_train_13",
+      "kotoba_1970",
       "kotoba_0308"
     ],
     "kanji": [
@@ -587,8 +586,8 @@
       "bp_n5_010"
     ],
     "kotoba": [
-      "kt_train_16",
-      "kt_train_15",
+      "kotoba_0375",
+      "kotoba_0488",
       "kotoba_0508"
     ],
     "kanji": [
@@ -677,9 +676,9 @@
     ],
     "kotoba": [
       "kt_train_01",
-      "kt_train_19",
+      "kotoba_0144",
       "kotoba_0600",
-      "kt_train_16",
+      "kotoba_0375",
       "kotoba_0358",
       "kotoba_0197"
     ],
@@ -7532,7 +7531,7 @@
       "kotoba_n2_0001",
       "kotoba_n2_0002",
       "kotoba_n2_0003",
-      "kotoba_n2_0004",
+      "kotoba_0914",
       "kotoba_n2_0005",
       "kotoba_n2_0006",
       "kotoba_n2_0007",
@@ -7639,7 +7638,7 @@
     "kotoba": [
       "kotoba_n2_0041",
       "kotoba_n2_0042",
-      "kotoba_n2_0043",
+      "kotoba_0031",
       "kotoba_n2_0044",
       "kotoba_n2_0045",
       "kotoba_n2_0046",
@@ -7649,7 +7648,7 @@
       "kotoba_n2_0050",
       "kotoba_n2_0051",
       "kotoba_n2_0052",
-      "kotoba_n2_0053",
+      "kt_train_06",
       "kotoba_n2_0054",
       "kotoba_n2_0055",
       "kotoba_n2_0056",
@@ -7814,7 +7813,7 @@
       "kotoba_n2_0113",
       "kotoba_n2_0114",
       "kotoba_n2_0115",
-      "kotoba_n2_0116",
+      "kt_train_08",
       "kotoba_n2_0117",
       "kotoba_n2_0118",
       "kotoba_n2_0119",
@@ -9526,7 +9525,7 @@
       "kotoba_n1_0049",
       "kotoba_n1_0050",
       "kotoba_n1_0051",
-      "kotoba_n1_0052",
+      "kotoba_n2_0042",
       "kotoba_n1_0053",
       "kotoba_n1_0054",
       "kotoba_n1_0055",
@@ -9534,7 +9533,7 @@
       "kotoba_n1_0057",
       "kotoba_n1_0058",
       "kotoba_n1_0059",
-      "kotoba_n1_0060"
+      "kotoba_n2_0044"
     ],
     "kanji": [
       "kj_n1_4fdd",
@@ -10499,7 +10498,7 @@
       "kotoba_n1_0393",
       "kotoba_n1_0394",
       "kotoba_n1_0395",
-      "kotoba_n1_0396",
+      "kotoba_n2_0022",
       "kotoba_n1_0397",
       "kotoba_n1_0398",
       "kotoba_n1_0399",
@@ -10605,7 +10604,7 @@
       "kotoba_n1_0425",
       "kotoba_n1_0426",
       "kotoba_n1_0427",
-      "kotoba_n1_0428",
+      "kotoba_n2_0014",
       "kotoba_n1_0429",
       "kotoba_n1_0430",
       "kotoba_n1_0431",
@@ -10883,7 +10882,7 @@
       "bp_n1_018"
     ],
     "kotoba": [
-      "kotoba_n1_0521",
+      "kotoba_n2_0084",
       "kotoba_n1_0522",
       "kotoba_n1_0523",
       "kotoba_n1_0524",

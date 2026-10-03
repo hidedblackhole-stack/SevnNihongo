@@ -45971,7 +45971,7 @@
     "meaningId": "Apa",
     "meaningEn": "what",
     "meaningJa": "何",
-    "jlpt": "N3",
+    "jlpt": "N5",
     "wordType": "pronoun",
     "kanjiComponents": [
       "何"
@@ -72270,30 +72270,6 @@
       "meaningId": "Penjelasannya tidak jelas."
     }
   },
-  "kotoba_n2_0004": {
-    "id": "kotoba_n2_0004",
-    "word": "赤ん坊",
-    "reading": "あかんぼう",
-    "meaningId": "Bayi",
-    "meaningEn": "baby",
-    "meaningJa": "あかんぼう",
-    "jlpt": "N2",
-    "wordType": "noun",
-    "kanjiComponents": [
-      "赤",
-      "坊"
-    ],
-    "collocations": [
-      "赤ん坊を使う (赤ん坊 wo tsukau - menggunakan 赤ん坊)",
-      "赤ん坊について (赤ん坊 ni tsuite - berkenaan dengan 赤ん坊)",
-      "赤ん坊の重要性 (赤ん坊 no juuyousei - pentingnya 赤ん坊)"
-    ],
-    "exampleSentence": {
-      "japanese": "このあかんぼうの使い方は非常に重要です。",
-      "reading": "このあかんぼうのつかいかたはひじょうにじゅうようです。",
-      "meaningId": "Penggunaan \"あかんぼう\" (baby) ini sangatlah penting."
-    }
-  },
   "kotoba_n2_0005": {
     "id": "kotoba_n2_0005",
     "word": "呆れる",
@@ -73158,29 +73134,6 @@
       "meaningId": "Lauk malam ini adalah ikan."
     }
   },
-  "kotoba_n2_0043": {
-    "id": "kotoba_n2_0043",
-    "word": "奥さん",
-    "reading": "おくさん",
-    "meaningId": "Istri; istrimu; Nyonya",
-    "meaningEn": "(hon) wife; your wife; madam",
-    "meaningJa": "おくさん",
-    "jlpt": "N2",
-    "wordType": "noun",
-    "kanjiComponents": [
-      "奥"
-    ],
-    "collocations": [
-      "奥さんを使う (奥さん wo tsukau - menggunakan 奥さん)",
-      "奥さんについて (奥さん ni tsuite - berkenaan dengan 奥さん)",
-      "奥さんの重要性 (奥さん no juuyousei - pentingnya 奥さん)"
-    ],
-    "exampleSentence": {
-      "japanese": "このおくさんの使い方は非常に重要です。",
-      "reading": "このおくさんのつかいかたはひじょうにじゅうようです。",
-      "meaningId": "Penggunaan \"おくさん\" ((hon) wife; your wife; madam) ini sangatlah penting."
-    }
-  },
   "kotoba_n2_0044": {
     "id": "kotoba_n2_0044",
     "word": "お先に",
@@ -73370,27 +73323,6 @@
       "japanese": "「この書類の確認をお願いします。」",
       "reading": "「このしょるいのかくにんをおねがいします。」",
       "meaningId": "\"Tolong periksa dokumen ini.\""
-    }
-  },
-  "kotoba_n2_0053": {
-    "id": "kotoba_n2_0053",
-    "word": "おはよう",
-    "reading": "おはよう",
-    "meaningId": "(abbr) Selamat pagi",
-    "meaningEn": "(abbr) Good morning",
-    "meaningJa": "おはよう",
-    "jlpt": "N2",
-    "wordType": "interjection",
-    "kanjiComponents": [],
-    "collocations": [
-      "おはようございます (ohayou gozaimasu - selamat pagi sopan)",
-      "朝の挨拶 (asa no aisatsu - salam pagi)",
-      "元気におはよう (genki ni ohayou - salam pagi ceria)"
-    ],
-    "exampleSentence": {
-      "japanese": "「先生、おはようございます。」",
-      "reading": "「せんせい、おはようございます。」",
-      "meaningId": "\"Selamat pagi, Guru.\""
     }
   },
   "kotoba_n2_0054": {
@@ -74719,27 +74651,6 @@
       "japanese": "さっさと死ね！",
       "reading": "さっさと死ね！",
       "meaningId": "Cepat mati!"
-    }
-  },
-  "kotoba_n2_0116": {
-    "id": "kotoba_n2_0116",
-    "word": "さようなら",
-    "reading": "さようなら",
-    "meaningId": "Selamat tinggal",
-    "meaningEn": "good-bye",
-    "meaningJa": "さようなら",
-    "jlpt": "N2",
-    "wordType": "interjection",
-    "kanjiComponents": [],
-    "collocations": [
-      "さようならを使う (さようなら wo tsukau - menggunakan さようなら)",
-      "さようならについて (さようなら ni tsuite - berkenaan dengan さようなら)",
-      "さようならの重要性 (さようなら no juuyousei - pentingnya さようなら)"
-    ],
-    "exampleSentence": {
-      "japanese": "「それでは、また明日会いましょう。さようなら。」",
-      "reading": "「それでは、またあしたあいましょう。さようなら。」",
-      "meaningId": "\"Kalau begitu, sampai jumpa besok. Selamat tinggal.\""
     }
   },
   "kotoba_n2_0117": {
@@ -82095,29 +82006,6 @@
       "meaningId": "Aku akan menemanimu."
     }
   },
-  "kotoba_n1_0052": {
-    "id": "kotoba_n1_0052",
-    "word": "お菜",
-    "reading": "おかず",
-    "meaningId": "Lauk; pendamping hidangan nasi",
-    "meaningEn": "side dish; accompaniment for rice dishes",
-    "meaningJa": "お菜",
-    "jlpt": "N1",
-    "wordType": "noun",
-    "kanjiComponents": [
-      "菜"
-    ],
-    "collocations": [
-      "お菜を使う (お菜 wo tsukau - menggunakan お菜)",
-      "お菜について (お菜 ni tsuite - berkenaan dengan お菜)",
-      "お菜の重要性 (お菜 no juuyousei - pentingnya お菜)"
-    ],
-    "exampleSentence": {
-      "japanese": "このお菜の使い方は非常に重要です。",
-      "reading": "このおかずのつかいかたはひじょうにじゅうようです。",
-      "meaningId": "Penggunaan \"お菜\" (side dish; accompaniment for rice dishes) ini sangatlah penting."
-    }
-  },
   "kotoba_n1_0053": {
     "id": "kotoba_n1_0053",
     "word": "お産",
@@ -82280,29 +82168,6 @@
       "japanese": "お世辞がお上手ね。",
       "reading": "お世辞がお上手ね。",
       "meaningId": "Kamu pandai menyanjung."
-    }
-  },
-  "kotoba_n1_0060": {
-    "id": "kotoba_n1_0060",
-    "word": "お先に",
-    "reading": "おさきに",
-    "meaningId": "Sebelumnya; di depan; sebelumnya",
-    "meaningEn": "before; ahead; previously",
-    "meaningJa": "お先に",
-    "jlpt": "N1",
-    "wordType": "adverb",
-    "kanjiComponents": [
-      "先"
-    ],
-    "collocations": [
-      "お先にを使う (お先に wo tsukau - menggunakan お先に)",
-      "お先にについて (お先に ni tsuite - berkenaan dengan お先に)",
-      "お先にの重要性 (お先に no juuyousei - pentingnya お先に)"
-    ],
-    "exampleSentence": {
-      "japanese": "お先にどうぞ。",
-      "reading": "お先にどうぞ。",
-      "meaningId": "Teruskan."
     }
   },
   "kotoba_n1_0061": {
@@ -89615,29 +89480,6 @@
       "meaningId": "Ada banyak jenis anggur yang berbeda, dan setiap jenis memerlukan metode budidaya yang berbeda."
     }
   },
-  "kotoba_n1_0396": {
-    "id": "kotoba_n1_0396",
-    "word": "一々",
-    "reading": "いちいち",
-    "meaningId": "Satu per satu; secara terpisah",
-    "meaningEn": "one by one; separately",
-    "meaningJa": "一々",
-    "jlpt": "N1",
-    "wordType": "noun",
-    "kanjiComponents": [
-      "一"
-    ],
-    "collocations": [
-      "一々を使う (一々 wo tsukau - menggunakan 一々)",
-      "一々について (一々 ni tsuite - berkenaan dengan 一々)",
-      "一々の重要性 (一々 no juuyousei - pentingnya 一々)"
-    ],
-    "exampleSentence": {
-      "japanese": "この一々の使い方は非常に重要です。",
-      "reading": "このいちいちのつかいかたはひじょうにじゅうようです。",
-      "meaningId": "Penggunaan \"一々\" (one by one; separately) ini sangatlah penting."
-    }
-  },
   "kotoba_n1_0397": {
     "id": "kotoba_n1_0397",
     "word": "一まず",
@@ -90107,138 +89949,6 @@
     },
     "meaningJa": "どこ"
   },
-  "kt_train_13": {
-    "id": "kt_train_13",
-    "word": "誰",
-    "reading": "だれ",
-    "romaji": "dare",
-    "meaningId": "Siapa",
-    "meaningEn": "Siapa",
-    "partOfSpeech": "Foundational Vocab",
-    "jlpt": "N5",
-    "examples": [
-      {
-        "jp": "あの人は誰ですか。",
-        "en": "Orang itu siapa?",
-        "id": "Orang itu siapa?",
-        "reading": "だれ"
-      }
-    ],
-    "wordType": "pronoun",
-    "kanjiComponents": [
-      "誰"
-    ],
-    "collocations": [
-      "誰を使う (誰 wo tsukau - menggunakan Siapa)",
-      "誰について (誰 ni tsuite - mengenai Siapa)",
-      "重要な誰 (juuyou na 誰 - Siapa yang penting)"
-    ],
-    "exampleSentence": {
-      "japanese": "「毎日の仕事の中で、誰の大切さを改めて実感しました。」",
-      "reading": "「まいにちのしごとのなかで、だれのたいせつさをあらためてじっかんしました。」",
-      "meaningId": "Saya menyadari sekali lagi betapa pentingnya seseorang dalam pekerjaan saya sehari-hari."
-    },
-    "meaningJa": "誰"
-  },
-  "kt_train_14": {
-    "id": "kt_train_14",
-    "word": "何",
-    "reading": "なに",
-    "romaji": "nani",
-    "meaningId": "Apa",
-    "meaningEn": "Apa",
-    "partOfSpeech": "Foundational Vocab",
-    "jlpt": "N5",
-    "examples": [
-      {
-        "jp": "これは何ですか。",
-        "en": "Ini apa?",
-        "id": "Ini apa?",
-        "reading": "なに"
-      }
-    ],
-    "wordType": "pronoun",
-    "kanjiComponents": [
-      "何"
-    ],
-    "collocations": [
-      "何を使う (何 wo tsukau - menggunakan Apa)",
-      "何について (何 ni tsuite - mengenai Apa)",
-      "重要な何 (juuyou na 何 - Apa yang penting)"
-    ],
-    "exampleSentence": {
-      "japanese": "「休みの日はいつも何をして過ごしますか。」",
-      "reading": "「やすみのひはいつもなにをしてすごしますか。」",
-      "meaningId": "Di hari libur kamu biasanya menghabiskan waktu dengan melakukan apa?"
-    },
-    "meaningJa": "何"
-  },
-  "kt_train_15": {
-    "id": "kt_train_15",
-    "word": "水",
-    "reading": "みず",
-    "romaji": "mizu",
-    "meaningId": "Udara",
-    "meaningEn": "Air",
-    "partOfSpeech": "Foundational Vocab",
-    "jlpt": "N5",
-    "examples": [
-      {
-        "jp": "水を一杯ください。",
-        "en": "Tolong berikan segelas air.",
-        "id": "Tolong berikan segelas air.",
-        "reading": "みず"
-      }
-    ],
-    "wordType": "noun",
-    "kanjiComponents": [
-      "水"
-    ],
-    "collocations": [
-      "水を使う (水 wo tsukau - menggunakan Air)",
-      "水について (水 ni tsuite - mengenai Air)",
-      "重要な水 (juuyou na 水 - Air yang penting)"
-    ],
-    "exampleSentence": {
-      "japanese": "「スーパーで新鮮な水を買って美味しくいただきました。」",
-      "reading": "「スーパーでしんせんなみずをかっておいしくいただきました。」",
-      "meaningId": "Saya membeli air segar di supermarket dan rasanya enak."
-    },
-    "meaningJa": "水"
-  },
-  "kt_train_16": {
-    "id": "kt_train_16",
-    "word": "本",
-    "reading": "ほん",
-    "romaji": "hon",
-    "meaningId": "Buku",
-    "meaningEn": "Buku",
-    "partOfSpeech": "Foundational Vocab",
-    "jlpt": "N5",
-    "examples": [
-      {
-        "jp": "日本語の本を読みます。",
-        "en": "Saya membaca buku bahasa Jepang.",
-        "id": "Saya membaca buku bahasa Jepang.",
-        "reading": "ほん"
-      }
-    ],
-    "wordType": "noun",
-    "kanjiComponents": [
-      "本"
-    ],
-    "collocations": [
-      "本を使う (本 wo tsukau - menggunakan Buku)",
-      "本について (本 ni tsuite - mengenai Buku)",
-      "重要な本 (juuyou na 本 - Buku yang penting)"
-    ],
-    "exampleSentence": {
-      "japanese": "「授業で先生が新しい本について分かりやすく説明してくれました。」",
-      "reading": "「じゅぎょうでせんせいがあたらしいほんについてわかりやすくせつめいしてくれました。」",
-      "meaningId": "Di kelas, guru menjelaskan buku baru dengan cara yang mudah dipahami."
-    },
-    "meaningJa": "本"
-  },
   "kt_train_17": {
     "id": "kt_train_17",
     "word": "日本",
@@ -90307,72 +90017,6 @@
       "meaningId": "Di kelas, guru menjelaskan bahasa Jepang baru dengan cara yang mudah dipahami."
     },
     "meaningJa": "日本語"
-  },
-  "kt_train_19": {
-    "id": "kt_train_19",
-    "word": "人",
-    "reading": "ひと",
-    "romaji": "hito",
-    "meaningId": "Orang / Manusia",
-    "meaningEn": "Orang / Manusia",
-    "partOfSpeech": "Foundational Vocab",
-    "jlpt": "N5",
-    "examples": [
-      {
-        "jp": "あの親切な人は誰ですか。",
-        "en": "Siapakah orang baik hati itu?",
-        "id": "Siapakah orang baik hati itu?",
-        "reading": "ひと"
-      }
-    ],
-    "wordType": "noun",
-    "kanjiComponents": [
-      "人"
-    ],
-    "collocations": [
-      "人を使う (人 wo tsukau - menggunakan Orang)",
-      "人について (人 ni tsuite - mengenai Orang)",
-      "重要な人 (juuyou na 人 - Orang yang penting)"
-    ],
-    "exampleSentence": {
-      "japanese": "「授業で先生が新しい人について分かりやすく説明してくれました。」",
-      "reading": "「じゅぎょうでせんせいがあたらしいひとについてわかりやすくせつめいしてくれました。」",
-      "meaningId": "Di kelas, guru menjelaskan orang-orang baru dengan cara yang mudah dipahami."
-    },
-    "meaningJa": "人"
-  },
-  "kt_train_20": {
-    "id": "kt_train_20",
-    "word": "食べる",
-    "reading": "たべる",
-    "romaji": "taberu",
-    "meaningId": "Makan (kata kerja)",
-    "meaningEn": "Makan (kata kerja)",
-    "partOfSpeech": "Foundational Vocab",
-    "jlpt": "N5",
-    "examples": [
-      {
-        "jp": "ご飯を美味しく食べます。",
-        "en": "Saya makan nasi dengan lahap.",
-        "id": "Saya makan nasi dengan lahap.",
-        "reading": "たべる"
-      }
-    ],
-    "wordType": "verb",
-    "kanjiComponents": [
-      "食"
-    ],
-    "collocations": [
-      "食べるを使う (食べる wo tsukau - menggunakan Makan (kata kerja))",
-      "食べるについて (食べる ni tsuite - mengenai Makan (kata kerja))",
-      "重要な食べる (juuyou na 食べる - Makan (kata kerja) yang penting)"
-    ],
-    "exampleSentence": {
-      "japanese": "「大切なことについて、先生とよく食べる。」",
-      "reading": "「たいせつなことについて、せんせいとよくたべる。」",
-      "meaningId": "Saya sering makan dengan guru saya tentang hal-hal penting."
-    },
-    "meaningJa": "食べる"
   },
   "kotoba_n2_0401": {
     "id": "kotoba_n2_0401",
@@ -124305,29 +123949,6 @@
       "meaningId": "Mereka menggelar serangkaian konser."
     }
   },
-  "kotoba_n1_0428": {
-    "id": "kotoba_n1_0428",
-    "word": "溢れる",
-    "reading": "あふれる",
-    "meaningId": "Banjir; meluap; penuh",
-    "meaningEn": "to flood; to overflow; to brim over",
-    "meaningJa": "溢れる",
-    "jlpt": "N1",
-    "wordType": "verb",
-    "kanjiComponents": [
-      "溢"
-    ],
-    "collocations": [
-      "溢れるを使う (溢れる wo tsukau - menggunakan 溢れる)",
-      "溢れるについて (溢れる ni tsuite - berkenaan dengan 溢れる)",
-      "溢れるの重要性 (溢れる no juuyousei - pentingnya 溢れる)"
-    ],
-    "exampleSentence": {
-      "japanese": "『うぐいす侍』人間愛とユーモア溢れる侍物語。",
-      "reading": "『うぐいす侍』人間愛とユーモア溢れる侍物語。",
-      "meaningId": "\"Uguisu Samurai\" Sebuah kisah samurai yang penuh dengan kemanusiaan dan humor."
-    }
-  },
   "kotoba_n1_0429": {
     "id": "kotoba_n1_0429",
     "word": "逸らす",
@@ -126492,29 +126113,6 @@
       "japanese": "温度が下がる。",
       "reading": "温度が下がる。",
       "meaningId": "Suhu turun."
-    }
-  },
-  "kotoba_n1_0521": {
-    "id": "kotoba_n1_0521",
-    "word": "下らない",
-    "reading": "くだらない",
-    "meaningId": "Tidak berguna; bodoh; remeh; tidak berharga",
-    "meaningEn": "good-for-nothing; stupid; trivial; worthless",
-    "meaningJa": "下らない",
-    "jlpt": "N1",
-    "wordType": "adjective-i",
-    "kanjiComponents": [
-      "下"
-    ],
-    "collocations": [
-      "下らないを使う (下らない wo tsukau - menggunakan 下らない)",
-      "下らないについて (下らない ni tsuite - berkenaan dengan 下らない)",
-      "下らないの重要性 (下らない no juuyousei - pentingnya 下らない)"
-    ],
-    "exampleSentence": {
-      "japanese": "この下らないの使い方は非常に重要です。",
-      "reading": "このくだらないのつかいかたはひじょうにじゅうようです。",
-      "meaningId": "Penggunaan \"下らない\" (good-for-nothing; stupid; trivial) ini sangatlah penting."
     }
   },
   "kotoba_n1_0522": {
@@ -143969,52 +143567,6 @@
       "meaningId": "Makan dengan jari tidak hanya sudah ada selama berabad-abad, namun beberapa pakar percaya bahwa hal ini mungkin akan menjadi populer kembali."
     }
   },
-  "kotoba_n1_1256": {
-    "id": "kotoba_n1_1256",
-    "word": "慌ただしい",
-    "reading": "あわただしい",
-    "meaningId": "busy; hurried; confused",
-    "meaningEn": "busy; hurried; confused; flurried",
-    "meaningJa": "慌ただしい",
-    "jlpt": "N1",
-    "wordType": "adjective-i",
-    "kanjiComponents": [
-      "慌"
-    ],
-    "collocations": [
-      "慌ただしいを使う (慌ただしい wo tsukau - menggunakan 慌ただしい)",
-      "慌ただしいについて (慌ただしい ni tsuite - berkenaan dengan 慌ただしい)",
-      "慌ただしいの重要性 (慌ただしい no juuyousei - pentingnya 慌ただしい)"
-    ],
-    "exampleSentence": {
-      "japanese": "今日は慌ただしいな。",
-      "reading": "今日は慌ただしいな。",
-      "meaningId": "Hari ini sangat sibuk."
-    }
-  },
-  "kotoba_n1_1257": {
-    "id": "kotoba_n1_1257",
-    "word": "慌てる",
-    "reading": "あわてる",
-    "meaningId": "Menjadi bingung (bingung tidak terorganisir)",
-    "meaningEn": "to become confused (disconcerted  disorganized)",
-    "meaningJa": "慌てる",
-    "jlpt": "N1",
-    "wordType": "verb",
-    "kanjiComponents": [
-      "慌"
-    ],
-    "collocations": [
-      "慌てるを使う (慌てる wo tsukau - menggunakan 慌てる)",
-      "慌てるについて (慌てる ni tsuite - berkenaan dengan 慌てる)",
-      "慌てるの重要性 (慌てる no juuyousei - pentingnya 慌てる)"
-    ],
-    "exampleSentence": {
-      "japanese": "慌てることは無駄を作る。",
-      "reading": "慌てることは無駄を作る。",
-      "meaningId": "Terburu-buru menciptakan pemborosan."
-    }
-  },
   "kotoba_n1_1258": {
     "id": "kotoba_n1_1258",
     "word": "抗議",
@@ -144579,30 +144131,6 @@
       "japanese": "私たちの手紙は行き違いになった。",
       "reading": "私たちの手紙は行き違いになった。",
       "meaningId": "Surat-surat kami tertukar."
-    }
-  },
-  "kotoba_n1_1282": {
-    "id": "kotoba_n1_1282",
-    "word": "行き成り",
-    "reading": "いきなり",
-    "meaningId": "Tiba-tiba",
-    "meaningEn": "suddenly",
-    "meaningJa": "行き成り",
-    "jlpt": "N1",
-    "wordType": "adverb",
-    "kanjiComponents": [
-      "行",
-      "成"
-    ],
-    "collocations": [
-      "行き成りを使う (行き成り wo tsukau - menggunakan 行き成り)",
-      "行き成りについて (行き成り ni tsuite - berkenaan dengan 行き成り)",
-      "行き成りの重要性 (行き成り no juuyousei - pentingnya 行き成り)"
-    ],
-    "exampleSentence": {
-      "japanese": "この行き成りの使い方は非常に重要です。",
-      "reading": "このいきなりのつかいかたはひじょうにじゅうようです。",
-      "meaningId": "Penggunaan \"行き成り\" (suddenly) ini sangatlah penting."
     }
   },
   "kotoba_n1_1283": {
@@ -164669,30 +164197,6 @@
       "meaningId": "Penggunaan \"疎か\" (neglect; negligence; carelessness) ini sangatlah penting."
     }
   },
-  "kotoba_n1_2126": {
-    "id": "kotoba_n1_2126",
-    "word": "粗筋",
-    "reading": "あらすじ",
-    "meaningId": "Garis besar; ringkasan",
-    "meaningEn": "outline; summary",
-    "meaningJa": "粗筋",
-    "jlpt": "N1",
-    "wordType": "noun",
-    "kanjiComponents": [
-      "粗",
-      "筋"
-    ],
-    "collocations": [
-      "粗筋を使う (粗筋 wo tsukau - menggunakan 粗筋)",
-      "粗筋について (粗筋 ni tsuite - berkenaan dengan 粗筋)",
-      "粗筋の重要性 (粗筋 no juuyousei - pentingnya 粗筋)"
-    ],
-    "exampleSentence": {
-      "japanese": "この粗筋の使い方は非常に重要です。",
-      "reading": "このあらすじのつかいかたはひじょうにじゅうようです。",
-      "meaningId": "Penggunaan \"粗筋\" (outline; summary) ini sangatlah penting."
-    }
-  },
   "kotoba_n1_2127": {
     "id": "kotoba_n1_2127",
     "word": "素っ気ない",
@@ -165475,30 +164979,6 @@
       "meaningId": "Waktu adalah hal yang relatif."
     }
   },
-  "kotoba_n1_2160": {
-    "id": "kotoba_n1_2160",
-    "word": "相変わらず",
-    "reading": "あいかわらず",
-    "meaningId": "seperti biasa; seperti biasanya; tetap sama",
-    "meaningEn": "as ever; as usual; the same",
-    "meaningJa": "相変わらず",
-    "jlpt": "N1",
-    "wordType": "adverb",
-    "kanjiComponents": [
-      "相",
-      "変"
-    ],
-    "collocations": [
-      "相変わらずを使う (相変わらず wo tsukau - menggunakan 相変わらず)",
-      "相変わらずについて (相変わらず ni tsuite - berkenaan dengan 相変わらず)",
-      "相変わらずの重要性 (相変わらず no juuyousei - pentingnya 相変わらず)"
-    ],
-    "exampleSentence": {
-      "japanese": "相変わらずよ。",
-      "reading": "相変わらずよ。",
-      "meaningId": "Sama seperti biasanya."
-    }
-  },
   "kotoba_n1_2161": {
     "id": "kotoba_n1_2161",
     "word": "総",
@@ -165568,30 +165048,6 @@
       "japanese": "このプロダクトはインテリジェント総合情報システムです。",
       "reading": "このプロダクトはインテリジェント総合情報システムです。",
       "meaningId": "Produk ini adalah sistem informasi komprehensif yang cerdas."
-    }
-  },
-  "kotoba_n1_2164": {
-    "id": "kotoba_n1_2164",
-    "word": "草臥れる",
-    "reading": "くたびれる",
-    "meaningId": "Lelah; aus",
-    "meaningEn": "to get tired; to wear out",
-    "meaningJa": "草臥れる",
-    "jlpt": "N1",
-    "wordType": "verb",
-    "kanjiComponents": [
-      "草",
-      "臥"
-    ],
-    "collocations": [
-      "草臥れるを使う (草臥れる wo tsukau - menggunakan 草臥れる)",
-      "草臥れるについて (草臥れる ni tsuite - berkenaan dengan 草臥れる)",
-      "草臥れるの重要性 (草臥れる no juuyousei - pentingnya 草臥れる)"
-    ],
-    "exampleSentence": {
-      "japanese": "この草臥れるの使い方は非常に重要です。",
-      "reading": "このくたびれるのつかいかたはひじょうにじゅうようです。",
-      "meaningId": "Penggunaan \"草臥れる\" (to get tired; to wear out) ini sangatlah penting."
     }
   },
   "kotoba_n1_2165": {
@@ -174971,30 +174427,6 @@
       "meaningId": "Sudah jelas."
     }
   },
-  "kotoba_n1_2560": {
-    "id": "kotoba_n1_2560",
-    "word": "当たり前",
-    "reading": "あたりまえ",
-    "meaningId": "usual; common; ordinary",
-    "meaningEn": "usual; common; ordinary; natural; reasonable; obvious",
-    "meaningJa": "当たり前",
-    "jlpt": "N1",
-    "wordType": "noun",
-    "kanjiComponents": [
-      "当",
-      "前"
-    ],
-    "collocations": [
-      "当たり前を使う (当たり前 wo tsukau - menggunakan 当たり前)",
-      "当たり前について (当たり前 ni tsuite - berkenaan dengan 当たり前)",
-      "当たり前の重要性 (当たり前 no juuyousei - pentingnya 当たり前)"
-    ],
-    "exampleSentence": {
-      "japanese": "当たり前だ。",
-      "reading": "当たり前だ。",
-      "meaningId": "Sudah jelas."
-    }
-  },
   "kotoba_n1_2561": {
     "id": "kotoba_n1_2561",
     "word": "当て",
@@ -175016,52 +174448,6 @@
       "japanese": "当ててみて。",
       "reading": "当ててみて。",
       "meaningId": "Coba tebak."
-    }
-  },
-  "kotoba_n1_2562": {
-    "id": "kotoba_n1_2562",
-    "word": "当てはまる",
-    "reading": "あてはまる",
-    "meaningId": "Menerapkan (aturan)",
-    "meaningEn": "to apply (a rule)",
-    "meaningJa": "当てはまる",
-    "jlpt": "N1",
-    "wordType": "verb",
-    "kanjiComponents": [
-      "当"
-    ],
-    "collocations": [
-      "当てはまるを使う (当てはまる wo tsukau - menggunakan 当てはまる)",
-      "当てはまるについて (当てはまる ni tsuite - berkenaan dengan 当てはまる)",
-      "当てはまるの重要性 (当てはまる no juuyousei - pentingnya 当てはまる)"
-    ],
-    "exampleSentence": {
-      "japanese": "これは当てはまる？",
-      "reading": "これは当てはまる？",
-      "meaningId": "Apakah ini berlaku?"
-    }
-  },
-  "kotoba_n1_2563": {
-    "id": "kotoba_n1_2563",
-    "word": "当てはめる",
-    "reading": "あてはめる",
-    "meaningId": "Menerapkan; beradaptasi",
-    "meaningEn": "to apply; to adapt",
-    "meaningJa": "当てはめる",
-    "jlpt": "N1",
-    "wordType": "verb",
-    "kanjiComponents": [
-      "当"
-    ],
-    "collocations": [
-      "当てはめるを使う (当てはめる wo tsukau - menggunakan 当てはめる)",
-      "当てはめるについて (当てはめる ni tsuite - berkenaan dengan 当てはめる)",
-      "当てはめるの重要性 (当てはめる no juuyousei - pentingnya 当てはめる)"
-    ],
-    "exampleSentence": {
-      "japanese": "この規則は貴方には当てはめることはできない。",
-      "reading": "この規則は貴方には当てはめることはできない。",
-      "meaningId": "Aturan ini tidak dapat diterapkan pada Anda."
     }
   },
   "kotoba_n1_2564": {
@@ -185958,52 +185344,6 @@
       "meaningId": "Setiap anak membutuhkan seseorang untuk diteladani dan ditiru."
     }
   },
-  "kotoba_n1_3020": {
-    "id": "kotoba_n1_3020",
-    "word": "包む",
-    "reading": "くるむ",
-    "meaningId": "Ditelan; diselimuti oleh; menyelesaikan; makan dgn lahap; mengemas; mengancingkan; tutupi dengan; gaun saya",
-    "meaningEn": "to be engulfed in; to be enveloped by; to wrap up; to tuck in; to pack; to do up; to cover with; to dress i",
-    "meaningJa": "包む",
-    "jlpt": "N1",
-    "wordType": "verb",
-    "kanjiComponents": [
-      "包"
-    ],
-    "collocations": [
-      "包むを使う (包む wo tsukau - menggunakan 包む)",
-      "包むについて (包む ni tsuite - berkenaan dengan 包む)",
-      "包むの重要性 (包む no juuyousei - pentingnya 包む)"
-    ],
-    "exampleSentence": {
-      "japanese": "包む必要はありません。",
-      "reading": "包む必要はありません。",
-      "meaningId": "Tidak perlu dibungkus."
-    }
-  },
-  "kotoba_n1_3021": {
-    "id": "kotoba_n1_3021",
-    "word": "呆れる",
-    "reading": "あきれる",
-    "meaningId": "Kagum; terkejut",
-    "meaningEn": "to be amazed; to be shocked",
-    "meaningJa": "呆れる",
-    "jlpt": "N1",
-    "wordType": "verb",
-    "kanjiComponents": [
-      "呆"
-    ],
-    "collocations": [
-      "呆れるを使う (呆れる wo tsukau - menggunakan 呆れる)",
-      "呆れるについて (呆れる ni tsuite - berkenaan dengan 呆れる)",
-      "呆れるの重要性 (呆れる no juuyousei - pentingnya 呆れる)"
-    ],
-    "exampleSentence": {
-      "japanese": "正直が聞いて呆れるよ。",
-      "reading": "正直が聞いて呆れるよ。",
-      "meaningId": "Jujur saja aku kaget mendengarnya."
-    }
-  },
   "kotoba_n1_3022": {
     "id": "kotoba_n1_3022",
     "word": "呆気ない",
@@ -190482,29 +189822,6 @@
       "meaningId": "Saling pengertian membantu perdamaian."
     }
   },
-  "kotoba_n1_3210": {
-    "id": "kotoba_n1_3210",
-    "word": "愈々",
-    "reading": "いよいよ",
-    "meaningId": "Semakin banyak; terlebih lagi; makin; akhirnya; tidak diragukan lagi",
-    "meaningEn": "more and more; all the more; increasingly; at last; beyond doubt",
-    "meaningJa": "愈々",
-    "jlpt": "N1",
-    "wordType": "adverb",
-    "kanjiComponents": [
-      "愈"
-    ],
-    "collocations": [
-      "愈々を使う (愈々 wo tsukau - menggunakan 愈々)",
-      "愈々について (愈々 ni tsuite - berkenaan dengan 愈々)",
-      "愈々の重要性 (愈々 no juuyousei - pentingnya 愈々)"
-    ],
-    "exampleSentence": {
-      "japanese": "この愈々の使い方は非常に重要です。",
-      "reading": "このいよいよのつかいかたはひじょうにじゅうようです。",
-      "meaningId": "Penggunaan \"愈々\" (more and more; all the more; increasingly) ini sangatlah penting."
-    }
-  },
   "kotoba_n1_3211": {
     "id": "kotoba_n1_3211",
     "word": "油絵",
@@ -193763,29 +193080,6 @@
       "meaningId": "Penggunaan \"零す\" (to spill) ini sangatlah penting."
     }
   },
-  "kotoba_n1_3348": {
-    "id": "kotoba_n1_3348",
-    "word": "零れる",
-    "reading": "こぼれる",
-    "meaningId": "Meluap; tumpah",
-    "meaningEn": "to overflow; to spill",
-    "meaningJa": "零れる",
-    "jlpt": "N1",
-    "wordType": "verb",
-    "kanjiComponents": [
-      "零"
-    ],
-    "collocations": [
-      "零れるを使う (零れる wo tsukau - menggunakan 零れる)",
-      "零れるについて (零れる ni tsuite - berkenaan dengan 零れる)",
-      "零れるの重要性 (零れる no juuyousei - pentingnya 零れる)"
-    ],
-    "exampleSentence": {
-      "japanese": "この零れるの使い方は非常に重要です。",
-      "reading": "このこぼれるのつかいかたはひじょうにじゅうようです。",
-      "meaningId": "Penggunaan \"零れる\" (to overflow; to spill) ini sangatlah penting."
-    }
-  },
   "kotoba_n1_3349": {
     "id": "kotoba_n1_3349",
     "word": "暦",
@@ -195408,30 +194702,6 @@
       "meaningId": "Penggunaan \"揉める\" (to disagree; to dispute) ini sangatlah penting."
     }
   },
-  "kotoba_n1_3418": {
-    "id": "kotoba_n1_3418",
-    "word": "揶揄う",
-    "reading": "からかう",
-    "meaningId": "Ejekan; menggoda; bercanda dengan; mengolok-olok",
-    "meaningEn": "to ridicule; to tease; to banter with; to make fun of",
-    "meaningJa": "揶揄う",
-    "jlpt": "N1",
-    "wordType": "verb",
-    "kanjiComponents": [
-      "揶",
-      "揄"
-    ],
-    "collocations": [
-      "揶揄うを使う (揶揄う wo tsukau - menggunakan 揶揄う)",
-      "揶揄うについて (揶揄う ni tsuite - berkenaan dengan 揶揄う)",
-      "揶揄うの重要性 (揶揄う no juuyousei - pentingnya 揶揄う)"
-    ],
-    "exampleSentence": {
-      "japanese": "この揶揄うの使い方は非常に重要です。",
-      "reading": "このからかうのつかいかたはひじょうにじゅうようです。",
-      "meaningId": "Penggunaan \"揶揄う\" (to ridicule; to tease; to banter with) ini sangatlah penting."
-    }
-  },
   "kotoba_n1_3419": {
     "id": "kotoba_n1_3419",
     "word": "擽ぐったい",
@@ -195453,30 +194723,6 @@
       "japanese": "この擽ぐったいの使い方は非常に重要です。",
       "reading": "このくすぐったいのつかいかたはひじょうにじゅうようです。",
       "meaningId": "Penggunaan \"擽ぐったい\" (ticklish) ini sangatlah penting."
-    }
-  },
-  "kotoba_n1_3420": {
-    "id": "kotoba_n1_3420",
-    "word": "曖昧",
-    "reading": "あいまい",
-    "meaningId": "Tidak jelas; ambigu",
-    "meaningEn": "vague; ambiguous",
-    "meaningJa": "曖昧",
-    "jlpt": "N1",
-    "wordType": "adjective-na",
-    "kanjiComponents": [
-      "曖",
-      "昧"
-    ],
-    "collocations": [
-      "曖昧を使う (曖昧 wo tsukau - menggunakan 曖昧)",
-      "曖昧について (曖昧 ni tsuite - berkenaan dengan 曖昧)",
-      "曖昧の重要性 (曖昧 no juuyousei - pentingnya 曖昧)"
-    ],
-    "exampleSentence": {
-      "japanese": "この文の意味は曖昧だ。",
-      "reading": "この文の意味は曖昧だ。",
-      "meaningId": "Arti kalimat ini ambigu."
     }
   },
   "kotoba_n1_3421": {
@@ -195641,29 +194887,6 @@
       "japanese": "この滲むの使い方は非常に重要です。",
       "reading": "このにじむのつかいかたはひじょうにじゅうようです。",
       "meaningId": "Penggunaan \"滲む\" (to run; to blur; to spread) ini sangatlah penting."
-    }
-  },
-  "kotoba_n1_3428": {
-    "id": "kotoba_n1_3428",
-    "word": "炙る",
-    "reading": "あぶる",
-    "meaningId": "Hangus",
-    "meaningEn": "to scorch",
-    "meaningJa": "炙る",
-    "jlpt": "N1",
-    "wordType": "verb",
-    "kanjiComponents": [
-      "炙"
-    ],
-    "collocations": [
-      "炙るを使う (炙る wo tsukau - menggunakan 炙る)",
-      "炙るについて (炙る ni tsuite - berkenaan dengan 炙る)",
-      "炙るの重要性 (炙る no juuyousei - pentingnya 炙る)"
-    ],
-    "exampleSentence": {
-      "japanese": "この炙るの使い方は非常に重要です。",
-      "reading": "このあぶるのつかいかたはひじょうにじゅうようです。",
-      "meaningId": "Penggunaan \"炙る\" (to scorch) ini sangatlah penting."
     }
   },
   "kotoba_n1_3429": {
@@ -196174,53 +195397,6 @@
       "meaningId": "Jika Anda berjalan dalam waktu lama, tumit Anda akan kapalan."
     }
   },
-  "kotoba_n1_3451": {
-    "id": "kotoba_n1_3451",
-    "word": "躊躇う",
-    "reading": "ためらう",
-    "meaningId": "Ragu-ragu",
-    "meaningEn": "to hesitate",
-    "meaningJa": "躊躇う",
-    "jlpt": "N1",
-    "wordType": "verb",
-    "kanjiComponents": [
-      "躊",
-      "躇"
-    ],
-    "collocations": [
-      "躊躇うを使う (躊躇う wo tsukau - menggunakan 躊躇う)",
-      "躊躇うについて (躊躇う ni tsuite - berkenaan dengan 躊躇う)",
-      "躊躇うの重要性 (躊躇う no juuyousei - pentingnya 躊躇う)"
-    ],
-    "exampleSentence": {
-      "japanese": "躊躇うものは失敗する。",
-      "reading": "躊躇うものは失敗する。",
-      "meaningId": "Mereka yang ragu akan gagal."
-    }
-  },
-  "kotoba_n1_3452": {
-    "id": "kotoba_n1_3452",
-    "word": "躓く",
-    "reading": "つまずく",
-    "meaningId": "Tersandung; perjalanan",
-    "meaningEn": "to stumble; to trip",
-    "meaningJa": "躓く",
-    "jlpt": "N1",
-    "wordType": "verb",
-    "kanjiComponents": [
-      "躓"
-    ],
-    "collocations": [
-      "躓くを使う (躓く wo tsukau - menggunakan 躓く)",
-      "躓くについて (躓く ni tsuite - berkenaan dengan 躓く)",
-      "躓くの重要性 (躓く no juuyousei - pentingnya 躓く)"
-    ],
-    "exampleSentence": {
-      "japanese": "走れば躓く。",
-      "reading": "走れば躓く。",
-      "meaningId": "Jika Anda lari, Anda akan tersandung."
-    }
-  },
   "kotoba_n1_3453": {
     "id": "kotoba_n1_3453",
     "word": "躾",
@@ -196381,53 +195557,6 @@
       "japanese": "この鋏の使い方は非常に重要です。",
       "reading": "このはさみのつかいかたはひじょうにじゅうようです。",
       "meaningId": "Penggunaan \"鋏\" (scissors) ini sangatlah penting."
-    }
-  },
-  "kotoba_n1_3460": {
-    "id": "kotoba_n1_3460",
-    "word": "饂飩",
-    "reading": "うどん",
-    "meaningId": "Mie (Jepang)",
-    "meaningEn": "noodles (Japanese)",
-    "meaningJa": "饂飩",
-    "jlpt": "N1",
-    "wordType": "noun",
-    "kanjiComponents": [
-      "饂",
-      "飩"
-    ],
-    "collocations": [
-      "饂飩を使う (饂飩 wo tsukau - menggunakan 饂飩)",
-      "饂飩について (饂飩 ni tsuite - berkenaan dengan 饂飩)",
-      "饂飩の重要性 (饂飩 no juuyousei - pentingnya 饂飩)"
-    ],
-    "exampleSentence": {
-      "japanese": "この饂飩の使い方は非常に重要です。",
-      "reading": "このうどんのつかいかたはひじょうにじゅうようです。",
-      "meaningId": "Penggunaan \"饂飩\" (noodles (Japanese)) ini sangatlah penting."
-    }
-  },
-  "kotoba_n1_3461": {
-    "id": "kotoba_n1_3461",
-    "word": "騙す",
-    "reading": "だます",
-    "meaningId": "Trik; mencurangi; menipu",
-    "meaningEn": "to trick; to cheat; to deceive",
-    "meaningJa": "騙す",
-    "jlpt": "N1",
-    "wordType": "verb",
-    "kanjiComponents": [
-      "騙"
-    ],
-    "collocations": [
-      "騙すを使う (騙す wo tsukau - menggunakan 騙す)",
-      "騙すについて (騙す ni tsuite - berkenaan dengan 騙す)",
-      "騙すの重要性 (騙す no juuyousei - pentingnya 騙す)"
-    ],
-    "exampleSentence": {
-      "japanese": "同僚を騙すのは良くないよ。",
-      "reading": "同僚を騙すのは良くないよ。",
-      "meaningId": "Tidak baik menipu rekan kerja Anda."
     }
   },
   "kotoba_n1_3462": {

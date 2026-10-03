@@ -1,4 +1,5 @@
 import { UserDeck, DeckItemRef } from '../types/rpg';
+import { kanaDojoKotobaIds } from './entityIds';
 import bunpouDb from './db/bunpou.json';
 import kanjiDb from './db/kanji.json';
 import kotobaDb from './db/kotoba.json';
@@ -71,9 +72,7 @@ const kanaKanjiIds = kanjiList
   .sort((a, b) => getKanaCanonicalRank(a) - getKanaCanonicalRank(b))
   .map(k => k.id || k.character);
 
-const kanaKotobaIds = kotobaList
-  .filter(k => k.id && k.id.startsWith('kt_train_'))
-  .map(k => k.id);
+const kanaKotobaIds = kanaDojoKotobaIds(kotobaList.map(k => k.id));
 
 const kanaRefs: DeckItemRef[] = [
   ...toRefs(kanaKanjiIds, 'kanji'),
