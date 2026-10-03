@@ -2463,6 +2463,42 @@ input:not([type="checkbox"]):not([type="radio"]) {
   --ui-line-strong: rgba(120, 150, 200, 0.5);
   --ui-line-inner: rgba(120, 150, 200, 0.16);
   --ui-radius: 16px;
+  --ui-text: #d6dcea;
+  --ui-text-hi: #f1f4fa;
+  --ui-text-dim: #98a2b8;
+  --ui-hover: #1d2535;
+  --ui-press: #141a25;
+  --ui-shadow: rgba(0, 0, 0, 0.18);
+  --ui-hi: rgba(255, 255, 255, 0.04);
+  --ui-press-shadow: rgba(0, 0, 0, 0.35);
+  --ui-danger-bg: #1c161c;
+  --ui-danger-line: rgba(226, 85, 91, 0.45);
+  --ui-danger-text: #f2a3a7;
+  --ui-gold: #e5b93f;
+  --ui-gold-line: rgba(229, 185, 63, 0.42);
+}
+
+/* Tema terang (washi): material yang sama, palet hangat */
+html.theme-light {
+  --ui-surface: #f6f3ec;
+  --ui-surface-hi: #fbf9f4;
+  --ui-surface-well: #e6e2d6;
+  --ui-line: rgba(94, 86, 64, 0.32);
+  --ui-line-strong: rgba(94, 86, 64, 0.58);
+  --ui-line-inner: rgba(94, 86, 64, 0.16);
+  --ui-text: #3b3528;
+  --ui-text-hi: #1f1d19;
+  --ui-text-dim: #615a4b;
+  --ui-hover: #fffdf8;
+  --ui-press: #e4dfd2;
+  --ui-shadow: rgba(60, 48, 25, 0.14);
+  --ui-hi: rgba(255, 255, 255, 0.75);
+  --ui-press-shadow: rgba(60, 48, 25, 0.25);
+  --ui-danger-bg: #f7eae8;
+  --ui-danger-line: rgba(168, 32, 37, 0.5);
+  --ui-danger-text: #8f1a1f;
+  --ui-gold: #8c580f;
+  --ui-gold-line: rgba(140, 88, 15, 0.5);
 }
 
 /* Sengaja TANPA @layer: kelas lama (.skeuo-tier-pill, .skeuo-btn, dst.) tidak ber-layer dan harus dikalahkan. */
@@ -2473,8 +2509,8 @@ input:not([type="checkbox"]):not([type="radio"]) {
     border: 1px solid var(--ui-line);
     border-radius: 18px;
     box-shadow:
-      0 8px 20px rgba(0, 0, 0, 0.18),
-      inset 0 1px 0 rgba(255, 255, 255, 0.035);
+      0 8px 20px var(--ui-shadow),
+      inset 0 1px 0 var(--ui-hi);
   }
   .ui-surface::after {
     content: "";
@@ -2484,13 +2520,13 @@ input:not([type="checkbox"]):not([type="radio"]) {
     border-radius: 14px;
     pointer-events: none;
   }
-  .ui-accent { color: #e5b93f; }
+  .ui-accent { color: var(--ui-gold); }
   .ui-icon-box {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     background: var(--ui-surface-well);
-    border: 1px solid rgba(110, 145, 205, 0.24);
+    border: 1px solid var(--ui-line);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
     transition: background-color 0.15s ease, border-color 0.15s ease;
   }
@@ -2500,7 +2536,7 @@ input:not([type="checkbox"]):not([type="radio"]) {
   }
 
   /* ---------- Kunci (tombol aksi) & chip filter / tab: satu keluarga ---------- */
-  html:not(.theme-light) :is(
+  html:not(.ui-a):not(.ui-b) :is(
     .btn, .rpg-btn, .rpg-btn-primary, .btn-primary, .btn-cta, .btn-skeuo-indigo, .btn-skeuo-gold,
     .skeuo-btn-gold, .btn-secondary, .rpg-btn-secondary, .skeuo-btn, .dungeon-btn,
     .btn-physical-primary, .btn-physical-secondary, .btn-physical-danger, .rpg-btn-danger,
@@ -2509,14 +2545,14 @@ input:not([type="checkbox"]):not([type="radio"]) {
     --k-bg: var(--ui-surface);
     --k-line: var(--ui-line);
     background: var(--k-bg);
-    color: #d6dcea;
+    color: var(--ui-text);
     border: 1px solid var(--k-line);
     text-shadow: none;
     box-shadow:
       inset 0 0 0 4px var(--k-bg),
       inset 0 0 0 5px var(--ui-line-inner),
-      0 8px 20px rgba(0, 0, 0, 0.18),
-      inset 0 1px 0 rgba(255, 255, 255, 0.035);
+      0 8px 20px var(--ui-shadow),
+      inset 0 1px 0 var(--ui-hi);
     transform: translateY(0);
     filter: none;
     transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease,
@@ -2524,86 +2560,86 @@ input:not([type="checkbox"]):not([type="radio"]) {
   }
 
   /* Hierarki: primer = border luar lebih kuat, teks terang */
-  html:not(.theme-light) :is(
+  html:not(.ui-a):not(.ui-b) :is(
     .btn:not(.btn-secondary):not(.btn-pill), .rpg-btn:not(.rpg-btn-secondary):not(.rpg-btn-danger),
     .rpg-btn-primary, .btn-primary, .btn-cta, .btn-skeuo-indigo, .btn-physical-primary
   ) {
     --k-bg: var(--ui-surface-hi);
     --k-line: var(--ui-line-strong);
-    color: #f1f4fa;
+    color: var(--ui-text-hi);
   }
 
   /* Hierarki: emas = aksen teks + border emas tipis (fill tetap navy) */
-  html:not(.theme-light) :is(.btn-skeuo-gold, .skeuo-btn-gold) {
+  html:not(.ui-a):not(.ui-b) :is(.btn-skeuo-gold, .skeuo-btn-gold) {
     --k-bg: var(--ui-surface-hi);
-    --k-line: rgba(229, 185, 63, 0.42);
-    color: #e5b93f;
+    --k-line: var(--ui-gold-line);
+    color: var(--ui-gold);
   }
 
   /* Hierarki: bahaya = aksen merah, fill tetap gelap */
-  html:not(.theme-light) :is(.btn-physical-danger, .rpg-btn-danger) {
-    --k-bg: #1c161c;
-    --k-line: rgba(226, 85, 91, 0.45);
-    color: #f2a3a7;
+  html:not(.ui-a):not(.ui-b) :is(.btn-physical-danger, .rpg-btn-danger) {
+    --k-bg: var(--ui-danger-bg);
+    --k-line: var(--ui-danger-line);
+    color: var(--ui-danger-text);
   }
 
   /* Hover: sedikit lebih terang + border lebih kuat (tanpa filter / gerak) */
-  html:not(.theme-light) :is(
+  html:not(.ui-a):not(.ui-b) :is(
     .btn, .rpg-btn, .rpg-btn-primary, .btn-primary, .btn-cta, .btn-skeuo-indigo, .btn-skeuo-gold,
     .skeuo-btn-gold, .btn-secondary, .rpg-btn-secondary, .skeuo-btn, .dungeon-btn,
     .btn-physical-primary, .btn-physical-secondary, .btn-physical-danger, .rpg-btn-danger,
     .skeuo-tier-pill, .notebook-filter-tab, .ui-chip
   ):hover:not(:disabled) {
-    --k-bg: #1d2535;
+    --k-bg: var(--ui-hover);
     --k-line: var(--ui-line-strong);
-    color: #f1f4fa;
+    color: var(--ui-text-hi);
     filter: none;
     transform: translateY(0);
   }
 
   /* Active (ditekan): permukaan lebih gelap, tenggelam 1px */
-  html:not(.theme-light) :is(
+  html:not(.ui-a):not(.ui-b) :is(
     .btn, .rpg-btn, .rpg-btn-primary, .btn-primary, .btn-cta, .btn-skeuo-indigo, .btn-skeuo-gold,
     .skeuo-btn-gold, .btn-secondary, .rpg-btn-secondary, .skeuo-btn, .dungeon-btn,
     .btn-physical-primary, .btn-physical-secondary, .btn-physical-danger, .rpg-btn-danger,
     .skeuo-tier-pill, .notebook-filter-tab, .ui-chip
   ):active:not(:disabled) {
-    --k-bg: #141a25;
+    --k-bg: var(--ui-press);
     transform: translateY(1px);
     box-shadow:
       inset 0 0 0 4px var(--k-bg),
       inset 0 0 0 5px var(--ui-line-inner),
-      inset 0 2px 6px rgba(0, 0, 0, 0.35);
+      inset 0 2px 6px var(--ui-press-shadow);
   }
 
   /* Terpilih (tab / filter aktif): lebih terang + border kuat + ikon beraksen emas */
-  html:not(.theme-light) :is(
+  html:not(.ui-a):not(.ui-b) :is(
     .skeuo-tier-pill.active, .notebook-filter-tab.active, .ui-chip.is-active, .seg-active
   ) {
     --k-bg: var(--ui-surface-hi);
     --k-line: var(--ui-line-strong);
     background: var(--k-bg);
-    color: #f1f4fa;
+    color: var(--ui-text-hi);
     border: 1px solid var(--k-line);
     transform: translateY(0);
     box-shadow:
       inset 0 0 0 4px var(--k-bg),
       inset 0 0 0 5px var(--ui-line-inner),
-      0 8px 20px rgba(0, 0, 0, 0.18),
-      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      0 8px 20px var(--ui-shadow),
+      inset 0 1px 0 var(--ui-hi);
   }
-  html:not(.theme-light) :is(.skeuo-tier-pill.active, .ui-chip.is-active) svg { color: #e5b93f; }
+  html:not(.ui-a):not(.ui-b) :is(.skeuo-tier-pill.active, .ui-chip.is-active) svg { color: var(--ui-gold); }
 
   /* Chip filter tidak aktif: sumur tenang (lebih gelap, border redup) */
-  html:not(.theme-light) :is(.skeuo-tier-pill:not(.active), .notebook-filter-tab:not(.active), .ui-chip:not(.is-active)) {
+  html:not(.ui-a):not(.ui-b) :is(.skeuo-tier-pill:not(.active), .notebook-filter-tab:not(.active), .ui-chip:not(.is-active)) {
     --k-bg: var(--ui-surface-well);
     --k-line: var(--ui-line-inner);
-    color: #98a2b8;
+    color: var(--ui-text-dim);
   }
-  html:not(.theme-light) :is(.skeuo-tier-pill:not(.active), .notebook-filter-tab:not(.active), .ui-chip:not(.is-active)):hover:not(:disabled) {
+  html:not(.ui-a):not(.ui-b) :is(.skeuo-tier-pill:not(.active), .notebook-filter-tab:not(.active), .ui-chip:not(.is-active)):hover:not(:disabled) {
     --k-bg: var(--ui-surface);
     --k-line: var(--ui-line);
-    color: #d6dcea;
+    color: var(--ui-text);
   }
 
   .ui-chip {
@@ -2616,19 +2652,19 @@ input:not([type="checkbox"]):not([type="radio"]) {
   }
 
   /* Disabled: tetap satu material, hanya redup */
-  html:not(.theme-light) :is(.btn, .rpg-btn, .btn-cta, .btn-secondary, .btn-skeuo-indigo, .btn-skeuo-gold, .skeuo-btn,
+  html:not(.ui-a):not(.ui-b) :is(.btn, .rpg-btn, .btn-cta, .btn-secondary, .btn-skeuo-indigo, .btn-skeuo-gold, .skeuo-btn,
     .skeuo-btn-gold, .btn-physical-primary, .btn-physical-secondary, .btn-physical-danger, .ui-chip):disabled {
     filter: none;
     opacity: 0.5;
   }
 
   /* Bar navigasi: permukaan yang sama */
-  html:not(.theme-light) .skeuo-navbar {
+  html:not(.ui-a):not(.ui-b) .skeuo-navbar {
     background: var(--ui-surface);
     border-color: var(--ui-line);
-    box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.035);
+    box-shadow: 0 -8px 20px var(--ui-shadow), inset 0 1px 0 var(--ui-hi);
   }
 
-html:not(.theme-light) :is(.skeuo-tier-pill, .ui-chip, .notebook-filter-tab, .btn-physical-primary, .btn-physical-secondary, .btn-physical-danger) {
+html:not(.ui-a):not(.ui-b) :is(.skeuo-tier-pill, .ui-chip, .notebook-filter-tab, .btn-physical-primary, .btn-physical-secondary, .btn-physical-danger) {
   border-radius: var(--ui-radius);
 }
