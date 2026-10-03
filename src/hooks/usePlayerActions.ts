@@ -500,6 +500,8 @@ export function usePlayerActions({
         currentStageId: targetStage!.id,
         currentWorldId: targetWorldId || prev.currentWorldId,
       }));
+      // Hub stage hidup di tab World: pindahkan tab aktif agar "Kembali ke Daftar Stage" dan highlight nav konsisten
+      setActiveTab('maps');
       setWorldNavView('maps');
       setSelectedStage(targetStage);
     }
