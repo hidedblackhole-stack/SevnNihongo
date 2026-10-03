@@ -18,6 +18,7 @@ import { DEFAULT_STATS } from '../state/defaultStats';
 import { canonicalEntityId } from '../state/canonicalizeStats';
 import { STORAGE_KEY_SIGNATURE } from '../state/storageKeys';
 import { applyLevelFromExp } from '../state/derivedState';
+import { consumePendingErrors } from '../utils/errorClassifier';
 import type { TabType } from '../components/layout/BottomNavigation';
 import type { WorldNavView } from '../components/map/WorldView';
 
@@ -142,6 +143,8 @@ export function usePlayerActions({
   ) => {
     // ID kanonik: alias lama / karakter kanji tidak boleh membuat record mastery ganda.
     if (itemId) itemId = canonicalEntityId(itemId);
+    // Jenis kesalahan dari sesi kuis yang baru selesai (sekali pakai; kosong untuk mode tanpa kuis)
+    const detectedErrors = consumePendingErrors();
     if (expGained > 0 || goldGained > 0) {
       handleRewardPlayer(expGained, goldGained);
     }
@@ -188,7 +191,7 @@ export function usePlayerActions({
           cat,
           score,
           total,
-          undefined,
+          detectedErrors.length > 0 ? detectedErrors : undefined,
           isContextual,
           effectiveInteraction
         );

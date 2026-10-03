@@ -9,6 +9,8 @@ import { StarSentenceQuiz } from './StarSentenceQuiz';
 import { calculateQuizReward } from '../../utils/rewards';
 import { normalizeQuestion } from '../../utils/questionUtils';
 import { sendScoreEvent } from '../../lib/supabase';
+import { classifyWrongAnswer, setPendingErrors } from '../../utils/errorClassifier';
+import type { ErrorType } from '../../types/content';
 
 interface QuizEngineProps {
   title: string;
@@ -41,6 +43,9 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
   soundEnabled = true,
   furiganaEnabled = true,
 }) => {
+  // Jenis kesalahan sesi ini (dikirim ke mastery lewat setPendingErrors saat selesai)
+  const sessionErrorsRef = React.useRef<ErrorType[]>([]);
+
   // Lock questions in state for the entire quiz session
   const [sessionQuestions, setSessionQuestions] = useState<Question[]>(propQuestions);
   const activeTitleRef = React.useRef(title);
@@ -92,6 +97,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
       playSound('correct', soundEnabled);
     } else {
       playSound('wrong', soundEnabled);
+      sessionErrorsRef.current.push(classifyWrongAnswer(currentQ, idx));
       if (onWrongAnswer) onWrongAnswer();
     }
 
@@ -106,6 +112,7 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
     if (isCorrect) {
       setCorrectCount(prev => prev + 1);
     } else {
+      sessionErrorsRef.current.push(classifyWrongAnswer(currentQ, selectedIdx));
       if (onWrongAnswer) onWrongAnswer();
     }
 
@@ -135,6 +142,8 @@ export const QuizEngine: React.FC<QuizEngineProps> = ({
         });
       }
 
+      setPendingErrors(sessionErrorsRef.current);
+      sessionErrorsRef.current = [];
       onComplete(correctCount, totalQ, expGained, goldGained);
     }
   };
