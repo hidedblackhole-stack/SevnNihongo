@@ -77,7 +77,7 @@ const TOUR_STEPS: TourStep[] = [
     id: 'deck',
     title: 'Rak Buku (Kurikulum & Buku Saku)',
     subtitle: 'Buku Kurikulum & Deck Hafalan',
-    description: 'Akses Rak Buku Kurikulum Resmi (Soumatome, Minna no Nihongo, dsb) atau kelola Buku Saku pribadimu dengan Flashcard dan Latihan Menulis!',
+    description: 'Buka tab Buku Saku untuk Rak Buku Kurikulum Resmi (Soumatome, Minna no Nihongo, dsb) atau kelola Buku Saku pribadimu dengan Flashcard dan Latihan Menulis!',
     targetSelector: '[data-tour="nav-deck"]',
     icon: Bookmark,
     accentColor: 'text-amber-400',

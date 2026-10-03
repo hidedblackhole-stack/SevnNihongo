@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Volume2, VolumeX, RotateCcw, ShieldAlert, Settings, BookOpen, User, LogOut, Coffee, MessageCircle, Sun, Moon, RefreshCw, Cloud, Check, Compass, Smartphone, Download } from 'lucide-react';
+import { Volume2, VolumeX, RotateCcw, ShieldAlert, Settings, BookOpen, User, LogOut, Coffee, MessageCircle, Sun, Moon, RefreshCw, Cloud, Check, Compass, Smartphone, Download, Play } from 'lucide-react';
 import { PlayerStats } from '../../types/rpg';
 import { speakJapanese, playSound } from '../../utils/audio';
 import { signOut } from '../../lib/supabase';
@@ -16,6 +16,34 @@ interface SettingsViewProps {
   lastSyncedAt?: string | null;
   onUpdateName?: (newName: string) => void;
   onReplayTutorial?: () => void;
+}
+
+function SettingSwitch({ checked, onChange, label }: { checked: boolean; onChange: (next: boolean) => void; label: string }) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={checked}
+      aria-label={label}
+      onClick={() => onChange(!checked)}
+      className="inline-flex items-center gap-2.5 shrink-0 select-none cursor-pointer"
+    >
+      <span className={`text-xs font-bold w-14 text-right ${checked ? 'text-text-primary' : 'text-text-secondary'}`}>
+        {checked ? 'Aktif' : 'Nonaktif'}
+      </span>
+      <span
+        className={`relative w-12 h-7 rounded-full border transition-colors ${
+          checked ? 'bg-surface-elevated border-gold/60' : 'bg-surface-inset border-border-primary'
+        }`}
+      >
+        <span
+          className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full transition-transform duration-150 shadow-md ${
+            checked ? 'translate-x-5 bg-gold' : 'translate-x-0 bg-text-muted'
+          }`}
+        />
+      </span>
+    </button>
+  );
 }
 
 export const SettingsView: React.FC<SettingsViewProps> = ({
@@ -242,7 +270,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         <div className="space-y-2">
           <label className="text-xs sm:text-sm font-bold text-text-primary font-heading flex items-center justify-between">
             <span>Nama Petualang</span>
-            <span className="text-[10px] text-text-muted font-mono font-normal">
+            <span className="text-[11px] text-text-secondary font-mono font-medium">
               {playerNameInput.length}/20 Karakter
             </span>
           </label>
@@ -303,7 +331,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 <span className="text-xs sm:text-sm font-bold font-heading text-text-primary block">
                   Pendekar Pria
                 </span>
-                <span className="text-[10px] text-text-muted font-body block mt-0.5">
+                <span className="text-[11px] text-text-secondary font-body block mt-0.5">
                   Petualang ksatria pemberani
                 </span>
               </div>
@@ -331,7 +359,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 <span className="text-xs sm:text-sm font-bold font-heading text-text-primary block">
                   Pendekar Wanita
                 </span>
-                <span className="text-[10px] text-text-muted font-body block mt-0.5">
+                <span className="text-[11px] text-text-secondary font-body block mt-0.5">
                   Petualang jubah tangguh
                 </span>
               </div>
@@ -356,21 +384,27 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             {['🦊', '🐉', '⛩️', '👹', '🥷', '🌸', '⚔️', '👺', '🐼'].map((emoji) => (
               <button
                 key={emoji}
+                type="button"
+                aria-pressed={(stats.avatar === emoji || (!stats.avatar && emoji === '🦊'))}
+                aria-label={`Avatar ${emoji}`}
                 onClick={() => {
                   playSound('click', true);
                   onUpdateSettings({ avatar: emoji });
                 }}
-                className={`w-12 h-12 flex items-center justify-center text-2xl rounded-xl border transition-all ${
-                  stats.avatar === emoji || (!stats.avatar && emoji === '🦊')
-                    ? 'bg-surface-elevated border-border-subtle scale-105 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_4px_10px_rgba(0,0,0,0.35)]'
-                    : 'bg-surface-inset border-border-subtle shadow-[inset_1px_1px_3px_var(--neu-d)] hover:border-border-muted opacity-70 hover:opacity-100'
+                className={`ui-chip relative w-12 h-12 justify-center text-2xl ${
+                  (stats.avatar === emoji || (!stats.avatar && emoji === '🦊')) ? 'is-active outline outline-2 outline-offset-2 outline-gold' : 'opacity-70 hover:opacity-100'
                 }`}
               >
                 {emoji}
+                {(stats.avatar === emoji || (!stats.avatar && emoji === '🦊')) && (
+                  <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-gold text-surface-base flex items-center justify-center shadow-md">
+                    <Check className="w-3 h-3" strokeWidth={3.5} />
+                  </span>
+                )}
               </button>
             ))}
           </div>
-          <p className="text-[10px] text-text-secondary">
+          <p className="text-[11px] text-text-secondary">
             *Avatar akan tersinkronisasi saat progress tersimpan ke cloud (saat EXP bertambah).
           </p>
         </div>
@@ -388,27 +422,21 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             <h4 className="text-xs sm:text-sm font-bold text-text-primary font-heading">Efek Suara Game (SFX)</h4>
             <p className="text-xs text-text-secondary">Suara ketuk kayu, tebasan bambu, genta zen, tetesan air & lonceng angin</p>
           </div>
-          <button
-            onClick={() => {
-              const newSetting = !stats.soundEnabled;
+          <SettingSwitch
+            checked={!!stats.soundEnabled}
+            label="Efek Suara Game (SFX)"
+            onChange={(newSetting) => {
               onUpdateSettings({ soundEnabled: newSetting });
               if (newSetting) playSound('click', true);
             }}
-            className={`p-2.5 rounded-xl border transition-all ${
-              stats.soundEnabled
-                ? 'bg-surface-elevated text-indigo border-border-subtle shadow-sm'
-                : 'bg-surface-inset text-text-muted border-border-subtle'
-            }`}
-          >
-            {stats.soundEnabled ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
-          </button>
+          />
         </div>
 
         {/* SFX Tester Pills */}
         {stats.soundEnabled && (
           <div className="pt-2 border-t border-border-subtle">
             <span className="text-[11px] font-bold text-text-secondary uppercase tracking-wider block mb-2 font-mono">
-              Pratinjau Efek Suara Organik:
+              Pratinjau Efek Suara — ketuk untuk memutar:
             </span>
             <div className="flex flex-wrap gap-2">
               <button
@@ -416,6 +444,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 onClick={() => playSound('click', true)}
                 className="btn btn-pill text-[11px] py-1 px-2.5"
               >
+                <Play className="w-3 h-3 fill-current" aria-hidden="true" />
                 🪵 Ketuk Kayu
               </button>
               <button
@@ -423,6 +452,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 onClick={() => playSound('correct', true)}
                 className="btn btn-pill text-[11px] py-1 px-2.5 text-emerald-600 dark:text-emerald-400"
               >
+                <Play className="w-3 h-3 fill-current" aria-hidden="true" />
                 🔔 Genta Zen (Benar)
               </button>
               <button
@@ -430,6 +460,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 onClick={() => playSound('wrong', true)}
                 className="btn btn-pill text-[11px] py-1 px-2.5 text-rose-600 dark:text-rose-400"
               >
+                <Play className="w-3 h-3 fill-current" aria-hidden="true" />
                 🥁 Ketuk Lembut (Salah)
               </button>
               <button
@@ -437,6 +468,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 onClick={() => playSound('coin', true)}
                 className="btn btn-pill text-[11px] py-1 px-2.5 text-gold"
               >
+                <Play className="w-3 h-3 fill-current" aria-hidden="true" />
                 💧 Suikinkutsu (Koin)
               </button>
               <button
@@ -444,6 +476,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 onClick={() => playSound('attack', true)}
                 className="btn btn-pill text-[11px] py-1 px-2.5 text-wine-accent"
               >
+                <Play className="w-3 h-3 fill-current" aria-hidden="true" />
                 🎋 Tebasan Bambu
               </button>
               <button
@@ -451,6 +484,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 onClick={() => playSound('levelup', true)}
                 className="btn btn-pill text-[11px] py-1 px-2.5 text-indigo"
               >
+                <Play className="w-3 h-3 fill-current" aria-hidden="true" />
                 🎐 Fūrin (Level Up)
               </button>
             </div>
@@ -537,29 +571,14 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 Tampilkan cara baca Hiragana di atas huruf Kanji
               </p>
             </div>
-            <button
-              type="button"
-              onClick={() => {
-                const isCurrentlyActive = stats.furiganaEnabled ?? true;
-                onUpdateSettings({ furiganaEnabled: !isCurrentlyActive });
+            <SettingSwitch
+              checked={stats.furiganaEnabled ?? true}
+              label="Bantuan Furigana & Kanji"
+              onChange={(next) => {
+                onUpdateSettings({ furiganaEnabled: next });
                 playSound('click', stats.soundEnabled);
               }}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all inline-flex items-center gap-2 shrink-0 select-none cursor-pointer border active:translate-y-[1px] ${
-                (stats.furiganaEnabled ?? true)
-                  ? 'bg-emerald-500/15 border-border-subtle text-emerald-700 dark:text-emerald-400 shadow-[0_2px_4px_var(--neu-d),inset_0_1px_0_rgba(255,255,255,0.7)]'
-                  : 'bg-surface-inset text-text-muted border-border-subtle hover:text-text-primary hover:border-border-primary'
-              }`}
-              title="Klik untuk menyalakan atau mematikan Furigana"
-            >
-              <span
-                className={`w-2 h-2 rounded-full transition-colors ${
-                  (stats.furiganaEnabled ?? true)
-                    ? 'bg-emerald-500'
-                    : 'bg-text-muted/40'
-                }`}
-              />
-              <span className="whitespace-nowrap">{(stats.furiganaEnabled ?? true) ? 'Aktif' : 'Nonaktif'}</span>
-            </button>
+            />
           </div>
 
           {/* 3. Panduan Awal (Tutorial) */}

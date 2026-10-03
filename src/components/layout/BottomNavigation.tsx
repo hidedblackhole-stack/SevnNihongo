@@ -21,7 +21,7 @@ const BottomNavigationComponent: React.FC<BottomNavigationProps> = ({
     { id: 'daily', label: 'Misi', icon: ScrollIcon },
     { id: 'leaderboard', label: 'Rank', icon: TrophyIcon },
     { id: 'library', label: 'Library', icon: BookIcon },
-    { id: 'deck', label: 'Rak Buku', icon: BookmarkIcon },
+    { id: 'deck', label: 'Buku Saku', icon: BookmarkIcon },
     { id: 'settings', label: 'Menu', icon: SettingsIcon },
   ];
 
