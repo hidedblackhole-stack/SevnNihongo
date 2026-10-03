@@ -1,5 +1,5 @@
 # NIHONGO QUEST — PANDUAN DESAIN SISTEM (DESIGN.md)
-*Gaya: Skeuomorphism Simple (Buku Catatan Petualang · Kertas Washi Tradisional & Kulit Penjilid)*
+*Gaya: Dark Layered / Inset-Outlined Skeuomorphism (acuan: kartu Buku Saku) · Buku Catatan Petualang · diperbarui 4 Okt 2026*
 
 Dokumen ini adalah **pedoman wajib** untuk setiap pembuatan atau modifikasi antarmuka (UI) di Nihongo Quest. Setiap komponen baru harus mematuhi aturan ini agar konsistensi visual tetap terjaga.
 
@@ -7,6 +7,26 @@ Dokumen ini adalah **pedoman wajib** untuk setiap pembuatan atau modifikasi anta
 
 ## 🏛️ Filosofi Inti
 Nihongo Quest mengusung tema **Buku Petualang Jepang Klasik (Fantasy Washi & Leather Scroll)**. Antarmuka harus terasa seperti benda fisik nyata yang bisa disentuh: buku catatan bersampul kulit, lembaran kertas washi, papan kayu dojo, dan stempel hanko tradisional.
+
+---
+
+## 🧱 Material Utama (BERLAKU UNTUK SEMUA KOMPONEN)
+
+Satu material untuk kartu, tombol, tab/filter, chip, dan item navigasi. Yang dibedakan hanya **fungsi dan hierarki**, bukan bahan.
+
+| Lapisan | Aturan |
+|---|---|
+| Latar | navy gelap solid (`--ui-surface`), **bukan** fill biru/emas penuh |
+| Border luar | 1px tipis (`--ui-line`) |
+| Garis dalam | lebih halus: putus-putus (`::after`, kartu besar) atau cincin 1px lewat `inset box-shadow` (tombol/chip) |
+| Shadow | sangat halus: `0 8px 20px` + `inset 0 1px 0` highlight |
+| Gradient glossy / efek cembung | **dilarang** |
+| Aksen biru & emas | hanya pada teks, ikon, dan border aktif — bukan fill |
+| Radius | konsisten: 16px (tombol/chip), 18px (kartu) — `--ui-radius` |
+
+Token & kelas (src/index.css, blok "UNIFIED SURFACE"): `--ui-surface/-hi/-well`, `--ui-line/-strong/-inner`; `.ui-surface`, `.ui-icon-box`, `.ui-chip`, `.ui-accent`. Tema terang memakai token yang sama dengan palet washi (`html.theme-light`).
+
+**Hierarki:** primer = border luar lebih kuat (`--ui-line-strong`) + fill sedikit lebih terang · sekunder = border standar · emas = teks/ikon emas + border emas tipis · bahaya = teks/border merah, fill tetap gelap · terpilih = fill lebih terang + border kuat + ikon beraksen · hover = sedikit lebih terang · ditekan = lebih gelap, turun 1px.
 
 ---
 
@@ -71,22 +91,19 @@ Warna **TIDAK BOLEH** meluap menjadi outline kartu atau background gradasi wadah
 </div>
 ```
 
-### 2. Tombol Aksi Fisik (Tactile Physical Buttons)
+### 2. Tombol Aksi (material inset-outlined)
+Nama kelas lama tetap dipakai sebagai peran; materialnya satu keluarga (lihat Material Utama).
 ```tsx
-// Tombol Utama (Timbul dengan bevel 3D tactile):
-<button className="btn-physical-primary py-2.5 px-4 rounded-xl text-xs font-bold font-heading">
-  Mulai
-</button>
-
-// Tombol Sekunder Fisik:
-<button className="btn-physical-secondary py-2.5 px-4 rounded-xl text-xs font-bold font-heading">
-  Pilih Level Lain
-</button>
-
-// Tombol Netral / Batal:
-<button className="btn btn-secondary py-2.5 px-4 rounded-xl text-xs font-heading">
-  Kembali
-</button>
+// Utama (border luar lebih kuat):
+<button className="btn-physical-primary py-2.5 px-4 text-xs font-bold font-heading">Mulai</button>
+// Sekunder / netral:
+<button className="btn-physical-secondary py-2.5 px-4 text-xs font-bold font-heading">Pilih Level Lain</button>
+// Batal:
+<button className="btn btn-secondary py-2.5 px-4 text-xs font-heading">Kembali</button>
+// Chip filter / tab (terpilih = tambahkan is-active):
+<button className={`ui-chip px-3 py-1 text-xs ${active ? 'is-active' : ''}`}>N5</button>
+// Kotak ikon:
+<span className="ui-icon-box p-2 rounded-xl"><Icon className="w-5 h-5" /></span>
 ```
 
 ### 3. Layar Hasil Permainan (Scorecard)
@@ -108,7 +125,7 @@ Warna **TIDAK BOLEH** meluap menjadi outline kartu atau background gradasi wadah
 - [ ] Apakah ada border tebal berwarna mencolok (`border-2 border-amber...`)? Jika ada, **GANTI ke `border border-border-subtle`**.
 - [ ] Apakah ada `blur-2xl` atau neon glow? Jika ada, **HAPUS**.
 - [ ] Apakah ada kata "medsos", "viral", atau tombol "salin format"? Jika ada, **HAPUS**.
-- [ ] Apakah tombol menggunakan style fisik (`btn-physical-primary` dsb)? Jika belum, **SESUAIKAN**.
+- [ ] Apakah tombol/chip memakai material baku (`btn-*`, `ui-chip`, `ui-icon-box`) tanpa `bg-*`/`border-*`/`shadow-*` buatan sendiri? Jika belum, **SESUAIKAN**.
 
 ---
 
@@ -117,18 +134,20 @@ Warna **TIDAK BOLEH** meluap menjadi outline kartu atau background gradasi wadah
 - Wadah cekung (`bg-surface-inset`) **tidak** dijahit: itu lubang/inset, bukan sampul.
 - **Dilarang di semua layar:** gradient pada wadah, outline/ring berwarna (gold, amber, indigo, teal, dst.), glow, blob blur, `backdrop-blur`. Aksen warna hanya pada teks, ikon, isi badge/stempel, dan bar progres.
 - Satu-satunya pengecualian outline berwarna: umpan balik jawaban benar/salah pada tombol pilihan kuis.
-- Tidak diberi jahitan: elemen `sticky`/`absolute`, kontainer yang bisa di-scroll (`overflow-y-auto`), chip/badge kecil, dan tombol (tombol memakai `btn-physical-*`).
+- Tidak diberi jahitan: elemen `sticky`/`absolute`, kontainer yang bisa di-scroll (`overflow-y-auto`), chip/badge kecil. Tombol besar/CTA (`btn-cta`) memakai garis dalam putus-putus; tombol kecil memakai cincin dalam 1px.
 
 ---
 
-## 🔘 Peta Kelas Tombol (semua tombol aksi harus fisik)
+## 🔘 Peta Kelas Tombol (semua satu material; beda di hierarki)
 | Peran | Kelas | Catatan |
 |---|---|---|
-| Aksi utama | `btn-physical-primary` (setara: `btn`, `btn-cta`, `rpg-btn`, `btn-skeuo-indigo`) | permukaan timbul + tepi bawah 4px, turun saat ditekan |
-| Aksi sekunder / netral / batal / tombol ikon berbingkai | `btn-physical-secondary` (setara: `btn btn-secondary`, `btn btn-pill`, `skeuo-btn`) | tepi bawah 3px |
-| Aksi berbahaya (hapus/reset/keluar) | `btn-physical-danger` | |
-| Tab / filter / pilihan **terpilih** | `seg-active` + aksen di teks (`text-gold`) | jangan memakai `bg-indigo text-white` atau `bg-gold` datar |
-| Wadah cekung | `bg-surface-inset` | otomatis mendapat ukiran dalam bila tidak punya `shadow-*` sendiri |
+| Aksi utama | `btn-physical-primary` (setara: `btn`, `btn-cta`, `rpg-btn`, `btn-skeuo-indigo`) | border luar lebih kuat |
+| Aksi sekunder / netral / batal / tombol ikon berbingkai | `btn-physical-secondary` (setara: `btn btn-secondary`, `btn btn-pill`, `skeuo-btn`) | border standar |
+| Aksi emas / klaim | `btn-skeuo-gold`, `skeuo-btn-gold` | teks & border emas, fill tetap navy |
+| Aksi berbahaya (hapus/reset/keluar) | `btn-physical-danger` | teks/border merah |
+| Tab / filter / pilihan | `ui-chip` (+ `is-active`), `skeuo-tier-pill`, `notebook-filter-tab` | terpilih = lebih terang + border kuat |
+| Kotak ikon | `ui-icon-box` (+ `is-active`) | nav, kartu |
+| Wadah cekung | `bg-surface-inset` | |
 
-- **Jangan** menambahkan `bg-*`, `border-*`, `shadow-*`, `hover:scale-*`, atau `active:scale-*` pada tombol berkelas di atas: utilitas itu menimpa bahan tombol dan membuatnya datar.
+- Aturan CSS ini sengaja **tanpa @layer** (blok "UNIFIED SURFACE") supaya mengalahkan kelas lama yang tidak ber-layer. Jangan menambahkan `bg-*`, `border-*`, `shadow-*`, `hover:scale-*`, atau `active:scale-*` pada elemen berkelas di atas.
 - Yang boleh tetap tanpa bahan tombol: tautan teks, tombol ikon tanpa bingkai, baris daftar, dan opsi jawaban kuis.

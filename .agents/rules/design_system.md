@@ -19,8 +19,9 @@ Follow the guidelines from `DESIGN.md` unconditionally when creating or modifyin
    - Never write words like "medsos", "viral", "salin format medsos", or hashtags (`#NihongoQuest`).
    - Use immersive, clean in-game terms: "Main Lagi", "Pilih Level Lain", "Kembali ke Arena", "Arena Arcade", "Survival 3 Nyawa".
 
-5. **Simple Skeuomorphism**:
-   - Use tactile buttons: `.btn-physical-primary`, `.btn-physical-secondary`, `.btn-secondary`.
-   - Use tactile panels: `.panel`, `.notebook-adventure-card`.
-   - Accent colors (gold, crimson, teal, matcha, indigo) belong ONLY on small icons, numbers, or stamps, never leaking as card outlines or gradient backgrounds.
+5. **Dark Layered Inset-Outlined Skeuomorphism** (acuan: kartu Buku Saku; detail di `DESIGN.md` → Material Utama):
+   - Satu material untuk kartu, tombol, tab/filter/chip, dan nav: latar navy gelap, border luar 1px, garis dalam halus, shadow lembut. Tanpa gradient glossy / efek cembung.
+   - Pakai kelas baku: `.btn-physical-primary/-secondary/-danger`, `.btn`, `.ui-chip` (+`is-active`), `.ui-icon-box`, `.panel`/`.ui-surface`. Jangan menambah `bg-*`/`border-*`/`shadow-*` buatan sendiri pada elemen tersebut.
+   - Hierarki dibedakan lewat kekuatan border dan aksen teks/ikon (biru/emas), bukan lewat fill warna.
+   - Accent colors (gold, crimson, teal, matcha, indigo) hanya pada ikon kecil, angka, stempel, dan teks.
 <!-- DESIGN_SYSTEM_RULES_END -->
