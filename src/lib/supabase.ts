@@ -24,11 +24,26 @@ function isMissingRelation(err: { code?: string; message?: string } | null | und
 const directUrl = (import.meta as any).env?.VITE_SUPABASE_URL || 'https://iokhdhqnpslpwsxspvaj.supabase.co';
 const supabaseKey = (import.meta as any).env?.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlva2hkaHFucHNscHdzeHNwdmFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg0MjQyMDUsImV4cCI6MjEwNDAwMDIwNX0.8o2UFh4VXRUObjvBq_rVRxIar7yZSU7vrCgaHutYyPE';
 
-function getSupabaseUrl(): string {
-  // Always prioritize directUrl for robust universal connectivity across Mobile PWA,
-  // Standalone executable, GitHub Pages, Vercel, and dev servers without relying on reverse proxies.
-  return directUrl;
+/**
+ * Di web yang di-host (Vercel dsb.) permintaan lewat proxy same-origin `/supabase-proxy` (lihat vercel.json)
+ * karena beberapa ISP (mis. di Indonesia) memblokir *.supabase.co sehingga login gagal "Failed to fetch".
+ * Di localhost / file / host tanpa rewrite (GitHub Pages, standalone) langsung ke supabase.co.
+ * Bila proxy gagal, resilientFetch otomatis jatuh ke directUrl dan mengingatnya (proxyBroken).
+ */
+function canUseSameOriginProxy(): boolean {
+  if (typeof window === 'undefined' || !window.location) return false;
+  const { protocol, hostname } = window.location;
+  if (protocol !== 'https:' && protocol !== 'http:') return false;
+  return !/^(localhost|127\.0\.0\.1|\[::1\]|.*\.github\.io)$/i.test(hostname);
 }
+
+function getSupabaseUrl(): string {
+  return canUseSameOriginProxy() ? `${window.location.origin}/supabase-proxy` : directUrl;
+}
+
+/** true setelah proxy terbukti tidak tersedia (404 / HTML / error jaringan) -> langsung ke supabase.co. */
+let proxyBroken = false;
+const PROXY_PREFIX_RE = /^https?:\/\/[^/]+(\/[^/]+)*\/supabase-proxy/;
 
 const supabaseUrl = getSupabaseUrl();
 
@@ -39,10 +54,14 @@ const supabaseUrl = getSupabaseUrl();
  *    automatically falling back to directUrl (supabase.co).
  */
 async function resilientFetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
-  const urlStr = typeof input === 'string' ? input : input instanceof URL ? input.toString() : (input as Request).url;
-  
+  let urlStr = typeof input === 'string' ? input : input instanceof URL ? input.toString() : (input as Request).url;
+  if (proxyBroken && urlStr.includes('/supabase-proxy')) {
+    urlStr = urlStr.replace(PROXY_PREFIX_RE, directUrl);
+    input = urlStr;
+  }
+
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 7000);
+  const timer = setTimeout(() => controller.abort(), 12000);
   
   const externalSignal = init?.signal;
   const onExternalAbort = () => controller.abort();
@@ -65,10 +84,11 @@ async function resilientFetch(input: RequestInfo | URL, init?: RequestInit): Pro
     if ((!res.ok || isHtml) && urlStr.includes('/supabase-proxy')) {
       const fallbackUrl = urlStr.replace(/^https?:\/\/[^/]+(\/[^/]+)*\/supabase-proxy/, directUrl);
       const fbController = new AbortController();
-      const fbTimer = setTimeout(() => fbController.abort(), 7000);
+      const fbTimer = setTimeout(() => fbController.abort(), 12000);
       try {
         const fallbackRes = await fetch(fallbackUrl, { ...init, signal: fbController.signal });
         clearTimeout(fbTimer);
+        proxyBroken = true;
         return fallbackRes;
       } catch {
         clearTimeout(fbTimer);
@@ -80,10 +100,11 @@ async function resilientFetch(input: RequestInfo | URL, init?: RequestInit): Pro
     if (urlStr.includes('/supabase-proxy')) {
       const fallbackUrl = urlStr.replace(/^https?:\/\/[^/]+(\/[^/]+)*\/supabase-proxy/, directUrl);
       const fbController = new AbortController();
-      const fbTimer = setTimeout(() => fbController.abort(), 7000);
+      const fbTimer = setTimeout(() => fbController.abort(), 12000);
       try {
         const fallbackRes = await fetch(fallbackUrl, { ...init, signal: fbController.signal });
         clearTimeout(fbTimer);
+        proxyBroken = true;
         return fallbackRes;
       } catch (fbErr) {
         clearTimeout(fbTimer);

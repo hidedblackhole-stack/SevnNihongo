@@ -72,8 +72,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
     } catch (err: any) {
       console.error('Auth error:', err);
       const msg = err.message || '';
-      if (msg.includes('Failed to fetch') || err.name === 'TypeError') {
-        setError('Gagal terhubung ke server (Failed to fetch). Jika menggunakan Brave atau AdBlocker, mohon matikan Shields/AdBlock untuk situs ini.');
+      if (
+        /Failed to fetch|Load failed|NetworkError|network request failed|aborted|timed? ?out/i.test(msg) ||
+        err.name === 'TypeError' || err.name === 'AbortError' || err.name === 'AuthRetryableFetchError'
+      ) {
+        setError('Gagal terhubung ke server. Coba: (1) periksa koneksi internet, (2) ganti jaringan (WiFi ↔ data seluler) atau aktifkan DNS 1.1.1.1 / VPN karena sebagian provider memblokir server kami, (3) matikan AdBlock/Brave Shields untuk situs ini, lalu muat ulang halaman.');
       } else if (msg.includes('Invalid login credentials')) {
         setError('Email atau password salah. Silakan periksa kembali.');
       } else if (msg.includes('already registered') || msg.includes('User already registered')) {
