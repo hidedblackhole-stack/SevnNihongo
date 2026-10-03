@@ -48,7 +48,7 @@ export function MainContent(props: MainContentProps) {
     isBossBattleActive, setIsBossBattleActive, isAuthModalOpen, setIsAuthModalOpen,
     worldNavView, setWorldNavView, worldResetCount, deckResetCount, deckInitialSubTab, setDeckInitialSubTab,
     handleTabChange, handleNavigateToOfficialBooks,
-    handleRewardPlayer, handleStudyComplete, handleRecordItemInteraction, handleStageModuleComplete,
+    handleRewardPlayer, handleStudyComplete, handleRecordItemInteraction, handleStageModuleComplete, handleTowerMastery,
     handleStartRemediationRecall, handleItemReviewed, handleCompleteRecallSession, handleUseMp,
     handleClaimMission, handleGameOver, handleHpDamage, handleResetData, handleLaunchStageById,
     handleUpdateName, handleUpdateSignature, handleToggleBookmark, handleUpdateDecks, handleReplayOnboarding,
@@ -173,6 +173,7 @@ export function MainContent(props: MainContentProps) {
                       onNavigateToOfficialBooks={handleNavigateToOfficialBooks}
                       onRewardPlayer={handleRewardPlayer}
                       onCompleteStudyItem={handleStudyComplete}
+                      onTowerMastery={handleTowerMastery}
                       playerMp={stats.mp}
                       playerMaxMp={stats.maxMp}
                       playerInt={stats.int}

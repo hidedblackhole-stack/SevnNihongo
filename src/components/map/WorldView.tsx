@@ -68,6 +68,8 @@ interface WorldViewProps {
   onNavigateTab?: (tab: 'home' | 'maps' | 'daily' | 'weekly' | 'leaderboard' | 'library' | 'deck' | 'settings') => void;
   onNavigateToOfficialBooks?: () => void;
   onRewardPlayer?: (exp: number, gold: number) => void;
+  /** Hasil lantai Tower (masteryGain per itemId) -> mastery/SRS pemain. */
+  onTowerMastery?: (masteryGain: Record<string, number>) => void;
   onCompleteStudyItem?: (
     moduleId: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss' | 'questions' | 'tryOuts',
     expGained: number,
@@ -99,6 +101,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
   userDecks,
   onUpdateDecks,
   onRewardPlayer,
+  onTowerMastery,
   onCompleteStudyItem,
   playerLevel = 1,
   playerTierIndex = 0,
@@ -553,7 +556,8 @@ export const WorldView: React.FC<WorldViewProps> = ({
               playerProfile={towerProfile}
               soundEnabled={soundEnabled}
               onRewardPlayer={onRewardPlayer}
-              onFloorCleared={() => {
+              onFloorCleared={(_floor, report) => {
+                onTowerMastery?.(report.masteryGain);
                 setTowerProgress(loadTowerProgress());
               }}
               onExit={() => {

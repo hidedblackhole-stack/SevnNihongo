@@ -19,6 +19,9 @@ import { canonicalEntityId } from '../state/canonicalizeStats';
 import { STORAGE_KEY_SIGNATURE } from '../state/storageKeys';
 import { applyLevelFromExp } from '../state/derivedState';
 import { consumePendingErrors } from '../utils/errorClassifier';
+import { KOTOBA_DATABASE } from '../data/kotoba';
+import { KANJI_DATABASE } from '../data/kanji';
+import { BUNPOU_DATABASE } from '../data/bunpou';
 import type { TabType } from '../components/layout/BottomNavigation';
 import type { WorldNavView } from '../components/map/WorldView';
 
@@ -265,6 +268,29 @@ export function usePlayerActions({
       }
 
       return newStats;
+    });
+  }, []);
+
+  // Hasil lantai Tower -> mastery/SRS & activity. masteryGain = { itemId: totalDelta }; delta > 0 = benar.
+  // ID yang bukan materi (mis. "round_2_INSCRIPTION") dilewati.
+  const handleTowerMastery = useCallback((masteryGain: Record<string, number>) => {
+    setStats(prev => {
+      let mastery = prev.itemMastery || {};
+      let next: PlayerStats = prev;
+      let changed = false;
+      for (const [rawId, delta] of Object.entries(masteryGain || {})) {
+        const id = canonicalEntityId(rawId);
+        const category: 'kotoba' | 'kanji' | 'bunpou' | null =
+          KOTOBA_DATABASE[id] ? 'kotoba' : KANJI_DATABASE[id] ? 'kanji' : BUNPOU_DATABASE[id] ? 'bunpou' : null;
+        if (!category) continue;
+        mastery = { ...mastery, [id]: recordItemInteraction(mastery[id], id, category, 'quiz', delta > 0) };
+        next = recordStudyActivity(next, 'questions', id, 1);
+        changed = true;
+      }
+      if (!changed) return prev;
+      let recallQueue = next.recallQueue || [];
+      try { recallQueue = buildSmartRecallQueue(mastery); } catch (e) { console.warn('Failed to update recall queue', e); }
+      return { ...next, itemMastery: mastery, recallQueue };
     });
   }, []);
 
@@ -579,7 +605,7 @@ export function usePlayerActions({
   }, []);
 
   return {
-    handleRewardPlayer, advanceMissions, handleStudyComplete, handleRecordItemInteraction,
+    handleRewardPlayer, advanceMissions, handleStudyComplete, handleRecordItemInteraction, handleTowerMastery,
     handleStageModuleComplete, handleStartRemediationRecall, handleItemReviewed, handleCompleteRecallSession,
     handleUseMp, handleAllocateStat, handleAscendTier, handleClaimMission, handleGameOver, handleHpDamage,
     handleResetData, handleLaunchStageById, handleUpdateName, handleUpdateSignature, handleToggleBookmark,
