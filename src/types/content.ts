@@ -240,7 +240,10 @@ export interface KotobaItem {
   meaningJa: string;
   meaningJaId?: string;
   jlpt: string;
-  wordType: 'noun' | 'verb' | 'adjective-i' | 'adjective-na' | 'adverb' | 'expression';
+  wordType:
+    | 'noun' | 'verb' | 'adjective-i' | 'adjective-na' | 'adjective-pn' | 'adverb'
+    | 'conjunction' | 'particle' | 'pronoun' | 'counter' | 'numeral' | 'interjection'
+    | 'expression' | 'prefix' | 'suffix' | 'auxiliary';
   kanjiComponents: string[];
   exampleSentence?: {
     japanese: string;

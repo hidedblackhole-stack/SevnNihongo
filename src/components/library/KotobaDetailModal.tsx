@@ -1,3 +1,4 @@
+import { getWordTypeLabel } from '../../utils/wordType';
 import React, { useMemo, useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion } from 'motion/react';
@@ -365,7 +366,7 @@ export const KotobaDetailModal: React.FC<KotobaDetailModalProps> = ({
                     : 'Supplementary (Lanjutan)'}
                 </span>
                 <span className="px-2.5 py-1 rounded-lg bg-surface-inset text-text-muted text-xs font-mono border border-border-subtle uppercase font-bold shadow-sm">
-                  {effectiveItem.wordType}
+                  {getWordTypeLabel(effectiveItem.wordType)}
                 </span>
                 {hasMultipleReadings && (
                   <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-bold border border-border-subtle text-red-700 dark:text-amber-400 bg-surface-inset shadow-sm flex items-center gap-1.5">

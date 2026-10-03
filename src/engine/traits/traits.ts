@@ -1,3 +1,4 @@
+import { getWordTypeLabel } from '../../utils/wordType';
 // ==============================================================================
 // NIHONGO QUEST: CAPABILITY TRAIT SYSTEM (ECS / TOOL-CONSUMER CONTRACTS)
 // Declarative capability detection & typed adaptors for entities
@@ -226,7 +227,7 @@ export function asFlashcard(item: any): FlashcardTrait | null {
     displayReading = displayReading || kotoba.reading || '';
     displayMeaning = displayMeaning || kotoba.meaningId || kotoba.meaningEn || '';
     level = level || kotoba.jlpt || 'N5';
-    subInfo = kotoba.wordType || '';
+    subInfo = getWordTypeLabel(kotoba.wordType);
   }
 
   if (!displayTitle) return null;

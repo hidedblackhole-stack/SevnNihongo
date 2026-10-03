@@ -1,3 +1,4 @@
+import { getWordTypeLabel } from '../../utils/wordType';
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Edit3, RotateCcw, ArrowRight, Volume2, Layers, BookOpen, Clock } from 'lucide-react';
@@ -268,7 +269,7 @@ export const KotobaWritingPractice: React.FC<KotobaWritingPracticeProps> = ({
               JLPT {kotoba.jlpt}
             </span>
             <span className="px-2.5 py-0.5 rounded-lg bg-surface-inset text-text-muted border border-border-subtle uppercase font-semibold shadow-sm">
-              {kotoba.wordType}
+              {getWordTypeLabel(kotoba.wordType)}
             </span>
             <span className="px-2.5 py-0.5 rounded-lg bg-surface-inset text-gold font-bold border border-border-subtle flex items-center gap-1.5 shadow-sm" title="Total Waktu Menulis Kotoba">
               <Clock className="w-3.5 h-3.5 text-gold" />

@@ -1,3 +1,4 @@
+import { getWordTypeLabel } from '../../utils/wordType';
 import React, { useState, useMemo, useDeferredValue } from 'react';
 import type { DeckItemCategory } from '../../types/rpg';
 import { AnimatePresence } from 'motion/react';
@@ -495,7 +496,7 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
                         {priority.badge}
                       </span>
                       <span className="px-1.5 py-0.5 rounded-md bg-surface-inset text-text-muted text-[9px] font-mono uppercase">
-                        {item.wordType}
+                        {getWordTypeLabel(item.wordType)}
                       </span>
                     </div>
                     <h3 className="text-xl sm:text-2xl font-bold text-text-primary font-jp tracking-wide mb-1 flex items-end gap-2 transition-colors">

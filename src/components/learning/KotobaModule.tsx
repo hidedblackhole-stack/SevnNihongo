@@ -1,3 +1,4 @@
+import { getWordTypeLabel } from '../../utils/wordType';
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Volume2, ArrowRight, ArrowLeft, Edit3 } from 'lucide-react';
@@ -116,7 +117,7 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
     const list: Question[] = [];
 
     items.forEach((item, itemIdx) => {
-      const isGreeting = item.wordType === 'expression' || /^(おはよう|こんにちは|こんばんは|さようなら|ありがとう)/.test(item.word);
+      const isGreeting = ['expression', 'interjection'].includes(item.wordType) || /^(おはよう|こんにちは|こんばんは|さようなら|ありがとう)/.test(item.word);
       const isTimeWord = /^(きょう|きのう|あした|あさ|ひる|よる|こんばん|まいあさ)/.test(item.reading || item.word) || /\b(pagi|siang|malam|besok|kemarin|hari ini)\b/i.test(item.meaningId);
 
       // Find suitable distractors from other words in KOTOBA_DATABASE
@@ -214,7 +215,7 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
       }
 
       // ─── 4. SOAL PERUBAHAN KONJUGASI KATA (Jika Kata Kerja / Sifat & Stage Memiliki Pola) ───
-      const isVerb = item.wordType === 'verb' || /[うくぐすつぬぶむる]$/.test(item.word);
+      const isVerb = item.wordType === 'verb';
       if (isVerb && detectedConjugations.length > 0) {
         try {
           const conj = conjugateVerb(item.word, item.reading);
@@ -416,7 +417,7 @@ export const KotobaModule: React.FC<KotobaModuleProps> = ({
                         <RubyText japanese={item.word} reading={item.reading} showFurigana={furiganaEnabled} />
                       </h4>
                       <p className="text-xs font-bold text-gold mb-1">{item.meaningId}</p>
-                      <p className="text-[10px] text-text-muted">Tipe: {item.wordType}</p>
+                      <p className="text-[10px] text-text-muted">Tipe: {getWordTypeLabel(item.wordType)}</p>
                     </div>
                     <button
                       onClick={(e) => {

@@ -1,3 +1,4 @@
+import { getWordTypeLabel } from '../../utils/wordType';
 import React from 'react';
 import { Volume2 } from 'lucide-react';
 import { RubyText } from './RubyText';
@@ -224,7 +225,7 @@ export const UniversalFlashcard: React.FC<UniversalFlashcardProps> = ({
               <div className="w-full flex justify-between items-center text-xs">
                 <div className="flex items-center gap-1.5 flex-wrap">
                   <span className="px-2.5 py-1 rounded-full bg-surface-inset text-indigo border border-border-subtle text-[11px] font-mono font-bold">
-                    {norm.kotoba?.jlpt || norm.level} • {norm.kotoba?.wordType || 'Kosakata'}
+                    {norm.kotoba?.jlpt || norm.level} • {getWordTypeLabel(norm.kotoba?.wordType) || 'Kosakata'}
                   </span>
                   {hasMultipleKotobaReadings && (
                     <span className="px-2 py-0.5 rounded-full bg-surface-inset text-red-700 dark:text-amber-400 border border-border-subtle text-[10px] font-mono font-bold flex items-center gap-1">
