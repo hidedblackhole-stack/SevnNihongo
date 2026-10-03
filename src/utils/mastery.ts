@@ -1263,14 +1263,19 @@ export function getGranularStageProgress(
   const dokkaiStats = getCategoryStats(stage.dokkaiIds || [], 'dokkai');
   const choukaiStats = getCategoryStats(stage.choukaiIds || [], 'choukai');
 
-  // Weighted overall stage progress
-  const overallPercentage = Math.round(
-    (bunpouStats.percentage * 0.3) +
-    (kotobaStats.percentage * 0.2) +
-    (kanjiStats.percentage * 0.2) +
-    (dokkaiStats.percentage * 0.2) +
-    (choukaiStats.percentage * 0.1)
-  );
+  // Weighted overall stage progress. Hanya kategori yang benar-benar punya butir yang dihitung
+  // (bobot dinormalisasi); kategori kosong tidak boleh menyumbang 100% gratis.
+  const weighted = [
+    { stats: bunpouStats, weight: 0.3 },
+    { stats: kotobaStats, weight: 0.2 },
+    { stats: kanjiStats, weight: 0.2 },
+    { stats: dokkaiStats, weight: 0.2 },
+    { stats: choukaiStats, weight: 0.1 },
+  ].filter(w => w.stats.totalCount > 0);
+  const totalWeight = weighted.reduce((sum, w) => sum + w.weight, 0);
+  const overallPercentage = totalWeight === 0
+    ? 0
+    : Math.round(weighted.reduce((sum, w) => sum + w.stats.percentage * w.weight, 0) / totalWeight);
 
   return {
     overallPercentage,
