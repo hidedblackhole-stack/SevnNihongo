@@ -79,7 +79,7 @@ export default function App() {
   });
 
   const actions = usePlayerActions({
-    stats, setStats, dailyMissions, setDailyMissions, setWeeklyMissions, setStageProgress,
+    stats, setStats, dailyMissions, setDailyMissions, setWeeklyMissions, stageProgress, setStageProgress,
     selectedStage, setSelectedStage, setIsRecallActive, setIsBossBattleActive, setActiveTab, setWorldNavView,
     showToast,
   });

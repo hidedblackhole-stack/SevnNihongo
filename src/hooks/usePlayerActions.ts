@@ -13,7 +13,7 @@ import { recordItemAttempt, recordItemInteraction, buildSmartRecallQueue } from 
 import { recordStudyActivity } from '../utils/activity';
 import { safeSetItem } from '../utils/storage';
 import { getTodayLocalDate } from '../utils/time';
-import { getGameOverHp } from '../utils/recovery';
+import { getGameOverHp, HP_POTION_ID } from '../utils/recovery';
 import { DEFAULT_STATS } from '../state/defaultStats';
 import { canonicalEntityId } from '../state/canonicalizeStats';
 import { STORAGE_KEY_SIGNATURE } from '../state/storageKeys';
@@ -27,6 +27,7 @@ interface Params {
   dailyMissions: Mission[];
   setDailyMissions: Dispatch<SetStateAction<Mission[]>>;
   setWeeklyMissions: Dispatch<SetStateAction<Mission[]>>;
+  stageProgress: Record<string, StageClearData>;
   setStageProgress: Dispatch<SetStateAction<Record<string, StageClearData>>>;
   selectedStage: Stage | null;
   setSelectedStage: Dispatch<SetStateAction<Stage | null>>;
@@ -39,7 +40,7 @@ interface Params {
 
 /** Handler aksi pemain (reward, misi, mastery, stage, atribut, reset, bookmark). Dipindah dari App.tsx. */
 export function usePlayerActions({
-  stats, setStats, dailyMissions, setDailyMissions, setWeeklyMissions, setStageProgress,
+  stats, setStats, dailyMissions, setDailyMissions, setWeeklyMissions, stageProgress, setStageProgress,
   selectedStage, setSelectedStage, setIsRecallActive, setIsBossBattleActive, setActiveTab, setWorldNavView,
   showToast,
 }: Params) {
@@ -276,6 +277,31 @@ export function usePlayerActions({
     if (!selectedStage) return;
 
     handleStudyComplete(moduleId, expGained, goldGained, itemId, score, total);
+
+    // Hadiah stage (stage.rewardExp/rewardGold/rewardItem) diberikan SEKALI, saat stage pertama kali clear.
+    // Kriteria clear sama dengan pembaruan stageProgress di bawah.
+    const prevEntry = stageProgress[selectedStage.id];
+    const expectedModules = [
+      selectedStage.bunpouIds?.length ? 'bunpou' : null,
+      selectedStage.kotobaIds?.length ? 'kotoba' : null,
+      selectedStage.kanjiIds?.length ? 'kanji' : null,
+      selectedStage.dokkaiIds?.length ? 'dokkai' : null,
+      selectedStage.choukaiIds?.length ? 'choukai' : null,
+    ].filter(Boolean).length || 1;
+    const doneModules = new Set([...(prevEntry?.clearedModules || []), moduleId]);
+    const clearsNow = (doneModules.size >= expectedModules || moduleId === 'boss') && !prevEntry?.cleared;
+    if (clearsNow) {
+      const stageExp = selectedStage.rewardExp || 0;
+      const stageGold = selectedStage.rewardGold || 0;
+      if (stageExp > 0 || stageGold > 0) handleRewardPlayer(stageExp, stageGold);
+      if (selectedStage.rewardItem) {
+        setStats(prev => ({ ...prev, inventory: [...(prev.inventory || []), HP_POTION_ID] }));
+      }
+      showToast(
+        `Stage selesai! +${stageExp} EXP, +${stageGold} Gold${selectedStage.rewardItem ? ' + Ramuan HP' : ''}`,
+        4000
+      );
+    }
 
     setStageProgress(prev => {
       const current = prev[selectedStage.id] || {
