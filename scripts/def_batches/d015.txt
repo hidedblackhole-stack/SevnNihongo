@@ -1,0 +1,250 @@
+n2_0149|動いているものを止めること。|Menghentikan sesuatu yang sedang bergerak; juga tanda berhenti.
+n2_0150|電気信号を音に変えて出す装置。|Alat yang mengubah sinyal listrik menjadi suara.
+n2_0151|すっきりして洗練されている様子。|Tampil rapi dan modis; juga langsing atau cerdas.
+n2_0152|相手に対して申し訳なく思う気持ちを表す言葉。|Ungkapan merasa tidak enak hati atau menyesal kepada orang lain.
+n2_0153|画像を映す仕組み。上や下へ滑らせること。|Lembar tayangan presentasi; juga gerakan menggeser atau meluncur.
+n2_0154|位置や時間を、少し動かす。|Menggeser posisi atau mengundurkan waktu sedikit.
+n2_0155|反対の方向に進む二つのものが、すぐそばを通り過ぎる。|Saling berpapasan ketika bergerak berlawanan arah.
+n2_0156|どんなことがあっても必ず。|Dengan segala cara; menyatakan harapan kuat agar sesuatu dilakukan.
+n2_0157|大学で、教授と学生が少人数で行う授業。|Kelas diskusi kecil antara dosen dan mahasiswa di universitas.
+n2_0158|十分でなくても、これだけはという気持ちを表す言葉。|Kata yang menyatakan 'paling tidak' sebagai batas minimum yang diharapkan.
+n2_0159|石灰などから作る、建築用の粉。|Serbuk bahan bangunan yang mengeras bila dicampur air.
+n2_0160|長さの単位。百分の一メートル。|Satuan panjang sebesar seperseratus meter.
+n2_0161|前の話から思い出した別の話題に移るときの言葉。|Kata untuk berpindah topik karena teringat sesuatu yang berkaitan.
+n2_0162|前の文を受けて、続けて述べるときの言葉。|Kata penghubung untuk melanjutkan kalimat sebelumnya; 'dan lalu'.
+n2_0163|あわてて、不注意な間違いをしやすい様子。|Mudah ceroboh dan membuat kesalahan karena tergesa-gesa.
+n2_0164|前のことに加えて、さらに。|Kata penghubung untuk menambah hal lain; 'lagi pula'.
+n2_0165|前に述べたことが理由となることを表す言葉。|Ungkapan yang menyatakan alasan berupa hal yang baru disebutkan.
+n2_0166|それ以外のもの。|Hal lain di luar yang sudah disebutkan.
+n2_0167|車輪の外側につける、ゴムの輪。|Cincin karet di sekeliling roda kendaraan.
+n2_0168|何よりもまず。|Hal yang terutama; pertama-tama.
+n2_0169|列車の運行を示した図表。|Diagram yang menunjukkan jadwal kereta; juga skema grafik.
+n2_0170|非常に硬くて、美しく輝く宝石。|Permata sangat keras yang berkilau indah.
+n2_0171|電話番号を回す円形の部分。目盛りの盤。|Bagian bundar untuk memutar nomor telepon; juga pelat penunjuk.
+n2_0172|ごく短い間に。すぐに。|Dalam sekejap; seketika itu juga.
+n2_0173|二重。二倍。|Ganda atau dua kali lipat; juga tempat tidur besar untuk dua orang.
+n2_0174|うそを言ったりして、相手に間違ったことを信じさせる。|Membuat orang lain percaya hal yang salah dengan dusta atau tipu muslihat.
+n2_0175|川の水をせき止めて、ためておく施設。|Bangunan penahan air sungai untuk ditampung.
+n2_0176|決めかねて、ぐずぐずする。|Merasa bimbang dan ragu untuk bertindak.
+n2_0177|身なりや行いに、しまりがない様子。|Tidak rapi dan tidak teratur dalam penampilan atau tindakan.
+n2_0178|衣類をしまう、引き出しのある家具。|Perabot berlaci untuk menyimpan pakaian.
+n2_0179|細かく切り離す。ちぎって取る。|Merobek menjadi potongan-potongan kecil.
+n2_0180|心づけとして渡す、お金。小さな部品や、かけら。|Uang tip yang diberikan sebagai ucapan terima kasih; juga keping kecil.
+n2_0181|黒板に書くための、白い棒。|Batang putih yang dipakai menulis di papan tulis.
+n2_0182|ある用事のついでに、別のことをする機会。|Kesempatan melakukan hal lain sambil mengerjakan suatu keperluan.
+n2_0183|足を物に引っかけて、倒れそうになる。|Kaki terantuk sesuatu hingga hampir jatuh; juga gagal di tengah usaha.
+n2_0184|作品や研究などの、中心となる題材。|Pokok bahasan yang menjadi inti karya atau penelitian.
+n2_0185|いいかげんで、筋の通らないこと。|Hal asal-asalan yang tidak masuk akal.
+n2_0186|テニスをするための、競技場。|Lapangan untuk bermain tenis.
+n2_0187|音楽や物事が進む速さ。|Kecepatan irama musik atau laju jalannya suatu hal.
+n2_0188|結局は同じ結果になると、あきらめる気持ちを表す言葉。|Kata yang menyatakan sikap pasrah bahwa hasilnya akan sama saja.
+n2_0189|初対面のときなどに、あいさつとして言う、丁寧な言葉。|Salam sopan saat berkenalan atau meminta kerja sama.
+n2_0190|緊張や期待で、心臓が強く打つ様子。|Jantung berdetak kencang karena tegang atau penuh harap.
+n2_0191|ずっと前に。もうすでに。|Sudah sejak lama.
+n2_0192|大勢が一度に、笑ったり押し寄せたりする様子。|Banyak orang tertawa atau mengalir sekaligus secara serentak.
+n2_0193|怒って、大きな声で、言う。|Berbicara dengan suara keras karena marah.
+n2_0194|それはさておき。いずれにしても。|Terlepas dari itu; yang penting.
+n2_0195|体力や技術を高めるための、練習。|Latihan untuk meningkatkan kebugaran atau keterampilan.
+n2_0196|石油などから作る、丈夫な合成繊維。|Serat sintetis kuat yang dibuat dari bahan petrokimia.
+n2_0197|こぶしなどで、強く打つ。|Memukul dengan keras memakai kepalan tangan atau benda.
+n2_0198|いずれにしても。何といっても。|Menyatakan alasan pokok; apa pun yang terjadi.
+n2_0199|はっきりした理由はないが、そのように感じる様子。|Merasa demikian tanpa alasan yang jelas.
+n2_0200|ひと言では、言い表せない様子。|Hal yang sulit dinyatakan; dengan negatif berarti 'sama sekali tidak'.
+n2_0201|番号。数字。|Angka atau nomor urut.
+n2_0202|ものをとめるための、らせん状の溝がある、小さな金具。|Pengencang logam kecil dengan alur spiral untuk menyatukan benda.
+n2_0203|首にかける、飾り。|Perhiasan yang digantungkan di leher.
+n2_0204|木などを、切る、ための、刃のついた、道具。|Alat bergerigi untuk memotong kayu dan benda keras lain.
+n2_0205|動きが遅い様子。|Gerak yang sangat lambat.
+n2_0206|くだらなくて、まじめに、取り合う、気になれない。|Konyol sehingga tak pantas ditanggapi serius.
+n2_0207|話し方や、態度が、はっきりしている様子。|Berbicara atau bersikap dengan jelas dan tegas.
+n2_0208|水などを入れて運ぶ、取っ手のついた容器。|Wadah bergagang untuk membawa air dan sejenisnya.
+n2_0209|初めて会ったときの、挨拶の言葉。|Ungkapan salam saat pertama kali berkenalan.
+n2_0210|決まった、型。模様。|Bentuk atau corak yang berulang; contoh pola.
+n2_0211|後ろ。後ろの、景色。後退すること。|Bagian belakang; juga latar atau gerak mundur.
+n2_0212|力を加えると縮み、離すと元に戻る部品。|Komponen elastis yang kembali ke bentuk semula setelah ditekan.
+n2_0213|ぴったり合うように、入れる。身につける。|Memasukkan sesuatu hingga pas; juga mengenakan cincin atau sarung tangan.
+n2_0214|つり合いが、とれていること。|Keadaan seimbang antara dua sisi.
+n2_0215|腰から足にかけて、はく、衣類。|Pakaian bawah; juga pakaian dalam.
+n2_0216|ある音楽を、演奏する、グループ。ベルト。|Kelompok pemusik; juga sabuk atau ikat.
+n2_0217|車などの、向きを、変える、輪。取っ手。|Roda kemudi kendaraan; juga gagang pegangan.
+n2_0218|つやがあって、きれいに、光っている様子。|Berkilau dan mengilap bersih.
+n2_0219|片手で、撃つ、小型の、銃。|Senjata api kecil yang ditembakkan dengan satu tangan.
+n2_0220|体の、調子を、整える、栄養素。|Zat gizi yang dibutuhkan tubuh dalam jumlah kecil.
+n2_0221|ほかのことは、さておいて、とりあえず。|Untuk sementara waktu; sebagai langkah awal.
+n2_0222|何もしなくても、そうなる様子。|Terjadi dengan sendirinya tanpa campur tangan.
+n2_0223|塩化ビニールで作った、柔らかい、素材。|Bahan lentur dari plastik vinil.
+n2_0224|あらゆる、分野の事柄を、解説した、事典。|Buku rujukan yang menjelaskan hal-hal dari berbagai bidang.
+n2_0225|大きな、建物。|Gedung besar bertingkat.
+n2_0226|薄い、赤色。|Warna merah muda.
+n2_0227|衣服やかばんの口を、開け閉めする金具。|Pengait logam untuk menutup dan membuka pakaian atau tas.
+n2_0228|おもしろおかしく、ふるまう。冗談を言う。|Bersenda gurau; bertingkah main-main.
+n2_0229|強く当たる。出会う。|Bertabrakan dengan keras; juga menghadapi masalah atau bertemu.
+n2_0230|物に、勢いよく、当てる。|Membenturkan sesuatu pada benda lain dengan keras.
+n2_0231|小声で、不平を言う様子。|Menggerutu dengan suara pelan; juga bintik-bintik kecil di kulit.
+n2_0232|食材を、炒める、ための、浅い鍋。|Peralatan masak datar bergagang untuk menggoreng.
+n2_0233|女性が着る、上半身の、洋服。|Pakaian atasan perempuan bergaya Barat.
+n2_0234|上から、垂らして、つるす。|Menggantungkan sesuatu agar menjuntai.
+n2_0235|汚れを落としたり、整えたりする、ための、道具。|Alat berbulu untuk membersihkan atau merapikan.
+n2_0236|熱で、形を、変えられる、合成樹脂。|Bahan sintetis yang dapat dibentuk dengan panas.
+n2_0237|駅で、乗客が、乗り降りする、場所。|Tempat naik-turun penumpang di stasiun.
+n2_0238|自由な様子。どこにも、属していない。|Bebas dan tidak terikat pada organisasi; juga tidak dikenai biaya.
+n2_0239|写真や、文字を、印刷すること。配布する、紙。|Mencetak gambar atau tulisan; juga selebaran yang dibagikan.
+n2_0240|衣服に、つける、飾りの、留め具。|Hiasan penyemat yang dikenakan pada pakaian.
+n2_0241|予定や、手順。コンピュータに、与える、命令。|Rencana acara atau urutan kegiatan; juga rangkaian perintah komputer.
+n2_0242|軽くて、やわらかい様子。|Terasa ringan, empuk, dan mengambang.
+n2_0243|腹の、中央の、くぼみ。|Cekungan di tengah perut bekas tali pusat.
+n2_0244|経験が、豊富な、人。|Orang yang berpengalaman luas di suatu bidang.
+n2_0245|回転する、羽根で、空を飛ぶ、乗り物。|Pesawat bersayap putar yang dapat terbang dan melayang.
+n2_0246|数や量が、少なくなる。時が、たつ。|Menjadi berkurang; juga waktu berlalu.
+n2_0247|いちばん、高い、ところ。|Bagian paling atas dari sesuatu.
+n2_0248|針金などを、切ったり、曲げたり、する、工具。|Alat tangan untuk memotong atau membengkokkan kawat.
+n2_0249|給料の、ほかに、支払われる、特別な、お金。|Uang tambahan di luar gaji tetap yang dibayarkan pada waktu tertentu.
+n2_0250|宣伝や、案内の、ために、貼る、大きな、紙。|Kertas besar yang ditempel untuk iklan atau pengumuman.
+n2_0251|結んであるものを、解く。|Membuka ikatan atau simpul.
+n2_0252|使い古して、破れた、布。欠点。|Kain compang-camping; juga kekurangan yang terungkap.
+n2_0253|良くも、悪くも、ない、様子。|Keadaan tidak buruk dan tidak istimewa; juga seruan 'sudahlah'.
+n2_0254|引くこと。足りないこと。|Tanda atau hal pengurangan; juga sisi negatif.
+n2_0255|どうして、よいか、分からず、うろたえる様子。|Kebingungan dan tidak tahu harus berbuat apa.
+n2_0256|顔の、一部を、おおう、もの。|Penutup hidung dan mulut yang dikenakan untuk perlindungan.
+n2_0257|物の、上を、足を広げて、越える。|Melangkahi sesuatu dengan mengangkang.
+n2_0258|光が、強すぎて、見ていられない。|Terlalu terang hingga sulit dipandang.
+n2_0259|目を、おおう、皮膚。|Lipatan kulit yang menutupi mata.
+n2_0260|首に、巻く、細長い、布。|Kain panjang yang dililitkan di leher; juga pembuang suara kendaraan.
+n2_0261|四十二キロ余りを、走る、陸上競技。|Lomba lari jarak jauh sejauh sekitar 42 kilometer.
+n2_0262|大きな、集合住宅。|Hunian bertingkat berbentuk gedung apartemen.
+n2_0263|あわれで、見ていられない様子。|Keadaan yang menyedihkan dan menyentuh rasa iba.
+n2_0264|布を、縫う、機械。|Mesin untuk menjahit kain.
+n2_0265|見た目が、悪くて、恥ずかしい。|Terlihat buruk dan memalukan.
+n2_0266|千分の一を、表す、単位。|Awalan satuan yang berarti seperseribu.
+n2_0267|量や、長さを、測る、器具。|Alat untuk mengukur jumlah atau panjang; juga argo taksi.
+n2_0268|筋道が、通らず、乱れている様子。|Kacau dan tidak masuk akal; juga berlebihan.
+n2_0269|変化が、はっきり、目立つ様子。|Perubahan yang tampak jelas dan mencolok.
+n2_0270|喜ばしく、祝うべきこと。|Peristiwa yang patut disambut gembira; juga sifat naif.
+n2_0271|料理の、一覧表。|Daftar hidangan yang tersedia di restoran.
+n2_0272|目が回るように、感じる、病気の症状。|Gejala merasa seperti berputar di kepala.
+n2_0273|電気で、動力を、生み出す、装置。|Mesin penggerak yang bertenaga listrik.
+n2_0274|そうなる、かもしれないという、気持ちを表す言葉。|Ungkapan yang menyatakan kemungkinan sesuatu terjadi.
+n2_0275|そうなる、可能性が、ある。|Ungkapan yang menyatakan 'mungkin saja'.
+n2_0276|物に、寄りかかる。食べ物が、胃に、残って、重く感じる。|Bersandar pada sesuatu; juga lambung terasa berat karena makanan.
+n2_0277|現代的で、新しい様子。|Bergaya mutakhir dan baru.
+n2_0278|価値ある物が、無駄になるのが、惜しい。|Merasa sayang kalau sesuatu yang berharga terbuang sia-sia.
+n2_0279|見本。絵や、写真の、題材となる、人。|Contoh atau pola; juga orang yang menjadi objek foto atau lukisan.
+n2_0280|一本の、レールの上を、走る、電車。|Kereta yang berjalan di atas satu rel.
+n2_0281|うるさい。きびしい。|Berisik; juga ketat dan cerewet.
+n2_0282|むやみに。やたらと。|Dilakukan sembarangan tanpa aturan atau batas.
+n2_0283|相手を、打ち負かす。|Mengalahkan lawan; juga menyelesaikan pekerjaan dengan cepat.
+n2_0284|思っていた、とおり。やはり。|Sesuai dugaan; juga 'tetap' atau 'ternyata'.
+n2_0285|ほかに、方法が、なくて、しかたがない。|Tidak ada pilihan lain sehingga terpaksa.
+n2_0286|熱い湯の中で、煮る。|Merebus bahan makanan dalam air panas.
+n2_0287|こちらへ、送ってくる。|Mengirimkan sesuatu ke pihak pembicara.
+n2_0288|通勤や通学で、乗り物が、混む時間。|Waktu padatnya penumpang kendaraan saat berangkat atau pulang kerja.
+n2_0289|昼食。|Hidangan makan siang.
+n2_0290|走ること。そでのない、シャツ。|Kegiatan berlari; juga kaus tanpa lengan.
+n2_0291|音楽や、動作の、周期的な、調子。|Pola berulang teratur dalam musik atau gerak.
+n2_0292|液体の、量の単位。|Satuan volume cairan sebesar seribu cm kubik.
+n2_0293|調査したことを、まとめた、文書。|Dokumen yang merangkum hasil penelitian atau pengamatan.
+n2_0294|飾りに、使う、細長い、布。|Kain panjang yang dipakai sebagai hiasan atau pengikat.
+n2_0295|雨のときに、着る、防水の、上着。|Pakaian luar antiair untuk dipakai saat hujan.
+n2_0296|疲れを、いやす、ための、楽しみや、遊び。|Kegiatan hiburan untuk menyegarkan badan dan pikiran.
+n2_0297|仕事の、合間の、自由な、時間。余暇。|Waktu senggang di luar pekerjaan; juga kegiatan untuk mengisinya.
+n2_0298|物事の、程度。水準。|Tingkat atau taraf suatu hal.
+n2_0299|光を、屈折させて、物を、大きく見せる、ガラスの、部品。|Kaca pembias cahaya yang dipakai di kamera dan kacamata.
+n2_0300|ローマ字を、使って、日本語を書く、表記法。|Penulisan bahasa Jepang dengan huruf Latin.
+n2_0301|荷物などを、入れて、しまう、鍵のかかる、棚。|Lemari berkunci untuk menyimpan barang pribadi.
+n2_0302|ホテルなどの、玄関に、ある、広い、ホール。|Ruang tamu luas di dekat pintu masuk hotel atau gedung.
+n2_0303|思っていたより、ずっと。比較的。|Cukup atau relatif dibandingkan yang lain.
+n2_0304|上と下が、続いている、女性用の、洋服。|Gaun satu potong untuk perempuan.
+n2_0305|大きさや、量を、小さくすること。|Mengecilkan volume atau ukuran dengan menekan; memadatkan data.
+n2_0306|手紙や、荷物などに、書く、相手の、名前や住所。|Nama dan alamat penerima yang ditulis pada surat atau paket.
+n2_0307|深く考えず、手軽に、すませる様子。|Mengambil jalan mudah tanpa memikirkan matang-matang.
+n2_0308|思ったのと、違っている様子。|Keadaan yang di luar perkiraan.
+n2_0309|それから、後。|Waktu setelah suatu titik; selanjutnya.
+n2_0310|ある時から、後。|Waktu mulai suatu titik dan seterusnya.
+n2_0311|能力や、地位が、高く、すぐれている。|Hebat dan terhormat karena kemampuan atau kedudukan.
+n2_0312|自分の、力などを、ほこって、偉そうにする。|Bersikap sombong atau bertingkah seperti penguasa.
+n2_0313|物事の、価値や、意味。|Nilai atau makna suatu hal.
+n2_0314|わざと、人を、いじめたり、困らせたり、する様子。|Sengaja menyulitkan atau menyakiti orang lain.
+n2_0315|悲しんでいる人の、心を、やわらげる。|Menenangkan hati orang yang bersedih.
+n2_0316|行う。成し遂げる。|Melakukan atau menyelesaikan sesuatu.
+n2_0317|現金を使わずに、離れた所へ、お金を送る、方法。|Cara mengirim uang tanpa tunai; juga kurs mata uang.
+n2_0318|別の場所へ、移ること。|Pindah ke tempat lain; pemindahan lokasi.
+n2_0319|地球上の、位置を、表す、赤道と、平行な、線。|Garis sejajar khatulistiwa yang menyatakan posisi utara-selatan di bumi.
+n2_0320|生活に、必要な、衣服と、食事と、住まい。|Kebutuhan pokok hidup: pakaian, makanan, dan tempat tinggal.
+n2_0321|地面を、掘って、水をくみ上げる、設備。|Lubang galian untuk mengambil air tanah.
+n2_0322|子供を、育てること。|Kegiatan membesarkan anak.
+n2_0323|とにかく。念のため。|Untuk sementara; sekadar memenuhi syarat.
+n2_0324|少しの間、休むこと。|Istirahat sebentar.
+n2_0325|一昨日。|Hari sebelum kemarin; bentuk lain 'ototoi'.
+n2_0326|一昨年。|Tahun sebelum tahun lalu.
+n2_0327|みんなが、同時に、すること。|Dilakukan oleh semua orang pada saat yang sama.
+n2_0328|ひとまず。一度。|Sekali dulu; sementara waktu; sekali sesuatu terjadi.
+n2_0329|いっそう。さらに。|Menyatakan tingkat yang naik satu tahap lagi.
+n2_0330|全体を、一通り、おおまかに。|Secara garis besar atau sekadarnya.
+n2_0331|決まっていて、変わらないこと。|Tetap, tertentu, dan tidak berubah.
+n2_0332|その分野で、第一級の、こと。|Kelas utama di suatu bidang.
+n2_0333|ねらいや、方向から、外れる。|Menyimpang dari sasaran atau arah semula.
+n2_0334|原因や、手段として、関係する。|Bergantung pada atau disebabkan oleh sesuatu.
+n2_0335|去ろうとする人を、とめる。|Menahan seseorang agar tidak pergi.
+n2_0336|何かに、ひっかかって、とまる。だまされる。|Tersangkut pada sesuatu; juga tertipu atau mengganjal pikiran.
+n2_0337|ひっくり返す。|Membalikkan sesuatu hingga terbalik; menjungkirkan.
+n2_0338|ひっくり返る。|Terbalik atau terjungkal.
+n2_0339|外に出ていたものが、中へ入る。|Mundur ke dalam; juga mengurung diri.
+n2_0340|住まいを、他の所に、移すこと。|Berpindah tempat tinggal.
+n2_0341|ある数から、他の数を、引く計算。|Operasi hitung mengurangkan satu bilangan dari bilangan lain.
+n2_0342|仕事や、責任を、受け持つ。|Menerima tugas atau tanggung jawab.
+n2_0343|中から、引いて、取り出す。|Menarik sesuatu keluar; juga mengambil uang dari rekening.
+n2_0344|勝ち負けが、つかずに、終わること。|Pertandingan yang berakhir tanpa pemenang.
+n2_0345|元の、道を、戻る。|Kembali ke arah semula.
+n2_0346|物が、お互いに、引き合う、力。|Gaya tarik antara dua benda.
+n2_0347|鳥の、羽。羽根つきの、玉。|Bulu atau sayap burung; juga kok bulu tangkis.
+n2_0348|風や雨を、防ぐために、窓の外に、つける、戸。|Pintu geser di luar jendela untuk menahan angin dan hujan.
+n2_0349|船を通すために、掘った、水路。|Jalur air buatan untuk dilalui kapal.
+n2_0350|映像を、スクリーンなどに、出す。|Menayangkan gambar ke layar; juga memantulkan bayangan.
+n2_0351|映像が、鏡や、水面に、出る。|Bayangan atau gambar terlihat di cermin, layar, atau foto.
+n2_0352|時間が、はてしなく、長い。|Waktu yang berlangsung sangat lama.
+n2_0353|英語で、書かれた、文章。|Kalimat atau teks dalam bahasa Inggris.
+n2_0354|英語と、日本語。|Berhubungan dengan bahasa Inggris dan Jepang; seperti kamus Inggris-Jepang.
+n2_0355|水のように、流れる、物質。|Zat yang mengalir seperti air.
+n2_0356|形が、丸い。|Berbentuk bulat.
+n2_0357|円の、周りの、長さ。|Panjang garis tepi sebuah lingkaran.
+n2_0358|草花や、野菜などを、育てること。|Kegiatan menanam bunga, sayur, atau tanaman hias.
+n2_0359|人が、集まって、飲食を、楽しむ、会。|Pesta atau perjamuan tempat orang berkumpul makan dan minum.
+n2_0360|長く、する。時間を、先に、送る。|Memanjangkan; juga menunda waktu.
+n2_0361|長く、なる。時間が、先に、延ばされる。|Menjadi lebih panjang; juga jadwal diundur.
+n2_0362|ある、期間や距離を、長くすること。|Pemanjangan waktu atau jarak.
+n2_0363|俳優が、舞台で、演じる、芸術。|Seni pertunjukan yang diperankan aktor di atas panggung.
+n2_0364|煙が、立って、息苦しい。|Terasa sesak karena asap.
+n2_0365|煙を、外に、出すための、筒。|Pipa tegak untuk mengeluarkan asap ke luar.
+n2_0366|物の、表面の、光沢。|Kilap pada permukaan sesuatu.
+n2_0367|学校などで、遠くへ、歩いて、行く、行事。|Kegiatan sekolah berupa perjalanan jauh untuk rekreasi.
+n2_0368|塩分が、多くて、味が、濃い。|Rasa yang banyak mengandung garam.
+n2_0369|きれいな物を、きたなくする。|Membuat sesuatu yang bersih menjadi kotor.
+n2_0370|周りより、低くなる。気持ちが、沈む。|Menjadi cekung atau penyok; juga semangat menurun.
+n2_0371|行って、帰ってくること。|Bepergian pergi dan pulang; bolak-balik.
+n2_0372|呼びかけに、答える。条件に、合わせる。|Menanggapi panggilan atau permintaan; juga menyesuaikan dengan keadaan.
+n2_0373|力を、貸して、助けること。|Mendukung dengan tenaga atau sorakan.
+n2_0374|客を、迎えて、もてなすこと。|Menerima dan menjamu tamu.
+n2_0375|訪れてきた、人に、会って、受け答えをすること。|Menerima dan melayani orang yang datang.
+n2_0376|理論や、知識を、実際に、使うこと。|Menerapkan teori atau pengetahuan secara praktis.
+n2_0377|動かないように、上から、おさえる。|Menekan atau menahan sesuatu agar tidak bergerak.
+n2_0378|ヨーロッパと、アメリカ。|Dunia Barat yakni Eropa dan Amerika.
+n2_0379|王の、娘。|Anak perempuan dari seorang raja.
+n2_0380|部屋を、しきる、ための、木の枠に、紙や布を、張った、戸。|Pintu geser berbingkai kayu berlapis kertas untuk menyekat ruangan.
+n2_0381|建物の、外。|Bagian di luar bangunan.
+n2_0382|品物を、問屋が、小売店に、売る。すりおろす。|Menjual barang dalam jumlah besar ke pengecer; juga memarut.
+n2_0383|他から、受けた、ありがたい、めぐみ。|Berkah atau keuntungan yang diterima dari pihak lain.
+n2_0384|ガラスなどで、おおって、暖めた、植物を、育てる、部屋。|Bangunan berkaca untuk menanam tumbuhan pada suhu hangat.
+n2_0385|地下から、わき出る、温かい水。また、その、入浴施設。|Air panas alami dari dalam bumi; juga tempat pemandiannya.
+n2_0386|暑さも、寒さも、厳しくない、気候の、地域。|Wilayah beriklim sedang yang tidak terlalu panas atau dingin.
+n2_0387|高い所から、低い所へ、行く。|Pergi turun dari tempat tinggi; juga menurun nilainya.
+n2_0388|低い所へ、下がること。|Gerak turun atau merosotnya sesuatu.
+n2_0389|乗り物から、降りること。|Turun dari kendaraan.
+n2_0390|月の、二十一日から、末日までの、期間。|Periode dari tanggal 21 hingga akhir bulan.
+n2_0391|清書の、前に、書く、下がき。|Tulisan kasar atau draf sebelum dibuat versi akhir.
+n2_0392|家庭や、工場などから出る、汚れた水。|Air kotor dari rumah atau pabrik yang dialirkan ke saluran pembuangan.
+n2_0393|文字などの、下に、引く、線。|Garis yang ditarik di bawah tulisan.
+n2_0394|日本の、伝統的な、木で作った、履物。|Alas kaki kayu tradisional Jepang.
+n2_0395|商店や、職人の家が、集まった、低地の、町。|Kawasan kota lama yang dihuni pedagang dan perajin.
+n2_0396|言葉や、行いが、品がない様子。|Perkataan atau tingkah laku yang kasar dan tidak sopan.
+n2_0397|仮に、そうであると、定めること。|Mengandaikan atau menetapkan sementara bahwa sesuatu benar.
+n2_0398|漢字を、元に、作られた、日本語の、文字。|Aksara suku kata Jepang yang berasal dari kanji, yaitu hiragana dan katakana.
