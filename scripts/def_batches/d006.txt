@@ -1,0 +1,250 @@
+ext_0021|本人であることを確認するために入力する、秘密の文字列。|Rangkaian karakter rahasia yang dimasukkan untuk membuktikan identitas pengguna.
+ext_0023|魚や野菜に衣をつけて、油で揚げた日本料理。|Hidangan Jepang berupa ikan atau sayuran yang dibalut adonan tepung lalu digoreng.
+ext_0026|味噌を溶かして作る、日本の汁物。|Sup Jepang yang dibuat dengan melarutkan pasta miso.
+ext_0027|蒸した大豆を発酵させた、粘りのある日本の食べ物。|Makanan Jepang dari kedelai kukus yang difermentasi dan bertekstur lengket.
+ext_0028|大豆から作る、白くてやわらかい食べ物。|Makanan putih lembut yang dibuat dari sari kedelai.
+ext_0032|ひき肉と野菜を皮で包んで焼いた、中華風の料理。|Hidangan gaya Tionghoa berupa isian daging cincang dan sayur dalam kulit tipis yang dipanggang.
+ext_0033|スマートフォンなどで使う、ソフトウェア。|Perangkat lunak yang dijalankan di ponsel pintar dan sejenisnya.
+ext_0034|伴奏に合わせて、歌を楽しむ娯楽。|Hiburan bernyanyi mengikuti musik pengiring.
+ext_0036|豚肉にパン粉をつけて油で揚げた料理。|Hidangan daging babi berbalut tepung roti yang digoreng.
+ext_0038|肉を焼きながら食べる日本料理。|Hidangan Jepang berupa daging yang dipanggang sendiri di meja lalu dimakan.
+ext_0039|茶葉を蒸して作る、緑色のお茶。|Teh berwarna hijau dari daun teh yang dikukus.
+ext_0041|じゃがいも。特にフライドポテト。|Kentang; terutama kentang goreng.
+ext_0042|豚肉を加工して作った、塩味の食品。|Makanan asin olahan dari daging babi.
+ext_0043|ひき肉を腸などに詰めた食品。|Makanan dari daging cincang yang dimasukkan ke dalam selongsong.
+ext_0044|牛乳を発酵させて作った、すっぱい食品。|Makanan asam hasil fermentasi susu.
+ext_0045|赤くて小さな、甘ずっぱい果物。|Buah kecil merah dengan rasa manis asam.
+ext_0046|大きくて甘い、網目のある果物。|Buah besar dan manis dengan kulit bermotif jaring.
+ext_0047|夏に食べる、緑の皮で中が赤い大きな果物。|Buah besar berkulit hijau berdaging merah yang dimakan di musim panas.
+ext_0048|葉が丸く重なった、緑色の野菜。|Sayuran hijau yang daunnya bergulung bulat berlapis.
+ext_0049|サラダに使う、薄くて柔らかい葉野菜。|Sayuran berdaun tipis dan lembut yang dipakai untuk salad.
+ext_0050|中が空洞の、緑色の野菜。|Sayuran hijau berongga yang rasanya sedikit pahit.
+ext_0051|オレンジ色の、根を食べる野菜。|Sayuran akar berwarna oranye.
+ext_0052|薄い皮に包まれた、辛くて丸い野菜。|Sayuran bulat berkulit tipis dengan rasa tajam.
+ext_0053|土の中にできる、丸い芋。|Umbi bulat yang tumbuh di dalam tanah.
+ext_0054|細長くて緑色の、水分の多い野菜。|Sayuran panjang hijau yang banyak berair.
+ext_0055|細長くて、辛みのある野菜。|Sayuran panjang dengan rasa tajam seperti daun bawang.
+ext_0056|硬い皮で、甘くて黄色い野菜。|Sayuran berkulit keras dengan daging kuning yang manis.
+ext_0057|緑の葉を食べる、栄養のある野菜。|Sayuran daun hijau yang bergizi tinggi.
+ext_0058|木のような形をした、緑色の野菜。|Sayuran hijau berbentuk seperti pohon kecil.
+ext_0059|トマトから作る、赤い調味料。|Saus merah yang dibuat dari tomat.
+ext_0060|卵と油と酢で作る、白いソース。|Saus putih dari telur, minyak, dan cuka.
+ext_0061|サラダにかける、液体のソース。|Saus cair yang disiramkan pada salad.
+ext_0062|耳に入れて、音楽などを聞く小さな道具。|Alat kecil yang dimasukkan ke telinga untuk mendengarkan musik dan sebagainya.
+ext_0063|耳をおおって、音楽などを聞く道具。|Alat yang menutupi telinga untuk mendengarkan musik.
+ext_0066|持ち運びができる、小型のパソコン。|Komputer pribadi kecil yang dapat dibawa ke mana-mana.
+ext_0069|インターネット。また、ネットワークや網。|Singkatan kata 'internet'; juga berarti jaringan atau jaring.
+ext_0070|インターネット上にある、ウェブページの集まり。|Kumpulan halaman web di internet.
+ext_0072|テレビやコンピュータの画面で遊ぶゲーム。|Permainan yang dimainkan melalui layar televisi atau komputer.
+ext_0073|バスケットにボールを入れて得点を競う球技。|Olahraga bola dua tim yang saling berebut memasukkan bola ke keranjang.
+ext_0074|ネットをはさんで、ボールを打ち合う球技。|Olahraga bola yang dimainkan dengan memukul bola melewati net.
+ext_0076|健康のために、ゆっくり走ること。|Berlari pelan-pelan untuk kebugaran tubuh.
+ext_0081|髪を洗うための洗剤。|Cairan pembersih untuk mencuci rambut.
+ext_0083|温風で髪をかわかす電気器具。|Alat listrik yang mengeringkan rambut dengan hembusan udara hangat.
+ext_0084|背中に背負う、かばん。|Tas yang digendong di punggung.
+ext_0086|鼻をかむ、薄くて柔らかい紙。|Kertas tipis dan lembut untuk menyeka atau membuang ingus.
+ext_0087|飲み物を入れる、プラスチックの容器。|Wadah plastik untuk minuman.
+ext_0088|買い物で、お金を払った証明の紙。|Kertas bukti pembayaran dari suatu pembelian.
+ext_0092|乗り物や催し物などに入るための券。|Karcis untuk naik kendaraan atau masuk ke suatu pertunjukan.
+ext_0102|薬や日用品を売る店。|Toko yang menjual obat dan kebutuhan sehari-hari.
+x_0001|溶いた卵を巻いて焼いた、日本の卵料理。|Hidangan telur Jepang dari kocokan telur yang digulung saat digoreng.
+x_0005|小麦粉や砂糖で作る、小さく焼いた菓子。|Kue kecil kering yang dipanggang dari tepung dan gula.
+x_0008|オレンジ色の、皮をむいて食べる果物。|Buah oranye berkulit mudah dikupas yang rasanya manis.
+x_0009|赤くて小さな、甘ずっぱい果物。|Buah kecil merah dengan rasa manis asam.
+x_0013|夏に食べる、緑の皮で中が赤い果物。|Buah musim panas berkulit hijau dan berdaging merah.
+x_0014|細長くて緑色の、水分が多い野菜。|Sayuran panjang hijau yang banyak berair.
+x_0015|紫色の、つやのある野菜。|Sayuran berwarna ungu mengilap.
+x_0016|土の中にできる、丸い芋。|Umbi bulat yang tumbuh di dalam tanah.
+x_0017|オレンジ色の、根を食べる野菜。|Sayuran akar berwarna oranye.
+x_0018|薄い皮に包まれた、辛くて丸い野菜。|Sayuran bulat berkulit tipis dengan rasa tajam.
+x_0019|白くて太い、根を食べる野菜。|Sayuran akar putih dan besar yang dimakan.
+x_0020|細長くて、辛みのある野菜。|Sayuran panjang bercita rasa tajam.
+x_0025|ごみやほこりを吸い取る電気器具。|Alat listrik yang menyedot sampah dan debu.
+x_0028|離れた所から、機械を操作する道具。|Alat untuk mengoperasikan mesin dari jarak jauh.
+x_0034|不要なものを捨てるための入れ物。|Wadah untuk membuang barang yang tidak diperlukan.
+x_0037|これから洗う、または洗った衣類。|Pakaian yang akan atau sudah dicuci.
+x_0046|短い丈の、上に着る衣服。|Pakaian luar yang dikenakan di bagian atas dengan panjang pendek.
+x_0049|手首につけて使う、時計。|Jam yang dikenakan di pergelangan tangan.
+x_0056|バスが止まって、客が乗り降りする場所。|Tempat bus berhenti untuk menaikkan dan menurunkan penumpang.
+x_0071|冬に学校などが休みになる期間。|Masa libur sekolah pada musim dingin.
+x_0091|一年の始め。新年を祝う時期。|Awal tahun; masa merayakan tahun baru.
+x_0098|丸々とした体で、肉を食用にする家畜。|Hewan ternak bertubuh gemuk yang dagingnya dimakan.
+x_0111|海にすむ、体が曲がって殻に覆われた生き物。|Hewan laut berbadan melengkung dan bercangkang.
+x_0112|横に歩く、はさみを持つ海の生き物。|Hewan laut berkaki banyak dan bercapit yang berjalan menyamping.
+x_0116|たてがみのある、強い大型のネコ科の動物。|Hewan besar dan kuat dari keluarga kucing yang berjantan bersurai.
+x_0117|白と黒の毛をした、竹を食べる動物。|Hewan berbulu hitam putih yang makan bambu.
+x_0118|魚や海の生き物を飼って見せる施設。|Fasilitas yang memelihara ikan dan makhluk laut untuk dipamerkan.
+x_0233|病人やけが人を、病院へ運ぶ車。|Kendaraan yang mengantar orang sakit atau terluka ke rumah sakit.
+x_0238|仕事を終えた人をねぎらう挨拶。|Ucapan penghargaan kepada orang yang telah bekerja keras.
+x_0241|人の部屋に入ったり、その場を去ったりするときの挨拶。|Salam sopan ketika masuk ke ruangan orang atau saat pamit.
+x_0249|別れるときに、相手の健康を願う挨拶。|Ucapan perpisahan yang mendoakan kesehatan lawan bicara.
+x_0251|中華麺を野菜や肉と一緒に炒めた料理。|Hidangan mi yang ditumis bersama sayuran dan daging.
+x_0262|鼻にツンとくる、緑色の辛い薬味。|Bumbu pedas hijau yang menyengat hidung, biasa dimakan dengan sushi.
+x_0264|強いにおいのある、料理に使う白い球根。|Umbi putih berbau tajam yang dipakai sebagai bumbu masak.
+x_0280|川に戻って卵を産む、赤みのある魚。|Ikan berdaging kemerahan yang kembali ke sungai untuk bertelur.
+kaigo_0004|心臓の動きが、手首などに伝わるもの。|Getaran denyut jantung yang terasa di pergelangan tangan dan sebagainya.
+kaigo_0013|他人の助けを借りず、自分の力ですること。|Melakukan sesuatu dengan kekuatan sendiri tanpa bantuan orang lain.
+kaigo_0015|朝にとる食事。|Makanan yang disantap pada pagi hari.
+kaigo_0017|夕方から夜にとる食事。|Makanan yang disantap pada malam hari.
+kaigo_0018|食事と食事の間にとる、軽い食べ物。|Makanan ringan yang dimakan di antara waktu makan utama.
+kaigo_0020|主食に添えて食べる、おかず。|Lauk yang dimakan bersama makanan pokok.
+kaigo_0021|出された食事を、全部食べた量。|Jumlah makanan yang dihabiskan seluruhnya.
+kaigo_0031|口の中の空間。|Ruang di dalam mulut.
+kaigo_0032|口の中の内部。|Bagian dalam rongga mulut.
+kaigo_0035|歯を失ったときに、代わりに用いる人工の歯。|Gigi buatan pengganti gigi yang hilang.
+kaigo_0036|皮膚の下に水がたまってできる、ふくらみ。|Benjolan berisi cairan di bawah kulit.
+kaigo_0039|食べ物を、歯でかみ砕くこと。|Menghancurkan makanan dengan gigi.
+kaigo_0040|食べ物を、口から胃へ飲み込むこと。|Menelan makanan dari mulut masuk ke lambung.
+kaigo_0048|利用者の部屋を、見回りや用事で訪れること。|Mendatangi kamar penghuni untuk berkeliling atau mengurus keperluan.
+kaigo_0049|ベッドから車いすなどへ、体を移すこと。|Memindahkan tubuh dari tempat tidur ke kursi roda atau sebaliknya.
+kaigo_0051|利用者が生活する個人の部屋。|Kamar pribadi tempat penghuni fasilitas tinggal.
+kaigo_0053|事務の仕事をするための部屋。|Ruangan untuk pekerjaan administrasi.
+kaigo_0054|相手の話に、注意深く耳を傾けること。|Mendengarkan cerita lawan bicara dengan sungguh-sungguh dan penuh perhatian.
+kaigo_0057|部屋や建物の中。|Bagian dalam ruangan atau gedung.
+kaigo_0067|大便を体の外に出すこと。|Mengeluarkan kotoran dari tubuh.
+kaigo_0082|着ている衣服を、着替えること。|Mengganti pakaian yang dikenakan.
+kaigo_0089|数量が多いこと。|Jumlah yang banyak.
+kaigo_0090|数量が少ないこと。|Jumlah yang sedikit.
+kaigo_0091|体の、性器のある部分。|Bagian tubuh tempat alat kelamin berada.
+kaigo_0092|汚れを、水などで洗い流すこと。|Membersihkan kotoran dengan air atau cairan.
+kaigo_0093|問題や悩みが、なくなること。|Hilangnya masalah atau gangguan sehingga teratasi.
+kaigo_0103|医者に診てもらうこと。|Pergi ke dokter untuk diperiksa.
+kaigo_0104|検査のために、血液を取ること。|Mengambil darah untuk keperluan pemeriksaan.
+kaigo_0106|腹の右上にあり、栄養の代謝などをする臓器。|Organ di perut kanan atas yang mengolah zat gizi dan menawarkan racun.
+kaigo_0107|検査などで示される、数字の値。|Nilai angka yang ditampilkan dalam hasil pemeriksaan.
+kaigo_0112|検査の結果、反応があること。|Hasil pemeriksaan yang menunjukkan adanya reaksi.
+kaigo_0113|検査の結果、反応がないこと。|Hasil pemeriksaan yang menunjukkan tidak ada reaksi.
+kaigo_0114|一人だけで使う部屋。|Kamar yang dipakai oleh satu orang saja.
+kaigo_0115|胃の中の物を、口から吐くこと。|Mengeluarkan isi lambung melalui mulut.
+kaigo_0117|吐いた物。|Isi lambung yang dimuntahkan.
+kaigo_0125|体温が、ふだんより高くなること。|Suhu tubuh naik di atas biasanya.
+kaigo_0127|熱が出る前などに感じる、ぞくぞくする寒気。|Rasa dingin menggigil yang muncul menjelang demam.
+kaigo_0147|足の、付け根から先の部分。|Bagian kaki dari pangkal paha sampai ujung.
+kaigo_0148|足の、かかとの部分。|Bagian tumit pada kaki.
+kaigo_0149|足の裏。|Bagian bawah telapak kaki.
+kaigo_0159|足を使って、歩くこと。|Bergerak dengan melangkahkan kaki.
+kaigo_0164|することが、できないこと。|Keadaan tidak mungkin atau tidak dapat dilakukan.
+kaigo_0165|麻痺などがなく、健康な側の体。|Sisi tubuh yang sehat tanpa kelumpuhan.
+kaigo_0166|麻痺や病気がある側の体。|Sisi tubuh yang lumpuh atau sakit.
+kaigo_0171|立っている状態から、倒れること。|Roboh dari posisi berdiri.
+kaigo_0172|強く打って、皮膚の下が傷つくこと。|Cedera di bawah kulit akibat benturan keras.
+kaigo_0177|床や道の、高さが違う所。|Tempat lantai atau jalan yang tingginya berbeda.
+kaigo_0179|体の外側にできた傷。|Luka yang terjadi pada bagian luar tubuh.
+kaigo_0183|頭の部分。|Bagian kepala.
+kaigo_0186|体の一部が、はれてふくらむこと。|Bagian tubuh yang membengkak.
+kaigo_0188|体から、汗が出ること。|Keluarnya keringat dari tubuh.
+kaigo_0189|あおむけに寝た姿勢。|Posisi berbaring menghadap ke atas.
+kaigo_0190|さわったとき、熱く感じること。|Rasa panas saat bagian tubuh disentuh.
+kaigo_0191|口から飲む薬。|Obat yang diminum lewat mulut.
+kaigo_0192|皮膚が、赤くなること。|Kulit yang menjadi merah.
+kaigo_0196|うつぶせに寝た姿勢。|Posisi berbaring tengkurap.
+kaigo_0198|横向きに寝た姿勢。|Posisi berbaring miring.
+kaigo_0201|体の、背中の部分。|Bagian tubuh di sisi punggung.
+kaigo_0203|歯が痛むこと。|Rasa sakit pada gigi.
+kaigo_0206|体の、腰の部分。|Bagian tubuh di area pinggang.
+kaigo_0207|皮膚に、小さな赤い点などができること。|Munculnya bintik merah kecil pada kulit.
+kaigo_0209|皮膚に塗る、やわらかい薬。|Obat lunak yang dioleskan pada kulit.
+kaigo_0211|薬などを、表面に塗ること。|Mengoleskan obat atau cairan pada permukaan.
+kaigo_0221|眠りから覚めて、意識がはっきりすること。|Terbangun dari tidur dan kesadaran menjadi jelas.
+kaigo_0223|たんなどを、機械で吸い取ること。|Menyedot dahak atau cairan dengan alat.
+kaigo_0226|足をお湯につけて、洗うこと。|Merendam dan membersihkan kaki dengan air hangat.
+kaigo_0231|手をお湯につけて、洗うこと。|Merendam dan membersihkan tangan dengan air hangat.
+kaigo_0235|ひじから肩までの、腕の部分。|Bagian lengan dari siku sampai bahu.
+kaigo_0238|入浴のために、お湯をためる大きな容器。|Wadah besar untuk menampung air hangat saat mandi.
+kaigo_0246|人に知られないようにしておくこと。|Hal yang disembunyikan agar tidak diketahui orang.
+kaigo_0249|人が、訪ねてくること。|Kedatangan seseorang untuk berkunjung.
+kaigo_0268|自分を生んだ男の親。|Orang tua laki-laki yang membesarkan; ayah sendiri.
+kaigo_0269|自分を生んだ女の親。|Orang tua perempuan yang melahirkan; ibu sendiri.
+kaigo_0279|日の光を浴びること。|Menjemur tubuh di bawah sinar matahari.
+kaigo_0283|関節などが固まって、動かしにくくなること。|Sendi yang mengeras sehingga sulit digerakkan.
+kaigo_0297|支援の内容や方法を、書いた書類。|Dokumen yang memuat isi dan cara pemberian bantuan; rencana perawatan.
+kaigo_0316|会議や行事に、出席した人。|Orang yang hadir dalam rapat atau acara.
+kaigo_0345|長く寝たきりで、皮膚が傷つくこと。|Luka pada kulit akibat berbaring lama dalam satu posisi.
+kaigo_0347|体の組織に、水がたまってむくむこと。|Penumpukan cairan di jaringan tubuh yang menyebabkan bengkak.
+kaigo_0348|腰の中央にある、三角形の骨。|Tulang berbentuk segitiga di tengah panggul.
+kaigo_0353|床について、横になっていること。|Berbaring di tempat tidur.
+kaigo_0355|眠りにつくこと。|Pergi tidur.
+kaigo_0357|ぐっすり、よく眠ること。|Tidur dengan lelap.
+kaigo_0359|眠れない状態が続くこと。|Keadaan sulit tidur yang berlangsung terus.
+kaigo_0360|よく眠れること。|Tidur yang nyenyak dan cukup.
+kaigo_0363|決まった場所を、見回って歩くこと。|Berkeliling memeriksa tempat-tempat yang ditentukan.
+1295|言葉を使わずに、相手に知らせる動作や記号。|Gerakan atau tanda untuk memberi tahu orang lain tanpa kata-kata.
+1296|汚れがなく、きれいであること。|Keadaan bebas kotoran dan bersih.
+1297|そうなってほしいと思う、気持ち。また、頼み。|Keinginan agar sesuatu terkabul; juga permohonan.
+1298|舞台の、開け閉めする布。また、劇の一区切り。|Kain penutup panggung yang dibuka-tutup; juga satu babak drama.
+1299|人が乗ったり荷物を運んだりする、大きな動物。|Hewan besar yang ditunggangi dan dipakai mengangkut barang.
+1300|ある物を、取り去る。外す。|Mengeluarkan atau mengecualikan sesuatu dari kelompok.
+1301|鼻で感じる、よいにおい。|Bau harum yang tertangkap hidung.
+1302|人が歩くための、道路の端の道。|Jalur di tepi jalan khusus untuk pejalan kaki.
+1303|実際に見ていないことを、心の中で思い描くこと。|Membayangkan dalam pikiran hal yang belum dilihat secara nyata.
+1304|あとで必要になることに、前もって準備する。|Menyiapkan lebih dulu untuk keperluan di kemudian hari; juga memiliki.
+1305|郵便や運行などの、決まった連絡の手段。|Layanan pengiriman atau perjalanan terjadwal; juga penerbangan.
+1306|たばこなどに火をつける道具。|Alat untuk menyalakan rokok atau api; juga penulis.
+1307|数の合計を、個数で割った値。|Nilai yang diperoleh dari jumlah dibagi banyaknya; juga keseimbangan.
+1308|動物の皮をなめして作った素材。|Bahan yang dibuat dari kulit hewan yang disamak.
+1309|その場から、離れて行く。|Pergi meninggalkan suatu tempat.
+1310|人に接するときの、正しい作法。|Tata cara bersikap yang baik dalam bergaul dengan orang lain.
+1311|何かをしようとする、考えや気持ち。|Pikiran atau kehendak untuk melakukan sesuatu.
+1312|少しの例外もなく、本当に。|Sepenuhnya tanpa pengecualian; sungguh.
+1313|ある範囲の、真ん中。|Bagian tengah dari suatu lingkup.
+1314|来た人を、喜んで迎えること。|Menyambut dengan gembira orang yang datang.
+1315|国内の品物を、外国へ売り出すこと。|Menjual barang dalam negeri ke luar negeri.
+1316|口の奥の、食べ物や空気が通る部分。|Bagian di belakang mulut yang dilalui makanan dan udara.
+1317|物と物との間のあき。時間の間隔。|Jarak atau celah di antara benda; juga selang waktu.
+1318|間違いや足りない所を、直すこと。|Memperbaiki kesalahan atau kekurangan.
+1319|出来事を忘れないために、残しておくこと。|Menyimpan atau memperingati suatu peristiwa agar tidak dilupakan.
+1320|寒さや恐ろしさで、体が小刻みに動く。|Tubuh bergerak kecil-kecil karena dingin atau takut.
+1321|同じ家に住む、家族全体。|Seluruh anggota keluarga yang tinggal di rumah yang sama.
+1322|ある目的のために、活発に動くこと。|Kegiatan yang dilakukan secara aktif untuk suatu tujuan.
+1323|年のわかい、男の子。|Anak laki-laki yang masih muda.
+1324|音楽に合わせて、体を動かして踊ること。|Menari mengikuti irama musik.
+1325|二つのものの、同じでない点。|Hal-hal yang tidak sama antara dua benda.
+1326|七日間のひとまとまり。|Rentang waktu tujuh hari; satu minggu.
+1327|前の内容に反することを、述べるときの言葉。|Kata penghubung untuk menyatakan hal yang berlawanan dengan sebelumnya.
+1328|規則や方法を、実際に当てはめて使うこと。|Menerapkan aturan atau cara pada kasus yang sebenarnya.
+1329|髪の毛や草などを、短く切り取る。|Memotong rambut atau rumput hingga pendek; juga memanen.
+1330|物事の悪い点を、指摘して意見を述べること。|Menunjukkan kekurangan suatu hal dan menyatakan pendapat atasnya.
+1331|物事が行われる所。|Tempat berlangsungnya suatu kegiatan; juga kesempatan atau suasana.
+1332|はっきりしないものを指す言葉。|Kata ganti untuk sesuatu yang tidak ditentukan.
+1333|頭がよくて、うまく立ち回れる様子。|Cerdas dan pandai menyesuaikan diri dalam bertindak.
+1334|人に、ものを求めるときの言葉。|Ungkapan akrab untuk meminta sesuatu dari orang lain.
+1335|争いなどで、自分の仲間である人。|Orang yang berada di pihak sendiri dalam suatu pertikaian.
+1336|放送や郵便など、仕事を取り扱う役所や機関。|Kantor atau lembaga yang menangani siaran, pos, dan sebagainya.
+1337|愛し合っている相手。|Pasangan yang saling mencintai.
+1338|自動車。また、他の言葉の前につく語。|Kata serapan untuk mobil; juga unsur dalam kata majemuk.
+1339|戦うために、組織された兵士の集まり。|Kelompok prajurit yang terorganisasi untuk berperang.
+1340|人の力ではどうにもならない、めぐり合わせ。|Nasib yang tak dapat diatur oleh kekuatan manusia; peruntungan.
+1341|自分が引き受けて、果たすべき務め。|Tugas yang diemban dan harus dipenuhi seseorang.
+1342|お金を、他の国の通貨に替えること。|Menukarkan uang ke mata uang negara lain.
+1343|長くなる。力などが成長する。|Menjadi lebih panjang; juga berkembang kemampuannya.
+1344|争いがなく、穏やかなこと。|Keadaan tanpa perselisihan dan tenteram.
+1345|客のために、手助けや気配りをすること。|Memberi bantuan atau pelayanan kepada pelanggan; juga barang gratis.
+1346|「訪ねる」「聞く」の謙譲語。|Bentuk merendah dari 'tazuneru' (mengunjungi) dan 'kiku' (bertanya).
+1347|ある場所を通って、目的地に行くこと。|Melewati suatu tempat dalam perjalanan menuju tujuan.
+1348|水や光などを、全身に受ける。|Menerima air atau cahaya di seluruh tubuh.
+1349|品物が、買われて売れていく。|Barang terjual dan laku.
+1350|国と国との境目。|Garis pemisah antara dua negara.
+1351|昼にとる食事。|Hidangan yang disantap pada siang hari.
+1352|古くから価値が認められた、伝統的なもの。|Hal tradisional yang sejak lama diakui nilainya; juga musik klasik.
+1353|弁当箱に詰めた、持ち運べる食事。|Makanan dalam kotak yang bisa dibawa-bawa.
+1354|同じことが続いて、いやになる。|Merasa bosan karena hal yang sama berlangsung terus.
+1355|物事をするのに必要な、時間や労力。|Waktu dan tenaga yang diperlukan untuk mengerjakan sesuatu.
+1356|薬などの働きが、現れる。|Obat atau tindakan memberikan hasil yang nyata.
+1357|悪いことをした人を、つかまえること。|Menangkap orang yang melakukan kejahatan.
+1358|物事の良い点や悪い点を述べること。|Menyatakan baik buruknya suatu hal.
+1359|ゆったりして、せかせかしない様子。|Santai dan tidak terburu-buru.
+1360|中が空洞の、細長い物。|Benda panjang yang berongga di dalamnya.
+1361|円を描くように動かす。順番に送る。|Memutar sesuatu; juga mengedarkan secara bergilir.
+1362|木などを薄く平らにした材料。|Bahan datar dan tipis dari kayu atau sejenisnya.
+1363|危険を承知で、あえて行うこと。|Melakukan sesuatu yang berisiko dengan sadar.
+1364|ある物の、まわり。|Daerah di sekeliling suatu benda atau tempat.
+1365|自分の思い通りに、人に構わずふるまうこと。|Bertingkah sesuka hati tanpa memedulikan orang lain.
+1366|電車や飛行機などに、乗っている人。|Orang yang naik kereta, pesawat, dan sebagainya.
+1367|勝負に、勝つこと。|Memenangkan suatu pertandingan.
+1368|週の中の、日の呼び名。|Nama hari dalam seminggu.
+1369|ある物事に、心がひかれること。|Perasaan tertarik atau peduli terhadap suatu hal.
+1370|細長くて、まっすぐな物。|Benda panjang dan lurus.
+1371|その上、さらに。|Lebih jauh lagi; selain itu.
+1372|相手の言葉を、否定するときの返事。|Jawaban untuk menyangkal atau membantah ucapan lawan bicara.
+1373|人間が住んでいる、天体。|Planet tempat manusia tinggal.
+1375|時間をおかずに、すぐ。|Segera tanpa menunggu lama.

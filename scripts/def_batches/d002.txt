@@ -1,0 +1,250 @@
+0341|今年の前の年。|Tahun sebelum tahun ini.
+0342|週の三番目の日。|Hari ketiga dalam seminggu.
+0343|乗り物の中に入って、それに運ばれる。|Masuk ke dalam kendaraan atau menaikinya agar diangkut.
+0344|自分より年下の男のきょうだい。|Saudara laki-laki yang lebih muda dari diri sendiri.
+0345|話している相手を指す言葉。|Kata ganti orang kedua untuk menyebut lawan bicara.
+0346|数の1000を表す数字。|Angka yang menyatakan bilangan seribu.
+0347|草や木の葉のような色。|Warna seperti rumput dan daun pepohonan.
+0348|鶏の肉。|Daging dari ayam.
+0349|重さが少なく、持ち上げやすいこと。|Berat yang sedikit sehingga mudah diangkat; ringan.
+0350|否定の言葉と一緒に使い、程度が大きくないことを表す。|Dipakai bersama bentuk negatif untuk menyatakan tingkat yang tidak begitu besar.
+0351|頭にかぶる物。|Benda yang dikenakan di kepala.
+0352|体や物が強く、壊れにくいこと。|Tubuh atau benda yang kuat dan tidak mudah rusak.
+0353|外から中へ移す。|Memindahkan sesuatu dari luar ke dalam.
+0354|二十歳の年齢。|Usia dua puluh tahun, yang di Jepang dianggap awal kedewasaan.
+0355|月の三番目の日。また、三日間。|Tanggal tiga dalam bulan; juga rentang tiga hari.
+0356|距離や時間が大きく離れていること。|Jarak atau waktu yang terpaut jauh.
+0357|夏の暑い時期に学校などが休みになる期間。|Masa libur sekolah pada musim panas.
+0358|親しく付き合っている人。|Orang yang bergaul akrab dengan kita.
+0359|左右の方向。物の幅。|Arah kanan-kiri; juga lebar suatu benda.
+0360|触ると温度が低く感じる様子。|Terasa bersuhu rendah ketika disentuh; juga sikap yang dingin.
+0361|日が暮れてから朝までの暗い時間。|Waktu gelap sejak matahari terbenam sampai pagi.
+0362|用を足すための場所や設備。|Tempat atau perlengkapan untuk buang air.
+0363|体の中の、食べ物を入れる部分。|Bagian tubuh tempat makanan masuk; perut.
+0364|場所を尋ねるときの言葉。|Kata tanya untuk menanyakan tempat.
+0365|することがなく、自由に使える時間。|Waktu luang yang tidak ada kegiatan dan dapat dipakai bebas.
+0366|鳥や虫などが声を出す。|Burung, serangga, dan hewan lain mengeluarkan suara.
+0367|すぐそばにあること。また、そのもの。|Tempat atau orang yang berada tepat di sisi; sebelah.
+0368|学問や技能を教える人。医者などの敬称にも使う。|Orang yang mengajarkan ilmu atau keterampilan; juga sebutan hormat untuk dokter dan sebagainya.
+0369|建物などから外へ出る所。|Tempat untuk keluar dari gedung dan sebagainya.
+0370|向いている方向の反対側。|Sisi yang berlawanan dengan arah hadap.
+0371|今月の前の月。|Bulan sebelum bulan ini.
+0372|音や映像を記録する細長いもの。また、物をくっつける細い粘着物。|Pita panjang untuk merekam suara atau gambar; juga pita perekat untuk menempel.
+0373|他人の姉を敬って呼ぶ言い方。また、年上の女性への呼びかけ。|Sebutan hormat untuk kakak perempuan orang lain; juga panggilan untuk perempuan yang lebih tua.
+0374|前の話を受けて、次に話を進めるときの言葉。|Kata penghubung untuk melanjutkan pembicaraan, setara 'kalau begitu'.
+0375|文字や絵を印刷して綴じたもの。|Barang cetakan berisi tulisan atau gambar yang dijilid.
+0376|手足を動かして水の中を進む。|Bergerak maju di dalam air dengan menggerakkan tangan dan kaki.
+0377|たばこの灰や吸い殻を入れる器。|Wadah untuk abu dan puntung rokok.
+0378|敷地の出入り口に設ける、開け閉めする建造物。|Bangunan yang dapat dibuka-tutup di pintu masuk pekarangan.
+0379|運んだり預けたりする品物。|Barang-barang yang dibawa atau dititipkan untuk perjalanan.
+0380|近くにあるものを指す言葉。|Kata penunjuk untuk benda atau hal yang dekat dengan pembicara.
+0381|文字や文章を紙などに記す。|Menuliskan huruf atau kalimat di kertas dan sebagainya.
+0382|それぞれの年。一年ごと。|Setiap tahun; berulang tiap tahun.
+0383|今日の次の日。|Hari setelah hari ini.
+0384|旅行者などが料金を払って泊まる施設。|Fasilitas tempat pelancong menginap dengan membayar.
+0385|乗り物から地面などへ移る。また、高い所から低い所へ移る。|Keluar dari kendaraan; juga berpindah dari tempat tinggi ke tempat rendah.
+0386|重さが大きいこと。また、程度が深刻なこと。|Bobot yang besar; juga hal yang berat atau serius.
+0387|電気で走り、人を運ぶ乗り物。|Kendaraan bertenaga listrik yang berjalan di rel untuk mengangkut orang.
+0388|体や心に苦しさを感じる様子。|Keadaan ketika tubuh atau perasaan terasa sakit.
+0389|言葉を使って相手に考えを伝える。|Menyampaikan pikiran kepada orang lain dengan kata-kata.
+0390|すぐれていて、人に誇れるほどであること。|Sangat bagus dan layak dibanggakan.
+0391|興味がわかず、おもしろくないこと。|Tidak menarik minat dan tidak menyenangkan.
+0392|回数が多い様子。また、十分に。|Sering terjadi; juga dengan baik atau sepenuhnya.
+0393|好ましくなく、したくない気持ち。|Perasaan tidak suka dan tidak ingin melakukan sesuatu.
+0394|学校から家で行うように出される課題。|Tugas yang diberikan sekolah untuk dikerjakan di rumah.
+0395|命がなくなる。|Kehilangan nyawa; berhenti hidup.
+0396|その場にいる全部の人。|Semua orang yang hadir atau yang bersangkutan.
+0397|数の10000を表す数字。|Angka yang menyatakan bilangan sepuluh ribu.
+0398|動く映像を上映する作品。|Karya gambar bergerak yang ditayangkan.
+0399|時間が大きく過ぎている。また、動きが速くない。|Waktu sudah lewat dari semestinya; juga gerakan yang tidak cepat.
+0400|頭の両側にあり、音を聞く器官。|Organ di kedua sisi kepala untuk mendengar.
+0401|時間やお金などが必要になる。|Waktu, uang, atau biaya yang dibutuhkan atau terpakai.
+0402|前の内容と反対のことを述べるときの言葉。|Kata penghubung untuk menyatakan hal yang berlawanan dengan sebelumnya.
+0403|数の4を表す、物を数えるときの言い方。|Cara menyebut bilangan empat saat menghitung benda.
+0404|勉強や仕事をするときに使う台。|Meja yang dipakai untuk belajar atau bekerja.
+0405|話し手から離れた場所を指す、くだけた言い方。|Kata penunjuk santai untuk tempat yang jauh dari pembicara.
+0406|お金を払って物を手に入れる。|Memperoleh barang dengan membayar uang.
+0407|閉じていたものが開いた状態になる。|Sesuatu yang tadinya tertutup menjadi terbuka.
+0408|学校で授業をする部屋。|Ruangan di sekolah tempat pelajaran berlangsung.
+0409|物を入れて持ち運ぶための袋や入れ物。|Wadah atau tas untuk membawa barang.
+0410|こすって火をつける小さな棒。|Batang kecil yang digesekkan untuk menyalakan api.
+0411|長さや時間が小さいこと。|Panjang atau waktu yang kecil; pendek.
+0412|自分の姉。|Kakak perempuan sendiri.
+0413|たくさんの人。|Banyak orang yang berkumpul.
+0414|閉じていたものを開く。|Membuka sesuatu yang tertutup.
+0415|することが多くて、ゆとりがない。|Banyak yang harus dikerjakan sehingga tidak ada waktu luang.
+0416|年を取った女の人。祖父母の母方・父方の女性。|Perempuan lanjut usia; juga nenek dari pihak ayah maupun ibu.
+0417|品物を並べて売る場所。|Tempat yang memajang dan menjual barang.
+0418|スーツの下に着る、えりのついた白いシャツ。|Kemeja berkerah, biasanya putih, yang dipakai di balik jas.
+0419|太陽が昇る方向に向かって左の方角。|Arah ke kiri bila menghadap matahari terbit; arah utara.
+0420|放送を音声で聞く機械。|Perangkat untuk mendengarkan siaran suara.
+0421|時間をおかずに行う様子。|Cara melakukan sesuatu tanpa menunda waktu.
+0422|手や顔をふくための小さな布。|Kain kecil untuk menyeka tangan atau wajah.
+0423|時を尋ねるときの言葉。|Kata tanya untuk menanyakan waktu.
+0424|すべて。残らず。|Seluruhnya tanpa ada yang tertinggal.
+0425|川や谷などの上にかけて渡れるようにしたもの。|Konstruksi di atas sungai atau lembah agar dapat diseberangi.
+0426|山から海へ流れる、水の大きな流れ。|Aliran air besar yang mengalir dari gunung ke laut.
+0427|牛乳から作る、パンに塗る黄色い脂肪。|Lemak kuning dari susu yang dioleskan pada roti.
+0428|程度や量をさらに大きくする様子。|Menyatakan tingkat atau jumlah yang lebih besar lagi.
+0429|建物や場所に入るための所。|Tempat untuk masuk ke gedung atau suatu area.
+0430|例を挙げて、他にもあることを表す言葉。|Partikel yang menyebut contoh sambil menandakan masih ada yang lain.
+0431|周りの長さや幅が大きいこと。|Keliling atau lebar yang besar; tebal.
+0432|与える。また、行う。|Memberikan sesuatu kepada yang lebih rendah; juga melakukan sesuatu.
+0433|エンジンの力で道を走る乗り物。|Kendaraan beroda bermesin yang berjalan di jalan.
+0434|太陽が出ている明るい時間。正午ごろ。|Waktu terang ketika matahari bersinar; sekitar tengah hari.
+0435|目に見える、赤や青などの感じ。|Kesan yang tampak di mata seperti merah atau biru.
+0436|レモンやバナナのような色。|Warna seperti lemon atau pisang.
+0437|北を向いたとき、西にあたる側。|Sisi yang berada di arah barat bila menghadap utara; sisi sebelah kiri.
+0438|主に葉や根などを食べる植物。|Tumbuhan yang dimakan daun, akar, dan bagian lainnya.
+0439|体に水やお湯をかけて洗うこと。また、その設備。|Mandi dengan menyiramkan air atau air hangat ke tubuh; juga perlengkapannya.
+0440|気晴らしや運動のために、ゆっくり歩くこと。|Berjalan perlahan untuk refreshing atau berolahraga.
+0441|数の3を表す数字。|Angka yang menyatakan bilangan tiga.
+0442|見えていたものが見えなくなる。|Sesuatu yang tadinya terlihat menjadi tidak terlihat; lenyap.
+0443|映画を上映して見せる建物。|Gedung tempat film diputar untuk penonton.
+0444|座るための、背もたれのある家具。|Perabot bersandaran yang dipakai untuk duduk.
+0445|生まれた日。また、その記念日。|Hari kelahiran seseorang beserta peringatannya.
+0446|刃物などで物を分ける。|Memisahkan atau memotong sesuatu dengan benda tajam.
+0447|月の七番目の日。また、七日間。|Tanggal tujuh dalam bulan; juga rentang tujuh hari.
+0448|水などを使って汚れを落とす。|Menghilangkan kotoran dengan air dan sebagainya.
+0449|話し手から離れたものを指す言葉。|Kata ganti penunjuk benda yang jauh dari pembicara dan pendengar.
+0450|重さの単位。キログラムの千分の一。|Satuan berat sebesar seperseribu kilogram.
+0451|先生などから教えを受けて身につける。|Menerima ajaran dari guru dan sebagainya lalu menguasainya.
+0452|ある時点より後の時間や位置。|Waktu atau posisi yang berada setelah titik tertentu.
+0453|ひげがあり、ネズミを捕る小さな動物。|Hewan kecil berkumis yang suka menangkap tikus dan sering dipelihara.
+0454|本を集めて、人に読ませたり貸したりする施設。|Tempat yang mengumpulkan buku untuk dibaca atau dipinjamkan.
+0455|順序よく並ぶようにする。|Menata benda agar berderet dengan teratur.
+0456|前の内容に対して、反対や逆の内容を続ける言葉。|Kata penghubung yang melanjutkan dengan hal yang bertentangan.
+0457|体積や面積、規模などが大きいこと。|Ukuran, luas, atau skala yang besar.
+0458|月の八番目の日。また、八日間。|Tanggal delapan dalam bulan; juga rentang delapan hari.
+0459|足を使って移動する。|Berpindah tempat dengan menggunakan kaki.
+0460|腰から足にかけてはく、二股の衣類。|Pakaian bawah berkaki dua yang dikenakan dari pinggang hingga kaki.
+0461|月の九番目の日。また、九日間。|Tanggal sembilan dalam bulan; juga rentang sembilan hari.
+0462|聞き手に近い場所や方向を指す、くだけた言い方。|Kata penunjuk santai untuk tempat atau arah yang dekat dengan lawan bicara.
+0463|上下の方向。また、その長さ。|Arah atas-bawah atau panjang dalam arah tersebut; vertikal.
+0464|飲み物を入れる、取っ手のある小さな器。|Wadah kecil bergagang untuk minuman.
+0465|話し手からも聞き手からも遠いものを指す言葉。|Kata penunjuk untuk hal yang jauh dari pembicara maupun pendengar.
+0466|人に何かをしてほしいと願う。|Meminta orang lain melakukan sesuatu; juga memesan atau menitipkan.
+0467|他人の兄を敬って呼ぶ言い方。また、年上の男性への呼びかけ。|Sebutan hormat untuk kakak laki-laki orang lain; juga panggilan untuk laki-laki yang lebih tua.
+0468|腕の先にあり、物をつかむ部分。|Bagian ujung lengan yang dipakai untuk memegang benda.
+0469|相手の言葉に同意するときの返事。|Jawaban untuk menyetujui ucapan lawan bicara.
+0470|それぞれの日。一日ごと。|Setiap hari; berulang tiap hari.
+0471|植物の、きれいな色の部分。|Bagian tumbuhan yang berwarna indah dan mekar.
+0472|数の1を表す数字。|Angka yang menyatakan bilangan satu.
+0473|人や動物がその場所に存在する。|Manusia atau hewan berada di suatu tempat.
+0474|甘い味の白い調味料。|Bumbu putih berasa manis.
+0475|日付を月ごとに並べて示した表。|Tabel yang menampilkan tanggal berurutan per bulan.
+0476|話しているその時。現在。|Saat ini ketika sedang berbicara; masa kini.
+0477|遊びや用事のために、他の土地へ出かけること。|Bepergian ke daerah lain untuk berlibur atau keperluan.
+0478|能力があって、行うことが可能である。|Memiliki kemampuan sehingga sanggup melakukan sesuatu; juga hal yang selesai dibuat.
+0479|冬のあとに来る、暖かくなる季節。|Musim setelah musim dingin ketika cuaca menghangat.
+0480|行動や動作を行う。|Melakukan suatu tindakan atau pekerjaan; kata kerja serbaguna.
+0481|数の8を表す、物を数えるときの言い方。|Cara menyebut bilangan delapan saat menghitung benda.
+0482|人が多く住み、店や家が集まった地域。|Kawasan berpenduduk banyak dengan toko dan rumah yang berkumpul.
+0483|手に持っているものを相手に渡す。|Menyerahkan sesuatu yang dipegang kepada orang lain.
+0484|空や海の色。|Warna langit dan laut.
+0485|雪のような、明るい色。|Warna cerah seperti salju.
+0486|物がそこに存在する。また、持っている。|Benda mati berada di suatu tempat; juga berarti memiliki.
+0487|寝るために使う家具。|Perabot yang dipakai untuk tidur.
+0488|川や雨になる、無色透明の液体。|Cairan bening tak berwarna seperti air sungai dan hujan.
+0489|数や年齢を尋ねるときの言葉。|Kata tanya untuk menanyakan jumlah atau usia.
+0490|心がうきうきして、楽しく感じる様子。|Keadaan hati yang gembira dan terasa senang.
+0491|米を炊いたもの。また、食事。|Beras yang telah dimasak; juga berarti makanan atau waktu makan.
+0492|その場にいる、たくさんの人を敬って呼ぶ言葉。|Sebutan hormat untuk orang-orang yang hadir.
+0493|味がよく、食べて満足できること。|Rasa yang lezat sehingga memuaskan saat dimakan.
+0494|家で飼って、かわいがる動物。|Hewan yang dipelihara di rumah dan disayangi.
+0495|あるものの囲いの中でない所。|Tempat yang berada di luar suatu batas atau ruang.
+0496|向いている方向の側。また、以前。|Sisi yang dihadapi; juga waktu sebelumnya.
+0497|話し手のいる所へ近づいてくる。|Bergerak mendekat ke tempat pembicara berada.
+0498|心が引かれて、もっと知りたい、楽しいと感じる様子。|Sesuatu yang menarik minat dan terasa menyenangkan.
+0499|あとで返してもらう約束で、物を人に使わせる。|Memberikan barang untuk dipakai orang lain dengan syarat dikembalikan.
+0500|時間が短い。また、動きが速い。|Waktu yang dini; juga gerakan yang cepat.
+0501|力や勢いが小さいこと。|Tenaga atau kekuatan yang kecil.
+0502|衣類などを水で洗うこと。|Kegiatan mencuci pakaian dengan air.
+0503|数の9を表す、物を数えるときの言い方。|Cara menyebut bilangan sembilan saat menghitung benda.
+0504|今年の次の年。|Tahun setelah tahun ini.
+0505|目が悪い人が、よく見えるようにかける道具。|Alat yang dikenakan agar penglihatan yang buruk dapat melihat jelas.
+0506|体の高さ。身長。|Tinggi badan atau perawakan seseorang; juga bagian punggung.
+0507|週の四番目の日。|Hari keempat dalam seminggu.
+0508|物を買うときなどに使う、紙幣や硬貨。|Uang kertas dan koin yang dipakai untuk membeli barang.
+0509|違いがなく、一つのものと見なせること。|Tidak ada bedanya sehingga dapat dianggap satu.
+0510|指でひもや鍵盤を操作して楽器を鳴らす。|Membunyikan alat musik dengan jari seperti pada senar atau tuts.
+0511|週の七番目の日。|Hari ketujuh dalam seminggu.
+0512|高い所と低い所をつなぐ、段になった通路。|Jalur berundak yang menghubungkan tempat tinggi dan rendah.
+0513|音が大きくて、気にさわる様子。|Suara yang keras dan mengganggu; berisik.
+0514|二つに分けた一つ分。|Satu bagian dari dua bagian yang sama.
+0515|男性が仕事などで着る、上下そろいの洋服。|Setelan pakaian pria berupa jas dan celana untuk bekerja.
+0516|空に雲が少なく、よく晴れた天気。|Cuaca ketika langit cerah dengan sedikit awan.
+0517|相手に見えるようにする。|Memperlihatkan sesuatu agar dilihat orang lain.
+0518|飲むための液体。|Cairan yang dapat diminum.
+0519|空から降る、白くて冷たい結晶。|Kristal putih dingin yang turun dari langit.
+0520|店で品物を買うこと。|Kegiatan membeli barang di toko.
+0521|二つ以上の道が交わっている所。|Titik tempat dua jalan atau lebih bertemu.
+0522|電車などが止まって、人が乗り降りする所。|Tempat kereta berhenti dan penumpang naik-turun.
+0523|危なくなく、心配がないこと。|Tidak berbahaya dan tidak perlu dikhawatirkan.
+0524|ボールが入った、インクで書くペン。|Pena berinkta dengan bola kecil di ujungnya.
+0525|知識や技術を身につけるために学ぶこと。|Kegiatan belajar untuk memperoleh pengetahuan dan keterampilan.
+0526|同じ親から生まれた人たち。|Orang-orang yang lahir dari orang tua yang sama.
+0527|手紙や書類を入れる紙の袋。|Kantong kertas untuk surat atau dokumen.
+0528|音を記録した円盤。|Cakram yang merekam suara.
+0529|豆を煎って粉にし、お湯で入れる黒い飲み物。|Minuman hitam yang diseduh dari biji kopi sangrai yang digiling.
+0530|中国で生まれた文字。|Aksara yang berasal dari Tiongkok dan dipakai dalam bahasa Jepang.
+0531|コーヒーなどを飲んで休む店。|Kedai tempat orang minum kopi dan beristirahat.
+0532|聞き手に近いものや、前に話したことを指す言葉。|Kata penunjuk untuk hal yang dekat dengan lawan bicara atau yang baru disebut.
+0533|まだ大人になっていない、幼い人。|Orang yang masih kecil dan belum dewasa.
+0534|少しだけ。また、短い間。|Sedikit saja; juga sebentar.
+0535|まだ大人になっていない女子。|Anak perempuan yang belum dewasa.
+0536|字を書いたり物を包んだりする、薄い材料。|Bahan tipis untuk menulis atau membungkus.
+0537|言葉の意味や使い方を調べるための本。|Buku untuk mencari arti dan pemakaian kata.
+0538|明日の次の日。|Hari setelah besok.
+0539|好きでなく、避けたいと思う気持ち。|Perasaan tidak menyukai dan ingin menghindari sesuatu.
+0540|進む方向の前。また、これから先の時間。|Bagian depan dalam arah gerak; juga waktu yang akan datang.
+0541|問いかけに対して返事をする。|Memberi balasan atas suatu pertanyaan.
+0542|食事をするための広い部屋。|Ruangan luas yang disediakan untuk makan bersama.
+0543|物を置いたり、食事をしたりする台。|Meja yang dipakai untuk meletakkan barang atau makan.
+0544|文書などを複写すること。|Menggandakan dokumen atau tulisan.
+0545|仕事をする。体を使って動く。|Mengerjakan pekerjaan; mengerahkan tenaga untuk bekerja.
+0546|話し手の近くにあるものと似ている様子。|Menyatakan keadaan yang serupa dengan hal di dekat pembicara; seperti ini.
+0547|数や量が多いこと。|Jumlah atau kadar yang banyak.
+0548|洋風の、開け閉めする出入り口の戸。|Daun pintu bergaya Barat yang dibuka-tutup dengan engsel.
+0549|目で物の姿を認める。映画などを楽しむ。|Menangkap wujud sesuatu dengan mata; juga menonton film dan sebagainya.
+0550|町の中にある、警察官がいる小さな施設。|Pos kecil di lingkungan kota tempat polisi berjaga.
+0551|物を切る、刃のついた道具。|Alat bermata tajam untuk memotong.
+0552|唐辛子などで舌がひりひりする味。|Rasa menyengat di lidah seperti pada cabai.
+0553|西洋風の衣服。|Pakaian bergaya Barat.
+0554|夜にとる食事。|Makanan yang dimakan pada malam hari.
+0555|エンジンやモーターで走る乗り物。|Kendaraan beroda yang berjalan dengan mesin atau motor.
+0556|時間や量などが、ぴったり合う様子。|Keadaan ketika waktu atau jumlah pas tanpa lebih atau kurang.
+0557|もう一回。|Sekali lagi; mengulangi satu kali lagi.
+0558|手紙を入れて出す、郵便の箱。|Kotak tempat memasukkan surat untuk dikirim lewat pos.
+0559|体に着るもの。|Benda yang dikenakan di tubuh.
+0560|長さの単位。百センチ。|Satuan panjang sebesar seratus sentimeter.
+0561|小麦粉をこねて焼いた食べ物。|Makanan dari adonan tepung terigu yang dipanggang.
+0562|全体の二分の一。|Setengah dari keseluruhan.
+0563|生まれてからの年数が少ない。元気がある。|Usianya masih sedikit; juga penuh semangat.
+0564|食べ物を口に入れてかんで飲み込む。|Memasukkan makanan ke mulut, mengunyah, lalu menelannya.
+0565|月の四番目の日。また、四日間。|Tanggal empat dalam bulan; juga rentang empat hari.
+0566|町の安全を守る、警察の人。|Petugas kepolisian yang menjaga keamanan masyarakat.
+0567|父母の兄弟。また、中年の男性への呼びかけ。|Saudara laki-laki orang tua; juga panggilan untuk pria paruh baya.
+0568|話し手の近くにあるものを指す言葉。|Kata ganti penunjuk untuk benda yang dekat dengan pembicara.
+0569|一つの建物をいくつかに分けて貸す住まい。|Hunian dalam satu gedung yang disekat dan disewakan.
+0570|羽があって、多くは空を飛ぶ動物。|Hewan berbulu sayap yang umumnya dapat terbang.
+0571|話し手のいる場所を指す言葉。|Kata penunjuk tempat pembicara berada.
+0572|人を敬って言う言葉。また、やり方。|Cara sopan menyebut orang; juga berarti cara atau metode.
+0573|料金を払って、客を目的地まで運ぶ車。|Mobil yang mengantar penumpang ke tujuan dengan bayaran.
+0574|前の話を受けて、次に述べるときの言葉。|Kata sambung untuk melanjutkan pembicaraan; 'kalau begitu'.
+0575|大豆から作る、黒くて塩味の調味料。|Bumbu hitam berasa asin yang dibuat dari kedelai.
+0576|数や量が多くないこと。|Jumlah atau kadar yang tidak banyak.
+0577|雪のように明るい色であること。|Berwarna cerah seperti salju.
+0578|来るまで、その場にとどまる。|Tinggal di tempat sampai seseorang atau sesuatu datang.
+0579|その直後に来るもの。|Hal yang datang tepat setelahnya.
+0580|今いる所から他の場所へ移る。|Berpindah dari tempat sekarang ke tempat lain.
+0581|道や物の曲がっている所。端。|Tikungan jalan atau bagian ujung suatu benda.
+0582|人間の性別の一つで、女に対するもの。|Salah satu jenis kelamin manusia, lawan dari perempuan.
+0583|六本の弦を弾いて音を出す楽器。|Alat musik berdawai enam yang dipetik.
+0584|音を耳で受け取る。また、人に尋ねる。|Menerima bunyi dengan telinga; juga bertanya kepada orang.
+0585|足を速く動かして進む。|Bergerak maju dengan menggerakkan kaki secara cepat.
+0586|自分や他人の母を敬って呼ぶ言葉。|Sebutan hormat untuk ibu sendiri atau ibu orang lain.
+0587|言葉や物事が表している内容。|Isi atau pengertian yang diwakili oleh kata atau peristiwa.
+0588|形があって、手に取ったり見たりできるもの。|Sesuatu yang berwujud sehingga dapat dipegang atau dilihat.
+0589|力が大きいこと。簡単には負けないこと。|Memiliki tenaga besar dan tidak mudah dikalahkan.
+0590|水の中にすみ、ひれやうろこのある動物。|Hewan penghuni air yang bersirip dan bersisik.

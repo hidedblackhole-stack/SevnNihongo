@@ -1,0 +1,250 @@
+1054|知っていることを敬って言う言葉。|Ungkapan hormat untuk menyatakan seseorang mengetahui atau mengenal sesuatu.
+1055|話し手や聞き手から離れたものを、そのような様子として指す言葉。|Kata penunjuk untuk hal yang jauh dari pembicara dan lawan bicara; 'seperti itu'.
+1056|少し前から今までの間。|Rentang waktu dari beberapa waktu lalu hingga sekarang.
+1057|表面をなめらかに動く。つるりと足がとられる。|Bergerak licin di permukaan; juga tergelincir.
+1058|水などを熱くして、煮え立たせる。|Memanaskan air hingga mendidih.
+1059|場所や状態が変わる。|Berpindah tempat atau keadaan; juga menular atau terpantul.
+1060|いくつかの中から、よいものを取り出す。|Mengambil yang terbaik dari beberapa pilihan.
+1061|高校で学んでいる生徒。|Pelajar yang menuntut ilmu di sekolah menengah atas.
+1062|来週の次の週。|Minggu setelah minggu depan.
+1063|相手の言葉にうなずくときの、くだけた返事。|Jawaban santai untuk menyetujui; 'ya'.
+1064|帰ること。また、帰る道や時。|Perjalanan atau saat pulang.
+1065|熱くした水。|Air yang telah dipanaskan.
+1066|ずっと前の時代。|Masa yang sudah lama berlalu.
+1067|舌で感じる、食べ物の感覚。|Sensasi makanan yang dirasakan lidah.
+1068|ユーラシア大陸の東の地域。|Benua dan kawasan di timur daratan Eurasia.
+1069|人の形に作った、おもちゃや飾り。|Mainan atau hiasan yang dibuat menyerupai manusia.
+1070|病気やけがが良くなる。|Penyakit atau luka menjadi pulih.
+1071|束縛されず、思い通りにできること。|Keadaan tidak terikat dan dapat bertindak sesuai kehendak.
+1072|短い時間だけ働く仕事。|Pekerjaan yang hanya dilakukan dalam waktu singkat.
+1073|砂などから作る、透明で割れやすい材料。|Bahan bening yang mudah pecah, dibuat dari pasir dan sejenisnya.
+1074|価値が高く、大切に扱うべきこと。|Berharga tinggi sehingga perlu diperlakukan dengan hati-hati; juga perkara besar.
+1075|決まった時間や時期に間に合わない。|Tidak sampai tepat pada waktu yang ditetapkan.
+1076|会合や行事を行う場所。|Tempat berlangsungnya pertemuan atau acara.
+1077|自分から人に物を与える。|Memberikan sesuatu kepada orang lain.
+1078|物や設備を役立てて使うこと。|Memanfaatkan benda atau fasilitas.
+1079|水の中で体を動かして進む方法。|Teknik atau gaya bergerak di dalam air.
+1080|特別でなく、いつもと同じであること。|Biasa, tidak istimewa; juga kereta lokal yang berhenti di semua stasiun.
+1081|燃料などに使う、空気のような気体。|Zat gas yang dipakai sebagai bahan bakar rumah tangga dan sebagainya.
+1082|例外なく、そうなること。|Tanpa kecuali; pasti terjadi.
+1083|勝ち負けを競い合うこと。|Perlombaan untuk memperebutkan kemenangan.
+1084|事情を理解して、受け入れること。|Memahami keadaan dan menerimanya.
+1085|火で熱を加えて、食べ物などを調理する。|Memberi panas pada makanan dengan api hingga matang.
+1086|他と区別されること。違うもの。|Hal yang terpisah atau berbeda dari yang lain.
+1087|ある地点や時を通り越す。限度を超える。|Melewati titik atau waktu tertentu; juga melebihi batas.
+1088|情報を伝えたり、連携を取ったりすること。|Menyampaikan kabar atau menghubungi untuk berkoordinasi.
+1089|前の事柄を受けて、続いて起こったことを述べる言葉。|Kata penghubung untuk hal yang terjadi setelah peristiwa sebelumnya.
+1090|日が沈んで、暗くなる。年や月が終わる。|Matahari terbenam hingga gelap; juga tahun atau bulan berakhir.
+1091|うれしくて、気持ちが明るくなる。|Merasa senang hingga hati menjadi riang.
+1092|長い間くり返して身についた行い。|Perilaku yang melekat karena dilakukan berulang dalam waktu lama.
+1093|会社などで、部を取りまとめる役の人。|Orang yang memimpin satu bagian di perusahaan dan sebagainya.
+1094|神や仏に、願いを伝える。|Menyampaikan permohonan kepada Tuhan atau dewa.
+1095|飲み水などを、管で家庭に送る設備。|Jaringan pipa yang mengalirkan air bersih ke rumah-rumah.
+1096|長い間待った末に、ある結果になる様子。|Menyatakan hasil yang akhirnya tercapai setelah lama.
+1097|仕事や作業に使う、物。|Benda yang dipakai untuk bekerja atau mengerjakan sesuatu.
+1098|小麦粉や砂糖、卵などで作った、甘い洋菓子。|Penganan manis bergaya Barat dari tepung, gula, dan telur.
+1099|都市の周辺にある地域。|Daerah di sekeliling kota.
+1100|子供が遊ぶための道具。|Benda yang dipakai anak-anak untuk bermain.
+1101|ついこの前から今までの間。|Rentang waktu dari belum lama berlalu sampai sekarang.
+1102|言うまでもなく、当然であること。|Sudah jelas dan wajar; tidak perlu dipertanyakan.
+1103|これからの天気を前もって知らせるもの。|Informasi yang memperkirakan cuaca yang akan datang.
+1104|人や物を運ぶための道具。|Sarana yang dipakai untuk mengangkut orang atau barang.
+1105|人が死ぬ。「死ぬ」の婉曲な言い方。|Seseorang meninggal; ungkapan halus untuk 'shinu'.
+1106|分からないことを人に聞く。訪れる。|Menanyakan hal yang belum jelas; juga mengunjungi.
+1107|頭に生えている毛。|Rambut yang tumbuh di kepala.
+1108|店の中で、品物を売っている場所。|Bagian di toko tempat barang dijual.
+1109|肌に直接着る衣類。|Pakaian yang dikenakan langsung menempel pada kulit.
+1110|音が出る。|Menghasilkan bunyi.
+1111|飛行機が離着陸する場所。|Tempat pesawat lepas landas dan mendarat.
+1112|首都。大きな都市。|Ibu kota; juga wilayah kota besar yang setingkat provinsi seperti Tokyo.
+1113|相手のために、心をこめてしてやること。|Sikap mau membantu dan bersikap baik kepada orang lain.
+1114|国や社会を治めること。|Kegiatan mengatur dan memerintah negara atau masyarakat.
+1115|前もって、席や品物などを確保しておくこと。|Mengamankan tempat atau barang sebelumnya.
+1116|悲しみや痛みで、涙を流す。|Mengeluarkan air mata karena sedih atau sakit.
+1117|さっと動いて、気持ちのよい様子。|Gerak yang mulus dan cepat; juga perasaan lega.
+1118|親しい相手を指す呼び方。|Kata ganti akrab untuk menyebut lawan bicara, terutama dipakai pria.
+1120|足で上から押さえる。|Menekan sesuatu dengan kaki dari atas.
+1121|店で働く人。|Orang yang bekerja di toko.
+1122|同じ所へ、何度も行き来する。|Pergi ke tempat yang sama secara rutin.
+1123|女の人を指す言葉。恋人の女性。|Kata ganti orang ketiga untuk perempuan; juga pacar perempuan.
+1124|ある物や出来事がある所。|Tempat suatu benda atau peristiwa berada.
+1125|綿から作る、柔らかい糸や布。|Benang atau kain lembut yang dibuat dari kapas.
+1126|日本の部屋の床に敷く、い草でできた敷物。|Alas lantai ruangan Jepang yang dibuat dari jerami.
+1127|表と反対の面。見えない部分。|Sisi yang berlawanan dengan bagian depan; bagian yang tak terlihat.
+1128|思いがけないことに、驚く。|Terkejut karena hal yang tak terduga.
+1129|地面が揺れる自然現象。|Fenomena alam berupa gerakan atau guncangan tanah.
+1130|陸地に囲まれた、広い水たまり。|Perairan luas yang dikelilingi daratan.
+1131|けがや損害などの、悪いことが起こりそうな状態。|Keadaan yang berpotensi menimbulkan cedera atau kerugian.
+1132|目的地に向かって出ていくこと。|Berangkat menuju tujuan.
+1133|授業の前に、内容を勉強しておくこと。|Mempelajari materi sebelum pelajaran dimulai.
+1134|これから先の時。|Waktu yang akan datang; juga prospek.
+1135|楽しみのために何かをすること。|Kegiatan yang dilakukan untuk bersenang-senang.
+1136|前と違った状態になる。|Menjadi berbeda dari sebelumnya.
+1137|日本で生まれた、相手を投げたり抑えたりする武道。|Seni bela diri Jepang yang melempar dan mengunci lawan.
+1139|呼びかけや問いかけに対する、応答。|Tanggapan atas panggilan, pertanyaan, atau surat.
+1140|ふつうとは違っていて、目立つこと。|Berbeda dari yang biasa sehingga menonjol.
+1141|高い所から、低い所へ移る。|Berpindah dari tempat tinggi ke rendah; juga turun dari kendaraan.
+1142|部屋などを暖めること。|Kegiatan menghangatkan ruangan.
+1143|知らせる。次の人に渡す。|Memberitahukan sesuatu atau meneruskannya kepada orang lain.
+1144|作品や品物を並べて、人々に見せる会。|Acara yang memajang karya atau barang untuk dilihat umum.
+1145|自動車などを動かす燃料。|Bahan bakar cair untuk kendaraan bermesin.
+1146|思っていたより、かなり。簡単には〜ない。|Cukup atau agak; dengan negatif berarti tidak mudah.
+1147|布を作ったり縫ったりするときに使う、細長い繊維。|Serat panjang yang dipakai untuk menenun atau menjahit.
+1148|同じ数を二つ合わせたもの。二つ分。|Besaran yang dilipatduakan; dua kali lipat.
+1149|会社などで、課の責任者。|Penanggung jawab satu seksi di perusahaan.
+1150|名所などを、見て楽しむこと。|Kegiatan melihat-lihat objek menarik atau tempat terkenal.
+1151|自動車などに燃料を入れる店。|Tempat mengisi bahan bakar kendaraan.
+1152|座る場所。決められた位置。|Tempat duduk yang disediakan atau posisi yang ditentukan.
+1153|人や物事の間のつながり。|Keterkaitan antara orang atau antar hal.
+1154|「見る」の謙譲語。|Bentuk merendah dari 'miru' (melihat).
+1155|夏から秋に、強い風と雨をともなって来る暴風雨。|Badai besar dengan angin kencang dan hujan yang datang pada musim panas hingga gugur.
+1156|散らかっているものを、しまうなどして整える。|Menata dan menyimpan benda yang berantakan.
+1157|水の上を進む、小さな乗り物。|Kendaraan kecil yang bergerak di atas air.
+1158|二つのうち、どちらかを選ぶときに使う言葉。|Kata penghubung untuk memilih salah satu dari dua hal.
+1159|知識や技術を教え、育てること。|Kegiatan mengajarkan pengetahuan dan keterampilan serta membimbing.
+1160|住む場所を変える。|Berpindah tempat tinggal.
+1162|稲の実から取る、日本人の主食。|Butir padi yang menjadi makanan pokok orang Jepang.
+1163|一番。また、もっともだと認める様子。|Yang paling; juga menyatakan bahwa sesuatu masuk akal.
+1164|気にする。世話をする。|Memedulikan atau mengurus; dengan negatif berarti tidak keberatan.
+1165|キリスト教の信者が祈る建物。|Bangunan tempat umat Kristen beribadah.
+1166|手に持っていた物を、離して下へ落とす。|Menjatuhkan benda yang dipegang; juga kehilangan.
+1167|真剣で、まじめな態度であること。|Sikap yang sungguh-sungguh dan serius.
+1168|悪いことをした気持ちを、相手に伝える。|Menyatakan penyesalan kepada orang yang dirugikan.
+1169|鼻で感じるもの。|Sesuatu yang tertangkap oleh hidung.
+1170|大きな声を出して、騒がしくする。|Membuat suasana ramai dan gaduh dengan suara keras.
+1171|周りを水で囲まれた陸地。|Daratan yang dikelilingi air.
+1172|残りなく、全部が。|Menyatakan sesuatu sepenuhnya tanpa tersisa.
+1173|問いに対する、返事や解決。|Balasan atau pemecahan atas suatu pertanyaan.
+1174|ある結果を生んだ、元のもの。|Hal yang menjadi sumber timbulnya suatu akibat.
+1175|いろいろな動物を飼って、見せる所。|Tempat memelihara berbagai hewan untuk dilihat pengunjung.
+1176|上着とズボンやスカートがそろった洋服。|Setelan jas yang terdiri dari jaket dan celana atau rok.
+1177|驚きや納得、感動などを表す声。|Seruan untuk menyatakan kaget, paham, atau kagum; juga 'seperti itu'.
+1179|「聞く」「訪ねる」の謙譲語。|Bentuk merendah dari 'kiku' (bertanya) dan 'tazuneru' (mengunjungi).
+1180|全部ではないが、大部分。|Hampir seluruhnya, kecuali sedikit.
+1181|眠っているときに見る、さまざまな場面。|Rangkaian gambaran yang dilihat saat tidur; juga cita-cita.
+1182|夜空に見える、地球のまわりを回る天体。|Benda langit yang mengorbit bumi dan tampak di langit malam.
+1183|中学校の上にある学校。|Sekolah tingkat menengah atas.
+1184|心の働き。物事を行おうとする心。|Daya batin; juga niat atau perasaan terhadap sesuatu.
+1185|間違いがなく、道理に合っていること。|Tidak salah dan sesuai kebenaran.
+1186|国内の品物を外国へ売り出すこと。|Menjual barang dari dalam negeri ke luar negeri.
+1187|人間が築いた、生活や考え方の様式。|Pola hidup dan cara berpikir yang dibentuk oleh manusia.
+1188|役に立たない。してはいけない。|Tidak berguna atau gagal; juga tidak diperbolehkan.
+1189|前の内容と反対のことを述べるときの言葉。|Kata penghubung untuk menyatakan hal yang bertentangan; 'tetapi'.
+1190|美しく見えるように、物を整える。|Menata sesuatu agar tampak indah.
+1191|前もって、必要なものを整えておくこと。|Menyiapkan lebih dulu apa yang diperlukan.
+1192|学校で決められた課程を終えること。|Menyelesaikan seluruh program pendidikan di sekolah.
+1193|決まった時刻や時期に遅れない。|Sempat atau tidak terlambat pada waktu yang ditentukan.
+1194|前のことに、さらに付け加えるときの言葉。|Kata penghubung untuk menambahkan hal lain; 'selain itu'.
+1195|物事の調子。体の調子。|Keadaan jalannya sesuatu; juga kondisi tubuh.
+1196|人に贈る品物。|Barang yang diberikan sebagai hadiah.
+1197|力を加えても形が変わりにくい。|Tidak mudah berubah bentuk meski diberi tekanan; juga kaku.
+1198|外国との間で、物を売り買いすること。|Jual beli barang dengan negara lain.
+1199|頭を使って、物事を判断したり思ったりする。|Menggunakan pikiran untuk menilai atau mempertimbangkan sesuatu.
+1200|一緒にいた人と、離れる。|Berpisah dari orang yang sebelumnya bersama.
+1201|生野菜などを盛り合わせた料理。|Hidangan campuran sayuran mentah dan bahan lain dengan saus.
+1202|朝、起きるべき時間よりも遅くまで寝ていること。|Tidur sampai melewati waktu bangun yang semestinya.
+1203|自然や社会の法則を研究する学問。|Ilmu yang meneliti hukum-hukum alam dan masyarakat.
+1204|このように。こんなふうに。|Dengan cara seperti ini.
+1205|光を出す。または、光を受けて輝く。|Memancarkan cahaya atau berkilau saat terkena cahaya.
+1207|子供や動植物を、大きくなるように世話をする。|Merawat anak, hewan, atau tanaman hingga tumbuh besar.
+1208|間違いなくそうなると思う様子。|Keyakinan bahwa sesuatu pasti akan terjadi.
+1209|空いた状態になる。|Menjadi kosong atau lowong sehingga tersedia.
+1210|部屋の温度を下げること。|Kegiatan mendinginkan suhu ruangan.
+1211|多くの人の前で音楽を演奏する会。|Pertunjukan musik di depan banyak penonton.
+1212|物事を、最初から行う。|Mulai melakukan sesuatu dari awal.
+1213|電気で光る明かり。|Penerangan yang menyala dengan tenaga listrik.
+1214|病気を治すことなどを研究する学問。|Ilmu yang mempelajari penyembuhan penyakit dan kesehatan.
+1215|ふんわりして、ものにさわるとやさしい感じ。|Terasa empuk dan lembut saat disentuh.
+1216|高い所から低い所に移す。つるす。|Memindahkan ke bawah; juga menggantungkan atau menarik kembali.
+1217|学校の責任者。|Orang yang memimpin sebuah sekolah.
+1218|新聞を作って発行する会社。|Perusahaan yang menerbitkan surat kabar.
+1219|文書や図を、電話回線で送る機械。|Mesin yang mengirim dokumen atau gambar melalui saluran telepon.
+1220|ラジオやテレビなどで、番組を送り出すこと。|Memancarkan siaran acara melalui radio atau televisi.
+1221|苦労や時間のあとで、ようやく。|Setelah susah payah atau menunggu lama, akhirnya.
+1222|エンジンで走る二輪の乗り物。|Kendaraan roda dua bermesin.
+1223|調べたことなどを、まとめた文書。|Dokumen yang merangkum hasil penelitian atau pengamatan.
+1224|悪いことが起こるのではないかと気にかけること。|Rasa cemas kalau-kalau terjadi hal buruk.
+1225|停まる駅が少なく、速く走る列車。|Kereta cepat yang berhenti di sedikit stasiun.
+1226|落ちているものを、取り上げる。|Memungut sesuatu yang tergeletak di bawah.
+1227|表面に、薬や色などをつける。|Mengoleskan obat, cat, atau warna pada permukaan.
+1228|細長く引いた、点が続いたもの。|Rangkaian titik yang memanjang; garis.
+1229|必要なものを、前もって整えておくこと。|Menyiapkan lebih dulu apa yang dibutuhkan.
+1231|入院していた人が、病院を出ること。|Keluar dari rumah sakit setelah dirawat.
+1232|傷を負う。|Mengalami luka pada tubuh.
+1233|ゆらゆら動く。|Bergerak bolak-balik ke kiri dan kanan atau naik turun.
+1234|学校に入って、学ぶこと。|Masuk ke sekolah atau universitas untuk belajar.
+1235|数や図形を研究する学問。|Ilmu yang mempelajari bilangan dan bentuk.
+1236|否定の言葉と一緒に使い、まったく〜ない意味。|Dipakai dengan negatif; berarti 'sama sekali tidak'.
+1237|早く着こうとして、速く動く。|Bergerak cepat agar segera sampai.
+1238|程度が悪く、ひどい様子。|Keadaan buruk atau kejam yang melampaui batas.
+1239|売り買いする物。|Barang yang diperjualbelikan.
+1240|二つ以上のものの違いを調べる。|Menilai perbedaan antara dua hal atau lebih.
+1241|周りをおおって、中に入れる。|Menutupi sekeliling sesuatu sehingga terbungkus.
+1242|足りないところがなく、満足できる程度であること。|Tidak kurang sedikit pun sehingga memadai.
+1243|女性が手に持つ、小さなかばん。|Tas kecil yang dibawa perempuan di tangan.
+1244|どんな場合でも、絶対に〜ない。|Dalam keadaan apa pun, sama sekali tidak.
+1245|あったものが、なくなる。|Sesuatu yang ada menjadi tidak ada; hilang atau habis.
+1246|しなければならないこと。|Pekerjaan atau urusan yang harus dilakukan.
+1247|「する」の尊敬語。|Bentuk hormat dari 'suru' (melakukan).
+1248|数の一万の一万倍。|Bilangan seratus juta.
+1249|これから先にあることを待つ、うれしい気持ち。|Perasaan senang menantikan sesuatu di depan; juga kesenangan.
+1250|足の指が出る、軽い履物。|Alas kaki ringan yang jari kakinya terbuka.
+1251|店などを訪れる人。|Orang yang datang berkunjung ke toko atau rumah.
+1252|反対側。意見に逆らうこと。|Sisi yang berlawanan; juga penentangan terhadap pendapat.
+1253|物が燃えるときに出る、熱と光。|Panas dan cahaya yang dihasilkan saat sesuatu terbakar.
+1254|飛行機が発着する施設。|Fasilitas tempat pesawat lepas landas dan mendarat.
+1255|何度も経験して、苦に思わなくなる。|Sudah sering mengalami hingga tidak lagi merasa asing.
+1256|日本風の宿泊施設。|Penginapan bergaya tradisional Jepang.
+1257|歯で物をはさんで、傷つける。|Menekan sesuatu dengan gigi; mengunyah atau menggigit.
+1258|液体の中に入れて、しみ込ませる。|Merendam sesuatu dalam cairan hingga meresap.
+1259|音楽に合わせて、体を動かすこと。|Gerakan tubuh mengikuti musik.
+1260|大学などで、先生が話して教えること。|Pengajaran dosen secara lisan di perguruan tinggi.
+1261|物や人を、相手の所へ運ぶ。|Mengirim atau mengantar benda maupun orang ke tujuan.
+1262|来る人を、待って受け入れる。|Menanti dan menyambut kedatangan seseorang.
+1263|程度が驚くほど大きい様子。|Tingkatnya begitu besar hingga mengagumkan.
+1264|ある範囲の中。|Di dalam batas tertentu.
+1265|見つけようとして、あちこち見る。|Melihat ke sana kemari untuk menemukan sesuatu.
+1266|物事を実際にする。|Melaksanakan suatu kegiatan.
+1267|机などの、引いて開ける入れ物。|Wadah di meja dan sebagainya yang ditarik untuk dibuka.
+1268|火で、物の表面が黒くなったり、中まで熱が通ったりする。|Terkena api sehingga menjadi gosong atau matang.
+1269|言い争ったり、殴り合ったりする。|Bertengkar dengan kata-kata atau berkelahi.
+1270|体の、背の部分。|Bagian tubuh di sisi belakang.
+1271|人や物がたくさん集まって、混雑する。|Banyak orang atau benda berkumpul hingga padat.
+1272|会ったとき、言葉や動作で挨拶をする。|Menyapa seseorang dengan kata atau gerakan ketika bertemu.
+1273|勝負で、相手に勝てない。|Gagal mengalahkan lawan dalam pertandingan.
+1274|「見る」の尊敬語。|Bentuk hormat dari 'miru' (melihat).
+1275|事務の仕事をする場所。|Tempat pekerjaan administrasi dilakukan.
+1276|もうすぐ、その時が来る様子。|Menyatakan waktu yang hampir tiba; sudah waktunya.
+1277|絵や彫刻などの美術品を展示する施設。|Gedung yang memamerkan karya seni seperti lukisan dan patung.
+1278|驚いたり、気づいたりしたときに出る声。|Seruan saat terkejut atau menyadari sesuatu.
+1279|それを除いた、残りのもの。|Hal lain di luar yang disebutkan.
+1280|物事の進行を妨げるもの。|Sesuatu yang mengganggu kelancaran suatu hal; juga bertamu.
+1281|心配がなく、気持ちが落ち着くこと。|Tidak lagi khawatir sehingga hati tenang.
+1282|あちこちから、一つの所に寄せる。|Mengumpulkan sesuatu dari berbagai tempat ke satu tempat.
+1283|いらない物を、手放す。|Membuang atau melepaskan barang yang tak diperlukan.
+1284|自動車を止めておく場所。|Tempat untuk memarkir kendaraan.
+1285|間違いなくそうであると思われる様子。|Perkiraan yang kuat bahwa sesuatu benar; juga pasti.
+1286|手にはめて、寒さなどから守るもの。|Penutup tangan untuk melindungi dari dingin dan sebagainya.
+1287|病気などで上がる、体の温度。|Suhu tubuh yang naik karena sakit; juga panas.
+1288|手や足の先にある、五つに分かれた部分。|Bagian ujung tangan atau kaki yang bercabang lima.
+1289|動いているものを、動かないようにする。|Membuat sesuatu yang bergerak menjadi diam; juga menghentikan atau memarkir.
+1290|洋服などに身につける、飾りの品。|Perhiasan atau pelengkap yang dikenakan bersama pakaian.
+1291|高い所から低い所に移る。|Bergerak dari atas ke bawah; juga menurun nilainya.
+1292|人の行いを、よいと言う。|Mengatakan bahwa perbuatan seseorang baik.
+1293|円を描くように動く。あちこち回って歩く。|Bergerak berputar membentuk lingkaran; juga berkeliling dari tempat ke tempat.
+1294|「くれる」の尊敬語。|Bentuk hormat dari 'kureru' (memberi kepada saya).
+theme_denshirenji|食べ物を電波で温める台所用品。|Perangkat dapur yang memanaskan makanan dengan gelombang mikro.
+ext_0002|電話やインターネットが使える、手のひらサイズの携帯端末。|Ponsel berukuran genggam yang dapat dipakai untuk telepon dan internet.
+ext_0004|丸い生地にチーズや具をのせて焼いた料理。|Hidangan dari adonan bulat dengan keju dan topping yang dipanggang.
+ext_0005|丸いパンに、肉などをはさんだ食べ物。|Makanan roti bulat berisi daging dan sayuran.
+ext_0006|カカオから作る、甘くて茶色いお菓子。|Penganan manis cokelat yang dibuat dari kakao.
+ext_0007|赤くて丸く、サラダなどに使う野菜。|Sayur buah merah bulat yang dipakai untuk salad dan masakan.
+ext_0008|黄色くて、すっぱい果物。|Buah berwarna kuning dengan rasa asam.
+ext_0011|世界中のコンピュータをつなぐ通信網。|Jaringan komunikasi yang menghubungkan komputer di seluruh dunia.
+ext_0013|クラブでボールを打って、穴に入れる球技。|Olahraga memukul bola dengan tongkat hingga masuk ke lubang.
+ext_0014|部屋の温度や湿度を調節する機械。|Mesin pengatur suhu dan kelembapan ruangan.
+ext_0015|座ったり、くつろいだりするための、背もたれのある長いいす。|Kursi panjang bersandaran yang nyaman untuk duduk santai.
+ext_0017|日本で作られた、動画のアニメーション作品。|Karya animasi bergerak buatan Jepang.
+ext_0018|エンジンで走る二輪の乗り物。|Kendaraan roda dua bermesin.
+ext_0019|コンピュータのデータを、紙に印刷する機械。|Mesin yang mencetak data komputer ke kertas.
+ext_0020|電子メールやウェブページを表す、所在地の表示。|Penanda lokasi untuk email atau halaman web; juga alamat.
