@@ -4,17 +4,10 @@ import { enrichBunpouItem } from './bunpouMetadata';
 import bunpouJson from './db/bunpou.json';
 import { BUNPOU_QUESTION_BANK as questionsJson } from './questionBank';
 import { LEGACY_BUNPOU_ID_ALIASES, defineLookupAlias } from './entityIds';
-import sentencesJson from './db/sentences.json';
 
-// Build sentence reading lookup map from canonical sentences database
-const sentenceReadingMap = new Map<string, string>();
-if (Array.isArray(sentencesJson)) {
-  for (const s of (sentencesJson as any[])) {
-    if (s.japanese && s.reading) {
-      sentenceReadingMap.set(s.japanese, s.reading);
-    }
-  }
-}
+// Catatan (C1): dulu seluruh korpus db/sentences.json (3,6 MB) di-import di sini hanya untuk melengkapi `reading`
+// contoh yang kosong. Semua contoh di db/bunpou.json sudah punya reading (dijaga oleh bunpou.golden.test.ts),
+// jadi korpus itu tidak lagi dimuat ke klien.
 
 interface RawExample {
   jp: string;
@@ -78,7 +71,7 @@ export const BUNPOU_DATABASE: Record<string, BunpouItem> = {};
 
     return {
       japanese: ex.jp,
-      reading: ex.reading || sentenceReadingMap.get(ex.jp) || ex.jp,
+      reading: ex.reading || ex.jp,
       meaningId: cleanMeaningId || `Contoh penerapan pola ${item.title}.`,
       meaningEn: ex.en || ex.id
     };

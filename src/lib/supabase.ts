@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import { PlayerStats } from '../types/rpg';
+import { getIsoWeekId } from '../utils/weekId';
 import { UserMasteryEntity, UserActivityEntity } from '../types/identity';
 import { getTierForExp, calculateLevelFromExp } from '../data/tiers';
 import type { TowerCloudState } from '../engine/tower/world/towerCloudState';
@@ -238,18 +239,8 @@ export interface WeeklyLeaderboardEntry {
  * Gets the current ISO week ID matching PostgreSQL 'IYYY-"W"IW'
  */
 export function getCurrentWeekId(): string {
-  const date = new Date();
-  const tdt = new Date(date.valueOf());
-  const dayn = (date.getDay() + 6) % 7;
-  tdt.setDate(tdt.getDate() - dayn + 3);
-  const firstThursday = tdt.valueOf();
-  tdt.setMonth(0, 1);
-  if (tdt.getDay() !== 4) {
-    tdt.setMonth(0, 1 + ((4 - tdt.getDay()) + 7) % 7);
-  }
-  const weekNum = 1 + Math.ceil((firstThursday - tdt.valueOf()) / 604800000);
-  const year = tdt.getFullYear();
-  return `${year}-W${weekNum.toString().padStart(2, '0')}`;
+  // Berbasis UTC, identik dengan week_id yang ditulis server (lihat utils/weekId.ts).
+  return getIsoWeekId();
 }
 
 /**
@@ -263,6 +254,8 @@ export async function sendScoreEvent(eventType: 'quiz_answer' | 'kanji_write', r
     const stats = JSON.parse(statsRaw);
     const userId = stats.userId;
     if (!userId) return;
+    // Jalur aman membutuhkan akun login (auth.uid()); tamu dilewati agar tidak memicu error di setiap jawaban.
+    if (SECURE_LEADERBOARD && !(await getSession())) return;
 
     const rawExp = Number(stats.totalExp) || 0;
     const effectiveTierIndex = Math.round(getTierForExp(Math.round(rawExp)).tierIndex || 0);

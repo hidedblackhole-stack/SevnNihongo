@@ -1,5 +1,5 @@
 // SevnQuest Service Worker for PWA Support (v2.5)
-const CACHE_NAME = 'sevnquest-v2.6';
+const CACHE_NAME = 'sevnquest-v2.7';
 // Path relatif terhadap scope SW supaya benar di root (Vercel/standalone) maupun sub-path (GitHub Pages).
 const STATIC_ASSETS = [
   'manifest.webmanifest',
@@ -64,6 +64,10 @@ self.addEventListener('fetch', (event) => {
     return;
   }
   const url = new URL(request.url);
+  // /api/*: network-only. Respons API konten TIDAK boleh disimpan oleh Service Worker (offline-lite: tanpa mirror konten).
+  if (url.pathname.startsWith('/api/')) {
+    return;
+  }
   if (
     url.hostname === 'localhost' ||
     url.hostname === '127.0.0.1' ||

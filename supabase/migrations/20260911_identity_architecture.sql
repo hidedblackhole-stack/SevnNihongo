@@ -504,14 +504,18 @@ ALTER TABLE stage ENABLE ROW LEVEL SECURITY;
 ALTER TABLE map ENABLE ROW LEVEL SECURITY;
 ALTER TABLE stage_content ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Public read for kanji" ON kanji FOR SELECT USING (true);
-CREATE POLICY "Public read for vocabulary" ON vocabulary FOR SELECT USING (true);
-CREATE POLICY "Public read for grammar" ON grammar FOR SELECT USING (true);
-CREATE POLICY "Public read for sentence" ON sentence FOR SELECT USING (true);
-CREATE POLICY "Public read for question" ON question FOR SELECT USING (true);
-CREATE POLICY "Public read for stage" ON stage FOR SELECT USING (true);
-CREATE POLICY "Public read for map" ON map FOR SELECT USING (true);
-CREATE POLICY "Public read for stage_content" ON stage_content FOR SELECT USING (true);
+-- SEC-02 (2026-10-04): policy "Public read ... USING (true)" di bawah SENGAJA DINONAKTIFKAN.
+-- Di production policy ini membuat seluruh tabel konten (vocabulary, kanji, grammar, ...) dapat diunduh massal
+-- dengan anon key publik. Klien SevnQuest tidak membaca tabel-tabel ini. Akses konten harus lewat API terkontrol.
+-- Lihat supabase/proposed/SEC-02_*.sql dan SEVNQUEST_SEC_C0_C1_PLAN.md. Jangan diaktifkan kembali.
+-- CREATE POLICY "Public read for kanji" ON kanji FOR SELECT USING (true);
+-- CREATE POLICY "Public read for vocabulary" ON vocabulary FOR SELECT USING (true);
+-- CREATE POLICY "Public read for grammar" ON grammar FOR SELECT USING (true);
+-- CREATE POLICY "Public read for sentence" ON sentence FOR SELECT USING (true);
+-- CREATE POLICY "Public read for question" ON question FOR SELECT USING (true);
+-- CREATE POLICY "Public read for stage" ON stage FOR SELECT USING (true);
+-- CREATE POLICY "Public read for map" ON map FOR SELECT USING (true);
+-- CREATE POLICY "Public read for stage_content" ON stage_content FOR SELECT USING (true);
 
 -- User data is owned by authenticated user
 CREATE POLICY "Users can manage their own mastery" ON user_mastery

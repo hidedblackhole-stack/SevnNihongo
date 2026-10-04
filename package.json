@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "test": "tsx --test src/engine/search/universalSearch.test.ts src/engine/deck/deckBuilder.test.ts src/utils/weekId.test.ts src/data/bunpou.golden.test.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.4",
