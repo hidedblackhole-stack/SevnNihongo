@@ -84585,7 +84585,7 @@
     "reading": "ランチ",
     "meaningId": "Makan siang",
     "meaningEn": "launch; lunch",
-    "meaningJa": "ランチ",
+    "meaningJa": "昼にとる食事。レストランで出す昼の定食。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [],
@@ -84598,7 +84598,9 @@
       "ランチを食べる (makan siang)",
       "ランチタイム (waktu makan siang)",
       "ランチメニュー (menu makan siang)"
-    ]
+    ],
+    "definitionId": "Hidangan makan siang; juga paket menu siang di restoran.",
+    "meaningJaId": "Hidangan makan siang; juga paket menu siang di restoran."
   },
   "kotoba_n2_0290": {
     "id": "kotoba_n2_0290",
@@ -87383,7 +87385,7 @@
     "reading": "かなづかい",
     "meaningId": "Ejaan kana",
     "meaningEn": "kana orthography; syllabary spelling",
-    "meaningJa": "仮名遣い",
+    "meaningJa": "仮名を使って言葉を書き表すときの決まり。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -87400,7 +87402,9 @@
       "仮名遣いを直す (memperbaiki ejaan kana)",
       "歴史的仮名遣い (ejaan kana historis)",
       "現代仮名遣い (ejaan kana modern)"
-    ]
+    ],
+    "definitionId": "Aturan penulisan kata dengan huruf kana.",
+    "meaningJaId": "Aturan penulisan kata dengan huruf kana."
   },
   "kotoba_n2_0400": {
     "id": "kotoba_n2_0400",
@@ -87408,7 +87412,7 @@
     "reading": "なになに",
     "meaningId": "Anu-anu; apa?",
     "meaningEn": "such and such; What?",
-    "meaningJa": "何々",
+    "meaningJa": "はっきり言わずに、いくつかのものを、まとめて指す言葉。",
     "jlpt": "N2",
     "wordType": "pronoun",
     "kanjiComponents": [
@@ -87423,7 +87427,9 @@
       "何々する (melakukan anu-anu)",
       "何々さん (si anu)",
       "何々によると (menurut anu)"
-    ]
+    ],
+    "definitionId": "Kata untuk menyebut beberapa hal tanpa merinci; juga 'apa saja'.",
+    "meaningJaId": "Kata untuk menyebut beberapa hal tanpa merinci; juga 'apa saja'."
   },
   "kotoba_n1_0001": {
     "id": "kotoba_n1_0001",
@@ -96578,7 +96584,7 @@
     "reading": "なんぷん",
     "meaningId": "Berapa menit",
     "meaningEn": "what minute?; how many minutes?",
-    "meaningJa": "何分",
+    "meaningJa": "時間を分単位で尋ねる言葉。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -96594,7 +96600,9 @@
       "何分かかる (butuh berapa menit)",
       "何分間 (berapa menit lamanya)",
       "何分ですか (berapa menit)"
-    ]
+    ],
+    "definitionId": "Kata tanya untuk menanyakan jumlah menit.",
+    "meaningJaId": "Kata tanya untuk menanyakan jumlah menit."
   },
   "kotoba_n2_0402": {
     "id": "kotoba_n2_0402",
@@ -96602,7 +96610,7 @@
     "reading": "かそく",
     "meaningId": "Percepatan; akselerasi",
     "meaningEn": "acceleration",
-    "meaningJa": "加速",
+    "meaningJa": "速度が増すこと。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -96618,7 +96626,9 @@
       "車が加速する (mobil mempercepat)",
       "加速度的に (secara akseleratif)",
       "急加速 (akselerasi mendadak)"
-    ]
+    ],
+    "definitionId": "Bertambahnya kecepatan gerak suatu benda.",
+    "meaningJaId": "Bertambahnya kecepatan gerak suatu benda."
   },
   "kotoba_n2_0403": {
     "id": "kotoba_n2_0403",
@@ -96626,7 +96636,7 @@
     "reading": "かそくど",
     "meaningId": "Percepatan; laju akselerasi",
     "meaningEn": "acceleration",
-    "meaningJa": "加速度",
+    "meaningJa": "単位時間あたりの速度の変化の割合。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -96643,7 +96653,9 @@
       "加速度が大きい (percepatannya besar)",
       "重力加速度 (percepatan gravitasi)",
       "加速度計 (akselerometer)"
-    ]
+    ],
+    "definitionId": "Laju perubahan kecepatan per satuan waktu.",
+    "meaningJaId": "Laju perubahan kecepatan per satuan waktu."
   },
   "kotoba_n2_0404": {
     "id": "kotoba_n2_0404",
@@ -96651,7 +96663,7 @@
     "reading": "かねつ",
     "meaningId": "Pemanasan",
     "meaningEn": "heating",
-    "meaningJa": "加熱",
+    "meaningJa": "熱を加えて温度を上げること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -96667,7 +96679,9 @@
       "加熱する (memanaskan)",
       "加熱調理 (memasak dengan pemanasan)",
       "電気加熱 (pemanasan listrik)"
-    ]
+    ],
+    "definitionId": "Memberi panas untuk menaikkan suhu.",
+    "meaningJaId": "Memberi panas untuk menaikkan suhu."
   },
   "kotoba_n2_0405": {
     "id": "kotoba_n2_0405",
@@ -96675,7 +96689,7 @@
     "reading": "かけつ",
     "meaningId": "Disahkan; disetujui",
     "meaningEn": "approval; adoption (e.g. motion; bill)",
-    "meaningJa": "可決",
+    "meaningJa": "会議で提案が承認されること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -96691,7 +96705,9 @@
       "法案が可決される (rancangan undang-undang disahkan)",
       "可決する (mengesahkan)",
       "賛成多数で可決 (disahkan dengan suara terbanyak)"
-    ]
+    ],
+    "definitionId": "Disetujuinya suatu usul dalam sidang.",
+    "meaningJaId": "Disetujuinya suatu usul dalam sidang."
   },
   "kotoba_n2_0406": {
     "id": "kotoba_n2_0406",
@@ -96699,7 +96715,7 @@
     "reading": "かおく",
     "meaningId": "Rumah; bangunan",
     "meaningEn": "house; building",
-    "meaningJa": "家屋",
+    "meaningJa": "人が住む建物。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -96715,7 +96731,9 @@
       "家屋を建てる (membangun rumah)",
       "木造家屋 (rumah kayu)",
       "家屋が倒れる (rumah roboh)"
-    ]
+    ],
+    "definitionId": "Bangunan tempat tinggal; rumah.",
+    "meaningJaId": "Bangunan tempat tinggal; rumah."
   },
   "kotoba_n2_0407": {
     "id": "kotoba_n2_0407",
@@ -96723,7 +96741,7 @@
     "reading": "やぬし",
     "meaningId": "Tuan tanah",
     "meaningEn": "landlord",
-    "meaningJa": "家主",
+    "meaningJa": "貸家などの持ち主。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -96739,7 +96757,9 @@
       "家主に会う (bertemu pemilik rumah)",
       "家主に払う (membayar pemilik rumah)",
       "家主の許可 (izin pemilik rumah)"
-    ]
+    ],
+    "definitionId": "Pemilik rumah sewa.",
+    "meaningJaId": "Pemilik rumah sewa."
   },
   "kotoba_n2_0408": {
     "id": "kotoba_n2_0408",
@@ -96747,7 +96767,7 @@
     "reading": "はたして",
     "meaningId": "Benarkah; sungguh",
     "meaningEn": "as was expected; really",
-    "meaningJa": "果して",
+    "meaningJa": "予想や疑いが本当かどうか。",
     "jlpt": "N2",
     "wordType": "adverb",
     "kanjiComponents": [
@@ -96762,7 +96782,9 @@
       "果して本当か (benarkah)",
       "果して来るだろうか (benarkah akan datang)",
       "果してその通り (ternyata memang begitu)"
-    ]
+    ],
+    "definitionId": "Menyatakan keraguan atau harapan apakah sesuatu benar-benar terjadi.",
+    "meaningJaId": "Menyatakan keraguan atau harapan apakah sesuatu benar-benar terjadi."
   },
   "kotoba_n2_0409": {
     "id": "kotoba_n2_0409",
@@ -96770,7 +96792,7 @@
     "reading": "かじつ",
     "meaningId": "Buah; kacang; beri.",
     "meaningEn": "fruit; nut; berry.",
-    "meaningJa": "果実",
+    "meaningJa": "植物の実。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -96786,7 +96808,9 @@
       "果実を食べる (makan buah)",
       "果実酒 (minuman buah)",
       "熟した果実 (buah matang)"
-    ]
+    ],
+    "definitionId": "Buah atau biji dari tumbuhan.",
+    "meaningJaId": "Buah atau biji dari tumbuhan."
   },
   "kotoba_n2_0410": {
     "id": "kotoba_n2_0410",
@@ -96794,7 +96818,7 @@
     "reading": "かくう",
     "meaningId": "Fiksi; khayalan",
     "meaningEn": "aerial; overhead; fiction",
-    "meaningJa": "架空",
+    "meaningJa": "実際には存在しないこと。想像で作ったこと。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -96810,7 +96834,9 @@
       "架空の話 (cerita fiktif)",
       "架空の人物 (tokoh fiktif)",
       "架空請求 (tagihan fiktif)"
-    ]
+    ],
+    "definitionId": "Hal yang tidak benar-benar ada; rekaan imajinasi.",
+    "meaningJaId": "Hal yang tidak benar-benar ada; rekaan imajinasi."
   },
   "kotoba_n2_0411": {
     "id": "kotoba_n2_0411",
@@ -96818,7 +96844,7 @@
     "reading": "かよう",
     "meaningId": "Lagu; balada",
     "meaningEn": "song; ballad",
-    "meaningJa": "歌謡",
+    "meaningJa": "大衆に親しまれる歌。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -96834,7 +96860,9 @@
       "歌謡曲 (lagu populer)",
       "歌謡ショー (acara musik)",
       "昭和歌謡 (lagu era Showa)"
-    ]
+    ],
+    "definitionId": "Lagu yang akrab di kalangan masyarakat luas.",
+    "meaningJaId": "Lagu yang akrab di kalangan masyarakat luas."
   },
   "kotoba_n2_0412": {
     "id": "kotoba_n2_0412",
@@ -96842,7 +96870,7 @@
     "reading": "かこう",
     "meaningId": "Kawah gunung berapi; mulut api",
     "meaningEn": "a burner; origin of a fire",
-    "meaningJa": "火口",
+    "meaningJa": "火山の噴火する口。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -96858,7 +96886,9 @@
       "火口から煙が出る (asap keluar dari kawah)",
       "火口湖 (danau kawah)",
       "火口付近 (sekitar kawah)"
-    ]
+    ],
+    "definitionId": "Lubang di puncak gunung api tempat letusan keluar.",
+    "meaningJaId": "Lubang di puncak gunung api tempat letusan keluar."
   },
   "kotoba_n2_0413": {
     "id": "kotoba_n2_0413",
@@ -96866,7 +96896,7 @@
     "reading": "かざん",
     "meaningId": "Gunung berapi",
     "meaningEn": "volcano",
-    "meaningJa": "火山",
+    "meaningJa": "地下の熱で岩が溶け噴き出す山。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -96882,7 +96912,9 @@
       "火山が噴火する (gunung berapi meletus)",
       "活火山 (gunung berapi aktif)",
       "火山灰 (abu vulkanik)"
-    ]
+    ],
+    "definitionId": "Gunung yang menyemburkan lava, abu, dan gas dari perut bumi.",
+    "meaningJaId": "Gunung yang menyemburkan lava, abu, dan gas dari perut bumi."
   },
   "kotoba_n2_0414": {
     "id": "kotoba_n2_0414",
@@ -96890,7 +96922,7 @@
     "reading": "やけど",
     "meaningId": "Luka bakar",
     "meaningEn": "burn; scald",
-    "meaningJa": "火傷",
+    "meaningJa": "火や熱湯などで皮膚に傷ができること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -96906,7 +96938,9 @@
       "火傷をする (terluka bakar)",
       "火傷が治る (luka bakar sembuh)",
       "ひどい火傷 (luka bakar parah)"
-    ]
+    ],
+    "definitionId": "Luka pada kulit akibat api atau air panas.",
+    "meaningJaId": "Luka pada kulit akibat api atau air panas."
   },
   "kotoba_n2_0415": {
     "id": "kotoba_n2_0415",
@@ -96914,7 +96948,7 @@
     "reading": "はなよめ",
     "meaningId": "Pengantin wanita",
     "meaningEn": "bride",
-    "meaningJa": "花嫁",
+    "meaningJa": "結婚する女性。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -96930,7 +96964,9 @@
       "花嫁になる (menjadi pengantin wanita)",
       "花嫁姿 (penampilan pengantin)",
       "花嫁衣装 (busana pengantin)"
-    ]
+    ],
+    "definitionId": "Perempuan yang akan atau baru menikah.",
+    "meaningJaId": "Perempuan yang akan atau baru menikah."
   },
   "kotoba_n2_0416": {
     "id": "kotoba_n2_0416",
@@ -96938,7 +96974,7 @@
     "reading": "はなび",
     "meaningId": "Kembang api",
     "meaningEn": "fireworks",
-    "meaningJa": "花火",
+    "meaningJa": "火薬を打ち上げて夜空に花のように広げるもの。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -96954,7 +96990,9 @@
       "花火を見る (menonton kembang api)",
       "花火大会 (festival kembang api)",
       "花火を上げる (menembakkan kembang api)"
-    ]
+    ],
+    "definitionId": "Hiburan dari bubuk mesiu yang meledak indah di langit malam.",
+    "meaningJaId": "Hiburan dari bubuk mesiu yang meledak indah di langit malam."
   },
   "kotoba_n2_0417": {
     "id": "kotoba_n2_0417",
@@ -96962,7 +97000,7 @@
     "reading": "かぜい",
     "meaningId": "Perpajakan",
     "meaningEn": "taxation",
-    "meaningJa": "課税",
+    "meaningJa": "税金をかけること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -96978,7 +97016,9 @@
       "収入に課税する (mengenakan pajak atas pendapatan)",
       "課税される (dikenai pajak)",
       "課税対象 (objek pajak)"
-    ]
+    ],
+    "definitionId": "Mengenakan pajak atas suatu barang atau pendapatan.",
+    "meaningJaId": "Mengenakan pajak atas suatu barang atau pendapatan."
   },
   "kotoba_n2_0418": {
     "id": "kotoba_n2_0418",
@@ -96986,7 +97026,7 @@
     "reading": "かてい",
     "meaningId": "Kurikulum; program studi",
     "meaningEn": "course; curriculum",
-    "meaningJa": "課程",
+    "meaningJa": "学校などで学ぶ順序や内容。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97002,7 +97042,9 @@
       "博士課程 (program doktoral)",
       "教育課程 (kurikulum)",
       "課程を終える (menyelesaikan program)"
-    ]
+    ],
+    "definitionId": "Rangkaian isi dan tahapan pelajaran yang harus ditempuh.",
+    "meaningJaId": "Rangkaian isi dan tahapan pelajaran yang harus ditempuh."
   },
   "kotoba_n2_0419": {
     "id": "kotoba_n2_0419",
@@ -97010,7 +97052,7 @@
     "reading": "かもつ",
     "meaningId": "Muatan; pengiriman",
     "meaningEn": "cargo; freight",
-    "meaningJa": "貨物",
+    "meaningJa": "運ぶ荷物。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97026,7 +97068,9 @@
       "貨物を運ぶ (mengangkut muatan)",
       "貨物列車 (kereta barang)",
       "貨物船 (kapal kargo)"
-    ]
+    ],
+    "definitionId": "Barang yang diangkut untuk dikirim.",
+    "meaningJaId": "Barang yang diangkut untuk dikirim."
   },
   "kotoba_n2_0420": {
     "id": "kotoba_n2_0420",
@@ -97034,7 +97078,7 @@
     "reading": "かしつ",
     "meaningId": "Kelalaian; kesalahan",
     "meaningEn": "error; blunder; accident",
-    "meaningJa": "過失",
+    "meaningJa": "不注意でしてしまった失敗。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97050,7 +97094,9 @@
       "過失を認める (mengakui kelalaian)",
       "過失致死 (kelalaian yang menyebabkan kematian)",
       "過失による事故 (kecelakaan akibat kelalaian)"
-    ]
+    ],
+    "definitionId": "Kesalahan yang terjadi akibat kelalaian.",
+    "meaningJaId": "Kesalahan yang terjadi akibat kelalaian."
   },
   "kotoba_n2_0421": {
     "id": "kotoba_n2_0421",
@@ -97058,7 +97104,7 @@
     "reading": "かじょう",
     "meaningId": "Kelebihan; berlebihan-",
     "meaningEn": "excess; over-",
-    "meaningJa": "過剰",
+    "meaningJa": "必要な量を超えて余ること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97074,7 +97120,9 @@
       "過剰な反応 (reaksi berlebihan)",
       "生産過剰 (produksi berlebih)",
       "過剰に心配する (terlalu khawatir)"
-    ]
+    ],
+    "definitionId": "Jumlah yang melebihi kebutuhan.",
+    "meaningJaId": "Jumlah yang melebihi kebutuhan."
   },
   "kotoba_n2_0422": {
     "id": "kotoba_n2_0422",
@@ -97082,7 +97130,7 @@
     "reading": "かてい",
     "meaningId": "Proses",
     "meaningEn": "process",
-    "meaningJa": "過程",
+    "meaningJa": "物事が進んで行く道すじ。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97098,7 +97146,9 @@
       "成長の過程 (proses pertumbuhan)",
       "過程を重視する (mementingkan proses)",
       "製造過程 (proses produksi)"
-    ]
+    ],
+    "definitionId": "Tahapan berjalannya suatu peristiwa.",
+    "meaningJaId": "Tahapan berjalannya suatu peristiwa."
   },
   "kotoba_n2_0423": {
     "id": "kotoba_n2_0423",
@@ -97106,7 +97156,7 @@
     "reading": "かはんすう",
     "meaningId": "Mayoritas",
     "meaningEn": "majority",
-    "meaningJa": "過半数",
+    "meaningJa": "全体の半分より多い数。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97123,7 +97173,9 @@
       "過半数を占める (menguasai mayoritas)",
       "過半数の賛成 (persetujuan mayoritas)",
       "過半数に達する (mencapai mayoritas)"
-    ]
+    ],
+    "definitionId": "Jumlah yang lebih dari separuh keseluruhan.",
+    "meaningJaId": "Jumlah yang lebih dari separuh keseluruhan."
   },
   "kotoba_n2_0424": {
     "id": "kotoba_n2_0424",
@@ -97131,7 +97183,7 @@
     "reading": "か",
     "meaningId": "Nyamuk",
     "meaningEn": "mosquito",
-    "meaningJa": "蚊",
+    "meaningJa": "血を吸う小さな虫。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97146,7 +97198,9 @@
       "蚊に刺される (digigit nyamuk)",
       "蚊が飛ぶ (nyamuk terbang)",
       "蚊取り線香 (obat nyamuk bakar)"
-    ]
+    ],
+    "definitionId": "Serangga kecil yang menghisap darah dan menggigit.",
+    "meaningJaId": "Serangga kecil yang menghisap darah dan menggigit."
   },
   "kotoba_n2_0425": {
     "id": "kotoba_n2_0425",
@@ -97154,7 +97208,7 @@
     "reading": "にわか",
     "meaningId": "Mendadak",
     "meaningEn": "sudden; abrupt; unexpected",
-    "meaningJa": "俄",
+    "meaningJa": "突然。急に。",
     "jlpt": "N2",
     "wordType": "adjective-na",
     "kanjiComponents": [
@@ -97169,7 +97223,9 @@
       "俄に変わる (berubah mendadak)",
       "俄に雨が降る (tiba-tiba hujan)",
       "俄雨 (hujan mendadak)"
-    ]
+    ],
+    "definitionId": "Mendadak; tiba-tiba.",
+    "meaningJaId": "Mendadak; tiba-tiba."
   },
   "kotoba_n2_0426": {
     "id": "kotoba_n2_0426",
@@ -97177,7 +97233,7 @@
     "reading": "かいかん",
     "meaningId": "Gedung pertemuan",
     "meaningEn": "meeting hall; assembly hall",
-    "meaningJa": "会館",
+    "meaningJa": "会議や集会に使う建物。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97193,7 +97249,9 @@
       "会館を借りる (menyewa gedung pertemuan)",
       "市民会館 (gedung warga)",
       "公民館 (balai warga)"
-    ]
+    ],
+    "definitionId": "Gedung untuk pertemuan atau acara.",
+    "meaningJaId": "Gedung untuk pertemuan atau acara."
   },
   "kotoba_n2_0427": {
     "id": "kotoba_n2_0427",
@@ -97201,7 +97259,7 @@
     "reading": "かいさん",
     "meaningId": "Pembubaran",
     "meaningEn": "breakup; dissolution",
-    "meaningJa": "解散",
+    "meaningJa": "集まっていた人が別れること。会などをやめること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97217,7 +97275,9 @@
       "会議を解散する (membubarkan rapat)",
       "国会の解散 (pembubaran parlemen)",
       "グループが解散する (kelompok bubar)"
-    ]
+    ],
+    "definitionId": "Bubarnya kumpulan orang atau organisasi.",
+    "meaningJaId": "Bubarnya kumpulan orang atau organisasi."
   },
   "kotoba_n2_0428": {
     "id": "kotoba_n2_0428",
@@ -97225,7 +97285,7 @@
     "reading": "かいせつ",
     "meaningId": "Penjelasan; komentar",
     "meaningEn": "explanation; commentary",
-    "meaningJa": "解説",
+    "meaningJa": "内容を分かりやすく説明すること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97241,7 +97301,9 @@
       "ニュースの解説 (ulasan berita)",
       "解説を聞く (mendengar penjelasan)",
       "解説者 (komentator)"
-    ]
+    ],
+    "definitionId": "Menjelaskan isi suatu hal agar mudah dipahami.",
+    "meaningJaId": "Menjelaskan isi suatu hal agar mudah dipahami."
   },
   "kotoba_n2_0429": {
     "id": "kotoba_n2_0429",
@@ -97249,7 +97311,7 @@
     "reading": "かいとう",
     "meaningId": "Jawaban (kunci)",
     "meaningEn": "answer; solution",
-    "meaningJa": "解答",
+    "meaningJa": "問題に対する答え。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97265,7 +97327,9 @@
       "問題の解答 (jawaban soal)",
       "解答を書く (menulis jawaban)",
       "解答用紙 (lembar jawaban)"
-    ]
+    ],
+    "definitionId": "Jawaban atas soal atau pertanyaan.",
+    "meaningJaId": "Jawaban atas soal atau pertanyaan."
   },
   "kotoba_n2_0430": {
     "id": "kotoba_n2_0430",
@@ -97273,7 +97337,7 @@
     "reading": "かいほう",
     "meaningId": "Pembebasan; pelepasan; emansipasi",
     "meaningEn": "release; liberation; emancipation",
-    "meaningJa": "解放",
+    "meaningJa": "自由にしてやること。束縛を解くこと。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97289,7 +97353,9 @@
       "人質を解放する (membebaskan sandera)",
       "解放される (dibebaskan)",
       "奴隷解放 (pembebasan budak)"
-    ]
+    ],
+    "definitionId": "Membebaskan dari kekangan atau tekanan.",
+    "meaningJaId": "Membebaskan dari kekangan atau tekanan."
   },
   "kotoba_n2_0431": {
     "id": "kotoba_n2_0431",
@@ -97297,7 +97363,7 @@
     "reading": "まわりみち",
     "meaningId": "Jalan memutar",
     "meaningEn": "detour",
-    "meaningJa": "回り道",
+    "meaningJa": "遠くなる曲がった道。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97313,7 +97379,9 @@
       "回り道をする (mengambil jalan memutar)",
       "回り道して帰る (pulang lewat jalan memutar)",
       "遠回り (memutar jauh)"
-    ]
+    ],
+    "definitionId": "Jalan yang berputar sehingga lebih jauh.",
+    "meaningJaId": "Jalan yang berputar sehingga lebih jauh."
   },
   "kotoba_n2_0432": {
     "id": "kotoba_n2_0432",
@@ -97321,7 +97389,7 @@
     "reading": "かいすう",
     "meaningId": "Frekuensi; berapa kali",
     "meaningEn": "number of times; frequency",
-    "meaningJa": "回数",
+    "meaningJa": "ものごとが行われる度数。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97337,7 +97405,9 @@
       "回数が多い (frekuensinya banyak)",
       "回数を減らす (mengurangi frekuensi)",
       "回数券を買う (membeli kupon)"
-    ]
+    ],
+    "definitionId": "Jumlah kejadian suatu hal.",
+    "meaningJaId": "Jumlah kejadian suatu hal."
   },
   "kotoba_n2_0433": {
     "id": "kotoba_n2_0433",
@@ -97345,7 +97415,7 @@
     "reading": "かいすうけん",
     "meaningId": "Buku tiket (kupon)",
     "meaningEn": "book of tickets",
-    "meaningJa": "回数券",
+    "meaningJa": "何枚かをまとめて売る切符。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97362,7 +97432,9 @@
       "回数券を使う (memakai buku tiket)",
       "バスの回数券 (kupon bus)",
       "回数券で乗る (naik dengan kupon)"
-    ]
+    ],
+    "definitionId": "Kumpulan tiket yang dijual sekaligus dengan harga lebih murah.",
+    "meaningJaId": "Kumpulan tiket yang dijual sekaligus dengan harga lebih murah."
   },
   "kotoba_n2_0434": {
     "id": "kotoba_n2_0434",
@@ -97370,7 +97442,7 @@
     "reading": "かいてん",
     "meaningId": "Perputaran; rotasi",
     "meaningEn": "rotation; revolution; turning",
-    "meaningJa": "回転",
+    "meaningJa": "軸を中心に回ること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97386,7 +97458,9 @@
       "地球の回転 (rotasi bumi)",
       "回転する (berputar)",
       "回転寿司 (sushi berputar)"
-    ]
+    ],
+    "definitionId": "Berputar mengelilingi suatu poros.",
+    "meaningJaId": "Berputar mengelilingi suatu poros."
   },
   "kotoba_n2_0435": {
     "id": "kotoba_n2_0435",
@@ -97394,7 +97468,7 @@
     "reading": "かいとう",
     "meaningId": "Membalas; jawaban",
     "meaningEn": "reply; answer",
-    "meaningJa": "回答",
+    "meaningJa": "質問や要求に答えること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97410,7 +97484,9 @@
       "アンケートに回答する (menjawab kuesioner)",
       "回答を待つ (menunggu jawaban)",
       "回答者 (responden)"
-    ]
+    ],
+    "definitionId": "Memberi jawaban atas pertanyaan atau permintaan.",
+    "meaningJaId": "Memberi jawaban atas pertanyaan atau permintaan."
   },
   "kotoba_n2_0436": {
     "id": "kotoba_n2_0436",
@@ -97418,7 +97494,7 @@
     "reading": "かたまり",
     "meaningId": "Gumpalan",
     "meaningEn": "lump; mass; clod",
-    "meaningJa": "塊",
+    "meaningJa": "一つに固まったもの。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97433,7 +97509,9 @@
       "塊になる (menjadi gumpalan)",
       "氷の塊 (bongkahan es)",
       "肉の塊 (gumpalan daging)"
-    ]
+    ],
+    "definitionId": "Benda yang menggumpal menjadi satu.",
+    "meaningJaId": "Benda yang menggumpal menjadi satu."
   },
   "kotoba_n2_0437": {
     "id": "kotoba_n2_0437",
@@ -97441,7 +97519,7 @@
     "reading": "かいせい",
     "meaningId": "Cuaca cerah",
     "meaningEn": "good weather",
-    "meaningJa": "快晴",
+    "meaningJa": "雲のないよく晴れた天気。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97457,7 +97535,9 @@
       "快晴になる (cuaca menjadi cerah)",
       "快晴の空 (langit cerah)",
       "快晴に恵まれる (diberkahi cuaca cerah)"
-    ]
+    ],
+    "definitionId": "Cuaca cerah tanpa awan.",
+    "meaningJaId": "Cuaca cerah tanpa awan."
   },
   "kotoba_n2_0438": {
     "id": "kotoba_n2_0438",
@@ -97465,7 +97545,7 @@
     "reading": "あやしい",
     "meaningId": "Mencurigakan",
     "meaningEn": "suspicious; dubious; doubtful",
-    "meaningJa": "怪しい",
+    "meaningJa": "疑わしくて不安な気持ちを起こさせる様子。",
     "jlpt": "N2",
     "wordType": "adjective-i",
     "kanjiComponents": [
@@ -97480,7 +97560,9 @@
       "怪しい人 (orang mencurigakan)",
       "怪しい動き (gerakan mencurigakan)",
       "空が怪しい (langit tampak akan hujan)"
-    ]
+    ],
+    "definitionId": "Terlihat mencurigakan dan menimbulkan keraguan.",
+    "meaningJaId": "Terlihat mencurigakan dan menimbulkan keraguan."
   },
   "kotoba_n2_0439": {
     "id": "kotoba_n2_0439",
@@ -97488,7 +97570,7 @@
     "reading": "くやしい",
     "meaningId": "Disesalkan; memalukan; menjengkelkan",
     "meaningEn": "regrettable; mortifying; vexing",
-    "meaningJa": "悔しい",
+    "meaningJa": "思い通りにならなくて腹立たしい。",
     "jlpt": "N2",
     "wordType": "adjective-i",
     "kanjiComponents": [
@@ -97503,7 +97585,9 @@
       "悔しい思い (perasaan kesal)",
       "負けて悔しい (kesal karena kalah)",
       "悔しくて泣く (menangis karena kesal)"
-    ]
+    ],
+    "definitionId": "Merasa kesal atau menyesal karena tidak sesuai harapan.",
+    "meaningJaId": "Merasa kesal atau menyesal karena tidak sesuai harapan."
   },
   "kotoba_n2_0440": {
     "id": "kotoba_n2_0440",
@@ -97511,7 +97595,7 @@
     "reading": "くやむ",
     "meaningId": "Berduka",
     "meaningEn": "to mourn",
-    "meaningJa": "悔やむ",
+    "meaningJa": "失敗を後から残念に思う。人の死を悲しむ。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -97526,7 +97610,9 @@
       "失敗を悔やむ (menyesali kegagalan)",
       "過去を悔やむ (menyesali masa lalu)",
       "死を悔やむ (berduka atas kematian)"
-    ]
+    ],
+    "definitionId": "Menyesali kegagalan; juga berduka atas kematian seseorang.",
+    "meaningJaId": "Menyesali kegagalan; juga berduka atas kematian seseorang."
   },
   "kotoba_n2_0441": {
     "id": "kotoba_n2_0441",
@@ -97534,7 +97620,7 @@
     "reading": "なつかしい",
     "meaningId": "Kangen; nostalgia",
     "meaningEn": "dear; desired; missed",
-    "meaningJa": "懐かしい",
+    "meaningJa": "昔のことを思い出して恋しい。",
     "jlpt": "N2",
     "wordType": "adjective-i",
     "kanjiComponents": [
@@ -97549,7 +97635,9 @@
       "懐かしい思い出 (kenangan yang dirindukan)",
       "懐かしい歌 (lagu nostalgia)",
       "懐かしい顔 (wajah yang dikangenin)"
-    ]
+    ],
+    "definitionId": "Merasa rindu pada hal masa lalu.",
+    "meaningJaId": "Merasa rindu pada hal masa lalu."
   },
   "kotoba_n2_0442": {
     "id": "kotoba_n2_0442",
@@ -97557,7 +97645,7 @@
     "reading": "あらためて",
     "meaningId": "Sekali lagi; lain kali",
     "meaningEn": "another time; again; over again",
-    "meaningJa": "改めて",
+    "meaningJa": "もう一度。あらためて。",
     "jlpt": "N2",
     "wordType": "adverb",
     "kanjiComponents": [
@@ -97572,7 +97660,9 @@
       "改めて挨拶する (menyapa sekali lagi)",
       "改めて考える (memikirkan kembali)",
       "改めて連絡する (menghubungi lagi nanti)"
-    ]
+    ],
+    "definitionId": "Sekali lagi dengan cara baru; lain kali.",
+    "meaningJaId": "Sekali lagi dengan cara baru; lain kali."
   },
   "kotoba_n2_0443": {
     "id": "kotoba_n2_0443",
@@ -97580,7 +97670,7 @@
     "reading": "あらためる",
     "meaningId": "Mengubah / memperbaiki / memperbarui",
     "meaningEn": "to change; to alter; to reform",
-    "meaningJa": "改める",
+    "meaningJa": "悪い所を新しく直す。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -97595,7 +97685,9 @@
       "考えを改める (mengubah pemikiran)",
       "規則を改める (merevisi peraturan)",
       "態度を改める (memperbaiki sikap)"
-    ]
+    ],
+    "definitionId": "Memperbarui atau memperbaiki sesuatu agar lebih baik.",
+    "meaningJaId": "Memperbarui atau memperbaiki sesuatu agar lebih baik."
   },
   "kotoba_n2_0444": {
     "id": "kotoba_n2_0444",
@@ -97603,7 +97695,7 @@
     "reading": "かいさつ",
     "meaningId": "Pemeriksaan tiket",
     "meaningEn": "examination of tickets",
-    "meaningJa": "改札",
+    "meaningJa": "駅で乗客の切符を調べること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97619,7 +97711,9 @@
       "改札を通る (melewati gerbang tiket)",
       "改札口 (gerbang tiket)",
       "改札で待つ (menunggu di gerbang tiket)"
-    ]
+    ],
+    "definitionId": "Pemeriksaan karcis penumpang di gerbang stasiun.",
+    "meaningJaId": "Pemeriksaan karcis penumpang di gerbang stasiun."
   },
   "kotoba_n2_0445": {
     "id": "kotoba_n2_0445",
@@ -97627,7 +97721,7 @@
     "reading": "かいせい",
     "meaningId": "Revisi; amendemen; perubahan perbaikan aturan",
     "meaningEn": "revision; amendment; alteration",
-    "meaningJa": "改正",
+    "meaningJa": "悪い所や不十分な所を直すこと。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97643,7 +97737,9 @@
       "法律を改正する (merevisi undang-undang)",
       "憲法改正 (amendemen konstitusi)",
       "改正案 (rancangan revisi)"
-    ]
+    ],
+    "definitionId": "Merevisi bagian yang buruk atau kurang pada aturan dan sebagainya.",
+    "meaningJaId": "Merevisi bagian yang buruk atau kurang pada aturan dan sebagainya."
   },
   "kotoba_n2_0446": {
     "id": "kotoba_n2_0446",
@@ -97651,7 +97747,7 @@
     "reading": "かいぞう",
     "meaningId": "Renovasi; modding (komp)",
     "meaningEn": "remodeling; modding (comp)",
-    "meaningJa": "改造",
+    "meaningJa": "形や仕組みを作り変えること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97667,7 +97763,9 @@
       "家を改造する (merenovasi rumah)",
       "車を改造する (memodifikasi mobil)",
       "改造工事 (pekerjaan renovasi)"
-    ]
+    ],
+    "definitionId": "Mengubah bentuk atau struktur sesuatu.",
+    "meaningJaId": "Mengubah bentuk atau struktur sesuatu."
   },
   "kotoba_n2_0447": {
     "id": "kotoba_n2_0447",
@@ -97675,7 +97773,7 @@
     "reading": "かいすいよく",
     "meaningId": "Mandi laut",
     "meaningEn": "sea bathing; seawater bath",
-    "meaningJa": "海水浴",
+    "meaningJa": "海で泳いだり日光浴をしたりすること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97692,7 +97790,9 @@
       "海水浴に行く (pergi berenang di laut)",
       "海水浴場 (pantai pemandian)",
       "夏の海水浴 (berenang di laut musim panas)"
-    ]
+    ],
+    "definitionId": "Berenang atau berjemur di laut.",
+    "meaningJaId": "Berenang atau berjemur di laut."
   },
   "kotoba_n2_0448": {
     "id": "kotoba_n2_0448",
@@ -97700,7 +97800,7 @@
     "reading": "かいよう",
     "meaningId": "Lautan",
     "meaningEn": "ocean",
-    "meaningJa": "海洋",
+    "meaningJa": "広い海。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97716,7 +97816,9 @@
       "海洋生物 (makhluk laut)",
       "海洋資源 (sumber daya laut)",
       "海洋調査 (survei laut)"
-    ]
+    ],
+    "definitionId": "Hamparan laut luas; samudra.",
+    "meaningJaId": "Hamparan laut luas; samudra."
   },
   "kotoba_n2_0449": {
     "id": "kotoba_n2_0449",
@@ -97724,7 +97826,7 @@
     "reading": "はいいろ",
     "meaningId": "Abu-abu; abu-abu; pucat pasi",
     "meaningEn": "grey; gray; ashen",
-    "meaningJa": "灰色",
+    "meaningJa": "白と黒の中間の色。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97740,7 +97842,9 @@
       "灰色の空 (langit abu-abu)",
       "灰色の服 (pakaian abu-abu)",
       "灰色になる (menjadi abu-abu)"
-    ]
+    ],
+    "definitionId": "Warna di antara putih dan hitam.",
+    "meaningJaId": "Warna di antara putih dan hitam."
   },
   "kotoba_n2_0450": {
     "id": "kotoba_n2_0450",
@@ -97748,7 +97852,7 @@
     "reading": "えのぐ",
     "meaningId": "Cat warna",
     "meaningEn": "colors; paints",
-    "meaningJa": "絵の具",
+    "meaningJa": "絵を描くための色のついた材料。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97764,7 +97868,9 @@
       "絵の具を塗る (mengoleskan cat warna)",
       "水彩絵の具 (cat air)",
       "絵の具を混ぜる (mencampur cat)"
-    ]
+    ],
+    "definitionId": "Bahan berwarna untuk melukis.",
+    "meaningJaId": "Bahan berwarna untuk melukis."
   },
   "kotoba_n2_0451": {
     "id": "kotoba_n2_0451",
@@ -97772,7 +97878,7 @@
     "reading": "かいかい",
     "meaningId": "Pembukaan sidang",
     "meaningEn": "opening of a meeting",
-    "meaningJa": "開会",
+    "meaningJa": "会を始めること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97788,7 +97894,9 @@
       "会議が開会する (rapat dibuka)",
       "開会式 (upacara pembukaan)",
       "開会を宣言する (menyatakan pembukaan)"
-    ]
+    ],
+    "definitionId": "Memulai suatu pertemuan atau sidang.",
+    "meaningJaId": "Memulai suatu pertemuan atau sidang."
   },
   "kotoba_n2_0452": {
     "id": "kotoba_n2_0452",
@@ -97796,7 +97904,7 @@
     "reading": "かいつう",
     "meaningId": "Pembukaan; terbuka",
     "meaningEn": "opening; open",
-    "meaningJa": "開通",
+    "meaningJa": "道路や鉄道などが通じて、使えるようになること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97812,7 +97920,9 @@
       "道路が開通する (jalan dibuka)",
       "開通式 (upacara pembukaan jalan)",
       "新線の開通 (pembukaan jalur baru)"
-    ]
+    ],
+    "definitionId": "Terbukanya jalan atau jalur kereta untuk dipakai.",
+    "meaningJaId": "Terbukanya jalan atau jalur kereta untuk dipakai."
   },
   "kotoba_n2_0453": {
     "id": "kotoba_n2_0453",
@@ -97820,7 +97930,7 @@
     "reading": "かいほう",
     "meaningId": "Membuka untuk umum; liberalisasi keterbukaan",
     "meaningEn": "open; throw open; liberalization",
-    "meaningJa": "開放",
+    "meaningJa": "閉じてあるものを開けて自由に、出入りできるようにすること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97836,7 +97946,9 @@
       "校庭を開放する (membuka halaman sekolah untuk umum)",
       "開放感 (rasa lega/bebas)",
       "窓を開放する (membuka jendela lebar)"
-    ]
+    ],
+    "definitionId": "Membuka sesuatu untuk umum atau bebas dimasuki.",
+    "meaningJaId": "Membuka sesuatu untuk umum atau bebas dimasuki."
   },
   "kotoba_n2_0454": {
     "id": "kotoba_n2_0454",
@@ -97844,7 +97956,7 @@
     "reading": "かい",
     "meaningId": "Cangkang; kerang",
     "meaningEn": "shell; shellfish",
-    "meaningJa": "貝",
+    "meaningJa": "海や川にすむ殻を持つ生き物。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97859,7 +97971,9 @@
       "貝を拾う (memungut kerang)",
       "貝殻 (cangkang kerang)",
       "貝の味噌汁 (sup miso kerang)"
-    ]
+    ],
+    "definitionId": "Hewan bercangkang yang hidup di laut atau sungai.",
+    "meaningJaId": "Hewan bercangkang yang hidup di laut atau sungai."
   },
   "kotoba_n2_0455": {
     "id": "kotoba_n2_0455",
@@ -97867,7 +97981,7 @@
     "reading": "はずれる",
     "meaningId": "Terlepas; meleset",
     "meaningEn": "to be disconnected; to get out of place; to be off",
-    "meaningJa": "外れる",
+    "meaningJa": "止めてあるものが取れる。的をそれる。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -97882,7 +97996,9 @@
       "予想が外れる (dugaan meleset)",
       "ボタンが外れる (kancing lepas)",
       "当てが外れる (harapan meleset)"
-    ]
+    ],
+    "definitionId": "Sesuatu yang terpasang terlepas; juga meleset dari sasaran.",
+    "meaningJaId": "Sesuatu yang terpasang terlepas; juga meleset dari sasaran."
   },
   "kotoba_n2_0456": {
     "id": "kotoba_n2_0456",
@@ -97890,7 +98006,7 @@
     "reading": "げか",
     "meaningId": "Departemen bedah",
     "meaningEn": "surgical department",
-    "meaningJa": "外科",
+    "meaningJa": "手術で病気を治す医学の分野。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97906,7 +98022,9 @@
       "外科に行く (pergi ke bedah)",
       "外科医 (dokter bedah)",
       "外科手術 (operasi bedah)"
-    ]
+    ],
+    "definitionId": "Cabang ilmu kedokteran yang menangani penyakit lewat operasi.",
+    "meaningJaId": "Cabang ilmu kedokteran yang menangani penyakit lewat operasi."
   },
   "kotoba_n2_0457": {
     "id": "kotoba_n2_0457",
@@ -97914,7 +98032,7 @@
     "reading": "がいぶ",
     "meaningId": "Bagian luar; eksternal",
     "meaningEn": "the outside; external",
-    "meaningJa": "外部",
+    "meaningJa": "外側の部分。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97930,7 +98048,9 @@
       "外部の人 (orang luar)",
       "外部に漏れる (bocor ke luar)",
       "外部からの意見 (pendapat dari luar)"
-    ]
+    ],
+    "definitionId": "Bagian luar; pihak luar.",
+    "meaningJaId": "Bagian luar; pihak luar."
   },
   "kotoba_n2_0458": {
     "id": "kotoba_n2_0458",
@@ -97938,7 +98058,7 @@
     "reading": "がいろん",
     "meaningId": "Pengantar umum; ikhtisar",
     "meaningEn": "intro; outline; general remarks",
-    "meaningJa": "概論",
+    "meaningJa": "全体のあらましを述べた論。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97954,7 +98074,9 @@
       "経済概論 (pengantar ekonomi)",
       "概論を学ぶ (mempelajari pengantar)",
       "法学概論 (pengantar ilmu hukum)"
-    ]
+    ],
+    "definitionId": "Uraian garis besar suatu bidang ilmu.",
+    "meaningJaId": "Uraian garis besar suatu bidang ilmu."
   },
   "kotoba_n2_0459": {
     "id": "kotoba_n2_0459",
@@ -97962,7 +98084,7 @@
     "reading": "ふた",
     "meaningId": "Penutup; tutup; tutup",
     "meaningEn": "cover; lid; cap",
-    "meaningJa": "蓋",
+    "meaningJa": "入れ物の口をふさぐもの。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -97977,7 +98099,9 @@
       "蓋を開ける (membuka tutup)",
       "蓋を閉める (menutup tutup)",
       "鍋の蓋 (tutup panci)"
-    ]
+    ],
+    "definitionId": "Penutup yang dipasang pada mulut wadah.",
+    "meaningJaId": "Penutup yang dipasang pada mulut wadah."
   },
   "kotoba_n2_0460": {
     "id": "kotoba_n2_0460",
@@ -97985,7 +98109,7 @@
     "reading": "まちかど",
     "meaningId": "Sudut jalan",
     "meaningEn": "street corner",
-    "meaningJa": "街角",
+    "meaningJa": "町の道が交わる角。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98001,7 +98125,9 @@
       "街角で会う (bertemu di sudut jalan)",
       "街角の店 (toko di sudut jalan)",
       "街角に立つ (berdiri di sudut jalan)"
-    ]
+    ],
+    "definitionId": "Sudut jalan di kota.",
+    "meaningJaId": "Sudut jalan di kota."
   },
   "kotoba_n2_0461": {
     "id": "kotoba_n2_0461",
@@ -98009,7 +98135,7 @@
     "reading": "かきね",
     "meaningId": "Pagar tanaman; pagar",
     "meaningEn": "hedge",
-    "meaningJa": "垣根",
+    "meaningJa": "敷地を囲む柵や木。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98025,7 +98151,9 @@
       "垣根を作る (membuat pagar tanaman)",
       "垣根を越える (melampaui batas)",
       "垣根の向こう (di seberang pagar)"
-    ]
+    ],
+    "definitionId": "Pagar atau tanaman yang mengelilingi pekarangan.",
+    "meaningJaId": "Pagar atau tanaman yang mengelilingi pekarangan."
   },
   "kotoba_n2_0462": {
     "id": "kotoba_n2_0462",
@@ -98033,7 +98161,7 @@
     "reading": "おのおの",
     "meaningId": "Masing-masing",
     "meaningEn": "each; every; either",
-    "meaningJa": "各々",
+    "meaningJa": "それぞれ。めいめい。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98048,7 +98176,9 @@
       "各々の意見 (pendapat masing-masing)",
       "各々の立場 (posisi masing-masing)",
       "各々に配る (membagikan ke tiap orang)"
-    ]
+    ],
+    "definitionId": "Masing-masing.",
+    "meaningJaId": "Masing-masing."
   },
   "kotoba_n2_0463": {
     "id": "kotoba_n2_0463",
@@ -98056,7 +98186,7 @@
     "reading": "かくじ",
     "meaningId": "Masing-masing orang",
     "meaningEn": "individual; each",
-    "meaningJa": "各自",
+    "meaningJa": "一人一人。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98072,7 +98202,9 @@
       "各自で用意する (disiapkan masing-masing)",
       "各自持参 (bawa masing-masing)",
       "各自の責任 (tanggung jawab masing-masing)"
-    ]
+    ],
+    "definitionId": "Tiap-tiap orang.",
+    "meaningJaId": "Tiap-tiap orang."
   },
   "kotoba_n2_0464": {
     "id": "kotoba_n2_0464",
@@ -98080,7 +98212,7 @@
     "reading": "かくち",
     "meaningId": "Setiap tempat; berbagai tempat",
     "meaningEn": "every place; various places",
-    "meaningJa": "各地",
+    "meaningJa": "それぞれの土地。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98096,7 +98228,9 @@
       "各地から集まる (berkumpul dari berbagai tempat)",
       "各地の天気 (cuaca berbagai daerah)",
       "全国各地 (berbagai penjuru negeri)"
-    ]
+    ],
+    "definitionId": "Berbagai daerah atau tempat.",
+    "meaningJaId": "Berbagai daerah atau tempat."
   },
   "kotoba_n2_0465": {
     "id": "kotoba_n2_0465",
@@ -98104,7 +98238,7 @@
     "reading": "かくじゅう",
     "meaningId": "Ekspansi",
     "meaningEn": "expansion",
-    "meaningJa": "拡充",
+    "meaningJa": "内容や設備を広げて充実させること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98120,7 +98254,9 @@
       "設備を拡充する (memperluas fasilitas)",
       "拡充する (memperluas)",
       "事業の拡充 (perluasan usaha)"
-    ]
+    ],
+    "definitionId": "Memperluas dan memperkaya isi atau fasilitas.",
+    "meaningJaId": "Memperluas dan memperkaya isi atau fasilitas."
   },
   "kotoba_n2_0466": {
     "id": "kotoba_n2_0466",
@@ -98128,7 +98264,7 @@
     "reading": "かくちょう",
     "meaningId": "expansion; extension; enlargement",
     "meaningEn": "expansion; extension; enlargement",
-    "meaningJa": "拡張",
+    "meaningJa": "範囲や規模を広げること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98144,7 +98280,9 @@
       "道路を拡張する (memperlebar jalan)",
       "拡張工事 (pekerjaan perluasan)",
       "機能を拡張する (memperluas fungsi)"
-    ]
+    ],
+    "definitionId": "Memperluas cakupan atau skala; juga memperbesar.",
+    "meaningJaId": "Memperluas cakupan atau skala; juga memperbesar."
   },
   "kotoba_n2_0467": {
     "id": "kotoba_n2_0467",
@@ -98152,7 +98290,7 @@
     "reading": "かくべつ",
     "meaningId": "Istimewa; luar biasa",
     "meaningEn": "exceptional",
-    "meaningJa": "格別",
+    "meaningJa": "他と違って特にすぐれていること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98168,7 +98306,9 @@
       "格別の配慮 (pertimbangan istimewa)",
       "格別に美味しい (istimewa lezatnya)",
       "格別な扱い (perlakuan istimewa)"
-    ]
+    ],
+    "definitionId": "Berbeda dari yang lain dan sangat istimewa.",
+    "meaningJaId": "Berbeda dari yang lain dan sangat istimewa."
   },
   "kotoba_n2_0468": {
     "id": "kotoba_n2_0468",
@@ -98176,7 +98316,7 @@
     "reading": "から",
     "meaningId": "Kulit; cangkang",
     "meaningEn": "shell; husk; hull",
-    "meaningJa": "殻",
+    "meaningJa": "物の外側をおおうかたい皮。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98191,7 +98331,9 @@
       "卵の殻 (cangkang telur)",
       "貝殻 (cangkang kerang)",
       "殻を破る (memecahkan cangkang)"
-    ]
+    ],
+    "definitionId": "Lapisan keras yang menutupi bagian luar benda.",
+    "meaningJaId": "Lapisan keras yang menutupi bagian luar benda."
   },
   "kotoba_n2_0469": {
     "id": "kotoba_n2_0469",
@@ -98199,7 +98341,7 @@
     "reading": "かくりつ",
     "meaningId": "Probabilitas; kemungkinan",
     "meaningEn": "probability",
-    "meaningJa": "確率",
+    "meaningJa": "あることが起こる可能性の度合い。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98215,7 +98357,9 @@
       "確率が高い (peluang tinggi)",
       "確率を計算する (menghitung peluang)",
       "確率が低い (peluang rendah)"
-    ]
+    ],
+    "definitionId": "Tingkat kemungkinan terjadinya sesuatu.",
+    "meaningJaId": "Tingkat kemungkinan terjadinya sesuatu."
   },
   "kotoba_n2_0470": {
     "id": "kotoba_n2_0470",
@@ -98223,7 +98367,7 @@
     "reading": "かくど",
     "meaningId": "Sudut",
     "meaningEn": "angle",
-    "meaningJa": "角度",
+    "meaningJa": "二つの線や面が作る開きの大きさ。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98239,7 +98383,9 @@
       "角度を変える (mengubah sudut)",
       "直角 (sudut siku)",
       "角度を測る (mengukur sudut)"
-    ]
+    ],
+    "definitionId": "Besarnya bukaan antara dua garis atau bidang.",
+    "meaningJaId": "Besarnya bukaan antara dua garis atau bidang."
   },
   "kotoba_n2_0471": {
     "id": "kotoba_n2_0471",
@@ -98247,7 +98393,7 @@
     "reading": "へだてる",
     "meaningId": "Memisahkan; menyekat",
     "meaningEn": "to be shut out",
-    "meaningJa": "隔てる",
+    "meaningJa": "間に物を置いて分ける。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -98262,7 +98408,9 @@
       "二人を隔てる (memisahkan keduanya)",
       "壁で隔てる (memisahkan dengan dinding)",
       "川を隔てて (terpisah sungai)"
-    ]
+    ],
+    "definitionId": "Memisahkan dengan menaruh sesuatu di antaranya.",
+    "meaningJaId": "Memisahkan dengan menaruh sesuatu di antaranya."
   },
   "kotoba_n2_0472": {
     "id": "kotoba_n2_0472",
@@ -98270,7 +98418,7 @@
     "reading": "がっか",
     "meaningId": "Subjek studi; program studi",
     "meaningEn": "study subject; course of study",
-    "meaningJa": "学科",
+    "meaningJa": "大学などで専門ごとに分けた課程。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98286,7 +98434,9 @@
       "学科を選ぶ (memilih program studi)",
       "英文学科 (jurusan sastra Inggris)",
       "学科試験 (ujian teori)"
-    ]
+    ],
+    "definitionId": "Bidang studi atau jurusan yang dibagi menurut spesialisasi.",
+    "meaningJaId": "Bidang studi atau jurusan yang dibagi menurut spesialisasi."
   },
   "kotoba_n2_0473": {
     "id": "kotoba_n2_0473",
@@ -98294,7 +98444,7 @@
     "reading": "がっかい",
     "meaningId": "Perkumpulan ilmiah; konferensi ilmiah",
     "meaningEn": "scientific society; academic meeting",
-    "meaningJa": "学会",
+    "meaningJa": "学者が集まって研究を発表し合う会。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98310,7 +98460,9 @@
       "学会で発表する (presentasi di konferensi ilmiah)",
       "学会に参加する (mengikuti konferensi)",
       "日本心理学会 (perkumpulan psikologi Jepang)"
-    ]
+    ],
+    "definitionId": "Perkumpulan peneliti yang bertukar hasil penelitian.",
+    "meaningJaId": "Perkumpulan peneliti yang bertukar hasil penelitian."
   },
   "kotoba_n2_0474": {
     "id": "kotoba_n2_0474",
@@ -98318,7 +98470,7 @@
     "reading": "がっきゅう",
     "meaningId": "Kelas (sekolah)",
     "meaningEn": "grade in school",
-    "meaningJa": "学級",
+    "meaningJa": "学校で学習する集団。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98334,7 +98486,9 @@
       "学級委員 (ketua kelas)",
       "学級会 (rapat kelas)",
       "学級閉鎖 (penutupan kelas)"
-    ]
+    ],
+    "definitionId": "Kelompok murid yang belajar bersama; kelas.",
+    "meaningJaId": "Kelompok murid yang belajar bersama; kelas."
   },
   "kotoba_n2_0475": {
     "id": "kotoba_n2_0475",
@@ -98342,7 +98496,7 @@
     "reading": "がくじゅつ",
     "meaningId": "Ilmiah; akademik",
     "meaningEn": "science; learning; scholarship",
-    "meaningJa": "学術",
+    "meaningJa": "学問や研究に関すること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98358,7 +98512,9 @@
       "学術的な (bersifat akademik)",
       "学術論文 (makalah ilmiah)",
       "学術会議 (konferensi ilmiah)"
-    ]
+    ],
+    "definitionId": "Hal yang berhubungan dengan ilmu pengetahuan dan penelitian.",
+    "meaningJaId": "Hal yang berhubungan dengan ilmu pengetahuan dan penelitian."
   },
   "kotoba_n2_0476": {
     "id": "kotoba_n2_0476",
@@ -98366,7 +98522,7 @@
     "reading": "がくねん",
     "meaningId": "Tahun ajaran / tingkatan kelas",
     "meaningEn": "year in school; grade in school",
-    "meaningJa": "学年",
+    "meaningJa": "学校で一年ごとに分けた段階。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98382,7 +98538,9 @@
       "学年が上がる (naik tingkat kelas)",
       "学年末 (akhir tahun ajaran)",
       "同じ学年 (kelas yang sama)"
-    ]
+    ],
+    "definitionId": "Tingkat kelas yang dibagi per tahun ajaran.",
+    "meaningJaId": "Tingkat kelas yang dibagi per tahun ajaran."
   },
   "kotoba_n2_0477": {
     "id": "kotoba_n2_0477",
@@ -98390,7 +98548,7 @@
     "reading": "がくぶ",
     "meaningId": "Departemen universitas; sarjana",
     "meaningEn": "department of a university; undergraduate",
-    "meaningJa": "学部",
+    "meaningJa": "大学で専門分野ごとに分けた組織。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98406,7 +98564,9 @@
       "学部を選ぶ (memilih fakultas)",
       "法学部 (fakultas hukum)",
       "学部生 (mahasiswa sarjana)"
-    ]
+    ],
+    "definitionId": "Fakultas yang dibagi menurut bidang ilmu di universitas.",
+    "meaningJaId": "Fakultas yang dibagi menurut bidang ilmu di universitas."
   },
   "kotoba_n2_0478": {
     "id": "kotoba_n2_0478",
@@ -98414,7 +98574,7 @@
     "reading": "がくりょく",
     "meaningId": "Kemampuan akademik",
     "meaningEn": "scholarship; knowledge; literary ability",
-    "meaningJa": "学力",
+    "meaningJa": "学問を身につけた力。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98430,7 +98590,9 @@
       "学力が高い (kemampuan akademik tinggi)",
       "学力テスト (tes kemampuan akademik)",
       "学力を伸ばす (meningkatkan kemampuan akademik)"
-    ]
+    ],
+    "definitionId": "Kemampuan akademik yang dimiliki seseorang.",
+    "meaningJaId": "Kemampuan akademik yang dimiliki seseorang."
   },
   "kotoba_n2_0479": {
     "id": "kotoba_n2_0479",
@@ -98438,7 +98600,7 @@
     "reading": "がっき",
     "meaningId": "Alat musik",
     "meaningEn": "musical instrument",
-    "meaningJa": "楽器",
+    "meaningJa": "音楽を演奏する道具。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98454,7 +98616,9 @@
       "楽器を弾く (memainkan alat musik)",
       "楽器店 (toko alat musik)",
       "楽器の演奏 (permainan alat musik)"
-    ]
+    ],
+    "definitionId": "Alat untuk membunyikan musik.",
+    "meaningJaId": "Alat untuk membunyikan musik."
   },
   "kotoba_n2_0480": {
     "id": "kotoba_n2_0480",
@@ -98462,7 +98626,7 @@
     "reading": "かけざん",
     "meaningId": "Perkalian",
     "meaningEn": "multiplication",
-    "meaningJa": "掛け算",
+    "meaningJa": "ある数を何倍かする計算。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98478,7 +98642,9 @@
       "掛け算を習う (belajar perkalian)",
       "掛け算の問題 (soal perkalian)",
       "九九の掛け算 (tabel perkalian)"
-    ]
+    ],
+    "definitionId": "Operasi hitung yang melipatgandakan suatu bilangan.",
+    "meaningJaId": "Operasi hitung yang melipatgandakan suatu bilangan."
   },
   "kotoba_n2_0481": {
     "id": "kotoba_n2_0481",
@@ -98486,7 +98652,7 @@
     "reading": "わりと",
     "meaningId": "Cukup; relatif",
     "meaningEn": "relatively; comparitively",
-    "meaningJa": "割と",
+    "meaningJa": "思っていたよりずっと。比較的。",
     "jlpt": "N2",
     "wordType": "adverb",
     "kanjiComponents": [
@@ -98501,7 +98667,9 @@
       "割と簡単 (relatif mudah)",
       "割と早い (relatif cepat)",
       "割と好き (lumayan suka)"
-    ]
+    ],
+    "definitionId": "Cukup atau lebih daripada dugaan; relatif.",
+    "meaningJaId": "Cukup atau lebih daripada dugaan; relatif."
   },
   "kotoba_n2_0482": {
     "id": "kotoba_n2_0482",
@@ -98509,7 +98677,7 @@
     "reading": "わりびき",
     "meaningId": "Diskon; pengurangan; rabat",
     "meaningEn": "discount; reduction; rebate",
-    "meaningJa": "割引",
+    "meaningJa": "定価から一部の金額を引くこと。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98525,7 +98693,9 @@
       "割引を受ける (mendapat diskon)",
       "学生割引 (diskon pelajar)",
       "割引券 (kupon diskon)"
-    ]
+    ],
+    "definitionId": "Pengurangan sebagian harga dari harga normal.",
+    "meaningJaId": "Pengurangan sebagian harga dari harga normal."
   },
   "kotoba_n2_0483": {
     "id": "kotoba_n2_0483",
@@ -98533,7 +98703,7 @@
     "reading": "わりざん",
     "meaningId": "Pembagian (matematika)",
     "meaningEn": "division (math)",
-    "meaningJa": "割算",
+    "meaningJa": "ある数を他の数で分ける計算。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98549,7 +98719,9 @@
       "割算をする (melakukan pembagian)",
       "割算の答え (hasil pembagian)",
       "掛け算と割算 (perkalian dan pembagian)"
-    ]
+    ],
+    "definitionId": "Operasi hitung membagi suatu bilangan dengan bilangan lain.",
+    "meaningJaId": "Operasi hitung membagi suatu bilangan dengan bilangan lain."
   },
   "kotoba_n2_0484": {
     "id": "kotoba_n2_0484",
@@ -98557,7 +98729,7 @@
     "reading": "かっこ",
     "meaningId": "Kurung; tanda kurung",
     "meaningEn": "parenthesis; brackets",
-    "meaningJa": "括弧",
+    "meaningJa": "文章の中で語句を囲む記号。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98573,7 +98745,9 @@
       "括弧に入れる (memasukkan ke dalam kurung)",
       "括弧を付ける (memberi tanda kurung)",
       "括弧内 (di dalam kurung)"
-    ]
+    ],
+    "definitionId": "Tanda yang mengapit kata atau kalimat dalam tulisan.",
+    "meaningJaId": "Tanda yang mengapit kata atau kalimat dalam tulisan."
   },
   "kotoba_n2_0485": {
     "id": "kotoba_n2_0485",
@@ -98581,7 +98755,7 @@
     "reading": "かつじ",
     "meaningId": "Huruf cetak; font",
     "meaningEn": "printing type",
-    "meaningJa": "活字",
+    "meaningJa": "印刷に使う金属などで作った文字。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98597,7 +98771,9 @@
       "活字を拾う (menyusun huruf cetak)",
       "活字離れ (menjauhnya minat baca)",
       "大きな活字 (huruf cetak besar)"
-    ]
+    ],
+    "definitionId": "Huruf cetak yang dipakai untuk mencetak.",
+    "meaningJaId": "Huruf cetak yang dipakai untuk mencetak."
   },
   "kotoba_n2_0486": {
     "id": "kotoba_n2_0486",
@@ -98605,7 +98781,7 @@
     "reading": "かつやく",
     "meaningId": "Aktif berkiprah",
     "meaningEn": "activity",
-    "meaningJa": "活躍",
+    "meaningJa": "目覚ましく働いたり、活動したりすること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98621,7 +98797,9 @@
       "選手が活躍する (atlet berkiprah)",
       "活躍の場 (arena berkiprah)",
       "大活躍 (berkiprah gemilang)"
-    ]
+    ],
+    "definitionId": "Berkiprah dengan menonjol dalam suatu bidang.",
+    "meaningJaId": "Berkiprah dengan menonjol dalam suatu bidang."
   },
   "kotoba_n2_0487": {
     "id": "kotoba_n2_0487",
@@ -98660,7 +98838,7 @@
     "reading": "かわく",
     "meaningId": "Menjadi haus",
     "meaningEn": "to be thirsty",
-    "meaningJa": "渇く",
+    "meaningJa": "のどが水分をほしがる。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -98675,7 +98853,9 @@
       "喉が渇く (haus)",
       "口が渇く (mulut kering)",
       "渇いた土 (tanah kering)"
-    ]
+    ],
+    "definitionId": "Merasa kehausan karena tenggorokan membutuhkan cairan.",
+    "meaningJaId": "Merasa kehausan karena tenggorokan membutuhkan cairan."
   },
   "kotoba_n2_0489": {
     "id": "kotoba_n2_0489",
@@ -98683,7 +98863,7 @@
     "reading": "かま",
     "meaningId": "Periuk; kamameshi",
     "meaningEn": "iron pot; kettle",
-    "meaningJa": "釜",
+    "meaningJa": "ご飯を炊いたり湯をわかしたりする鍋。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98698,7 +98878,9 @@
       "釜でご飯を炊く (menanak nasi dengan periuk)",
       "釜飯 (nasi kamameshi)",
       "電気釜 (penanak nasi listrik)"
-    ]
+    ],
+    "definitionId": "Periuk untuk menanak nasi atau memanaskan air.",
+    "meaningJaId": "Periuk untuk menanak nasi atau memanaskan air."
   },
   "kotoba_n2_0490": {
     "id": "kotoba_n2_0490",
@@ -98706,7 +98888,7 @@
     "reading": "かわら",
     "meaningId": "Genteng",
     "meaningEn": "roof tile",
-    "meaningJa": "瓦",
+    "meaningJa": "屋根にふく焼いた板状のもの。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98721,7 +98903,9 @@
       "瓦の屋根 (atap genteng)",
       "瓦を葺く (memasang genteng)",
       "瓦屋根 (atap genteng)"
-    ]
+    ],
+    "definitionId": "Lempeng tanah liat bakar yang dipasang di atap.",
+    "meaningJaId": "Lempeng tanah liat bakar yang dipasang di atap."
   },
   "kotoba_n2_0491": {
     "id": "kotoba_n2_0491",
@@ -98729,7 +98913,7 @@
     "reading": "かわかす",
     "meaningId": "Mengeringkan",
     "meaningEn": "to dry (clothes; etc.); to desiccate",
-    "meaningJa": "乾かす",
+    "meaningJa": "水分をなくして乾いた状態にする。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -98744,7 +98928,9 @@
       "洗濯物を乾かす (mengeringkan cucian)",
       "髪を乾かす (mengeringkan rambut)",
       "ドライヤーで乾かす (mengeringkan dengan pengering rambut)"
-    ]
+    ],
+    "definitionId": "Membuat sesuatu menjadi kering.",
+    "meaningJaId": "Membuat sesuatu menjadi kering."
   },
   "kotoba_n2_0492": {
     "id": "kotoba_n2_0492",
@@ -98752,7 +98938,7 @@
     "reading": "かんそう",
     "meaningId": "Kering; kekeringan",
     "meaningEn": "dry; arid; insipid",
-    "meaningJa": "乾燥",
+    "meaningJa": "水分がなくなること。空気中の水分が少ないこと。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98768,7 +98954,9 @@
       "空気が乾燥する (udara kering)",
       "乾燥肌 (kulit kering)",
       "乾燥機 (mesin pengering)"
-    ]
+    ],
+    "definitionId": "Keadaan tanpa air; juga udara yang kering.",
+    "meaningJaId": "Keadaan tanpa air; juga udara yang kering."
   },
   "kotoba_n2_0493": {
     "id": "kotoba_n2_0493",
@@ -98776,7 +98964,7 @@
     "reading": "かんでんち",
     "meaningId": "Sel kering; baterai",
     "meaningEn": "dry cell; battery",
-    "meaningJa": "乾電池",
+    "meaningJa": "液体を使わない小型の電池。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98793,7 +98981,9 @@
       "乾電池を買う (membeli baterai)",
       "乾電池を換える (mengganti baterai)",
       "単三乾電池 (baterai AA)"
-    ]
+    ],
+    "definitionId": "Baterai kecil yang tidak memakai cairan.",
+    "meaningJaId": "Baterai kecil yang tidak memakai cairan."
   },
   "kotoba_n2_0494": {
     "id": "kotoba_n2_0494",
@@ -98801,7 +98991,7 @@
     "reading": "かんぱい",
     "meaningId": "Bersulang",
     "meaningEn": "toast (drink)",
-    "meaningJa": "乾杯",
+    "meaningJa": "お祝いのとき杯を上げて祝うこと。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98817,7 +99007,9 @@
       "乾杯する (bersulang)",
       "乾杯の音頭 (aba-aba bersulang)",
       "乾杯しよう (ayo bersulang)"
-    ]
+    ],
+    "definitionId": "Mengangkat gelas bersama untuk merayakan sesuatu.",
+    "meaningJaId": "Mengangkat gelas bersama untuk merayakan sesuatu."
   },
   "kotoba_n2_0495": {
     "id": "kotoba_n2_0495",
@@ -98825,7 +99017,7 @@
     "reading": "かんむり",
     "meaningId": "Mahkota; mahkota kecil",
     "meaningEn": "crown; diadem; first",
-    "meaningJa": "冠",
+    "meaningJa": "頭にかぶる飾り。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98840,7 +99032,9 @@
       "冠をかぶる (mengenakan mahkota)",
       "王冠 (mahkota raja)",
       "冠詞 (kata sandang)"
-    ]
+    ],
+    "definitionId": "Hiasan atau mahkota yang dikenakan di kepala.",
+    "meaningJaId": "Hiasan atau mahkota yang dikenakan di kepala."
   },
   "kotoba_n2_0496": {
     "id": "kotoba_n2_0496",
@@ -98848,7 +99042,7 @@
     "reading": "かんたい",
     "meaningId": "Zona dingin (kutub)",
     "meaningEn": "frigid zone",
-    "meaningJa": "寒帯",
+    "meaningJa": "極に近いとても寒い地域。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98864,7 +99058,9 @@
       "寒帯の気候 (iklim kutub)",
       "寒帯地方 (daerah kutub)",
       "亜寒帯 (subkutub)"
-    ]
+    ],
+    "definitionId": "Wilayah dekat kutub yang sangat dingin.",
+    "meaningJaId": "Wilayah dekat kutub yang sangat dingin."
   },
   "kotoba_n2_0497": {
     "id": "kotoba_n2_0497",
@@ -98872,7 +99068,7 @@
     "reading": "かんちがい",
     "meaningId": "Kesalahpahaman; tebakan yang salah",
     "meaningEn": "misunderstanding; wrong guess",
-    "meaningJa": "勘違い",
+    "meaningJa": "間違えて思いこむこと。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98888,7 +99084,9 @@
       "勘違いする (salah paham)",
       "勘違いだった (ternyata salah paham)",
       "私の勘違い (kesalahpahaman saya)"
-    ]
+    ],
+    "definitionId": "Salah mengira atau salah paham tentang sesuatu.",
+    "meaningJaId": "Salah mengira atau salah paham tentang sesuatu."
   },
   "kotoba_n2_0498": {
     "id": "kotoba_n2_0498",
@@ -98896,7 +99094,7 @@
     "reading": "まく",
     "meaningId": "Menggulung; melilit",
     "meaningEn": "to wind; to coil; to roll",
-    "meaningJa": "巻く",
+    "meaningJa": "丸めて重ねる。巻き付ける。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -98911,7 +99109,9 @@
       "巻物 (gulungan)",
       "ネクタイを巻く (melilitkan dasi)",
       "包帯を巻く (membalut perban)"
-    ]
+    ],
+    "definitionId": "Menggulung sesuatu; juga melilitkan.",
+    "meaningJaId": "Menggulung sesuatu; juga melilitkan."
   },
   "kotoba_n2_0499": {
     "id": "kotoba_n2_0499",
@@ -98919,7 +99119,7 @@
     "reading": "かんちょう",
     "meaningId": "Kantor pemerintah",
     "meaningEn": "government office; authorities",
-    "meaningJa": "官庁",
+    "meaningJa": "国の役所。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -98935,7 +99135,9 @@
       "官庁に勤める (bekerja di kantor pemerintah)",
       "官庁街 (kawasan perkantoran pemerintah)",
       "中央官庁 (kementerian pusat)"
-    ]
+    ],
+    "definitionId": "Kantor atau instansi pemerintah.",
+    "meaningJaId": "Kantor atau instansi pemerintah."
   },
   "kotoba_n2_0500": {
     "id": "kotoba_n2_0500",
@@ -98943,7 +99145,7 @@
     "reading": "ほす",
     "meaningId": "Menjemur; mengeringkan",
     "meaningEn": "to air; to dry; to desiccate",
-    "meaningJa": "干す",
+    "meaningJa": "日光や風にあてて乾かす。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -98958,7 +99160,9 @@
       "洗濯物を干す (menjemur cucian)",
       "布団を干す (menjemur futon)",
       "魚を干す (menjemur ikan)"
-    ]
+    ],
+    "definitionId": "Mengeringkan di bawah matahari atau angin.",
+    "meaningJaId": "Mengeringkan di bawah matahari atau angin."
   },
   "kotoba_n2_0501": {
     "id": "kotoba_n2_0501",
@@ -98966,7 +99170,7 @@
     "reading": "かんずる",
     "meaningId": "Merasakan",
     "meaningEn": "to feel; to sense",
-    "meaningJa": "感ずる",
+    "meaningJa": "心にそのように受けとる。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -98981,7 +99185,9 @@
       "寒さを感ずる (merasa dingin)",
       "責任を感ずる (merasa bertanggung jawab)",
       "感ずるところ (hal yang dirasakan)"
-    ]
+    ],
+    "definitionId": "Merasakan sesuatu dalam hati atau tubuh.",
+    "meaningJaId": "Merasakan sesuatu dalam hati atau tubuh."
   },
   "kotoba_n2_0502": {
     "id": "kotoba_n2_0502",
@@ -98989,7 +99195,7 @@
     "reading": "かんげき",
     "meaningId": "Terharu; terkesan",
     "meaningEn": "deep emotion; impression; inspiration",
-    "meaningJa": "感激",
+    "meaningJa": "深く心を動かされること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99005,7 +99211,9 @@
       "感激する (terharu)",
       "感激の涙 (air mata haru)",
       "感激のあまり (saking terharu)"
-    ]
+    ],
+    "definitionId": "Hati tergerak dalam oleh sesuatu.",
+    "meaningJaId": "Hati tergerak dalam oleh sesuatu."
   },
   "kotoba_n2_0503": {
     "id": "kotoba_n2_0503",
@@ -99013,7 +99221,7 @@
     "reading": "かんそう",
     "meaningId": "Kesan; pendapat",
     "meaningEn": "impressions; thoughts",
-    "meaningJa": "感想",
+    "meaningJa": "見たり聞いたりして心に感じたこと。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99029,7 +99237,9 @@
       "感想を述べる (menyampaikan kesan)",
       "感想文 (karangan kesan)",
       "感想を聞く (menanyakan kesan)"
-    ]
+    ],
+    "definitionId": "Perasaan atau pendapat yang timbul setelah menyaksikan sesuatu.",
+    "meaningJaId": "Perasaan atau pendapat yang timbul setelah menyaksikan sesuatu."
   },
   "kotoba_n2_0504": {
     "id": "kotoba_n2_0504",
@@ -99037,7 +99247,7 @@
     "reading": "かんき",
     "meaningId": "Ventilasi",
     "meaningEn": "ventilation",
-    "meaningJa": "換気",
+    "meaningJa": "部屋の空気を入れかえること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99053,7 +99263,9 @@
       "部屋を換気する (memberi ventilasi kamar)",
       "換気扇 (kipas ventilasi)",
       "換気が悪い (ventilasi buruk)"
-    ]
+    ],
+    "definitionId": "Mengganti udara di dalam ruangan.",
+    "meaningJaId": "Mengganti udara di dalam ruangan."
   },
   "kotoba_n2_0505": {
     "id": "kotoba_n2_0505",
@@ -99061,7 +99273,7 @@
     "reading": "かんわ",
     "meaningId": "Kamus kanji-Jepang",
     "meaningEn": "Chinese Character-Japanese (e.g. dictionary)",
-    "meaningJa": "漢和",
+    "meaningJa": "漢字の意味を日本語で説明した辞書。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99077,7 +99289,9 @@
       "漢和辞典 (kamus kanji)",
       "漢和辞典を引く (membuka kamus kanji)",
       "漢和辞典で調べる (mencari di kamus kanji)"
-    ]
+    ],
+    "definitionId": "Kamus yang menjelaskan makna kanji dalam bahasa Jepang.",
+    "meaningJaId": "Kamus yang menjelaskan makna kanji dalam bahasa Jepang."
   },
   "kotoba_n2_0506": {
     "id": "kotoba_n2_0506",
@@ -99085,7 +99299,7 @@
     "reading": "あまやかす",
     "meaningId": "Memanjakan; merusak",
     "meaningEn": "to pamper; to spoil",
-    "meaningJa": "甘やかす",
+    "meaningJa": "必要以上にかわいがる。わがままを許す。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -99100,7 +99314,9 @@
       "子供を甘やかす (memanjakan anak)",
       "甘やかされる (dimanjakan)",
       "甘やかして育てる (membesarkan dengan memanjakan)"
-    ]
+    ],
+    "definitionId": "Memanjakan secara berlebihan.",
+    "meaningJaId": "Memanjakan secara berlebihan."
   },
   "kotoba_n2_0507": {
     "id": "kotoba_n2_0507",
@@ -99108,7 +99324,7 @@
     "reading": "かんばん",
     "meaningId": "Papan nama",
     "meaningEn": "sign; signboard; doorplate",
-    "meaningJa": "看板",
+    "meaningJa": "店の名前などを書いて掲げる板。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99124,7 +99340,9 @@
       "看板を出す (memasang papan nama)",
       "看板娘 (anak perempuan pemilik toko)",
       "店の看板 (papan nama toko)"
-    ]
+    ],
+    "definitionId": "Papan nama yang dipasang di depan toko.",
+    "meaningJaId": "Papan nama yang dipasang di depan toko."
   },
   "kotoba_n2_0508": {
     "id": "kotoba_n2_0508",
@@ -99132,7 +99350,7 @@
     "reading": "かんびょう",
     "meaningId": "Keperawatan (pasien)",
     "meaningEn": "nursing (a patient)",
-    "meaningJa": "看病",
+    "meaningJa": "病人の世話をすること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99148,7 +99366,9 @@
       "病人を看病する (merawat orang sakit)",
       "看病する (merawat)",
       "夜通し看病 (merawat semalaman)"
-    ]
+    ],
+    "definitionId": "Merawat dan menjaga orang sakit.",
+    "meaningJaId": "Merawat dan menjaga orang sakit."
   },
   "kotoba_n2_0509": {
     "id": "kotoba_n2_0509",
@@ -99156,7 +99376,7 @@
     "reading": "ゆるい",
     "meaningId": "Longgar; lunak; lambat",
     "meaningEn": "loose; lenient; slow",
-    "meaningJa": "緩い",
+    "meaningJa": "引き締まっていない。ゆったりしている。",
     "jlpt": "N2",
     "wordType": "adjective-i",
     "kanjiComponents": [
@@ -99171,7 +99391,9 @@
       "緩い坂 (tanjakan landai)",
       "ベルトが緩い (sabuk longgar)",
       "緩くなる (menjadi longgar)"
-    ]
+    ],
+    "definitionId": "Tidak kencang atau longgar; juga landai dan lambat.",
+    "meaningJaId": "Tidak kencang atau longgar; juga landai dan lambat."
   },
   "kotoba_n2_0510": {
     "id": "kotoba_n2_0510",
@@ -99179,7 +99401,7 @@
     "reading": "かんづめ",
     "meaningId": "Makanan kaleng; pengalengan",
     "meaningEn": "packing (in cans); canning; canned goods",
-    "meaningJa": "缶詰",
+    "meaningJa": "食品を缶に詰めて保存したもの。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99195,7 +99417,9 @@
       "缶詰を開ける (membuka makanan kaleng)",
       "缶詰にする (mengalengkan)",
       "缶詰の魚 (ikan kaleng)"
-    ]
+    ],
+    "definitionId": "Makanan awet yang dikemas dalam kaleng.",
+    "meaningJaId": "Makanan awet yang dikemas dalam kaleng."
   },
   "kotoba_n2_0511": {
     "id": "kotoba_n2_0511",
@@ -99203,7 +99427,7 @@
     "reading": "かんそく",
     "meaningId": "Pengamatan",
     "meaningEn": "observation",
-    "meaningJa": "観測",
+    "meaningJa": "自然現象などを観察して測ること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99219,7 +99443,9 @@
       "天気を観測する (mengamati cuaca)",
       "観測所 (stasiun pengamatan)",
       "気象観測 (pengamatan cuaca)"
-    ]
+    ],
+    "definitionId": "Mengamati dan mengukur gejala alam.",
+    "meaningJaId": "Mengamati dan mengukur gejala alam."
   },
   "kotoba_n2_0512": {
     "id": "kotoba_n2_0512",
@@ -99227,7 +99453,7 @@
     "reading": "かんねん",
     "meaningId": "Konsep; gagasan",
     "meaningEn": "idea; notion; sense (e.g. of duty)",
-    "meaningJa": "観念",
+    "meaningJa": "ある物事についての考え。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99243,7 +99469,9 @@
       "固定観念 (konsep yang kaku)",
       "観念する (pasrah)",
       "時間の観念 (konsep waktu)"
-    ]
+    ],
+    "definitionId": "Pandangan atau pengertian tentang sesuatu.",
+    "meaningJaId": "Pandangan atau pengertian tentang sesuatu."
   },
   "kotoba_n2_0513": {
     "id": "kotoba_n2_0513",
@@ -99251,7 +99479,7 @@
     "reading": "かんしょう",
     "meaningId": "Apresiasi",
     "meaningEn": "appreciation",
-    "meaningJa": "鑑賞",
+    "meaningJa": "芸術などを味わって楽しむこと。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99267,7 +99495,9 @@
       "音楽を鑑賞する (mengapresiasi musik)",
       "映画鑑賞 (menonton film)",
       "絵画鑑賞 (mengapresiasi lukisan)"
-    ]
+    ],
+    "definitionId": "Menikmati dan menghargai karya seni.",
+    "meaningJaId": "Menikmati dan menghargai karya seni."
   },
   "kotoba_n2_0514": {
     "id": "kotoba_n2_0514",
@@ -99275,7 +99505,7 @@
     "reading": "まもなく",
     "meaningId": "Sebentar lagi; tak lama lagi",
     "meaningEn": "soon; before long; in a short time",
-    "meaningJa": "間も無く",
+    "meaningJa": "少しすると。やがて。",
     "jlpt": "N2",
     "wordType": "adverb",
     "kanjiComponents": [
@@ -99291,7 +99521,9 @@
       "間も無く到着する (sebentar lagi tiba)",
       "間も無く始まる (sebentar lagi dimulai)",
       "間も無く終わる (sebentar lagi selesai)"
-    ]
+    ],
+    "definitionId": "Tidak lama lagi.",
+    "meaningJaId": "Tidak lama lagi."
   },
   "kotoba_n2_0515": {
     "id": "kotoba_n2_0515",
@@ -99299,7 +99531,7 @@
     "reading": "かんかく",
     "meaningId": "Jarak; interval",
     "meaningEn": "space; interval; SPC",
-    "meaningJa": "間隔",
+    "meaningJa": "物と物とのあいだの距離。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99315,7 +99547,9 @@
       "間隔を空ける (memberi jarak)",
       "等間隔 (jarak sama)",
       "十分間隔 (interval sepuluh menit)"
-    ]
+    ],
+    "definitionId": "Jarak atau selang antara dua benda atau kejadian.",
+    "meaningJaId": "Jarak atau selang antara dua benda atau kejadian."
   },
   "kotoba_n2_0516": {
     "id": "kotoba_n2_0516",
@@ -99323,7 +99557,7 @@
     "reading": "かんせつ",
     "meaningId": "Tidak langsung",
     "meaningEn": "indirection; indirectness",
-    "meaningJa": "間接",
+    "meaningJa": "他のものを通して関係すること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99339,7 +99573,9 @@
       "間接的な (secara tidak langsung)",
       "間接的に聞く (mendengar secara tidak langsung)",
       "間接照明 (pencahayaan tidak langsung)"
-    ]
+    ],
+    "definitionId": "Berhubungan melalui perantara.",
+    "meaningJaId": "Berhubungan melalui perantara."
   },
   "kotoba_n2_0517": {
     "id": "kotoba_n2_0517",
@@ -99347,7 +99583,7 @@
     "reading": "かんとう",
     "meaningId": "Separuh bagian timur Jepang; termasuk Tokyo",
     "meaningEn": "eastern half of Japan; including Tokyo",
-    "meaningJa": "関東",
+    "meaningJa": "日本の本州の東側の地方。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99363,7 +99599,9 @@
       "関東地方 (wilayah Kanto)",
       "関東平野 (dataran Kanto)",
       "関東大震災 (gempa besar Kanto)"
-    ]
+    ],
+    "definitionId": "Wilayah di timur Honshu yang mencakup Tokyo.",
+    "meaningJaId": "Wilayah di timur Honshu yang mencakup Tokyo."
   },
   "kotoba_n2_0518": {
     "id": "kotoba_n2_0518",
@@ -99371,7 +99609,7 @@
     "reading": "ふくめる",
     "meaningId": "Memasukkan; menyertakan",
     "meaningEn": "to include; to instruct; to make one understand",
-    "meaningJa": "含める",
+    "meaningJa": "全体の中に入れる。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -99386,7 +99624,9 @@
       "税金を含める (memasukkan pajak)",
       "費用に含める (memasukkan dalam biaya)",
       "私も含めて (termasuk saya)"
-    ]
+    ],
+    "definitionId": "Menyertakan sesuatu sebagai bagian dari keseluruhan.",
+    "meaningJaId": "Menyertakan sesuatu sebagai bagian dari keseluruhan."
   },
   "kotoba_n2_0519": {
     "id": "kotoba_n2_0519",
@@ -99394,7 +99634,7 @@
     "reading": "あやうい",
     "meaningId": "Berbahaya; genting",
     "meaningEn": "dangerous; critical; grave",
-    "meaningJa": "危うい",
+    "meaningJa": "あぶなくて心配な様子。",
     "jlpt": "N2",
     "wordType": "adjective-i",
     "kanjiComponents": [
@@ -99409,7 +99649,9 @@
       "危うい状況 (situasi genting)",
       "危うく助かる (nyaris selamat)",
       "危うい立場 (posisi genting)"
-    ]
+    ],
+    "definitionId": "Berbahaya dan mengkhawatirkan.",
+    "meaningJaId": "Berbahaya dan mengkhawatirkan."
   },
   "kotoba_n2_0520": {
     "id": "kotoba_n2_0520",
@@ -99417,7 +99659,7 @@
     "reading": "きかい",
     "meaningId": "Alat; instrumen",
     "meaningEn": "instrument",
-    "meaningJa": "器械",
+    "meaningJa": "簡単な仕組みの道具。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99433,7 +99675,9 @@
       "器械体操 (senam alat)",
       "医療器械 (alat medis)",
       "器械を使う (memakai alat)"
-    ]
+    ],
+    "definitionId": "Peralatan sederhana atau instrumen.",
+    "meaningJaId": "Peralatan sederhana atau instrumen."
   },
   "kotoba_n2_0521": {
     "id": "kotoba_n2_0521",
@@ -99465,7 +99709,7 @@
     "reading": "きじゅん",
     "meaningId": "Standar; patokan",
     "meaningEn": "standard; basis; criteria",
-    "meaningJa": "基準",
+    "meaningJa": "物事を決めるよりどころ。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99481,7 +99725,9 @@
       "基準を満たす (memenuhi standar)",
       "基準値 (nilai standar)",
       "安全基準 (standar keselamatan)"
-    ]
+    ],
+    "definitionId": "Patokan yang dijadikan dasar penilaian.",
+    "meaningJaId": "Patokan yang dijadikan dasar penilaian."
   },
   "kotoba_n2_0523": {
     "id": "kotoba_n2_0523",
@@ -99489,7 +99735,7 @@
     "reading": "きそ",
     "meaningId": "foundation; dasar / landasan",
     "meaningEn": "foundation; basis",
-    "meaningJa": "基礎",
+    "meaningJa": "物事の土台。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99505,7 +99751,9 @@
       "基礎を学ぶ (mempelajari dasar)",
       "基礎知識 (pengetahuan dasar)",
       "基礎工事 (pekerjaan pondasi)"
-    ]
+    ],
+    "definitionId": "Dasar atau fondasi suatu hal.",
+    "meaningJaId": "Dasar atau fondasi suatu hal."
   },
   "kotoba_n2_0524": {
     "id": "kotoba_n2_0524",
@@ -99513,7 +99761,7 @@
     "reading": "きち",
     "meaningId": "Pangkalan",
     "meaningEn": "base",
-    "meaningJa": "基地",
+    "meaningJa": "活動の拠点となる場所。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99529,7 +99777,9 @@
       "軍事基地 (pangkalan militer)",
       "基地を作る (membangun pangkalan)",
       "米軍基地 (pangkalan militer AS)"
-    ]
+    ],
+    "definitionId": "Tempat yang menjadi pusat kegiatan, seperti pangkalan militer.",
+    "meaningJaId": "Tempat yang menjadi pusat kegiatan, seperti pangkalan militer."
   },
   "kotoba_n2_0525": {
     "id": "kotoba_n2_0525",
@@ -99537,7 +99787,7 @@
     "reading": "きばん",
     "meaningId": "foundation; dasar / landasan",
     "meaningEn": "foundation; basis",
-    "meaningJa": "基盤",
+    "meaningJa": "ものごとの土台。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99553,7 +99803,9 @@
       "生活の基盤 (landasan hidup)",
       "基盤を築く (membangun landasan)",
       "経済基盤 (landasan ekonomi)"
-    ]
+    ],
+    "definitionId": "Landasan tempat suatu hal berdiri.",
+    "meaningJaId": "Landasan tempat suatu hal berdiri."
   },
   "kotoba_n2_0526": {
     "id": "kotoba_n2_0526",
@@ -99561,7 +99813,7 @@
     "reading": "よせる",
     "meaningId": "Mendekatkan; memesan (取り寄せる)",
     "meaningEn": "to collect; to gather; to add",
-    "meaningJa": "寄せる",
+    "meaningJa": "近くに動かす。集める。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -99576,7 +99828,9 @@
       "身を寄せる (bernaung)",
       "椅子を寄せる (mendekatkan kursi)",
       "本を取り寄せる (memesan buku)"
-    ]
+    ],
+    "definitionId": "Mendekatkan sesuatu; juga mengumpulkan atau memesan.",
+    "meaningJaId": "Mendekatkan sesuatu; juga mengumpulkan atau memesan."
   },
   "kotoba_n2_0527": {
     "id": "kotoba_n2_0527",
@@ -99584,7 +99838,7 @@
     "reading": "いくぶん",
     "meaningId": "Agak; sedikit",
     "meaningEn": "somewhat",
-    "meaningJa": "幾分",
+    "meaningJa": "少しだけ。ある程度。",
     "jlpt": "N2",
     "wordType": "adverb",
     "kanjiComponents": [
@@ -99600,7 +99854,9 @@
       "幾分良くなる (agak membaik)",
       "幾分か (sedikit)",
       "幾分寒い (agak dingin)"
-    ]
+    ],
+    "definitionId": "Sedikit atau sampai taraf tertentu.",
+    "meaningJaId": "Sedikit atau sampai taraf tertentu."
   },
   "kotoba_n2_0528": {
     "id": "kotoba_n2_0528",
@@ -99608,7 +99864,7 @@
     "reading": "きげん",
     "meaningId": "Batas waktu",
     "meaningEn": "term; period",
-    "meaningJa": "期限",
+    "meaningJa": "決められた日時。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99624,7 +99880,9 @@
       "期限が切れる (batas waktu habis)",
       "期限を守る (menepati batas waktu)",
       "提出期限 (batas pengumpulan)"
-    ]
+    ],
+    "definitionId": "Batas waktu yang telah ditentukan.",
+    "meaningJaId": "Batas waktu yang telah ditentukan."
   },
   "kotoba_n2_0529": {
     "id": "kotoba_n2_0529",
@@ -99632,7 +99890,7 @@
     "reading": "きかんしゃ",
     "meaningId": "Lokomotif; mesin",
     "meaningEn": "locomotive; engine",
-    "meaningJa": "機関車",
+    "meaningJa": "列車を引っ張って走る車両。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99649,7 +99907,9 @@
       "機関車が走る (lokomotif melaju)",
       "蒸気機関車 (lokomotif uap)",
       "機関車トーマス (Thomas si lokomotif)"
-    ]
+    ],
+    "definitionId": "Kendaraan penarik kereta; lokomotif.",
+    "meaningJaId": "Kendaraan penarik kereta; lokomotif."
   },
   "kotoba_n2_0530": {
     "id": "kotoba_n2_0530",
@@ -99657,7 +99917,7 @@
     "reading": "かえす",
     "meaningId": "Memulangkan; mengirim pulang",
     "meaningEn": "to send back",
-    "meaningJa": "帰す",
+    "meaningJa": "もとの場所に行かせる。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -99672,7 +99932,9 @@
       "客を帰す (memulangkan tamu)",
       "子供を家に帰す (memulangkan anak ke rumah)",
       "そのまま帰す (memulangkan begitu saja)"
-    ]
+    ],
+    "definitionId": "Menyuruh pulang atau mengembalikan ke tempat asal.",
+    "meaningJaId": "Menyuruh pulang atau mengembalikan ke tempat asal."
   },
   "kotoba_n2_0531": {
     "id": "kotoba_n2_0531",
@@ -99680,7 +99942,7 @@
     "reading": "きをつける",
     "meaningId": "Hati-hati; memperhatikan; berhati-hatilah",
     "meaningEn": "to be careful; to pay attention; to take care",
-    "meaningJa": "気を付ける",
+    "meaningJa": "注意する。気を配る。",
     "jlpt": "N2",
     "wordType": "expression",
     "kanjiComponents": [
@@ -99696,7 +99958,9 @@
       "足元に気を付ける (hati-hati dengan langkah)",
       "火に気を付ける (waspada api)",
       "体に気を付ける (jaga tubuh)"
-    ]
+    ],
+    "definitionId": "Berhati-hati dan memperhatikan sesuatu.",
+    "meaningJaId": "Berhati-hati dan memperhatikan sesuatu."
   },
   "kotoba_n2_0532": {
     "id": "kotoba_n2_0532",
@@ -99704,7 +99968,7 @@
     "reading": "きあつ",
     "meaningId": "atmospheric tekanan",
     "meaningEn": "atmospheric pressure",
-    "meaningJa": "気圧",
+    "meaningJa": "空気の重さによる圧力。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99720,7 +99984,9 @@
       "気圧が下がる (tekanan udara turun)",
       "高気圧 (tekanan tinggi)",
       "低気圧 (tekanan rendah)"
-    ]
+    ],
+    "definitionId": "Tekanan yang diakibatkan berat lapisan udara.",
+    "meaningJaId": "Tekanan yang diakibatkan berat lapisan udara."
   },
   "kotoba_n2_0533": {
     "id": "kotoba_n2_0533",
@@ -99728,7 +99994,7 @@
     "reading": "きたい",
     "meaningId": "Uap; gas",
     "meaningEn": "vapour; gas",
-    "meaningJa": "気体",
+    "meaningJa": "水蒸気のように決まった形を持たない物質。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99744,7 +100010,9 @@
       "気体と液体 (gas dan cairan)",
       "気体になる (menjadi gas)",
       "有毒な気体 (gas beracun)"
-    ]
+    ],
+    "definitionId": "Zat tanpa bentuk tetap seperti uap atau gas.",
+    "meaningJaId": "Zat tanpa bentuk tetap seperti uap atau gas."
   },
   "kotoba_n2_0534": {
     "id": "kotoba_n2_0534",
@@ -99752,7 +100020,7 @@
     "reading": "けはい",
     "meaningId": "Tanda-tanda; suasana",
     "meaningEn": "indication; market trend; worry",
-    "meaningJa": "気配",
+    "meaningJa": "何かがいるような様子。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99768,7 +100036,9 @@
       "人の気配 (tanda keberadaan orang)",
       "秋の気配 (suasana musim gugur)",
       "気配を感じる (merasakan kehadiran)"
-    ]
+    ],
+    "definitionId": "Tanda halus yang menyiratkan adanya sesuatu.",
+    "meaningJaId": "Tanda halus yang menyiratkan adanya sesuatu."
   },
   "kotoba_n2_0535": {
     "id": "kotoba_n2_0535",
@@ -99776,7 +100046,7 @@
     "reading": "まれ",
     "meaningId": "Langka; jarang",
     "meaningEn": "rare; seldom",
-    "meaningJa": "稀",
+    "meaningJa": "めったにない様子。",
     "jlpt": "N2",
     "wordType": "adjective-na",
     "kanjiComponents": [
@@ -99791,7 +100061,9 @@
       "稀な例 (contoh langka)",
       "稀に見る (jarang terlihat)",
       "稀にしかない (sangat jarang)"
-    ]
+    ],
+    "definitionId": "Jarang terjadi; langka.",
+    "meaningJaId": "Jarang terjadi; langka."
   },
   "kotoba_n2_0536": {
     "id": "kotoba_n2_0536",
@@ -99799,7 +100071,7 @@
     "reading": "きじゅん",
     "meaningId": "Standar; patokan",
     "meaningEn": "standard; basis; criteria",
-    "meaningJa": "規準",
+    "meaningJa": "物事を決めるよりどころ。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99815,7 +100087,9 @@
       "規準を設ける (menetapkan patokan)",
       "判断の規準 (patokan penilaian)",
       "規準に従う (mengikuti patokan)"
-    ]
+    ],
+    "definitionId": "Patokan untuk menilai atau memutuskan sesuatu.",
+    "meaningJaId": "Patokan untuk menilai atau memutuskan sesuatu."
   },
   "kotoba_n2_0537": {
     "id": "kotoba_n2_0537",
@@ -99823,7 +100097,7 @@
     "reading": "きりつ",
     "meaningId": "Disiplin; tata tertib",
     "meaningEn": "order; rules; law",
-    "meaningJa": "規律",
+    "meaningJa": "集団の秩序を保つための決まり。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99839,7 +100113,9 @@
       "規律を守る (menjaga disiplin)",
       "規律正しい (disiplin)",
       "規律が乱れる (disiplin kacau)"
-    ]
+    ],
+    "definitionId": "Aturan yang menjaga keteraturan sebuah kelompok.",
+    "meaningJaId": "Aturan yang menjaga keteraturan sebuah kelompok."
   },
   "kotoba_n2_0538": {
     "id": "kotoba_n2_0538",
@@ -99847,7 +100123,7 @@
     "reading": "きごう",
     "meaningId": "Simbol; kode",
     "meaningEn": "symbol; code",
-    "meaningJa": "記号",
+    "meaningJa": "意味を表すしるし。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99863,7 +100139,9 @@
       "記号を書く (menulis simbol)",
       "化学記号 (simbol kimia)",
       "発音記号 (simbol fonetik)"
-    ]
+    ],
+    "definitionId": "Tanda yang mewakili suatu arti.",
+    "meaningJaId": "Tanda yang mewakili suatu arti."
   },
   "kotoba_n2_0539": {
     "id": "kotoba_n2_0539",
@@ -99871,7 +100149,7 @@
     "reading": "きしょう",
     "meaningId": "Bangun tidur",
     "meaningEn": "rising; getting out of bed",
-    "meaningJa": "おきる",
+    "meaningJa": "寝ていた人が起きること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99892,7 +100170,9 @@
       "朝六時に起床する (bangun pukul enam pagi)",
       "起床時間 (waktu bangun)",
       "起床ラッパ (terompet bangun)"
-    ]
+    ],
+    "definitionId": "Bangun dari tempat tidur.",
+    "meaningJaId": "Bangun dari tempat tidur."
   },
   "kotoba_n2_0540": {
     "id": "kotoba_n2_0540",
@@ -99900,7 +100180,7 @@
     "reading": "うえる",
     "meaningId": "Kelaparan",
     "meaningEn": "to starve",
-    "meaningJa": "飢える",
+    "meaningJa": "食べ物がなくておなかがすく。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -99915,7 +100195,9 @@
       "飢える人 (orang yang kelaparan)",
       "飢えと寒さ (kelaparan dan kedinginan)",
       "愛に飢える (haus kasih sayang)"
-    ]
+    ],
+    "definitionId": "Sangat lapar karena tidak ada makanan.",
+    "meaningJaId": "Sangat lapar karena tidak ada makanan."
   },
   "kotoba_n2_0541": {
     "id": "kotoba_n2_0541",
@@ -99923,7 +100205,7 @@
     "reading": "ききん",
     "meaningId": "Kelaparan (bencana)",
     "meaningEn": "famine",
-    "meaningJa": "飢饉",
+    "meaningJa": "作物が実らず食べ物が、足りなくなること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99939,7 +100221,9 @@
       "飢饉が起こる (kelaparan melanda)",
       "大飢饉 (kelaparan besar)",
       "飢饉に苦しむ (menderita kelaparan)"
-    ]
+    ],
+    "definitionId": "Bencana kekurangan pangan akibat gagal panen.",
+    "meaningJaId": "Bencana kekurangan pangan akibat gagal panen."
   },
   "kotoba_n2_0542": {
     "id": "kotoba_n2_0542",
@@ -99947,7 +100231,7 @@
     "reading": "ぎしき",
     "meaningId": "Upacara; ritual",
     "meaningEn": "ceremony; rite; ritual",
-    "meaningJa": "儀式",
+    "meaningJa": "決まった形式で行う行事。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -99963,7 +100247,9 @@
       "儀式を行う (melaksanakan upacara)",
       "結婚の儀式 (upacara pernikahan)",
       "厳かな儀式 (upacara khidmat)"
-    ]
+    ],
+    "definitionId": "Acara yang dilakukan dengan tata cara tertentu.",
+    "meaningJaId": "Acara yang dilakukan dengan tata cara tertentu."
   },
   "kotoba_n2_0543": {
     "id": "kotoba_n2_0543",
@@ -99971,7 +100257,7 @@
     "reading": "つまる",
     "meaningId": "Tersumbat; penuh",
     "meaningEn": "to be blocked; to be packed",
-    "meaningJa": "詰まる",
+    "meaningJa": "ふさがって通らなくなる。いっぱいになる。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -99986,7 +100272,9 @@
       "鼻が詰まる (hidung tersumbat)",
       "排水管が詰まる (pipa pembuangan tersumbat)",
       "予定が詰まる (jadwal padat)"
-    ]
+    ],
+    "definitionId": "Tersumbat sehingga tidak bisa lewat; juga penuh sesak.",
+    "meaningJaId": "Tersumbat sehingga tidak bisa lewat; juga penuh sesak."
   },
   "kotoba_n2_0544": {
     "id": "kotoba_n2_0544",
@@ -99994,7 +100282,7 @@
     "reading": "かえって",
     "meaningId": "Sebaliknya; justru",
     "meaningEn": "on the contrary; rather; all the more",
-    "meaningJa": "却って",
+    "meaningJa": "思ったのとは反対に。",
     "jlpt": "N2",
     "wordType": "adverb",
     "kanjiComponents": [
@@ -100009,7 +100297,9 @@
       "却って迷惑 (justru merepotkan)",
       "却って悪い (malah lebih buruk)",
       "却って好都合 (justru menguntungkan)"
-    ]
+    ],
+    "definitionId": "Justru sebaliknya dari yang diperkirakan.",
+    "meaningJaId": "Justru sebaliknya dari yang diperkirakan."
   },
   "kotoba_n2_0545": {
     "id": "kotoba_n2_0545",
@@ -100017,7 +100307,7 @@
     "reading": "きゃくま",
     "meaningId": "Ruang tamu",
     "meaningEn": "parlor; guest room",
-    "meaningJa": "客間",
+    "meaningJa": "訪ねてきた客を通す部屋。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -100033,7 +100323,9 @@
       "客間に通す (mempersilakan ke ruang tamu)",
       "客間で待つ (menunggu di ruang tamu)",
       "広い客間 (ruang tamu luas)"
-    ]
+    ],
+    "definitionId": "Ruangan untuk menerima tamu.",
+    "meaningJaId": "Ruangan untuk menerima tamu."
   },
   "kotoba_n2_0546": {
     "id": "kotoba_n2_0546",
@@ -100041,7 +100333,7 @@
     "reading": "きゃくせき",
     "meaningId": "Kursi penonton",
     "meaningEn": "guest seating",
-    "meaningJa": "客席",
+    "meaningJa": "劇場などで客が座る席。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -100057,7 +100349,9 @@
       "客席に座る (duduk di kursi penonton)",
       "客席から見る (melihat dari kursi penonton)",
       "客席が満員 (kursi penonton penuh)"
-    ]
+    ],
+    "definitionId": "Kursi tempat penonton duduk.",
+    "meaningJaId": "Kursi tempat penonton duduk."
   },
   "kotoba_n2_0547": {
     "id": "kotoba_n2_0547",
@@ -100065,7 +100359,7 @@
     "reading": "さかさ",
     "meaningId": "Terbalik",
     "meaningEn": "reverse; inversion; upside down",
-    "meaningJa": "逆さ",
+    "meaningJa": "上下や前後が反対になること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -100080,7 +100374,9 @@
       "逆さにする (membalikkan)",
       "逆さに持つ (memegang terbalik)",
       "逆さ吊り (digantung terbalik)"
-    ]
+    ],
+    "definitionId": "Keadaan atas-bawah atau depan-belakang terbalik.",
+    "meaningJaId": "Keadaan atas-bawah atau depan-belakang terbalik."
   },
   "kotoba_n2_0548": {
     "id": "kotoba_n2_0548",
@@ -100088,7 +100384,7 @@
     "reading": "さかさま",
     "meaningId": "Terbalik; kebalikan",
     "meaningEn": "inversion; upside down",
-    "meaningJa": "逆様",
+    "meaningJa": "順序や向きが反対であること。",
     "jlpt": "N2",
     "wordType": "adjective-na",
     "kanjiComponents": [
@@ -100104,7 +100400,9 @@
       "逆様になる (menjadi terbalik)",
       "逆様に置く (menaruh terbalik)",
       "上下逆様 (terbalik atas bawah)"
-    ]
+    ],
+    "definitionId": "Kebalikan dari yang semestinya.",
+    "meaningJaId": "Kebalikan dari yang semestinya."
   },
   "kotoba_n2_0549": {
     "id": "kotoba_n2_0549",
@@ -100112,7 +100410,7 @@
     "reading": "きゅうぎょう",
     "meaningId": "Tutup sementara (toko); libur usaha; penutupan operasional",
     "meaningEn": "closed (e.g. store); business suspended; shutdown",
-    "meaningJa": "休業",
+    "meaningJa": "店や事業を一時休むこと。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -100128,7 +100426,9 @@
       "店が休業する (toko tutup sementara)",
       "臨時休業 (tutup mendadak)",
       "休業中 (sedang tutup)"
-    ]
+    ],
+    "definitionId": "Berhenti beroperasi sementara waktu untuk usaha.",
+    "meaningJaId": "Berhenti beroperasi sementara waktu untuk usaha."
   },
   "kotoba_n2_0550": {
     "id": "kotoba_n2_0550",
@@ -100136,7 +100436,7 @@
     "reading": "きゅうこう",
     "meaningId": "Kuliah dibatalkan",
     "meaningEn": "lecture cancelled",
-    "meaningJa": "休講",
+    "meaningJa": "先生の都合で授業が行われないこと。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -100152,7 +100452,9 @@
       "授業が休講になる (kuliah dibatalkan)",
       "休講のお知らせ (pengumuman kuliah dibatalkan)",
       "休講掲示 (papan pembatalan kuliah)"
-    ]
+    ],
+    "definitionId": "Kuliah yang ditiadakan karena dosen berhalangan.",
+    "meaningJaId": "Kuliah yang ditiadakan karena dosen berhalangan."
   },
   "kotoba_n2_0551": {
     "id": "kotoba_n2_0551",
@@ -100160,7 +100462,7 @@
     "reading": "きゅうそく",
     "meaningId": "Istirahat",
     "meaningEn": "rest; relief; relaxation",
-    "meaningJa": "休息",
+    "meaningJa": "仕事をやめて体を休めること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -100176,7 +100478,9 @@
       "休息を取る (beristirahat)",
       "休息時間 (waktu istirahat)",
       "心身の休息 (istirahat jiwa raga)"
-    ]
+    ],
+    "definitionId": "Berhenti bekerja untuk beristirahat.",
+    "meaningJaId": "Berhenti bekerja untuk beristirahat."
   },
   "kotoba_n2_0552": {
     "id": "kotoba_n2_0552",
@@ -100184,7 +100488,7 @@
     "reading": "きゅうよう",
     "meaningId": "Istirahat; pemulihan",
     "meaningEn": "rest; break; recreation",
-    "meaningJa": "休養",
+    "meaningJa": "体や心を休めて元気を回復すること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -100200,7 +100504,9 @@
       "休養を取る (mengambil istirahat)",
       "十分に休養する (beristirahat cukup)",
       "休養が必要 (perlu istirahat)"
-    ]
+    ],
+    "definitionId": "Beristirahat untuk memulihkan tenaga dan kesehatan.",
+    "meaningJaId": "Beristirahat untuk memulihkan tenaga dan kesehatan."
   },
   "kotoba_n2_0553": {
     "id": "kotoba_n2_0553",
@@ -100208,7 +100514,7 @@
     "reading": "くむ",
     "meaningId": "Menimba (air); menyendok",
     "meaningEn": "to draw (water); to dip; to scoop",
-    "meaningJa": "汲む",
+    "meaningJa": "水などをすくい取る。人の気持ちを思いやる。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -100223,7 +100529,9 @@
       "水を汲む (menimba air)",
       "お茶を汲む (menuang teh)",
       "気持ちを汲む (memahami perasaan)"
-    ]
+    ],
+    "definitionId": "Menimba atau menyendok cairan; juga memahami perasaan orang.",
+    "meaningJaId": "Menimba atau menyendok cairan; juga memahami perasaan orang."
   },
   "kotoba_n2_0554": {
     "id": "kotoba_n2_0554",
@@ -100231,7 +100539,7 @@
     "reading": "きゅうよ",
     "meaningId": "Gaji; tunjangan",
     "meaningEn": "allowance; grant; supply",
-    "meaningJa": "給与",
+    "meaningJa": "会社などが支払う給料や手当。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -100247,7 +100555,9 @@
       "給与を受ける (menerima gaji)",
       "給与明細 (slip gaji)",
       "給与が上がる (gaji naik)"
-    ]
+    ],
+    "definitionId": "Gaji atau tunjangan yang dibayarkan perusahaan.",
+    "meaningJaId": "Gaji atau tunjangan yang dibayarkan perusahaan."
   },
   "kotoba_n2_0555": {
     "id": "kotoba_n2_0555",
@@ -100255,7 +100565,7 @@
     "reading": "あげる",
     "meaningId": "Mengangkat; mengadakan (upacara)",
     "meaningEn": "to raise; to fly",
-    "meaningJa": "挙げる",
+    "meaningJa": "高く持ち上げる。式などを行う。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -100270,7 +100580,9 @@
       "例を挙げる (memberi contoh)",
       "結婚式を挙げる (mengadakan pernikahan)",
       "手を挙げる (mengangkat tangan)"
-    ]
+    ],
+    "definitionId": "Mengangkat tinggi-tinggi; juga mengadakan upacara; menyebutkan contoh.",
+    "meaningJaId": "Mengangkat tinggi-tinggi; juga mengadakan upacara; menyebutkan contoh."
   },
   "kotoba_n2_0556": {
     "id": "kotoba_n2_0556",
@@ -100278,7 +100590,7 @@
     "reading": "ぎょぎょう",
     "meaningId": "Perikanan",
     "meaningEn": "fishing (industry)",
-    "meaningJa": "漁業",
+    "meaningJa": "魚や貝などをとって売る産業。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -100294,7 +100606,9 @@
       "漁業が盛ん (perikanan maju)",
       "漁業組合 (koperasi nelayan)",
       "沿岸漁業 (perikanan pantai)"
-    ]
+    ],
+    "definitionId": "Usaha menangkap dan menjual ikan dan hasil laut.",
+    "meaningJaId": "Usaha menangkap dan menjual ikan dan hasil laut."
   },
   "kotoba_n2_0557": {
     "id": "kotoba_n2_0557",
@@ -100302,7 +100616,7 @@
     "reading": "りょうし",
     "meaningId": "Nelayan",
     "meaningEn": "fisherman",
-    "meaningJa": "漁師",
+    "meaningJa": "魚などをとることを仕事とする人。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -100318,7 +100632,9 @@
       "漁師になる (menjadi nelayan)",
       "漁師町 (kota nelayan)",
       "漁師の網 (jaring nelayan)"
-    ]
+    ],
+    "definitionId": "Orang yang pekerjaannya menangkap ikan.",
+    "meaningJaId": "Orang yang pekerjaannya menangkap ikan."
   },
   "kotoba_n2_0558": {
     "id": "kotoba_n2_0558",
@@ -100326,7 +100642,7 @@
     "reading": "けいば",
     "meaningId": "Balap kuda",
     "meaningEn": "horse racing",
-    "meaningJa": "競馬",
+    "meaningJa": "馬を走らせて勝ち負けを競う競技。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -100342,7 +100658,9 @@
       "競馬をする (berjudi balap kuda)",
       "競馬場 (arena pacuan kuda)",
       "競馬の馬 (kuda pacu)"
-    ]
+    ],
+    "definitionId": "Perlombaan adu kecepatan kuda.",
+    "meaningJaId": "Perlombaan adu kecepatan kuda."
   },
   "kotoba_n2_0559": {
     "id": "kotoba_n2_0559",
@@ -100350,7 +100668,7 @@
     "reading": "きょうかい",
     "meaningId": "Batas",
     "meaningEn": "boundary",
-    "meaningJa": "境界",
+    "meaningJa": "土地などの分かれ目。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -100366,7 +100684,9 @@
       "境界線 (garis batas)",
       "境界を越える (melewati batas)",
       "土地の境界 (batas tanah)"
-    ]
+    ],
+    "definitionId": "Garis pemisah antar wilayah atau bidang.",
+    "meaningJaId": "Garis pemisah antar wilayah atau bidang."
   },
   "kotoba_n2_0560": {
     "id": "kotoba_n2_0560",
@@ -100374,7 +100694,7 @@
     "reading": "ごういん",
     "meaningId": "Memaksa; sewenang-wenang",
     "meaningEn": "overbearing; coercive; pushy",
-    "meaningJa": "強引",
+    "meaningJa": "無理にでも押し通すこと。",
     "jlpt": "N2",
     "wordType": "adjective-na",
     "kanjiComponents": [
@@ -100390,7 +100710,9 @@
       "強引に進める (memaksakan jalannya)",
       "強引な人 (orang yang suka memaksa)",
       "強引に誘う (mengajak dengan memaksa)"
-    ]
+    ],
+    "definitionId": "Memaksakan kehendak dengan cara kasar.",
+    "meaningJaId": "Memaksakan kehendak dengan cara kasar."
   },
   "kotoba_n2_0561": {
     "id": "kotoba_n2_0561",
@@ -100398,7 +100720,7 @@
     "reading": "きょうか",
     "meaningId": "Memperkuat",
     "meaningEn": "strengthen; intensify; reinforce",
-    "meaningJa": "強化",
+    "meaningJa": "より強くすること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -100414,7 +100736,9 @@
       "体制を強化する (memperkuat sistem)",
       "強化する (memperkuat)",
       "強化合宿 (kamp pelatihan intensif)"
-    ]
+    ],
+    "definitionId": "Membuat sesuatu menjadi lebih kuat.",
+    "meaningJaId": "Membuat sesuatu menjadi lebih kuat."
   },
   "kotoba_n2_0562": {
     "id": "kotoba_n2_0562",
@@ -100422,7 +100746,7 @@
     "reading": "つよき",
     "meaningId": "Tegas; agresif",
     "meaningEn": "firm; strong",
-    "meaningJa": "強気",
+    "meaningJa": "強く出る気持ち。自信を持って積極的である様子。",
     "jlpt": "N2",
     "wordType": "adjective-na",
     "kanjiComponents": [
@@ -100438,7 +100762,9 @@
       "強気で言う (berkata dengan tegas)",
       "強気な態度 (sikap agresif)",
       "強気になる (menjadi percaya diri)"
-    ]
+    ],
+    "definitionId": "Sikap berani dan percaya diri; agresif.",
+    "meaningJaId": "Sikap berani dan percaya diri; agresif."
   },
   "kotoba_n2_0563": {
     "id": "kotoba_n2_0563",
@@ -100446,7 +100772,7 @@
     "reading": "きょうしゅく",
     "meaningId": "Merasa sungkan",
     "meaningEn": "shame; very kind of you; sorry to trouble",
-    "meaningJa": "恐縮",
+    "meaningJa": "相手に迷惑をかけたと申し訳なく思うこと。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -100462,7 +100788,9 @@
       "恐縮です (saya merasa sungkan)",
       "恐縮する (merasa sungkan)",
       "恐縮ですが (maaf merepotkan)"
-    ]
+    ],
+    "definitionId": "Merasa sungkan karena merepotkan orang lain.",
+    "meaningJaId": "Merasa sungkan karena merepotkan orang lain."
   },
   "kotoba_n2_0564": {
     "id": "kotoba_n2_0564",
@@ -100470,7 +100798,7 @@
     "reading": "はさまる",
     "meaningId": "Terjepit; terselip",
     "meaningEn": "to get between; to be caught in",
-    "meaningJa": "挟まる",
+    "meaningJa": "二つのものの間に入って動かなくなる。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -100485,7 +100813,9 @@
       "歯に挟まる (terselip di gigi)",
       "ドアに挟まる (terjepit pintu)",
       "二つの間に挟まる (terjepit di antara dua)"
-    ]
+    ],
+    "definitionId": "Terjepit di antara dua benda.",
+    "meaningJaId": "Terjepit di antara dua benda."
   },
   "kotoba_n2_0565": {
     "id": "kotoba_n2_0565",
@@ -100493,7 +100823,7 @@
     "reading": "はさむ",
     "meaningId": "Menyela; tahan di antara; masukkan",
     "meaningEn": "to interpose; to hold between; to insert",
-    "meaningJa": "挟む",
+    "meaningJa": "二つのものの間に入れる。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -100508,7 +100838,9 @@
       "ドアに指を挟む (jari terjepit pintu)",
       "話に口を挟む (menyela pembicaraan)",
       "間に挟む (menyisipkan di antara)"
-    ]
+    ],
+    "definitionId": "Menyelipkan sesuatu di antara dua benda; juga menyela.",
+    "meaningJaId": "Menyelipkan sesuatu di antara dua benda; juga menyela."
   },
   "kotoba_n2_0566": {
     "id": "kotoba_n2_0566",
@@ -100516,7 +100848,7 @@
     "reading": "おそわる",
     "meaningId": "Diajari; belajar dari",
     "meaningEn": "to be taught",
-    "meaningJa": "教わる",
+    "meaningJa": "教えてもらう。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -100531,7 +100863,9 @@
       "先生から教わる (diajari oleh guru)",
       "ピアノを教わる (belajar piano)",
       "教わったこと (hal yang diajarkan)"
-    ]
+    ],
+    "definitionId": "Menerima pelajaran dari seseorang.",
+    "meaningJaId": "Menerima pelajaran dari seseorang."
   },
   "kotoba_n2_0567": {
     "id": "kotoba_n2_0567",
@@ -100539,7 +100873,7 @@
     "reading": "きょうよう",
     "meaningId": "Pendidikan; wawasan",
     "meaningEn": "culture; education; refinement",
-    "meaningJa": "教養",
+    "meaningJa": "学問や知識を身につけて備わった豊かさ。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -100555,7 +100889,9 @@
       "教養がある (berpendidikan)",
       "教養を身につける (memperoleh wawasan)",
       "一般教養 (pendidikan umum)"
-    ]
+    ],
+    "definitionId": "Wawasan dan pengetahuan yang membentuk kepribadian.",
+    "meaningJaId": "Wawasan dan pengetahuan yang membentuk kepribadian."
   },
   "kotoba_n2_0568": {
     "id": "kotoba_n2_0568",
@@ -100563,7 +100899,7 @@
     "reading": "そば",
     "meaningId": "Soba (mie soba)",
     "meaningEn": "soba (buckwheat noodles)",
-    "meaningJa": "蕎麦",
+    "meaningJa": "そば粉で作った細い麺。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -100579,7 +100915,9 @@
       "蕎麦を食べる (makan soba)",
       "蕎麦屋 (kedai soba)",
       "蕎麦粉 (tepung soba)"
-    ]
+    ],
+    "definitionId": "Mi tipis dari tepung gandum hitam.",
+    "meaningJaId": "Mi tipis dari tepung gandum hitam."
   },
   "kotoba_n2_0569": {
     "id": "kotoba_n2_0569",
@@ -100587,7 +100925,7 @@
     "reading": "ひびき",
     "meaningId": "Gema; resonansi",
     "meaningEn": "echo; sound; reverberation",
-    "meaningJa": "響き",
+    "meaningJa": "音が広がって伝わること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -100602,7 +100940,9 @@
       "鐘の響き (gema lonceng)",
       "音の響き (gema suara)",
       "言葉の響き (bunyi kata)"
-    ]
+    ],
+    "definitionId": "Gema suara yang merambat atau terdengar bergaung.",
+    "meaningJaId": "Gema suara yang merambat atau terdengar bergaung."
   },
   "kotoba_n2_0570": {
     "id": "kotoba_n2_0570",
@@ -100610,7 +100950,7 @@
     "reading": "ひびく",
     "meaningId": "Bergema; berdampak",
     "meaningEn": "to resound",
-    "meaningJa": "響く",
+    "meaningJa": "音や振動が広く伝わる。影響する。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -100625,7 +100965,9 @@
       "音が響く (suara bergema)",
       "心に響く (menyentuh hati)",
       "声が響く (suara menggema)"
-    ]
+    ],
+    "definitionId": "Suara bergema; juga berdampak ke sekitar.",
+    "meaningJaId": "Suara bergema; juga berdampak ke sekitar."
   },
   "kotoba_n2_0571": {
     "id": "kotoba_n2_0571",
@@ -100633,7 +100975,7 @@
     "reading": "おどろかす",
     "meaningId": "Mengejutkan; mengagetkan",
     "meaningEn": "to surprise; to frighten; to create a stir",
-    "meaningJa": "驚かす",
+    "meaningJa": "びっくりさせる。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -100648,7 +100990,9 @@
       "人を驚かす (mengejutkan orang)",
       "世間を驚かす (menggemparkan masyarakat)",
       "驚かせる (mengagetkan)"
-    ]
+    ],
+    "definitionId": "Membuat orang terkejut.",
+    "meaningJaId": "Membuat orang terkejut."
   },
   "kotoba_n2_0572": {
     "id": "kotoba_n2_0572",
@@ -100656,7 +101000,7 @@
     "reading": "まげる",
     "meaningId": "Membengkokkan; menekuk",
     "meaningEn": "to bend; to crook; to lean",
-    "meaningJa": "曲げる",
+    "meaningJa": "まっすぐなものを、曲がった形にする。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -100671,7 +101015,9 @@
       "針金を曲げる (membengkokkan kawat)",
       "膝を曲げる (menekuk lutut)",
       "事実を曲げる (memutarbalikkan fakta)"
-    ]
+    ],
+    "definitionId": "Membengkokkan atau menekuk benda lurus.",
+    "meaningJaId": "Membengkokkan atau menekuk benda lurus."
   },
   "kotoba_n2_0573": {
     "id": "kotoba_n2_0573",
@@ -100679,7 +101025,7 @@
     "reading": "きょくせん",
     "meaningId": "Kurva",
     "meaningEn": "curve",
-    "meaningJa": "曲線",
+    "meaningJa": "曲がっている線。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -100695,7 +101041,9 @@
       "曲線を描く (menggambar kurva)",
       "美しい曲線 (kurva indah)",
       "曲線美 (keindahan lekuk)"
-    ]
+    ],
+    "definitionId": "Garis yang melengkung.",
+    "meaningJaId": "Garis yang melengkung."
   },
   "kotoba_n2_0574": {
     "id": "kotoba_n2_0574",
@@ -100703,7 +101051,7 @@
     "reading": "こと",
     "meaningId": "Koto (kecapi Jepang)",
     "meaningEn": "Koto (Japanese harp)",
-    "meaningJa": "琴",
+    "meaningJa": "十三本の弦を張った日本の楽器。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -100718,7 +101066,9 @@
       "琴を弾く (memainkan koto)",
       "琴の音 (suara koto)",
       "お琴 (koto)"
-    ]
+    ],
+    "definitionId": "Alat musik berdawai Jepang yang dipetik dan dimainkan di lantai.",
+    "meaningJaId": "Alat musik berdawai Jepang yang dipetik dan dimainkan di lantai."
   },
   "kotoba_n2_0575": {
     "id": "kotoba_n2_0575",
@@ -100726,7 +101076,7 @@
     "reading": "ちかぢか",
     "meaningId": "Dalam waktu dekat",
     "meaningEn": "nearness; before long",
-    "meaningJa": "近々",
+    "meaningJa": "もうすぐ。ちかぢか。",
     "jlpt": "N2",
     "wordType": "adverb",
     "kanjiComponents": [
@@ -100741,7 +101091,9 @@
       "近々会う (bertemu dalam waktu dekat)",
       "近々発表する (mengumumkan dalam waktu dekat)",
       "近々出発する (berangkat dalam waktu dekat)"
-    ]
+    ],
+    "definitionId": "Dalam waktu dekat.",
+    "meaningJaId": "Dalam waktu dekat."
   },
   "kotoba_n2_0576": {
     "id": "kotoba_n2_0576",
@@ -100749,7 +101101,7 @@
     "reading": "ちかよる",
     "meaningId": "Pendekatan; mendekat",
     "meaningEn": "to approach; to draw near",
-    "meaningJa": "近寄る",
+    "meaningJa": "そばまで行く。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -100765,7 +101117,9 @@
       "犬に近寄る (mendekati anjing)",
       "近寄らないで (jangan mendekat)",
       "危険な所に近寄る (mendekati tempat berbahaya)"
-    ]
+    ],
+    "definitionId": "Mendekati suatu tempat atau seseorang.",
+    "meaningJaId": "Mendekati suatu tempat atau seseorang."
   },
   "kotoba_n2_0577": {
     "id": "kotoba_n2_0577",
@@ -100773,7 +101127,7 @@
     "reading": "ちかづける",
     "meaningId": "Mendekatkan",
     "meaningEn": "to bring near; to put close; to let come near",
-    "meaningJa": "近付ける",
+    "meaningJa": "近くに寄せる。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -100789,7 +101143,9 @@
       "顔を近付ける (mendekatkan wajah)",
       "耳を近付ける (mendekatkan telinga)",
       "火に近付ける (mendekatkan ke api)"
-    ]
+    ],
+    "definitionId": "Mendekatkan sesuatu atau seseorang.",
+    "meaningJaId": "Mendekatkan sesuatu atau seseorang."
   },
   "kotoba_n2_0578": {
     "id": "kotoba_n2_0578",
@@ -100797,7 +101153,7 @@
     "reading": "きんぎょ",
     "meaningId": "Ikan mas",
     "meaningEn": "goldfish",
-    "meaningJa": "金魚",
+    "meaningJa": "赤や金色のきれいな観賞用の淡水魚。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -100813,7 +101169,9 @@
       "金魚を飼う (memelihara ikan mas)",
       "金魚鉢 (mangkuk ikan mas)",
       "金魚すくい (menangkap ikan mas)"
-    ]
+    ],
+    "definitionId": "Ikan hias air tawar berwarna cerah.",
+    "meaningJaId": "Ikan hias air tawar berwarna cerah."
   },
   "kotoba_n2_0579": {
     "id": "kotoba_n2_0579",
@@ -100821,7 +101179,7 @@
     "reading": "くとうてん",
     "meaningId": "Tanda baca",
     "meaningEn": "punctuation marks",
-    "meaningJa": "句読点",
+    "meaningJa": "文章を区切る点や丸。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -100838,7 +101196,9 @@
       "句読点を打つ (membubuhkan tanda baca)",
       "句読点の使い方 (cara memakai tanda baca)",
       "句読点を付ける (memberi tanda baca)"
-    ]
+    ],
+    "definitionId": "Tanda baca seperti koma dan titik pada kalimat.",
+    "meaningJaId": "Tanda baca seperti koma dan titik pada kalimat."
   },
   "kotoba_n2_0580": {
     "id": "kotoba_n2_0580",
@@ -100846,7 +101206,7 @@
     "reading": "くいき",
     "meaningId": "Zona; kawasan",
     "meaningEn": "limits; boundary; domain",
-    "meaningJa": "区域",
+    "meaningJa": "区切られた地域。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -100862,7 +101222,9 @@
       "区域を決める (menentukan zona)",
       "立入禁止区域 (zona terlarang)",
       "危険区域 (zona berbahaya)"
-    ]
+    ],
+    "definitionId": "Wilayah atau zona yang dibatasi.",
+    "meaningJaId": "Wilayah atau zona yang dibatasi."
   },
   "kotoba_n2_0581": {
     "id": "kotoba_n2_0581",
@@ -100870,7 +101232,7 @@
     "reading": "くぎる",
     "meaningId": "Memisahkan; memberi batas",
     "meaningEn": "to punctuate; to cut off; to mark off",
-    "meaningJa": "区切る",
+    "meaningJa": "境目をつけて分ける。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -100886,7 +101248,9 @@
       "言葉を区切る (memisahkan kata)",
       "時間を区切る (membatasi waktu)",
       "区切りをつける (menyelesaikan satu tahap)"
-    ]
+    ],
+    "definitionId": "Memberi batas pada sesuatu; juga menghentikan sejenak.",
+    "meaningJaId": "Memberi batas pada sesuatu; juga menghentikan sejenak."
   },
   "kotoba_n2_0582": {
     "id": "kotoba_n2_0582",
@@ -100894,7 +101258,7 @@
     "reading": "くぶん",
     "meaningId": "Pembagian; kategori",
     "meaningEn": "division; section; classification",
-    "meaningJa": "レベル",
+    "meaningJa": "全体をいくつかに分けること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -100915,7 +101279,9 @@
       "区分する (membagi/mengategorikan)",
       "ごみの区分 (kategori sampah)",
       "地区の区分 (pembagian kawasan)"
-    ]
+    ],
+    "definitionId": "Membagi keseluruhan menjadi beberapa bagian atau kategori.",
+    "meaningJaId": "Membagi keseluruhan menjadi beberapa bagian atau kategori."
   },
   "kotoba_n2_0583": {
     "id": "kotoba_n2_0583",
@@ -100923,7 +101289,7 @@
     "reading": "くじょう",
     "meaningId": "Keluhan",
     "meaningEn": "complaint; troubles; objection",
-    "meaningJa": "苦情",
+    "meaningJa": "不満や被害を訴える言葉。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -100939,7 +101305,9 @@
       "苦情を言う (menyampaikan keluhan)",
       "苦情が来る (keluhan masuk)",
       "苦情処理 (penanganan keluhan)"
-    ]
+    ],
+    "definitionId": "Pernyataan ketidakpuasan atau kerugian yang disampaikan.",
+    "meaningJaId": "Pernyataan ketidakpuasan atau kerugian yang disampaikan."
   },
   "kotoba_n2_0584": {
     "id": "kotoba_n2_0584",
@@ -100947,7 +101315,7 @@
     "reading": "くしん",
     "meaningId": "Jerih payah",
     "meaningEn": "pain; trouble",
-    "meaningJa": "苦心",
+    "meaningJa": "いろいろ考えて苦労すること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -100963,7 +101331,9 @@
       "苦心して作る (membuat dengan jerih payah)",
       "苦心の作 (karya hasil jerih payah)",
       "苦心する (bersusah payah)"
-    ]
+    ],
+    "definitionId": "Memeras pikiran dan bersusah payah mencari cara.",
+    "meaningJaId": "Memeras pikiran dan bersusah payah mencari cara."
   },
   "kotoba_n2_0585": {
     "id": "kotoba_n2_0585",
@@ -100971,7 +101341,7 @@
     "reading": "そなえる",
     "meaningId": "Dilengkapi; mempersiapkan",
     "meaningEn": "to be furnished with",
-    "meaningJa": "具える",
+    "meaningJa": "必要な物を用意する。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -100986,7 +101356,9 @@
       "災害に具える (bersiap menghadapi bencana)",
       "具えあれば (jika bersiap)",
       "力を具える (memiliki kekuatan)"
-    ]
+    ],
+    "definitionId": "Melengkapi dengan apa yang diperlukan; juga mempersiapkan.",
+    "meaningJaId": "Melengkapi dengan apa yang diperlukan; juga mempersiapkan."
   },
   "kotoba_n2_0586": {
     "id": "kotoba_n2_0586",
@@ -100994,7 +101366,7 @@
     "reading": "からっぽ",
     "meaningId": "Kosong",
     "meaningEn": "empty; vacant; hollow",
-    "meaningJa": "空っぽ",
+    "meaningJa": "中に何も入っていない様子。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101009,7 +101381,9 @@
       "空っぽの箱 (kotak kosong)",
       "頭が空っぽ (kepala kosong)",
       "財布が空っぽ (dompet kosong)"
-    ]
+    ],
+    "definitionId": "Keadaan tidak ada isinya sama sekali.",
+    "meaningJaId": "Keadaan tidak ada isinya sama sekali."
   },
   "kotoba_n2_0587": {
     "id": "kotoba_n2_0587",
@@ -101017,7 +101391,7 @@
     "reading": "くうそう",
     "meaningId": "Khayalan",
     "meaningEn": "daydream; fantasy; fancy",
-    "meaningJa": "空想",
+    "meaningJa": "現実にはないことをあれこれ思い描くこと。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101033,7 +101407,9 @@
       "空想にふける (tenggelam dalam khayalan)",
       "空想の世界 (dunia khayalan)",
       "空想科学 (sains fiksi)"
-    ]
+    ],
+    "definitionId": "Membayangkan hal yang tidak nyata.",
+    "meaningJaId": "Membayangkan hal yang tidak nyata."
   },
   "kotoba_n2_0588": {
     "id": "kotoba_n2_0588",
@@ -101041,7 +101417,7 @@
     "reading": "くうちゅう",
     "meaningId": "Langit; udara",
     "meaningEn": "sky; air",
-    "meaningJa": "空中",
+    "meaningJa": "空の中。地面からはなれた所。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101057,7 +101433,9 @@
       "空中に浮く (melayang di udara)",
       "空中を飛ぶ (terbang di udara)",
       "空中ブランコ (ayunan udara)"
-    ]
+    ],
+    "definitionId": "Ruang di udara; tempat di atas tanah.",
+    "meaningJaId": "Ruang di udara; tempat di atas tanah."
   },
   "kotoba_n2_0589": {
     "id": "kotoba_n2_0589",
@@ -101065,7 +101443,7 @@
     "reading": "ぐうすう",
     "meaningId": "Bilangan genap",
     "meaningEn": "even number",
-    "meaningJa": "偶数",
+    "meaningJa": "二で割り切れる整数。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101081,7 +101459,9 @@
       "偶数と奇数 (bilangan genap dan ganjil)",
       "偶数日 (hari genap)",
       "偶数番号 (nomor genap)"
-    ]
+    ],
+    "definitionId": "Bilangan bulat yang habis dibagi dua.",
+    "meaningJaId": "Bilangan bulat yang habis dibagi dua."
   },
   "kotoba_n2_0590": {
     "id": "kotoba_n2_0590",
@@ -101089,7 +101469,7 @@
     "reading": "くし",
     "meaningId": "Sisir",
     "meaningEn": "comb",
-    "meaningJa": "櫛",
+    "meaningJa": "髪をとかす道具。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101104,7 +101484,9 @@
       "髪を櫛でとかす (menyisir rambut)",
       "櫛を入れる (menyisir)",
       "櫛で整える (merapikan dengan sisir)"
-    ]
+    ],
+    "definitionId": "Alat bergigi untuk menyisir rambut.",
+    "meaningJaId": "Alat bergigi untuk menyisir rambut."
   },
   "kotoba_n2_0591": {
     "id": "kotoba_n2_0591",
@@ -101112,7 +101494,7 @@
     "reading": "くず",
     "meaningId": "Remah; sampah",
     "meaningEn": "waste; scrap",
-    "meaningJa": "屑",
+    "meaningJa": "役に立たない小さなかけら。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101127,7 +101509,9 @@
       "紙屑を捨てる (membuang kertas bekas)",
       "金属の屑 (sisa logam)",
       "人間の屑 (sampah masyarakat)"
-    ]
+    ],
+    "definitionId": "Serpihan kecil yang tak berguna; sampah.",
+    "meaningJaId": "Serpihan kecil yang tak berguna; sampah."
   },
   "kotoba_n2_0592": {
     "id": "kotoba_n2_0592",
@@ -101135,7 +101519,7 @@
     "reading": "ほる",
     "meaningId": "Menggali; menggali",
     "meaningEn": "to dig; to excavate",
-    "meaningJa": "掘る",
+    "meaningJa": "地面などに穴をあける。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -101150,7 +101534,9 @@
       "穴を掘る (menggali lubang)",
       "土を掘る (menggali tanah)",
       "井戸を掘る (menggali sumur)"
-    ]
+    ],
+    "definitionId": "Membuat lubang di tanah; menggali.",
+    "meaningJaId": "Membuat lubang di tanah; menggali."
   },
   "kotoba_n2_0593": {
     "id": "kotoba_n2_0593",
@@ -101158,7 +101544,7 @@
     "reading": "むれ",
     "meaningId": "Kawanan; gerombolan",
     "meaningEn": "group; crowd; flock",
-    "meaningJa": "群れ",
+    "meaningJa": "同じ種類の動物などが集まったもの。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101173,7 +101559,9 @@
       "羊の群れ (kawanan domba)",
       "人の群れ (kerumunan orang)",
       "群れをなす (membentuk kawanan)"
-    ]
+    ],
+    "definitionId": "Kumpulan hewan atau orang yang berkelompok.",
+    "meaningJaId": "Kumpulan hewan atau orang yang berkelompok."
   },
   "kotoba_n2_0594": {
     "id": "kotoba_n2_0594",
@@ -101181,7 +101569,7 @@
     "reading": "ぐん",
     "meaningId": "Kabupaten (gun)",
     "meaningEn": "country; district",
-    "meaningJa": "郡",
+    "meaningJa": "県の中の行政区画。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101196,7 +101584,9 @@
       "郡部 (daerah kabupaten)",
       "郡役所 (kantor kabupaten)",
       "郡山 (Koriyama)"
-    ]
+    ],
+    "definitionId": "Satuan wilayah administratif di bawah prefektur.",
+    "meaningJaId": "Satuan wilayah administratif di bawah prefektur."
   },
   "kotoba_n2_0595": {
     "id": "kotoba_n2_0595",
@@ -101204,7 +101594,7 @@
     "reading": "かかわる",
     "meaningId": "Berkaitan; terlibat",
     "meaningEn": "to concern oneself in; to have to do with; to affect",
-    "meaningJa": "係わる",
+    "meaningJa": "あることに関係する。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -101219,7 +101609,9 @@
       "事件に係わる (terlibat kasus)",
       "命に係わる (menyangkut nyawa)",
       "係わりを持つ (memiliki keterkaitan)"
-    ]
+    ],
+    "definitionId": "Berkaitan atau terlibat dengan suatu hal.",
+    "meaningJaId": "Berkaitan atau terlibat dengan suatu hal."
   },
   "kotoba_n2_0596": {
     "id": "kotoba_n2_0596",
@@ -101227,7 +101619,7 @@
     "reading": "かたむく",
     "meaningId": "Miring; condong",
     "meaningEn": "to incline toward; to slant; to lurch",
-    "meaningJa": "傾く",
+    "meaningJa": "斜めになる。ある方向に向かう。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -101242,7 +101634,9 @@
       "船が傾く (kapal miring)",
       "家が傾く (rumah miring)",
       "日が傾く (matahari condong)"
-    ]
+    ],
+    "definitionId": "Menjadi miring; juga cenderung ke arah tertentu.",
+    "meaningJaId": "Menjadi miring; juga cenderung ke arah tertentu."
   },
   "kotoba_n2_0597": {
     "id": "kotoba_n2_0597",
@@ -101250,7 +101644,7 @@
     "reading": "けいしき",
     "meaningId": "Bentuk; formalitas",
     "meaningEn": "form; formality; format",
-    "meaningJa": "形式",
+    "meaningJa": "物事の型や決まったやり方。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101266,7 +101660,9 @@
       "形式的な (bersifat formal)",
       "形式を守る (menjaga formalitas)",
       "書類の形式 (format dokumen)"
-    ]
+    ],
+    "definitionId": "Bentuk atau tata cara yang telah ditentukan.",
+    "meaningJaId": "Bentuk atau tata cara yang telah ditentukan."
   },
   "kotoba_n2_0598": {
     "id": "kotoba_n2_0598",
@@ -101274,7 +101670,7 @@
     "reading": "けいようし",
     "meaningId": "Kata sifat-i (keiyoushi)",
     "meaningEn": "true adjective",
-    "meaningJa": "形容詞",
+    "meaningJa": "物の様子や性質を表す「〜い」で終わる言葉。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101291,7 +101687,9 @@
       "形容詞の活用 (konjugasi kata sifat-i)",
       "形容詞を覚える (menghafal kata sifat)",
       "い形容詞 (kata sifat-i)"
-    ]
+    ],
+    "definitionId": "Kata sifat berakhiran 'i' yang menggambarkan keadaan atau sifat benda.",
+    "meaningJaId": "Kata sifat berakhiran 'i' yang menggambarkan keadaan atau sifat benda."
   },
   "kotoba_n2_0599": {
     "id": "kotoba_n2_0599",
@@ -101299,7 +101697,7 @@
     "reading": "けいようどうし",
     "meaningId": "Kata sifat-na (keiyōdōshi)",
     "meaningEn": "adjectival noun; quasi-adjective",
-    "meaningJa": "形容動詞",
+    "meaningJa": "物の様子を表し「〜だ」と言う言葉。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101317,7 +101715,9 @@
       "形容動詞の活用 (konjugasi kata sifat-na)",
       "形容動詞と形容詞 (kata sifat-na dan -i)",
       "な形容詞 (kata sifat-na)"
-    ]
+    ],
+    "definitionId": "Kata sifat berakhiran 'na' yang menggambarkan keadaan atau sifat.",
+    "meaningJaId": "Kata sifat berakhiran 'na' yang menggambarkan keadaan atau sifat."
   },
   "kotoba_n2_0600": {
     "id": "kotoba_n2_0600",
@@ -101325,7 +101725,7 @@
     "reading": "めぐまれる",
     "meaningId": "Diberkahi; dikaruniai",
     "meaningEn": "to be blessed with; to be rich in",
-    "meaningJa": "恵まれる",
+    "meaningJa": "よい環境や条件を与えられる。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -101340,7 +101740,9 @@
       "才能に恵まれる (diberkahi bakat)",
       "天気に恵まれる (diberkahi cuaca baik)",
       "恵まれた環境 (lingkungan yang menguntungkan)"
-    ]
+    ],
+    "definitionId": "Diberi kondisi atau berkah yang baik.",
+    "meaningJaId": "Diberi kondisi atau berkah yang baik."
   },
   "kotoba_n2_0601": {
     "id": "kotoba_n2_0601",
@@ -101348,7 +101750,7 @@
     "reading": "よろこび",
     "meaningId": "Kegembiraan; kebahagiaan",
     "meaningEn": "(n) (a) joy; (a) delight; rapture",
-    "meaningJa": "慶び",
+    "meaningJa": "めでたいと思う気持ち。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101363,7 +101765,9 @@
       "慶びの日 (hari kegembiraan)",
       "慶びを分かち合う (berbagi kegembiraan)",
       "慶び事 (peristiwa membahagiakan)"
-    ]
+    ],
+    "definitionId": "Perasaan gembira atas peristiwa yang baik.",
+    "meaningJaId": "Perasaan gembira atas peristiwa yang baik."
   },
   "kotoba_n2_0602": {
     "id": "kotoba_n2_0602",
@@ -101371,7 +101775,7 @@
     "reading": "うやまう",
     "meaningId": "Menunjukkan rasa hormat; kehormatan",
     "meaningEn": "to show respect; to honour",
-    "meaningJa": "敬う",
+    "meaningJa": "尊いものとして大切にする。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -101386,7 +101790,9 @@
       "先生を敬う (menghormati guru)",
       "年上の人を敬う (menghormati yang lebih tua)",
       "敬う気持ち (rasa hormat)"
-    ]
+    ],
+    "definitionId": "Menghormati dan menghargai dengan tulus.",
+    "meaningJaId": "Menghormati dan menghargai dengan tulus."
   },
   "kotoba_n2_0603": {
     "id": "kotoba_n2_0603",
@@ -101394,7 +101800,7 @@
     "reading": "けいご",
     "meaningId": "Kehormatan; istilah penghormatan",
     "meaningEn": "honorific; term of respect",
-    "meaningJa": "敬語",
+    "meaningJa": "相手を敬う気持ちを表す言葉。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101410,7 +101816,9 @@
       "敬語を使う (memakai bahasa hormat)",
       "敬語を学ぶ (mempelajari keigo)",
       "尊敬語と謙譲語 (bahasa hormat dan merendah)"
-    ]
+    ],
+    "definitionId": "Bahasa sopan yang menunjukkan rasa hormat kepada lawan bicara.",
+    "meaningJaId": "Bahasa sopan yang menunjukkan rasa hormat kepada lawan bicara."
   },
   "kotoba_n2_0604": {
     "id": "kotoba_n2_0604",
@@ -101418,7 +101826,7 @@
     "reading": "けいこ",
     "meaningId": "Praktik; pelatihan; belajar",
     "meaningEn": "practice; training; study",
-    "meaningJa": "稽古",
+    "meaningJa": "芸や武道などを練習すること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101434,7 +101842,9 @@
       "稽古をする (berlatih)",
       "ピアノの稽古 (latihan piano)",
       "剣道の稽古 (latihan kendo)"
-    ]
+    ],
+    "definitionId": "Latihan seni pertunjukan atau bela diri.",
+    "meaningJaId": "Latihan seni pertunjukan atau bela diri."
   },
   "kotoba_n2_0605": {
     "id": "kotoba_n2_0605",
@@ -101442,7 +101852,7 @@
     "reading": "けいとう",
     "meaningId": "Sistem; garis keturunan",
     "meaningEn": "system; family line; geological formation",
-    "meaningJa": "系統",
+    "meaningJa": "つながっている順序。血筋。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101458,7 +101868,9 @@
       "系統を調べる (menyelidiki garis keturunan)",
       "指揮系統 (rantai komando)",
       "同じ系統の色 (warna sejenis)"
-    ]
+    ],
+    "definitionId": "Garis keturunan atau susunan yang saling terhubung.",
+    "meaningJaId": "Garis keturunan atau susunan yang saling terhubung."
   },
   "kotoba_n2_0606": {
     "id": "kotoba_n2_0606",
@@ -101466,7 +101878,7 @@
     "reading": "けいど",
     "meaningId": "Garis bujur",
     "meaningEn": "longitude",
-    "meaningJa": "経度",
+    "meaningJa": "地球上の位置を表す南北に走る線。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101482,7 +101894,9 @@
       "東経と西経 (bujur timur dan barat)",
       "経度を調べる (memeriksa garis bujur)",
       "経度と緯度 (bujur dan lintang)"
-    ]
+    ],
+    "definitionId": "Garis bujur yang menyatakan posisi timur-barat di bumi.",
+    "meaningJaId": "Garis bujur yang menyatakan posisi timur-barat di bumi."
   },
   "kotoba_n2_0607": {
     "id": "kotoba_n2_0607",
@@ -101490,7 +101904,7 @@
     "reading": "けいぞく",
     "meaningId": "Kelanjutan; kontinuitas",
     "meaningEn": "continuation",
-    "meaningJa": "継続",
+    "meaningJa": "物事が続くこと。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101506,7 +101920,9 @@
       "仕事を継続する (melanjutkan pekerjaan)",
       "継続は力なり (konsistensi adalah kekuatan)",
       "継続的な (berkelanjutan)"
-    ]
+    ],
+    "definitionId": "Berlanjutnya suatu hal secara terus-menerus.",
+    "meaningJaId": "Berlanjutnya suatu hal secara terus-menerus."
   },
   "kotoba_n2_0608": {
     "id": "kotoba_n2_0608",
@@ -101514,7 +101930,7 @@
     "reading": "つながり",
     "meaningId": "Hubungan; keterkaitan",
     "meaningEn": "connection; link; relationship",
-    "meaningJa": "繋がり",
+    "meaningJa": "ものとものがつながっていること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101529,7 +101945,9 @@
       "人との繋がり (hubungan dengan orang)",
       "家族の繋がり (ikatan keluarga)",
       "繋がりを大切にする (menghargai hubungan)"
-    ]
+    ],
+    "definitionId": "Keterkaitan antara satu hal dengan hal lain.",
+    "meaningJaId": "Keterkaitan antara satu hal dengan hal lain."
   },
   "kotoba_n2_0609": {
     "id": "kotoba_n2_0609",
@@ -101537,7 +101955,7 @@
     "reading": "つながる",
     "meaningId": "Terhubung; berkaitan",
     "meaningEn": "to be tied together; to be connected to; to be related to",
-    "meaningJa": "繋がる",
+    "meaningJa": "ものとものが結ばれる。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -101552,7 +101970,9 @@
       "電話が繋がる (telepon tersambung)",
       "道が繋がる (jalan terhubung)",
       "インターネットに繋がる (terhubung ke internet)"
-    ]
+    ],
+    "definitionId": "Menjadi bersambung atau terhubung.",
+    "meaningJaId": "Menjadi bersambung atau terhubung."
   },
   "kotoba_n2_0610": {
     "id": "kotoba_n2_0610",
@@ -101560,7 +101980,7 @@
     "reading": "つなげる",
     "meaningId": "Menyambungkan; menghubungkan",
     "meaningEn": "to connect",
-    "meaningJa": "繋げる",
+    "meaningJa": "別々のものを結びつける。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -101575,7 +101995,9 @@
       "二つを繋げる (menyambungkan keduanya)",
       "パソコンを繋げる (menyambungkan komputer)",
       "話を繋げる (menyambung pembicaraan)"
-    ]
+    ],
+    "definitionId": "Menyambungkan dua hal yang terpisah.",
+    "meaningJaId": "Menyambungkan dua hal yang terpisah."
   },
   "kotoba_n2_0611": {
     "id": "kotoba_n2_0611",
@@ -101583,7 +102005,7 @@
     "reading": "けいこうとう",
     "meaningId": "Lampu neon",
     "meaningEn": "fluorescent lamp; person who is slow to react",
-    "meaningJa": "蛍光灯",
+    "meaningJa": "管の中で光を出す電灯。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101600,7 +102022,9 @@
       "蛍光灯をつける (menyalakan lampu neon)",
       "蛍光灯を替える (mengganti lampu neon)",
       "蛍光灯が切れる (lampu neon putus)"
-    ]
+    ],
+    "definitionId": "Lampu tabung yang memancarkan cahaya dari lapisan fluoresen.",
+    "meaningJaId": "Lampu tabung yang memancarkan cahaya dari lapisan fluoresen."
   },
   "kotoba_n2_0612": {
     "id": "kotoba_n2_0612",
@@ -101608,7 +102032,7 @@
     "reading": "けいび",
     "meaningId": "Penjagaan; keamanan",
     "meaningEn": "defense; guard; policing",
-    "meaningJa": "警備",
+    "meaningJa": "危険がないように見張ること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101624,7 +102048,9 @@
       "警備する (menjaga)",
       "警備員 (petugas keamanan)",
       "警備が厳しい (penjagaan ketat)"
-    ]
+    ],
+    "definitionId": "Menjaga agar tidak terjadi hal berbahaya.",
+    "meaningJaId": "Menjaga agar tidak terjadi hal berbahaya."
   },
   "kotoba_n2_0613": {
     "id": "kotoba_n2_0613",
@@ -101632,7 +102058,7 @@
     "reading": "げいのう",
     "meaningId": "Hiburan umum; prestasi; pencapaian",
     "meaningEn": "public entertainment; accomplishments; attainments",
-    "meaningJa": "芸能",
+    "meaningJa": "歌や踊りなどの芸。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101648,7 +102074,9 @@
       "芸能界 (dunia hiburan)",
       "芸能人 (selebritas)",
       "伝統芸能 (seni pertunjukan tradisional)"
-    ]
+    ],
+    "definitionId": "Pertunjukan seperti nyanyian dan tarian.",
+    "meaningJaId": "Pertunjukan seperti nyanyian dan tarian."
   },
   "kotoba_n2_0614": {
     "id": "kotoba_n2_0614",
@@ -101656,7 +102084,7 @@
     "reading": "げきぞう",
     "meaningId": "Melonjak; bertambah drastis",
     "meaningEn": "sudden increase",
-    "meaningJa": "激増",
+    "meaningJa": "急に大きく増えること。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101672,7 +102100,9 @@
       "人口が激増する (populasi melonjak)",
       "事故が激増する (kecelakaan melonjak)",
       "激増している (melonjak drastis)"
-    ]
+    ],
+    "definitionId": "Bertambah banyak secara mendadak.",
+    "meaningJaId": "Bertambah banyak secara mendadak."
   },
   "kotoba_n2_0615": {
     "id": "kotoba_n2_0615",
@@ -101680,7 +102110,7 @@
     "reading": "すきま",
     "meaningId": "Celah",
     "meaningEn": "crevice; crack; gap",
-    "meaningJa": "隙間",
+    "meaningJa": "物と物とのあいだのわずかな空き。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101696,7 +102126,9 @@
       "隙間風 (angin celah)",
       "隙間を埋める (menutup celah)",
       "隙間がある (ada celah)"
-    ]
+    ],
+    "definitionId": "Celah sempit di antara dua benda.",
+    "meaningJaId": "Celah sempit di antara dua benda."
   },
   "kotoba_n2_0616": {
     "id": "kotoba_n2_0616",
@@ -101704,7 +102136,7 @@
     "reading": "けた",
     "meaningId": "Digit; angka",
     "meaningEn": "column; beam; digit",
-    "meaningJa": "桁",
+    "meaningJa": "数字の位の並び。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101719,7 +102151,9 @@
       "桁を間違える (salah digit)",
       "三桁の数 (angka tiga digit)",
       "桁が違う (digitnya berbeda)"
-    ]
+    ],
+    "definitionId": "Posisi tempat dalam bilangan; juga balok penyangga.",
+    "meaningJaId": "Posisi tempat dalam bilangan; juga balok penyangga."
   },
   "kotoba_n2_0617": {
     "id": "kotoba_n2_0617",
@@ -101727,7 +102161,7 @@
     "reading": "けっさく",
     "meaningId": "Mahakarya",
     "meaningEn": "masterpiece; best work; boner",
-    "meaningJa": "傑作",
+    "meaningJa": "特にすぐれた作品。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101743,7 +102177,9 @@
       "傑作を作る (menciptakan mahakarya)",
       "傑作だ (mahakarya)",
       "傑作映画 (film mahakarya)"
-    ]
+    ],
+    "definitionId": "Karya yang sangat unggul.",
+    "meaningJaId": "Karya yang sangat unggul."
   },
   "kotoba_n2_0618": {
     "id": "kotoba_n2_0618",
@@ -101751,7 +102187,7 @@
     "reading": "けつあつ",
     "meaningId": "Tekanan darah",
     "meaningEn": "blood pressure",
-    "meaningJa": "けつあつ",
+    "meaningJa": "血液が血管を押す力。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101772,7 +102208,9 @@
       "血圧が高い (tekanan darah tinggi)",
       "血圧を測る (mengukur tekanan darah)",
       "高血圧 (hipertensi)"
-    ]
+    ],
+    "definitionId": "Tekanan darah di dalam pembuluh.",
+    "meaningJaId": "Tekanan darah di dalam pembuluh."
   },
   "kotoba_n2_0619": {
     "id": "kotoba_n2_0619",
@@ -101780,7 +102218,7 @@
     "reading": "けつえき",
     "meaningId": "Darah",
     "meaningEn": "blood",
-    "meaningJa": "ちのこと",
+    "meaningJa": "体の中を流れる赤い液体。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101801,7 +102239,9 @@
       "血液検査 (tes darah)",
       "血液型 (golongan darah)",
       "血液を提供する (mendonorkan darah)"
-    ]
+    ],
+    "definitionId": "Cairan merah yang mengalir di tubuh.",
+    "meaningJaId": "Cairan merah yang mengalir di tubuh."
   },
   "kotoba_n2_0620": {
     "id": "kotoba_n2_0620",
@@ -101809,7 +102249,7 @@
     "reading": "げっきゅう",
     "meaningId": "Gaji bulanan",
     "meaningEn": "monthly salary",
-    "meaningJa": "月給",
+    "meaningJa": "一か月を単位とする給料。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101825,7 +102265,9 @@
       "月給をもらう (menerima gaji bulanan)",
       "月給が上がる (gaji bulanan naik)",
       "月給日 (hari gajian)"
-    ]
+    ],
+    "definitionId": "Gaji yang dibayarkan per bulan.",
+    "meaningJaId": "Gaji yang dibayarkan per bulan."
   },
   "kotoba_n2_0621": {
     "id": "kotoba_n2_0621",
@@ -101833,7 +102275,7 @@
     "reading": "つきひ",
     "meaningId": "Waktu; hari-hari",
     "meaningEn": "time; years; days",
-    "meaningJa": "月日",
+    "meaningJa": "月と日。時間の流れ。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101849,7 +102291,9 @@
       "長い月日 (waktu yang lama)",
       "月日が流れる (waktu berlalu)",
       "月日がたつ (waktu berlalu)"
-    ]
+    ],
+    "definitionId": "Bulan dan hari; juga lamanya waktu yang berlalu.",
+    "meaningJaId": "Bulan dan hari; juga lamanya waktu yang berlalu."
   },
   "kotoba_n2_0622": {
     "id": "kotoba_n2_0622",
@@ -101857,7 +102301,7 @@
     "reading": "げつまつ",
     "meaningId": "Akhir bulan",
     "meaningEn": "end of the month",
-    "meaningJa": "月末",
+    "meaningJa": "その月の終わりの頃。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101873,7 +102317,9 @@
       "月末に払う (membayar akhir bulan)",
       "月末の締め切り (tenggat akhir bulan)",
       "月末まで (sampai akhir bulan)"
-    ]
+    ],
+    "definitionId": "Akhir dari suatu bulan.",
+    "meaningJaId": "Akhir dari suatu bulan."
   },
   "kotoba_n2_0623": {
     "id": "kotoba_n2_0623",
@@ -101881,7 +102327,7 @@
     "reading": "かねる",
     "meaningId": "Merangkap; sekaligus berfungsi sebagai",
     "meaningEn": "to hold (position); to serve; to be unable",
-    "meaningJa": "兼ねる",
+    "meaningJa": "二つの働きを合わせ持つ。",
     "jlpt": "N2",
     "wordType": "suffix",
     "kanjiComponents": [
@@ -101896,7 +102342,9 @@
       "待ちかねる (tidak sabar menunggu)",
       "見るに見かねる (tak tahan melihat)",
       "決めかねる (sulit memutuskan)"
-    ]
+    ],
+    "definitionId": "Menjalankan dua fungsi sekaligus; juga 'tidak dapat' dalam akhiran.",
+    "meaningJaId": "Menjalankan dua fungsi sekaligus; juga 'tidak dapat' dalam akhiran."
   },
   "kotoba_n2_0624": {
     "id": "kotoba_n2_0624",
@@ -101904,7 +102352,7 @@
     "reading": "かたい",
     "meaningId": "Keras; teguh",
     "meaningEn": "hard (esp. wood); steadfast; honorable",
-    "meaningJa": "堅い",
+    "meaningJa": "かたい。しっかりしている。",
     "jlpt": "N2",
     "wordType": "adjective-i",
     "kanjiComponents": [
@@ -101919,7 +102367,9 @@
       "堅い約束 (janji teguh)",
       "堅い木 (kayu keras)",
       "堅い人 (orang yang kaku/serius)"
-    ]
+    ],
+    "definitionId": "Keras; juga kokoh dan teguh.",
+    "meaningJaId": "Keras; juga kokoh dan teguh."
   },
   "kotoba_n2_0625": {
     "id": "kotoba_n2_0625",
@@ -101927,7 +102377,7 @@
     "reading": "いやがる",
     "meaningId": "Benci; tidak suka",
     "meaningEn": "to hate; to dislike",
-    "meaningJa": "嫌がる",
+    "meaningJa": "いやだと思って避けようとする。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -101942,7 +102392,9 @@
       "勉強を嫌がる (enggan belajar)",
       "嫌がる子供 (anak yang tidak mau)",
       "人の嫌がること (hal yang tidak disukai orang)"
-    ]
+    ],
+    "definitionId": "Merasa tidak suka dan ingin menghindari sesuatu.",
+    "meaningJaId": "Merasa tidak suka dan ingin menghindari sesuatu."
   },
   "kotoba_n2_0626": {
     "id": "kotoba_n2_0626",
@@ -101950,7 +102402,7 @@
     "reading": "たつ",
     "meaningId": "Berdiri; dibangun",
     "meaningEn": "to erect; to be erected; to be built",
-    "meaningJa": "建つ",
+    "meaningJa": "建物ができあがる。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -101965,7 +102417,9 @@
       "家が建つ (rumah berdiri)",
       "ビルが建つ (gedung berdiri)",
       "銅像が建つ (patung didirikan)"
-    ]
+    ],
+    "definitionId": "Bangunan berdiri atau selesai dibangun.",
+    "meaningJaId": "Bangunan berdiri atau selesai dibangun."
   },
   "kotoba_n2_0627": {
     "id": "kotoba_n2_0627",
@@ -101973,7 +102427,7 @@
     "reading": "こんだて",
     "meaningId": "Menu (daftar hidangan)",
     "meaningEn": "menu; program; schedule",
-    "meaningJa": "献立",
+    "meaningJa": "食事の料理の組み合わせ。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -101989,7 +102443,9 @@
       "献立を考える (memikirkan menu)",
       "今日の献立 (menu hari ini)",
       "献立表 (daftar menu)"
-    ]
+    ],
+    "definitionId": "Susunan hidangan dalam sekali makan.",
+    "meaningJaId": "Susunan hidangan dalam sekali makan."
   },
   "kotoba_n2_0628": {
     "id": "kotoba_n2_0628",
@@ -101997,7 +102453,7 @@
     "reading": "けんしゅう",
     "meaningId": "Pelatihan",
     "meaningEn": "training",
-    "meaningJa": "研修",
+    "meaningJa": "仕事に必要な知識や技術を身につける訓練。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -102013,7 +102469,9 @@
       "新人研修 (pelatihan karyawan baru)",
       "研修を受ける (mengikuti pelatihan)",
       "海外研修 (pelatihan luar negeri)"
-    ]
+    ],
+    "definitionId": "Pelatihan untuk memperoleh pengetahuan atau keterampilan kerja.",
+    "meaningJaId": "Pelatihan untuk memperoleh pengetahuan atau keterampilan kerja."
   },
   "kotoba_n2_0629": {
     "id": "kotoba_n2_0629",
@@ -102021,7 +102479,7 @@
     "reading": "けんちょう",
     "meaningId": "Kantor prefektur",
     "meaningEn": "prefectural office",
-    "meaningJa": "県庁",
+    "meaningJa": "県の行政を行う役所。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -102037,7 +102495,9 @@
       "県庁に勤める (bekerja di kantor prefektur)",
       "県庁所在地 (ibu kota prefektur)",
       "県庁の職員 (pegawai kantor prefektur)"
-    ]
+    ],
+    "definitionId": "Kantor yang menjalankan pemerintahan prefektur.",
+    "meaningJaId": "Kantor yang menjalankan pemerintahan prefektur."
   },
   "kotoba_n2_0630": {
     "id": "kotoba_n2_0630",
@@ -102045,7 +102505,7 @@
     "reading": "みおろす",
     "meaningId": "Memandang dari atas; meremehkan",
     "meaningEn": "to overlook; to command a view of; to look down on something",
-    "meaningJa": "見下ろす",
+    "meaningJa": "高い所から下を見る。人を軽く見る。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -102061,7 +102521,9 @@
       "町を見下ろす (memandang kota dari atas)",
       "人を見下ろす (merendahkan orang)",
       "窓から見下ろす (memandang dari jendela)"
-    ]
+    ],
+    "definitionId": "Memandang ke bawah dari ketinggian; juga meremehkan orang.",
+    "meaningJaId": "Memandang ke bawah dari ketinggian; juga meremehkan orang."
   },
   "kotoba_n2_0631": {
     "id": "kotoba_n2_0631",
@@ -102069,7 +102531,7 @@
     "reading": "けんがく",
     "meaningId": "Kunjungan studi",
     "meaningEn": "inspection; study by observation; field trip",
-    "meaningJa": "見学",
+    "meaningJa": "実際に見て学ぶこと。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -102085,7 +102547,9 @@
       "工場を見学する (mengunjungi pabrik)",
       "見学に行く (pergi kunjungan studi)",
       "見学者 (pengunjung studi)"
-    ]
+    ],
+    "definitionId": "Mengunjungi tempat untuk melihat dan belajar langsung.",
+    "meaningJaId": "Mengunjungi tempat untuk melihat dan belajar langsung."
   },
   "kotoba_n2_0632": {
     "id": "kotoba_n2_0632",
@@ -102093,7 +102557,7 @@
     "reading": "みかけ",
     "meaningId": "Penampilan luar",
     "meaningEn": "outward appearance",
-    "meaningJa": "見掛け",
+    "meaningJa": "外から見た様子。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -102109,7 +102573,9 @@
       "見掛けによらず (di luar dugaan)",
       "見掛けが悪い (penampilannya buruk)",
       "見掛け倒し (hanya tampak luarnya)"
-    ]
+    ],
+    "definitionId": "Penampilan luar yang tampak.",
+    "meaningJaId": "Penampilan luar yang tampak."
   },
   "kotoba_n2_0633": {
     "id": "kotoba_n2_0633",
@@ -102117,7 +102583,7 @@
     "reading": "みなれる",
     "meaningId": "Terbiasa melihat; akrab",
     "meaningEn": "to become used to seeing; to be familiar with",
-    "meaningJa": "見慣れる",
+    "meaningJa": "何度も見て慣れる。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -102133,7 +102599,9 @@
       "見慣れた景色 (pemandangan yang akrab)",
       "見慣れない顔 (wajah yang asing)",
       "見慣れてくる (menjadi terbiasa melihat)"
-    ]
+    ],
+    "definitionId": "Menjadi akrab karena sering melihat.",
+    "meaningJaId": "Menjadi akrab karena sering melihat."
   },
   "kotoba_n2_0634": {
     "id": "kotoba_n2_0634",
@@ -102141,7 +102609,7 @@
     "reading": "みだし",
     "meaningId": "Judul; tajuk",
     "meaningEn": "heading; caption; subtitle",
-    "meaningJa": "見出し",
+    "meaningJa": "記事などの内容を示す題。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -102157,7 +102625,9 @@
       "新聞の見出し (judul koran)",
       "見出しを付ける (memberi judul)",
       "大見出し (judul besar)"
-    ]
+    ],
+    "definitionId": "Judul yang menunjukkan isi artikel atau berita.",
+    "meaningJaId": "Judul yang menunjukkan isi artikel atau berita."
   },
   "kotoba_n2_0635": {
     "id": "kotoba_n2_0635",
@@ -102165,7 +102635,7 @@
     "reading": "みおくる",
     "meaningId": "Mengantar kepergian; membiarkan lewat",
     "meaningEn": "to see off; to farewell; to escort",
-    "meaningJa": "見送る",
+    "meaningJa": "去る人を見て送る。そのまま通す。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -102181,7 +102651,9 @@
       "友達を見送る (mengantar teman)",
       "電車を見送る (membiarkan kereta lewat)",
       "見送りに行く (pergi mengantar)"
-    ]
+    ],
+    "definitionId": "Mengantar kepergian seseorang; juga membiarkan sesuatu lewat.",
+    "meaningJaId": "Mengantar kepergian seseorang; juga membiarkan sesuatu lewat."
   },
   "kotoba_n2_0636": {
     "id": "kotoba_n2_0636",
@@ -102189,7 +102661,7 @@
     "reading": "みなおす",
     "meaningId": "Meninjau ulang",
     "meaningEn": "to look again; to get a better opinion of",
-    "meaningJa": "見直す",
+    "meaningJa": "もう一度見て改める。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -102205,7 +102677,9 @@
       "計画を見直す (meninjau ulang rencana)",
       "見直しをする (melakukan peninjauan ulang)",
       "考えを見直す (mengevaluasi ulang pemikiran)"
-    ]
+    ],
+    "definitionId": "Meninjau kembali untuk memperbaiki; juga menilai ulang.",
+    "meaningJaId": "Meninjau kembali untuk memperbaiki; juga menilai ulang."
   },
   "kotoba_n2_0637": {
     "id": "kotoba_n2_0637",
@@ -102213,7 +102687,7 @@
     "reading": "みつかる",
     "meaningId": "Ditemukan",
     "meaningEn": "to be found; to be discovered",
-    "meaningJa": "見付かる",
+    "meaningJa": "探していたものが見える所に出てくる。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -102229,7 +102703,9 @@
       "財布が見付かる (dompet ditemukan)",
       "答えが見付かる (jawaban ditemukan)",
       "仕事が見付かる (pekerjaan ditemukan)"
-    ]
+    ],
+    "definitionId": "Sesuatu yang dicari akhirnya ditemukan atau ketahuan.",
+    "meaningJaId": "Sesuatu yang dicari akhirnya ditemukan atau ketahuan."
   },
   "kotoba_n2_0638": {
     "id": "kotoba_n2_0638",
@@ -102237,7 +102713,7 @@
     "reading": "みつける",
     "meaningId": "Menemukan",
     "meaningEn": "to be familiar; to discover; to detect",
-    "meaningJa": "見付ける",
+    "meaningJa": "探して見出す。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -102253,7 +102729,9 @@
       "鍵を見付ける (menemukan kunci)",
       "答えを見付ける (menemukan jawaban)",
       "仕事を見付ける (menemukan pekerjaan)"
-    ]
+    ],
+    "definitionId": "Menemukan sesuatu yang dicari.",
+    "meaningJaId": "Menemukan sesuatu yang dicari."
   },
   "kotoba_n2_0639": {
     "id": "kotoba_n2_0639",
@@ -102261,7 +102739,7 @@
     "reading": "みまう",
     "meaningId": "Menjenguk",
     "meaningEn": "to ask after (health); to visit",
-    "meaningJa": "見舞う",
+    "meaningJa": "病人を訪ねて励ます。災難にあう。",
     "jlpt": "N2",
     "wordType": "verb",
     "kanjiComponents": [
@@ -102277,7 +102755,9 @@
       "病人を見舞う (menjenguk orang sakit)",
       "病院へ見舞う (menjenguk ke rumah sakit)",
       "災害に見舞われる (tertimpa bencana)"
-    ]
+    ],
+    "definitionId": "Mengunjungi orang sakit; juga ditimpa musibah.",
+    "meaningJaId": "Mengunjungi orang sakit; juga ditimpa musibah."
   },
   "kotoba_n2_0640": {
     "id": "kotoba_n2_0640",
@@ -102285,7 +102765,7 @@
     "reading": "みほん",
     "meaningId": "Sampel",
     "meaningEn": "sample",
-    "meaningJa": "見本",
+    "meaningJa": "商品の見せ用の品。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -102301,7 +102781,9 @@
       "見本を見せる (menunjukkan sampel)",
       "見本市 (pameran dagang)",
       "商品見本 (sampel produk)"
-    ]
+    ],
+    "definitionId": "Contoh barang yang dipakai untuk menunjukkan mutu.",
+    "meaningJaId": "Contoh barang yang dipakai untuk menunjukkan mutu."
   },
   "kotoba_n2_0641": {
     "id": "kotoba_n2_0641",
@@ -102309,7 +102791,7 @@
     "reading": "けんきょ",
     "meaningId": "Kesopanan; kerendahhatian",
     "meaningEn": "modesty; humility",
-    "meaningJa": "謙虚",
+    "meaningJa": "ひかえめで素直な様子。",
     "jlpt": "N2",
     "wordType": "adjective-na",
     "kanjiComponents": [
@@ -102325,7 +102807,9 @@
       "謙虚な態度 (sikap rendah hati)",
       "謙虚に学ぶ (belajar dengan rendah hati)",
       "謙虚な人 (orang yang rendah hati)"
-    ]
+    ],
+    "definitionId": "Rendah hati dan tidak menonjolkan diri.",
+    "meaningJaId": "Rendah hati dan tidak menonjolkan diri."
   },
   "kotoba_n2_0642": {
     "id": "kotoba_n2_0642",
@@ -102333,7 +102817,7 @@
     "reading": "けんそん",
     "meaningId": "Rendah hati; kerendahhatian; kesopanan",
     "meaningEn": "humble; humility; modesty",
-    "meaningJa": "謙遜",
+    "meaningJa": "自分を控えめにあつかうこと。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -102349,7 +102833,9 @@
       "謙遜する (merendah)",
       "謙遜して言う (berkata merendah)",
       "ご謙遜を (Anda terlalu merendah)"
-    ]
+    ],
+    "definitionId": "Bersikap merendah dan tidak menyombongkan diri.",
+    "meaningJaId": "Bersikap merendah dan tidak menyombongkan diri."
   },
   "kotoba_n2_0643": {
     "id": "kotoba_n2_0643",
@@ -102357,7 +102843,7 @@
     "reading": "けわしい",
     "meaningId": "Curam; terjal; tajam (tatapan)",
     "meaningEn": "inaccessible place; sharp eyes",
-    "meaningJa": "険しい",
+    "meaningJa": "傾きがきつく危ない様子。",
     "jlpt": "N2",
     "wordType": "adjective-i",
     "kanjiComponents": [
@@ -102372,7 +102858,9 @@
       "険しい山 (gunung terjal)",
       "険しい表情 (ekspresi tegang)",
       "険しい道 (jalan terjal)"
-    ]
+    ],
+    "definitionId": "Curam, terjal, dan berbahaya; juga tatapan tajam.",
+    "meaningJaId": "Curam, terjal, dan berbahaya; juga tatapan tajam."
   },
   "kotoba_n2_0644": {
     "id": "kotoba_n2_0644",
@@ -102380,7 +102868,7 @@
     "reading": "けんびきょう",
     "meaningId": "Mikroskop",
     "meaningEn": "microscope",
-    "meaningJa": "顕微鏡",
+    "meaningJa": "小さなものを大きく見る道具。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -102397,7 +102885,9 @@
       "顕微鏡で見る (melihat dengan mikroskop)",
       "顕微鏡を覗く (mengintip mikroskop)",
       "電子顕微鏡 (mikroskop elektron)"
-    ]
+    ],
+    "definitionId": "Alat yang memperbesar benda kecil untuk diamati.",
+    "meaningJaId": "Alat yang memperbesar benda kecil untuk diamati."
   },
   "kotoba_n2_0645": {
     "id": "kotoba_n2_0645",
@@ -102405,7 +102895,7 @@
     "reading": "もともと",
     "meaningId": "Awalnya; secara alami; dari awal",
     "meaningEn": "originally; by nature; from the start",
-    "meaningJa": "元々",
+    "meaningJa": "最初から。そもそも。",
     "jlpt": "N2",
     "wordType": "adverb",
     "kanjiComponents": [
@@ -102420,7 +102910,9 @@
       "元々の性格 (watak asli)",
       "元々知っていた (memang sudah tahu)",
       "元々そうだ (memang begitu dari awal)"
-    ]
+    ],
+    "definitionId": "Sejak awal; pada dasarnya.",
+    "meaningJaId": "Sejak awal; pada dasarnya."
   },
   "kotoba_n2_0646": {
     "id": "kotoba_n2_0646",
@@ -102428,7 +102920,7 @@
     "reading": "げんこう",
     "meaningId": "Naskah",
     "meaningEn": "manuscript; copy",
-    "meaningJa": "原稿",
+    "meaningJa": "印刷するために書いた文章。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -102444,7 +102936,9 @@
       "原稿を書く (menulis naskah)",
       "原稿用紙 (kertas naskah)",
       "原稿の締め切り (tenggat naskah)"
-    ]
+    ],
+    "definitionId": "Naskah tulisan yang disiapkan untuk dicetak.",
+    "meaningJaId": "Naskah tulisan yang disiapkan untuk dicetak."
   },
   "kotoba_n2_0647": {
     "id": "kotoba_n2_0647",
@@ -102452,7 +102946,7 @@
     "reading": "げんさん",
     "meaningId": "Tempat asal; habitat",
     "meaningEn": "place of origin; habitat",
-    "meaningJa": "原産",
+    "meaningJa": "もとはその土地で生まれたこと。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -102468,7 +102962,9 @@
       "日本原産 (asli Jepang)",
       "原産地 (tempat asal)",
       "アジア原産 (asli Asia)"
-    ]
+    ],
+    "definitionId": "Asal tempat suatu tanaman atau hewan.",
+    "meaningJaId": "Asal tempat suatu tanaman atau hewan."
   },
   "kotoba_n2_0648": {
     "id": "kotoba_n2_0648",
@@ -102476,7 +102972,7 @@
     "reading": "げんし",
     "meaningId": "Primitif; purba",
     "meaningEn": "origin; primeval",
-    "meaningJa": "原始",
+    "meaningJa": "文明がまだ発達していない初めの状態。",
     "jlpt": "N2",
     "wordType": "noun",
     "kanjiComponents": [
@@ -102492,7 +102988,9 @@
       "原始時代 (zaman purba)",
       "原始的な (primitif)",
       "原始人 (manusia purba)"
-    ]
+    ],
+    "definitionId": "Keadaan awal ketika peradaban belum maju; primitif.",
+    "meaningJaId": "Keadaan awal ketika peradaban belum maju; primitif."
   },
   "kotoba_n2_0649": {
     "id": "kotoba_n2_0649",

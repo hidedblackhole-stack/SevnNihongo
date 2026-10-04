@@ -1,0 +1,250 @@
+n2_0289|昼にとる食事。レストランで出す、昼の定食。|Hidangan makan siang; juga paket menu siang di restoran.
+n2_0399|仮名を使って、言葉を書き表すときの、決まり。|Aturan penulisan kata dengan huruf kana.
+n2_0400|はっきり言わずに、いくつかのものを、まとめて指す言葉。|Kata untuk menyebut beberapa hal tanpa merinci; juga 'apa saja'.
+n2_0401|時間を、分単位で尋ねる言葉。|Kata tanya untuk menanyakan jumlah menit.
+n2_0402|速度が、増すこと。|Bertambahnya kecepatan gerak suatu benda.
+n2_0403|単位時間あたりの、速度の、変化の割合。|Laju perubahan kecepatan per satuan waktu.
+n2_0404|熱を加えて、温度を上げること。|Memberi panas untuk menaikkan suhu.
+n2_0405|会議で、提案が、承認されること。|Disetujuinya suatu usul dalam sidang.
+n2_0406|人が住む、建物。|Bangunan tempat tinggal; rumah.
+n2_0407|貸家などの、持ち主。|Pemilik rumah sewa.
+n2_0408|予想や、疑いが、本当かどうか。|Menyatakan keraguan atau harapan apakah sesuatu benar-benar terjadi.
+n2_0409|植物の、実。|Buah atau biji dari tumbuhan.
+n2_0410|実際には、存在しないこと。想像で、作ったこと。|Hal yang tidak benar-benar ada; rekaan imajinasi.
+n2_0411|大衆に、親しまれる、歌。|Lagu yang akrab di kalangan masyarakat luas.
+n2_0412|火山の、噴火する、口。|Lubang di puncak gunung api tempat letusan keluar.
+n2_0413|地下の、熱で、岩が溶け、噴き出す、山。|Gunung yang menyemburkan lava, abu, dan gas dari perut bumi.
+n2_0414|火や熱湯などで、皮膚に、傷ができること。|Luka pada kulit akibat api atau air panas.
+n2_0415|結婚する、女性。|Perempuan yang akan atau baru menikah.
+n2_0416|火薬を、打ち上げて、夜空に、花のように、広げるもの。|Hiburan dari bubuk mesiu yang meledak indah di langit malam.
+n2_0417|税金を、かけること。|Mengenakan pajak atas suatu barang atau pendapatan.
+n2_0418|学校などで、学ぶ、順序や内容。|Rangkaian isi dan tahapan pelajaran yang harus ditempuh.
+n2_0419|運ぶ、荷物。|Barang yang diangkut untuk dikirim.
+n2_0420|不注意で、してしまった、失敗。|Kesalahan yang terjadi akibat kelalaian.
+n2_0421|必要な量を、超えて、余ること。|Jumlah yang melebihi kebutuhan.
+n2_0422|物事が、進んで行く、道すじ。|Tahapan berjalannya suatu peristiwa.
+n2_0423|全体の、半分より、多い数。|Jumlah yang lebih dari separuh keseluruhan.
+n2_0424|血を吸う、小さな、虫。|Serangga kecil yang menghisap darah dan menggigit.
+n2_0425|突然。急に。|Mendadak; tiba-tiba.
+n2_0426|会議や、集会に、使う、建物。|Gedung untuk pertemuan atau acara.
+n2_0427|集まっていた人が、別れること。会などを、やめること。|Bubarnya kumpulan orang atau organisasi.
+n2_0428|内容を、分かりやすく、説明すること。|Menjelaskan isi suatu hal agar mudah dipahami.
+n2_0429|問題に対する、答え。|Jawaban atas soal atau pertanyaan.
+n2_0430|自由に、してやること。束縛を、解くこと。|Membebaskan dari kekangan atau tekanan.
+n2_0431|遠くなる、曲がった道。|Jalan yang berputar sehingga lebih jauh.
+n2_0432|ものごとが、行われる、度数。|Jumlah kejadian suatu hal.
+n2_0433|何枚かを、まとめて売る、切符。|Kumpulan tiket yang dijual sekaligus dengan harga lebih murah.
+n2_0434|軸を中心に、回ること。|Berputar mengelilingi suatu poros.
+n2_0435|質問や、要求に、答えること。|Memberi jawaban atas pertanyaan atau permintaan.
+n2_0436|一つに、固まったもの。|Benda yang menggumpal menjadi satu.
+n2_0437|雲のない、よく晴れた、天気。|Cuaca cerah tanpa awan.
+n2_0438|疑わしくて、不安な、気持ちを、起こさせる様子。|Terlihat mencurigakan dan menimbulkan keraguan.
+n2_0439|思い通りに、ならなくて、腹立たしい。|Merasa kesal atau menyesal karena tidak sesuai harapan.
+n2_0440|失敗を、後から、残念に思う。人の死を、悲しむ。|Menyesali kegagalan; juga berduka atas kematian seseorang.
+n2_0441|昔のことを、思い出して、恋しい。|Merasa rindu pada hal masa lalu.
+n2_0442|もう一度。あらためて。|Sekali lagi dengan cara baru; lain kali.
+n2_0443|悪い所を、新しく、直す。|Memperbarui atau memperbaiki sesuatu agar lebih baik.
+n2_0444|駅で、乗客の、切符を、調べること。|Pemeriksaan karcis penumpang di gerbang stasiun.
+n2_0445|悪い所や、不十分な所を、直すこと。|Merevisi bagian yang buruk atau kurang pada aturan dan sebagainya.
+n2_0446|形や、仕組みを、作り変えること。|Mengubah bentuk atau struktur sesuatu.
+n2_0447|海で、泳いだり、日光浴を、したりすること。|Berenang atau berjemur di laut.
+n2_0448|広い、海。|Hamparan laut luas; samudra.
+n2_0449|白と黒の、中間の、色。|Warna di antara putih dan hitam.
+n2_0450|絵を描くための、色のついた、材料。|Bahan berwarna untuk melukis.
+n2_0451|会を、始めること。|Memulai suatu pertemuan atau sidang.
+n2_0452|道路や、鉄道などが、通じて、使えるようになること。|Terbukanya jalan atau jalur kereta untuk dipakai.
+n2_0453|閉じてあるものを、開けて、自由に、出入りできるようにすること。|Membuka sesuatu untuk umum atau bebas dimasuki.
+n2_0454|海や、川に、すむ、殻を持つ、生き物。|Hewan bercangkang yang hidup di laut atau sungai.
+n2_0455|止めてあるものが、取れる。的を、それる。|Sesuatu yang terpasang terlepas; juga meleset dari sasaran.
+n2_0456|手術で、病気を、治す、医学の、分野。|Cabang ilmu kedokteran yang menangani penyakit lewat operasi.
+n2_0457|外側の、部分。|Bagian luar; pihak luar.
+n2_0458|全体の、あらましを、述べた、論。|Uraian garis besar suatu bidang ilmu.
+n2_0459|入れ物の、口を、ふさぐ、もの。|Penutup yang dipasang pada mulut wadah.
+n2_0460|町の、道が、交わる、角。|Sudut jalan di kota.
+n2_0461|敷地を、囲む、柵や、木。|Pagar atau tanaman yang mengelilingi pekarangan.
+n2_0462|それぞれ。めいめい。|Masing-masing.
+n2_0463|一人一人。|Tiap-tiap orang.
+n2_0464|それぞれの、土地。|Berbagai daerah atau tempat.
+n2_0465|内容や、設備を、広げて、充実させること。|Memperluas dan memperkaya isi atau fasilitas.
+n2_0466|範囲や、規模を、広げること。|Memperluas cakupan atau skala; juga memperbesar.
+n2_0467|他と、違って、特に、すぐれていること。|Berbeda dari yang lain dan sangat istimewa.
+n2_0468|物の、外側を、おおう、かたい皮。|Lapisan keras yang menutupi bagian luar benda.
+n2_0469|あることが、起こる、可能性の、度合い。|Tingkat kemungkinan terjadinya sesuatu.
+n2_0470|二つの線や、面が、作る、開きの、大きさ。|Besarnya bukaan antara dua garis atau bidang.
+n2_0471|間に、物を置いて、分ける。|Memisahkan dengan menaruh sesuatu di antaranya.
+n2_0472|大学などで、専門ごとに、分けた、課程。|Bidang studi atau jurusan yang dibagi menurut spesialisasi.
+n2_0473|学者が、集まって、研究を、発表し合う、会。|Perkumpulan peneliti yang bertukar hasil penelitian.
+n2_0474|学校で、学習する、集団。|Kelompok murid yang belajar bersama; kelas.
+n2_0475|学問や、研究に関する、こと。|Hal yang berhubungan dengan ilmu pengetahuan dan penelitian.
+n2_0476|学校で、一年ごとに、分けた、段階。|Tingkat kelas yang dibagi per tahun ajaran.
+n2_0477|大学で、専門分野ごとに、分けた、組織。|Fakultas yang dibagi menurut bidang ilmu di universitas.
+n2_0478|学問を、身につけた、力。|Kemampuan akademik yang dimiliki seseorang.
+n2_0479|音楽を、演奏する、道具。|Alat untuk membunyikan musik.
+n2_0480|ある数を、何倍かする、計算。|Operasi hitung yang melipatgandakan suatu bilangan.
+n2_0481|思っていたより、ずっと。比較的。|Cukup atau lebih daripada dugaan; relatif.
+n2_0482|定価から、一部の金額を、引くこと。|Pengurangan sebagian harga dari harga normal.
+n2_0483|ある数を、他の数で、分ける、計算。|Operasi hitung membagi suatu bilangan dengan bilangan lain.
+n2_0484|文章の中で、語句を、囲む、記号。|Tanda yang mengapit kata atau kalimat dalam tulisan.
+n2_0485|印刷に使う、金属などで作った、文字。|Huruf cetak yang dipakai untuk mencetak.
+n2_0486|目覚ましく、働いたり、活動したりすること。|Berkiprah dengan menonjol dalam suatu bidang.
+n2_0488|のどが、水分を、ほしがる。|Merasa kehausan karena tenggorokan membutuhkan cairan.
+n2_0489|ご飯を、炊いたり、湯を、わかしたり、する、鍋。|Periuk untuk menanak nasi atau memanaskan air.
+n2_0490|屋根に、ふく、焼いた、板状のもの。|Lempeng tanah liat bakar yang dipasang di atap.
+n2_0491|水分を、なくして、乾いた状態に、する。|Membuat sesuatu menjadi kering.
+n2_0492|水分が、なくなること。空気中の、水分が、少ないこと。|Keadaan tanpa air; juga udara yang kering.
+n2_0493|液体を使わない、小型の、電池。|Baterai kecil yang tidak memakai cairan.
+n2_0494|お祝いのとき、杯を、上げて、祝うこと。|Mengangkat gelas bersama untuk merayakan sesuatu.
+n2_0495|頭に、かぶる、飾り。|Hiasan atau mahkota yang dikenakan di kepala.
+n2_0496|極に近い、とても寒い、地域。|Wilayah dekat kutub yang sangat dingin.
+n2_0497|間違えて、思いこむこと。|Salah mengira atau salah paham tentang sesuatu.
+n2_0498|丸めて、重ねる。巻き付ける。|Menggulung sesuatu; juga melilitkan.
+n2_0499|国の、役所。|Kantor atau instansi pemerintah.
+n2_0500|日光や、風に、あてて、乾かす。|Mengeringkan di bawah matahari atau angin.
+n2_0501|心に、そのように、受けとる。|Merasakan sesuatu dalam hati atau tubuh.
+n2_0502|深く、心を、動かされること。|Hati tergerak dalam oleh sesuatu.
+n2_0503|見たり、聞いたり、して、心に、感じた、こと。|Perasaan atau pendapat yang timbul setelah menyaksikan sesuatu.
+n2_0504|部屋の、空気を、入れかえること。|Mengganti udara di dalam ruangan.
+n2_0505|漢字の意味を、日本語で、説明した、辞書。|Kamus yang menjelaskan makna kanji dalam bahasa Jepang.
+n2_0506|必要以上に、かわいがる。わがままを、許す。|Memanjakan secara berlebihan.
+n2_0507|店の名前などを、書いて、掲げる、板。|Papan nama yang dipasang di depan toko.
+n2_0508|病人の、世話をすること。|Merawat dan menjaga orang sakit.
+n2_0509|引き締まって、いない。ゆったりしている。|Tidak kencang atau longgar; juga landai dan lambat.
+n2_0510|食品を、缶に、詰めて、保存したもの。|Makanan awet yang dikemas dalam kaleng.
+n2_0511|自然現象などを、観察して、測ること。|Mengamati dan mengukur gejala alam.
+n2_0512|ある物事についての、考え。|Pandangan atau pengertian tentang sesuatu.
+n2_0513|芸術などを、味わって、楽しむこと。|Menikmati dan menghargai karya seni.
+n2_0514|少しすると。やがて。|Tidak lama lagi.
+n2_0515|物と物との、あいだの、距離。|Jarak atau selang antara dua benda atau kejadian.
+n2_0516|他のものを、通して、関係すること。|Berhubungan melalui perantara.
+n2_0517|日本の、本州の、東側の、地方。|Wilayah di timur Honshu yang mencakup Tokyo.
+n2_0518|全体の、中に、入れる。|Menyertakan sesuatu sebagai bagian dari keseluruhan.
+n2_0519|あぶなくて、心配な様子。|Berbahaya dan mengkhawatirkan.
+n2_0520|簡単な、仕組みの、道具。|Peralatan sederhana atau instrumen.
+n2_0521|道具。|Peralatan atau perkakas.
+n2_0522|物事を、決める、よりどころ。|Patokan yang dijadikan dasar penilaian.
+n2_0523|物事の、土台。|Dasar atau fondasi suatu hal.
+n2_0524|活動の、拠点となる、場所。|Tempat yang menjadi pusat kegiatan, seperti pangkalan militer.
+n2_0525|ものごとの、土台。|Landasan tempat suatu hal berdiri.
+n2_0526|近くに、動かす。集める。|Mendekatkan sesuatu; juga mengumpulkan atau memesan.
+n2_0527|少しだけ。ある程度。|Sedikit atau sampai taraf tertentu.
+n2_0528|決められた、日時。|Batas waktu yang telah ditentukan.
+n2_0529|列車を、引っ張って、走る、車両。|Kendaraan penarik kereta; lokomotif.
+n2_0530|もとの、場所に、行かせる。|Menyuruh pulang atau mengembalikan ke tempat asal.
+n2_0531|注意する。気を配る。|Berhati-hati dan memperhatikan sesuatu.
+n2_0532|空気の、重さによる、圧力。|Tekanan yang diakibatkan berat lapisan udara.
+n2_0533|水蒸気のように、決まった形を、持たない、物質。|Zat tanpa bentuk tetap seperti uap atau gas.
+n2_0534|何かが、いるような、様子。|Tanda halus yang menyiratkan adanya sesuatu.
+n2_0535|めったに、ない様子。|Jarang terjadi; langka.
+n2_0536|物事を、決める、よりどころ。|Patokan untuk menilai atau memutuskan sesuatu.
+n2_0537|集団の、秩序を保つための、決まり。|Aturan yang menjaga keteraturan sebuah kelompok.
+n2_0538|意味を表す、しるし。|Tanda yang mewakili suatu arti.
+n2_0539|寝ていた人が、起きること。|Bangun dari tempat tidur.
+n2_0540|食べ物がなくて、おなかが、すく。|Sangat lapar karena tidak ada makanan.
+n2_0541|作物が、実らず、食べ物が、足りなくなること。|Bencana kekurangan pangan akibat gagal panen.
+n2_0542|決まった、形式で、行う、行事。|Acara yang dilakukan dengan tata cara tertentu.
+n2_0543|ふさがって、通らなくなる。いっぱいに、なる。|Tersumbat sehingga tidak bisa lewat; juga penuh sesak.
+n2_0544|思ったのとは、反対に。|Justru sebaliknya dari yang diperkirakan.
+n2_0545|訪ねてきた、客を、通す、部屋。|Ruangan untuk menerima tamu.
+n2_0546|劇場などで、客が座る、席。|Kursi tempat penonton duduk.
+n2_0547|上下や、前後が、反対になること。|Keadaan atas-bawah atau depan-belakang terbalik.
+n2_0548|順序や、向きが、反対であること。|Kebalikan dari yang semestinya.
+n2_0549|店や、事業を、一時、休むこと。|Berhenti beroperasi sementara waktu untuk usaha.
+n2_0550|先生の、都合で、授業が、行われないこと。|Kuliah yang ditiadakan karena dosen berhalangan.
+n2_0551|仕事を、やめて、体を、休めること。|Berhenti bekerja untuk beristirahat.
+n2_0552|体や、心を、休めて、元気を、回復すること。|Beristirahat untuk memulihkan tenaga dan kesehatan.
+n2_0553|水などを、すくい取る。人の気持ちを、思いやる。|Menimba atau menyendok cairan; juga memahami perasaan orang.
+n2_0554|会社などが、支払う、給料や、手当。|Gaji atau tunjangan yang dibayarkan perusahaan.
+n2_0555|高く、持ち上げる。式などを、行う。|Mengangkat tinggi-tinggi; juga mengadakan upacara; menyebutkan contoh.
+n2_0556|魚や、貝などを、とって、売る、産業。|Usaha menangkap dan menjual ikan dan hasil laut.
+n2_0557|魚などを、とる、ことを、仕事とする、人。|Orang yang pekerjaannya menangkap ikan.
+n2_0558|馬を、走らせて、勝ち負けを競う、競技。|Perlombaan adu kecepatan kuda.
+n2_0559|土地などの、分かれ目。|Garis pemisah antar wilayah atau bidang.
+n2_0560|無理にでも、押し通すこと。|Memaksakan kehendak dengan cara kasar.
+n2_0561|より、強くすること。|Membuat sesuatu menjadi lebih kuat.
+n2_0562|強く出る、気持ち。自信を持って、積極的である様子。|Sikap berani dan percaya diri; agresif.
+n2_0563|相手に、迷惑をかけたと、申し訳なく、思うこと。|Merasa sungkan karena merepotkan orang lain.
+n2_0564|二つのものの、間に入って、動かなくなる。|Terjepit di antara dua benda.
+n2_0565|二つのものの、間に、入れる。|Menyelipkan sesuatu di antara dua benda; juga menyela.
+n2_0566|教えてもらう。|Menerima pelajaran dari seseorang.
+n2_0567|学問や、知識を、身につけて、備わった、豊かさ。|Wawasan dan pengetahuan yang membentuk kepribadian.
+n2_0568|そば粉で、作った、細い、麺。|Mi tipis dari tepung gandum hitam.
+n2_0569|音が、広がって、伝わること。|Gema suara yang merambat atau terdengar bergaung.
+n2_0570|音や、振動が、広く、伝わる。影響する。|Suara bergema; juga berdampak ke sekitar.
+n2_0571|びっくり、させる。|Membuat orang terkejut.
+n2_0572|まっすぐなものを、曲がった形にする。|Membengkokkan atau menekuk benda lurus.
+n2_0573|曲がっている、線。|Garis yang melengkung.
+n2_0574|十三本の、弦を、張った、日本の、楽器。|Alat musik berdawai Jepang yang dipetik dan dimainkan di lantai.
+n2_0575|もうすぐ。ちかぢか。|Dalam waktu dekat.
+n2_0576|そばまで、行く。|Mendekati suatu tempat atau seseorang.
+n2_0577|近くに、寄せる。|Mendekatkan sesuatu atau seseorang.
+n2_0578|赤や、金色の、きれいな、観賞用の、淡水魚。|Ikan hias air tawar berwarna cerah.
+n2_0579|文章を、区切る、点や、丸。|Tanda baca seperti koma dan titik pada kalimat.
+n2_0580|区切られた、地域。|Wilayah atau zona yang dibatasi.
+n2_0581|境目を、つけて、分ける。|Memberi batas pada sesuatu; juga menghentikan sejenak.
+n2_0582|全体を、いくつかに、分けること。|Membagi keseluruhan menjadi beberapa bagian atau kategori.
+n2_0583|不満や、被害を、訴える、言葉。|Pernyataan ketidakpuasan atau kerugian yang disampaikan.
+n2_0584|いろいろ考えて、苦労すること。|Memeras pikiran dan bersusah payah mencari cara.
+n2_0585|必要な物を、用意する。|Melengkapi dengan apa yang diperlukan; juga mempersiapkan.
+n2_0586|中に、何も入っていない、様子。|Keadaan tidak ada isinya sama sekali.
+n2_0587|現実にはない、ことを、あれこれ、思い描くこと。|Membayangkan hal yang tidak nyata.
+n2_0588|空の、中。地面から、はなれた所。|Ruang di udara; tempat di atas tanah.
+n2_0589|二で、割り切れる、整数。|Bilangan bulat yang habis dibagi dua.
+n2_0590|髪を、とかす、道具。|Alat bergigi untuk menyisir rambut.
+n2_0591|役に立たない、小さな、かけら。|Serpihan kecil yang tak berguna; sampah.
+n2_0592|地面などに、穴をあける。|Membuat lubang di tanah; menggali.
+n2_0593|同じ種類の、動物などが、集まったもの。|Kumpulan hewan atau orang yang berkelompok.
+n2_0594|県の、中の、行政区画。|Satuan wilayah administratif di bawah prefektur.
+n2_0595|あることに、関係する。|Berkaitan atau terlibat dengan suatu hal.
+n2_0596|斜めになる。ある方向に、向かう。|Menjadi miring; juga cenderung ke arah tertentu.
+n2_0597|物事の、型や、決まった、やり方。|Bentuk atau tata cara yang telah ditentukan.
+n2_0598|物の、様子や、性質を、表す、「〜い」で、終わる言葉。|Kata sifat berakhiran 'i' yang menggambarkan keadaan atau sifat benda.
+n2_0599|物の、様子を、表し、「〜だ」と、言う、言葉。|Kata sifat berakhiran 'na' yang menggambarkan keadaan atau sifat.
+n2_0600|よい、環境や、条件を、与えられる。|Diberi kondisi atau berkah yang baik.
+n2_0601|めでたいと、思う、気持ち。|Perasaan gembira atas peristiwa yang baik.
+n2_0602|尊いものとして、大切に、する。|Menghormati dan menghargai dengan tulus.
+n2_0603|相手を、敬う、気持ちを、表す、言葉。|Bahasa sopan yang menunjukkan rasa hormat kepada lawan bicara.
+n2_0604|芸や、武道などを、練習すること。|Latihan seni pertunjukan atau bela diri.
+n2_0605|つながっている、順序。血筋。|Garis keturunan atau susunan yang saling terhubung.
+n2_0606|地球上の、位置を、表す、南北に、走る、線。|Garis bujur yang menyatakan posisi timur-barat di bumi.
+n2_0607|物事が、続くこと。|Berlanjutnya suatu hal secara terus-menerus.
+n2_0608|ものと、ものが、つながっていること。|Keterkaitan antara satu hal dengan hal lain.
+n2_0609|ものと、ものが、結ばれる。|Menjadi bersambung atau terhubung.
+n2_0610|別々のものを、結びつける。|Menyambungkan dua hal yang terpisah.
+n2_0611|管の中で、光を出す、電灯。|Lampu tabung yang memancarkan cahaya dari lapisan fluoresen.
+n2_0612|危険がないように、見張ること。|Menjaga agar tidak terjadi hal berbahaya.
+n2_0613|歌や、踊りなどの、芸。|Pertunjukan seperti nyanyian dan tarian.
+n2_0614|急に、大きく、増えること。|Bertambah banyak secara mendadak.
+n2_0615|物と物との、あいだの、わずかな、空き。|Celah sempit di antara dua benda.
+n2_0616|数字の、位の、並び。|Posisi tempat dalam bilangan; juga balok penyangga.
+n2_0617|特に、すぐれた、作品。|Karya yang sangat unggul.
+n2_0618|血液が、血管を、押す、力。|Tekanan darah di dalam pembuluh.
+n2_0619|体の中を、流れる、赤い、液体。|Cairan merah yang mengalir di tubuh.
+n2_0620|一か月を、単位とする、給料。|Gaji yang dibayarkan per bulan.
+n2_0621|月と、日。時間の、流れ。|Bulan dan hari; juga lamanya waktu yang berlalu.
+n2_0622|その月の、終わりの、頃。|Akhir dari suatu bulan.
+n2_0623|二つの、働きを、合わせ持つ。|Menjalankan dua fungsi sekaligus; juga 'tidak dapat' dalam akhiran.
+n2_0624|かたい。しっかり、している。|Keras; juga kokoh dan teguh.
+n2_0625|いやだと、思って、避けようとする。|Merasa tidak suka dan ingin menghindari sesuatu.
+n2_0626|建物が、できあがる。|Bangunan berdiri atau selesai dibangun.
+n2_0627|食事の、料理の、組み合わせ。|Susunan hidangan dalam sekali makan.
+n2_0628|仕事に、必要な、知識や、技術を、身につける、訓練。|Pelatihan untuk memperoleh pengetahuan atau keterampilan kerja.
+n2_0629|県の、行政を、行う、役所。|Kantor yang menjalankan pemerintahan prefektur.
+n2_0630|高い所から、下を見る。人を、軽く見る。|Memandang ke bawah dari ketinggian; juga meremehkan orang.
+n2_0631|実際に、見て、学ぶこと。|Mengunjungi tempat untuk melihat dan belajar langsung.
+n2_0632|外から、見た、様子。|Penampilan luar yang tampak.
+n2_0633|何度も、見て、慣れる。|Menjadi akrab karena sering melihat.
+n2_0634|記事などの、内容を、示す、題。|Judul yang menunjukkan isi artikel atau berita.
+n2_0635|去る人を、見て、送る。そのまま、通す。|Mengantar kepergian seseorang; juga membiarkan sesuatu lewat.
+n2_0636|もう一度、見て、改める。|Meninjau kembali untuk memperbaiki; juga menilai ulang.
+n2_0637|探していたものが、見える所に、出てくる。|Sesuatu yang dicari akhirnya ditemukan atau ketahuan.
+n2_0638|探して、見出す。|Menemukan sesuatu yang dicari.
+n2_0639|病人を、訪ねて、励ます。災難に、あう。|Mengunjungi orang sakit; juga ditimpa musibah.
+n2_0640|商品の、見せ用の、品。|Contoh barang yang dipakai untuk menunjukkan mutu.
+n2_0641|ひかえめで、素直な様子。|Rendah hati dan tidak menonjolkan diri.
+n2_0642|自分を、控えめに、あつかうこと。|Bersikap merendah dan tidak menyombongkan diri.
+n2_0643|傾きが、きつく、危ない様子。|Curam, terjal, dan berbahaya; juga tatapan tajam.
+n2_0644|小さな、ものを、大きく、見る、道具。|Alat yang memperbesar benda kecil untuk diamati.
+n2_0645|最初から。そもそも。|Sejak awal; pada dasarnya.
+n2_0646|印刷する、ために、書いた、文章。|Naskah tulisan yang disiapkan untuk dicetak.
+n2_0647|もとは、その土地で、生まれたこと。|Asal tempat suatu tanaman atau hewan.
+n2_0648|文明が、まだ、発達していない、初めの、状態。|Keadaan awal ketika peradaban belum maju; primitif.
