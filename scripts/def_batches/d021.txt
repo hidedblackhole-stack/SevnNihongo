@@ -1,0 +1,250 @@
+n2_1656|草木が、盛んに、伸びて、重なり合う。|Tumbuhan tumbuh lebat dan rapat.
+n2_1657|羊などの、毛から、作った、糸。|Benang yang dibuat dari bulu domba.
+n2_1658|動物の、毛のついた、皮。|Kulit hewan yang masih berbulu.
+n2_1659|利益が、出る。|Usaha atau bisnis menghasilkan untung.
+n2_1660|利益を、得る。|Memperoleh keuntungan atau uang.
+n2_1661|建築や、家具などの、材料に、する、木。|Kayu yang dipakai sebagai bahan bangunan atau perabot.
+n2_1662|おおよその、基準。|Patokan kasar untuk mengira ukuran atau kemajuan.
+n2_1663|見つけやすくする、ための、しるし。|Tanda yang dipasang agar mudah dikenali.
+n2_1664|今。現在。|Saat ini; pada masa sekarang.
+n2_1665|朝、起きる、ために、鳴らす、時計。|Jam yang dibunyikan untuk membangunkan.
+n2_1666|目標として、向かう。|Menjadikan sesuatu sebagai tujuan atau sasaran.
+n2_1667|本などの、内容を、順に、示した、表。|Daftar isi yang menunjukkan bagian-bagian buku.
+n2_1668|自分より、地位や年齢が、上の人。|Orang yang kedudukan atau usianya di atas kita.
+n2_1669|ほかよりも、目に、つく。|Mencolok dan menarik perhatian.
+n2_1670|蒸したもち米を、つぶして、作った、日本の、食べ物。|Makanan Jepang dari beras ketan yang ditumbuk dan dibentuk.
+n2_1671|分からない、ことを、尋ねること。|Menanyakan keterangan atau informasi kepada pihak terkait.
+n2_1672|質問と、答え。|Rangkaian tanya jawab; juga dialog.
+n2_1673|夜の、間。|Waktu malam hari.
+n2_1674|夜に、走る、列車。夜に、動くこと。|Kereta yang berjalan malam hari; juga sifat hidup di malam hari.
+n2_1675|方向を、示す、矢の形の、しるし。|Tanda berbentuk anak panah penunjuk arah.
+n2_1676|劇や、映画で、演じる人。|Orang yang berperan dalam pertunjukan.
+n2_1677|国や、地方の、仕事を、行う、所。|Kantor pemerintahan.
+n2_1678|役所で、働く、人。|Pegawai yang bekerja di kantor pemerintahan.
+n2_1679|受け持つ、べき、仕事。|Tugas atau peran yang harus dipenuhi.
+n2_1680|湯を、わかす、金属製の、道具。|Ceret logam untuk memanaskan air.
+n2_1681|薬を、売る、店。|Toko yang menjual dan menyiapkan obat.
+n2_1682|薬を、混ぜるのに、使った、四番目の指。|Jari keempat pada tangan atau jari manis.
+n2_1683|治療などに、使う、薬。|Obat atau bahan kimia untuk pengobatan.
+n2_1684|ほかの言語に、直す。|Mengalihbahasakan ke bahasa lain.
+n2_1685|気を、ゆるめて、失敗すること。|Lengah sehingga terjadi kekeliruan.
+n2_1686|健康な人の、血を、病人に、入れること。|Memasukkan darah dari orang lain ke tubuh pasien.
+n2_1687|人や、荷物を、運ぶこと。|Pengangkutan orang atau barang.
+n2_1688|勇気が、あって、元気がよい。|Gagah berani dan penuh semangat.
+n2_1689|友だちとして、仲よくする、関係。|Hubungan baik antara pihak yang bersahabat.
+n2_1690|ゆったりと、落ち着いた、様子。|Tenang dan santai tanpa terburu-buru.
+n2_1691|感謝したく、なる様子。|Patut disyukuri dan membuat berterima kasih.
+n2_1692|あることと、ないこと。|Ada atau tidaknya sesuatu.
+n2_1693|お金が、かかること。|Berbayar; ada biaya yang harus dikeluarkan.
+n2_1694|水などが、あふれ出る。|Cairan atau perasaan muncul meluap; juga mendidih.
+n2_1695|遊具などが、ある、遊び場。|Taman hiburan dengan wahana bermain.
+n2_1696|郵便で、送ること。|Mengirim barang atau surat lewat pos.
+n2_1697|夕方に、発行する、新聞。|Koran yang terbit pada sore hari.
+n2_1698|夕方に、沈む、太陽。|Matahari senja yang hampir terbenam.
+n2_1699|夏の、夕方に、急に、降る、強い雨。|Hujan deras mendadak pada sore hari musim panas.
+n2_1700|あとの、ために、用意して、おくこと。|Persiapan atau cadangan untuk keperluan nanti.
+n2_1701|使ったり、取ったりした、あとに、残る。|Menjadi sisa; juga berlebih atau tak tertangani.
+n2_1702|必要な、分より、多いこと。|Berlebihan dari yang diperlukan; juga lebih lagi.
+n2_1703|自分に、関係のない、他の場所。|Tempat lain atau orang lain di luar lingkungan sendiri.
+n2_1704|他人の、物を、一時、持っておく。|Menyimpan titipan barang milik orang lain.
+n2_1705|小さな、子供。|Anak kecil di bawah usia sekolah.
+n2_1706|考え方や、やり方が、子供っぽい様子。|Pola pikir atau tingkah yang kekanak-kanakan.
+n2_1707|小学校に、入る前の、子供が、通う、施設。|Lembaga pendidikan untuk anak sebelum masuk sekolah dasar.
+n2_1708|物を、入れる、入れ物。|Wadah untuk menaruh sesuatu.
+n2_1709|入れ物に、入る、量。|Besarnya isi yang dapat ditampung wadah.
+n2_1710|高く、掲げる。油で、調理する。|Mengangkat tinggi-tinggi atau mengibarkan; juga menggoreng.
+n2_1711|洋服や、小物を、売る、店。|Toko yang menjual pakaian dan aksesori gaya Barat.
+n2_1712|固体を、液体に、する。|Melelehkan benda padat; juga melarutkan.
+n2_1713|固まったものを、液体で、ゆるめる。|Mengocok atau melarutkan sesuatu dengan cairan.
+n2_1714|固まったものが、液体に、なる。|Benda padat mencair atau larut; juga menyatu dengan sekitar.
+n2_1715|溶けて、全体に、混ざる。|Larut dan berbaur dengan lingkungan sekitar.
+n2_1716|火山から、噴き出した、どろどろの、岩。|Batuan cair panas yang menyembur dari gunung berapi.
+n2_1717|ある、分野で、使われる、専門的な、言葉。|Istilah khusus yang dipakai dalam suatu bidang.
+n2_1718|使いみち。|Kegunaan atau pemakaian sesuatu.
+n2_1719|羊の、毛。|Bulu yang berasal dari domba.
+n2_1720|話や、文章の、要点。|Ringkasan inti suatu pembicaraan atau tulisan.
+n2_1721|物事を、うまく、やる、こつ。|Cara cerdik mengerjakan sesuatu; juga pokok pembicaraan.
+n2_1722|日の、光。|Sinar matahari yang menyinari.
+n2_1723|生き物の、体を、育てる、栄養。|Zat gizi yang menopang pertumbuhan makhluk hidup.
+n2_1724|必要以上に、ほしがること。|Sikap serakah yang ingin lebih dari yang perlu.
+n2_1725|夏に、着る、木綿の、着物。|Kimono katun ringan yang dikenakan di musim panas.
+n2_1726|外国の人が、日本に、来ること。|Kedatangan orang asing ke Jepang.
+n2_1727|頼りに、なりそうで、安心できる。|Tampak dapat diandalkan dan menenangkan.
+n2_1728|うっかり、落として、しまった、物。|Barang yang tanpa sengaja terjatuh atau tertinggal.
+n2_1729|試験に、落ちること。|Tidak lulus ujian atau tidak naik kelas.
+n2_1730|心が、静まる。一つ所に、定まる。|Menjadi tenang; juga menetap di suatu tempat.
+n2_1731|言葉や、行いが、荒々しい様子。|Perbuatan atau ucapan yang kasar.
+n2_1732|紙面の、区切った、部分。|Kolom atau bagian pada lembar tulisan.
+n2_1733|得と、損。|Keuntungan dan kerugian; kepentingan.
+n2_1734|自然に、関する、学問。小学校などの、教科。|Ilmu alam; juga mata pelajaran sains.
+n2_1735|建物の、裏の、出入り口。|Pintu keluar masuk di bagian belakang gedung.
+n2_1736|裏と、表を、反対に、する。|Membalikkan sesuatu sehingga sisi belakang menghadap ke depan.
+n2_1737|歩いていて、足を、止める。|Berhenti melangkah sejenak.
+n2_1738|省いて、短くする。|Menyingkat atau meringkas kata.
+n2_1739|川の、水が、流れる、地域。|Daerah yang dialiri atau dilewati sungai.
+n2_1740|世間で、広く、人気を得る。|Menjadi tren atau sangat populer.
+n2_1741|さすが。|Memang sudah semestinya; tak heran.
+n2_1742|だんだん、増えて、たまる。|Terkumpul dan menumpuk sedikit demi sedikit.
+n2_1743|物を、貯める。|Mengumpulkan dan menyimpan sesuatu.
+n2_1744|がっかりしたときなどに、出る、息。|Embusan napas panjang saat kecewa atau lega.
+n2_1745|その場に、とどまる。|Tetap berada di suatu tempat; berhenti.
+n2_1746|家の人が、いない間、家を、守ること。|Menjaga rumah ketika penghuni sedang pergi.
+n2_1747|小さい、丸いもの。|Benda kecil berbentuk bulat; butiran.
+n2_1748|二つの、側面。|Kedua sisi dari sesuatu.
+n2_1749|学生や、社員が、共同で、住む、施設。|Tempat tinggal bersama bagi pelajar atau karyawan.
+n2_1750|涼しい所で、暑さを、避ける。|Mencari udara sejuk untuk menghindari panas.
+n2_1751|重さなどを、はかる。|Menimbang atau mengukur berat dan jumlah.
+n2_1752|外国で、自国民の、保護などを、行う、外交官。|Pejabat diplomatik yang melindungi warga negaranya di luar negeri.
+n2_1753|お金を、受け取ること。|Menerima uang pembayaran.
+n2_1754|頼りに、なって、心強い。|Terasa kuat dan menenangkan.
+n2_1755|決まって、いない、一時的な、こと。|Bersifat sementara atau di luar jadwal tetap.
+n2_1756|分かりやすく、他のものに、なぞらえる。|Mengibaratkan sesuatu dengan hal lain.
+n2_1757|決まりに、当てはまらない、もの。|Hal yang tidak termasuk dalam aturan umum.
+n2_1758|熱い物を、冷たく、する。|Mendinginkan sesuatu yang panas.
+n2_1759|熱い物が、冷たくなる。気持ちが、冷める。|Sesuatu yang panas menjadi dingin; juga semangat meredup.
+n2_1760|冷たく、する。|Menjadikan sesuatu dingin.
+n2_1761|凍らせること。|Membekukan makanan untuk mengawetkan.
+n2_1762|振ると、鳴る、小さな、鐘。|Lonceng kecil yang berbunyi bila digoyangkan.
+n2_1763|得点が、ないこと。|Nilai nol; tidak mendapat angka sama sekali.
+n2_1764|列に、並んだ、島々。|Gugusan pulau yang berjajar.
+n2_1765|ばらばらに、引き離す。|Merobek atau membelah sesuatu; juga memisahkan hubungan.
+n2_1766|思い出す、人や、場所に、会いたい、気持ち。|Perasaan rindu ingin bertemu orang atau tempat.
+n2_1767|粘土を、焼いて、作った、建築材料。|Bahan bangunan dari tanah liat yang dibakar.
+n2_1768|同じ、目的で、団結すること。|Penggabungan pihak-pihak untuk tujuan bersama.
+n2_1769|明るくて、元気な様子。|Periang dan bersemangat.
+n2_1770|火を、つけて、光を、出す、棒状の、物。|Batang lilin yang dinyalakan untuk penerangan.
+n2_1771|山の、すその、部分。|Bagian kaki gunung.
+n2_1772|音を、記録すること。|Merekam suara pada media.
+n2_1773|道理を、述べて、議論する。|Membahas dan memperdebatkan suatu hal secara runtut.
+n2_1774|日本語と、英語。|Berkaitan dengan bahasa Jepang dan Inggris, seperti kamus Jepang-Inggris.
+n2_1775|日本の、伝統的な、衣服。|Pakaian tradisional Jepang seperti kimono.
+n2_1776|相手に、話しかけて、声を、かける。|Memulai pembicaraan dengan seseorang.
+n2_1777|互いに、話して、決めること。|Berunding atau berdiskusi bersama untuk memutuskan.
+n2_1778|電話が、話し中で、つながらない、こと。|Saluran telepon sedang dipakai sehingga sibuk.
+n2_1779|悪いことを、したと、謝る。|Meminta maaf atas kesalahan yang diperbuat.
+n2_1780|汁物などを、入れる、木の、器。|Mangkuk kayu untuk sup atau nasi.
+n2_1781|飯や汁を、入れる、器。|Mangkuk untuk nasi atau sup.
+n2_1782|ご飯などを、盛る、大きな、鉢。|Mangkuk besar untuk makanan; juga hidangan nasi mangkuk.
+n2_1783|逃げる。隠れる。|Lepas atau menghilang; makna kuno 'sembunyi'.
+n2_1784|鼻で、においを、感じ取る。|Mencium bau dengan hidung.
+n2_1785|小さな、声で、話す。|Berbicara dengan suara sangat pelan; berbisik.
+n2_1786|人の、持ち物を、そっと、盗む人。|Pencuri yang mengambil barang orang diam-diam, biasanya di keramaian.
+n2_1787|ひねって、回す。|Memutar atau memelintir sesuatu.
+n2_1788|手で、こするように、押す。|Memijat atau meremas dengan tangan.
+n2_1789|言葉の、おもしろい、使い方。|Permainan kata atau lelucon; juga sifat modis.
+n2_1790|うまく、立ち回って、得を、しようとする。|Berbuat licik demi keuntungan sendiri.
+n2_1791|にらむように、見る。|Menatap tajam dengan tidak senang; juga mengawasi.
+n2_1792|ごみを、はく、道具。|Alat untuk menyapu kotoran.
+n2_1793|二つの、ものが、向き合って、争うこと。|Pertentangan atau konfrontasi antara dua pihak.
+x_0006|水道から、出る、水。|Air yang mengalir dari keran atau pipa ledeng.
+x_0027|室内の、空気を、外に、出す、換気用の、ファン。|Kipas yang menyedot udara dalam ruangan ke luar.
+x_0030|電源の、コードを、のばす、ための、コード。|Kabel tambahan untuk memperpanjang jangkauan listrik.
+x_0035|洗濯のときに、衣類を、やわらかくする、洗剤。|Cairan untuk melembutkan pakaian saat dicuci.
+x_0036|洗濯物を、干す、場所や、道具。|Tempat atau alat untuk menjemur cucian.
+x_0040|郵便物が、届けられる、箱。|Kotak penerima surat di rumah.
+x_0051|日光から、肌を、守る、クリーム。|Krim pelindung kulit dari sinar matahari.
+x_0060|空いている、席。|Tempat duduk yang tidak terisi.
+x_0064|試験などに、受からないこと。|Tidak lulus ujian atau seleksi.
+x_0066|クラスを、受け持つ、先生。|Guru yang bertanggung jawab atas sebuah kelas.
+x_0074|仕事で、取引を、している、相手の会社。|Perusahaan mitra yang menjalin transaksi dengan kita.
+x_0075|給料が、出る、休暇。|Cuti yang tetap dibayar gajinya.
+x_0076|期間の、定めのない、正式な、社員。|Karyawan tetap yang berstatus resmi.
+x_0077|会社などの、決まった、勤務時間。|Jam kerja resmi yang ditetapkan perusahaan.
+x_0081|お金を、受け取った、ことを、示す、書類。|Dokumen yang menyatakan pembayaran sudah diterima.
+x_0082|価格に、税金が、含まれて、いること。|Harga yang sudah termasuk pajak.
+x_0083|手続きなどに、かかる、費用。|Biaya yang dikenakan untuk suatu pengurusan.
+x_0084|いくつかに、分けること。支払いを、分けること。|Membagi menjadi beberapa bagian; juga mencicil pembayaran.
+x_0090|新年に、初めて、神社などに、参ること。|Kunjungan pertama ke kuil pada awal tahun baru.
+x_0095|二十歳を、迎えた、人を、祝う、式。|Upacara untuk merayakan orang yang mencapai usia dewasa.
+x_0115|犬に、似た、野生の、動物。|Hewan liar mirip anjing yang hidup berkelompok.
+x_0120|白と黒の、石を、碁盤に、置いて、遊ぶ、ゲーム。|Permainan papan Go dengan batu putih dan hitam.
+x_0125|コンピュータなどを、つなぐ、通信網。|Jaringan yang menghubungkan beberapa komputer atau perangkat.
+x_0127|データを、インターネット上に、送ること。|Mengirim berkas dari perangkat ke internet atau server.
+x_0131|情報を、保存して、他の機器に、提供する、コンピュータ。|Komputer yang menyimpan data dan menyediakannya bagi perangkat lain.
+x_0132|データを、予備として、保存しておくこと。|Menyimpan salinan data sebagai cadangan.
+x_0133|コンピュータを、動かす、プログラム。|Program yang menjalankan komputer.
+x_0134|コンピュータの、機械そのもの。|Bagian fisik dari komputer.
+x_0140|メールなどを、送ること。|Mengirim surel atau data kepada pihak lain.
+x_0141|メールなどを、受け取ること。|Menerima surel atau data dari pihak lain.
+x_0142|メールに、ファイルを、付けて、送ること。|Menyertakan berkas pada surel yang dikirim.
+x_0143|受け取った、メールなどを、他の人に、送ること。|Meneruskan pesan yang diterima ke orang lain.
+x_0146|機械や、システムを、動かし始めること。|Menyalakan mesin atau sistem agar mulai bekerja.
+x_0147|機械や、システムを、もう一度、起動すること。|Menyalakan ulang mesin atau sistem.
+x_0150|人の、声や、音。|Suara manusia atau bunyi yang terdengar.
+x_0151|映像を、記録すること。|Merekam gambar bergerak.
+x_0152|インターネット上に、文章や写真を、載せること。|Mengunggah tulisan atau foto ke internet.
+x_0153|みんなで、同じものを、使うこと。|Memakai atau memiliki sesuatu bersama.
+x_0155|心を、こめて、客を、迎え、もてなすこと。|Keramahan tulus dalam menyambut dan melayani tamu.
+x_0156|悪かったことを、丁寧に、謝ること。|Permintaan maaf yang sopan atas kesalahan.
+x_0157|周りの人や、状況に、気を、配ること。|Memperhatikan keadaan dan perasaan orang sekitar.
+x_0158|相手の、ことを、思いやる、気持ち。|Rasa peduli dan perhatian terhadap orang lain.
+x_0159|決められた、時間より、早く、帰ること。|Pulang dari sekolah atau kerja sebelum jam yang ditetapkan.
+x_0161|地球の、気温が、上がること。|Naiknya suhu rata-rata bumi.
+x_0171|みんなが、同時に。|Serentak oleh semua orang.
+x_0172|少しずつ、変わっていく様子。|Berubah sedikit demi sedikit seiring waktu.
+x_0176|歩くのを、助ける、道具。|Alat penopang untuk membantu berjalan.
+x_0177|危なくないように、見守ること。|Mengawasi dan menjaga agar tidak terjadi bahaya.
+x_0178|相手に、声を、かけて、気を、配ること。|Menyapa atau memberi aba-aba kepada penghuni yang dirawat.
+x_0180|記憶や、判断の、力が、低下する、病気。|Penyakit yang menurunkan daya ingat dan kemampuan menilai.
+x_0183|自分で、食べにくい人の、食事を、手伝うこと。|Membantu orang yang sulit makan sendiri.
+x_0185|自分で、入浴しにくい人の、入浴を、手伝うこと。|Membantu orang yang sulit mandi sendiri.
+x_0187|体の、水分が、不足する、こと。|Kekurangan cairan di dalam tubuh.
+x_0188|暑さで、体の調子が、悪くなる、症状。|Gangguan tubuh akibat cuaca sangat panas.
+x_0189|日中、施設に、通って、受ける、介護サービス。|Layanan perawatan di fasilitas pada siang hari tanpa menginap.
+x_0191|介護や、家事を、手伝う、人。|Pendamping yang membantu perawatan dan urusan rumah tangga.
+x_0192|自分の、家に、いること。|Berada di rumah sendiri; perawatan atau pekerjaan di rumah.
+x_0193|施設に、入って、生活すること。|Masuk dan tinggal di sebuah fasilitas.
+x_0200|残業に、対して、支払われる、給料。|Upah tambahan untuk kerja lembur.
+x_0207|日本に、住む、すべての人に、付けられる、番号。|Nomor identitas yang diberikan kepada setiap penduduk Jepang.
+x_0218|作業に、使う、道具。|Perkakas yang dipakai untuk bekerja.
+x_0220|ボルトや、ナットを、回す、工具。|Kunci untuk mengencangkan baut dan mur.
+x_0221|欠点の、ある、製品。|Produk yang cacat atau tidak memenuhi standar.
+x_0222|品物を、届ける、約束の、期日。|Tanggal yang dijanjikan untuk pengiriman barang.
+x_0223|品物を、工場などから、送り出すこと。|Mengirimkan barang dari pabrik atau gudang.
+x_0224|荷物を、包んで、箱に詰めること。|Mengemas dan memasukkan barang ke dalam kotak.
+x_0227|機械などの、正確さの、程度。|Tingkat ketepatan atau kecermatan suatu hasil.
+x_0228|物を、きちんと、並べて、整えること。|Menata barang agar rapi dan teratur.
+x_0229|入ってはいけないと、決められた、場所。|Tulisan yang melarang orang memasuki suatu area.
+x_0231|火を、消す、ための、器具。|Alat untuk memadamkan api awal.
+x_0257|卵液に、具を入れて、蒸した、料理。|Hidangan telur kocok berisi bahan yang dikukus dalam cangkir.
+x_0261|かつおを、煮て、乾燥させ、削った、食品。|Serpihan tipis ikan cakalang kering yang dipakai untuk kaldu.
+x_0269|穴の、あいた、蓮の、地下茎。|Akar teratai berlubang yang dimakan sebagai sayuran.
+x_0270|ぬめりの、ある、芋の、一種。|Umbi berlendir yang direbus atau dikukus untuk lauk.
+x_0276|緑豆などから、作った、細い、麺。|Mi tipis bening dari pati kacang hijau atau kentang.
+x_0279|魚を、開いて、干した、食品。|Ikan yang dibelah lalu dikeringkan sebagai makanan awet.
+x_0282|小さくて、背が、青い、魚。|Ikan kecil berpunggung kebiruan yang kaya lemak.
+x_0284|めでたい席で、食べられる、赤い、魚。|Ikan merah yang dihidangkan pada acara perayaan.
+x_0289|定職に、つかず、アルバイトで、生活する人。|Orang yang bekerja paruh waktu atau serabutan tanpa pekerjaan tetap.
+x_0291|会社などの、お金の、記録や、管理を、する、専門家。|Ahli yang mencatat dan mengaudit keuangan.
+x_0292|専門の、技術を、持つ、人。|Orang yang memiliki keterampilan teknis di suatu bidang.
+x_0293|建物を、設計する、人。|Orang yang merancang bangunan.
+x_0295|髪を、切る、仕事を、する人。|Orang yang bekerja memotong rambut, terutama pria.
+x_0300|店で、品物を、売る、人。|Orang yang menjual barang di toko.
+x_0301|アニメなどに、声を、あてる、人。|Orang yang mengisi suara tokoh animasi atau film.
+x_0302|薬を、調合する、専門家。|Ahli yang meracik dan menyerahkan obat.
+x_0303|動物の、病気を、治す、医者。|Dokter yang mengobati hewan.
+x_0304|保育園などで、子供を、世話する、人。|Pengasuh anak di taman kanak-kanak atau penitipan.
+x_0305|ある、分野を、専門に、研究する人。|Orang yang meneliti suatu bidang secara khusus.
+x_0307|政治を、行う、仕事を、する人。|Orang yang berkecimpung dalam urusan pemerintahan.
+x_0308|会社や、事業を、運営する人。|Orang yang mengelola perusahaan atau usaha.
+x_0313|船の、責任者。|Pemimpin dan penanggung jawab di sebuah kapal.
+n1_0001|新しい、考えや、思いつき。|Gagasan baru yang terlintas.
+n1_0002|自動車の、速度を、上げる、足で、踏む、装置。|Pedal injak untuk menambah kecepatan kendaraan.
+n1_0003|やり方が、しつこくて、ひどい様子。|Cara yang keterlaluan dan licik; juga warna yang terlalu mencolok.
+n1_0004|ばかにして、笑う。|Menertawakan seseorang dengan sikap merendahkan.
+n1_0005|あっけなく、簡単に、終わる様子。|Berakhir dengan mudah dan cepat; juga bersahaja.
+n1_0006|上がること。増えること。|Naik atau meningkat; juga gambar close-up.
+n1_0007|目的に、近づく、ための、方法。|Cara mendekati suatu sasaran atau masalah.
+n1_0008|順序や、位置が、反対に、なっていること。|Keadaan terbalik dari yang seharusnya.
+n1_0009|職業ではなく、趣味として、行う人。|Orang yang menekuni sesuatu sebagai hobi, bukan profesi.
+n1_0010|はっきり、していない様子。|Tidak jelas dan masih samar-samar.
+n1_0011|驚いたり、感心したり、した、ときに、言う、言葉。|Seruan saat terkejut atau kagum.
+n1_0012|アラビア半島を中心とする、地域や、民族。|Wilayah atau bangsa yang berpusat di Jazirah Arab.
+n1_0013|小さな、丸い、氷の粒。小さく切った、餅の、菓子。|Butiran es kecil dari langit; juga kue beras renyah.
+n1_0014|酸を、中和する、性質の、物質。|Zat bersifat basa yang menetralkan asam.
+n1_0015|軽くて、さびにくい、金属。|Logam ringan yang tidak mudah berkarat.
+n1_0016|時間。|Satuan jam atau waktu tertentu.
+n1_0017|多くの人に、同じ質問を、して、意見を、集める調査。|Penelitian dengan menanyai banyak orang untuk mengumpulkan pendapat.
+n1_0018|演奏の、あとに、もう一度、と、求めること。|Permintaan penonton agar pertunjukan diulang atau ditambah.
+n1_0019|責任感が、なく、いい加減な様子。|Asal-asalan atau tidak bertanggung jawab; juga 'sudah cukup'.
+n1_0020|キリスト教の、創始者。|Tokoh pusat agama Kristen; juga jawaban 'ya'.
