@@ -1,15 +1,16 @@
 import React, { useMemo, useState, useCallback } from 'react';
 import { motion } from 'motion/react';
 import { Play, Flame, ChevronRight, Compass, HelpCircle } from 'lucide-react';
-import { ScrollIcon, QuillIcon } from '../ui/EngravingIcons';
+import { ScrollIcon } from '../ui/EngravingIcons';
 import { PlayerStats, Mission, StageClearData } from '../../types/rpg';
 import { getEffectiveTier } from '../../utils/ascension';
 import { MAP_REGIONS, getStagesForMap } from '../../data/maps';
 import { TierAvatar } from '../avatar/TierAvatar';
 import { playSound } from '../../utils/audio';
-import { calculateOverallMastery, generateAdaptiveRecommendation } from '../../utils/mastery';
+import { generateAdaptiveRecommendation } from '../../utils/mastery';
 import { STORAGE_KEY_HOME_GUIDE } from '../../state/storageKeys';
 import { StartGuideModal, GuidePath } from './StartGuideModal';
+import { FeatureSearch, FeatureTarget } from './FeatureSearch';
 
 export interface HomeViewProps {
   stats: PlayerStats;
@@ -17,7 +18,7 @@ export interface HomeViewProps {
   stageProgress?: Record<string, StageClearData>;
   onOpenStatusModal: () => void;
   onNavigateToStage: (stageId: string) => void;
-  onNavigateTab: (tab: 'maps' | 'daily' | 'weekly' | 'settings' | 'library') => void;
+  onNavigateTab: (tab: 'maps' | 'daily' | 'weekly' | 'leaderboard' | 'settings' | 'library' | 'deck') => void;
   onStartRecall?: () => void;
 }
 
@@ -42,7 +43,6 @@ export const HomeView: React.FC<HomeViewProps> = ({
   const currentStage = stages.find(s => s.id === (isFirstTime ? 'stage_kana_hira_1' : stats.currentStageId)) || stages[0];
   const effectiveStage = currentStage;
 
-  const overallMastery = useMemo(() => calculateOverallMastery(stats.itemMastery || {}), [stats.itemMastery]);
   const recallCount = stats.recallQueue ? stats.recallQueue.length : 0;
   const recommendation = useMemo(() => generateAdaptiveRecommendation(stats), [stats.itemMastery, stats.recallQueue, stats.currentStageId]);
 
@@ -74,6 +74,16 @@ export const HomeView: React.FC<HomeViewProps> = ({
     if (path === 'foundation') onNavigateToStage('stage_kana_hira_1');
     else if (path === 'library') onNavigateTab('library');
     else onNavigateTab('maps');
+  };
+
+  const handleFeatureSelect = (target: FeatureTarget) => {
+    playSound('click', stats.soundEnabled);
+    if (target.type === 'tab') onNavigateTab(target.tab);
+    else if (target.type === 'status') onOpenStatusModal();
+    else if (target.type === 'recall') {
+      if (onStartRecall) onStartRecall();
+      else onNavigateTab('maps');
+    } else setIsGuideOpen(true);
   };
 
   const openGuide = () => {
@@ -312,38 +322,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
         </div>
 
-        {/* Row 3: Tutor & Linguistic Mastery */}
-        <div
-          onClick={() => {
-            playSound('open_modal', stats.soundEnabled);
-            onOpenStatusModal();
-          }}
-          className="p-4 flex items-center justify-between gap-3 hover:bg-surface-elevated/40 cursor-pointer transition-all group"
-        >
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-surface-inset/50 text-indigo border border-border-subtle shrink-0">
-              <QuillIcon className="w-4 h-4" />
-            </div>
-            <div>
-              <span className="text-sm font-bold text-text-primary font-heading group-hover:text-gold transition-colors">
-                Profil & Tutor
-              </span>
-              <p className="text-[10px] text-text-secondary font-mono">True Mastery & Kelemahan</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-state-success font-mono">
-              {overallMastery.overallPercentage}%
-            </span>
-            {recommendation.prioritySeverity === 'critical' && (
-              <span className="badge-wine">
-                ⚠ 1 Titik Lemah
-              </span>
-            )}
-            <ChevronRight className="w-4 h-4 text-text-secondary group-hover:text-gold group-hover:translate-x-0.5 transition-all" />
-          </div>
-        </div>
+        {/* Row 3: Pencarian fitur */}
+        <FeatureSearch onSelect={handleFeatureSelect} />
       </div>
 
       <StartGuideModal

@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { Search, Languages, X } from 'lucide-react';
-import { convertRomajiToKana } from '../../utils/imeEngine';
-import { playSound } from '../../utils/audio';
+import React from 'react';
+import { Search, X } from 'lucide-react';
 
 interface JapaneseSearchInputProps {
   value: string;
   onChange: (value: string) => void;
+  /** @deprecated tidak dipakai lagi (IME otomatis); dipertahankan agar pemanggil lama tetap valid. */
   placeholderIme?: string;
   placeholderLatin?: string;
+  /** @deprecated tidak dipakai lagi (tombol IME dihapus). */
   soundEnabled?: boolean;
   autoFocus?: boolean;
   /** Kelas wadah (default: flex-1 agar mengisi baris filter). */
@@ -21,32 +21,25 @@ const DEFAULT_INPUT_CLASS =
 
 /**
  * UI input pencarian materi Jepang (hanya tampilan). Logika pencarian ada di engine/search/universalSearch.
- * Toggle A / あ hanyalah alat bantu mengetik kana: pencarian romaji tetap bekerja di mode A.
+ * Tanpa toggle IME: engine pencarian mendeteksi sendiri romaji / kana / kanji / arti.
  */
 export const JapaneseSearchInput: React.FC<JapaneseSearchInputProps> = ({
   value,
   onChange,
-  placeholderIme = 'Cari (romaji → kana)...',
   placeholderLatin = 'Cari kata, romaji, arti...',
-  soundEnabled = true,
   autoFocus,
   className = 'flex-1',
   inputClassName = DEFAULT_INPUT_CLASS,
 }) => {
-  const [imeActive, setImeActive] = useState(true);
-
   return (
     <div className={`relative flex items-center ${className}`}>
       <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted pointer-events-none" />
       <input
         type="text"
-        placeholder={imeActive ? placeholderIme : placeholderLatin}
+        placeholder={placeholderLatin}
         value={value}
         autoFocus={autoFocus}
-        onChange={(e) => {
-          const raw = e.target.value;
-          onChange(imeActive ? convertRomajiToKana(raw) : raw);
-        }}
+        onChange={(e) => onChange(e.target.value)}
         className={inputClassName}
       />
 
@@ -62,22 +55,6 @@ export const JapaneseSearchInput: React.FC<JapaneseSearchInputProps> = ({
           </button>
         )}
 
-        <button
-          type="button"
-          onClick={() => {
-            playSound('click', soundEnabled);
-            setImeActive(prev => !prev);
-          }}
-          className={`px-2 py-1 rounded-lg text-xs font-mono font-bold flex items-center gap-1 transition-all cursor-pointer select-none ${
-            imeActive
-              ? 'bg-gold/20 text-gold border border-border-subtle shadow-xs'
-              : 'bg-surface-card text-text-muted border border-border-subtle hover:text-text-primary'
-          }`}
-          title={imeActive ? 'IME Jepang Aktif (Romaji -> Kana)' : 'Mode Huruf Latin'}
-        >
-          <Languages className="w-3.5 h-3.5" />
-          <span>{imeActive ? 'あ' : 'A'}</span>
-        </button>
       </div>
     </div>
   );

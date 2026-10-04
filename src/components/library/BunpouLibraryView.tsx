@@ -68,7 +68,6 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
 }) => {
   const [subSection, setSubSection] = useState<'dictionary' | 'conjugation'>('dictionary');
   const [searchQuery, setSearchQuery] = useState('');
-  const [imeActive, setImeActive] = useState(true);
   const [visibleCount, setVisibleCount] = useState(40);
   const [levelFilter, setLevelFilter] = useState<string>('all');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
