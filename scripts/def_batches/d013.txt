@@ -1,0 +1,250 @@
+2893|特に親しく、心を許し合える友人。|Teman yang sangat akrab dan dipercaya sepenuh hati.
+2894|金銭や物品を、決まりに従って支払い与えること。|Memberikan uang atau barang sesuai ketentuan, seperti tunjangan.
+2895|人が住むための建物。|Bangunan yang dipakai sebagai tempat tinggal.
+2896|物の形や関係を、絵や線で表したもの。|Gambar atau skema yang menunjukkan bentuk atau hubungan sesuatu.
+2897|出かける人や去る人を、見送ること。|Mengantar kepergian seseorang.
+2898|地方から、首都の東京へ行くこと。|Pergi dari daerah menuju Tokyo, ibu kota.
+2899|話題を変えたり、次の話に入るときに使う言葉。|Kata pembuka untuk berganti topik atau memulai bagian berikutnya.
+2900|分かりやすくするために、他のものにたとえて言うこと。|Perumpamaan untuk menjelaskan sesuatu; juga 'seandainya'.
+2901|大きさや程度が、少しの狂いもなく合う様子。|Keadaan yang sangat pas tanpa kelebihan atau kekurangan.
+2902|商売を職業とする人。|Orang yang pekerjaannya berdagang.
+2903|人の心を、強く引きつける力。|Daya yang kuat memikat hati orang.
+2904|することがなく、時間をもてあます様子。|Keadaan tak ada kegiatan sehingga waktu terasa lama.
+2905|ある事柄を、そうでないと打ち消すこと。|Menyangkal bahwa sesuatu benar.
+2906|自分や他人の、男の親。|Orang tua laki-laki; ayah.
+2907|上の者が、下の者に、何かをするよう言いつけること。|Perintah dari atasan agar bawahan melakukan sesuatu.
+2908|物事の意味や内容を、正しく分かること。|Mengerti arti atau isi suatu hal dengan benar.
+2909|物事の様子や種類を、尋ねるときの言葉。|Kata tanya untuk menanyakan jenis atau keadaan sesuatu.
+2910|他の助けや支配を受けず、自分の力で成り立つこと。|Berdiri sendiri tanpa bergantung atau dikuasai pihak lain.
+2911|体や心に感じる、苦しさ。|Rasa sakit pada tubuh atau perasaan.
+2912|生まれてから、死ぬまで。|Sepanjang hidup dari lahir sampai meninggal.
+2913|病気や事故などが、起こらないよう、前もって備えること。|Berjaga lebih dulu agar penyakit atau kecelakaan tidak terjadi.
+2914|会に入っている人。|Orang yang tergabung sebagai anggota suatu perkumpulan.
+2915|手先を使う作業が、上手な様子。|Pandai bekerja dengan tangan; juga cakap melakukan banyak hal.
+2916|いっぱいになる。潮が満ちる。|Menjadi penuh; juga air laut pasang.
+2917|生活のために、働く、仕事。|Pekerjaan yang dijalani untuk mencari nafkah.
+2918|人を、不当に、区別して扱うこと。|Memperlakukan orang berbeda secara tidak adil.
+2919|行く、先。|Tujuan atau arah keberangkatan.
+2920|事実であることを、はっきり示すこと。|Menunjukkan dengan jelas bahwa sesuatu adalah fakta.
+2921|うれしそうに、静かに、笑う様子。|Tersenyum manis dengan tenang.
+2922|体を、鍛える、教科。|Mata pelajaran untuk melatih tubuh; olahraga.
+2923|期待が外れて、がっかりすること。|Rasa kecewa karena harapan tidak terpenuhi.
+2924|お金を、ためておくこと。|Menyimpan uang dengan menabung.
+2925|好きになる。心に、かなう。|Merasa suka atau cocok di hati.
+2926|小さいこと。|Berarti kecil pada awalan kata.
+2927|覚えて、そらで言えるようにすること。|Menghafal sesuatu sehingga dapat diucapkan tanpa melihat.
+2928|他人の、妻を、敬って呼ぶ言葉。|Sebutan hormat untuk istri orang lain.
+2929|二つ以上の物事に、共通して、あること。|Hal yang dimiliki bersama oleh dua atau lebih.
+2930|新しくて、生き生きしている様子。|Baru dan segar.
+2931|人と、別れること。|Berpisah dengan seseorang.
+2932|考え方。社会や人生に関する、まとまった考え。|Pemikiran atau gagasan yang teratur tentang kehidupan dan masyarakat.
+2933|はっきり、示さない、あるものを、指す言葉。|Kata penentu untuk sesuatu yang tidak disebutkan; 'suatu'.
+2934|成人した、女性。|Perempuan dewasa; sebutan sopan.
+2935|声などを、大きくして、伝える、道具。|Alat yang memperbesar suara; mikrofon.
+2936|ある学問を、深く、きわめた人。博士号を持つ人。|Orang yang mendalami suatu ilmu; juga pemegang gelar doktor.
+2937|紙や布などを、切る、道具。|Alat untuk memotong kertas atau kain.
+2938|考えた、計画や、意見。|Rencana atau usulan yang dipikirkan.
+2939|口の中にあり、味を感じ、話すときに動く部分。|Bagian di dalam mulut untuk merasakan dan berbicara.
+2940|人が、生まれてから、死ぬまでの、期間。|Perjalanan hidup manusia sejak lahir sampai meninggal.
+2941|十分に、たくさんある様子。|Cukup banyak; melimpah.
+2942|新品ではなく、一度使った、もの。|Barang yang bukan baru, melainkan sudah dipakai.
+2943|物事が成り立つために、必要な、事柄。|Hal yang harus dipenuhi agar sesuatu terlaksana.
+2944|それぞれが、受け持つ、務め。|Tugas atau peran yang dipegang masing-masing orang.
+2945|思いがけないことに、驚く様子。|Terkejut karena sesuatu yang tak diduga.
+2946|水に、混ざらない、なめらかな、液体。|Cairan licin yang tidak bercampur dengan air.
+2947|忘れないように、短く書き留めたもの。|Catatan singkat agar tidak lupa.
+2948|条件などが、悪くて、損になること。|Keadaan tidak menguntungkan atau berada pada posisi lemah.
+2949|ある言語を、他の言語に、直すこと。|Mengalihkan suatu bahasa ke bahasa lain.
+2950|よい。ふさわしい。|Baik atau pantas.
+2951|思いがけず、起こること。|Terjadi tanpa diduga.
+2952|植物が、成長して、初めに出る、小さな葉や茎。|Bagian kecil yang pertama tumbuh dari biji atau cabang.
+2953|必要な数や量に、足りないこと。|Jumlah atau takaran yang tidak mencukupi.
+2954|ガラスで作った、飲み物を入れる器。|Wadah dari kaca untuk minuman.
+2955|勝ち負けを、争う。勝つために、努力する。|Bertempur atau bertanding; juga berjuang melawan kesulitan.
+2956|向かって行く、先。|Arah tujuan yang dituju.
+2957|ある部分を、特に、強く、言うこと。|Menekankan suatu bagian dengan kuat.
+2958|人の手が、加わらない、山や川などの、環境。|Lingkungan alam yang tidak dibuat manusia; juga bersifat alami.
+2959|果物を、しぼった、飲み物。|Minuman dari perasan buah.
+2960|あったことを、書き残すこと。最高の成績。|Catatan peristiwa; juga hasil tertinggi dalam olahraga.
+2961|機械などを、動かすこと。|Menjalankan atau mengoperasikan mesin atau alat.
+2962|数や量が、非常に、大きいこと。|Jumlah yang amat besar.
+2963|重要で、軽く扱えない様子。|Penting dan tidak boleh dianggap enteng.
+2964|会社の、資本を、分けた、証書。木の切り株。|Surat bukti kepemilikan modal perusahaan; juga tunggul pohon.
+2965|悪いことが、起こらず、無難なこと。|Keadaan selamat tanpa terjadi hal buruk.
+2966|決まりや、約束に、そむくこと。|Melanggar aturan atau perjanjian.
+2967|順に、並んだ、もの。|Barisan atau deretan yang berurutan.
+2968|何人かで、座れる、長いす。|Kursi panjang yang dapat diduduki beberapa orang.
+2969|物事。出来事。|Hal, perkara, atau kejadian.
+2970|使ったり、取ったりしたあとに、余ったもの。|Sisa yang tertinggal setelah dipakai.
+2971|長い、時間の流れ。|Lamanya waktu yang berlalu bertahun-tahun.
+2972|体に、傷を負うこと。|Mengalami luka pada tubuh.
+2973|意見を、述べ合って、論じること。|Bertukar pendapat dan berdebat tentang suatu hal.
+2974|物事の、その時の、様子。|Keadaan atau situasi suatu peristiwa pada saat itu.
+2975|金属で作った、入れ物。|Wadah dari logam yang berongga; kaleng.
+2976|作りが、ぞんざいで、粗い様子。|Kasar dan seadanya dalam pembuatan atau perlakuan.
+2977|腕などを、交差させる。仲間になって、行う。|Menyilangkan lengan; juga menyusun atau bekerja sama.
+2978|立っている物を、横にする。相手に、勝つ。|Merobohkan sesuatu yang berdiri; juga mengalahkan lawan.
+2979|上の学校に、進むこと。|Melanjutkan ke jenjang sekolah yang lebih tinggi.
+2980|ちょうど、よい、程度。具合。|Takaran atau tingkat yang pas; juga keadaan atau kondisi.
+2981|二つのうち、前に述べた方。|Yang disebut lebih dulu di antara dua hal.
+2982|いちばん、中心に。|Dalam hal yang paling utama; terutama.
+2983|職に、つくこと。|Mendapatkan pekerjaan.
+2984|眠りから、目をあける。気づかせる。|Menyadarkan; membuka mata dari tidur; juga mendinginkan.
+2985|謝ったり、人に声をかけたりするときの言葉。|Ungkapan permintaan maaf atau permisi saat memanggil orang.
+2986|物事の、ありさま。|Kondisi atau keadaan suatu hal.
+2987|時間の、単位。一分の、六十分の一。|Satuan waktu sebesar seperenam puluh menit.
+2988|鳥や、飛行機の、飛ぶための、部分。|Bagian tubuh untuk terbang pada burung atau pesawat.
+2989|命を、うばう。|Menghabisi nyawa makhluk hidup.
+2990|おろかな、こと。|Bodoh atau konyol.
+2991|衣服を、つけていない、体。|Tubuh tanpa pakaian.
+2992|あのように、程度が、大きい様子。|Menyatakan tingkat sebesar itu.
+2993|日本の、行政区画の、一つ。|Satuan wilayah administrasi Jepang setingkat provinsi.
+2994|続いている、部分。|Bagian lanjutan dari sesuatu.
+2995|作品などの、内容を、表す、名前。話題。|Nama yang menunjukkan isi karya; juga tema soal.
+2996|いったい、どういう、ことかと、強く、尋ねる気持ち。|Kata penegas pertanyaan; juga satu kesatuan.
+2997|すぐれた、行いや、成績に、与えられる、もの。|Penghargaan yang diberikan atas prestasi atau perbuatan baik.
+2998|風を、受けて、走る、小型の船。|Kapal kecil berlayar yang dijalankan tenaga angin.
+2999|いちばん、最後。|Bagian atau tahap paling akhir.
+3000|麦などから作る、強い洋酒。|Minuman keras berkadar tinggi dari biji-bijian.
+3001|はっきり、しない、人を、指す言葉。|Kata ganti untuk orang yang tidak diketahui.
+3002|お金を、借りること。借りた、お金。|Uang yang dipinjam; atau kewajiban membayar utang.
+3003|食べ物を、消化する、体の中の、袋状の、臓器。|Organ berbentuk kantung dalam tubuh untuk mencerna makanan.
+3004|自分から、進んで、行う様子。|Bersikap aktif dan inisiatif.
+3005|ある働きを、する、ために、備えた、機械。|Perangkat yang dipasang untuk menjalankan suatu fungsi.
+3006|間違いなく、そうだと、思う気持ち。|Ungkapan yang menyatakan keyakinan bahwa sesuatu pasti demikian.
+3007|アメリカなどの、国を、構成する、地域。|Wilayah penyusun negara seperti negara bagian; juga benua.
+3008|首の、つけ根から、腕に、つながる、部分。|Bagian tubuh antara leher dan lengan.
+3009|音を、立てないように、静かに。|Pelan-pelan agar tidak menimbulkan suara.
+3010|行動や、動作を、行う。|Melakukan suatu tindakan; juga menjadi.
+3011|どちらにも、かたよらない、様子。|Tidak berat sebelah.
+3012|熱さや、冷たさの、程度。|Tingkat panas atau dinginnya sesuatu.
+3013|米の、実る、植物。|Tumbuhan penghasil beras.
+3014|人と、会ったときの、決まった、言葉や動作。|Kata atau gerak yang lazim saat bertemu orang.
+3015|ある行いの、結果として、現れる、よい働き。|Hasil atau pengaruh baik dari suatu tindakan.
+3016|液体を、入れる、口の細い、容器。|Wadah berleher sempit untuk cairan.
+3017|外国に、行って、学ぶこと。|Pergi belajar ke luar negeri.
+3018|上の人が、下の人に、仕事などを、言いつける。|Memerintahkan atau menugaskan sesuatu kepada orang lain.
+3019|「もらう」「食べる」の、謙譲語。頭の上に、のせる。|Bentuk merendah dari 'morau' dan 'taberu'; juga menaruh di atas kepala.
+3020|同じ、職場で、働く人。|Orang yang bekerja di tempat kerja yang sama.
+3021|ある物事から、関連する、別のことを、思い浮かべること。|Mengingat hal lain yang terkait dari suatu hal.
+3022|相手に、向かって、攻め込むこと。|Menyerbu lawan; juga mengkritik keras.
+3023|是か非か。何としても、そうしたいという、気持ち。|Benar atau salah; juga menyatakan harapan agar pasti dilakukan.
+3024|質が、よいこと。|Bermutu baik atau kelas tinggi.
+3025|ある場所に、行き着く。手が、及ぶ。|Sampai di tujuan; juga terjangkau tangan.
+3026|世の中の、注目を集める、出来事。|Peristiwa yang menarik perhatian masyarakat.
+3027|手を、加えず、そのままの、状態で。|Dalam keadaan tanpa diubah.
+3028|話や、文章の、大切な、ところ。|Bagian terpenting dari pembicaraan atau tulisan.
+3029|得意であること。|Bidang yang dikuasai; juga pelanggan tetap.
+3030|国王の、息子。|Putra seorang raja.
+3031|水などが、冷えて、固まる。|Air membeku karena sangat dingin.
+3032|入り組んでおらず、簡単な、様子。|Tidak rumit; sederhana.
+3033|強く、ぶつかること。意見などが、食い違うこと。|Tabrakan keras; juga bentrokan pendapat.
+3034|恐れずに、物事に、立ち向かう、心。|Sikap batin menghadapi sesuatu tanpa gentar.
+3035|細かい、ところまで、よく、知っている。|Mengetahui sesuatu secara rinci.
+3036|大勢の前で、話をすること。|Berbicara di depan banyak orang.
+3037|亡くなった人の、財産などを、受け継ぐこと。|Menerima harta peninggalan orang yang meninggal.
+3038|競技に、出る人。|Orang yang bertanding dalam olahraga; atlet.
+3039|成長して、大きくなる。|Tumbuh dan menjadi besar.
+3040|一年の、間。|Selama satu tahun; tiap tahun.
+3041|何度も、続けて、行う様子。|Terjadi atau dilakukan berulang kali.
+3042|考えや、事実を、声に出して、伝える。|Menyampaikan pikiran atau fakta dengan ucapan.
+3043|落ち着いて、物事を、判断する様子。|Tenang dan menilai keadaan dengan kepala dingin.
+3044|ある目的の、ために、集まって、できた、団体。|Kelompok terstruktur yang dibentuk untuk suatu tujuan.
+3045|事件や、出来事が、発生する。|Suatu peristiwa atau kejadian muncul.
+3046|法律に、反する、行い。|Perbuatan yang melanggar hukum.
+3047|好ましくないと、思って、避ける。|Tidak menyukai dan menghindari sesuatu.
+3048|どうするかを、きめること。|Menetapkan keputusan akan melakukan apa.
+3049|つかんでいた、ものを、離す。|Melepaskan sesuatu yang dipegang.
+3050|様子や方法を、尋ねるときの、言葉。|Kata tanya untuk menanyakan keadaan atau cara.
+3051|道具などを、使って、取りはからう。|Memakai alat atau menangani sesuatu; juga memperlakukan orang.
+3052|決められた、時刻に、遅れること。|Datang melewati waktu yang ditentukan.
+3053|ぶんの、一部を、取りのぞく。|Menghilangkan sebagian agar lebih ringkas; juga menghemat.
+3054|うまくいくか、どうかを、確かめる。|Mencoba untuk mengetahui hasil atau kemampuan sesuatu.
+3055|空気中の、水蒸気が、地表近くで、細かい水滴になったもの。|Butiran air halus di dekat permukaan tanah yang mengurangi jarak pandang.
+3056|物に、塗って、色をつける、液体。|Cairan pewarna yang dioleskan pada permukaan benda.
+3057|目的を、果たすための、方法。|Cara atau sarana untuk mencapai tujuan.
+3058|細かさが、足りない、ところ。欠点。|Bagian yang kasar; juga cacat atau kekurangan.
+3059|物質の、性質や変化を、研究する、学問。|Ilmu yang meneliti sifat dan perubahan zat.
+3060|音楽の、曲を、作ること。|Menciptakan atau menggubah lagu.
+3061|人から、物を、受け取る。|Menerima sesuatu dari orang lain.
+3062|物事が、実際に、行われている、場所。|Tempat sesungguhnya suatu kegiatan atau kejadian berlangsung.
+3063|商売を、行うこと。|Menjalankan usaha dagang; juga bagian penjualan.
+3064|昼間に、空に見える、明るい、天体。|Bintang terang di siang hari yang menjadi sumber cahaya bagi bumi.
+3065|ごく、短い、時間。|Waktu yang amat singkat.
+3066|ある、区切られた、土地の、範囲。|Wilayah atau kawasan yang dibatasi.
+3067|植物の、もとになる、粒。物事の、原因。|Biji tumbuhan; juga bahan atau penyebab suatu hal.
+3068|水などが、かかって、しめる。|Menjadi basah karena terkena air.
+3069|いやな、においが、する。|Mengeluarkan bau yang tidak sedap; juga mencurigakan.
+3070|水の上を、進む、小型の、乗り物。|Kendaraan kecil yang bergerak di atas air.
+3071|病気や、けがを、治すこと。|Pengobatan penyakit atau luka; layanan kesehatan.
+3072|ある事に、心を、うばわれること。|Larut dan asyik pada suatu hal.
+3073|一人ずつ。|Satu orang demi satu orang.
+3074|食事を、始める前の、挨拶。|Ucapan sebelum mulai makan sebagai tanda syukur.
+3075|動作や状態を、表す、言葉の、種類。|Jenis kata yang menyatakan tindakan atau keadaan.
+3077|実際に、起こった、こと。|Hal yang benar-benar terjadi.
+3078|道具などを、使って、人を、驚かせる、芸。|Trik yang membuat penonton terpesona.
+3079|一年を、いくつかに、分けた、学校の、区切り。|Satu bagian dari pembagian tahun ajaran sekolah.
+3080|座るための、背もたれのある、家具。|Perabot bersandaran untuk duduk.
+3081|思いもよらない。とんでもない。|Tidak masuk akal; juga hal di luar dugaan dan keterlaluan.
+3082|助けや、支えを、求める。|Mengandalkan bantuan atau dukungan.
+3083|近いうちに。|Dalam waktu dekat; nanti suatu saat.
+3084|お金を、たくさん、持つ、人。|Orang yang memiliki banyak uang.
+3085|実際に、見たり、行ったりして、身につけた、こと。|Pengetahuan yang diperoleh dari mengalami langsung.
+3086|神や、先祖を、まつる、行事。にぎやかな、行事。|Perayaan untuk menghormati dewa atau leluhur; festival yang meriah.
+3087|同じ、仲間の、集まり。|Kumpulan orang atau benda yang digolongkan bersama.
+3088|生活のために、する、仕事。|Pekerjaan sebagai mata pencaharian.
+3089|動物に、与える、食べ物。|Makanan yang diberikan kepada hewan.
+3090|電車や、バスなどが、出発すること。|Keberangkatan kereta, bus, atau kendaraan lain.
+3091|全体を、百として、割合を、表す、単位。|Satuan yang menyatakan perbandingan per seratus.
+theme_ashikubi|足の、ふくらはぎと、足の甲の間の、細い部分。|Bagian ramping di antara betis dan telapak kaki.
+theme_kouza|銀行などに、お金を、預けるために、作る、記録。|Catatan atau akun di bank untuk menyimpan dan mengelola uang.
+theme_furikomi|銀行を通して、お金を、他の口座に、送ること。|Mengirim uang melalui bank ke rekening orang lain.
+theme_anshoubangou|本人であることを、確認するための、秘密の、数字。|Angka rahasia untuk memastikan identitas pemilik rekening atau kartu.
+theme_hokenshou|健康保険に、入っていることを、示す、証明書。|Kartu yang membuktikan bahwa seseorang terdaftar asuransi kesehatan.
+ext_0024|小麦粉の、生地に、キャベツなどを、混ぜて、焼いた、料理。|Hidangan Jepang dari adonan tepung dan kubis yang dipanggang di atas wajan datar.
+ext_0025|小麦粉の、生地に、たこを、入れて、丸く焼いた、料理。|Bola adonan berisi potongan gurita yang dipanggang.
+ext_0030|鶏肉などを、串に刺して、焼いた、料理。|Hidangan potongan ayam yang ditusuk dan dipanggang.
+ext_0031|牛肉や、野菜を、鍋で煮ながら、食べる、日本料理。|Hidangan rebusan daging sapi dan sayuran dalam panci di meja.
+ext_0035|ご飯の上に、煮た牛肉を、のせた、丼料理。|Nasi mangkuk dengan irisan daging sapi rebus di atasnya.
+ext_0037|鶏肉などに、粉を、つけて、油で揚げた、料理。|Daging ayam berbalut tepung yang digoreng.
+ext_0040|茶葉を、粉にした、緑色の、お茶。|Teh hijau yang digiling halus menjadi bubuk.
+ext_0064|手で動かして、画面の、操作をする、コンピュータの、機器。|Perangkat penunjuk di komputer yang digerakkan tangan.
+ext_0065|文字を、入力する、ための、装置。|Papan tuts untuk memasukkan huruf ke komputer.
+ext_0067|画面を、指で触って、操作する、薄い、コンピュータ。|Komputer pipih yang dioperasikan dengan menyentuh layar.
+ext_0068|ファイルを、整理して、入れておく、場所。|Tempat pengelompokan berkas pada komputer.
+ext_0071|日記などを、ネット上に、公開する、ウェブサイト。|Situs web berisi catatan atau tulisan pribadi yang dipublikasikan.
+ext_0075|楕円形の、ボールを、持って、運ぶ、球技。|Olahraga bola lonjong yang dibawa dan dioper dengan tangan.
+ext_0077|呼吸と、ポーズで、心身を、整える、運動。|Latihan pernapasan dan postur untuk menyeimbangkan tubuh dan pikiran.
+ext_0078|板に、乗って、波の上を、滑る、スポーツ。|Olahraga meluncur di atas ombak dengan papan.
+ext_0079|車を、止めておく、場所。|Tempat khusus untuk memarkir kendaraan.
+ext_0080|頭を、守る、ために、かぶる、かたい、帽子。|Topi keras pelindung kepala.
+ext_0082|シャンプーのあとに、髪を、なめらかにする、ための、液。|Cairan yang melembutkan rambut setelah keramas.
+ext_0085|耳に、つける、飾り。|Perhiasan yang dikenakan di telinga.
+ext_0089|買い物などで、割引が、受けられる、券。|Kertas atau kode yang memberi potongan harga.
+ext_0090|人が、集まる、催し物。|Kegiatan atau acara yang dihadiri banyak orang.
+ext_0091|客の前で、直接、行う、演奏。|Pertunjukan musik yang dibawakan langsung di hadapan penonton.
+ext_0093|人と、接する、ときの、礼儀。|Sopan santun dalam bergaul dengan orang lain.
+ext_0094|集団を、引っ張る、人。|Orang yang memimpin suatu kelompok.
+ext_0095|体重を、減らす、ための、食事制限や、運動。|Pengaturan makan atau olahraga untuk menurunkan berat badan.
+ext_0096|緊張を、ほぐして、くつろぐこと。|Melepas ketegangan dan bersantai.
+ext_0097|特定の、物に、体が、過敏に、反応すること。|Reaksi berlebihan tubuh terhadap zat tertentu.
+ext_0098|食事で、足りない、栄養を、補う、食品。|Produk untuk melengkapi gizi yang kurang dari makanan.
+ext_0099|全身の、美容を、目的とした、手入れ。|Perawatan kecantikan seluruh tubuh di salon.
+ext_0100|生き物の、体に、入って、病気を、引き起こす、小さな、病原体。|Patogen sangat kecil yang menyerang tubuh dan menimbulkan penyakit.
+ext_0101|病気を、防ぐ、ために、体に、入れる、薬。|Obat yang disuntikkan untuk mencegah penyakit.
+x_0002|野菜を、塩などに、漬けた、食品。|Makanan berupa sayuran yang diawetkan dengan garam atau cuka.
+x_0003|海藻を、薄く、乾かした、食品。|Lembaran rumput laut kering yang dipakai untuk membungkus nasi.
+x_0004|小麦を、ひいて、粉にした、もの。|Tepung hasil gilingan gandum.
+x_0010|ピンク色の、甘い、果物。|Buah manis berwarna merah muda dengan kulit berbulu halus.
+x_0011|水分が、多い、白い、果肉の、果物。|Buah berdaging putih yang banyak berair dan renyah.
+x_0012|オレンジ色の、甘い、秋の、果物。|Buah oranye yang manis, populer di musim gugur.
+x_0021|緑の葉を、食べる、栄養の、ある、野菜。|Sayuran daun hijau yang kaya zat besi.
+x_0022|葉が、白く、丸く、重なった、野菜。|Sayuran berdaun putih dan berlapis, sering dimasak untuk sup.
+x_0023|傘の形をした、森にはえる、食べ物。|Jamur yang tumbuh di hutan atau budidaya dan dapat dimakan.
+x_0024|黄色い粒が、並んだ、穀物や、野菜。|Tanaman dengan butiran kuning berderet yang dimakan.
+x_0026|米を、炊く、ための、電気器具。|Alat listrik untuk memasak nasi.
+x_0029|電池に、電気を、ためる、ための、機器。|Perangkat untuk mengisi daya baterai.
+x_0031|顔や手を、洗う、場所。|Tempat untuk mencuci muka dan tangan.
+x_0032|歯を、磨く、ときに、使う、ペースト。|Pasta yang dipakai untuk menyikat gigi.
+x_0033|トイレで、使う、紙。|Kertas yang dipakai di toilet.
+x_0038|建物の、外に、張り出した、床の部分。|Bagian lantai yang menjorok keluar dari bangunan, tempat menjemur atau bersantai.
