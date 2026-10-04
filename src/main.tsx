@@ -28,3 +28,8 @@ function loadApp() {
 }
 
 loadApp();
+
+// Hitung pengunjung (termasuk tamu) setelah aplikasi tampil, tanpa menahan render awal.
+setTimeout(() => {
+  import('./lib/visitors.ts').then((m) => m.registerVisit()).catch(() => {});
+}, 4000);

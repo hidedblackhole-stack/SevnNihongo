@@ -254,8 +254,8 @@ export async function sendScoreEvent(eventType: 'quiz_answer' | 'kanji_write', r
     const stats = JSON.parse(statsRaw);
     const userId = stats.userId;
     if (!userId) return;
-    // Jalur aman membutuhkan akun login (auth.uid()); tamu dilewati agar tidak memicu error di setiap jawaban.
-    if (SECURE_LEADERBOARD && !(await getSession())) return;
+    // Tamu tidak punya catatan di server: hanya pemain login yang masuk leaderboard/skor mingguan.
+    if (!(await getSession())) return;
 
     const rawExp = Number(stats.totalExp) || 0;
     const effectiveTierIndex = Math.round(getTierForExp(Math.round(rawExp)).tierIndex || 0);
@@ -308,9 +308,11 @@ export async function upsertLeaderboard(stats: PlayerStats) {
     const roundedExp = Math.round(Number(stats.totalExp) || 0);
     const effectiveTierIndex = Math.round(getTierForExp(roundedExp).tierIndex || 0);
 
+    // Tamu tidak punya catatan di server: hanya pemain login yang masuk leaderboard.
+    if (!(await getSession())) return;
+
     if (SECURE_LEADERBOARD) {
-      // Hanya pemain login (auth.uid() ada). Server menolak EXP turun dan membatasi laju kenaikan.
-      if (!(await getSession())) return;
+      // Server menolak EXP turun dan membatasi laju kenaikan.
       const { error: rpcError } = await supabase.rpc('upsert_leaderboard_entry', {
         p_player_name: stats.playerName || 'Unknown Player',
         p_level: Math.max(Math.round(Number(stats.level) || 1), calculateLevelFromExp(roundedExp)),

@@ -137,7 +137,13 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
         if (currentUserId) {
           const listForRank = (data && data.length > 0) ? data : allTimeEntries;
           const rankInfo = await getUserLeaderboardRank(currentUserId, listForRank);
-          if (rankInfo) {
+          if (!rankInfo) {
+            // Tamu/pemain tanpa catatan di server: buang kartu peringkat lama dari cache.
+            setMyRankInfo(null);
+            try {
+              localStorage.removeItem(STORAGE_KEY_MY_RANK);
+            } catch {}
+          } else {
             setMyRankInfo(rankInfo);
             try {
               localStorage.setItem(STORAGE_KEY_MY_RANK, JSON.stringify(rankInfo));
