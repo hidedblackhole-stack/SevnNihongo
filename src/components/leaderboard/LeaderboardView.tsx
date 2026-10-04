@@ -169,8 +169,14 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
   };
 
   // Single unified controller effect: triggers when tab becomes active or params change
+  // Jangan ambil ulang dari server bila data untuk tampilan yang sama baru saja diambil (pindah tab bolak-balik).
+  const lastFetchRef = useRef<{ key: string; at: number } | null>(null);
   useEffect(() => {
     if (!isActive) return;
+    const key = `${activeTab}:${displayLimit}`;
+    const last = lastFetchRef.current;
+    if (last && last.key === key && Date.now() - last.at < 45_000) return;
+    lastFetchRef.current = { key, at: Date.now() };
     fetchLeaderboard();
   }, [isActive, activeTab, displayLimit]);
 

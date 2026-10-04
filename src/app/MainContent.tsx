@@ -6,6 +6,7 @@ import { HomeView } from '../components/home/HomeView';
 import { MissionsView } from '../components/missions/MissionsView';
 import { AuthModal } from '../components/auth/AuthModal';
 import { ModuleBoundary } from '../components/common/ModuleBoundary';
+import { FreezeWhenHidden } from '../components/common/FreezeWhenHidden';
 import { recordStudyActivity } from '../utils/activity';
 import type { useAppNavigation } from '../hooks/useAppNavigation';
 import type { usePlayerActions } from '../hooks/usePlayerActions';
@@ -126,6 +127,7 @@ export function MainContent(props: MainContentProps) {
                 className={activeTab === 'home' ? 'block animate-tab-enter' : 'hidden'}
                 aria-hidden={activeTab !== 'home'}
               >
+                <FreezeWhenHidden active={activeTab === 'home'}>
                 {visitedTabs.has('home') && (
                   <ModuleBoundary label="Beranda">
                   <HomeView
@@ -139,6 +141,7 @@ export function MainContent(props: MainContentProps) {
                   />
                   </ModuleBoundary>
                 )}
+                </FreezeWhenHidden>
               </div>
 
               {/* World / Maps Tab */}
@@ -146,6 +149,7 @@ export function MainContent(props: MainContentProps) {
                 className={activeTab === 'maps' ? 'block animate-tab-enter' : 'hidden'}
                 aria-hidden={activeTab !== 'maps'}
               >
+                <FreezeWhenHidden active={activeTab === 'maps'}>
                 {visitedTabs.has('maps') && (
                   <ModuleBoundary label="Peta Dunia">
                     <WorldView
@@ -189,6 +193,7 @@ export function MainContent(props: MainContentProps) {
                     />
                   </ModuleBoundary>
                 )}
+                </FreezeWhenHidden>
               </div>
 
               {/* Missions Tab (Daily & Weekly) */}
@@ -196,6 +201,7 @@ export function MainContent(props: MainContentProps) {
                 className={(activeTab === 'daily' || activeTab === 'weekly') ? 'block animate-tab-enter' : 'hidden'}
                 aria-hidden={activeTab !== 'daily' && activeTab !== 'weekly'}
               >
+                <FreezeWhenHidden active={activeTab === 'daily' || activeTab === 'weekly'}>
                 {(visitedTabs.has('daily') || visitedTabs.has('weekly')) && (
                   <ModuleBoundary label="Misi">
                   <MissionsView
@@ -206,6 +212,7 @@ export function MainContent(props: MainContentProps) {
                   />
                   </ModuleBoundary>
                 )}
+                </FreezeWhenHidden>
               </div>
 
               {/* Leaderboard Tab */}
@@ -213,6 +220,7 @@ export function MainContent(props: MainContentProps) {
                 className={activeTab === 'leaderboard' ? 'block animate-tab-enter' : 'hidden'}
                 aria-hidden={activeTab !== 'leaderboard'}
               >
+                <FreezeWhenHidden active={activeTab === 'leaderboard'}>
                 {visitedTabs.has('leaderboard') && (
                   <ModuleBoundary label="Papan Peringkat">
                   <LeaderboardView
@@ -225,6 +233,7 @@ export function MainContent(props: MainContentProps) {
                   />
                   </ModuleBoundary>
                 )}
+                </FreezeWhenHidden>
               </div>
 
               {/* Library Tab */}
@@ -232,6 +241,7 @@ export function MainContent(props: MainContentProps) {
                 className={activeTab === 'library' ? 'block animate-tab-enter' : 'hidden'}
                 aria-hidden={activeTab !== 'library'}
               >
+                <FreezeWhenHidden active={activeTab === 'library'}>
                 {visitedTabs.has('library') && (
                   <ModuleBoundary label="Perpustakaan">
                   <LibraryView
@@ -247,6 +257,7 @@ export function MainContent(props: MainContentProps) {
                   />
                   </ModuleBoundary>
                 )}
+                </FreezeWhenHidden>
               </div>
 
               {/* Deck / Buku Saku Tab */}
@@ -254,6 +265,7 @@ export function MainContent(props: MainContentProps) {
                 className={activeTab === 'deck' ? 'block animate-tab-enter' : 'hidden'}
                 aria-hidden={activeTab !== 'deck'}
               >
+                <FreezeWhenHidden active={activeTab === 'deck'}>
                 {visitedTabs.has('deck') && (
                   <ModuleBoundary label="Buku Saku">
                   <BukuSakuView
@@ -280,6 +292,7 @@ export function MainContent(props: MainContentProps) {
                   />
                   </ModuleBoundary>
                 )}
+                </FreezeWhenHidden>
               </div>
 
               {/* Settings Tab */}
@@ -287,6 +300,7 @@ export function MainContent(props: MainContentProps) {
                 className={activeTab === 'settings' ? 'block animate-tab-enter' : 'hidden'}
                 aria-hidden={activeTab !== 'settings'}
               >
+                <FreezeWhenHidden active={activeTab === 'settings'}>
                 {visitedTabs.has('settings') && (
                   <ModuleBoundary label="Pengaturan">
                   <SettingsView
@@ -313,6 +327,7 @@ export function MainContent(props: MainContentProps) {
                   />
                   </ModuleBoundary>
                 )}
+                </FreezeWhenHidden>
               </div>
             </div>
           </div>
