@@ -1,0 +1,270 @@
+n1_0297|音を使って表現する芸術。|Seni yang mengungkapkan perasaan dan gagasan melalui bunyi dan irama.
+n1_0511|価値の高い、黄色く輝く金属。|Logam mulia berwarna kuning mengilap yang bernilai tinggi.
+n1_0512|レモンや菜の花のような色。|Warna kuning seperti lemon atau bunga sawi.
+n1_0548|何一つ。少しも。|Dengan negatif berarti 'tidak apa-apa' atau 'tidak sama sekali'.
+n1_0549|他の何よりも。|Lebih dari hal apa pun; yang paling utama.
+n1_0550|どれ。どちら。そのうち。|Yang mana; juga 'bagaimanapun' atau 'suatu saat nanti'.
+n1_0551|特別な、意図もなく、自然な様子。|Tampak biasa dan tidak disengaja; wajar saja.
+n1_0552|理由を、尋ねる言葉。|Kata tanya untuk menanyakan alasan.
+n1_0553|理由を、述べるときに、使う言葉。|Kata penghubung untuk menerangkan sebab; 'sebabnya'.
+n1_0554|時刻や、日を、尋ねる言葉。|Kata tanya untuk menanyakan waktu atau hari.
+n1_0555|はっきりしない、ある時。|Pada suatu waktu yang belum jelas; suatu saat.
+n1_0556|どんな時でも。|Pada saat kapan pun.
+n1_0557|気づかない、うちに。|Tanpa disadari waktu telah berlalu.
+n1_0558|永久に。ずっと。|Selamanya tanpa batas waktu.
+n1_0559|どんな時も。ふだん。|Setiap saat; biasanya.
+n1_0560|場所を、尋ねる言葉。|Kata tanya untuk menanyakan tempat.
+n1_0561|どこと、決めない、場所。|Suatu tempat yang tidak ditentukan.
+n1_0562|相手に、強く、頼む言葉。|Kata untuk memohon dengan sangat; 'mohon'.
+n1_0563|どちらの方。どの方向。|Yang mana atau siapa dengan cara sopan; juga arah.
+n1_0564|すぐれた、句。|Bait atau frasa yang indah dan menawan.
+n1_0565|材料に、手を加えて、別の物にすること。|Mengolah bahan menjadi bentuk lain.
+n1_0566|団体や、制度に、入ること。|Bergabung atau mendaftar menjadi anggota suatu lembaga atau asuransi.
+n1_0567|ある物に、別の要素を、加えること。|Menambahkan unsur lain; juga mempertimbangkan keadaan.
+n1_0568|読み札と、取り札で、遊ぶ、日本の、カード。|Permainan kartu tradisional Jepang.
+n1_0569|気の毒で、同情したくなる様子。|Menimbulkan rasa iba atau kasihan.
+n1_0570|小さくて、愛らしい様子。|Imut dan menggemaskan.
+n1_0571|愛しんで、大切に、世話をする。|Menyayangi dan memelihara dengan penuh kasih.
+n1_0572|小さくて、愛嬌のある様子。|Manis dan menggemaskan.
+n1_0573|変わっていて、笑いたくなる様子。|Janggal; juga lucu hingga membuat tertawa.
+n1_0574|かなり。相当に。|Cukup banyak; lumayan.
+n1_0575|家庭の、お金の、やりくり。|Pengelolaan keuangan rumah tangga.
+n1_0576|貸家などの、持ち主。|Pemilik rumah yang disewakan.
+n1_0577|家を、飛び出して、帰らないこと。|Pergi meninggalkan rumah tanpa berniat pulang.
+n1_0578|人が飼う、動物。|Hewan ternak seperti sapi, babi, dan ayam.
+n1_0579|主君に、仕える人。|Pengikut atau bawahan seorang penguasa.
+n1_0580|生物や、学問などの、分類。|Golongan dalam klasifikasi; juga jurusan studi.
+n1_0581|することがない、時間。|Waktu luang.
+n1_0582|思ったとおりかどうか、確かめるときの、言葉。|Kata yang menyatakan keraguan 'benarkah' sampai terbukti.
+n1_0583|約束や、役目を、成し遂げる。|Menunaikan janji atau tugas; juga menghabiskan.
+n1_0584|いちばん、最後。端。|Ujung terjauh atau akhir dari sesuatu.
+n1_0585|すっかり、なくなる。死ぬ。|Habis atau berakhir; juga meninggal.
+n1_0586|頼りなく、消えやすい。|Rapuh dan mudah sirna; fana.
+n1_0587|川。|Sungai-sungai atau aliran sungai secara umum.
+n1_0588|火や、金属が出す、小さな、火の粒。|Percikan api kecil; juga perselisihan sengit.
+n1_0589|熱で、受けた、皮膚の、傷。|Luka pada kulit akibat panas.
+n1_0590|太陽系の、四番目の、惑星。|Planet keempat dalam tata surya yang berwarna merah.
+n1_0591|布団などを、かけて、足を暖める、日本の、暖房具。|Meja pemanas Jepang yang ditutupi selimut tempat menghangatkan kaki.
+n1_0592|それぞれ。|Masing-masing satu per satu.
+n1_0593|ある、決まった、場所や、部分。|Bagian atau tempat tertentu; juga penghitung poin.
+n1_0594|事柄を、一つ一つ、分けて、書くこと。|Menuliskan hal-hal dalam butir-butir terpisah.
+n1_0595|花を、作っている、薄い、部分。|Helai tipis penyusun bunga.
+n1_0596|花を、植えるために、土を、盛り上げた所。|Bidang tanah yang ditinggikan untuk menanam bunga.
+n1_0597|花の、おしべで、作られる、粉。|Serbuk halus dari bunga yang menyebabkan penyerbukan.
+n1_0598|思い通りに、ならず、落ち着かない様子。|Gelisah dan jengkel karena sesuatu tak sesuai harapan.
+n1_0599|弱い者を、苦しめたり、困らせたりする。|Menyakiti atau merundung orang yang lebih lemah.
+n1_0600|持ち運ぶ、物。責任。|Barang yang dibawa atau diangkut; juga beban tanggung jawab.
+n1_0601|運ぶために、荷物を、まとめること。|Mengemas barang agar siap dikirim.
+n1_0602|はなやかで、目立つ様子。|Gemilang dan menarik perhatian.
+n1_0603|明るく、きらびやかな様子。|Meriah dan cemerlang.
+n1_0604|はでで、ぜいたくな様子。|Tampil mewah dan berlebihan.
+n1_0605|体つきが、ほっそりして、弱々しい様子。|Berperawakan ramping dan halus; juga rapuh.
+n1_0606|決められた、授業以外の、時間。|Kegiatan di luar jam pelajaran resmi.
+n1_0607|解決する、べき、問題。|Tugas atau tema yang harus dikerjakan atau diselesaikan.
+n1_0608|お金。|Alat pembayaran berupa uang logam dan kertas.
+n1_0609|ある、時間や、数量を、越えること。|Lewat dari waktu atau jumlah tertentu; juga terlalu.
+n1_0610|過ごした、失敗。まちがい。|Kesalahan yang telah dilakukan.
+n1_0611|人口が、少なくなりすぎること。|Berkurangnya penduduk secara drastis di suatu daerah.
+n1_0612|多すぎること。|Kelebihan atau terlalu banyak.
+n1_0613|人や物が、過度に、集中すること。|Terlalu padat dan penuh sesak.
+n1_0614|働きすぎて、疲れること。|Kelelahan akibat bekerja berlebihan.
+n1_0615|もやなどで、ぼんやり、見える。|Tampak samar karena berkabut.
+n1_0616|急に。突然。|Secara mendadak; juga tiba-tiba.
+n1_0617|自分の、思い通りに、ふるまう様子。|Bersikap sesuka hati tanpa memikirkan orang lain.
+n1_0618|文字の、線を、数える、数え方。絵。|Satuan hitung goresan huruf; juga gambar.
+n1_0619|新しい、時代を、開くこと。|Menandai awal babak baru dalam sejarah.
+n1_0620|上品な、おもむき。|Keanggunan atau cita rasa halus yang menawan.
+n1_0622|ある、ことに、割り込んで、関わること。|Turut campur atau ikut masuk ke dalam suatu urusan.
+n1_0623|病人などの、世話をすること。|Merawat dan mengurus orang sakit atau yang tidak sadar.
+n1_0624|集まり。会合。|Perkumpulan atau pertemuan untuk tujuan tertentu.
+n1_0625|公式に、会って、話すこと。|Pertemuan resmi untuk berbicara, misalnya dengan wartawan.
+n1_0626|向かい合って、話し合うこと。|Berbicara berhadapan untuk berunding.
+n1_0627|結んだものを、ゆるめて、離す。|Membuka atau mengurai ikatan.
+n1_0628|規制や、契約などを、取り消すこと。|Mencabut atau membatalkan larangan atau kontrak.
+n1_0629|死体などを、切り開いて、調べること。|Membedah jasad untuk diteliti.
+n1_0630|配ったものを、集め直すこと。|Mengumpulkan kembali barang yang sudah dibagikan.
+n1_0631|客を、乗せずに、車などを、移動させること。|Memindahkan kendaraan tanpa penumpang menuju tempat lain.
+n1_0632|書類を、順に、回して、見せること。|Mengedarkan dokumen dari orang ke orang untuk dibaca.
+n1_0633|電気が、流れる、道すじ。|Jalur tertutup tempat arus listrik mengalir.
+n1_0634|気持ちが、よいこと。|Menyenangkan dan terasa nyaman; sukarela.
+n1_0635|怪しい、大きな、動物。|Makhluk besar khayalan yang aneh dan menakutkan.
+n1_0636|人に、親しんで、慣れる。|Menjadi jinak dan akrab dengan orang.
+n1_0637|急に、連れて、行く。|Membawa kabur atau menculik; juga menyapu bersih.
+n1_0638|新しく、なる。形式ばる。|Menjadi baru; juga bersikap formal atau serius.
+n1_0639|改めて、かえって、悪くすること。|Perubahan yang justru memperburuk keadaan.
+n1_0640|悪い所を、改め、新しくすること。|Pembaruan besar pada sistem atau aturan lama.
+n1_0641|こわれた所を、直すこと。|Memperbaiki atau merenovasi bagian yang rusak.
+n1_0642|決まりなどを、改めて、決め直すこと。|Menetapkan ulang aturan atau nilai.
+n1_0643|書物の、内容を、改め、直すこと。|Merevisi isi buku atau dokumen.
+n1_0644|悪い点を、直して、よくすること。|Memperbaiki kekurangan agar lebih baik.
+n1_0645|船で、人や、物を、運ぶこと。|Pengangkutan orang atau barang lewat laut.
+n1_0646|陸と陸との、間の、狭い、海。|Perairan sempit di antara dua daratan.
+n1_0647|海面から、測った、土地の、高さ。|Ketinggian tanah yang diukur dari permukaan laut.
+n1_0648|海の中を、決まった方向に、流れる、水の、動き。|Aliran air laut yang bergerak dengan arah tetap.
+n1_0649|船で、行く道。|Rute pelayaran melalui laut.
+n1_0650|物が、燃えた、あとの、粉。|Serbuk sisa pembakaran.
+n1_0651|たばこの、灰や、吸い殻を、入れる、器。|Wadah untuk abu dan puntung rokok.
+n1_0652|会などを、開くこと。|Menyelenggarakan suatu acara atau pertemuan.
+n1_0653|荒れた土地を、切り開いて、利用すること。|Membuka lahan baru; juga merintis bidang baru.
+n1_0654|土地や、資源を、利用できるように、すること。|Mengembangkan sesuatu agar bermanfaat, seperti lahan atau produk baru.
+n1_0655|建物の、層。|Lantai suatu bangunan.
+n1_0656|身分や、地位の、段階。|Tingkatan pangkat; juga kelas sosial.
+n1_0657|重なった、層。|Lapisan atau tingkatan masyarakat.
+n1_0658|貝の、体を、おおう、かたい、殻。|Cangkang keras yang menutupi tubuh kerang.
+n1_0659|外国の、お金。|Mata uang negara asing.
+n1_0660|外から、見た、様子。|Penampilan atau tampak luar.
+n1_0661|外務大臣。|Menteri yang mengurus hubungan luar negeri.
+n1_0662|横を向いて、見ない様子。|Berpaling dan tidak mau memandang atau menanggapi.
+n1_0663|外から、来ること。外国から、来ること。|Datang dari luar; juga rawat jalan di rumah sakit.
+n1_0664|悪い、影響を、与える。|Merugikan atau membahayakan sesuatu.
+n1_0665|険しく、切り立った、所。|Lereng curam tegak seperti dinding.
+n1_0666|全体の、あらましを、述べること。|Pemaparan garis besar suatu hal.
+n1_0667|物事の、大まかな、考え。|Pengertian umum mengenai suatu hal.
+n1_0668|おおよその、内容。|Garis besar atau ringkasan kasar.
+n1_0669|物の、口を、おおう、もの。|Penutup untuk wadah atau lubang.
+n1_0670|町。道。|Jalan atau kawasan kota; juga akhiran 'gai'.
+n1_0671|町の、道ばた。|Di jalanan atau di tepi jalan kota.
+n1_0672|都市を、結ぶ、大きな、道路。|Jalan raya utama yang menghubungkan kota.
+n1_0673|条件に、当てはまること。|Memenuhi atau sesuai dengan syarat tertentu.
+n1_0674|それぞれ。みな。|Tiap atau masing-masing.
+n1_0675|それぞれ。めいめい。|Masing-masing dari beberapa hal.
+n1_0676|いろいろな、種類。|Berbagai jenis yang ada.
+n1_0677|広く、散らばって、広がること。|Menyebar luas ke berbagai arah.
+n1_0678|身分。地位。|Kedudukan atau derajat; juga kasus dalam tata bahasa.
+n1_0679|程度や、地位などの、違い。|Perbedaan atau jurang antara tingkatan.
+n1_0680|物事の、中心。原子の、中心。|Inti atau pusat sesuatu; juga nuklir.
+n1_0681|手に入れること。|Berhasil memperoleh sesuatu, misalnya hadiah atau suara.
+n1_0682|狩りで、とった、動物。|Hewan hasil buruan; juga barang rebutan.
+n1_0683|しっかり、して、頼りになる様子。|Kokoh dan dapat diandalkan.
+n1_0684|間違いないと、固く、信じること。|Keyakinan kuat bahwa sesuatu benar.
+n1_0685|はっきりと、決まること。|Menjadi pasti dan tidak berubah lagi.
+n1_0686|確実に、手に入れ、守ること。|Memastikan memperoleh dan menjaga sesuatu.
+n1_0687|しっかりと、うちたてること。|Mengukuhkan sesuatu hingga mantap.
+n1_0688|心に、とめておく、こと。思い当たること。|Ingatan; juga hal yang terasa dikenal.
+n1_0689|とがった、ところ。すみ。|Sudut yang runcing; juga bidak bishop dalam shogi.
+n1_0690|間が、離れる。|Terpisah jauh oleh jarak atau waktu.
+n1_0691|一週間おきに。|Berselang satu minggu; tiap dua minggu.
+n1_0692|古いものを、改め、新しくすること。|Pembaruan yang mengganti hal lama dengan yang baru.
+n1_0693|世の中の、仕組みを、急に、大きく、変えること。|Perubahan besar dan mendasar pada sistem pemerintahan atau masyarakat.
+n1_0694|学問と、芸術。|Ilmu dan seni.
+n1_0695|大学を、卒業した人の、称号。|Gelar sarjana setelah lulus universitas.
+n1_0696|学問上の、考え方。|Teori atau pandangan dalam suatu ilmu.
+n1_0697|学校に、通った、経歴。|Riwayat pendidikan seseorang.
+n1_0698|楽しいと、感じる。|Merasakan senang atau menikmati sesuatu.
+n1_0699|物事を、よい方に、考えること。|Memandang segala hal dengan harapan baik.
+n1_0700|音楽の、曲を、記号で、書いたもの。|Catatan lagu yang ditulis dengan simbol musik.
+n1_0701|顔の、下の、部分。|Bagian bawah wajah; dagu atau rahang.
+n1_0702|あとで、払う、約束で、買うこと。|Pembelian dengan kredit; juga akhiran untuk menggantungkan.
+n1_0703|全体を、十に、分けた、割合。|Persepuluhan dari keseluruhan; juga bagian.
+n1_0704|間に、無理に、入る。|Menyelinap masuk di antara sesuatu; menyerobot.
+n1_0705|ある数を、他の数で、分ける、計算。|Perhitungan pembagian.
+n1_0706|分けて、割り当てること。|Pembagian tugas atau jatah kepada masing-masing.
+n1_0707|定価から、安くすること。|Pemberian potongan harga.
+n1_0708|思ったより。比較的。|Dibandingkan dengan yang lain; relatif.
+n1_0709|ちょうど。|Tepat; pas pada waktunya.
+n1_0710|花や、枝を、器に、挿して、飾る。|Menata bunga atau ranting dalam wadah sebagai hiasan.
+n1_0711|生き生きとして、勢いがある様子。|Aktif dan penuh semangat.
+n1_0712|表面が、すべすべして、なめらかな様子。|Permukaan yang halus dan mulus; juga lancar.
+n1_0713|おかしくて、笑いたくなる様子。|Lucu dan menggelikan.
+n1_0714|さらに。同時に。|Dan juga; sekaligus.
+n1_0715|願いや、望みが、実現する。|Harapan atau keinginan terpenuhi.
+n1_0716|願いや、望みを、実現させる。|Mengabulkan atau memenuhi harapan.
+n1_0717|会社が、資金を、集めるために、発行する、証券。|Surat bukti kepemilikan modal perusahaan.
+n1_0718|かんで、切る。|Menggigit hingga putus.
+n1_0719|歯で、少し、かんで、取る。|Menggigit atau mengunyah sedikit; juga mempelajari sekadarnya.
+n1_0720|米を、たくさんの水で、柔らかく、煮た、食べ物。|Makanan nasi yang dimasak lunak dengan banyak air.
+n1_0721|かわいていること。|Keadaan kering; juga langit dalam Yijing.
+n1_0722|頭に、かぶる、飾り。|Hiasan mahkota yang dikenakan di kepala.
+n1_0723|熱が、出る前などに、感じる、ぞくぞくする寒さ。|Rasa dingin menggigil yang terasa di tubuh.
+n1_0724|本や、雑誌を、出版すること。|Menerbitkan buku atau majalah.
+n1_0725|相手の、失敗などを、許すこと。|Memaafkan atau memberi keringanan kepada orang yang bersalah.
+n1_0726|ある行いを、するよう、人に、勧めること。|Anjuran kepada seseorang untuk melakukan sesuatu.
+n1_0727|相手に、ある行いを、するよう、強く、勧めること。|Imbauan resmi agar pihak lain melakukan sesuatu.
+n1_0728|ある行いを、するよう、誘うこと。|Ajakan untuk bergabung atau membeli sesuatu.
+n1_0729|巻いた、もの。書物の、一冊。|Benda yang digulung; juga satu jilid buku.
+n1_0730|苦しさを、我慢する。|Menahan atau sanggup menanggung kesulitan.
+n1_0731|我慢できないほど、強い様子。|Terlalu kuat hingga tak tertahankan.
+n1_0732|欠点が、まったく、ない様子。|Tanpa cela dan sangat sempurna.
+n1_0733|国家の、役所に、勤める、役人。|Pejabat negara yang menjalankan pemerintahan.
+n1_0734|人の、失敗などを、広い心で、許すこと。|Sikap lapang dada dan menerima perbedaan atau kesalahan orang.
+n1_0735|干して、乾かした、もの。|Barang yang dijemur; makanan yang dikeringkan.
+n1_0736|他人のことに、口を、出すこと。|Mencampuri urusan orang lain.
+n1_0737|木の、いちばん、太い、部分。物事の、中心。|Batang pohon; juga bagian pokok suatu hal.
+n1_0738|主な、道路や、鉄道。|Jalur utama jalan atau kereta api.
+n1_0739|組織の、中心と、なる、人。|Orang-orang pimpinan inti dalam organisasi.
+n1_0740|心に、深く、感じること。|Perasaan haru yang mendalam terhadap sesuatu.
+n1_0741|手に、触れたときの、感じ。|Kesan yang didapat saat menyentuh; juga petunjuk dari penjajakan.
+n1_0742|病気などが、うつること。|Tertularnya penyakit atau pengaruh buruk.
+n1_0743|刺激を、感じる、程度。|Tingkat kepekaan atau sensitivitas.
+n1_0744|感動が、大きすぎて、言葉に、できないこと。|Haru yang begitu besar hingga tak dapat diungkapkan.
+n1_0745|環境や、状態に、慣れさせる。|Membiasakan atau menjinakkan seseorang atau hewan.
+n1_0746|何度も、経験して、平気に、なること。|Terbiasa karena sering dialami.
+n1_0747|ふだん、行われている、やり方。|Cara atau kebiasaan yang lazim dilakukan.
+n1_0748|昔から、続いている、習わし。|Kebiasaan atau adat yang diwariskan.
+n1_0749|ふだん、よく、使われること。|Dipakai secara umum dan sudah lazim.
+n1_0750|昔からの、決まった、やり方。|Kebiasaan atau preseden yang berlaku turun-temurun.
+n1_0751|単位などを、他の単位に、直して、計算すること。|Mengubah satuan atau nilai ke satuan lain.
+n1_0752|困難を、承知で、行う様子。|Berani atau dengan sengaja melakukan sesuatu meski sulit.
+n1_0753|喜びの、あまり、あげる、大声。|Sorak-sorai gembira banyak orang.
+n1_0754|中国から、伝わった、読み方の、言葉。|Kata Jepang yang berasal dari bahasa Tionghoa.
+n1_0755|砂糖のような、味。厳しくない。|Berasa manis; juga bersikap longgar atau terlalu optimis.
+n1_0756|人の、好意に、すがる。|Bermanja-manja pada orang; juga menerima kebaikan orang.
+n1_0757|辛くない味。調子のよい、言葉。|Rasa manis atau tidak pedas; juga bujuk rayu manis.
+n1_0758|悪いことが、ないか、見張ること。|Mengawasi agar tidak terjadi hal yang tidak diinginkan.
+n1_0759|病人などの、世話をすること。|Merawat orang sakit atau terluka.
+n1_0760|細く長い、竹などの、棒。|Galah panjang dari bambu atau sejenisnya.
+n1_0761|中が、空洞の、細長い、物。|Benda panjang berongga; pipa.
+n1_0762|手軽で、簡単な、こと。|Sederhana dan praktis.
+n1_0763|要点を、短く、まとめて、いる様子。|Ringkas dan padat tanpa bertele-tele.
+n1_0764|飾りが、なく、質素な様子。|Sederhana tanpa hiasan berlebihan.
+n1_0765|締まっていた、ものが、ゆるくなる。|Menjadi longgar atau kendur; juga ketegangan mereda.
+n1_0766|強さや、きびしさを、弱める。|Mengendurkan ikatan atau mengurangi ketegangan.
+n1_0767|傾きが、小さい様子。ゆったり、している。|Landai dan tidak curam; juga santai atau longgar.
+n1_0768|厳しさなどを、やわらげること。|Meredakan ketegangan atau melonggarkan peraturan.
+n1_0769|最も、大切な、こと。|Hal yang paling penting dan tidak boleh diabaikan.
+n1_0770|物事に対する、見方。|Cara pandang terhadap sesuatu; juga tampak.
+n1_0771|演技などを、見物する、人々。|Orang-orang yang menonton suatu pertunjukan.
+n1_0772|物事を、見る、立場。|Sudut pandang dalam menilai sesuatu.
+n1_0773|映画などを、見物すること。|Menonton atau menyaksikan pertunjukan atau pameran.
+n1_0774|つき通す。最後まで、やり通す。|Menembus sesuatu; juga memegang teguh hingga akhir.
+n1_0775|身に、備わった、重々しさ。|Wibawa atau kharisma yang melekat pada seseorang.
+n1_0776|元に、戻すこと。得た、利益を、返すこと。|Mengembalikan ke asal; juga membagikan keuntungan ke pelanggan.
+n1_0777|数え年六十一歳。|Ulang tahun ke-60 yang dirayakan sebagai siklus lengkap kalender.
+n1_0778|時々。ときたま。|Kadang-kadang; sesekali.
+n1_0779|少しの、時間で。やがて。|Dalam waktu singkat; tak lama lagi.
+n1_0780|正しくない。|Berbuat atau menjadi salah.
+n1_0781|人と人との、関係。|Hubungan antar dua orang atau kelompok.
+n1_0782|外国の、品物に、かける、税金。|Pajak yang dikenakan atas barang impor.
+n1_0783|ある、ことに、関わること。|Terlibat atau ikut serta dalam suatu hal.
+n1_0784|大きな、建物。|Gedung atau balai besar.
+n1_0785|まるごと。|Seluruhnya atau utuh tanpa kurang.
+n1_0786|全部。そっくり。|Secara keseluruhan tanpa dibagi.
+n1_0787|まったく。|Sama sekali; benar-benar.
+n1_0788|まるで。|Seolah-olah; atau dengan negatif berarti sama sekali tidak.
+n1_0789|丸く、する。巻く。|Membulatkan atau menggulung sesuatu; juga membujuk.
+n1_0790|口の中や、のどを、水で、洗うこと。|Membilas mulut atau tenggorokan dengan air.
+n1_0791|子供が、遊ぶ、道具。|Alat yang dipakai anak untuk bermain.
+n1_0792|体の中に、できる、悪性の、腫れ物。|Tumor ganas yang tumbuh dalam tubuh; kanker.
+n1_0793|目の病気を、扱う、医学の、分野。|Bidang kedokteran yang menangani penyakit mata.
+n1_0794|目の、中の、丸い、部分。|Bagian bundar bola mata.
+n1_0795|目を、補う、道具。|Alat bantu penglihatan yang dipakai di depan mata.
+n1_0796|地殻を、作っている、かたい物質。|Batuan keras penyusun kerak bumi.
+n1_0797|本物に、似せて、作った、にせの物。|Barang tiruan yang dibuat meniru aslinya.
+n1_0798|自分の、考えを、変えない、様子。|Keras kepala dan tidak mau mengubah pendirian.
+n1_0799|がっしりして、じょうぶな様子。|Kuat dan kokoh.
+n1_0800|顔の、様子。|Raut atau ekspresi wajah seseorang.
+n1_0801|願い出る、ための、書類。|Surat permohonan untuk mendaftar atau mengajukan sesuatu.
+n1_0802|計画を、立てること。|Menyusun rencana atau proyek.
+n1_0803|悪くなりはしないかと、心配する。|Merasa khawatir akan terjadinya hal buruk.
+n1_0804|人に、与える、害。|Gangguan atau bahaya yang ditimbulkan kepada orang lain.
+n1_0805|危ない、状態。|Keadaan genting yang berbahaya; krisis.
+n1_0806|人を、笑わせる、劇。|Pertunjukan lucu yang berakhir bahagia.
+n1_0807|物を、入れる、入れ物。人の、大きさ。|Wadah; juga kapasitas atau bakat seseorang.
+n1_0808|生物の、体の、ある働きを、受け持つ、部分。|Bagian tubuh yang menjalankan fungsi tertentu.
+n1_0809|物事の、土台。|Dasar atau asal sesuatu.
+n1_0810|ある目的の、ために、集めた、お金。|Dana yang dihimpun untuk tujuan tertentu.
+n1_0811|二で、割り切れない、整数。|Bilangan bulat yang tidak habis dibagi dua.
+n1_0812|美しい。清潔である。|Cantik dan bersih; juga rapi.
+n1_0813|こちらへ、送ってくる。|Mengirimkan atau menyerahkan sesuatu kepada pembicara.
+n1_0814|物に、もたれかかる。人に、頼る。|Bersandar pada sesuatu; juga menggantungkan diri pada orang lain.
+n1_0815|物や、お金を、贈ること。|Menyumbangkan atau menghibahkan barang kepada lembaga.
