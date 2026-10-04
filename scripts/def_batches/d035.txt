@@ -1,0 +1,5 @@
+n2_0001|以前と、変わらない、様子。|Keadaan yang tidak berubah dari sebelumnya; seperti biasa.
+n2_0010|あちらこちら。いろいろな、場所。|Di sana sini; berbagai tempat.
+n2_0017|することが、多くて、落ち着かない様子。|Sibuk dan terburu-buru karena banyak yang harus dikerjakan.
+n2_0023|気づかない、うちに。|Tanpa disadari waktu atau keadaan telah berubah.
+n2_0041|人の、助けや、ご好意に、感謝する、言葉。|Ucapan terima kasih atas bantuan atau kebaikan orang lain; syukurlah berkat Anda.
