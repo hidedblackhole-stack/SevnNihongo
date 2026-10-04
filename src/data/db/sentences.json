@@ -88693,5 +88693,2822 @@
     "translation_en": "",
     "source": "kotoba_database",
     "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0001",
+    "japanese": "母の作る卵焼きは、甘いです。",
+    "reading": "ははのつくるたまごやきは、あまいです。",
+    "translation_id": "Telur dadar gulung buatan ibu saya manis.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0002",
+    "japanese": "ご飯と一緒に、漬物を食べます。",
+    "reading": "ごはんといっしょに、つけものをたべます。",
+    "translation_id": "Saya makan acar bersama nasi.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0003",
+    "japanese": "おにぎりに、海苔を巻きます。",
+    "reading": "おにぎりに、のりをまきます。",
+    "translation_id": "Saya membungkus onigiri dengan nori.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0004",
+    "japanese": "ケーキを作るために、小麦粉を買いました。",
+    "reading": "けーきをつくるために、こむぎこをかいました。",
+    "translation_id": "Saya membeli tepung terigu untuk membuat kue.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0005",
+    "japanese": "友達に、クッキーを焼いてあげました。",
+    "reading": "ともだちに、くっきーをやいてあげました。",
+    "translation_id": "Saya memanggangkan kue kering untuk teman.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0006",
+    "japanese": "日本では、水道水が飲めます。",
+    "reading": "にほんでは、すいどうすいがのめます。",
+    "translation_id": "Di Jepang air keran bisa diminum.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0007",
+    "japanese": "毎日、りんごを一つ食べます。",
+    "reading": "まいにち、りんごをひとつたべます。",
+    "translation_id": "Setiap hari saya makan satu apel.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0008",
+    "japanese": "冬は、こたつでみかんを食べます。",
+    "reading": "ふゆは、こたつでみかんをたべます。",
+    "translation_id": "Di musim dingin saya makan jeruk di bawah kotatsu.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0009",
+    "japanese": "春は、いちごが甘くておいしいです。",
+    "reading": "はるは、いちごがあまくておいしいです。",
+    "translation_id": "Di musim semi stroberi manis dan lezat.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0010",
+    "japanese": "桃は、柔らかくて甘いです。",
+    "reading": "ももは、やわらかくてあまいです。",
+    "translation_id": "Persik itu lembut dan manis.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0011",
+    "japanese": "秋に、梨をもらいました。",
+    "reading": "あきに、なしをもらいました。",
+    "translation_id": "Di musim gugur saya diberi pir.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0012",
+    "japanese": "庭に、柿の木があります。",
+    "reading": "にわに、かきのきがあります。",
+    "translation_id": "Di halaman ada pohon kesemek.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0013",
+    "japanese": "夏は、冷たい西瓜がおいしいです。",
+    "reading": "なつは、つめたいすいかがおいしいです。",
+    "translation_id": "Di musim panas semangka dingin terasa enak.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0014",
+    "japanese": "きゅうりを薄く切ります。",
+    "reading": "きゅうりをうすくきります。",
+    "translation_id": "Saya mengiris mentimun tipis-tipis.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0015",
+    "japanese": "なすは、焼いても煮てもおいしいです。",
+    "reading": "なすは、やいてもにてもおいしいです。",
+    "translation_id": "Terong enak baik dipanggang maupun direbus.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0016",
+    "japanese": "カレーに、じゃがいもを入れます。",
+    "reading": "かれーに、じゃがいもをいれます。",
+    "translation_id": "Saya memasukkan kentang ke kari.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0017",
+    "japanese": "にんじんは、体にいいです。",
+    "reading": "にんじんは、からだにいいです。",
+    "translation_id": "Wortel baik untuk tubuh.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0018",
+    "japanese": "玉ねぎを切ると、涙が出ます。",
+    "reading": "たまねぎをきると、なみだがでます。",
+    "translation_id": "Kalau memotong bawang bombai, air mata keluar.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0019",
+    "japanese": "大根おろしを、焼き魚に添えます。",
+    "reading": "だいこんおろしを、やきざかなにそえます。",
+    "translation_id": "Saya menyajikan parutan lobak dengan ikan bakar.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0020",
+    "japanese": "味噌汁に、ねぎを入れます。",
+    "reading": "みそしるに、ねぎをいれます。",
+    "translation_id": "Saya memasukkan daun bawang ke sup miso.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0021",
+    "japanese": "ほうれん草を茹でて、お浸しにします。",
+    "reading": "ほうれんそうをゆでて、おひたしにします。",
+    "translation_id": "Saya merebus bayam lalu menjadikannya ohitashi.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0022",
+    "japanese": "冬は、白菜の鍋をよく食べます。",
+    "reading": "ふゆは、はくさいのなべをよくたべます。",
+    "translation_id": "Di musim dingin saya sering makan nabe sawi putih.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0023",
+    "japanese": "秋は、きのこがおいしい季節です。",
+    "reading": "あきは、きのこがおいしいきせつです。",
+    "translation_id": "Musim gugur adalah musim jamur yang lezat.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0024",
+    "japanese": "夏は、焼きとうもろこしが人気です。",
+    "reading": "なつは、やきとうもろこしがにんきです。",
+    "translation_id": "Di musim panas jagung bakar populer.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0025",
+    "japanese": "毎週、掃除機で部屋を掃除します。",
+    "reading": "まいしゅう、そうじきでへやをそうじします。",
+    "translation_id": "Setiap minggu saya membersihkan kamar dengan penyedot debu.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0026",
+    "japanese": "新しい炊飯器で、ご飯を炊きました。",
+    "reading": "あたらしいすいはんきで、ごはんをたきました。",
+    "translation_id": "Saya menanak nasi dengan penanak nasi baru.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0027",
+    "japanese": "料理をするときは、換気扇を回します。",
+    "reading": "りょうりをするときは、かんきせんをまわします。",
+    "translation_id": "Saat memasak, saya menyalakan kipas penyedot udara.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0028",
+    "japanese": "テレビのリモコンが見つかりません。",
+    "reading": "てれびのりもこんがみつかりません。",
+    "translation_id": "Remote televisi tidak ketemu.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0029",
+    "japanese": "スマホの充電器を忘れました。",
+    "reading": "すまほのじゅうでんきをわすれました。",
+    "translation_id": "Saya lupa membawa charger ponsel.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0030",
+    "japanese": "コンセントが遠いので、延長コードを使います。",
+    "reading": "こんせんとがとおいので、えんちょうこーどをつかいます。",
+    "translation_id": "Karena stopkontak jauh, saya memakai kabel ekstensi.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0031",
+    "japanese": "洗面所で、手を洗います。",
+    "reading": "せんめんじょで、てをあらいます。",
+    "translation_id": "Saya mencuci tangan di tempat cuci muka.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0032",
+    "japanese": "歯磨き粉がなくなったので、買いに行きます。",
+    "reading": "はみがきこがなくなったので、かいにいきます。",
+    "translation_id": "Pasta gigi habis, jadi saya pergi membelinya.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0033",
+    "japanese": "トイレットペーパーを買い忘れました。",
+    "reading": "といれっとぺーぱーをかいわすれました。",
+    "translation_id": "Saya lupa membeli tisu toilet.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0034",
+    "japanese": "ごみは、ごみ箱に捨ててください。",
+    "reading": "ごみは、ごみばこにすててください。",
+    "translation_id": "Tolong buang sampah ke tempat sampah.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0035",
+    "japanese": "洗濯のとき、柔軟剤を入れます。",
+    "reading": "せんたくのとき、じゅうなんざいをいれます。",
+    "translation_id": "Saat mencuci, saya menambahkan pelembut pakaian.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0036",
+    "japanese": "ベランダの物干しに、洗濯物を干します。",
+    "reading": "べらんだのものほしに、せんたくものをほします。",
+    "translation_id": "Saya menjemur cucian di tempat jemuran balkon.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0037",
+    "japanese": "雨が降りそうなので、洗濯物を取り込みます。",
+    "reading": "あめがふりそうなので、せんたくものをとりこみます。",
+    "translation_id": "Sepertinya akan hujan, jadi saya mengangkat cucian.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0038",
+    "japanese": "ベランダで、植物を育てています。",
+    "reading": "べらんだで、しょくぶつをそだてています。",
+    "translation_id": "Saya menanam tumbuhan di balkon.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0039",
+    "japanese": "玄関に、新しい表札をかけました。",
+    "reading": "げんかんに、あたらしいひょうさつをかけました。",
+    "translation_id": "Saya memasang papan nama baru di pintu masuk.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0040",
+    "japanese": "毎朝、郵便受けを見に行きます。",
+    "reading": "まいあさ、ゆうびんうけをみにいきます。",
+    "translation_id": "Setiap pagi saya mengecek kotak surat.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0041",
+    "japanese": "今日、宅配便が届きます。",
+    "reading": "きょう、たくはいびんがとどきます。",
+    "translation_id": "Hari ini paket akan tiba.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0042",
+    "japanese": "アパートを借りるとき、敷金を払いました。",
+    "reading": "あぱーとをかりるとき、しききんをはらいました。",
+    "translation_id": "Saat menyewa apartemen, saya membayar uang jaminan.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0043",
+    "japanese": "この部屋は、礼金がかかりません。",
+    "reading": "このへやは、れいきんがかかりません。",
+    "translation_id": "Kamar ini tidak dikenakan uang terima kasih.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0044",
+    "japanese": "管理人さんに、鍵を預けました。",
+    "reading": "かんりにんさんに、かぎをあずけました。",
+    "translation_id": "Saya menitipkan kunci kepada pengelola gedung.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0045",
+    "japanese": "駅の駐輪場に、自転車を停めました。",
+    "reading": "えきのちゅうりんじょうに、じてんしゃをとめました。",
+    "translation_id": "Saya memarkir sepeda di tempat parkir sepeda stasiun.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0046",
+    "japanese": "寒いので、ジャケットを着ます。",
+    "reading": "さむいので、じゃけっとをきます。",
+    "translation_id": "Karena dingin, saya memakai jaket.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0047",
+    "japanese": "プールへ行くので、水着を持っていきます。",
+    "reading": "ぷーるへいくので、みずぎをもっていきます。",
+    "translation_id": "Karena akan ke kolam renang, saya membawa pakaian renang.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0048",
+    "japanese": "体育の授業には、運動靴を履きます。",
+    "reading": "たいいくのじゅぎょうには、うんどうぐつをはきます。",
+    "translation_id": "Untuk pelajaran olahraga, saya memakai sepatu olahraga.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0049",
+    "japanese": "父は、高い腕時計を持っています。",
+    "reading": "ちちは、たかいうでどけいをもっています。",
+    "translation_id": "Ayah saya punya jam tangan mahal.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0050",
+    "japanese": "日差しが強いので、サングラスをかけます。",
+    "reading": "ひざしがつよいので、さんぐらすをかけます。",
+    "translation_id": "Karena sinar matahari terik, saya memakai kacamata hitam.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0051",
+    "japanese": "海へ行く前に、日焼け止めを塗ります。",
+    "reading": "うみへいくまえに、ひやけどめをぬります。",
+    "translation_id": "Sebelum ke pantai, saya mengoleskan tabir surya.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0052",
+    "japanese": "急いでいないので、各駅停車に乗ります。",
+    "reading": "いそいでいないので、かくえきていしゃにのります。",
+    "translation_id": "Karena tidak buru-buru, saya naik kereta lokal.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0053",
+    "japanese": "終電に乗り遅れて、タクシーで帰りました。",
+    "reading": "しゅうでんにのりおくれて、たくしーでかえりました。",
+    "translation_id": "Saya ketinggalan kereta terakhir dan pulang naik taksi.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0054",
+    "japanese": "横断歩道を渡るときは、左右を見ましょう。",
+    "reading": "おうだんほどうをわたるときは、さゆうをみましょう。",
+    "translation_id": "Saat menyeberang di zebra cross, lihat kiri dan kanan.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0055",
+    "japanese": "高速道路は、お金がかかります。",
+    "reading": "こうそくどうろは、おかねがかかります。",
+    "translation_id": "Jalan tol itu berbayar.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0056",
+    "japanese": "バス停で、友達を待っています。",
+    "reading": "ばすていで、ともだちをまっています。",
+    "translation_id": "Saya menunggu teman di halte bus.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0057",
+    "japanese": "搭乗は、三十分前に始まります。",
+    "reading": "とうじょうは、さんじゅっぷんまえにはじまります。",
+    "translation_id": "Boarding dimulai tiga puluh menit sebelumnya.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0058",
+    "japanese": "台風のため、飛行機が欠航になりました。",
+    "reading": "たいふうのため、ひこうきがけっこうになりました。",
+    "translation_id": "Karena topan, penerbangan dibatalkan.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0059",
+    "japanese": "日本で働くには、ビザが必要です。",
+    "reading": "にほんではたらくには、びざがひつようです。",
+    "translation_id": "Untuk bekerja di Jepang, diperlukan visa.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0060",
+    "japanese": "この電車は、空席がありません。",
+    "reading": "このでんしゃは、くうせきがありません。",
+    "translation_id": "Kereta ini tidak ada kursi kosong.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0061",
+    "japanese": "新幹線の指定席を予約しました。",
+    "reading": "しんかんせんのしていせきをよやくしました。",
+    "translation_id": "Saya memesan kursi bernomor Shinkansen.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0062",
+    "japanese": "自由席は、早く並ばないと座れません。",
+    "reading": "じゆうせきは、はやくならばないとすわれません。",
+    "translation_id": "Kursi bebas tidak bisa diduduki kalau tidak antre lebih awal.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0063",
+    "japanese": "雨の日は、体育館で運動します。",
+    "reading": "あめのひは、たいいくかんでうんどうします。",
+    "translation_id": "Saat hujan, kami berolahraga di gedung olahraga.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0064",
+    "japanese": "試験に不合格で、とても残念でした。",
+    "reading": "しけんにふごうかくで、とてもざんねんでした。",
+    "translation_id": "Saya tidak lulus ujian dan sangat kecewa.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0065",
+    "japanese": "昨日、小学校の同級生に会いました。",
+    "reading": "きのう、しょうがっこうのどうきゅうせいにあいました。",
+    "translation_id": "Kemarin saya bertemu teman sekelas SD.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0066",
+    "japanese": "担任の先生は、とても優しいです。",
+    "reading": "たんにんのせんせいは、とてもやさしいです。",
+    "translation_id": "Wali kelas saya sangat baik.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0067",
+    "japanese": "放課後は、部活で忙しいです。",
+    "reading": "ほうかごは、ぶかつでいそがしいです。",
+    "translation_id": "Sepulang sekolah saya sibuk dengan kegiatan klub.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0068",
+    "japanese": "文化祭で、クラスの店を出します。",
+    "reading": "ぶんかさいで、くらすのみせをだします。",
+    "translation_id": "Di festival budaya, kelas kami membuka kedai.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0069",
+    "japanese": "来週、運動会があります。",
+    "reading": "らいしゅう、うんどうかいがあります。",
+    "translation_id": "Minggu depan ada hari olahraga.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0070",
+    "japanese": "京都へ、修学旅行に行きました。",
+    "reading": "きょうとへ、しゅうがくりょこうにいきました。",
+    "translation_id": "Kami pergi karyawisata ke Kyoto.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0071",
+    "japanese": "冬休みは、田舎に帰ります。",
+    "reading": "ふゆやすみは、いなかにかえります。",
+    "translation_id": "Pada libur musim dingin saya pulang kampung.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0072",
+    "japanese": "面接に、履歴書を持っていきます。",
+    "reading": "めんせつに、りれきしょをもっていきます。",
+    "translation_id": "Saya membawa CV ke wawancara.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0073",
+    "japanese": "もっと給料の高い会社に転職したいです。",
+    "reading": "もっときゅうりょうのたかいかいしゃにてんしょくしたいです。",
+    "translation_id": "Saya ingin pindah ke perusahaan bergaji lebih tinggi.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0074",
+    "japanese": "午後は、取引先に挨拶に行きます。",
+    "reading": "ごごは、とりひきさきにあいさつにいきます。",
+    "translation_id": "Sore ini saya pergi menyapa mitra bisnis.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0075",
+    "japanese": "来週、有給を取るつもりです。",
+    "reading": "らいしゅう、ゆうきゅうをとるつもりです。",
+    "translation_id": "Minggu depan saya berencana mengambil cuti berbayar.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0076",
+    "japanese": "アルバイトから、正社員になりました。",
+    "reading": "あるばいとから、せいしゃいんになりました。",
+    "translation_id": "Dari pekerja paruh waktu, saya menjadi karyawan tetap.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0077",
+    "japanese": "今日は、定時に帰ることができました。",
+    "reading": "きょうは、ていじにかえることができました。",
+    "translation_id": "Hari ini saya bisa pulang tepat waktu jam kerja.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0078",
+    "japanese": "財布を落として、警察署へ行きました。",
+    "reading": "さいふをおとして、けいさつしょへいきました。",
+    "translation_id": "Saya kehilangan dompet dan pergi ke kantor polisi.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0079",
+    "japanese": "引っ越しの手続きで、区役所へ行きます。",
+    "reading": "ひっこしのてつづきで、くやくしょへいきます。",
+    "translation_id": "Untuk mengurus pindah rumah, saya pergi ke kantor kecamatan.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0080",
+    "japanese": "今日中に、代金を振り込んでください。",
+    "reading": "きょうじゅうに、だいきんをふりこんでください。",
+    "translation_id": "Tolong transfer pembayarannya hari ini juga.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0081",
+    "japanese": "会社に出すので、領収書をください。",
+    "reading": "かいしゃにだすので、りょうしゅうしょをください。",
+    "translation_id": "Karena akan diserahkan ke perusahaan, tolong berikan kuitansi.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0082",
+    "japanese": "この値段は、税込です。",
+    "reading": "このねだんは、ぜいこみです。",
+    "translation_id": "Harga ini sudah termasuk pajak.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0083",
+    "japanese": "振込には、手数料がかかります。",
+    "reading": "ふりこみには、てすうりょうがかかります。",
+    "translation_id": "Untuk transfer dikenakan biaya administrasi.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0084",
+    "japanese": "代金は、三回に分割して払います。",
+    "reading": "だいきんは、さんかいにぶんかつしてはらいます。",
+    "translation_id": "Saya membayar harga dengan cicilan tiga kali.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0085",
+    "japanese": "この店は、現金払いのみです。",
+    "reading": "このみせは、げんきんばらいのみです。",
+    "translation_id": "Toko ini hanya menerima pembayaran tunai.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0086",
+    "japanese": "クレジットカードで、払ってもいいですか。",
+    "reading": "くれじっとかーどで、はらってもいいですか。",
+    "translation_id": "Bolehkah saya membayar dengan kartu kredit?",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0087",
+    "japanese": "ここに、電話番号を書いてください。",
+    "reading": "ここに、でんわばんごうをかいてください。",
+    "translation_id": "Tolong tulis nomor telepon Anda di sini.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0088",
+    "japanese": "今年の夏は、猛暑が続いています。",
+    "reading": "ことしのなつは、もうしょがつづいています。",
+    "translation_id": "Musim panas tahun ini panas terik terus berlangsung.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0089",
+    "japanese": "強い寒波が、日本に来ています。",
+    "reading": "つよいかんぱが、にほんにきています。",
+    "translation_id": "Gelombang dingin yang kuat sedang melanda Jepang.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0090",
+    "japanese": "毎年、家族で初詣に行きます。",
+    "reading": "まいとし、かぞくではつもうでにいきます。",
+    "translation_id": "Setiap tahun saya pergi hatsumode bersama keluarga.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0091",
+    "japanese": "お正月は、家族と一緒に過ごします。",
+    "reading": "おしょうがつは、かぞくといっしょにすごします。",
+    "translation_id": "Saya menghabiskan tahun baru bersama keluarga.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0092",
+    "japanese": "七夕に、短冊に願い事を書きます。",
+    "reading": "たなばたに、たんざくにねがいごとをかきます。",
+    "translation_id": "Saat Tanabata, kami menulis permohonan di kertas tanzaku.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0093",
+    "japanese": "お盆には、故郷へ帰ります。",
+    "reading": "おぼんには、こきょうへかえります。",
+    "translation_id": "Saat Obon saya pulang ke kampung halaman.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0094",
+    "japanese": "来月、友達の結婚式に出ます。",
+    "reading": "らいげつ、ともだちのけっこんしきにでます。",
+    "translation_id": "Bulan depan saya akan menghadiri pernikahan teman.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0095",
+    "japanese": "成人式で、着物を着ました。",
+    "reading": "せいじんしきで、きものをきました。",
+    "translation_id": "Saya memakai kimono pada upacara kedewasaan.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0096",
+    "japanese": "卒業式で、みんな泣きました。",
+    "reading": "そつぎょうしきで、みんななきました。",
+    "translation_id": "Di upacara kelulusan, semua orang menangis.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0097",
+    "japanese": "四月に、入学式があります。",
+    "reading": "しがつに、にゅうがくしきがあります。",
+    "translation_id": "Bulan April ada upacara penerimaan murid baru.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0098",
+    "japanese": "農場で、豚を見ました。",
+    "reading": "のうじょうで、ぶたをみました。",
+    "translation_id": "Saya melihat babi di peternakan.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0099",
+    "japanese": "牧場で、羊が草を食べています。",
+    "reading": "ぼくじょうで、ひつじがくさをたべています。",
+    "translation_id": "Di peternakan, domba sedang makan rumput.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0100",
+    "japanese": "山で、熊に会ったら危ないです。",
+    "reading": "やまで、くまにあったらあぶないです。",
+    "translation_id": "Berbahaya jika bertemu beruang di gunung.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0101",
+    "japanese": "山で、狐を見ました。",
+    "reading": "やまで、きつねをみました。",
+    "translation_id": "Saya melihat rubah di gunung.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0102",
+    "japanese": "公園で、狸を見かけました。",
+    "reading": "こうえんで、たぬきをみかけました。",
+    "translation_id": "Saya melihat tanuki di taman.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0103",
+    "japanese": "奈良公園には、鹿がたくさんいます。",
+    "reading": "ならこうえんには、しかがたくさんいます。",
+    "translation_id": "Di Taman Nara ada banyak rusa.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0104",
+    "japanese": "庭で、蛇を見て驚きました。",
+    "reading": "にわで、へびをみておどろきました。",
+    "translation_id": "Saya terkejut melihat ular di halaman.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0105",
+    "japanese": "雨の日は、蛙の声が聞こえます。",
+    "reading": "あめのひは、かえるのこえがきこえます。",
+    "translation_id": "Saat hujan terdengar suara katak.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0106",
+    "japanese": "蜂に刺されて、手が腫れました。",
+    "reading": "はちにさされて、てがはれました。",
+    "translation_id": "Saya disengat tawon dan tangan saya bengkak.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0107",
+    "japanese": "砂糖に、蟻が集まっています。",
+    "reading": "さとうに、ありがあつまっています。",
+    "translation_id": "Semut berkerumun di gula.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0108",
+    "japanese": "部屋に、大きな蜘蛛がいました。",
+    "reading": "へやに、おおきなくもがいました。",
+    "translation_id": "Ada laba-laba besar di kamar.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0109",
+    "japanese": "池に、亀がいます。",
+    "reading": "いけに、かめがいます。",
+    "translation_id": "Ada kura-kura di kolam.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0110",
+    "japanese": "海で、鯨を見ることができました。",
+    "reading": "うみで、くじらをみることができました。",
+    "translation_id": "Saya bisa melihat paus di laut.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0111",
+    "japanese": "私は、海老のてんぷらが大好きです。",
+    "reading": "わたしは、えびのてんぷらがだいすきです。",
+    "translation_id": "Saya sangat suka tempura udang.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0112",
+    "japanese": "北海道で、蟹を食べました。",
+    "reading": "ほっかいどうで、かにをたべました。",
+    "translation_id": "Saya makan kepiting di Hokkaido.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0113",
+    "japanese": "朝、庭で雀が鳴いています。",
+    "reading": "あさ、にわですずめがないています。",
+    "translation_id": "Pagi hari burung pipit berkicau di halaman.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0114",
+    "japanese": "祖父の家では、鶏を飼っています。",
+    "reading": "そふのいえでは、にわとりをかっています。",
+    "translation_id": "Di rumah kakek saya memelihara ayam.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0115",
+    "japanese": "昔、日本には狼がいました。",
+    "reading": "むかし、にほんにはおおかみがいました。",
+    "translation_id": "Dahulu di Jepang ada serigala.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0116",
+    "japanese": "動物園で、ライオンを見ました。",
+    "reading": "どうぶつえんで、らいおんをみました。",
+    "translation_id": "Saya melihat singa di kebun binatang.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0117",
+    "japanese": "上野動物園には、パンダがいます。",
+    "reading": "うえのどうぶつえんには、ぱんだがいます。",
+    "translation_id": "Di Kebun Binatang Ueno ada panda.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0118",
+    "japanese": "日曜日に、水族館へ行きました。",
+    "reading": "にちようびに、すいぞくかんへいきました。",
+    "translation_id": "Hari Minggu saya pergi ke akuarium.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0119",
+    "japanese": "春に、植物園で花を見ました。",
+    "reading": "はるに、しょくぶつえんではなをみました。",
+    "translation_id": "Di musim semi saya melihat bunga di kebun raya.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0120",
+    "japanese": "祖父は、毎日囲碁をしています。",
+    "reading": "そふは、まいにちいごをしています。",
+    "translation_id": "Kakek saya bermain Go setiap hari.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0121",
+    "japanese": "週末に、友達と麻雀をします。",
+    "reading": "しゅうまつに、ともだちとまーじゃんをします。",
+    "translation_id": "Akhir pekan saya bermain mahjong bersama teman.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0122",
+    "japanese": "兄は、野球が上手です。",
+    "reading": "あには、やきゅうがじょうずです。",
+    "translation_id": "Kakak laki-laki saya jago bisbol.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0123",
+    "japanese": "学校で、剣道を習っています。",
+    "reading": "がっこうで、けんどうをならっています。",
+    "translation_id": "Saya belajar kendo di sekolah.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0124",
+    "japanese": "スマートフォンで、天気を調べます。",
+    "reading": "すまーとふぉんで、てんきをしらべます。",
+    "translation_id": "Saya mengecek cuaca dengan ponsel pintar.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0125",
+    "japanese": "会社のネットワークに接続できません。",
+    "reading": "かいしゃのねっとわーくにせつぞくできません。",
+    "translation_id": "Saya tidak bisa terhubung ke jaringan perusahaan.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0126",
+    "japanese": "このアプリを、無料でダウンロードできます。",
+    "reading": "このあぷりを、むりょうでだうんろーどできます。",
+    "translation_id": "Aplikasi ini bisa diunduh gratis.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0127",
+    "japanese": "写真を、サイトにアップロードしました。",
+    "reading": "しゃしんを、さいとにあっぷろーどしました。",
+    "translation_id": "Saya mengunggah foto ke situs.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0128",
+    "japanese": "新しいアカウントを作りました。",
+    "reading": "あたらしいあかうんとをつくりました。",
+    "translation_id": "Saya membuat akun baru.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0129",
+    "japanese": "パスワードを入れて、ログインしてください。",
+    "reading": "ぱすわーどをいれて、ろぐいんしてください。",
+    "translation_id": "Tolong masukkan kata sandi lalu login.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0130",
+    "japanese": "使い終わったら、ログアウトしてください。",
+    "reading": "つかいおわったら、ろぐあうとしてください。",
+    "translation_id": "Setelah selesai, tolong logout.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0131",
+    "japanese": "サーバーが止まって、サイトが見られません。",
+    "reading": "さーばーがとまって、さいとがみられません。",
+    "translation_id": "Server berhenti sehingga situs tidak bisa dibuka.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0132",
+    "japanese": "大切なデータは、バックアップを取っておきます。",
+    "reading": "たいせつなでーたは、ばっくあっぷをとっておきます。",
+    "translation_id": "Data penting saya buatkan cadangannya.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0133",
+    "japanese": "新しいソフトウェアをインストールしました。",
+    "reading": "あたらしいそふとうぇあをいんすとーるしました。",
+    "translation_id": "Saya memasang perangkat lunak baru.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0134",
+    "japanese": "ハードウェアが古くて、動きが遅いです。",
+    "reading": "はーどうぇあがふるくて、うごきがおそいです。",
+    "translation_id": "Perangkat kerasnya tua sehingga jalannya lambat.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0135",
+    "japanese": "会社のウェブサイトを見てください。",
+    "reading": "かいしゃのうぇぶさいとをみてください。",
+    "translation_id": "Silakan lihat situs web perusahaan.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0136",
+    "japanese": "店のホームページで、地図を調べます。",
+    "reading": "みせのほーむぺーじで、ちずをしらべます。",
+    "translation_id": "Saya mengecek peta di laman web toko.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0137",
+    "japanese": "インターネットで、店の場所を検索しました。",
+    "reading": "いんたーねっとで、みせのばしょをけんさくしました。",
+    "translation_id": "Saya mencari lokasi toko di internet.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0138",
+    "japanese": "画面が暗くて、見にくいです。",
+    "reading": "がめんがくらくて、みにくいです。",
+    "translation_id": "Layarnya gelap sehingga sulit dilihat.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0139",
+    "japanese": "ソフトを最新版に更新しました。",
+    "reading": "そふとをさいしんばんにこうしんしました。",
+    "translation_id": "Saya memperbarui perangkat lunak ke versi terbaru.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0140",
+    "japanese": "メールを、まだ送信していません。",
+    "reading": "めーるを、まだそうしんしていません。",
+    "translation_id": "Surel itu belum saya kirim.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0141",
+    "japanese": "新しいメールを、受信しました。",
+    "reading": "あたらしいめーるを、じゅしんしました。",
+    "translation_id": "Saya menerima surel baru.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0142",
+    "japanese": "メールに、資料を添付しました。",
+    "reading": "めーるに、しりょうをてんぷしました。",
+    "translation_id": "Saya melampirkan dokumen pada surel.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0143",
+    "japanese": "このメールを、部長に転送してください。",
+    "reading": "このめーるを、ぶちょうにてんそうしてください。",
+    "translation_id": "Tolong teruskan surel ini kepada kepala departemen.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0144",
+    "japanese": "友達に、すぐ返信しました。",
+    "reading": "ともだちに、すぐへんしんしました。",
+    "translation_id": "Saya langsung membalas teman.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0145",
+    "japanese": "ネットワークが切断されました。",
+    "reading": "ねっとわーくがせつだんされました。",
+    "translation_id": "Jaringan terputus.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0146",
+    "japanese": "パソコンの起動に、時間がかかります。",
+    "reading": "ぱそこんのきどうに、じかんがかかります。",
+    "translation_id": "Komputer butuh waktu untuk menyala.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0147",
+    "japanese": "動かないときは、再起動してください。",
+    "reading": "うごかないときは、さいきどうしてください。",
+    "translation_id": "Kalau tidak berfungsi, tolong restart.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0148",
+    "japanese": "昨日、面白い動画を見ました。",
+    "reading": "きのう、おもしろいどうがをみました。",
+    "translation_id": "Kemarin saya menonton video yang menarik.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0149",
+    "japanese": "画像を保存して、友達に送りました。",
+    "reading": "がぞうをほぞんして、ともだちにおくりました。",
+    "translation_id": "Saya menyimpan gambar itu dan mengirimnya ke teman.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0150",
+    "japanese": "音声が小さくて、よく聞こえません。",
+    "reading": "おんせいがちいさくて、よくきこえません。",
+    "translation_id": "Suaranya kecil sehingga tidak terdengar jelas.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0151",
+    "japanese": "好きなドラマを、録画しておきました。",
+    "reading": "すきなどらまを、ろくがしておきました。",
+    "translation_id": "Saya merekam drama kesukaan saya.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0152",
+    "japanese": "SNSに、旅行の写真を投稿しました。",
+    "reading": "えすえぬえすに、りょこうのしゃしんをとうこうしました。",
+    "translation_id": "Saya mengunggah foto perjalanan ke media sosial.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0153",
+    "japanese": "資料を、チームで共有します。",
+    "reading": "しりょうを、ちーむできょうゆうします。",
+    "translation_id": "Dokumen dibagikan dalam tim.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0154",
+    "japanese": "その発言がSNSで炎上しました。",
+    "reading": "そのはつげんがえすえぬえすでえんじょうしました。",
+    "translation_id": "Pernyataan itu menjadi viral dihujat di media sosial.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0155",
+    "japanese": "日本のおもてなしの心に感動しました。",
+    "reading": "にほんのおもてなしのこころにかんどうしました。",
+    "translation_id": "Saya tersentuh oleh semangat keramahan Jepang.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0156",
+    "japanese": "ご迷惑をおかけしたことを、お詫びします。",
+    "reading": "ごめいわくをおかけしたことを、おわびします。",
+    "translation_id": "Saya mohon maaf telah merepotkan Anda.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0157",
+    "japanese": "彼女は、いつも周りに気配りをしています。",
+    "reading": "かのじょは、いつもまわりにきくばりをしています。",
+    "translation_id": "Dia selalu memperhatikan orang di sekitarnya.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0158",
+    "japanese": "温かいお気遣いに、感謝します。",
+    "reading": "あたたかいおきづかいに、かんしゃします。",
+    "translation_id": "Saya berterima kasih atas perhatian hangat Anda.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0159",
+    "japanese": "体調が悪くて、学校を早退しました。",
+    "reading": "たいちょうがわるくて、がっこうをそうたいしました。",
+    "translation_id": "Karena kurang sehat, saya pulang lebih awal dari sekolah.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0160",
+    "japanese": "目の色は、親から遺伝します。",
+    "reading": "めのいろは、おやからいでんします。",
+    "translation_id": "Warna mata diturunkan dari orang tua.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0161",
+    "japanese": "地球の温暖化が、問題になっています。",
+    "reading": "ちきゅうのおんだんかが、もんだいになっています。",
+    "translation_id": "Pemanasan global menjadi masalah.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0162",
+    "japanese": "原子力発電所は、安全が大切です。",
+    "reading": "げんしりょくはつでんしょは、あんぜんがたいせつです。",
+    "translation_id": "Keselamatan itu penting bagi PLTN.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0163",
+    "japanese": "屋根に、太陽光パネルを付けました。",
+    "reading": "やねに、たいようこうぱねるをつけました。",
+    "translation_id": "Saya memasang panel surya di atap.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0164",
+    "japanese": "ペットボトルは、リサイクルされます。",
+    "reading": "ぺっとぼとるは、りさいくるされます。",
+    "translation_id": "Botol plastik didaur ulang.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0165",
+    "japanese": "彼は、刑務所に入っていました。",
+    "reading": "かれは、けいむしょにはいっていました。",
+    "translation_id": "Dia pernah berada di penjara.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0166",
+    "japanese": "加害者は、被害者に謝りました。",
+    "reading": "かがいしゃは、ひがいしゃにあやまりました。",
+    "translation_id": "Pelaku meminta maaf kepada korban.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0167",
+    "japanese": "日本では、少子化が問題になっています。",
+    "reading": "にほんでは、しょうしかがもんだいになっています。",
+    "translation_id": "Di Jepang, penurunan angka kelahiran menjadi masalah.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0168",
+    "japanese": "高齢化が進んで、介護が必要な人が増えています。",
+    "reading": "こうれいかがすすんで、かいごがひつようなひとがふえています。",
+    "translation_id": "Karena penduduk menua, orang yang butuh perawatan bertambah.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0169",
+    "japanese": "明日の遠足が楽しみで、わくわくします。",
+    "reading": "あしたのえんそくがたのしみで、わくわくします。",
+    "translation_id": "Saya berdebar-debar menantikan darmawisata besok.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0170",
+    "japanese": "電車に、ぎりぎり間に合いました。",
+    "reading": "でんしゃに、ぎりぎりまにあいました。",
+    "translation_id": "Saya sempat naik kereta tepat pada detik terakhir.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0171",
+    "japanese": "開始の合図で、みんなが一斉に走り出しました。",
+    "reading": "かいしのあいずで、みんながいっせいにはしりだしました。",
+    "translation_id": "Dengan aba-aba mulai, semua orang berlari serentak.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0172",
+    "japanese": "次第に、暗くなってきました。",
+    "reading": "しだいに、くらくなってきました。",
+    "translation_id": "Lambat laun hari mulai gelap.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0173",
+    "japanese": "約束を守るのは、当然です。",
+    "reading": "やくそくをまもるのは、とうぜんです。",
+    "translation_id": "Menepati janji itu sudah sewajarnya.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0174",
+    "japanese": "確かに、あなたの言う通りです。",
+    "reading": "たしかに、あなたのいうとおりです。",
+    "translation_id": "Memang benar seperti yang Anda katakan.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0175",
+    "japanese": "車椅子で、利用者さんを散歩に連れて行きます。",
+    "reading": "くるまいすで、りようしゃさんをさんぽにつれていきます。",
+    "translation_id": "Saya mengajak penerima layanan jalan-jalan dengan kursi roda.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0176",
+    "japanese": "おばあさんは、歩行器を使って歩きます。",
+    "reading": "おばあさんは、ほこうきをつかってあるきます。",
+    "translation_id": "Nenek berjalan dengan memakai alat bantu jalan.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0177",
+    "japanese": "夜は、利用者さんの見守りをします。",
+    "reading": "よるは、りようしゃさんのみまもりをします。",
+    "translation_id": "Pada malam hari saya mengawasi penerima layanan.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0178",
+    "japanese": "介助のときは、必ず声かけをします。",
+    "reading": "かいじょのときは、かならずこえかけをします。",
+    "translation_id": "Saat membantu, saya selalu memberi aba-aba lisan.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0179",
+    "japanese": "二時間ごとに、体位変換をします。",
+    "reading": "にじかんごとに、たいいへんかんをします。",
+    "translation_id": "Setiap dua jam, saya mengubah posisi tubuh pasien.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0180",
+    "japanese": "祖母は、認知症になりました。",
+    "reading": "そぼは、にんちしょうになりました。",
+    "translation_id": "Nenek saya menderita demensia.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0181",
+    "japanese": "認知症の人が、夜に徘徊することがあります。",
+    "reading": "にんちしょうのひとが、よるにはいかいすることがあります。",
+    "translation_id": "Penderita demensia kadang berkeliaran pada malam hari.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0182",
+    "japanese": "けがの後、毎日リハビリをしています。",
+    "reading": "けがのあと、まいにちりはびりをしています。",
+    "translation_id": "Setelah cedera, saya melakukan rehabilitasi setiap hari.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0183",
+    "japanese": "昼ごはんの時間に、食事介助をします。",
+    "reading": "ひるごはんのじかんに、しょくじかいじょをします。",
+    "translation_id": "Saat makan siang, saya membantu penerima layanan makan.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0184",
+    "japanese": "排泄介助は、プライバシーに気をつけます。",
+    "reading": "はいせつかいじょは、ぷらいばしーにきをつけます。",
+    "translation_id": "Dalam membantu buang hajat, saya memperhatikan privasi.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0185",
+    "japanese": "週に二回、入浴介助をします。",
+    "reading": "しゅうににかい、にゅうよくかいじょをします。",
+    "translation_id": "Dua kali seminggu saya membantu penerima layanan mandi.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0186",
+    "japanese": "風邪で、痰が出ます。",
+    "reading": "かぜで、たんがでます。",
+    "translation_id": "Karena flu, keluar dahak.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0187",
+    "japanese": "夏は、脱水に注意してください。",
+    "reading": "なつは、だっすいにちゅういしてください。",
+    "translation_id": "Di musim panas, waspadalah terhadap dehidrasi.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0188",
+    "japanese": "暑い日は、熱中症に気をつけましょう。",
+    "reading": "あついひは、ねっちゅうしょうにきをつけましょう。",
+    "translation_id": "Pada hari panas, waspadalah terhadap sengatan panas.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0189",
+    "japanese": "おじいさんは、週三回デイサービスに通っています。",
+    "reading": "おじいさんは、しゅうさんかいでいさーびすにかよっています。",
+    "translation_id": "Kakek pergi ke layanan perawatan harian tiga kali seminggu.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0190",
+    "japanese": "ケアマネジャーに、介護の相談をしました。",
+    "reading": "けあまねじゃーに、かいごのそうだんをしました。",
+    "translation_id": "Saya berkonsultasi soal perawatan kepada care manager.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0191",
+    "japanese": "ヘルパーさんが、毎日家に来てくれます。",
+    "reading": "へるぱーさんが、まいにちいえにきてくれます。",
+    "translation_id": "Pendamping perawatan datang ke rumah setiap hari.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0192",
+    "japanese": "在宅で、介護をしている家族が多いです。",
+    "reading": "ざいたくで、かいごをしているかぞくがおおいです。",
+    "translation_id": "Banyak keluarga yang merawat lansia di rumah.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0193",
+    "japanese": "祖父は、来月施設に入所します。",
+    "reading": "そふは、らいげつしせつににゅうしょします。",
+    "translation_id": "Kakek saya akan masuk fasilitas bulan depan.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0194",
+    "japanese": "来週、利用者さんが退所します。",
+    "reading": "らいしゅう、りようしゃさんがたいしょします。",
+    "translation_id": "Minggu depan penerima layanan akan keluar dari fasilitas.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0195",
+    "japanese": "交代の前に、申し送りをします。",
+    "reading": "こうたいのまえに、もうしおくりをします。",
+    "translation_id": "Sebelum pergantian shift, kami melakukan serah terima informasi.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0196",
+    "japanese": "来月のシフトが、もう出ました。",
+    "reading": "らいげつのしふとが、もうでました。",
+    "translation_id": "Jadwal shift bulan depan sudah keluar.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0197",
+    "japanese": "私の在留期間は、三年です。",
+    "reading": "わたしのざいりゅうきかんは、さんねんです。",
+    "translation_id": "Masa izin tinggal saya adalah tiga tahun.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0198",
+    "japanese": "技能実習で、日本に来ました。",
+    "reading": "ぎのうじっしゅうで、にほんにきました。",
+    "translation_id": "Saya datang ke Jepang untuk magang teknis.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0199",
+    "japanese": "この仕事の時給は、千円です。",
+    "reading": "このしごとのじきゅうは、せんえんです。",
+    "translation_id": "Upah per jam pekerjaan ini seribu yen.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0200",
+    "japanese": "残業をしたら、残業代がもらえます。",
+    "reading": "ざんぎょうをしたら、ざんぎょうだいがもらえます。",
+    "translation_id": "Kalau lembur, saya mendapat upah lembur.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0201",
+    "japanese": "会社で、健康保険に入っています。",
+    "reading": "かいしゃで、けんこうほけんにはいっています。",
+    "translation_id": "Saya ikut asuransi kesehatan lewat perusahaan.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0202",
+    "japanese": "雇用保険は、仕事を失ったときに役立ちます。",
+    "reading": "こようほけんは、しごとをうしなったときにやくだちます。",
+    "translation_id": "Asuransi ketenagakerjaan berguna saat kehilangan pekerjaan.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0203",
+    "japanese": "仕事中にけがをして、労災になりました。",
+    "reading": "しごとちゅうにけがをして、ろうさいになりました。",
+    "translation_id": "Saya terluka saat bekerja dan dihitung sebagai kecelakaan kerja.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0204",
+    "japanese": "十二月に、年末調整の書類を出します。",
+    "reading": "じゅうにがつに、ねんまつちょうせいのしょるいをだします。",
+    "translation_id": "Bulan Desember saya menyerahkan dokumen penyesuaian pajak akhir tahun.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0205",
+    "japanese": "給料から、源泉徴収されています。",
+    "reading": "きゅうりょうから、げんせんちょうしゅうされています。",
+    "translation_id": "Pajak dipotong dari gaji saya di sumber.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0206",
+    "japanese": "区役所で、住民票を取りました。",
+    "reading": "くやくしょで、じゅうみんひょうをとりました。",
+    "translation_id": "Saya mengambil surat keterangan domisili di kantor kecamatan.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0207",
+    "japanese": "会社に、マイナンバーを知らせました。",
+    "reading": "かいしゃに、まいなんばーをしらせました。",
+    "translation_id": "Saya memberitahukan My Number kepada perusahaan.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0208",
+    "japanese": "住所が変わったら、届出をしてください。",
+    "reading": "じゅうしょがかわったら、とどけでをしてください。",
+    "translation_id": "Kalau alamat berubah, tolong lakukan pelaporan.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0209",
+    "japanese": "留学生は、資格外活動の許可があればアルバイトができます。",
+    "reading": "りゅうがくせいは、しかくがいかつどうのきょかがあればあるばいとができます。",
+    "translation_id": "Mahasiswa asing bisa kerja paruh waktu jika punya izin kegiatan di luar status.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0210",
+    "japanese": "倉庫で、フォークリフトを運転します。",
+    "reading": "そうこで、ふぉーくりふとをうんてんします。",
+    "translation_id": "Di gudang saya mengemudikan forklift.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0211",
+    "japanese": "工場で、溶接の仕事をしています。",
+    "reading": "こうじょうで、ようせつのしごとをしています。",
+    "translation_id": "Saya bekerja sebagai tukang las di pabrik.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0212",
+    "japanese": "建物の壁を、塗装しました。",
+    "reading": "たてもののかべを、とそうしました。",
+    "translation_id": "Kami mengecat dinding gedung.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0213",
+    "japanese": "新しいビルで、配管の工事をしています。",
+    "reading": "あたらしいびるで、はいかんのこうじをしています。",
+    "translation_id": "Di gedung baru kami mengerjakan pemasangan pipa.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0214",
+    "japanese": "工事現場で、鉄筋を組み立てます。",
+    "reading": "こうじげんばで、てっきんをくみたてます。",
+    "translation_id": "Di lokasi konstruksi kami merakit besi beton.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0215",
+    "japanese": "高い所では、足場を組んで作業します。",
+    "reading": "たかいところでは、あしばをくんでさぎょうします。",
+    "translation_id": "Di tempat tinggi, kami bekerja dengan memasang perancah.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0216",
+    "japanese": "高い所では、安全帯をつけてください。",
+    "reading": "たかいところでは、あんぜんたいをつけてください。",
+    "translation_id": "Di tempat tinggi, tolong pakai sabuk pengaman.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0217",
+    "japanese": "工場では、作業服を着ます。",
+    "reading": "こうじょうでは、さぎょうふくをきます。",
+    "translation_id": "Di pabrik saya memakai seragam kerja.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0218",
+    "japanese": "工具は、使った後に片付けてください。",
+    "reading": "こうぐは、つかったあとにかたづけてください。",
+    "translation_id": "Perkakas tolong dirapikan setelah dipakai.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0219",
+    "japanese": "ハンマーで、くぎを打ちます。",
+    "reading": "はんまーで、くぎをうちます。",
+    "translation_id": "Saya memaku dengan palu.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0220",
+    "japanese": "スパナで、ボルトを締めます。",
+    "reading": "すぱなで、ぼるとをしめます。",
+    "translation_id": "Saya mengencangkan baut dengan kunci pas.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0221",
+    "japanese": "検査で、不良品を見つけました。",
+    "reading": "けんさで、ふりょうひんをみつけました。",
+    "translation_id": "Dalam pemeriksaan, saya menemukan barang cacat.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0222",
+    "japanese": "納期に間に合うように、急いで作ります。",
+    "reading": "のうきにまにあうように、いそいでつくります。",
+    "translation_id": "Kami membuatnya dengan cepat agar sesuai tenggat pengiriman.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0223",
+    "japanese": "今日、百個の製品を出荷します。",
+    "reading": "きょう、ひゃっこのせいひんをしゅっかします。",
+    "translation_id": "Hari ini kami mengirim seratus produk.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0224",
+    "japanese": "割れないように、丁寧に梱包します。",
+    "reading": "われないように、ていねいにこんぽうします。",
+    "translation_id": "Saya mengemas dengan hati-hati agar tidak pecah.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0225",
+    "japanese": "工場で、部品の組み立てをしています。",
+    "reading": "こうじょうで、ぶひんのくみたてをしています。",
+    "translation_id": "Di pabrik saya merakit komponen.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0226",
+    "japanese": "金属の表面を、研磨します。",
+    "reading": "きんぞくのひょうめんを、けんまします。",
+    "translation_id": "Saya memoles permukaan logam.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0227",
+    "japanese": "この機械は、精度が高いです。",
+    "reading": "このきかいは、せいどがたかいです。",
+    "translation_id": "Mesin ini memiliki ketelitian tinggi.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0228",
+    "japanese": "職場では、整理整頓が大切です。",
+    "reading": "しょくばでは、せいりせいとんがたいせつです。",
+    "translation_id": "Di tempat kerja, kerapian dan keteraturan itu penting.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0229",
+    "japanese": "この先は、立入禁止です。",
+    "reading": "このさきは、たちいりきんしです。",
+    "translation_id": "Di depan sini dilarang masuk.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0230",
+    "japanese": "非常口の場所を、確認しておきましょう。",
+    "reading": "ひじょうぐちのばしょを、かくにんしておきましょう。",
+    "translation_id": "Mari pastikan lokasi pintu darurat terlebih dahulu.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0231",
+    "japanese": "廊下に、消火器が置いてあります。",
+    "reading": "ろうかに、しょうかきがおいてあります。",
+    "translation_id": "Di koridor ada alat pemadam api.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0232",
+    "japanese": "けがをした人に、応急手当をしました。",
+    "reading": "けがをしたひとに、おうきゅうてあてをしました。",
+    "translation_id": "Saya memberikan pertolongan pertama kepada orang yang terluka.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0233",
+    "japanese": "事故があったので、救急車を呼びました。",
+    "reading": "じこがあったので、きゅうきゅうしゃをよびました。",
+    "translation_id": "Karena ada kecelakaan, saya memanggil ambulans.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0234",
+    "japanese": "「いってきます」と言って、家を出ました。",
+    "reading": "「いってきます」といって、いえをでました。",
+    "translation_id": "Saya berkata \"Saya berangkat\" lalu keluar rumah.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0235",
+    "japanese": "母は、「いってらっしゃい」と笑顔で言いました。",
+    "reading": "ははは、「いってらっしゃい」とえがおでいいました。",
+    "translation_id": "Ibu berkata \"Hati-hati di jalan\" dengan senyum.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0236",
+    "japanese": "「ただいま」と言って、部屋に入りました。",
+    "reading": "「ただいま」といって、へやにはいりました。",
+    "translation_id": "Saya berkata \"Saya pulang\" lalu masuk ke kamar.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0237",
+    "japanese": "「おかえり」と、母が迎えてくれました。",
+    "reading": "「おかえり」と、ははがむかえてくれました。",
+    "translation_id": "Ibu menyambut saya dengan \"Selamat datang kembali\".",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0238",
+    "japanese": "今日も一日、お疲れ様でした。",
+    "reading": "きょうもいちにち、おつかれさまでした。",
+    "translation_id": "Terima kasih atas kerja kerasnya hari ini.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0239",
+    "japanese": "いつも、お世話になります。",
+    "reading": "いつも、おせわになります。",
+    "translation_id": "Terima kasih atas bantuan Anda selama ini.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0240",
+    "japanese": "今日から働きます。よろしくお願いします。",
+    "reading": "きょうからはたらきます。よろしくおねがいします。",
+    "translation_id": "Saya mulai bekerja hari ini. Mohon bantuannya.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0241",
+    "japanese": "「失礼します」と言って、部屋に入りました。",
+    "reading": "「しつれいします」といって、へやにはいりました。",
+    "translation_id": "Saya berkata \"Permisi\" lalu masuk ke ruangan.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0242",
+    "japanese": "遅れてしまって、申し訳ありません。",
+    "reading": "おくれてしまって、もうしわけありません。",
+    "translation_id": "Mohon maaf sekali sudah terlambat.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0243",
+    "japanese": "「ありがとう」「どういたしまして」",
+    "reading": "「ありがとう」「どういたしまして」",
+    "translation_id": "\"Terima kasih.\" \"Sama-sama.\"",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0244",
+    "japanese": "プレゼントを、ありがとうございます。",
+    "reading": "ぷれぜんとを、ありがとうございます。",
+    "translation_id": "Terima kasih atas hadiahnya.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0245",
+    "japanese": "先生、今までありがとうございました。",
+    "reading": "せんせい、いままでありがとうございました。",
+    "translation_id": "Guru, terima kasih atas semuanya selama ini.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0246",
+    "japanese": "ただいま確認しますので、少々お待ちください。",
+    "reading": "ただいまかくにんしますので、しょうしょうおまちください。",
+    "translation_id": "Kami sedang memeriksa, mohon tunggu sebentar.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0247",
+    "japanese": "上司に頼まれて、「承知しました」と答えました。",
+    "reading": "じょうしにたのまれて、「しょうちしました」とこたえました。",
+    "translation_id": "Diminta atasan, saya menjawab \"Baik, dimengerti\".",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0248",
+    "japanese": "店に入ると、「いらっしゃいませ」と言われました。",
+    "reading": "みせにはいると、「いらっしゃいませ」といわれました。",
+    "translation_id": "Begitu masuk toko, saya disambut \"Selamat datang\".",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0249",
+    "japanese": "遠くへ行く友達に、「お元気で」と言いました。",
+    "reading": "とおくへいくともだちに、「おげんきで」といいました。",
+    "translation_id": "Kepada teman yang pergi jauh, saya berkata \"Jaga kesehatan ya\".",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0250",
+    "japanese": "誕生日に、しゃぶしゃぶを食べに行きました。",
+    "reading": "たんじょうびに、しゃぶしゃぶをたべにいきました。",
+    "translation_id": "Saat ulang tahun saya makan shabu-shabu.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0251",
+    "japanese": "お祭りで、焼きそばを買いました。",
+    "reading": "おまつりで、やきそばをかいました。",
+    "translation_id": "Di festival saya membeli yakisoba.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0252",
+    "japanese": "今日の晩ごはんは、カレーライスです。",
+    "reading": "きょうのばんごはんは、かれーらいすです。",
+    "translation_id": "Makan malam hari ini nasi kari.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0253",
+    "japanese": "昼ごはんに、親子丼を食べました。",
+    "reading": "ひるごはんに、おやこどんをたべました。",
+    "translation_id": "Saya makan oyakodon saat makan siang.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0254",
+    "japanese": "駅の近くで、天丼を食べました。",
+    "reading": "えきのちかくで、てんどんをたべました。",
+    "translation_id": "Saya makan tendon di dekat stasiun.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0255",
+    "japanese": "試験の前に、カツ丼を食べました。",
+    "reading": "しけんのまえに、かつどんをたべました。",
+    "translation_id": "Sebelum ujian, saya makan katsudon.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0256",
+    "japanese": "母の作る肉じゃがは、おいしいです。",
+    "reading": "ははのつくるにくじゃがは、おいしいです。",
+    "translation_id": "Nikujaga buatan ibu saya enak.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0257",
+    "japanese": "茶碗蒸しは、熱いうちに食べてください。",
+    "reading": "ちゃわんむしは、あついうちにたべてください。",
+    "translation_id": "Silakan makan chawanmushi selagi panas.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0258",
+    "japanese": "寒い日は、コンビニでおでんを買います。",
+    "reading": "さむいひは、こんびにでおでんをかいます。",
+    "translation_id": "Pada hari dingin, saya membeli oden di minimarket.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0259",
+    "japanese": "新幹線で、駅弁を食べました。",
+    "reading": "しんかんせんで、えきべんをたべました。",
+    "translation_id": "Saya makan bento stasiun di Shinkansen.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0260",
+    "japanese": "昆布で、だしを取ります。",
+    "reading": "こんぶで、だしをとります。",
+    "translation_id": "Saya membuat kaldu dari kombu.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0261",
+    "japanese": "お好み焼きに、鰹節をかけます。",
+    "reading": "おこのみやきに、かつおぶしをかけます。",
+    "translation_id": "Saya menaburkan katsuobushi di atas okonomiyaki.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0262",
+    "japanese": "寿司には、わさびを少し付けます。",
+    "reading": "すしには、わさびをすこしつけます。",
+    "translation_id": "Untuk sushi, saya menambahkan sedikit wasabi.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0263",
+    "japanese": "風邪のときは、生姜湯を飲みます。",
+    "reading": "かぜのときは、しょうがゆをのみます。",
+    "translation_id": "Saat flu, saya minum air jahe hangat.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0264",
+    "japanese": "パスタに、にんにくを入れます。",
+    "reading": "ぱすたに、にんにくをいれます。",
+    "translation_id": "Saya menambahkan bawang putih ke pasta.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0265",
+    "japanese": "この料理は、唐辛子が入っていて辛いです。",
+    "reading": "このりょうりは、とうがらしがはいっていてからいです。",
+    "translation_id": "Masakan ini pedas karena ada cabainya.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0266",
+    "japanese": "ほうれん草に、ごまをかけます。",
+    "reading": "ほうれんそうに、ごまをかけます。",
+    "translation_id": "Saya menaburkan wijen pada bayam.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0267",
+    "japanese": "ビールと一緒に、枝豆を食べます。",
+    "reading": "びーるといっしょに、えだまめをたべます。",
+    "translation_id": "Saya makan edamame bersama bir.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0268",
+    "japanese": "秋になると、栗ご飯を食べます。",
+    "reading": "あきになると、くりごはんをたべます。",
+    "translation_id": "Kalau musim gugur, saya makan nasi kastanye.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0269",
+    "japanese": "蓮根の天ぷらを、食べました。",
+    "reading": "れんこんのてんぷらを、たべました。",
+    "translation_id": "Saya makan tempura akar teratai.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0270",
+    "japanese": "秋は、里芋を煮て食べます。",
+    "reading": "あきは、さといもをにてたべます。",
+    "translation_id": "Di musim gugur, saya merebus dan makan talas.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0271",
+    "japanese": "冬至に、かぼちゃを食べる習慣があります。",
+    "reading": "とうじに、かぼちゃをたべるしゅうかんがあります。",
+    "translation_id": "Ada kebiasaan makan labu pada hari titik balik matahari musim dingin.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0272",
+    "japanese": "スープに、セロリを入れます。",
+    "reading": "すーぷに、せろりをいれます。",
+    "translation_id": "Saya memasukkan seledri ke sup.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0273",
+    "japanese": "春の野菜といえば、アスパラガスです。",
+    "reading": "はるのやさいといえば、あすぱらがすです。",
+    "translation_id": "Kalau bicara sayuran musim semi, itu asparagus.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0274",
+    "japanese": "もやしは、安くて使いやすい野菜です。",
+    "reading": "もやしは、やすくてつかいやすいやさいです。",
+    "translation_id": "Tauge adalah sayuran murah yang mudah dipakai.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0275",
+    "japanese": "おでんに、こんにゃくを入れます。",
+    "reading": "おでんに、こんにゃくをいれます。",
+    "translation_id": "Saya memasukkan konnyaku ke oden.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0276",
+    "japanese": "サラダに、春雨を入れました。",
+    "reading": "さらだに、はるさめをいれました。",
+    "translation_id": "Saya memasukkan sohun ke salad.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0277",
+    "japanese": "お正月には、かまぼこを食べます。",
+    "reading": "おしょうがつには、かまぼこをたべます。",
+    "translation_id": "Pada tahun baru, kami makan kamaboko.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0278",
+    "japanese": "おでんに、ちくわが入っています。",
+    "reading": "おでんに、ちくわがはいっています。",
+    "translation_id": "Di dalam oden ada chikuwa.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0279",
+    "japanese": "朝ごはんに、鯵の干物を焼きます。",
+    "reading": "あさごはんに、あじのひものをやきます。",
+    "translation_id": "Untuk sarapan, saya memanggang ikan kering.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0280",
+    "japanese": "朝ごはんに、焼き鮭を食べました。",
+    "reading": "あさごはんに、やきじゃけをたべました。",
+    "translation_id": "Saya makan salmon panggang untuk sarapan.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0281",
+    "japanese": "今日の晩ごはんは、鯖の味噌煮です。",
+    "reading": "きょうのばんごはんは、さばのみそにです。",
+    "translation_id": "Makan malam hari ini makerel rebus miso.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0282",
+    "japanese": "鰯は、体にいい魚です。",
+    "reading": "いわしは、からだにいいさかなです。",
+    "translation_id": "Sarden adalah ikan yang baik untuk tubuh.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0283",
+    "japanese": "秋になったら、秋刀魚を焼いて食べます。",
+    "reading": "あきになったら、さんまをやいてたべます。",
+    "translation_id": "Kalau musim gugur tiba, saya memanggang dan makan sanma.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0284",
+    "japanese": "お祝いの席で、鯛を食べます。",
+    "reading": "おいわいのせきで、たいをたべます。",
+    "translation_id": "Pada acara perayaan, kami makan ikan tai.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0285",
+    "japanese": "寿司の中で、鮪が一番好きです。",
+    "reading": "すしのなかで、まぐろがいちばんすきです。",
+    "translation_id": "Di antara sushi, saya paling suka tuna.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0286",
+    "japanese": "烏賊の刺身は、コリコリしておいしいです。",
+    "reading": "いかのさしみは、こりこりしておいしいです。",
+    "translation_id": "Sashimi cumi-cumi kenyal dan lezat.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0287",
+    "japanese": "たこ焼きには、蛸が入っています。",
+    "reading": "たこやきには、たこがはいっています。",
+    "translation_id": "Di dalam takoyaki ada gurita.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0288",
+    "japanese": "味噌汁に、ワカメを入れます。",
+    "reading": "みそしるに、わかめをいれます。",
+    "translation_id": "Saya memasukkan wakame ke sup miso.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0289",
+    "japanese": "兄は、大学を出てからフリーターをしています。",
+    "reading": "あにはだいがくをでてからふりーたーをしています。",
+    "translation_id": "Kakak saya bekerja paruh waktu sejak lulus kuliah.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0290",
+    "japanese": "弟は、弁護士になりたいと言っています。",
+    "reading": "おとうとは、べんごしになりたいといっています。",
+    "translation_id": "Adik laki-laki saya bilang ingin menjadi pengacara.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0291",
+    "japanese": "姉は、公認会計士を目指しています。",
+    "reading": "あねは、こうにんかいけいしをめざしています。",
+    "translation_id": "Kakak perempuan saya bercita-cita jadi akuntan publik.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0292",
+    "japanese": "彼は、優秀な技術者です。",
+    "reading": "かれは、ゆうしゅうなぎじゅつしゃです。",
+    "translation_id": "Dia adalah insinyur yang andal.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0293",
+    "japanese": "有名な建築家が、この家を設計しました。",
+    "reading": "ゆうめいなけんちくかが、このいえをせっけいしました。",
+    "translation_id": "Seorang arsitek terkenal merancang rumah ini.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0294",
+    "japanese": "美容師さんに、髪を切ってもらいました。",
+    "reading": "びようしさんに、かみをきってもらいました。",
+    "translation_id": "Rambut saya dipotong oleh penata rambut.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0295",
+    "japanese": "理容師が、ひげを剃ってくれました。",
+    "reading": "りようしが、ひげをそってくれました。",
+    "translation_id": "Tukang cukur mencukurkan kumis saya.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0296",
+    "japanese": "消防士は、人々の命を守ります。",
+    "reading": "しょうぼうしは、ひとびとのいのちをまもります。",
+    "translation_id": "Petugas pemadam kebakaran melindungi nyawa orang.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0297",
+    "japanese": "警察官に、道を聞きました。",
+    "reading": "けいさつかんに、みちをききました。",
+    "translation_id": "Saya menanyakan jalan kepada polisi.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0298",
+    "japanese": "彼は、自衛官として働いています。",
+    "reading": "かれは、じえいかんとしてはたらいています。",
+    "translation_id": "Dia bekerja sebagai anggota pasukan bela diri.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0299",
+    "japanese": "店長に、休みをお願いしました。",
+    "reading": "てんちょうに、やすみをおねがいしました。",
+    "translation_id": "Saya meminta izin libur kepada manajer toko.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0300",
+    "japanese": "デパートで、販売員として働いています。",
+    "reading": "でぱーとで、はんばいいんとしてはたらいています。",
+    "translation_id": "Saya bekerja sebagai pramuniaga di pusat perbelanjaan.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0301",
+    "japanese": "私は、声優になるのが夢です。",
+    "reading": "わたしは、せいゆうになるのがゆめです。",
+    "translation_id": "Impian saya adalah menjadi pengisi suara.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0302",
+    "japanese": "薬局で、薬剤師が薬の説明をしてくれました。",
+    "reading": "やっきょくで、やくざいしがくすりのせつめいをしてくれました。",
+    "translation_id": "Di apotek, apoteker menjelaskan obatnya.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0303",
+    "japanese": "犬が病気なので、獣医に連れて行きました。",
+    "reading": "いぬがびょうきなので、じゅういにつれていきました。",
+    "translation_id": "Karena anjing saya sakit, saya membawanya ke dokter hewan.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0304",
+    "japanese": "姉は、保育園で保育士をしています。",
+    "reading": "あねは、ほいくえんでほいくしをしています。",
+    "translation_id": "Kakak perempuan saya bekerja sebagai pengasuh di taman penitipan anak.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0305",
+    "japanese": "彼は、大学で働く研究者です。",
+    "reading": "かれは、だいがくではたらくけんきゅうしゃです。",
+    "translation_id": "Dia adalah peneliti yang bekerja di universitas.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0306",
+    "japanese": "子供のころ、科学者に憧れていました。",
+    "reading": "こどものころ、かがくしゃにあこがれていました。",
+    "translation_id": "Waktu kecil, saya mengidolakan ilmuwan.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0307",
+    "japanese": "その政治家は、国民に人気があります。",
+    "reading": "そのせいじかは、こくみんににんきがあります。",
+    "translation_id": "Politikus itu populer di kalangan rakyat.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0308",
+    "japanese": "父は、小さな会社の経営者です。",
+    "reading": "ちちは、ちいさなかいしゃのけいえいしゃです。",
+    "translation_id": "Ayah saya pengelola sebuah perusahaan kecil.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0309",
+    "japanese": "彼は、若い起業家として有名です。",
+    "reading": "かれは、わかいきぎょうかとしてゆうめいです。",
+    "translation_id": "Dia terkenal sebagai wirausahawan muda.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0310",
+    "japanese": "投資家は、株の値段を毎日見ています。",
+    "reading": "とうしかは、かぶのねだんをまいにちみています。",
+    "translation_id": "Investor memantau harga saham setiap hari.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0311",
+    "japanese": "姉は、外交官として海外で働いています。",
+    "reading": "あねは、がいこうかんとしてかいがいではたらいています。",
+    "translation_id": "Kakak perempuan saya bekerja di luar negeri sebagai diplomat.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0312",
+    "japanese": "電車の乗務員が、ドアを確認しました。",
+    "reading": "でんしゃのじょうむいんが、どあをかくにんしました。",
+    "translation_id": "Awak kereta memeriksa pintu.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
+  },
+  {
+    "id": "sen_kt_kotoba_x_0313",
+    "japanese": "船長が、船の進む方向を決めます。",
+    "reading": "せんちょうが、ふねのすすむほうこうをきめます。",
+    "translation_id": "Kapten kapal menentukan arah kapal.",
+    "translation_en": "",
+    "source": "kotoba_database",
+    "version": 1
   }
 ]
