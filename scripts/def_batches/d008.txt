@@ -1,0 +1,250 @@
+1592|建物や山林などが、火で燃える災い。|Bencana ketika bangunan atau hutan terbakar oleh api.
+1632|ある物を、別の物と取りかえる。|Menukar atau mengganti suatu benda dengan yang lain.
+1633|本人に代わって、物事を行うこと。また、その人。|Bertindak atas nama orang lain; juga orang yang mewakili.
+1634|山から海へ流れる、大きな水の流れ。|Aliran air besar yang mengalir dari pegunungan ke laut.
+1635|人や物事に、初めて会うこと。|Peristiwa bertemu orang atau hal baru untuk pertama kali.
+1636|思ってもみなかった、様子。|Keadaan yang tidak terduga sebelumnya.
+1637|丸い、小さな物。宝石。|Benda bulat kecil; juga permata atau mutiara.
+1638|大切に思い、慈しむ気持ち。|Perasaan menyayangi dan menganggap seseorang berharga.
+1639|物事の、そのときの様子。|Keadaan suatu hal pada saat tertentu.
+1640|目に見える、自然や町の様子。|Pemandangan alam atau kota yang tampak di mata.
+1641|姉と妹。女のきょうだい。|Kakak dan adik perempuan; saudari kandung.
+1642|一年を通して、いつも。|Sepanjang tahun, selalu.
+1643|知識や技術を、身につけること。|Kegiatan memperoleh pengetahuan atau keterampilan.
+1645|心地よい温度であること。思いやりがあること。|Suhu yang nyaman dan menghangatkan; juga sikap yang penuh kehangatan.
+1646|よいと思って、人にすすめる。|Menganjurkan sesuatu yang dianggap baik kepada orang lain.
+1647|開いていたものを、しめる。|Menutup sesuatu yang tadinya terbuka.
+1648|事件を捜査する、警察官。|Petugas polisi yang menyelidiki perkara kejahatan.
+1649|位置や状態を、変える。|Mengubah posisi atau keadaan sesuatu; menggerakkan.
+1650|かわいそうで、同情を引くこと。|Keadaan memilukan yang menimbulkan rasa iba.
+1651|過ぎていく、時間。ある瞬間。|Waktu yang berjalan; juga saat atau kesempatan tertentu.
+1652|夜の、まん中の時間。|Waktu di tengah malam.
+1653|その、ころ。|Masa ketika suatu peristiwa terjadi.
+1654|手間がかかって、厄介なこと。世話をすること。|Hal yang repot dan memakan tenaga; juga mengurus orang lain.
+1655|中から、引き出す。追い越す。|Menarik sesuatu keluar; juga melampaui atau menghilangkan.
+1656|物事の、土台。|Dasar atau asal-usul suatu hal.
+1657|偶然、人や物事に出くわす。|Bertemu atau menjumpai sesuatu secara kebetulan.
+1658|はっきりしていて、疑いのないこと。|Terang benderang dan tidak diragukan lagi.
+1659|過ぎた日のことを、懐かしく心に思うこと。|Hal masa lalu yang diingat dengan rasa rindu.
+1660|次の。これから来る。|Berarti 'akan datang' atau 'berikutnya' pada awalan kata.
+1661|これから先に来る、時。|Waktu yang akan datang.
+1662|物事を、さまたげること。|Mengganggu atau menghalangi kelancaran sesuatu.
+1663|水の中にすむ、動物。|Hewan penghuni air; bacaan lain 'uo' untuk ikan.
+1664|物を入れる、箱。ある場合。|Kotak untuk menyimpan benda; juga kasus tertentu.
+1665|ものの数を、調べる。|Menghitung jumlah sesuatu.
+1666|急に激しく変化する様子。|Perubahan yang terjadi mendadak dan tajam.
+1667|主張を訴えるために、大勢で行進すること。|Aksi banyak orang berbaris untuk menyampaikan tuntutan.
+1668|手で、強くつかむ。|Menggenggam dengan kuat; juga membentuk nasi kepal.
+1669|起こった、事柄。|Hal atau peristiwa yang terjadi.
+1670|考えた末に、出した答え。|Jawaban akhir yang diperoleh setelah berpikir.
+1671|お母さんを、親しんで呼ぶ言葉。|Sebutan akrab untuk ibu.
+1672|地面を作る、細かい粒の物。|Lapisan butiran halus yang membentuk permukaan bumi.
+1673|そのものだけが持つ、特別な性質。|Sifat istimewa yang hanya dimiliki oleh sesuatu itu.
+1674|平地より少し高くなった、小さな山。|Gundukan tanah yang sedikit lebih tinggi dari tanah datar.
+1675|紙などで包んだ、小さな荷物。|Barang kecil yang dibungkus kertas dan dikirim lewat pos.
+1676|大切で、なくてはならないこと。|Penting dan tidak boleh diabaikan.
+1677|考えや気持ちを、形にして表すこと。|Menyampaikan pikiran atau perasaan dalam bentuk nyata.
+1678|百年を一区切りとする、時代。|Rentang waktu seratus tahun.
+1679|物の、お金の額。数の大きさ。|Besaran harga barang; juga nilai numerik.
+1680|仕事をする、事務所。|Tempat kerja administrasi.
+1681|うれしく思う、気持ち。|Perasaan gembira dan bahagia.
+1682|ジェットエンジンで飛ぶ、飛行機。|Pesawat terbang yang digerakkan mesin jet.
+1683|六月ごろに続く、雨の多い時期。|Masa banyak hujan yang berlangsung sekitar bulan Juni.
+1684|内閣の、最高責任者。|Pimpinan tertinggi kabinet pemerintahan.
+1685|こうなってほしいと、願うこと。|Keinginan agar sesuatu terjadi.
+1686|「木曜日」の略。|Singkatan dari 'mokuyoubi' (hari Kamis).
+1687|相手に分かるように、見せる。|Memperlihatkan sesuatu agar dipahami orang lain.
+1688|読み物として書かれた、本。|Karya tulis berbentuk buku untuk dibaca.
+1689|体の、胃や腸のある部分。|Bagian tubuh tempat lambung dan usus berada.
+1690|心や考えが、表に出たもの。|Hal yang tampak sebagai perwujudan pikiran atau perasaan.
+1691|前を行くものを、あとから行く。|Bergerak mengikuti sesuatu di depan untuk menangkapnya.
+1692|決まった、期間。|Jangka waktu tetap; juga tiket langganan transportasi.
+1693|人が多く集まる、大きな町。|Kota besar yang dipadati banyak orang.
+1694|簡単には形が変わらないほど、強い。|Sulit berubah bentuk karena tegar; juga kaku.
+1695|ある、時代。また、年ごとの区切り。|Rentang waktu atau generasi tertentu.
+1696|正しい、こと。プラスの数。|Hal yang benar; juga bilangan positif.
+1697|音が大きくて、気にさわる様子。|Suara yang keras dan mengganggu; juga cerewet.
+1698|数字や事柄を、整理して示したもの。|Susunan angka atau keterangan yang ditata dalam kolom dan baris.
+1699|頭などを、おおう。損害などを受ける。|Mengenakan sesuatu di kepala; juga menanggung kerugian.
+1700|野山などへ、食事を持って出かける遊び。|Bepergian ke alam terbuka sambil membawa makanan untuk bersantai.
+1701|物を入れる、あみ目のある入れ物。|Wadah berpori yang dianyam untuk menaruh barang.
+1702|話題を、変えるときの言葉。|Kata untuk berganti topik pembicaraan.
+1703|細かい所は気にせず、大まかに行う様子。|Dilakukan secara kasar tanpa memperhatikan rincian.
+1704|人との、交わり。|Pergaulan atau hubungan dengan orang lain.
+1705|根を張って、生きている生き物。|Makhluk hidup yang berakar di tanah, seperti pohon dan rumput.
+1706|学問を、深く研究する人。|Orang yang mendalami suatu ilmu.
+1707|ある傾向が、少しある様子。|Menyatakan kecenderungan yang agak terasa.
+1708|生まれつきの性質。男女の区別。|Sifat bawaan; juga jenis kelamin.
+1709|分けて持つ、務め。|Tugas atau peran yang dipegang; juga kegunaan.
+1710|値段などを、尋ねるときの言葉。|Kata tanya untuk menanyakan harga atau jumlah.
+1711|物事が、滞って進まないこと。|Keadaan terhenti dan tidak lancar, seperti lalu lintas.
+1712|お金が、かからないこと。|Tidak dikenai biaya.
+1713|それが、ないこと。|Keadaan tidak ada atau tanpa sesuatu.
+1714|するべきことを、しないでいる。|Tidak mengerjakan apa yang seharusnya dikerjakan.
+1715|かなり、大きい程度。|Dalam tingkat yang cukup besar; lumayan.
+1716|そばから、遠ざかる。|Menjauh dari sisi seseorang atau sesuatu.
+1717|本気で、一生懸命であること。|Bersungguh-sungguh dan tidak bermain-main.
+1718|よいと思うものを、人にすすめること。|Menganjurkan orang atau hal yang dianggap baik.
+1719|特別にすぐれていること。|Sangat unggul dibanding yang lain.
+1720|相手を、うやまう気持ち。|Perasaan menghargai dan menghormati orang lain.
+1721|体に着る、物。|Benda yang dikenakan pada tubuh; pakaian.
+1722|丁寧、尊敬の気持ちを表す言葉。|Awalan untuk menyatakan kesopanan atau penghormatan.
+1723|物事を、始末すること。|Menyelesaikan atau menangani suatu urusan.
+1724|病気やけがで、治療を受けている人。|Orang yang sedang menjalani perawatan karena sakit atau luka.
+1725|物事が、うまく進むこと。|Keadaan ketika sesuatu berjalan baik tanpa hambatan.
+1726|あることを、しようとして動くこと。|Bertindak untuk melakukan sesuatu.
+1727|劇や映画で、役を演じること。|Memerankan tokoh dalam drama atau film; juga ketangkasan penampilan.
+1728|向いている方と、反対側。|Sisi yang berlawanan dengan arah hadap; juga waktu sesudahnya.
+1729|横の、長さ。|Ukuran panjang ke arah samping.
+1730|加工していない、そのままの状態。|Keadaan asli belum diolah; mentah atau segar.
+1731|過ぎ去った、時。|Masa yang telah berlalu.
+1732|くつろいで座る、背もたれのある長いいす。|Kursi panjang bersandaran yang nyaman.
+1733|物事の、勢力や力強さ。|Kekuatan atau dorongan yang menggerakkan sesuatu.
+1734|間違いがないと、請け合うこと。|Menyatakan dengan pasti bahwa tidak akan ada masalah.
+1735|あることのために、使う。|Memakai sesuatu untuk tujuan tertentu.
+1736|ある場所を、通って先へ行く。|Melewati suatu tempat hingga melampauinya.
+1737|家族が、くつろぐ部屋。|Ruangan di rumah tempat keluarga bersantai.
+1738|国、全体。|Seluruh wilayah suatu negara.
+1739|はっきり言えないほど、細かく複雑な様子。|Halus dan rumit sehingga sulit dinyatakan dengan jelas.
+1740|ものから受ける、印象。|Kesan atau perasaan yang diterima dari sesuatu.
+1741|夜通し、眠らずに起きていること。|Tetap terjaga semalam suntuk tanpa tidur.
+1742|商品の、値段。|Harga suatu barang.
+1743|家を、数える言葉。|Satuan hitung untuk rumah atau toko.
+1744|運動をするための、広い場所。|Lapangan luas untuk berolahraga; juga tanah (arde).
+1745|危険などを、こわいと思う。|Merasa takut terhadap bahaya dan sejenisnya.
+1746|赤道付近の、年中暑い地域。|Wilayah dekat khatulistiwa yang panas sepanjang tahun.
+1747|組み合わせたひとそろい。|Satu perangkat benda yang saling melengkapi; juga mengatur.
+1748|見えない所に、身をひそめる。|Menyembunyikan diri di tempat yang tak terlihat.
+1749|その人、自分。|Diri sendiri atau orangnya langsung.
+1750|行動や調査などの、目当てとなるもの。|Sesuatu yang menjadi sasaran tindakan atau penelitian.
+1751|肉や野菜などを煮て作る、汁の料理。|Hidangan berkuah dari rebusan daging dan sayur.
+1752|二十歳。数の二十。|Usia dua puluh tahun; juga bilangan dua puluh.
+1753|程度が、それほど大きくない様子。|Dengan negatif berarti tidak begitu; juga 'terlalu' dalam bentuk lisan.
+1754|品物を、売り買いする所。|Tempat jual beli barang yang digelar berkala.
+1755|戦いに、使う道具。|Alat yang dipakai untuk berperang atau bertarung.
+1756|物事が、新しくできる。|Sesuatu muncul atau lahir sebagai akibat.
+1757|足の、曲がる部分。|Sendi di tengah kaki yang dapat ditekuk.
+1758|病気やけがの治療のため、病院に入ること。|Masuk rumah sakit untuk menjalani perawatan.
+1759|田や畑で、作物を作る人。|Orang yang bertani di sawah dan ladang.
+1760|その場所の、近く。|Daerah di dekat tempat itu.
+1761|相手の言葉に、答える。|Menanggapi permintaan atau seruan orang lain.
+1762|ボールなどを、味方に渡すこと。|Mengoper bola kepada rekan; juga lulus atau tiket terusan.
+1763|その人の、家。|Rumah seseorang; juga sebutan untuk suami sendiri.
+1764|勝ち負けを争う、こと。|Peristiwa saling berhadapan untuk menentukan menang dan kalah.
+1765|ボールを打つ、道具。|Alat pemukul bola untuk tenis, bulutangkis, dan sejenisnya.
+1766|体の各部へ、刺激を伝える組織。|Jaringan tubuh yang menyampaikan rangsangan ke berbagai bagian.
+1767|動力を、生み出す機械。|Mesin penghasil tenaga penggerak.
+1768|手紙や荷物を、届ける制度。|Sistem pengiriman surat dan paket.
+1769|一緒に行く、人。|Orang yang pergi bersama; rekan seperjalanan.
+1770|物を、つつんだもの。|Barang yang dibungkus.
+1771|相手の言うことを、よく理解して受け入れること。|Memahami penjelasan orang lain lalu menerimanya.
+1772|たくさんあって、ゆたかな様子。|Banyak dan berlimpah.
+1773|言葉を連ねて、一つの意味をまとめたもの。|Rangkaian kata yang membentuk satu makna utuh.
+1774|困難なことを、どうにか行う様子。|Keadaan melakukan sesuatu dengan cara apa pun hingga berhasil.
+1775|引いて、のばす。無理に連れて行く。|Menarik sesuatu; juga memaksa seseorang ikut.
+1776|場所や手段、原因を表す言葉。|Partikel penanda tempat kegiatan, alat, atau sebab.
+1777|建物の、中の下の面。|Permukaan bawah di dalam bangunan yang diinjak.
+1778|そこに、あること。|Keberadaan seseorang atau sesuatu.
+1779|周りを、ぐるりと取りまく。|Mengitari sesuatu di sekelilingnya.
+1780|使うために、払うお金。|Uang yang harus dibayar untuk pemakaian atau layanan.
+1781|悪いことが起こらないように、気をつけること。|Berhati-hati agar tidak terjadi hal buruk.
+1782|火がついて、炎が上がる。|Menyala dan menimbulkan api; juga bergairah.
+1783|国の、最高の責任者。|Kepala negara tertinggi pada negara republik.
+1784|ある、目的や条件に、ふさわしい。|Sesuai dengan tujuan atau syarat tertentu.
+1785|間違いが、なく確かであること。|Tepat dan tidak ada kesalahan.
+1786|物を作ったり届けたりするように、頼むこと。|Meminta agar barang dibuat atau dikirim; memesan.
+1787|結婚している、男女。|Pasangan laki-laki dan perempuan yang telah menikah.
+1788|物事の、進行をさまたげるもの。|Hal yang menghalangi jalannya sesuatu; juga gangguan fungsi tubuh.
+1789|楽器を、奏でること。|Memainkan alat musik di depan pendengar.
+1790|順番の、はじめ。最もよいこと。|Urutan pertama; juga yang paling baik.
+1791|アジアの東にある、島国。|Negara kepulauan di Asia Timur.
+1792|自分や他人を、産んだ女の親。|Orang tua perempuan yang melahirkan seseorang.
+1793|試合などで、一番になること。|Menjadi nomor satu dalam pertandingan.
+1794|自分のことを、すぐれていると思う気持ち。|Perasaan bangga terhadap diri atau milik sendiri.
+1795|上下の方向。また、その長さ。|Arah atas-bawah atau panjang dalam arah tersebut.
+1796|物の、いちばん外側の部分。|Bagian terluar atau ujung suatu benda.
+1797|特別でなく、ふつうであること。|Umum; tidak khusus atau tertentu.
+1798|あることのために、かかるお金。|Uang yang dikeluarkan untuk suatu keperluan.
+1799|劇などを、演じる場所。|Tempat pementasan drama dan sejenisnya.
+1800|牛乳から作る、白くてやわらかい食品。|Bahan makanan lembut berwarna putih yang dibuat dari susu.
+1801|人や車が通る、道。|Jalan yang dilalui orang dan kendaraan.
+1802|ある地位や仕事に、入る。|Mulai menempati suatu jabatan atau pekerjaan.
+1803|相手を、信じて頼ること。|Percaya dan menggantungkan diri pada orang lain.
+1804|することができる、こと。|Hal yang dapat dilakukan atau mungkin terjadi.
+1805|条件が、整えば、という意味の言葉。|Ungkapan 'jika memungkinkan' untuk menyatakan kemauan bersyarat.
+1806|日が出ている、間。|Waktu ketika matahari bersinar.
+1807|落ちたり倒れたりしないように、持ち上げる。|Menopang agar tidak jatuh atau roboh; juga menyokong.
+1809|生まれてから、経った年数。|Lamanya tahun sejak seseorang lahir.
+1810|世間に伝わっている、評価。|Penilaian masyarakat terhadap seseorang atau sesuatu.
+1811|数の9を表す数字。|Angka yang menyatakan bilangan sembilan.
+1812|目から出る、水分。|Cairan yang keluar dari mata saat menangis.
+1813|来る人を、出て待つこと。|Menyambut atau menjemput orang yang datang.
+1814|がまんできないほど、強く感じる様子。|Sesuatu yang begitu kuat sehingga tak tertahankan.
+1815|必要な事項を、書き入れること。|Menuliskan keterangan yang diperlukan pada formulir.
+1816|劣っている、悪い点。|Bagian yang kurang atau buruk dari sesuatu.
+1817|部屋や箱などの、すみ。|Sudut ruangan atau kotak; juga tanduk.
+1818|うそではない、事実。|Kenyataan yang tidak dusta; juga 'sungguh'.
+1819|言うことや行うことを、控えること。|Menahan diri dalam berkata atau bertindak karena sungkan.
+1820|物が、重なって高くなる。|Benda bertumpuk sehingga makin tinggi.
+1821|あるものの、すべて。|Seluruh bagian dari sesuatu.
+1822|千の意味を、表す言葉。|Awalan yang berarti seribu; kilo.
+1823|他人に、迷いやめんどうをかけること。|Merepotkan atau mengganggu orang lain.
+1824|人間の、全体。|Seluruh umat manusia.
+1825|他に、誰もいないこと。|Keadaan seorang diri tanpa orang lain.
+1826|細長い物を、まとめて、ひとくくりにしたもの。|Sekumpulan benda panjang yang diikat jadi satu.
+1827|はっきりと、形や内容が分かる様子。|Berbentuk jelas dan dapat dibayangkan secara nyata.
+1828|写真や絵を、入れるわく。金額。|Bingkai untuk foto atau lukisan; juga jumlah uang.
+1829|人や荷物を、運ぶ箱形の車。|Mobil berbentuk kotak untuk mengangkut orang dan barang.
+1830|色や味が、強く出ている様子。|Warna atau rasa yang pekat; juga kental.
+1831|美しさを、表す人間の活動。|Kegiatan manusia yang mengekspresikan keindahan.
+1832|品物が、売り買いされる所。|Tempat barang dagangan diperjualbelikan.
+1833|山や海底などを、掘って通した道。|Jalan yang digali menembus gunung atau bawah laut.
+1834|生物の体の、表面をおおうもの。|Lapisan penutup luar tubuh makhluk hidup atau buah.
+1835|ある場所に、しばらく泊まること。|Tinggal sementara di suatu tempat.
+1836|いや、という否定。|Ungkapan penolakan; 'tidak'.
+1837|前の話を受けて、次に続けるときの言葉。|Kata pengantar untuk melanjutkan pembicaraan; 'kalau begitu'.
+1838|社会の、決まり。|Aturan yang mengikat masyarakat; juga cara atau metode.
+1839|幸せでないこと。悲しい出来事。|Keadaan tidak bahagia; juga peristiwa duka.
+1840|深く、好きになる。|Menyayangi dengan sepenuh hati.
+1841|つらいことで、心が重くなる。|Hati menjadi pilu karena hal yang menyedihkan.
+1842|動かないで、そのままでいる様子。|Tetap diam tanpa bergerak; juga menatap lekat.
+1843|仕事が、よくできること。|Memiliki kemampuan bekerja yang baik.
+1844|両手を打ち合わせて、音を出すこと。|Bertepuk tangan untuk menyatakan penghargaan.
+1845|その人が、置かれている状況。|Posisi atau keadaan seseorang berada.
+1846|気にとめないで、ほうっておくこと。|Tidak memedulikan dan membiarkan begitu saja.
+1847|座っていた人が、起き上がる。|Berdiri dari posisi duduk; juga bangkit dari keadaan buruk.
+1848|ある時の、半分。途中。|Setengah dari suatu masa; juga pertengahan.
+1849|耳が長い、小さな動物。|Hewan kecil berkuping panjang.
+1850|くだらないことを、よくしゃべること。|Banyak berbicara atau mengobrol santai.
+1851|昼の、十二時。|Pukul dua belas siang; tengah hari.
+1852|あることに、関係がある。|Berhubungan atau menyangkut suatu hal.
+1853|はっきりしない、未来の日。|Suatu hari di masa depan yang belum jelas; juga beberapa waktu lalu.
+1854|一緒に、何かをする人。|Orang yang bersama-sama melakukan suatu kegiatan.
+1855|上下で、分けた段階。|Tingkatan atau peringkat yang berurutan.
+1856|立派だと、思うこと。|Merasa kagum terhadap sesuatu yang patut dipuji.
+1857|物の、中が空いている所。|Bagian yang berongga atau berlubang pada suatu benda.
+1858|女性が、着る洋風の服。|Pakaian gaya Barat yang dikenakan perempuan.
+1859|遠くの人からの、知らせ。|Kabar atau surat dari orang yang jauh.
+1860|必要なものを、手に入れようとする。|Berusaha mendapatkan sesuatu yang diinginkan atau dibutuhkan.
+1861|味方に、そむく。|Berkhianat terhadap pihak yang mempercayai.
+1862|「日曜日」の略。|Singkatan dari 'nichiyoubi' (hari Minggu).
+1863|意見を、出し合って決めること。|Berunding dan bertukar pendapat untuk mengambil keputusan.
+1864|生きている、もの。|Benda yang bernyawa; hewan dan makhluk lain.
+1865|仕事を、手伝う人。|Orang yang membantu pekerjaan seseorang, seperti asisten dosen.
+1866|昔の、ふるい。|Yang lama atau sebelumnya; mantan.
+1867|大きな声を、出す。|Mengeluarkan suara keras.
+1868|理由を、述べるときの言葉。|Kata penghubung untuk memberi alasan; 'sebabnya'.
+1869|お金。|Uang atau masalah yang menyangkut keuangan.
+1870|数を、全部たしたもの。|Hasil penjumlahan seluruh angka.
+1871|口や、のどを水で洗うこと。|Membersihkan mulut atau tenggorokan dengan air atau obat kumur.
+1872|急がず、のんびりしている様子。|Keadaan tidak tergesa-gesa dan santai.
+1873|詩を、作る人。|Orang yang menciptakan puisi.
+1874|動力を使って、動く装置。|Peralatan yang bekerja dengan tenaga penggerak.
+1875|これ以上は、できない境目。|Batas yang tidak bisa dilampaui lagi.
+1876|わらなどを、よりあわせた、ひも。|Tali yang dipintal dari jerami atau serat.
+1877|お金の、貸し借りや流通。|Peredaran, pinjam-meminjam, dan pembiayaan uang.
+1878|光。灯。|Cahaya atau lampu penerang.
+1879|少しも〜ない、という意味を表す言葉。|Bersama bentuk negatif berarti 'sedikit pun tidak'.
+1880|することを、終わらせる。|Menuntaskan sesuatu yang sedang dikerjakan.
+1881|ある時期。おおよその時。|Masa atau waktu tertentu; kira-kira pada saat itu.
+1882|おもしろく、人を笑わせるための言葉。|Ucapan yang dimaksudkan lucu, bukan sungguhan.

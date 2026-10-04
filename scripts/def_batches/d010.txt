@@ -1,0 +1,250 @@
+2135|他のものより、質や能力が上である。|Lebih unggul dalam mutu atau kemampuan dibanding yang lain; juga sehat dan baik.
+2136|人の、そのときの気分。|Suasana hati seseorang pada saat tertentu.
+2137|前もって、そうなると思うこと。|Memperkirakan lebih dulu bahwa sesuatu akan terjadi.
+2138|持って、上へ上げる。ほめて、いい気分にさせる。|Mengangkat sesuatu ke atas; juga menyanjung seseorang.
+2139|罪を犯した、人。|Orang yang melakukan tindak kejahatan.
+2140|産業の、もとになる、自然のもの。|Bahan alam yang menjadi dasar kegiatan industri dan kehidupan.
+2141|物の上に、置く。乗り物に、人や荷物を入れる。|Menaruh sesuatu di atas benda lain; juga mengangkut penumpang atau barang.
+2142|腰に巻いて、衣服を留める帯。|Pita atau tali yang dililitkan di pinggang untuk menahan pakaian.
+2143|時間を、使って暮らす。|Menjalani atau menghabiskan waktu.
+2144|二つのものが、向かい合うこと。|Dua hal yang saling berhadapan; juga berpasangan.
+2145|二つのものの、あとに述べた方。|Yang disebut belakangan di antara dua hal.
+2146|目に見える、形や様子。|Wujud atau tampilan yang tampak oleh mata.
+2147|お金を、使うこと。|Pengeluaran uang untuk suatu keperluan.
+2148|本を、読むこと。|Kegiatan membaca buku.
+2149|冬の朝、地面にできる、白い氷の粒。|Butiran es putih yang terbentuk di tanah pada pagi musim dingin.
+2150|他と、違っている。|Tidak sama dengan yang lain.
+2151|説明のために、挙げる、事柄。|Hal yang dikemukakan untuk menjelaskan sesuatu; contoh.
+2152|買い物などに使う、貨幣。金属の一種。|Uang yang dipakai untuk membeli sesuatu; juga logam emas.
+2153|離れた人に、知らせを送ること。|Mengirim kabar kepada orang yang berjauhan.
+2154|技術などを、身につけさせるための、練習。|Latihan yang dijalani untuk menguasai keterampilan tertentu.
+2155|このごろ。最近。|Waktu belakangan ini.
+2156|前もって考えた、計画。|Rencana yang disusun terlebih dahulu.
+2157|山に、登ること。|Kegiatan mendaki gunung.
+2158|すっきりして、気持ちがよい様子。|Terasa segar dan lega; dengan negatif berarti 'sama sekali tidak'.
+2159|手や体をふくための、布。|Kain untuk mengeringkan tangan atau badan.
+2160|一定の地域を治める、組織。|Organisasi politik yang memerintah wilayah tertentu.
+2161|文章などを、書くことを仕事にしている人。|Orang yang pekerjaannya menulis karya.
+2162|言うまでもなく、そうであること。|Sudah jelas bahwa hal itu demikian.
+2163|結婚していないこと。|Keadaan belum menikah.
+2164|前のことを理由にして、あとのことを述べる言葉。|Kata penghubung sopan untuk menyatakan akibat; 'karena itu'.
+2165|仕事などを、一時やめて休むこと。|Berhenti sebentar dari pekerjaan untuk beristirahat.
+2166|駅で、電車に乗り降りする場所。|Tempat naik-turun penumpang kereta di stasiun; juga rumah.
+2167|大人になった、人。|Orang yang sudah dewasa.
+2168|体や道具を使って、する仕事。|Pekerjaan yang dikerjakan dengan tubuh atau peralatan.
+2169|選挙などで、候補者や案に、票を入れること。|Memberikan suara pada pemilihan calon atau usulan.
+2170|ある目的で、人が集まること。|Pertemuan orang-orang yang berkumpul untuk tujuan tertentu.
+2171|人々が暮らす、世の中。|Dunia tempat orang-orang hidup bersama; masyarakat.
+2172|最後の部分。終わり。|Bagian paling akhir; ujung.
+2173|光を出して、きらきらする。|Memancarkan cahaya yang berkilau.
+2174|元気があって、活発な様子。|Penuh semangat dan keramaian.
+2175|お金などを、しまっておくための、じょうぶな箱。|Kotak kokoh untuk menyimpan uang dan barang berharga.
+2176|人の、面倒を見ること。|Mengurus dan membantu kebutuhan orang lain.
+2177|家を離れて、遠くへ行くこと。|Perjalanan jauh meninggalkan rumah.
+2178|範囲や数などを、決めて限ること。|Menetapkan batas jumlah atau cakupan.
+2179|低い所から、高い所へ上がる。|Bergerak naik dari tempat rendah ke tempat tinggi; matahari terbit.
+2180|国を治める人を、敬って呼ぶ言葉。|Sebutan hormat untuk penguasa negeri.
+2181|その状態が、続いている。まだ起こっていない。|Keadaan yang masih berlangsung; juga yang belum terjadi.
+2182|新聞や雑誌に、載っている文章。|Tulisan yang dimuat di surat kabar atau majalah.
+2183|秩序がなく、入り乱れること。|Keadaan tanpa keteraturan dan campur aduk.
+2184|働いた人に、会社などから払われる、お金。|Uang yang dibayarkan perusahaan kepada pekerjanya.
+2185|成人した、男の人。|Laki-laki dewasa.
+2186|上手になるために、繰り返して行うこと。|Mengulangi sesuatu berkali-kali agar menjadi terampil.
+2187|牛乳などを、凍らせて作った、冷たい菓子。|Penganan dingin yang dibuat dari susu yang dibekukan.
+2188|一つの方。他方では。|Satu sisi; juga untuk menyampaikan sisi lain dari suatu hal.
+2189|こわれた物を、直すこと。|Memperbaiki sesuatu yang rusak.
+2190|地面。土地。|Permukaan bumi; tanah; juga posisi dasar.
+2191|イエス・キリストの誕生を、祝う祭り。|Perayaan kelahiran Yesus Kristus.
+2192|前の話を受けて、次に続けるときの言葉。|Kata penghubung untuk melanjutkan; 'kalau begitu'.
+2193|考えや気持ちを、形にして示す。|Menampilkan pikiran atau perasaan dalam bentuk nyata.
+2194|車に乗って、出かけること。|Pergi bersenang-senang dengan mobil.
+2195|ほかのものより、よいと思う。|Merasa lebih menyukai atau memilih sesuatu.
+2196|危険や困難から、人を救う。|Menyelamatkan orang dari bahaya atau kesulitan.
+2197|うれしい、悲しいなどの、心の動き。|Gejolak batin seperti senang atau sedih.
+2198|水の中で、息ができなくなる。ある事に、夢中になる。|Tidak bisa bernapas di dalam air; juga larut berlebihan dalam sesuatu.
+2199|腕で、かかえる。心の中に持つ。|Memeluk dengan lengan; juga menyimpan perasaan di hati.
+2200|相手を、乱暴に、あるいは親しんで呼ぶ言葉。|Kata ganti kasar atau akrab untuk memanggil lawan bicara.
+2201|物事についての、知っていること。|Hal yang diketahui tentang sesuatu.
+2202|同じ目的の人が、集まって作る組織。|Organisasi yang dibentuk orang-orang dengan tujuan sama.
+2203|その国の、政治の中心となる都市。|Kota pusat pemerintahan suatu negara.
+2204|同じ政治的な考えの人が、作る団体。|Kelompok orang yang memiliki pandangan politik sama.
+2205|大勢の前で、あるテーマについて話すこと。|Berbicara tentang suatu tema di hadapan banyak orang.
+2206|間に何も入れず、じかに。|Tanpa perantara; langsung.
+2207|口から、出す。|Mengeluarkan dari mulut; juga mengembuskan napas.
+2208|雲の中で、起こる、大きな音と光の現象。|Fenomena bunyi dan cahaya besar di antara awan.
+2209|人から受けた、情けや、恵み。|Kebaikan yang diterima dari orang lain yang patut dibalas.
+2210|物が、ある場所。|Tempat atau letak keberadaan sesuatu.
+2211|ゆとり。|Kelonggaran waktu, tenaga, atau uang.
+2212|上から、かぶせて隠す。|Menutupi sesuatu dari atas.
+2213|全体に対する、割合。|Perbandingan bagian terhadap keseluruhan.
+2214|物やお金などを、使ってしまうこと。|Menggunakan barang atau uang hingga habis.
+2215|心。物事を、考える働き。|Batin atau jiwa; juga daya berpikir.
+2216|人の、迷惑になるような悪ふざけ。|Tindakan iseng yang mengganggu orang lain; juga sia-sia.
+2217|犬などが、大きな声で、鳴く。|Anjing atau hewan buas mengeluarkan suara keras.
+2218|二つのうち、どちらか一つを選ぶときの言葉。|Kata penghubung untuk memilih antara dua pilihan.
+2219|人の、仕事を、助けること。|Membantu pekerjaan orang lain; juga orang yang membantu.
+2220|これから先。|Waktu mulai sekarang dan seterusnya.
+2221|地球を、おおう、空気。|Lapisan gas yang menyelimuti bumi.
+2222|すべて。全体。|Berarti 'seluruh' atau 'semua' pada awalan kata.
+2223|高い所から低い所へ、向かうこと。|Arah perjalanan menurun; juga kereta yang menjauhi Tokyo.
+2224|道具の、手で持つ部分。|Bagian alat yang dipegang tangan; juga motif atau pola.
+2225|農作物を、取り入れること。|Mengumpulkan hasil tanam; juga hasil yang diperoleh.
+2226|人や、考えなどに、逆らうこと。|Menentang atau melawan orang atau gagasan.
+2227|考えを決める、助けにすること。|Memakai sesuatu sebagai bahan pertimbangan atau rujukan.
+2228|驚いたり、思い出したりしたときに出る声。|Seruan ketika terkejut atau teringat sesuatu.
+2229|中に、入れて持つ。|Menyimpan di dalam; mengandung atau mencakup sesuatu.
+2230|人が食べるための、食べ物。|Persediaan bahan pangan untuk dimakan manusia.
+2231|あるものが、及ぶ、広さ。|Lingkup atau batas jangkauan suatu hal.
+2232|大きいこと。程度が、はなはだしいこと。|Berarti besar; juga menyatakan tingkat yang sangat.
+2233|していることを、やめる。|Menghentikan sesuatu yang sedang atau biasa dilakukan.
+2234|不思議で、変わっている様子。|Keadaan yang aneh dan tak lazim.
+2235|活動などの、中心となる所。|Tempat yang menjadi pusat suatu kegiatan.
+2236|すき間がなく、ぴったりくっついている様子。|Keadaan rapat tanpa celah; juga rahasia.
+2237|どんな時も。ふだん。|Setiap saat; biasanya.
+2238|鳥の、体に生える、軽い毛。|Bulu ringan yang tumbuh pada tubuh burung; juga sayap.
+2239|ある物事に、影響を与える。|Memberikan pengaruh atau akibat pada sesuatu.
+2240|数や量を、少なくする。|Membuat jumlah atau banyaknya menjadi lebih sedikit.
+2241|仲がよくて、親しみを感じる。|Berhubungan baik dan terasa dekat.
+2242|にこにこした、顔。|Wajah yang tersenyum.
+2243|考えたり、判断したりする、頭の働き。|Kemampuan otak untuk berpikir dan menilai.
+2244|仕事や、役目などを、やめる。|Berhenti dari pekerjaan atau jabatan.
+2245|力を合わせて、物事をすること。|Bekerja sama untuk melakukan sesuatu.
+2246|野外に、テントなどを張って、泊まること。|Menginap di alam terbuka dengan mendirikan tenda.
+2247|文章や、書物の、区切り。|Satuan bagian dalam karya tulis atau buku.
+2248|映像と音声を、記録したもの。|Rekaman gambar bergerak dan suara.
+2249|多くの人や物が、集まったもの。|Kumpulan banyak orang atau benda.
+2250|明日の、次の日。|Hari setelah besok.
+2251|ほんの、少しの、言葉。|Satu kata atau sepatah ucapan singkat.
+2252|細菌のために、歯が、傷むこと。|Gigi yang rusak berlubang akibat kuman.
+2253|問題や、もめごとを、片づけること。|Menyelesaikan masalah atau perselisihan.
+2254|人間によく似た、動物。|Hewan yang mirip manusia, bergelantungan di pohon.
+2255|高くて細長い、建物。|Bangunan tinggi dan ramping.
+2256|絵や図を、かく。|Membuat gambar atau lukisan; juga melukiskan dalam kata.
+2257|入れ物などの、一番下。|Bagian paling bawah wadah atau sesuatu.
+2258|体の、胃や腸がある部分。|Bagian tubuh tempat lambung dan usus berada.
+2259|よくないこと。許されないこと。|Hal yang tidak diperbolehkan; juga nilai tidak lulus.
+2260|会議の、進行をする責任者。|Pemimpin yang mengatur jalannya sidang.
+2261|電波などで、番組を、送ること。|Menyiarkan acara melalui gelombang radio atau televisi.
+2262|あることを始める前の、準備。|Persiapan sebelum memulai sesuatu.
+2263|物事を行うときの、決まった作法。|Tata cara yang semestinya dalam bertindak.
+2264|同時に、生まれた二人の子。|Dua anak yang dilahirkan bersamaan dari satu ibu.
+2265|青い、厚い布で作った、ズボン。|Celana dari kain denim tebal berwarna biru.
+2266|物事に、一生懸命になる様子。|Keadaan bersungguh-sungguh dan penuh semangat.
+2267|働いて、お金を得る。|Bekerja untuk memperoleh uang.
+2268|経済の、様子。商売の、活気。|Keadaan ekonomi atau kelesuan dan kegairahan bisnis.
+2269|多いか少ないかは別にして、少しは。|Dalam jumlah kecil atau besar; sedikit banyak.
+2270|持っていたものを、なくす。|Kehilangan sesuatu yang pernah dimiliki.
+2271|水が、凍って固まった、もの。|Air yang membeku dan mengeras.
+2272|生き物。加熱していない、食べ物。|Makhluk hidup; juga makanan mentah.
+2273|人が、死ぬこと。|Peristiwa meninggalnya seseorang.
+2274|調べたことなどを、まとめた文書。|Dokumen yang merangkum hasil pengamatan atau penelitian.
+2275|人に、物を、与える。送る。|Memberikan atau mengirimkan sesuatu kepada orang lain.
+2276|売ったり、買ったりする、品物。|Barang yang diperjualbelikan.
+2277|前のことが、理由となって、次のことが起こる。|Kata penghubung yang menyatakan akibat dari hal sebelumnya.
+2278|何も、ない様子。|Dengan negatif berarti 'tidak apa-apa' atau 'tidak ada apa pun'.
+2279|ある方向に、傾く、こと。|Kecenderungan menuju arah tertentu.
+2280|数や量を、数えて、求めること。|Menghitung bilangan atau jumlah.
+2281|旅先の、土地の産物。人に贈る品。|Barang khas dari tempat perjalanan; juga hadiah untuk orang.
+2282|物の、中に入っている、事柄。|Hal yang terkandung di dalam sesuatu.
+2283|黄色い体に、黒い、しま模様のある、猛獣。|Hewan buas berbulu kuning bergaris hitam.
+2284|道。そのとおりであること。|Jalan atau ruas jalan; juga berarti 'sesuai dengan'.
+2285|程度が、非常に大きい様子。ひどい苦労。|Sangat besar tingkatnya; juga berat dan sulit.
+2286|地球の、まわりを回る星。時間の、区切り。|Benda langit yang mengelilingi bumi; juga satuan waktu bulan.
+2287|人を、悪に導く、おそろしい存在。|Makhluk jahat yang menyesatkan manusia ke dalam kejahatan.
+2288|前のことがあっても、変わらず。|Meski telah terjadi hal sebelumnya, tetap demikian.
+2289|列車を、走らせるための、道。|Jalur tempat kereta api berjalan.
+2290|ある場合を、仮に、考える言葉。|Kata untuk mengandaikan suatu situasi.
+2291|きちんと、している様子。|Sebagaimana mestinya; rapi dan pantas.
+2292|太陽。昼間。一日。|Matahari; siang hari; juga hari atau tanggal.
+2293|あることのために、役に立つこと。|Memberi sumbangan bagi suatu hal.
+2294|外にあるものを、取り入れて、自分のものにする。|Menyerap sesuatu dari luar menjadi bagian dari dirinya.
+2295|やかましい、音。|Suara-suara yang mengganggu.
+2296|昔から、受け継がれてきた、しきたりや技術。|Adat atau keterampilan yang diwariskan sejak dahulu.
+2297|顔などを、美しく見せるために、整えること。|Menghias wajah agar tampak lebih cantik.
+2298|人にお願いするときの、言葉。|Ungkapan untuk meminta bantuan atau menitip salam.
+2299|どんなものでも。すべて。|Apa pun juga; segalanya.
+2300|物を、いくつかに、分ける。壊す。|Memecahkan benda hingga terbagi; juga membagi dalam hitungan.
+2301|程度が、さらに大きくなる様子。|Menyatakan tingkat yang semakin bertambah.
+2302|にせものでない、本当の物。|Barang yang asli, bukan tiruan.
+2303|物事の、最初。|Awal mula dari suatu hal.
+2304|数や量が、増えること。|Pertambahan jumlah atau banyaknya.
+2305|会社などで行う、書類を扱う仕事。|Pekerjaan kantor yang menangani dokumen.
+2306|砂糖などで作った、甘い食べ物。|Kudapan manis yang dibuat dari gula dan sebagainya.
+2307|今すぐに、そうなりそうな様子。|Keadaan yang hampir segera terjadi.
+2308|年を取った、人。|Orang yang sudah lanjut usia.
+2309|乗り物や機械を、動かすこと。|Menjalankan kendaraan atau mesin.
+2310|ふつうでなく、ひどいこと。危険が迫る、とき。|Keadaan luar biasa; juga situasi darurat.
+2311|円や球のような、形。|Berbentuk lingkaran atau bola.
+2312|時間や、お金などが、必要になる。ぶら下がる。|Waktu atau biaya yang diperlukan; juga tergantung atau terkunci.
+2313|それ以外の、もの。|Hal lain di luar yang sudah disebut.
+2314|物の、外側の面。|Bagian luar atau permukaan sesuatu.
+2315|人の手を、借りずに、動くこと。|Bekerja sendiri tanpa dijalankan tangan manusia.
+2316|山と山の間の、くぼんだ土地。|Tanah rendah di antara dua pegunungan.
+2317|暑いときなどに、皮膚から出る、水分。|Cairan yang keluar dari kulit saat panas atau gugup.
+2318|物を、のせる、台。電気の、灯。|Penyangga untuk meletakkan sesuatu; juga lampu meja dan tribun penonton.
+2319|調べたことなどを、知らせること。|Menyampaikan hasil pengamatan atau penyelidikan.
+2320|目当てとするもの。|Sasaran yang hendak dicapai.
+2321|ひもなどで、結び合わせる。|Menyambungkan benda dengan tali; juga menghubungkan.
+2322|苦労がなく、気持ちが、安らかなこと。|Tidak sulit dan terasa santai.
+2323|文書や絵などを、そのまま写し取ること。|Menggandakan dokumen atau gambar apa adanya.
+2324|中から、急に、外へ出る。|Melompat atau menerobos keluar dengan mendadak.
+2325|味がよい。上手である。|Rasa yang lezat; juga mahir.
+2327|物が、そこに、存在する。|Benda berada atau tersedia di suatu tempat.
+2328|人々が、暮らしている、社会。|Masyarakat tempat orang-orang hidup.
+2329|機械などが、こわれて、動かなくなること。|Mesin atau alat yang rusak sehingga tidak berfungsi.
+2330|物事が、非常に、速く進むこと。|Berjalan dengan sangat cepat.
+2331|文字を、読む、読み方。|Cara membaca tulisan atau kanji.
+2332|絵の具などで、描いた、絵。|Gambar yang dibuat dengan cat dan sebagainya.
+2333|海や湖の水が、高く低く動くこと。|Gerakan naik turun air laut atau danau.
+2334|物事で、受ける、損失。|Kerugian atau kerusakan yang diderita.
+2335|小さくて、愛らしい様子。|Kecil dan menggemaskan.
+2336|気持ちよく、過ごせる様子。|Terasa nyaman untuk ditempati atau dipakai.
+2337|物の、数量などを、測る、基準。|Dasar ukuran jumlah; juga satuan kredit mata kuliah.
+2338|あらかじめ、定められた、こと。|Hal yang telah ditetapkan; juga aturan atau kebiasaan.
+2339|ある物事の、原因。他のもののために、悪い結果になること。|Sebab suatu hal; sering dipakai untuk menyalahkan sesuatu.
+2340|米や麦など、主食になる、作物。|Tanaman pokok seperti padi dan gandum.
+2341|ふつうの人が、持っている、知識や判断力。|Pengetahuan dan daya nalar yang lazim dimiliki orang umum.
+2342|目的の方へ、教え導くこと。|Membimbing dan mengarahkan orang ke arah tujuan.
+2343|言葉。言語。|Kata atau bahasa.
+2344|ある物事の、真ん中。ある状態が、続いている間。|Bagian dalam atau tengah; juga sedang berlangsung.
+2345|正しくないこと。|Hal yang keliru.
+2346|そうなることを、願う。遠くを見る。|Mengharapkan sesuatu terjadi; juga memandang jauh.
+2347|商売などで、得る、お金。人の、ためになること。|Keuntungan dari usaha; juga manfaat.
+2348|程度が、非常に、大きいことを表す言葉。|Kata untuk menyatakan tingkat yang sangat besar.
+2349|体の、胴の、中ほどの、部分。|Bagian tengah badan di sekitar pinggul.
+2350|裁判に、持ち出す。人に、強く、知らせる。|Mengajukan ke pengadilan; juga menyampaikan keluhan atau perasaan.
+2351|再び。そのうえに。|Sekali lagi; juga 'dan' atau 'atau'.
+2352|食べる、という意味の、乱暴な言い方。|Bentuk kasar dari 'taberu' (makan).
+2353|人を、笑わせる、おもしろみ。|Rasa lucu yang membuat orang tertawa.
+2354|よく、似ている様子。残らず。|Sangat mirip; juga seluruhnya tanpa sisa.
+2355|新聞などを、世に出すこと。|Menerbitkan dan mengedarkan koran atau dokumen.
+2356|目的を、果たすこと。|Tercapainya suatu tujuan dengan baik.
+2357|今の、状態。|Keadaan saat ini.
+2358|おじ、おばの、子。|Anak dari paman atau bibi.
+2359|ぐっすりと、深く眠る様子。|Tidur nyenyak sekali.
+2360|乗り物などを、止める、装置。|Alat untuk menghentikan kendaraan atau mesin.
+2361|前のことと、反対のことを述べる、言葉。|Kata penghubung untuk menyatakan hal yang bertentangan.
+2362|学問などを、学ぶこと。値引き。|Kegiatan belajar; juga pemberian potongan harga.
+2363|人。人の、世界。|Manusia atau orang; juga sifat-sifat manusiawi.
+2364|物が、悪くなって、いやなにおいが、出る。|Benda menjadi busuk dan berbau tidak sedap.
+2365|劇や映画で、役を演じる女性。|Perempuan yang memerankan tokoh dalam drama atau film.
+2366|チームの、リーダー。|Pemimpin sebuah tim.
+2367|液体や気体を、送る管。|Tabung untuk mengalirkan cairan atau gas; juga pipa rokok.
+2368|人の、手が、加わらない、自然のままの様子。|Keadaan alami tanpa campur tangan manusia.
+2369|数の、7を表す、数字。|Angka yang menyatakan bilangan tujuh.
+2370|危険を、前もって、知らせること。|Memberi tahu lebih dulu mengenai bahaya.
+2371|本当だと、思う。疑わない。|Meyakini sesuatu benar tanpa meragukannya.
+2372|切れ目なく、続くこと。|Berlangsung terus tanpa terputus.
+2373|重さの単位。千キログラム。|Satuan berat sebesar seribu kilogram.
+2374|実際に、ある、こと。|Hal yang benar-benar ada.
+2375|田や畑で、作物を、作る仕事。|Pekerjaan membudidayakan tanaman di sawah dan ladang.
+2376|手持ちの、お金。|Uang yang dipegang atau uang tunai; juga sifat mata duitan.
+2377|あるものを、別のものに、変えること。|Mengubah sesuatu menjadi lain.
+2378|世の中で、広く、はやること。|Kegemaran yang meluas di masyarakat; juga penyebaran wabah.
+2379|本。書物。|Buku atau bacaan di perpustakaan.
+2380|会社などを、運営していくこと。|Menjalankan dan mengelola perusahaan.
+2381|全体を、代わりに、示すもの。|Orang atau hal yang mewakili keseluruhan.
+2382|夜が、終わって、朝になる。新年に、なる。|Malam berakhir dan pagi tiba; juga tahun baru tiba.
+2383|気晴らしや、運動のために、ゆっくり、歩くこと。|Berjalan santai untuk refreshing atau olahraga.
+2384|問題などが、重大である様子。|Keadaan yang gawat dan membawa dampak berat.
+2385|遠くを、見る。|Memandang ke kejauhan dengan saksama.
