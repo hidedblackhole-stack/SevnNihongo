@@ -174,7 +174,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
           )}
 
           {GOOGLE_AUTH_ENABLED && googleReady && (<>
-          <div ref={googleBtnRef} className="w-full flex justify-center min-h-[44px]" />
+          <div ref={googleBtnRef} style={{ colorScheme: 'light' }} className="w-full flex justify-center min-h-[44px]" />
 
           <div className="flex items-center gap-3 text-[10px] text-text-muted uppercase tracking-wider">
             <span className="flex-1 h-px bg-border-subtle" />

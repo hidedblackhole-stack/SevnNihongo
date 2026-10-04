@@ -83,7 +83,7 @@ export async function mountGoogleButton(
     container.innerHTML = '';
     gsi.accounts.id.renderButton(container, {
       type: 'standard',
-      theme: 'outline',
+      theme: document.documentElement.classList.contains('dark') ? 'filled_black' : 'outline',
       size: 'large',
       text: 'continue_with',
       shape: 'pill',
