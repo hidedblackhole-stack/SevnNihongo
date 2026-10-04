@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 import { motion } from 'motion/react';
-import { Play, Flame, ChevronRight } from 'lucide-react';
+import { Play, Flame, ChevronRight, Compass, HelpCircle } from 'lucide-react';
 import { ScrollIcon, QuillIcon } from '../ui/EngravingIcons';
 import { PlayerStats, Mission, StageClearData } from '../../types/rpg';
 import { getEffectiveTier } from '../../utils/ascension';
@@ -8,6 +8,8 @@ import { MAP_REGIONS, getStagesForMap } from '../../data/maps';
 import { TierAvatar } from '../avatar/TierAvatar';
 import { playSound } from '../../utils/audio';
 import { calculateOverallMastery, generateAdaptiveRecommendation } from '../../utils/mastery';
+import { STORAGE_KEY_HOME_GUIDE } from '../../state/storageKeys';
+import { StartGuideModal, GuidePath } from './StartGuideModal';
 
 export interface HomeViewProps {
   stats: PlayerStats;
@@ -15,7 +17,7 @@ export interface HomeViewProps {
   stageProgress?: Record<string, StageClearData>;
   onOpenStatusModal: () => void;
   onNavigateToStage: (stageId: string) => void;
-  onNavigateTab: (tab: 'maps' | 'daily' | 'weekly' | 'settings') => void;
+  onNavigateTab: (tab: 'maps' | 'daily' | 'weekly' | 'settings' | 'library') => void;
   onStartRecall?: () => void;
 }
 
@@ -33,6 +35,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
   // Check if player has completed any stage
   const hasClearedAnyStage = stageProgress ? Object.values(stageProgress).some(s => s?.cleared) : false;
   const isFirstTime = !hasClearedAnyStage;
+  const isNewcomer = isFirstTime && stats.totalExp === 0;
 
   const currentMap = MAP_REGIONS.find(m => m.id === (isFirstTime ? 'map_kana_hiragana' : stats.currentMapId)) || MAP_REGIONS[0];
   const stages = getStagesForMap(currentMap ? currentMap.id : stats.currentMapId);
@@ -47,13 +50,65 @@ export const HomeView: React.FC<HomeViewProps> = ({
   const totalMissionsCount = dailyMissions.length || 4;
   const hasClaimableReward = dailyMissions.some(m => m.completed && !m.claimed);
 
+  const [guideSeen, setGuideSeen] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem(STORAGE_KEY_HOME_GUIDE) === 'true';
+    } catch {
+      return false;
+    }
+  });
+  const [isGuideOpen, setIsGuideOpen] = useState(false);
+
+  const closeGuide = useCallback(() => {
+    setIsGuideOpen(false);
+    setGuideSeen(true);
+    try {
+      localStorage.setItem(STORAGE_KEY_HOME_GUIDE, 'true');
+    } catch {
+      /* penyimpanan tidak tersedia: panduan tetap bisa dibuka lagi */
+    }
+  }, []);
+
+  const handlePickPath = (path: GuidePath) => {
+    closeGuide();
+    if (path === 'foundation') onNavigateToStage('stage_kana_hira_1');
+    else if (path === 'library') onNavigateTab('library');
+    else onNavigateTab('maps');
+  };
+
+  const openGuide = () => {
+    playSound('open_modal', stats.soundEnabled);
+    setIsGuideOpen(true);
+  };
+
+  // Satu "langkah berikutnya" yang menyesuaikan kondisi pemain.
+  const nextStep = (() => {
+    const goStage = (id?: string) => () => (id ? onNavigateToStage(id) : onNavigateTab('maps'));
+
+    if (isNewcomer && !guideSeen) {
+      return { eyebrow: 'MULAI DI SINI', title: 'Kenali SevnQuest', hint: 'Panduan singkat: apa, bagaimana, dan mulai dari mana', icon: Compass, run: openGuide };
+    }
+    if (isNewcomer) {
+      return { eyebrow: 'FOUNDATION', title: 'Mulai Belajar Hiragana', hint: effectiveStage?.title, icon: Play, run: goStage(effectiveStage?.id) };
+    }
+    if (recallCount > 0 && onStartRecall) {
+      return { eyebrow: 'LANGKAH BERIKUTNYA', title: `Ulang ${recallCount} item di Recall`, hint: 'Kunci ingatan sebelum materi baru', icon: Flame, run: onStartRecall };
+    }
+    if (recommendation.prioritySeverity === 'critical') {
+      const run = recommendation.actionType === 'recall' && onStartRecall
+        ? onStartRecall
+        : recommendation.actionType === 'status_modal'
+          ? onOpenStatusModal
+          : goStage(recommendation.targetStageId || effectiveStage?.id);
+      return { eyebrow: 'TITIK LEMAH', title: recommendation.actionLabel, hint: recommendation.title, icon: Play, run };
+    }
+    return { eyebrow: 'LANGKAH BERIKUTNYA', title: 'Lanjut ke Stage Berikutnya', hint: effectiveStage?.title, icon: Play, run: goStage(effectiveStage?.id) };
+  })();
+  const NextIcon = nextStep.icon;
+
   const handleContinue = () => {
     playSound('click', stats.soundEnabled);
-    if (effectiveStage) {
-      onNavigateToStage(effectiveStage.id);
-    } else {
-      onNavigateTab('maps');
-    }
+    nextStep.run();
   };
 
   return (
@@ -133,35 +188,36 @@ export const HomeView: React.FC<HomeViewProps> = ({
         </div>
       </motion.div>
 
-      {/* 3. MAIN PRIMARY CTA: CONTINUE EXPEDITION */}
-      {effectiveStage && (
-        <motion.button
-          animate={isFirstTime ? { y: [0, -4, 0] } : {}}
-          transition={isFirstTime ? { repeat: Infinity, duration: 2, ease: "easeInOut" } : {}}
-          whileHover={{ scale: 1.01 }}
-          whileTap={{ scale: 0.98 }}
-          onClick={handleContinue}
-          className="btn btn-cta flex items-center justify-between text-left group"
-        >
-          <div className="flex items-center gap-3.5 min-w-0 flex-1">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 ui-icon-box rounded-xl text-gold group-hover:scale-105 transition-transform shrink-0">
-              <Play className="w-5 h-5 sm:w-6 sm:h-6 ml-0.5 fill-gold text-gold" />
-            </div>
-            <div className="space-y-0.5 min-w-0 flex-1">
-              <span className="breadcrumb-label text-gold-soft block">
-                WORLD
-              </span>
-              <h3 className="text-base sm:text-lg font-bold text-text-on-btn font-heading truncate">
-                Lanjutkan Belajar di World
-              </h3>
-            </div>
+      {/* 3. MAIN PRIMARY CTA: LANGKAH BERIKUTNYA (adaptif; pemain baru diarahkan ke panduan) */}
+      <motion.button
+        animate={isNewcomer && !guideSeen ? { y: [0, -4, 0] } : {}}
+        transition={isNewcomer && !guideSeen ? { repeat: Infinity, duration: 2, ease: "easeInOut" } : {}}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
+        onClick={handleContinue}
+        className="btn btn-cta flex items-center justify-between text-left group"
+      >
+        <div className="flex items-center gap-3.5 min-w-0 flex-1">
+          <div className="w-11 h-11 sm:w-12 sm:h-12 ui-icon-box rounded-xl text-gold group-hover:scale-105 transition-transform shrink-0">
+            <NextIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gold" />
           </div>
+          <div className="space-y-0.5 min-w-0 flex-1">
+            <span className="breadcrumb-label text-gold-soft block">
+              {nextStep.eyebrow}
+            </span>
+            <h3 className="text-base sm:text-lg font-bold text-text-on-btn font-heading truncate">
+              {nextStep.title}
+            </h3>
+            {nextStep.hint && (
+              <p className="text-[11px] text-text-secondary font-body truncate">{nextStep.hint}</p>
+            )}
+          </div>
+        </div>
 
-          <div className="w-8 h-8 ui-icon-box rounded-full shrink-0 group-hover:translate-x-1 transition-transform">
-            <ChevronRight className="w-5 h-5 text-gold-soft font-bold" />
-          </div>
-        </motion.button>
-      )}
+        <div className="w-8 h-8 ui-icon-box rounded-full shrink-0 group-hover:translate-x-1 transition-transform">
+          <ChevronRight className="w-5 h-5 text-gold-soft font-bold" />
+        </div>
+      </motion.button>
 
       {/* 4. COMPACT ESSENTIAL ACTION LIST (MOMENT-TO-MOMENT ONLY) */}
       <div className="panel p-0 overflow-hidden divide-y divide-border-subtle shadow-lg">
@@ -206,6 +262,25 @@ export const HomeView: React.FC<HomeViewProps> = ({
             </div>
           </div>
         )}
+
+        {/* Row: Panduan SevnQuest (selalu bisa dibuka ulang) */}
+        <div
+          onClick={openGuide}
+          className="p-4 flex items-center justify-between gap-3 hover:bg-surface-elevated/40 cursor-pointer transition-all group"
+        >
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-surface-inset/50 text-indigo border border-border-subtle shrink-0">
+              <HelpCircle className="w-4 h-4" />
+            </div>
+            <div>
+              <span className="text-sm font-bold text-text-primary font-heading group-hover:text-gold transition-colors">
+                Panduan SevnQuest
+              </span>
+              <p className="text-[10px] text-text-secondary font-mono">Cara belajar & jalur untuk pemula</p>
+            </div>
+          </div>
+          <ChevronRight className="w-4 h-4 text-text-secondary group-hover:text-gold group-hover:translate-x-0.5 transition-all" />
+        </div>
 
         {/* Row 2: Daily Missions */}
         <div
@@ -270,6 +345,13 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
         </div>
       </div>
+
+      <StartGuideModal
+        isOpen={isGuideOpen}
+        soundEnabled={stats.soundEnabled}
+        onClose={closeGuide}
+        onPickPath={handlePickPath}
+      />
     </div>
   );
 };
