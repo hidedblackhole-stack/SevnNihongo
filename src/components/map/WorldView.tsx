@@ -15,8 +15,10 @@ import {
   Layers, 
   Library,
   Zap,
-  Castle
+  Castle,
+  Lock
 } from 'lucide-react';
+import { TOWER_ENABLED } from '../../data/featureFlags';
 import { StageClearData, UserDeck, DeckItemCategory } from '../../types/rpg';
 import { Stage, ItemMasteryRecord } from '../../types/content';
 import { playSound } from '../../utils/audio';
@@ -124,7 +126,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
   const [worldMode, setWorldMode] = useState<'arcade' | 'dungeon' | 'stage' | 'tower'>(() => {
     if (navView === 'dungeon') return 'dungeon';
     if (navView === 'maps' || navView === 'stage') return 'stage';
-    if (navView === 'tower') return 'tower';
+    if (navView === 'tower' && TOWER_ENABLED) return 'tower';
     return 'arcade';
   });
 
@@ -159,7 +161,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
     } else if (navView === 'maps' || navView === 'stage') {
       setWorldMode('stage');
     } else if (navView === 'tower') {
-      setWorldMode('tower');
+      setWorldMode(TOWER_ENABLED ? 'tower' : 'arcade');
     } else if (navView === 'arcade' || navView === 'world_hub') {
       setWorldMode('arcade');
     }
@@ -180,6 +182,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
   }, [resetSignal]);
 
   const handleSwitchMode = (mode: 'arcade' | 'dungeon' | 'stage' | 'tower') => {
+    if (mode === 'tower' && !TOWER_ENABLED) return; // Tower ditutup (lihat data/featureFlags.ts)
     playSound('click', soundEnabled);
     setWorldMode(mode);
     if (onNavViewChange) {
@@ -467,17 +470,27 @@ export const WorldView: React.FC<WorldViewProps> = ({
         <button
           type="button"
           onClick={() => handleSwitchMode('tower')}
+          disabled={!TOWER_ENABLED}
+          aria-disabled={!TOWER_ENABLED}
+          title={TOWER_ENABLED ? undefined : 'Menara 1.000 sedang dalam pengembangan'}
           className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 px-2.5 sm:px-3 rounded-xl text-xs sm:text-sm font-bold font-sans transition-all whitespace-nowrap ${
-            worldMode === 'tower'
+            !TOWER_ENABLED
+              ? 'text-text-muted opacity-60 cursor-not-allowed'
+              : worldMode === 'tower'
               ? 'bg-surface-card text-wine-accent shadow-sm border border-border-subtle'
               : 'text-text-muted hover:text-text-primary'
           }`}
         >
-          <Castle className={`w-4 h-4 shrink-0 ${worldMode === 'tower' ? 'text-wine-accent' : ''}`} />
+          {TOWER_ENABLED
+            ? <Castle className={`w-4 h-4 shrink-0 ${worldMode === 'tower' ? 'text-wine-accent' : ''}`} />
+            : <Lock className="w-4 h-4 shrink-0" />}
           <span>
             <span className="inline sm:hidden">Tower</span>
             <span className="hidden sm:inline">Menara 1.000</span>
           </span>
+          {!TOWER_ENABLED && (
+            <span className="px-1.5 py-0.5 rounded-md bg-surface-inset border border-border-subtle text-[9px] font-mono font-bold uppercase tracking-wider">Segera</span>
+          )}
         </button>
 
       </div>
@@ -491,6 +504,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
           playerLevel={playerLevel}
           playerTierIndex={playerTierIndex}
           onOpenTower={() => handleSwitchMode('tower')}
+          towerLocked={!TOWER_ENABLED}
           onRewardPlayer={onRewardPlayer}
           onCompleteStudyItem={onCompleteStudyItem}
         />
@@ -547,7 +561,7 @@ export const WorldView: React.FC<WorldViewProps> = ({
         />
       )}
 
-      {worldMode === 'tower' && (
+      {TOWER_ENABLED && worldMode === 'tower' && (
         /* MODE 4: MENARA 1.000 LANTAI (NIHONGO TOWER) */
         activeTowerFloor !== null ? (
           <div className="w-full">

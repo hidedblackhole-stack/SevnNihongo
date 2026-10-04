@@ -28,6 +28,8 @@ interface ArcadeHubViewProps {
   playerLevel?: number;
   playerTierIndex?: number;
   onOpenTower?: () => void;
+  /** Tower ditutup (dalam pengembangan): banner tetap tampil tetapi tombolnya nonaktif. */
+  towerLocked?: boolean;
   onRewardPlayer?: (exp: number, gold: number) => void;
   onCompleteStudyItem?: (
     moduleId: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss' | 'questions' | 'tryOuts',
@@ -45,6 +47,7 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
   playerLevel = 1,
   playerTierIndex = 0,
   onOpenTower,
+  towerLocked = false,
   onRewardPlayer,
   onCompleteStudyItem,
 }) => {
@@ -71,7 +74,7 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
       </div>
 
       {/* FEATURED: NIHONGO TOWER 1.000 FLOORS BANNER */}
-      {onOpenTower && (
+      {(onOpenTower || towerLocked) && (
         <div className="panel panel-stitched p-5 rounded-3xl bg-surface-card border border-border-subtle shadow-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3.5">
             <div className="w-12 h-12 rounded-2xl bg-wine-accent text-white flex items-center justify-center font-heading font-black text-xl shrink-0 shadow-md">
@@ -83,7 +86,7 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
                   Mode Unggulan
                 </span>
                 <span className="px-2 py-0.5 rounded-full bg-gold/15 border border-border-subtle text-gold text-[10px] font-black tracking-wider uppercase font-mono">
-                  Beta Test
+                  {towerLocked ? 'Dalam Pengembangan' : 'Beta Test'}
                 </span>
                 <span className="text-xs text-text-muted font-bold font-mono">
                   1.000 Lantai
@@ -92,7 +95,7 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
               <h3 className="text-base sm:text-lg font-black font-heading text-text-primary mt-0.5 flex items-center gap-2 flex-wrap">
                 <span>Menara 1.000 Lantai (Nihongo Tower)</span>
                 <span className="text-xs sm:text-sm font-semibold text-gold font-mono tracking-tight">
-                  (Beta Test)
+                  {towerLocked ? '(Segera Hadir)' : '(Beta Test)'}
                 </span>
               </h3>
               <p className="text-xs text-text-secondary mt-0.5 max-w-xl">
@@ -103,11 +106,12 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
 
           <button
             type="button"
-            onClick={onOpenTower}
-            className="btn-physical-primary w-full sm:w-auto px-5 py-3 rounded-2xl font-bold text-xs font-heading flex items-center justify-center gap-2 transition-all cursor-pointer shrink-0"
+            onClick={towerLocked ? undefined : onOpenTower}
+            disabled={towerLocked}
+            className="btn-physical-primary w-full sm:w-auto px-5 py-3 rounded-2xl font-bold text-xs font-heading flex items-center justify-center gap-2 transition-all cursor-pointer shrink-0 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <span>Daki Menara Sekarang</span>
-            <ChevronRight className="w-4 h-4" />
+            <span>{towerLocked ? 'Segera Hadir' : 'Daki Menara Sekarang'}</span>
+            {!towerLocked && <ChevronRight className="w-4 h-4" />}
           </button>
         </div>
       )}
