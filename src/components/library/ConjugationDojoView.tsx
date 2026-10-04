@@ -8,6 +8,7 @@ import {
   ArrowRight,
   ChevronRight,
   Flame,
+  FlaskConical,
 } from 'lucide-react';
 import {
   CONJUGATION_FORMS_INFO,
@@ -20,6 +21,7 @@ import {
 } from '../../data/conjugationRules';
 import { speakJapanese, playSound } from '../../utils/audio';
 import { RubyText } from '../learning/RubyText';
+import { ConjugationSandboxModal } from './ConjugationSandboxModal';
 
 interface ConjugationDojoViewProps {
   soundEnabled?: boolean;
@@ -45,6 +47,13 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
   const [streak, setStreak] = useState(0);
   const [totalScore, setTotalScore] = useState(0);
   const [totalAnswered, setTotalAnswered] = useState(0);
+
+  // Sandbox "Coba dengan Kotoba" (eksplorasi, tidak memberi EXP/mastery)
+  const [sandboxFormId, setSandboxFormId] = useState<string | null>(null);
+  const handleOpenSandbox = (formId: string) => {
+    playSound('click', soundEnabled);
+    setSandboxFormId(formId);
+  };
 
   // Start Drill Quiz
   const handleStartDrill = (formId: string = 'all') => {
@@ -472,15 +481,26 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
                     </h3>
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={() => handleStartDrill(form.id)}
-                    className="btn-physical-secondary flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold font-heading text-indigo transition-all self-start sm:self-auto"
-                  >
-                    <Flame className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
-                    <span>Latih Bentuk Ini</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
+                  <div className="flex flex-col sm:flex-row gap-2 self-stretch sm:self-auto">
+                    <button
+                      type="button"
+                      onClick={() => handleStartDrill(form.id)}
+                      className="btn-physical-secondary flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold font-heading text-indigo transition-all"
+                    >
+                      <Flame className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
+                      <span>Latih Bentuk Ini</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleOpenSandbox(form.id)}
+                      className="btn-physical-secondary flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold font-heading text-indigo transition-all"
+                    >
+                      <FlaskConical className="w-3.5 h-3.5 text-amber-300" />
+                      <span>Coba dengan Kotoba</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
 
                 <p className="text-xs sm:text-sm text-text-secondary leading-relaxed">
@@ -561,15 +581,26 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
                     </h3>
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={() => handleStartDrill(form.id)}
-                    className="btn-physical-secondary flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold font-heading text-wine-accent transition-all self-start sm:self-auto"
-                  >
-                    <Flame className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
-                    <span>Latih Bentuk Ini</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
+                  <div className="flex flex-col sm:flex-row gap-2 self-stretch sm:self-auto">
+                    <button
+                      type="button"
+                      onClick={() => handleStartDrill(form.id)}
+                      className="btn-physical-secondary flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold font-heading text-wine-accent transition-all"
+                    >
+                      <Flame className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
+                      <span>Latih Bentuk Ini</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleOpenSandbox(form.id)}
+                      className="btn-physical-secondary flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold font-heading text-wine-accent transition-all"
+                    >
+                      <FlaskConical className="w-3.5 h-3.5 text-amber-300" />
+                      <span>Coba dengan Kotoba</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
 
                 <p className="text-xs sm:text-sm text-text-secondary leading-relaxed">
@@ -763,6 +794,15 @@ export const ConjugationDojoView: React.FC<ConjugationDojoViewProps> = ({
             ))}
           </div>
         </div>
+      )}
+
+      {sandboxFormId && (
+        <ConjugationSandboxModal
+          key={sandboxFormId}
+          formId={sandboxFormId}
+          soundEnabled={soundEnabled}
+          onClose={() => setSandboxFormId(null)}
+        />
       )}
     </div>
   );

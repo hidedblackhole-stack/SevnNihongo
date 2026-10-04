@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import type { DeckItemCategory } from '../../types/rpg';
 import { AnimatePresence } from 'motion/react';
-import { Search, Filter, ChevronDown, Bookmark, LayoutGrid, List, BookOpen, Zap, Languages, X, Trash2, ChevronRight } from 'lucide-react';
+import { Search, Filter, ChevronDown, Bookmark, LayoutGrid, List, BookOpen, Zap, Trash2, ChevronRight } from 'lucide-react';
 import { ScrollIcon } from '../ui/EngravingIcons';
 import { BUNPOU_DATABASE } from '../../data/bunpou';
 import { ALL_GRAMMAR_FUNCTION_CATEGORIES } from '../../data/bunpouMetadata';
@@ -12,8 +12,8 @@ import { playSound } from '../../utils/audio';
 import { UserDeck } from '../../types/rpg';
 import { isItemBookmarked } from '../../utils/decks';
 import { getCanonicalGrammarTitle, getGrammarTitleInfo } from '../../utils/bunpouTitleUtils';
-import { matchBunpouItem } from '../../utils/bunpouSearchUtils';
-import { convertRomajiToKana } from '../../utils/imeEngine';
+import { searchJapanese, createSubsetIndex } from '../../engine/search/universalSearch';
+import { JapaneseSearchInput } from '../common/JapaneseSearchInput';
 import { DeckBookmarkPicker } from '../deck/DeckBookmarkPicker';
 import { getBunpouCategoryTags } from '../../utils/bunpouSkillAdapter';
 
@@ -107,8 +107,17 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
     return counts;
   }, [allBunpou]);
 
+  const bunpouSearchIndex = useMemo(() => createSubsetIndex({ bunpou: allBunpou }), [allBunpou]);
+
   const filteredBunpou = useMemo(() => {
-    return allBunpou.filter((item) => {
+    // Pencarian teks ditangani engine universal (rumus, varian, judul kanonik, romaji, arti, fungsi),
+    // hasilnya terurut relevansi. Filter level/fungsi diterapkan sesudahnya.
+    const hasQuery = Boolean(searchQuery.trim());
+    const candidates = hasQuery
+      ? searchJapanese(searchQuery, { entityTypes: ['bunpou'], index: bunpouSearchIndex, limit: Infinity }).map(r => r.entity as BunpouItem)
+      : allBunpou;
+
+    return candidates.filter((item) => {
       // 1. Level Filter
       if (levelFilter !== 'all' && item.level !== levelFilter) {
         return false;
@@ -122,11 +131,9 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
         if (!matchesCategory) return false;
       }
 
-      // 3. Text Search Query (supports formula, variants, canonical title, romaji, meaning, and function categories)
-      if (!searchQuery.trim()) return true;
-      return matchBunpouItem(item, searchQuery);
+      return true;
     });
-  }, [allBunpou, levelFilter, functionFilter, searchQuery]);
+  }, [allBunpou, bunpouSearchIndex, levelFilter, functionFilter, searchQuery]);
 
   const displayedBunpou = useMemo(() => {
     return filteredBunpou.slice(0, visibleCount);
@@ -206,51 +213,13 @@ export const BunpouLibraryView: React.FC<BunpouLibraryViewProps> = ({
         <>
           {/* Search & Level Filter */}
           <div className="flex flex-col sm:flex-row gap-3">
-        <div className="relative flex-1 flex items-center">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted pointer-events-none" />
-          <input
-            type="text"
-            placeholder={imeActive ? "Cari rumus (romaji → kana)..." : "Cari rumus, arti, fungsi..."}
-            value={searchQuery}
-            onChange={(e) => {
-              const raw = e.target.value;
-              const converted = imeActive ? convertRomajiToKana(raw) : raw;
-              setSearchQuery(converted);
-              setVisibleCount(40);
-            }}
-            className="w-full pl-10 pr-20 py-3 bg-surface-inset border border-border-subtle rounded-2xl text-sm text-text-primary placeholder:text-text-muted focus:outline-hidden focus:border-border-primary transition-all shadow-inner font-medium font-jp"
-          />
-
-          <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={() => setSearchQuery('')}
-                className="w-6 h-6 rounded-lg text-text-muted hover:text-text-primary hover:bg-surface-card flex items-center justify-center transition-all cursor-pointer"
-                title="Hapus pencarian"
-              >
-                <X className="w-3.5 h-3.5" />
-              </button>
-            )}
-
-            <button
-              type="button"
-              onClick={() => {
-                playSound('click', soundEnabled);
-                setImeActive(prev => !prev);
-              }}
-              className={`px-2 py-1 rounded-lg text-xs font-mono font-bold flex items-center gap-1 transition-all cursor-pointer select-none ${
-                imeActive
-                  ? 'bg-gold/20 text-gold border border-border-subtle shadow-xs'
-                  : 'bg-surface-card text-text-muted border border-border-subtle hover:text-text-primary'
-              }`}
-              title={imeActive ? 'IME Jepang Aktif (Romaji -> Kana)' : 'Mode Huruf Latin'}
-            >
-              <Languages className="w-3.5 h-3.5" />
-              <span>{imeActive ? 'あ' : 'A'}</span>
-            </button>
-          </div>
-        </div>
+        <JapaneseSearchInput
+          value={searchQuery}
+          onChange={(v) => { setSearchQuery(v); setVisibleCount(40); }}
+          placeholderIme="Cari rumus (romaji → kana)..."
+          placeholderLatin="Cari rumus, arti, fungsi..."
+          soundEnabled={soundEnabled}
+        />
 
         <div className="relative shrink-0">
           <button

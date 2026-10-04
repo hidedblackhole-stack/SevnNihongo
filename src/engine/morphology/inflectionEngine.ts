@@ -327,3 +327,46 @@ export function conjugateAdjective(
 
   return { word: cleanJp, reading: cleanRd, type, forms };
 }
+
+/**
+ * Penjelasan langkah perubahan bentuk verba.
+ * Hasil akhir SELALU diambil dari conjugateVerb(); langkah hanya diturunkan dari selisih
+ * bentuk kamus → hasil, jadi tidak ada rule konjugasi kedua.
+ */
+export interface VerbConjugationStep {
+  kind: 'base' | 'remove' | 'add';
+  /** Teks utuh setelah langkah ini. */
+  text: string;
+  /** Potongan yang dibuang / ditambahkan (kosong untuk langkah 'base'). */
+  part: string;
+}
+
+export interface VerbConjugationExplanation {
+  group: VerbGroup;
+  base: { japanese: string; reading: string };
+  result: { japanese: string; reading: string };
+  steps: VerbConjugationStep[];
+}
+
+export function explainVerbConjugation(
+  word: string,
+  reading: string | undefined,
+  form: ConjugationForm
+): VerbConjugationExplanation | null {
+  const res = conjugateVerb(word, reading);
+  const base = res.forms.jisho;
+  const result = res.forms[form];
+  if (!base || !result || !result.japanese) return null;
+
+  let common = 0;
+  const max = Math.min(base.japanese.length, result.japanese.length);
+  while (common < max && base.japanese[common] === result.japanese[common]) common++;
+
+  const removed = base.japanese.slice(common);
+  const added = result.japanese.slice(common);
+  const steps: VerbConjugationStep[] = [{ kind: 'base', text: base.japanese, part: '' }];
+  if (removed) steps.push({ kind: 'remove', text: base.japanese.slice(0, common), part: removed });
+  if (added) steps.push({ kind: 'add', text: result.japanese, part: added });
+
+  return { group: res.group, base, result, steps };
+}

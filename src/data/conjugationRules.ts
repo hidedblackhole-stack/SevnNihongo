@@ -1,5 +1,7 @@
 import { Question, KotobaItem } from '../types/content';
-import { conjugateVerb } from '../engine/morphology/inflectionEngine';
+import { conjugateVerb, explainVerbConjugation, VerbConjugationExplanation } from '../engine/morphology/inflectionEngine';
+import type { ConjugationForm } from '../engine/types';
+import { getWordTypeLabel } from '../utils/wordType';
 import { fisherYatesShuffle } from '../utils/smartRandomizer';
 
 export type VerbGroup = 'godan' | 'ichidan' | 'irregular';
@@ -1243,3 +1245,34 @@ export function getConjugatedMeaningId(baseMeaning: string, formId: string): str
   }
 }
 
+
+/* ==========================================================================
+   SANDBOX "COBA DENGAN KOTOBA": validasi Kotoba kanonik terhadap bentuk yang dibuka.
+   Hasil tetap berasal dari engine morfologi (explainVerbConjugation).
+   ========================================================================== */
+
+const DICTIONARY_FORM_ENDING = /[うくぐすつぬぶむる]$/;
+
+export type KotobaSandboxResult =
+  | { valid: true; explanation: VerbConjugationExplanation; meaningId: string }
+  | { valid: false; reason: string };
+
+export function tryKotobaWithForm(item: KotobaItem, formId: string): KotobaSandboxResult {
+  const display = getTargetFormDisplay(formId);
+  if (item.wordType !== 'verb') {
+    return {
+      valid: false,
+      reason: `${display.badge} berlaku untuk verba, sedangkan ${item.word} adalah ${getWordTypeLabel(item.wordType).toLowerCase()}.`,
+    };
+  }
+  const w = item.word.trim();
+  const r = (item.reading || w).trim();
+  if (!DICTIONARY_FORM_ENDING.test(w) && !DICTIONARY_FORM_ENDING.test(r)) {
+    return { valid: false, reason: `${w} tidak berakhiran bentuk kamus verba (u, ku, gu, su, tsu, nu, bu, mu, ru), jadi aturan ${display.badge} tidak bisa diterapkan.` };
+  }
+  const explanation = explainVerbConjugation(w, r, formId as ConjugationForm);
+  if (!explanation) {
+    return { valid: false, reason: `Mesin konjugasi belum menghasilkan ${display.badge} untuk ${w}.` };
+  }
+  return { valid: true, explanation, meaningId: getConjugatedMeaningId(item.meaningId, formId) };
+}

@@ -1,13 +1,14 @@
 import React, { useState, useMemo, useDeferredValue } from 'react';
 import type { DeckItemCategory } from '../../types/rpg';
-import { Search, Filter, ChevronDown, BookOpen, Bookmark, Languages, X, Trash2, LayoutGrid, Table } from 'lucide-react';
+import { Filter, ChevronDown, BookOpen, Bookmark, Trash2, LayoutGrid, Table } from 'lucide-react';
 import { KANJI_DATABASE } from '../../data/kanji';
 import { KanjiItem, ItemMasteryRecord } from '../../types/content';
 import { KanjiDetailModal } from './KanjiDetailModal';
 import { playSound } from '../../utils/audio';
 import { UserDeck } from '../../types/rpg';
 import { isItemBookmarked } from '../../utils/decks';
-import { convertRomajiToKana, createJapaneseQueryMatcher } from '../../utils/imeEngine';
+import { searchJapanese, createSubsetIndex } from '../../engine/search/universalSearch';
+import { JapaneseSearchInput } from '../common/JapaneseSearchInput';
 import { DeckBookmarkPicker } from '../deck/DeckBookmarkPicker';
 
 const SUUJI_CHARACTERS = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '百', '千', '万', '零'];
@@ -201,7 +202,6 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const deferredQuery = useDeferredValue(searchQuery);
-  const [imeActive, setImeActive] = useState(true);
   const [visibleCount, setVisibleCount] = useState(200);
   const [viewMode, setViewMode] = useState<'gojuuon' | 'grid'>('gojuuon');
 
@@ -272,7 +272,6 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
   const kanjiSearchIndex = useMemo(() => {
     return allKanji.map(item => ({
       item,
-      searchStr: `${item.character} ${item.meaningId || ''} ${item.meaningEn || ''} ${item.radical || ''} ${item.radicalName || ''} ${(item.onyomi || []).join(' ')} ${(item.kunyomi || []).join(' ')}`.toLowerCase(),
       isHiragana: HIRAGANA_ORDER.includes(item.character) || item.radical === 'Hiragana',
       isKatakana: KATAKANA_ORDER.includes(item.character) || item.radical === 'Katakana',
       isSuuji: suujiSet.has(item.character),
@@ -329,10 +328,18 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
     return counts;
   }, [allKanji, suujiSet]);
 
+  const kanjiSearchDocs = useMemo(() => createSubsetIndex({ kanji: allKanji }), [allKanji]);
+
   const filteredKanji = useMemo(() => {
-    const q = deferredQuery.toLowerCase().trim();
-    const hasQuery = Boolean(q);
-    const matcher = createJapaneseQueryMatcher(q);
+    const hasQuery = Boolean(deferredQuery.trim());
+
+    // Pencarian teks: engine universal (urutan relevansi). null = tanpa query.
+    let rankOf: Map<string, number> | null = null;
+    if (hasQuery) {
+      rankOf = new Map();
+      searchJapanese(deferredQuery, { entityTypes: ['kanji'], index: kanjiSearchDocs, limit: Infinity })
+        .forEach((r, i) => rankOf!.set(r.primaryText, i));
+    }
 
     const filtered: KanjiItem[] = [];
 
@@ -355,7 +362,7 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
       }
 
       // 2. Search Query Match
-      if (hasQuery && !matcher.matchesText(entry.searchStr)) {
+      if (rankOf && !rankOf.has(item.character)) {
         continue;
       }
 
@@ -378,8 +385,14 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
       return [...filtered].sort((a, b) => getKanaRank(a) - getKanaRank(b));
     }
 
+    // Dengan query: urutan relevansi dari engine (kecuali mode Kana yang punya urutan baku).
+    if (rankOf) {
+      const ranks = rankOf;
+      return [...filtered].sort((a, b) => ranks.get(a.character)! - ranks.get(b.character)!);
+    }
+
     return filtered;
-  }, [kanjiSearchIndex, levelFilter, kanaCategory, deferredQuery, isDeckKanaOnly]);
+  }, [kanjiSearchIndex, kanjiSearchDocs, levelFilter, kanaCategory, deferredQuery, isDeckKanaOnly]);
 
   const displayedKanji = filteredKanji.slice(0, visibleCount);
 
@@ -436,51 +449,14 @@ export const KanjiLibraryView: React.FC<KanjiLibraryViewProps> = ({
       <div className="panel panel-stitched p-4 sm:p-5 rounded-2xl border border-border-subtle shadow-sm space-y-4">
         <div className="flex flex-col md:flex-row gap-3">
           {/* Search Input with Japanese IME Toggle */}
-          <div className="relative flex-1 flex items-center">
-            <Search className="w-4 h-4 text-text-muted absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => {
-                const raw = e.target.value;
-                const converted = imeActive ? convertRomajiToKana(raw) : raw;
-                setSearchQuery(converted);
-                setVisibleCount(100);
-              }}
-              placeholder={imeActive ? "Cari kanji/kana (romaji → kana)..." : "Cari kanji, arti, onyomi, kunyomi..."}
-              className="w-full pl-10 pr-20 py-2.5 rounded-xl bg-surface-inset border border-border-subtle text-text-primary placeholder:text-text-muted text-sm font-medium focus:outline-hidden focus:border-border-muted font-jp"
-            />
-
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
-              {searchQuery && (
-                <button
-                  type="button"
-                  onClick={() => setSearchQuery('')}
-                  className="w-6 h-6 rounded-lg text-text-muted hover:text-text-primary hover:bg-surface-card flex items-center justify-center transition-all cursor-pointer"
-                  title="Hapus pencarian"
-                >
-                  <X className="w-3.5 h-3.5" />
-                </button>
-              )}
-
-              <button
-                type="button"
-                onClick={() => {
-                  playSound('click', soundEnabled);
-                  setImeActive(prev => !prev);
-                }}
-                className={`px-2 py-1 rounded-lg text-xs font-mono font-bold flex items-center gap-1 transition-all cursor-pointer select-none ${
-                  imeActive
-                    ? 'bg-gold/20 text-gold border border-border-subtle shadow-xs'
-                    : 'bg-surface-card text-text-muted border border-border-subtle hover:text-text-primary'
-                }`}
-                title={imeActive ? 'IME Jepang Aktif (Romaji -> Kana)' : 'Mode Huruf Latin'}
-              >
-                <Languages className="w-3.5 h-3.5" />
-                <span>{imeActive ? 'あ' : 'A'}</span>
-              </button>
-            </div>
-          </div>
+          <JapaneseSearchInput
+            value={searchQuery}
+            onChange={(v) => { setSearchQuery(v); setVisibleCount(100); }}
+            placeholderIme="Cari kanji/kana (romaji → kana)..."
+            placeholderLatin="Cari kanji, arti, onyomi, kunyomi..."
+            soundEnabled={soundEnabled}
+            inputClassName="w-full pl-10 pr-20 py-2.5 rounded-xl bg-surface-inset border border-border-subtle text-text-primary placeholder:text-text-muted text-sm font-medium focus:outline-hidden focus:border-border-muted font-jp"
+          />
 
           {/* Level Dropdown for Mobile / Desktop */}
           <div className="relative shrink-0">

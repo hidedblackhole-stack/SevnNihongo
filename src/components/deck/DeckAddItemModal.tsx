@@ -1,12 +1,14 @@
 import React, { useState, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Search, Plus, Check, CheckSquare, Square } from 'lucide-react';
+import { X, Plus, Check, CheckSquare, Square } from 'lucide-react';
 import { UserDeck, DeckItemCategory } from '../../types/rpg';
 import { KOTOBA_DATABASE } from '../../data/kotoba';
 import { KANJI_DATABASE } from '../../data/kanji';
 import { BUNPOU_DATABASE } from '../../data/bunpou';
 import { playSound } from '../../utils/audio';
+import { searchJapanese } from '../../engine/search/universalSearch';
+import { JapaneseSearchInput } from '../common/JapaneseSearchInput';
 import { useBackButton } from '../../hooks/useBackButton';
 
 interface SearchResultItem {
@@ -51,8 +53,10 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
   }, [targetDeck.items]);
 
   // Unified list of searchable items
+  // Hanya dibangun saat modal dibuka (sebelumnya ikut dibangun setiap Buku Saku dibuka).
   const allSearchableItems: SearchResultItem[] = useMemo(() => {
     const results: SearchResultItem[] = [];
+    if (!isOpen) return results;
 
     // Kotoba
     for (const item of Object.values(KOTOBA_DATABASE)) {
@@ -99,24 +103,34 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
     }
 
     return results;
-  }, []);
+  }, [isOpen]);
+
+  const itemByKey = useMemo(
+    () => new Map(allSearchableItems.map(it => [`${it.category}:${it.id}`, it])),
+    [allSearchableItems]
+  );
 
   const filteredItems = useMemo(() => {
-    const q = searchQuery.toLowerCase().trim();
+    const passes = (item: SearchResultItem) =>
+      (categoryFilter === 'all' || item.category === categoryFilter) &&
+      (levelFilter === 'all' || item.level === levelFilter);
 
-    return allSearchableItems.filter(item => {
-      if (categoryFilter !== 'all' && item.category !== categoryFilter) return false;
-      if (levelFilter !== 'all' && item.level !== levelFilter) return false;
+    // Pencarian: engine universal (romaji/kana/kanji/arti, terurut relevansi, ID kanonik).
+    if (searchQuery.trim()) {
+      const hits = searchJapanese(searchQuery, {
+        entityTypes: categoryFilter === 'all' ? undefined : [categoryFilter],
+        limit: Infinity,
+      });
+      const out: SearchResultItem[] = [];
+      for (const hit of hits) {
+        const item = itemByKey.get(`${hit.entityType}:${hit.entityId}`);
+        if (item && passes(item)) out.push(item);
+      }
+      return out;
+    }
 
-      if (!q) return true;
-
-      const titleMatch = item.title.toLowerCase().includes(q);
-      const readingMatch = item.reading ? item.reading.toLowerCase().includes(q) : false;
-      const meaningMatch = item.meaning.toLowerCase().includes(q);
-
-      return titleMatch || readingMatch || meaningMatch;
-    });
-  }, [allSearchableItems, searchQuery, categoryFilter, levelFilter]);
+    return allSearchableItems.filter(passes);
+  }, [allSearchableItems, itemByKey, searchQuery, categoryFilter, levelFilter]);
 
   const displayedItems = useMemo(() => {
     return filteredItems.slice(0, visibleCount);
@@ -217,27 +231,15 @@ export const DeckAddItemModal: React.FC<DeckAddItemModalProps> = ({
 
           {/* Search & Filter Bar */}
           <div className="p-4 border-b border-border-subtle space-y-3 bg-surface-card shrink-0">
-            <div className="relative">
-              <Search className="w-4 h-4 text-text-muted absolute left-3.5 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  setVisibleCount(30);
-                }}
-                placeholder="Cari kanji, kata, pola, arti..."
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-surface-inset border border-border-subtle focus:border-border-primary focus:outline-none text-xs sm:text-sm text-text-primary font-medium"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary text-xs font-bold"
-                >
-                  Clear
-                </button>
-              )}
-            </div>
+            <JapaneseSearchInput
+              value={searchQuery}
+              onChange={(v) => { setSearchQuery(v); setVisibleCount(30); }}
+              placeholderIme="Cari kanji, kata, pola (romaji → kana)..."
+              placeholderLatin="Cari kanji, kata, pola, arti..."
+              soundEnabled={soundEnabled}
+              className="w-full"
+              inputClassName="w-full pl-10 pr-20 py-2.5 rounded-xl bg-surface-inset border border-border-subtle focus:border-border-primary focus:outline-none text-xs sm:text-sm text-text-primary font-medium font-jp"
+            />
 
             <div className="flex flex-wrap items-center gap-2 pb-1">
               {/* Category Pills */}

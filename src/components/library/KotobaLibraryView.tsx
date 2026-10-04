@@ -2,7 +2,7 @@ import { getWordTypeLabel } from '../../utils/wordType';
 import React, { useState, useMemo, useDeferredValue } from 'react';
 import type { DeckItemCategory } from '../../types/rpg';
 import { AnimatePresence } from 'motion/react';
-import { Search, Volume2, Filter, ChevronDown, Bookmark, Languages, X, Trash2 } from 'lucide-react';
+import { Volume2, Filter, ChevronDown, Bookmark, Trash2 } from 'lucide-react';
 import { BookIcon } from '../ui/EngravingIcons';
 import { KOTOBA_DATABASE } from '../../data/kotoba';
 import { playSound, speakJapanese } from '../../utils/audio';
@@ -11,7 +11,8 @@ import { KotobaItem, ItemMasteryRecord } from '../../types/content';
 import { KotobaDetailModal } from './KotobaDetailModal';
 import { UserDeck } from '../../types/rpg';
 import { isItemBookmarked } from '../../utils/decks';
-import { convertRomajiToKana, createJapaneseQueryMatcher } from '../../utils/imeEngine';
+import { searchJapanese, createSubsetIndex } from '../../engine/search/universalSearch';
+import { JapaneseSearchInput } from '../common/JapaneseSearchInput';
 import { parseReadingVariations } from '../../utils/readingHighlightUtils';
 import { DeckBookmarkPicker } from '../deck/DeckBookmarkPicker';
 
@@ -112,7 +113,6 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const deferredQuery = useDeferredValue(searchQuery);
-  const [imeActive, setImeActive] = useState(true);
   const [visibleCount, setVisibleCount] = useState(50);
   const [levelFilter, setLevelFilter] = useState<string>('all');
   const [selectedUnit, setSelectedUnit] = useState<string>('all');
@@ -125,11 +125,10 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
     return Object.values(KOTOBA_DATABASE);
   }, [items]);
 
-  // Pre-index Kotoba once: pre-lowercases and caches search strings for 8,500+ items (reduces search time from ~1000ms to ~1ms)
+  // Index filter (level/unit/prioritas) dibangun sekali. Pencarian teks ditangani engine universal.
   const searchIndex = useMemo(() => {
     return allKotoba.map(item => ({
       item,
-      searchStr: `${item.word || ''} ${item.reading || ''} ${item.meaningId || ''} ${item.meaningJa || ''} ${item.unitName || ''}`.toLowerCase(),
       isKaigo: Boolean(item.tags?.includes('Kaigo')),
       isSSW: Boolean(item.tags?.includes('SSW') || item.jlpt === 'SSW'),
       priorityTier: getKotobaPriority(item).tier,
@@ -162,50 +161,56 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
     return Array.from(unitMap.entries()).map(([name, count]) => ({ name, count }));
   }, [allKotoba]);
 
+  const kotobaSearchIndex = useMemo(() => createSubsetIndex({ kotoba: allKotoba }), [allKotoba]);
+  const entryById = useMemo(() => new Map(searchIndex.map(e => [e.item.id, e])), [searchIndex]);
+
   const filteredKotoba = useMemo(() => {
-    const q = deferredQuery.toLowerCase().trim();
-    const hasQuery = Boolean(q);
-    const matcher = createJapaneseQueryMatcher(q);
+    const hasQuery = Boolean(deferredQuery.trim());
 
     if (!hasQuery && levelFilter === 'all' && selectedUnit === 'all' && priorityFilter === 'all') {
       return allKotoba;
     }
 
-    const results: KotobaItem[] = [];
-    for (let i = 0; i < searchIndex.length; i++) {
-      const entry = searchIndex[i];
+    const passesFilters = (entry: (typeof searchIndex)[number]) => {
       const item = entry.item;
 
       // 1. Level filter check
       if (levelFilter !== 'all') {
         if (levelFilter === 'Kaigo') {
-          if (!entry.isKaigo) continue;
+          if (!entry.isKaigo) return false;
         } else if (levelFilter === 'SSW') {
-          if (!entry.isSSW) continue;
+          if (!entry.isSSW) return false;
         } else if (item.jlpt !== levelFilter) {
-          continue;
+          return false;
         }
       }
 
       // 2. Unit filter check (Kaigo)
-      if (levelFilter === 'Kaigo' && selectedUnit !== 'all') {
-        if (item.unitName !== selectedUnit) continue;
-      }
+      if (levelFilter === 'Kaigo' && selectedUnit !== 'all' && item.unitName !== selectedUnit) return false;
 
       // 3. Priority filter check
-      if (priorityFilter !== 'all' && entry.priorityTier !== priorityFilter) {
-        continue;
-      }
+      if (priorityFilter !== 'all' && entry.priorityTier !== priorityFilter) return false;
 
-      // 4. Instant query check (single fast substring check)
-      if (hasQuery && !matcher.matchesText(entry.searchStr)) {
-        continue;
-      }
+      return true;
+    };
 
-      results.push(item);
+    const results: KotobaItem[] = [];
+
+    // 4. Pencarian: hasil sudah diurutkan relevansi oleh engine universal.
+    if (hasQuery) {
+      const hits = searchJapanese(deferredQuery, { entityTypes: ['kotoba'], index: kotobaSearchIndex, limit: Infinity });
+      for (const hit of hits) {
+        const entry = entryById.get(hit.entityId);
+        if (entry && passesFilters(entry)) results.push(entry.item);
+      }
+      return results;
+    }
+
+    for (const entry of searchIndex) {
+      if (passesFilters(entry)) results.push(entry.item);
     }
     return results;
-  }, [searchIndex, allKotoba, deferredQuery, levelFilter, selectedUnit, priorityFilter]);
+  }, [searchIndex, entryById, kotobaSearchIndex, allKotoba, deferredQuery, levelFilter, selectedUnit, priorityFilter]);
 
   const displayedKotoba = filteredKotoba.slice(0, visibleCount);
 
@@ -264,51 +269,13 @@ export const KotobaLibraryView: React.FC<KotobaLibraryViewProps> = ({
 
       {/* Filters and Search */}
       <div className="flex flex-col sm:flex-row gap-3">
-        <div className="relative flex-1 flex items-center">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted pointer-events-none" />
-          <input
-            type="text"
-            placeholder={imeActive ? "Cari kata (romaji → kana)..." : "Cari kata, romaji, arti..."}
-            value={searchQuery}
-            onChange={(e) => {
-              const raw = e.target.value;
-              const converted = imeActive ? convertRomajiToKana(raw) : raw;
-              setSearchQuery(converted);
-              setVisibleCount(50); // reset visible count on search
-            }}
-            className="w-full pl-10 pr-20 py-3 bg-surface-inset border border-border-subtle rounded-2xl text-sm text-text-primary placeholder:text-text-muted focus:outline-hidden focus:border-border-primary transition-all shadow-inner font-medium font-jp"
-          />
-
-          <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={() => setSearchQuery('')}
-                className="w-6 h-6 rounded-lg text-text-muted hover:text-text-primary hover:bg-surface-card flex items-center justify-center transition-all cursor-pointer"
-                title="Hapus pencarian"
-              >
-                <X className="w-3.5 h-3.5" />
-              </button>
-            )}
-
-            <button
-              type="button"
-              onClick={() => {
-                playSound('click', soundEnabled);
-                setImeActive(prev => !prev);
-              }}
-              className={`px-2 py-1 rounded-lg text-xs font-mono font-bold flex items-center gap-1 transition-all cursor-pointer select-none ${
-                imeActive
-                  ? 'bg-gold/20 text-gold border border-border-subtle shadow-xs'
-                  : 'bg-surface-card text-text-muted border border-border-subtle hover:text-text-primary'
-              }`}
-              title={imeActive ? 'IME Jepang Aktif (Romaji -> Kana)' : 'Mode Huruf Latin'}
-            >
-              <Languages className="w-3.5 h-3.5" />
-              <span>{imeActive ? 'あ' : 'A'}</span>
-            </button>
-          </div>
-        </div>
+        <JapaneseSearchInput
+          value={searchQuery}
+          onChange={(v) => { setSearchQuery(v); setVisibleCount(50); }}
+          placeholderIme="Cari kata (romaji → kana)..."
+          placeholderLatin="Cari kata, romaji, arti..."
+          soundEnabled={soundEnabled}
+        />
 
         <div className="relative shrink-0">
           <button
