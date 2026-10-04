@@ -1,0 +1,300 @@
+n1_1929|人を、表す言葉。|Berarti orang; dipakai sebagai akhiran kebangsaan atau profesi.
+n1_1936|国や、社会を、作る、人々。|Rakyat atau penduduk suatu negara.
+n1_1937|他の人の、見る目。|Pandangan atau perhatian orang lain di sekitar.
+n1_1938|刃物の、切る、部分。|Bagian tajam pada pisau atau pedang.
+n1_1939|ごみを、はき取る、道具。|Alat pengangkut sampah hasil sapuan.
+n1_1940|非常に。たいへん。|Sangat atau amat dalam tingkat tinggi.
+n1_1941|なくなって、しまう。|Habis sama sekali; juga berakhir.
+n1_1942|力の、かぎり、行う。|Mencurahkan tenaga; juga mengabdi atau menghabiskan sesuatu.
+n1_1943|動きが、すばやい、様子。|Cepat dan sigap.
+n1_1944|遠慮が、なくて、あつかましい。|Tidak tahu malu dan kurang sungkan.
+n1_1945|計画する。工夫して、行う。|Merencanakan atau mengusahakan sesuatu; juga menipu.
+n1_1946|息を、吹いて、楽器を、鳴らすこと。|Memainkan alat musik tiup.
+n1_1947|上から、下へ、たれ下がる。しずくが、落ちる。|Menggantung ke bawah; juga menetes atau mengeluarkan cairan.
+n1_1948|物事を、前に、進めること。|Mendorong dan mempercepat jalannya suatu hal.
+n1_1949|分かっていることから、考えて、見当をつけること。|Menduga atau mengira berdasarkan petunjuk yang ada.
+n1_1950|分かっていることから、道筋を、立てて、考えること。|Penalaran dari fakta yang ada; juga cerita detektif.
+n1_1951|物に、含まれる、水分。|Kandungan air atau kelembapan pada sesuatu.
+n1_1952|川や、水道の、水の、もと。|Sumber air sungai atau pasokan air.
+n1_1953|水で、洗い流すこと。|Pencucian dengan air mengalir; juga toilet siram.
+n1_1954|稲を、育てる、ための、水をたたえた、田。|Sawah beririgasi untuk menanam padi.
+n1_1955|あか抜けて、洒落た、様子。|Anggun dan bergaya khas; juga halus.
+n1_1956|勢いが、弱くなる。|Menjadi lemah atau merosot kekuatannya.
+n1_1957|最後まで、成し遂げる。|Berhasil mencapai atau menuntaskan sesuatu.
+n1_1958|ある人や、ものを、深く、敬うこと。|Pemujaan atau pengagungan terhadap seseorang atau sesuatu.
+n1_1959|量や、金額が、増える。|Bertambah banyak atau membengkak.
+n1_1960|大きくて、場所を、取る。|Memakan banyak tempat karena berukuran besar.
+n1_1961|数や量を、表す、言葉。|Kata yang menyatakan bilangan atau jumlah.
+n1_1962|卵から、かえって、間もない、鳥の、子。|Anak burung yang baru menetas; juga boneka pada perayaan anak perempuan.
+n1_1963|物を、置く。ある地位に、つかせる。|Meletakkan sesuatu dengan mantap; juga mengangkat seseorang pada suatu jabatan.
+n1_1964|しっかり、取り付けて、置く。|Memasang atau meletakkan alat dengan kokoh pada tempatnya.
+n1_1965|衣服などの、下の端。山の、ふもと。|Ujung bawah pakaian; juga kaki gunung.
+n1_1966|すました、顔を、する。濁りを、取り除く。|Bersikap tenang dan acuh; juga menjernihkan cairan.
+n1_1967|人間が、住む、社会。時代。|Dunia atau masyarakat; juga zaman atau generasi.
+n1_1968|相手を、喜ばせる、ための、言葉。|Sanjungan atau pujian yang dilontarkan untuk menyenangkan hati.
+n1_1969|生活を、共にする、人々の、集まり。|Rumah tangga atau keluarga yang tinggal bersama.
+n1_1970|同じ時代に、生きる、人々。|Generasi orang-orang yang hidup sezaman.
+n1_1971|世間の、人々の、意見。|Pendapat umum masyarakat.
+n1_1972|悪い所を、正しく、直すこと。|Mengoreksi atau membenahi ketidakseimbangan.
+n1_1973|どうしても。|Dengan segala cara; menyatakan harapan kuat agar dilakukan.
+n1_1974|決まり。仕組み。|Sistem atau aturan; juga akhiran untuk menyebut suatu sistem.
+n1_1975|おさえて、止める。支配する。|Menahan atau mengendalikan; juga menguasai.
+n1_1976|決まりを、破った人に、与える、罰。|Hukuman atau sanksi atas pelanggaran aturan.
+n1_1977|決まりなどを、新しく、作ること。|Menetapkan dan menyusun aturan atau undang-undang.
+n1_1978|同じ学校や、団体で、決められた、衣服。|Pakaian seragam yang ditetapkan sekolah atau instansi.
+n1_1979|条件などを、つけて、限ること。|Pembatasan atau syarat yang membatasi.
+n1_1980|他を、従わせる、力。|Kekuatan atau pengaruh suatu kelompok.
+n1_1981|名字と、名前。|Nama lengkap yang terdiri dari marga dan nama pribadi.
+n1_1982|相手を、打ち負かして、従わせること。|Menaklukkan lawan atau mengatasi kesulitan.
+n1_1983|物事が、できあがる。成立する。|Terbentuk atau berjalan wajar; juga terdiri atas.
+n1_1984|できる、だけ。|Sebisa mungkin.
+n1_1985|できる、限り。|Sedapat mungkin; kalau bisa.
+n1_1986|努力して、得た、よい結果。|Hasil baik yang diperoleh dari usaha.
+n1_1987|十分に、成長すること。|Kematangan atau tahap dewasa penuh.
+n1_1988|成人した、年齢。|Usia yang dianggap dewasa menurut hukum.
+n1_1989|政治を、行う、権力。|Kekuasaan pemerintahan atau pemerintah yang berkuasa.
+n1_1990|政治の、方針や、手段。|Kebijakan atau langkah pemerintahan.
+n1_1991|きちんと、そろえる。用意する。|Merapikan atau menyiapkan agar tertata baik.
+n1_1992|きちんと、整っている様子。|Rapi dan teratur sempurna.
+n1_1993|きちんと、並ぶこと。|Berbaris atau berjajar secara teratur.
+n1_1994|星の、並びを、いくつかの、形に、見立てた、もの。|Kelompok bintang yang membentuk pola tertentu; rasi.
+n1_1995|よく、晴れた、天気。|Cuaca cerah dan langit bersih.
+n1_1996|間違いなく。|Dengan benar atau sesuai kaidah.
+n1_1997|ちょうど。まったく。|Tepat dan sungguh; pantas.
+n1_1998|問題に対する、正しい、答え。|Jawaban yang benar atas suatu soal.
+n1_1999|正式な、決まり。|Yang resmi, sah, dan sesuai aturan.
+n1_2000|正しい、道理。|Keadilan atau kebenaran yang menjadi pegangan.
+n1_2002|道理に、かなっている様子。|Sah, wajar, dan dapat dibenarkan.
+n1_2003|さっぱりして、気持ちがよい。|Segar dan menyenangkan.
+n1_2004|きれいで、汚れが、ない様子。|Bersih, jernih, dan suci.
+n1_2005|貸し借りなどを、きちんと、整理すること。|Menyelesaikan utang piutang atau hubungan hingga bersih.
+n1_2006|心が、きれいで、素直な様子。|Murni dan polos hatinya.
+n1_2007|清いことと、濁っていること。善と悪。|Hal bersih dan keruh; juga kebaikan dan keburukan.
+n1_2008|加工されていない、そのままの、状態。|Keadaan mentah atau belum diolah; juga langsung.
+n1_2009|命を、保たせる。能力などを、役立てる。|Membuat tetap hidup; juga memanfaatkan kemampuan atau bahan dengan baik.
+n1_2010|生まれた、ときから、持っている、こと。|Sifat atau kondisi bawaan sejak lahir.
+n1_2011|ひげなどを、のばして、育てる。|Menumbuhkan atau memelihara kumis atau rumput.
+n1_2012|生き物が、育つこと。|Pertumbuhan makhluk hidup atau tanaman.
+n1_2013|少し、ぬるい。きびしくない。|Hangat-hangat kuku; juga bersikap lunak dan tidak tegas.
+n1_2014|暮らしを、立てる、方法。|Cara memperoleh nafkah untuk hidup.
+n1_2015|生きることと、死ぬこと。|Hidup dan mati.
+n1_2016|魚や、肉の、においが、する。|Berbau amis seperti ikan atau darah.
+n1_2017|まじめすぎて、融通が、きかない様子。|Terlalu serius dan kaku.
+n1_2018|生きている、人間の、体。|Tubuh manusia yang hidup dengan darah dan daging.
+n1_2019|体の、働きや、仕組み。月経。|Fisiologi tubuh; juga menstruasi.
+n1_2020|もり上がる。気分が、高まる。|Membumbung atau membengkak; juga suasana menjadi meriah.
+n1_2021|食べ物などを、器に、入れる。薬を、混ぜる。|Menyajikan makanan di piring; juga menumpuk atau meracik obat.
+n1_2022|美しい、着物などで、着飾ること。|Berdandan dengan busana mewah untuk acara resmi.
+n1_2023|勢いが、盛んで、立派な様子。|Megah, besar-besaran, dan meriah.
+n1_2024|細かくて、よくできている様子。|Rumit, halus, dan sangat teliti pengerjaannya.
+n1_2025|細かい所まで、正確な様子。|Teliti dan rinci hingga ke hal terkecil.
+n1_2026|キリスト教の、聖典。|Kitab suci agama Kristen; Alkitab.
+n1_2027|意見などを、広く、示すこと。|Pernyataan resmi kepada publik; deklarasi.
+n1_2028|作ること。|Berarti buatan; akhiran untuk produk buatan suatu tempat atau bahan.
+n1_2029|鉄を、作ること。|Pembuatan besi dari bijih besi.
+n1_2030|物を、作る、方法。|Cara pembuatan atau resep sesuatu.
+n1_2031|西に、傾いた、太陽。|Sinar matahari sore dari arah barat.
+n1_2032|偽りのない、心。|Ketulusan atau kebenaran hati.
+n1_2033|まじめで、うそが、ない様子。|Tulus, jujur, dan dapat dipercaya.
+n1_2034|若く、元気で、夢にあふれる、時期。|Masa muda yang penuh semangat dan impian.
+n1_2035|動いていた、ものが、止まること。|Berhenti dan diam tidak bergerak.
+n1_2036|動きが、ない、様子。|Bersifat statis atau tidak bergerak.
+n1_2037|税金に、関する、仕事を、する、役所。|Kantor yang mengurus pajak.
+n1_2038|こわれやすい。心が、弱い。|Rapuh mudah rusak; juga lemah hatinya.
+n1_2039|大切に、思って、手放したくない。|Menyayangkan sesuatu; juga berhemat atau enggan melepas.
+n1_2040|何かを、しようという、考え。計算。|Niat untuk melakukan sesuatu; juga perkiraan.
+n1_2041|責任の、ある、務め。|Kewajiban atau tanggung jawab yang harus dipenuhi.
+n1_2042|生まれて、間もない、子。|Bayi yang baru lahir.
+n1_2043|赤くなる。|Menjadi kemerahan atau merona.
+n1_2044|収入より、支出が、多いこと。|Defisit; pengeluaran melebihi pendapatan.
+n1_2045|家や、地位を、受け継ぐ、人。|Pewaris yang meneruskan keluarga atau usaha.
+n1_2046|途中で、切れる。|Terputus atau terhenti di tengah jalan.
+n1_2047|物事を、始める、きっかけ。|Pemicu atau awal mula suatu hal.
+n1_2048|胸が、しめつけられる、ように、つらい。|Terasa sesak dan menyakitkan di hati.
+n1_2049|物事の、区切り。限り。|Batas atau titik henti; juga tak berujung.
+n1_2050|別のものに、変える。気持ちを、変える。|Beralih atau mengganti ke yang lain; juga mengubah suasana hati.
+n1_2051|物事の、切れる、ところ。|Celah atau titik putus di antara dua hal.
+n1_2052|体を、切り開くこと。土地を、切り開くこと。|Membedah tubuh; juga membuka lahan baru.
+n1_2053|心に、強く、迫る様子。|Terasa mendesak dan penuh perasaan sungguh-sungguh.
+n1_2054|つなぎ合わせる。|Menyambungkan; juga mencangkok atau memasang tulang.
+n1_2055|触れ合うこと。|Bersentuhan atau menjalin kontak dengan orang atau benda.
+n1_2056|語句や、文を、つなぐ、品詞。|Kata penghubung yang menyambung kata atau kalimat.
+n1_2057|折り曲げて、返す。元の方へ、戻る。|Melipat balik; juga berbalik dan kembali menghubungi.
+n1_2058|いくつかの、考えを、合わせて、取り入れること。|Memadukan beberapa pendapat atau corak menjadi satu.
+n1_2059|新しく、作る。用意する。|Membuat atau menyediakan sesuatu, seperti kesempatan atau tempat.
+n1_2060|機械や、施設を、取り付けること。|Memasang atau mendirikan fasilitas atau alat.
+n1_2061|新しく、決めること。|Menetapkan atau mengatur sesuatu, misalnya pengaturan.
+n1_2062|新しく、組織などを、作ること。|Mendirikan lembaga atau organisasi.
+n1_2063|物事の、区切り。|Bagian, ruas, atau ayat; juga masa tertentu.
+n1_2064|分かるように、話す。教えを、述べる。|Menjelaskan dengan gamblang; juga berkhotbah atau memberi pengajaran.
+n1_2065|相手に、納得させること。|Meyakinkan seseorang agar menerima suatu pendapat.
+n1_2066|山の、斜面の、雪が、崩れ落ちること。|Longsoran salju dari lereng gunung; juga banyak yang berjatuhan.
+n1_2067|続いていた、ことが、なくなる。|Berakhir atau punah; juga terputus.
+n1_2068|関係や、つながりを、切る。|Memutuskan hubungan atau menghentikan kebiasaan.
+n1_2069|出版が、終わって、売られなくなること。|Buku yang tidak dicetak lagi dan habis di pasaran.
+n1_2070|望みが、まったく、なくなること。|Hilangnya semua harapan; keputusasaan.
+n1_2071|不思議な、力を持つ、人。|Pertapa atau sosok sakti dalam kepercayaan Timur.
+n1_2072|少し、前。|Beberapa waktu lalu; beberapa hari yang lalu.
+n1_2073|先の方に。以前に。|Lebih dulu; juga sebelumnya.
+n1_2074|先に、行くこと。|Berjalan atau berlangsung lebih dahulu.
+n1_2075|先月の、前の、月。|Dua bulan sebelum bulan ini.
+n1_2076|先週の、前の、週。|Dua minggu sebelum minggu ini.
+n1_2077|その家の、前の、代の、主。|Pemimpin generasi sebelumnya.
+n1_2078|先に、着くこと。|Kedatangan lebih awal; pertama tiba.
+n1_2079|生まれつき、持っている、様子。|Bersifat bawaan sejak lahir.
+n1_2080|他の、物や、国を、自分のものに、すること。|Menduduki atau menguasai suatu tempat; juga memonopoli.
+n1_2081|宗教を、広めること。|Penyebaran ajaran agama.
+n1_2082|意見などを、広く、はっきり、述べること。|Mengumumkan secara resmi dan tegas; proklamasi.
+n1_2083|それだけを、行う様子。|Terutama; hanya satu hal yang dilakukan.
+n1_2084|特定の分野を、専門に、学ぶこと。|Mendalami satu bidang secara khusus.
+n1_2085|特定の、人だけが、使うこと。|Dipakai khusus oleh seseorang atau satu tujuan.
+n1_2086|戦い。|Pertempuran atau perang.
+n1_2087|戦争による、被害。|Kerugian atau kehancuran akibat perang.
+n1_2088|戦いを、進める、方法。|Taktik atau cara berperang atau bertanding.
+n1_2089|敵と、戦うこと。|Pertempuran atau perkelahian antara dua pihak.
+n1_2090|戦う、ための、力。|Kekuatan tempur atau potensi perang.
+n1_2091|いやしくて、情けない様子。|Hina dan memalukan.
+n1_2092|色が、つく。影響を、受ける。|Berwarna karena celupan; juga terpengaruh atau ternoda.
+n1_2093|液体が、中に、しみ込む。刺激を、感じる。|Meresap ke dalam; juga terasa perih atau menyentuh hati.
+n1_2094|布などを、色に、浸す。|Mewarnai kain atau benda dengan celupan.
+n1_2095|水の中に、入る。人目を、避けて、隠れる。|Menyelam ke dalam air; juga menyelinap atau bersembunyi.
+n1_2096|水の中に、もぐること。|Kegiatan menyelam di bawah air.
+n1_2097|こっそり、中に、入り込むこと。|Menyusup masuk secara diam-diam.
+n1_2098|ほめて、いい気に、させる。|Memuji-muji agar seseorang senang dan menuruti.
+n1_2099|細い、糸状の、もの。|Serat tipis seperti benang; bahan tekstil.
+n1_2100|大きな、船。|Kapal besar.
+n1_2101|代表者を、投票で、選ぶこと。|Pemilihan wakil rakyat lewat pemungutan suara.
+n1_2102|人や、物を、選び出すこと。|Seleksi atau penyaringan untuk memilih yang terbaik.
+n1_2103|色や、形が、はっきりして、美しい様子。|Jelas, cerah, dan mengesankan.
+n1_2104|向いている、側。以前。|Sisi depan; juga waktu sebelumnya.
+n1_2105|あらかじめ。|Terlebih dahulu; sebelumnya.
+n1_2106|本題に、入る前の、言葉。|Kata pengantar sebelum pokok pembicaraan.
+n1_2107|ある、ことを、成り立たせる、ための、もと。|Syarat atau premis yang melandasi suatu hal.
+n1_2108|これから、先の、道のり。|Perjalanan atau prospek masa depan seseorang.
+n1_2109|前もって、切符などを、売ること。|Penjualan tiket sebelum hari pelaksanaan.
+n1_2110|以前に、あった、例。|Contoh atau preseden yang pernah terjadi.
+n1_2111|良いことと、悪いこと。|Baik dan buruk; mutu suatu hal.
+n1_2112|性格が、よくて、悪いことを、しない様子。|Berhati baik dan jujur.
+n1_2113|前の、ことを、受けて、続ける言葉。|Kata penghubung untuk melanjutkan; 'lalu' atau 'dan'.
+n1_2114|前の、ことと、反対の、ことを、述べる言葉。|Kata penghubung yang menyatakan hal berlawanan; 'tetapi'.
+n1_2115|前の、ことに、続けて、述べる言葉。|Kata penghubung yang menyambung hal berikutnya; 'dan lalu'.
+n1_2116|前のことと、反対の、ことを、述べるときの、言葉。|Kata penghubung formal berarti 'namun demikian'.
+n1_2117|いかにも。本当に。|Seolah-olah atau tampak benar-benar demikian.
+n1_2118|病気が、すっかり、治ること。|Pulih sepenuhnya dari penyakit.
+n1_2119|勢いが、いちばん、盛んな、時期。|Masa puncak kejayaan.
+n1_2120|すべてが、滅びること。|Musnah seluruhnya tanpa sisa.
+n1_2121|座禅を、組んで、心を、静める、仏教の、一派。|Aliran Buddha yang menekankan meditasi dan ketenangan batin.
+n1_2122|破れた所を、直す。体裁を、整える。|Menambal atau memperbaiki yang rusak; juga menutupi kesalahan.
+n1_2123|料理を、のせる、台。一人分の、食事。|Baki makan; juga satu porsi hidangan.
+n1_2124|物事を、うまく、取りはからう、こと。|Langkah atau tindakan penanganan atas suatu hal.
+n1_2125|いいかげんに、扱う様子。|Mengabaikan atau lalai terhadap sesuatu.
+n1_2127|愛想が、なく、冷たい様子。|Dingin dan ketus tanpa keramahan.
+n1_2128|物を、作る、ための、材料。|Bahan mentah untuk membuat sesuatu atau bahan cerita.
+n1_2129|動きが、はやくて、すばしこい。|Gesit dan cepat bergerak.
+n1_2130|とても、すばらしい、様子。|Sangat indah atau menawan.
+n1_2131|飾り気が、なく、素直な様子。|Sederhana dan polos tanpa dibuat-buat.
+n1_2132|いくつかを、組み合わせること。|Kombinasi atau pasangan beberapa hal.
+n1_2133|いくつかを、合わせて、一組に、する。|Menggabungkan beberapa hal menjadi satu kesatuan.
+n1_2134|全体の中に、組み入れる。|Memasukkan sesuatu ke dalam suatu sistem atau program.
+n1_2135|苦しみなどを、人に、うったえること。|Gugatan atau keluhan yang disampaikan.
+n1_2136|裁判所に、うったえること。|Proses mengajukan perkara ke pengadilan.
+n1_2137|進むのを、じゃまする。|Menghalangi atau mencegah suatu kemajuan.
+n1_2138|物事が、進むのを、止めること。|Pencegahan atau penghalangan suatu tindakan.
+n1_2139|家や、野に、すむ、小さな、動物。|Hewan pengerat kecil yang hidup di rumah atau ladang.
+n1_2140|仏教の、修行を、する人。|Orang yang menjalani kehidupan religius Buddha.
+n1_2141|新聞などを、初めて、出すこと。|Penerbitan edisi perdana surat kabar atau majalah.
+n1_2142|新しい、ものを、作り出すこと。|Penciptaan sesuatu yang benar-benar baru.
+n1_2143|団体などを、新しく、作ること。|Pendirian suatu lembaga atau sekolah.
+n1_2144|大きくて、りっぱな、様子。|Megah dan berskala besar.
+n1_2145|気持ちが、よく、すがすがしい様子。|Segar dan menyenangkan.
+n1_2146|犯人などを、探し、調べること。|Penyelidikan pencarian pelaku kejahatan.
+n1_2147|探して、見つけようと、すること。|Pencarian atau penggeledahan.
+n1_2148|かき混ぜる。乱す。|Mengaduk atau mengacak sehingga kacau.
+n1_2149|機械や、人を、思い通りに、動かす。|Mengoperasikan alat; juga mengendalikan orang di balik layar.
+n1_2150|飛行機などを、動かすこと。|Mengemudikan pesawat atau kapal; juga mengendalikan seseorang.
+n1_2151|時期などを、早くする。|Mempercepat jadwal atau tindakan.
+n1_2152|非常に、急ぐこと。|Sangat mendesak dan perlu segera.
+n1_2153|櫓や、ペダルを、動かして、進める。|Mendayung perahu atau mengayuh sepeda.
+n1_2154|言い争ったり、勝負を、競ったり、すること。|Perselisihan atau persaingan.
+n1_2155|互いに。いっしょに。|Berarti saling atau bersama sebagai awalan.
+n1_2156|その人や、物に、ふさわしい様子。|Sesuai dan pantas dengan kemampuan atau keadaan.
+n1_2157|ちょうど、つり合っている様子。|Sepadan dan pantas dengan sesuatu.
+n1_2158|商品の、そのときの、値段。|Harga pasar; juga spekulasi atau taksiran.
+n1_2159|互いに、向かい合う、関係。|Hubungan yang berhadapan; relatif.
+n1_2161|全体。すべて。|Seluruh atau keseluruhan sebagai awalan.
+n1_2162|団体などの、全員が、集まる、会。|Pertemuan seluruh anggota organisasi.
+n1_2163|いくつかのものを、一つに、まとめること。|Penggabungan berbagai unsur menjadi satu kesatuan.
+n1_2165|遺体を、墓に、納める。事実を、隠す。|Menguburkan jenazah; juga menutup-nutupi atau melupakan suatu fakta.
+n1_2166|苦しんで、手足を、動かす。|Meronta atau berjuang dengan susah payah.
+n1_2167|美しく、見せる、ための、飾り。|Hiasan atau dekorasi untuk mempercantik.
+n1_2168|ある目的の、ために、備える、道具や、装置。|Perlengkapan atau peralatan yang disiapkan untuk suatu kegiatan.
+n1_2169|乗り物などが、走ること。|Berjalannya kendaraan; jarak tempuh.
+n1_2170|お金を、他の人に、送ること。|Mengirim uang kepada seseorang.
+n1_2171|山や海などで、危険な目に、遭うこと。|Mengalami kecelakaan atau bencana di gunung atau laut.
+n1_2172|人々が、騒ぎ立てて、秩序が、乱れること。|Keributan atau kerusuhan akibat banyak orang.
+n1_2173|形。人や、神の、姿を、かたどったもの。|Patung atau wujud; juga bayangan citra.
+n1_2174|いくらか、よい様子。増すこと。|Sedikit lebih baik; juga penambahan.
+n1_2175|増やして、強くすること。|Memperbanyak dan memperkuat.
+n1_2176|増やして、よりよく、すること。|Meningkatkan dan mendorong kemajuan, seperti kesehatan.
+n1_2177|憎く、思う気持ち。|Perasaan benci kepada seseorang.
+n1_2178|物を、しまっておく、建物。|Gudang atau lumbung penyimpanan.
+n1_2179|財政を、受け持つ、大臣。|Menteri yang mengurus keuangan negara.
+n1_2180|物の、作り方。体格。|Konstruksi atau cara pembuatan; juga postur.
+n1_2181|物を、こしらえる。|Membuat atau membangun sesuatu; juga mengolah atau membudidayakan.
+n1_2182|そうするよう、せきたてる。|Mendorong seseorang agar bertindak; mendesak.
+n1_2183|物事が、早く、進むように、すること。|Mempercepat atau mendorong kemajuan suatu hal.
+n1_2184|そば。ある、方向。|Sisi atau pihak; juga bagian sekeliling.
+n1_2185|物の、横の、面。物事の、ある一面。|Sisi samping sesuatu; juga salah satu aspek dari suatu hal.
+n1_2186|ある、ことに、合わせる。|Menyesuaikan dengan keadaan atau fakta.
+n1_2187|言い換えると。|Yaitu atau dengan kata lain.
+n1_2188|ただちに。すぐ。|Seketika atau langsung pada saat itu juga.
+n1_2189|ほんの、少しの、間。|Sekejap atau waktu yang sangat singkat.
+n1_2190|自由を、しばって、制限すること。|Pengekangan kebebasan atau belenggu.
+n1_2191|数を、足していく、計算。|Operasi hitung penjumlahan.
+n1_2192|変えずに、そのままの、状態で。|Dalam keadaan apa adanya tanpa diubah.
+n1_2193|聞き手に、近い、ものを、指す言葉。|Kata ganti penunjuk benda yang dekat dengan lawan bicara.
+n1_2194|その、あと。|Kata penghubung untuk 'setelah itu' atau 'lalu'.
+n1_2195|前の、ことが、理由で。|Kata penghubung yang menyatakan sebab; 'karena itu'.
+n1_2196|前の、ことを、受けて、次に、進めるときの、言葉。|Kata penghubung sopan untuk melanjutkan; 'kalau begitu'.
+n1_2197|前の、ことが、あっても、変わらず。|Kata penghubung untuk menyatakan 'meskipun begitu'.
+n1_2198|その、上。|Kata penghubung yang menambah hal lain; 'selain itu'.
+n1_2199|二つのうち、どちらかを、選ぶときの、言葉。|Kata penghubung untuk pilihan; 'atau'.
+n1_2200|そのために。|Kata penghubung yang menyatakan akibat; 'oleh karena itu'.
+n1_2201|その、程度。|Menyatakan tingkat sebesar itu; dengan negatif 'tidak begitu'.
+n1_2202|聞き手に、近い、場所。|Tempat yang dekat dengan lawan bicara; 'situ'.
+n1_2203|そのとき。そういう、わけで。|Kata penghubung berarti 'maka' atau 'pada saat itu'.
+n1_2204|その、あたり。|Sekitar tempat itu; juga kira-kira.
+n1_2205|聞き手に、近い、方向。あなた。|Arah atau sisi yang dekat dengan lawan bicara; juga 'Anda' secara sopan.
+n1_2206|そろっていること。|Keseragaman atau perangkat yang lengkap; berpasangan.
+n1_2207|そのまま、続くこと。|Berlanjutnya atau keberlangsungan sesuatu.
+n1_2208|身分や、価値が、高い。|Berharga dan terhormat.
+n1_2209|価値の、あるものとして、敬う。|Menghargai dan menjunjung sesuatu yang bernilai.
+n1_2210|こわす。害を、与える。|Merusak atau melukai; juga gagal melakukan sesuatu.
+n1_2211|財産などを、失うこと。|Kerugian atau kehilangan harta.
+n1_2212|ほかの、考え。悪意。|Maksud lain atau niat buruk di balik tindakan.
+n1_2213|自分と、関係のない、人。|Orang lain yang tidak bersangkutan.
+n1_2214|目的語を、とる、動詞。|Kata kerja yang membutuhkan objek langsung.
+n1_2215|もう、一方。|Sisi atau pihak yang lain.
+n1_2216|多くの人の、賛成で、決めること。|Pengambilan keputusan berdasarkan suara terbanyak.
+n1_2217|仕事などが、非常に、忙しいこと。|Sangat sibuk dan penuh kegiatan.
+n1_2218|いろいろな、種類が、あること。|Keberagaman atau variasi jenis.
+n1_2219|口の中に、出る、液。|Cairan di dalam mulut; air liur.
+n1_2220|互いに、譲り合って、まとめること。|Berkompromi dengan saling mengalah.
+n1_2221|交渉などが、まとまること。|Tercapainya kesepakatan dalam perundingan.
+n1_2222|前もって、相談すること。|Rapat persiapan atau perundingan awal.
+n1_2223|前もって、相談して、決める。|Berunding sebelumnya untuk menyamakan rencana.
+n1_2224|打って、入れる。夢中に、なる。|Memasukkan dengan memukul; juga mencurahkan diri pada suatu hal.
+n1_2225|ある、ことを、否定すること。|Penyangkalan atau penolakan terhadap suatu pernyataan.
+n1_2226|途中で、終わらせる。|Menghentikan atau mengakhiri sesuatu di tengah jalan.
+n1_2227|行き詰まりを、切り開くこと。|Memecahkan kebuntuan atau jalan buntu.
+n1_2228|強い、衝撃。|Pukulan keras atau kerugian besar; juga serangan dalam bisbol.
+n1_2229|物に、勢いよく、当てる。|Membenturkan sesuatu atau melempar pada sasaran.
+n1_2230|出来の、悪い、作品。|Karya yang buruk mutunya.
+n1_2231|様子。ありさま。|Penampilan atau sikap lahiriah; juga pura-pura.
+n1_2232|体の、大きさや、つくり。|Postur dan bentuk fisik tubuh.
+n1_2233|自分で、実際に、経験すること。|Pengalaman langsung yang dialami sendiri.
+n1_2234|外から、見た、様子。形式。|Penampilan luar atau format yang rapi.
+n1_2235|体の、形や、様子。|Bentuk dan postur tubuh seseorang.
+n1_2236|体の、力。|Kekuatan fisik atau stamina.
+n1_2237|ある、ことに、向かって。|Menyatakan 'terhadap' atau 'berkenaan dengan' suatu hal.
+n1_2239|向かい合って、勝負や、対立を、すること。|Konfrontasi langsung atau pertarungan penentu.
