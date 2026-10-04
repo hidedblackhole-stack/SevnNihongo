@@ -1,0 +1,260 @@
+n1_0282|人が、集まる、大きな、部屋。ゴルフの、穴。|Aula atau ruang besar tempat orang berkumpul; juga lubang pada golf.
+n1_0283|立場。地位。位置。|Posisi, kedudukan, atau tempat seseorang dalam tim atau pekerjaan.
+n1_0284|安心して、気持ちが、落ち着く様子。|Merasa lega dan tenang setelah kekhawatiran hilang.
+n1_0285|湯などを、入れて、保温する、容器。|Wadah untuk menyimpan air panas; termos atau poci.
+n1_0286|少しずつ、物事が、進む様子。粒が、たくさん、できる様子。|Berjalan sedikit demi sedikit; juga bintik-bintik kecil yang muncul.
+n1_0287|ぐちを、こぼす。|Menggerutu dengan nada mengeluh.
+n1_0288|輪郭が、はっきり、しなくなる。|Menjadi kabur atau buram dan tidak jelas.
+n1_0289|電圧の、単位。ねじ。|Satuan tegangan listrik; juga baut.
+n1_0290|水や、空気を、送り出す、機械。|Mesin yang memindahkan cairan atau udara.
+n1_0291|しるし。印を、つけること。|Tanda atau lambang; juga menandai atau mengawasi.
+n1_0292|どうして、よいか、分からず、うろたえる。|Kebingungan dan tidak tahu harus bertindak bagaimana.
+n1_0293|新聞や、放送など、多くの人に、情報を、伝える手段。|Media yang menyampaikan informasi kepada masyarakat luas.
+n1_0294|手で、体を、揉んで、疲れを、ほぐすこと。|Memijat tubuh dengan tangan untuk melemaskan otot.
+n1_0295|印刷の、間違い。|Kesalahan cetak pada tulisan.
+n1_0296|結婚した、女性に、つける、敬称。|Sebutan untuk perempuan yang sudah menikah.
+n1_0297|音楽。|Musik atau seni suara.
+n1_0298|千分の一を、表す、単位。|Satuan seperseribu; milimeter.
+n1_0299|その場の、雰囲気。|Suasana yang terasa di suatu tempat atau situasi.
+n1_0300|品物を、作る、会社。|Perusahaan pembuat atau produsen barang.
+n1_0301|伝言。言葉。|Pesan yang disampaikan kepada orang lain.
+n1_0302|情報を、伝える、手段。|Sarana penyampaian informasi seperti televisi dan internet.
+n1_0303|音楽の、旋律。|Rangkaian nada yang membentuk lagu.
+n1_0304|車で、泊まれる、簡単な、ホテル。|Hotel sederhana bagi pengendara dengan tempat parkir di depan kamar.
+n1_0305|監視する、ための、画面。|Layar untuk memantau; juga orang yang menguji produk.
+n1_0306|まともに。直接。|Secara langsung dan telak tanpa menghindar.
+n1_0307|相手を、打ち負かす。急いで、仕上げる。|Mengalahkan lawan; juga menyelesaikan pekerjaan dengan cepat.
+n1_0308|複雑で、分かりにくい。|Rumit dan membingungkan.
+n1_0309|最後まで、やって、しまう。|Menyelesaikan sesuatu sampai tuntas.
+n1_0310|若い人。若々しい。|Anak muda; atau yang berjiwa muda.
+n1_0311|気持ちや、時間などに、余裕が、あること。|Kelonggaran waktu, tenaga, atau suasana hati.
+n1_0312|他に、ない、特別な様子。|Unik, khas, dan tidak ada duanya.
+n1_0313|同じ団体の、人が、着る、そろいの、服。|Pakaian seragam anggota tim atau organisasi.
+n1_0314|米を、炊いた、もの。ご飯。|Nasi; juga porsi nasi dalam hidangan.
+n1_0315|品物に、貼る、名前や、内容を、書いた、紙。|Kertas penanda nama atau isi pada barang.
+n1_0316|明かりを、ともす、道具。|Alat penerang berbentuk lampu.
+n1_0317|だらしなく、いい加減な様子。|Longgar dan tidak disiplin.
+n1_0318|決まり。規則。|Aturan yang harus dipatuhi.
+n1_0319|競走。細かい、模様の、織物。|Perlombaan; juga kain renda bermotif halus.
+n1_0320|決まった、メンバーで、出る人。|Pemain atau anggota tetap; juga ukuran standar.
+n1_0321|疲れを、いやす、ための、楽しみ。|Kegiatan hiburan untuk menyegarkan badan dan pikiran.
+n1_0322|練習。授業。|Pelajaran atau sesi latihan.
+n1_0323|上品な、女性。|Perempuan terhormat; nyonya atau nona.
+n1_0324|手で、動かして、操作する、棒。動物の、肝臓。|Tuas untuk mengoperasikan mesin; juga hati hewan.
+n1_0325|ガスや、電気で、食べ物を、加熱する、器具。|Alat memasak dengan gas atau listrik; juga microwave.
+n1_0326|料金を、払って、借りる、自動車。|Mobil yang disewa dengan membayar.
+n1_0327|エックス線。|Sinar X untuk memotret bagian dalam tubuh.
+n1_0328|太い、縄。|Tali tebal yang dipintal.
+n1_0329|ローマ字。|Penulisan bahasa Jepang dengan huruf Latin.
+n1_0330|夢の、ように、ロマンに、満ちた様子。|Bernuansa romantis dan penuh angan-angan.
+n1_0331|電力の、単位。|Satuan daya listrik.
+n1_0332|分類の、一つ。|Tingkat klasifikasi di bawah famili dalam taksonomi.
+n1_0333|喜ばしい。祝うべき。|Patut dirayakan dan menggembirakan.
+n1_0334|相手に、与える、好感。|Keramahan atau sikap menyenangkan terhadap orang lain.
+n1_0335|愛することと、憎むこと。|Perasaan cinta dan benci yang bercampur.
+n1_0336|悪いこと。|Kejahatan atau keburukan.
+n1_0337|よくない。|Tidak baik, buruk, atau merugikan.
+n1_0338|状態が、悪くなること。|Keadaan menjadi memburuk.
+n1_0339|いたずら。|Perbuatan iseng atau nakal.
+n1_0340|他人を、悪く言うこと。|Perkataan buruk tentang orang lain.
+n1_0341|悪いことを、する人。|Orang yang berbuat jahat.
+n1_0342|縁起が、悪い、日。|Hari yang dianggap membawa sial.
+n1_0343|水辺に、生える、背の高い、草。|Rumput tinggi yang tumbuh di tepi air.
+n1_0344|強く、押さえつけること。|Menekan atau menindas dengan kuat.
+n1_0345|押さえつける、力。|Gaya tekan; juga tekanan dari pihak lain.
+n1_0346|物や、人を、取り扱うこと。|Cara memperlakukan atau menangani sesuatu atau seseorang.
+n1_0347|相手を、示す、言葉。|Menyatakan alamat tujuan; 'ditujukan kepada'.
+n1_0348|手紙などを、ある相手に、向けて、出す。|Menujukan atau mengalamatkan sesuatu kepada orang tertentu.
+n1_0349|ほかに、選ぶ、ものがあることを、表す言葉。|Kata penghubung yang berarti 'atau'; juga 'mungkin'.
+n1_0350|はっきり、言わない、ある物事を、指す。|Kata penentu untuk sesuatu yang tak disebutkan; 'tertentu'.
+n1_0351|値段が、安くて、品が、ないように、見える。|Terlihat murahan dan kurang bermutu.
+n1_0353|ひそかに、人を、殺すこと。|Pembunuhan terencana terhadap tokoh penting secara diam-diam.
+n1_0354|道具を、使わず、頭の中で、計算すること。|Menghitung di dalam kepala tanpa alat.
+n1_0355|それとなく、示すこと。|Memberi petunjuk secara halus atau tidak langsung.
+n1_0356|心配する。工夫して、考える。|Mengkhawatirkan; juga memikirkan sesuatu dengan cermat.
+n1_0357|思ったとおり。|Menyatakan 'sesuai dugaan' bahwa hal itu memang terjadi.
+n1_0358|光が、ない、暗い所。|Kegelapan; juga hal yang tersembunyi.
+n1_0359|手段として、使う、言葉。|Menyatakan alat atau cara; 'dengan'.
+n1_0360|人名などに、使われる、漢字。|Kanji yang dipakai dalam nama orang atau tempat.
+n1_0361|物が、ある場所。|Letak atau tempat suatu benda.
+n1_0362|頼る。そのまま、従う。|Bergantung atau bersandar; unsur dalam kata 'irai' dan 'izon'.
+n1_0363|理由や、手段を、表す、言葉。|Kata penghubung yang menyatakan akibat; 'maka'.
+n1_0364|前と、同じ状態の、まま。|Tetap dalam keadaan seperti semula.
+n1_0365|他の、ものに、頼って、成り立つこと。|Bergantung pada sesuatu atau seseorang.
+n1_0366|他人に、任せて、行ってもらうこと。|Menyerahkan pengurusan sesuatu kepada orang lain.
+n1_0367|強い力。|Kekuatan besar yang berpengaruh.
+n1_0368|軍隊の、階級の、一つ。|Salah satu pangkat perwira dalam militer.
+n1_0369|やる気に、満ちて、張り切る。|Bersemangat dan penuh antusias untuk melakukan sesuatu.
+n1_0371|ある、考えや、目的。|Maksud atau rencana di balik tindakan seseorang.
+n1_0372|自分の、考えを、通そうと、する、強い気持ち。|Sikap keras kepala atau gengsi untuk mempertahankan pendapat.
+n1_0373|何かを、しようとする、積極的な、気持ち。|Semangat atau keinginan kuat untuk melakukan sesuatu.
+n1_0374|簡単に、できる。|Mudah dilakukan; akhiran 'yasui'.
+n1_0375|「する」の、尊敬語。|Bentuk hormat dari 'suru' (melakukan).
+n1_0376|昔から、続いている、決まり。|Adat atau kebiasaan yang diwariskan sejak lama.
+n1_0377|「分かりました」の、とても、丁寧な言い方。|Bentuk sangat sopan dari 'wakarimashita' (saya mengerti).
+n1_0378|他と、違う意見。|Pendapat yang berbeda; keberatan.
+n1_0379|他と、違う意見。|Pandangan yang berlainan dari yang lain.
+n1_0380|自分と、違う性別の人。|Orang berjenis kelamin berbeda dari diri sendiri.
+n1_0381|地位や、勤務地などが、変わること。|Perubahan jabatan atau penempatan.
+n1_0382|違う、意見。反対の、考え。|Pendapat berlawanan atau keberatan terhadap sesuatu.
+n1_0383|ほかの、状態に、移ること。|Beralih ke tahap atau sistem lain.
+n1_0384|他の土地へ、移って、住むこと。|Pindah dan menetap di wilayah lain.
+n1_0385|他の国へ、移り住む、人。|Orang yang pindah menetap ke negara lain.
+n1_0386|水分が、なくなって、しおれる。|Menjadi layu dan keriput karena kehilangan air.
+n1_0387|ふくらんでいた、ものが、小さくなる。|Mengempis; juga bunga yang layu.
+n1_0388|ある目的で、着る、服。|Pakaian yang dikenakan untuk acara, seperti kostum panggung.
+n1_0389|身に着ける、衣類。|Pakaian yang dikenakan.
+n1_0390|着る物。|Pakaian secara umum.
+n1_0391|間違える。違う状態に、する。|Salah mengerti atau menyalahi; juga membuat berbeda.
+n1_0392|昔の、建物などの、残った跡。|Reruntuhan atau bekas bangunan sejarah masa lalu.
+n1_0393|ある、地域の、外。|Di luar wilayah yang bersangkutan.
+n1_0394|育つこと。育てられ方。|Proses tumbuh; juga latar asuhan seseorang.
+n1_0395|人や、物を、育てて、成長させること。|Membina dan membesarkan orang atau tanaman hingga dewasa.
+n1_0397|とりあえず。|Untuk sementara waktu; lebih dulu.
+n1_0398|ひとまとめに、同じように、考えること。|Memukul rata atau menilai tanpa pembedaan.
+n1_0399|ひとまとめに、すること。|Mengumpulkan atau melakukan sekaligus dalam satu paket.
+n1_0400|休まず、一度に、続けて、行う、様子。|Sekali jalan atau sekali tenggak tanpa berhenti.
+n1_0401|一度に、すべてを、行う様子。|Sekaligus sekali pukul dalam satu gerakan.
+n1_0402|ひたすら、一つの、ことに、打ち込む様子。|Setia dan tekun pada satu hal.
+n1_0403|ちょっと、見ること。ちらっと見て。|Sekilas pandang atau sepintas.
+n1_0404|少しの、言葉。|Sepatah kata singkat.
+n1_0405|ただ、そのことだけを、する様子。|Dengan sepenuh hati hanya pada satu hal; juga sama sekali.
+n1_0406|少し前の、ある期間。|Suatu masa pada waktu yang sudah berlalu.
+n1_0407|おととい、の前の日。|Tiga hari yang lalu.
+n1_0408|心を、一つに、集中する、こと。|Memusatkan hati sepenuhnya pada satu hal.
+n1_0409|ただ、一人。|Seorang diri; satu orang.
+n1_0410|何もしなくても、自然に。|Terjadi dengan sendirinya tanpa campur tangan.
+n1_0411|少し。しばらく。|Sedikit atau sebentar; juga ungkapan ringan 'nanti dulu'.
+n1_0412|すべて。まったく。|Seluruhnya; dengan negatif berarti 'sama sekali tidak'.
+n1_0413|ひと休みすること。あと少し。|Istirahat sebentar; juga tinggal sedikit lagi.
+n1_0414|ある、範囲の、全体。|Seluruh kawasan di sekitar suatu tempat.
+n1_0415|決まって、変わらないこと。|Tetap dan tidak berubah.
+n1_0416|その場に、いる、すべての人。|Seluruh orang yang hadir atau bersangkutan.
+n1_0417|朝から、晩までの、間。|Satu hari penuh dari pagi hingga malam; juga tanggal satu.
+n1_0418|試合で、一度、負けること。|Satu kali kalah dalam pertandingan.
+n1_0419|全体の、一つの、部分。本や、新聞の、一冊。|Sebagian dari keseluruhan; juga satu eksemplar.
+n1_0420|全体の、中の、一部。|Bagian kecil dari suatu keseluruhan.
+n1_0421|別れること。別れてから。|Perpisahan atau sejak berpisah.
+n1_0422|がらりと、変わること。|Berubah total secara mendadak.
+n1_0423|あたり、一帯。新聞の、第一ページ。|Seluruh permukaan atau area; juga halaman depan surat kabar.
+n1_0424|一度、見ること。|Sekali lihat; sekali pandang.
+n1_0425|みな、同じで、変わらない様子。|Seragam dan merata tanpa perbedaan.
+n1_0426|同じように、すること。|Berlaku sama rata untuk semuanya.
+n1_0427|つながって、いる、ひとまとまり。|Serangkaian kejadian atau tindakan yang berkaitan.
+n1_0429|向きを、変えて、ほかへ向ける。|Memalingkan arah pandangan atau pembicaraan; juga menghindarkan.
+n1_0430|空に、走る、電気の、光。|Cahaya kilat yang menyambar di langit.
+n1_0431|しるし。判。|Tanda atau cap; stempel.
+n1_0432|公的な、書類に、使う、印。|Stempel pribadi yang terdaftar resmi untuk dokumen.
+n1_0433|会などに、属している、人。|Anggota atau petugas dalam suatu organisasi.
+n1_0434|地面などを、引っ張って、動かす。|Menyeret sesuatu di tanah; juga terbawa-bawa pengaruh.
+n1_0435|下の方へ、引く。|Menurunkan harga atau tingkat; menarik ke bawah.
+n1_0436|ある、結果を、生じさせる。|Menimbulkan atau memicu suatu akibat.
+n1_0437|受け取って、持ち帰る。息を引き取る。|Mengambil atau menjemput; juga menghembuskan napas terakhir.
+n1_0438|仕事や、責任を、受け持つ。|Menerima tugas atau tanggung jawab.
+n1_0439|引いて、上げる。その場から、立ち去る。|Menarik ke atas; juga meninggalkan tempat.
+n1_0440|勝負が、つかずに、終わること。|Pertandingan yang berakhir seri.
+n1_0441|引っ掛けて、止める。|Menyangkutkan sesuatu; juga menipu atau menenggak minuman.
+n1_0442|爪などで、強くこする。|Menggaruk atau mencakar dengan kuku.
+n1_0443|食べ物を、のどを通して、体に、入れる。理解する。|Menelan makanan; juga memahami sesuatu.
+n1_0444|暗く、陰気な様子。|Muram, suram, dan tidak ceria.
+n1_0445|仕事から、退いて、静かに暮らすこと。|Pensiun dari pekerjaan dan hidup tenang.
+n1_0446|雨のときに、使う、道具。|Perlengkapan untuk hujan seperti payung dan jas hujan.
+n1_0447|雨が、降る、天気。|Cuaca ketika hujan turun.
+n1_0448|十二支の、四番目。|Shio keempat dalam sistem dua belas shio, yaitu kelinci.
+n1_0449|水などが、ぐるぐる、回って、できる、流れ。|Pusaran air atau udara yang berputar.
+n1_0450|うそを、言う人。|Orang yang suka berbohong.
+n1_0451|あれこれ。と、言われて、いること。|Ungkapan yang berarti 'dan sebagainya' atau 'ini itu'.
+n1_0452|組織や、事業を、動かしていくこと。|Menjalankan dan mengelola organisasi atau kegiatan.
+n1_0453|荷物などを、運ぶこと。|Pengiriman barang dari satu tempat ke tempat lain.
+n1_0454|荷物や、人を、運ぶ、代金。|Biaya pengangkutan barang atau penumpang.
+n1_0455|物を、運び動かすこと。|Mengangkut dan memindahkan barang.
+n1_0456|人の、力を、超えた、人生の、めぐりあわせ。|Peruntungan yang berada di luar kendali manusia.
+n1_0457|人や、荷物を、運ぶ、仕事。|Kegiatan pengangkutan orang dan barang.
+n1_0458|お金や、物などを、うまく、働かせて、使うこと。|Memanfaatkan dana atau aset secara efektif.
+n1_0459|事業や、生活を、行う。|Menjalankan usaha atau menjalani kehidupan.
+n1_0460|光を、受けて、美しく、見える。|Tampak menawan atau bersinar di bawah cahaya.
+n1_0461|映画を、スクリーンに、写すこと。|Memutar film di layar.
+n1_0462|目に見える、形。|Gambar atau citra yang tampak di layar atau cermin.
+n1_0463|勢いが、盛んに、なる。|Menjadi makmur dan berjaya.
+n1_0464|ローマ字。英語の、文字。|Huruf Latin atau aksara bahasa Inggris.
+n1_0465|ずばぬけた、功績を、あげた、人。|Orang yang berjasa besar dan menjadi teladan keberanian.
+n1_0466|病気を、防ぎ、健康を、保つ、こと。|Menjaga kebersihan dan kesehatan agar terhindar penyakit.
+n1_0467|水のように、流れる、物。|Zat cair atau sari.
+n1_0468|その、程度が、さらに、強くなる様子。|Menunjukkan tingkat yang kian bertambah.
+n1_0469|書物などを、調べながら、読むこと。|Membaca dokumen atau buku di tempat, seperti di perpustakaan.
+n1_0470|気が、進まない、様子。|Dengan enggan dan terpaksa melakukan sesuatu.
+n1_0471|不快で、見るのも、いやな様子。|Menjijikkan atau tidak senonoh.
+n1_0472|物事が、すらすら、運ぶ様子。|Berjalan lancar tanpa hambatan.
+n1_0473|角が、立たず、穏やかな様子。|Rukun dan damai tanpa pertentangan.
+n1_0474|庭。公園。|Taman atau kebun; juga akhiran untuk tempat seperti 'youchien'.
+n1_0475|それだけで、なく、さらに。|Lebih jauh lagi; bahkan.
+n1_0476|合計して、数えた、数。|Jumlah total keseluruhan; juga batangan.
+n1_0477|あるものに、沿って、続くこと。|Sepanjang atau mengikuti sesuatu, seperti 'kawa-zoi'.
+n1_0478|離れないように、ついていく。従う。|Mengikuti sesuatu; juga sesuai dengan harapan atau aturan.
+n1_0479|海や、湖などの、陸地に、近い、ところ。|Wilayah dekat laut atau danau; pesisir.
+n1_0480|鉄道の、線路に、沿った、所。|Wilayah di sepanjang jalur kereta api.
+n1_0481|劇などで、役を、務める。|Memerankan suatu tokoh; juga memainkan peran.
+n1_0482|役を、務める。|Memainkan tokoh dalam drama atau memerankan sesuatu.
+n1_0483|実際に、やって、慣れる、ための、練習。|Latihan praktik untuk membiasakan diri; juga manuver militer.
+n1_0484|劇や、映画などを、監督して、作り上げること。|Mengarahkan pementasan atau siaran; penyutradaraan.
+n1_0485|気づまりで、近づきにくい。煙で、息苦しい。|Segan atau canggung didekati; juga berasap hingga sesak.
+n1_0486|煙が、立つ。ぼんやり、見える。|Mengepul asap; juga tampak berkabut.
+n1_0487|葉を、乾燥させて、吸う、嗜好品。|Daun yang dikeringkan untuk dihisap; rokok.
+n1_0488|つながり。縁。|Hubungan nasib antara orang; jodoh atau tepi.
+n1_0489|日本家屋の、庭に、面した、細長い、廊下。|Lorong kayu sempit di tepi rumah Jepang yang menghadap ke halaman.
+n1_0490|結婚についての、話し合い。|Perundingan atau tawaran perjodohan.
+n1_0491|つやがあって、美しい様子。|Menawan dan berkilau indah.
+n1_0492|だんだん、離れていく。|Semakin menjauh dari suatu tempat atau keadaan.
+n1_0493|まっすぐでなく、遠くを、回って、行くこと。|Jalan memutar yang lebih jauh.
+n1_0494|遠くの、場所。|Tempat yang jauh.
+n1_0495|青白い、重い、金属。|Logam berat berwarna abu kebiruan.
+n1_0496|しょっぱい、調味料。|Garam; juga zat kimia seperti klorida.
+n1_0497|場所や、時間を、示す、言葉。|Partikel formal penanda tempat atau waktu; 'di'.
+n1_0498|場所や、状況を、示す、言葉。|Partikel formal penanda tempat atau situasi.
+n1_0499|きれいなものを、きたなくする。|Menodai kehormatan atau mencemari sesuatu yang bersih.
+n1_0500|見ていて、不快に、なるほど、汚い。|Menjijikkan karena sangat kotor.
+n1_0501|汚いもの。|Kotoran atau noda yang menempel.
+n1_0502|きれいな、物が、汚くなる。|Menjadi kotor atau ternoda.
+n1_0503|兄弟姉妹の、息子。|Anak laki-laki dari saudara kandung.
+n1_0504|急な、事態に、対する、手当て。|Penanganan sementara untuk keadaan darurat.
+n1_0505|募集に、応じて、申し込むこと。|Mendaftar atau mengajukan diri atas suatu penerimaan.
+n1_0506|上から、動かないように、おさえる。|Menahan sesuatu agar tidak bergerak; juga menguasai.
+n1_0507|勢いよく、近づく。|Menyerbu atau berdatangan dalam jumlah besar.
+n1_0508|無理に、中へ、入れる。|Menjejalkan atau menekan sesuatu ke dalam.
+n1_0509|相撲の、最高位の、力士。|Pegulat sumo berpangkat tertinggi.
+n1_0510|こぶしなどで、強く、打つ。|Memukul dengan keras.
+n1_0511|金。|Emas; juga warna emas keemasan.
+n1_0512|黄色。|Warna kuning.
+n1_0513|広い、土地と、立派な、家。|Rumah besar beserta pekarangannya.
+n1_0514|ちょっとしたことを、恐れる様子。|Penakut dan mudah gentar.
+n1_0515|甲に、次ぐ、第二位。しゃれた、様子。|Peringkat kedua; juga unik atau bergaya aneh.
+n1_0516|男性が、自分を、指す、くだけた言葉。|Kata ganti diri maskulin yang kasar atau akrab.
+n1_0517|穏やかで、優しい様子。|Lembut dan ramah wataknya; juga iklim yang sejuk.
+n1_0518|耳に、聞こえる、音。|Bunyi atau nada yang terdengar.
+n1_0519|楽器や、声の、特徴の、ある、音。|Warna suara khas yang membedakan alat musik atau suara.
+n1_0520|高い所から、低い所へ、行く。後ろへ、退く。|Turun dari tempat tinggi; juga mundur.
+n1_0522|順位や、階級が、下の方。|Posisi atau peringkat yang lebih rendah.
+n1_0523|勢いが、弱まること。|Mereda atau melemahnya sesuatu.
+n1_0524|古い物を、引き取って、新しい物の、代金に、充てること。|Tukar tambah barang lama untuk membeli yang baru.
+n1_0525|心の、奥に、ある、本当の、考え。|Maksud atau niat tersembunyi dalam hati.
+n1_0526|物事の、土台。準備。|Dasar atau lapisan awal; juga persiapan atau bakat.
+n1_0527|あらかじめ、調べておくこと。|Penelitian atau persiapan awal sebelum sesuatu dimulai.
+n1_0528|勤務が、終わること。|Selesainya jam tugas.
+n1_0529|言葉や、行いが、いやしく、品がない様子。|Perkataan atau tingkah yang kasar dan tidak sopan.
+n1_0530|身分の、低い、役人。|Pegawai rendahan.
+n1_0532|姿を、変えて、別のものに、なる。|Menyamar atau berubah wujud menjadi sesuatu yang lain.
+n1_0533|ある状態に、なる。ある状態に、する。|Menjadi atau menjadikan sesuatu; imbuhan 'ka'.
+n1_0534|二つ以上の、元素が、結びついて、別の、物質に、なること。|Persenyawaan beberapa unsur menjadi zat baru.
+n1_0535|大昔の、生物の、体や跡が、石に、なって、残ったもの。|Sisa makhluk purba yang membatu dalam lapisan bumi.
+n1_0536|化学的に、作った、繊維。|Serat buatan yang dibuat secara kimia.
+n1_0537|かりに、置く、こと。|Bersifat sementara atau palsu.
+n1_0538|仮に、そうだとしても。|Seandainya demikian pun; meskipun.
+n1_0539|いくつかの、ものを、順に、尋ねる、言葉。|Ungkapan 'coba, mana' ketika mengecek sesuatu satu per satu.
+n1_0540|とにかく。いずれにしても。|Pokoknya; bagaimanapun juga.
+n1_0541|はっきり、しないが、そのように、感じる様子。|Entah mengapa terasa demikian; agak.
+n1_0542|驚きや、感動を、表す、言葉。|Kata seru untuk menyatakan kejutan; 'betapa'.
+n1_0543|驚いたことに。程度が、大きいことを表す言葉。|Betapa luar biasa; menyatakan keheranan.
+n1_0544|はっきりした、理由は、ないが。|Tanpa alasan yang jelas; entah bagaimana.
+n1_0545|どうとも、言えない様子。|Dengan negatif berarti 'sama sekali tidak'; juga sulit diungkapkan.
+n1_0546|どんなものでも。|Apa pun juga yang diperlukan.
+n1_0547|どんな。何の。|Menanyakan jenis atau tujuan; 'apa' atau 'yang mana'.
