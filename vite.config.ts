@@ -1,7 +1,7 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
-import {defineConfig, loadEnv} from 'vite';
+import {defineConfig, loadEnv, type Plugin} from 'vite';
 
 // Pecah bundle supaya (1) kode aplikasi yang sering berubah tidak ikut meng-invalidasi cache
 // dependency & dataset besar (JSON puluhan MB), dan (2) browser mengunduh potongan secara paralel.
@@ -25,6 +25,34 @@ function manualChunks(id: string): string | undefined {
   return undefined;
 }
 
+// Di dev, /api/deck-topic memakai handler yang sama dengan fungsi Vercel (api/deck-topic.ts).
+function deckAiDevApi(env: Record<string, string>): Plugin {
+  return {
+    name: 'deck-ai-dev-api',
+    configureServer(server) {
+      server.middlewares.use('/api/deck-topic', async (req, res) => {
+        const send = (status: number, body: unknown) => {
+          res.statusCode = status;
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify(body));
+        };
+        if (req.method !== 'POST') return send(405, {error: 'method_not_allowed'});
+        let raw = '';
+        for await (const chunk of req) raw += chunk;
+        let body: unknown = null;
+        try { body = JSON.parse(raw || 'null'); } catch { /* body tidak valid → 400 dari handler */ }
+        const mod = await server.ssrLoadModule('/api/deck-topic.ts');
+        const out = await mod.planTopic(body, {
+          DECK_AI_BASE_URL: env.DECK_AI_BASE_URL,
+          DECK_AI_API_KEY: env.DECK_AI_API_KEY,
+          DECK_AI_MODEL: env.DECK_AI_MODEL,
+        });
+        send(out.status, out.body);
+      });
+    },
+  };
+}
+
 export default defineConfig(({mode}) => {
   const env = loadEnv(mode, process.cwd(), '');
   // Target proxy dev/preview. Bisa diganti lewat VITE_SUPABASE_URL tanpa mengubah kode.
@@ -40,7 +68,7 @@ export default defineConfig(({mode}) => {
 
   return {
     base: './',
-    plugins: [react(), tailwindcss()],
+    plugins: [react(), tailwindcss(), deckAiDevApi(env)],
     resolve: {
       dedupe: ['react', 'react-dom'],
       alias: {

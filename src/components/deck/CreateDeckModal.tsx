@@ -387,10 +387,10 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                       </div>
                       <div>
                         <p className="text-xs font-heading font-bold text-text-primary">
-                          Mau buat deck dengan AI Gemini?
+                          Buat deck otomatis dari topik?
                         </p>
                         <p className="text-[11px] text-text-secondary">
-                          Cukup ketik tema bebas, dapatkan deck lengkap dengan furigana & terjemahan.
+                          Ketik topik atau pilih tema, deck langsung tersusun dari materi SevnQuest.
                         </p>
                       </div>
                     </div>
