@@ -1,0 +1,150 @@
+0191|気温や物の温度が、熱くも冷たくもなく心地よい程度であること。|Suhu udara atau benda yang tidak panas dan tidak dingin, melainkan hangat dan nyaman.
+0192|毛糸で編んだ、上半身に着る衣類。|Pakaian rajutan dari wol atau benang yang dipakai di tubuh bagian atas untuk menghangatkan badan.
+0193|ペダルをこいで走る二輪の乗り物。|Kendaraan roda dua yang dijalankan dengan mengayuh pedal.
+0194|ラジオと録音再生機能がついたカセットテープ用の機器。|Perangkat yang menggabungkan radio dengan pemutar dan perekam kaset.
+0195|電気器具や火などを作動させる、または身に着ける。|Menyalakan atau mengaktifkan alat/lampu; juga berarti mengenakan atau memasangkan sesuatu pada diri.
+0196|今年から数えて二年後の年。|Tahun yang jatuh dua tahun setelah tahun ini.
+0197|児童や生徒が先生から教育を受ける場所。|Tempat anak-anak dan pelajar menerima pendidikan dari guru.
+0198|値段や数量が分からないときに尋ねる言葉。|Kata tanya untuk menanyakan harga atau jumlah yang belum diketahui.
+0199|数の4を表す数字。|Angka yang menyatakan bilangan empat.
+0200|外から中へ移動する。また、容器や場所に収まる。|Bergerak dari luar ke dalam; juga berarti dapat tertampung dalam suatu wadah atau tempat.
+0201|空が雲で覆われている天気。|Keadaan cuaca ketika langit tertutup awan.
+0202|自分の国ではない、他の国。|Negara lain selain negara tempat seseorang tinggal atau berasal.
+0203|熱くなく、冷たくもない中途半端な温度であること。|Suhu yang tanggung, tidak panas dan tidak dingin; sering untuk minuman yang sudah kurang hangat.
+0204|前の文を受けて、あとに続けるときに使う言葉。|Kata penghubung untuk melanjutkan kalimat sebelumnya; berarti 'dan lalu' atau 'setelah itu'.
+0205|感謝や挨拶、強調などに幅広く使う言葉。|Ungkapan serbaguna untuk berterima kasih, menyapa, atau menekankan perasaan, misalnya 'terima kasih'.
+0206|生活のために働くこと。職業。|Kegiatan bekerja untuk mencari nafkah; pekerjaan atau profesi.
+0207|壁などに作った、光や風を通す開口部。|Bukaan pada dinding yang meloloskan cahaya dan udara; jendela.
+0208|日が暮れてから夜までの時間。|Waktu sesudah matahari terbenam hingga malam hari.
+0209|理解したり行ったりするのに手間や努力がいること。|Sesuatu yang memerlukan banyak usaha untuk dipahami atau dikerjakan; sulit.
+0210|田舎で、人が集まって暮らす小さな地域。|Kawasan kecil di pedesaan tempat sekelompok orang hidup bersama.
+0211|芯が黒鉛でできた、字や絵を書く筆記具。|Alat tulis dengan inti grafit yang dipakai untuk menulis dan menggambar.
+0212|端から端までの距離や時間が大きいこと。|Jarak atau waktu dari ujung ke ujung yang besar; panjang.
+0213|人や動物がこの世に出てくる。|Muncul ke dunia sebagai manusia atau hewan; dilahirkan.
+0214|記事や写真を載せて定期的に出す本。|Terbitan berkala berisi artikel dan foto.
+0215|一つの政府のもとにまとまった地域や人々。|Wilayah dan rakyat yang bersatu di bawah satu pemerintahan.
+0216|警察官を親しみを込めて呼ぶ言い方。|Sebutan akrab untuk petugas polisi.
+0217|今日の朝。|Waktu pagi pada hari ini.
+0218|雲がなくなり、空が明るくなる。|Langit menjadi cerah karena awan menghilang.
+0219|夜にとる食事。|Makanan yang dimakan pada malam hari.
+0220|同じ場所や行動を人と共にすること。|Berada di tempat yang sama atau melakukan sesuatu bersama orang lain.
+0221|三つ以上のものの中から一つを選ぶときに尋ねる言葉。|Kata tanya untuk memilih satu dari tiga hal atau lebih.
+0222|足で体を支えて、まっすぐな姿勢になる。|Menopang tubuh dengan kaki dalam posisi tegak.
+0223|体や心の調子がよいこと。活力があること。|Keadaan tubuh dan jiwa yang sehat dan bersemangat.
+0224|空の様子。晴れ、雨、風などの状態。|Keadaan langit dan udara seperti cerah, hujan, dan angin.
+0225|病気やけがを診て治療する人。|Orang yang memeriksa dan mengobati penyakit atau luka.
+0226|数の7を表す数字。|Angka yang menyatakan bilangan tujuh.
+0227|ズボンや靴などを身に着ける。|Mengenakan celana, sepatu, atau pakaian bagian bawah lainnya.
+0228|少しずつ変化が進んでいく様子。|Keadaan ketika sesuatu berubah sedikit demi sedikit.
+0229|家の出入り口に取り付ける、日本風の引き戸。|Pintu geser bergaya Jepang yang dipasang pada pintu masuk rumah.
+0230|文字や数式を書き留めるための冊子。|Buku untuk mencatat tulisan atau mengerjakan latihan.
+0231|もう一度。そして、さらに。|Sekali lagi; selain itu, atau dan juga.
+0232|いま話している日。|Hari yang sedang berlangsung saat ini.
+0233|程度がかなり大きいことを表す言葉。|Kata keterangan untuk menyatakan tingkat yang tinggi; sangat.
+0234|今年から二年前の年。|Tahun yang jatuh dua tahun sebelum tahun ini.
+0235|いくつかの文を連ねてまとまった内容を表したもの。|Rangkaian kalimat yang menyampaikan isi yang utuh; teks atau tulisan.
+0236|人々が遊んだり休んだりするために作られた場所。|Tempat umum yang dibuat agar orang dapat bermain dan beristirahat.
+0237|あとで返す約束で他人のものを使う。|Memakai milik orang lain dengan janji akan dikembalikan.
+0238|顔にあり、食べ物をとり、声を出す器官。|Bagian wajah untuk makan dan bersuara; juga berarti lubang atau bukaan.
+0239|手に取って、落とさないようにする。|Menggenggam sesuatu dengan tangan agar tidak jatuh; juga berarti memiliki.
+0240|シャツなどの上に重ねて着る衣服。|Pakaian luar yang dikenakan di atas kemeja.
+0241|夏のあとに来て、木の葉が色づく季節。|Musim setelah musim panas ketika daun-daun berubah warna.
+0242|よくない状態であること。好ましくないこと。|Keadaan yang tidak baik atau tidak diinginkan.
+0243|空や海のような色。|Warna seperti langit cerah dan laut.
+0244|ある場所を拠点にして生活する。|Menetap dan menjalani kehidupan di suatu tempat.
+0245|電話をして相手を呼び出す。また、物を掛ける。|Menghubungi seseorang melalui telepon; juga berarti menggantungkan atau memasang sesuatu.
+0246|週の五番目の日。|Hari kelima dalam seminggu.
+0247|覚えていたことが思い出せなくなる。|Tidak lagi dapat mengingat sesuatu yang dahulu diingat; juga lupa membawa barang.
+0248|用を足す場所。トイレ。|Tempat untuk buang air; toilet.
+0249|カメラで写した、物や人の姿の画像。|Gambar benda atau orang yang diambil dengan kamera.
+0250|数の0。何もないこと。|Bilangan nol; keadaan tidak ada apa pun.
+0251|種類や様子がたくさんあること。|Keadaan ketika jenis atau ragamnya banyak.
+0252|すでにその状態になっていること。|Menyatakan bahwa suatu hal sudah terjadi atau sudah dalam keadaan tertentu.
+0253|人と顔を合わせる。|Bertatap muka atau bertemu dengan seseorang.
+0254|太陽が昼に見える方角で、北の反対。|Arah yang berlawanan dengan utara; arah matahari tampak pada siang hari di belahan bumi utara.
+0255|月の五番目の日。また、五日間。|Tanggal lima dalam bulan; juga rentang lima hari.
+0256|衣服を体にまとう。|Mengenakan pakaian pada tubuh, terutama pakaian atasan.
+0257|話し手から少し離れた場所を指す言葉。|Kata penunjuk untuk tempat yang agak jauh dari pembicara; 'situ'.
+0258|続いていたことが最後まで行われる。|Sesuatu yang berlangsung sampai pada akhirnya; selesai.
+0259|いくつかの中から選ぶときに使う言葉。|Kata penunjuk tanya untuk memilih salah satu dari beberapa hal; 'yang mana'.
+0260|書かれた文字や文章を見て、内容を理解する。|Melihat tulisan lalu memahami isinya.
+0261|前の話を受けて、次の話を述べるときの言葉。|Kata sambung yang melanjutkan pembicaraan; 'kalau begitu'.
+0262|今月の次の月。|Bulan yang datang setelah bulan ini.
+0263|木や草になる、食べられる実。|Buah dari pohon atau tumbuhan yang dapat dimakan.
+0264|動いていたものが動かなくなる。|Sesuatu yang tadinya bergerak menjadi diam.
+0265|目的の場所に行き着く。|Sampai di tempat tujuan.
+0266|非常に好きであること。|Perasaan suka yang sangat besar.
+0267|自分より年下の女のきょうだい。|Saudara perempuan yang lebih muda dari diri sendiri.
+0268|春のあとに来る、一年で最も暑い季節。|Musim setelah musim semi dan merupakan musim terpanas dalam setahun.
+0269|今日の夜。|Malam pada hari ini.
+0270|海水などから作る、しょっぱい調味料。|Bumbu berasa asin yang dibuat dari air laut dan sejenisnya.
+0271|今週の前の週。|Minggu sebelum minggu ini.
+0272|手に入れたい、そうしたいと思う気持ち。|Perasaan ingin memiliki atau ingin melakukan sesuatu.
+0273|幹や枝があり、地面に根を張る植物。また、その材料。|Tumbuhan berbatang dan bercabang yang berakar di tanah; juga bahan kayunya.
+0274|うそでなく、事実であること。|Hal yang bukan dusta, melainkan sesuai kenyataan.
+0275|病気や傷を治したり、予防したりするために飲む・塗るもの。|Zat yang diminum atau dioleskan untuk menyembuhkan atau mencegah penyakit.
+0276|砂糖などを使った甘い食べ物。|Makanan manis yang dibuat dengan gula dan sebagainya.
+0277|週の六番目の日。|Hari keenam dalam seminggu.
+0278|味が悪く、おいしくない。|Rasa yang tidak enak.
+0279|米などから作る、飲むと酔う飲み物。|Minuman beralkohol seperti sake yang membuat orang mabuk.
+0280|数や量がたくさんあること。|Jumlah atau kadar yang banyak.
+0281|人間以外の、動く生き物。|Makhluk hidup yang bergerak selain manusia.
+0282|電車やバスなどに乗るための、お金を払った証明の紙。|Kertas bukti pembayaran untuk naik kereta, bus, dan sebagainya.
+0283|長さの単位で、1000メートル。|Satuan panjang sebesar seribu meter.
+0284|声を出して、人に来るよう知らせる。|Mengeluarkan suara agar orang datang; memanggil atau mengundang.
+0285|人や動物の、頭から足までの全体。|Seluruh badan manusia atau hewan dari kepala sampai kaki.
+0286|急がず、時間をかけて行う様子。|Cara melakukan sesuatu tanpa tergesa-gesa dengan waktu yang longgar.
+0287|月の二番目の日。また、二日間。|Tanggal dua dalam bulan; juga rentang dua hari.
+0288|十分に成長した人。|Orang yang sudah tumbuh dewasa sepenuhnya.
+0289|口の中にあり、食べ物をかむ白い器官。|Bagian putih di dalam mulut yang dipakai untuk mengunyah makanan.
+0290|秋のあとに来る、一年で最も寒い季節。|Musim setelah musim gugur dan merupakan musim terdingin dalam setahun.
+0291|ある物事がある所。場面や部分も指す。|Lokasi tertentu; juga dapat berarti bagian atau situasi tertentu.
+0292|口や風で空気を動かして流れを作る。|Menggerakkan udara melalui mulut atau angin; meniup atau bertiup.
+0293|体の下にあり、立ったり歩いたりするための部分。|Bagian tubuh paling bawah yang dipakai untuk berdiri dan berjalan.
+0294|物を入れるための、四角い入れ物。|Wadah berbentuk persegi untuk menyimpan benda.
+0295|数の8を表す数字。|Angka yang menyatakan bilangan delapan.
+0296|夜が明けてから昼までの時間。|Waktu sejak fajar menyingsing hingga siang hari.
+0297|昨日の前の日。|Hari sebelum kemarin.
+0298|多くの人に名前や評判が知られていること。|Keadaan ketika nama atau reputasi dikenal oleh banyak orang.
+0299|月の二十番目の日。また、二十日間。|Tanggal dua puluh dalam bulan; juga rentang dua puluh hari.
+0300|距離や時間の隔たりが小さいこと。|Jarak atau waktu yang hanya sedikit terpaut.
+0301|人にお願いしたり、物を求めたりするときの丁寧な言葉。|Ungkapan sopan untuk meminta tolong atau meminta sesuatu.
+0302|時刻を知らせたり測ったりする道具。|Alat untuk menunjukkan dan mengukur waktu.
+0303|正午から日が暮れるまでの間。|Waktu dari tengah hari sampai menjelang matahari terbenam.
+0304|食べるためのもの。食品。|Segala sesuatu yang dimakan; bahan makanan.
+0305|雨や雪などが空から落ちてくる。|Hujan, salju, dan sebagainya yang jatuh dari langit.
+0306|難しくなく、簡単であること。|Tidak sulit; mudah dan sederhana.
+0307|外国にある自国の代表が仕事をする建物。|Gedung tempat perwakilan suatu negara bekerja di negara lain.
+0308|名前の分からない人を尋ねる言葉。|Kata tanya untuk menanyakan orang yang belum diketahui namanya.
+0309|高い方向。物の表面や高い位置。|Arah yang lebih tinggi; bagian permukaan atau posisi yang tinggi.
+0310|数の5を表す数字。|Angka yang menyatakan bilangan lima.
+0311|月の十番目の日。また、十日間。|Tanggal sepuluh dalam bulan; juga rentang sepuluh hari.
+0312|二つのうち、どちらかを選ぶときに尋ねる言葉。|Kata tanya untuk memilih satu di antara dua pilihan; juga bisa menanyakan arah.
+0313|水を張って泳ぐための設備。|Fasilitas berisi air untuk berenang.
+0314|大きさや規模が少ないこと。|Ukuran atau skala yang kecil.
+0315|いま過ごしている週。|Minggu yang sedang berlangsung sekarang.
+0316|動物の体から取った、食べる部分。|Bagian tubuh hewan yang dimakan.
+0317|数の0。何もないこと。|Bilangan nol; keadaan tidak ada apa pun.
+0318|豚の肉。|Daging dari babi.
+0319|面積や幅が大きいこと。|Luas atau lebar yang besar.
+0320|足に履く、布や糸でできた衣類。|Pakaian dari kain atau benang yang dikenakan di kaki sebelum memakai sepatu.
+0321|人数が一であること。|Jumlah orang yang hanya satu.
+0322|戸や箱を開け閉めするための道具。|Alat untuk mengunci dan membuka pintu atau kotak.
+0323|離れた向かい側。あちらの方。|Sisi seberang atau tempat yang berada agak jauh di sana.
+0324|やり方がうまいこと。得意であること。|Pandai dan terampil dalam melakukan sesuatu.
+0325|牛の肉。|Daging dari sapi.
+0326|声に出して言うこと。また、その内容。|Hal yang diucapkan atau isi pembicaraannya; cerita.
+0327|毎日の夜。|Setiap malam hari.
+0328|数の3を表す、物を数えるときの言い方。|Cara menyebut bilangan tiga saat menghitung benda.
+0329|息とともに空気や煙を口から取り込む。|Menarik udara atau asap rokok masuk melalui mulut.
+0330|お金を預かったり貸したりする機関。|Lembaga yang menyimpan dan meminjamkan uang.
+0331|価値があり、粗末にできないこと。|Memiliki nilai sehingga harus dihargai dan dijaga.
+0332|学校などで学ぶ人。|Orang yang belajar di sekolah atau lembaga pendidikan.
+0333|家や建物の中で、壁で仕切られた空間。|Ruang di dalam rumah atau gedung yang disekat dinding.
+0334|昼にとる食事。|Makanan yang dimakan pada siang hari.
+0335|低い方向。物の下側。|Arah yang lebih rendah; bagian bawah suatu benda.
+0336|数の2を表す、物を数えるときの言い方。|Cara menyebut bilangan dua saat menghitung benda.
+0337|数の100を表す数字。|Angka yang menyatakan bilangan seratus.
+0338|土地の様子を紙などに描いて示したもの。|Gambar di kertas dan sejenisnya yang menunjukkan keadaan suatu wilayah.
+0339|野菜を売る店。また、その人。|Toko yang menjual sayuran, atau orang yang berjualan sayur.
+0340|洋服の首に結ぶ、細長い布。|Kain panjang dan sempit yang diikat di leher pada pakaian formal.
