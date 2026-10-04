@@ -1,0 +1,250 @@
+n2_1349|品物を売る小さな店。|Toko kecil tempat menjual barang dagangan.
+n2_1404|特に、それと決めること。|Menetapkan atau menunjuk sesuatu secara khusus.
+n2_1405|特別な、値段で、売ること。|Penjualan khusus dengan harga murah.
+n2_1406|相手が、いないのに、一人で、話すこと。|Berbicara sendirian tanpa ada lawan bicara.
+n2_1407|表面が、でこぼこして、平らでない様子。|Permukaan yang tidak rata dan berbonggol.
+n2_1408|道が、行き止まりに、なっている、所。|Ujung jalan yang buntu.
+n2_1409|進んで、行き止まりに、ぶつかる。|Sampai ke ujung jalan hingga tak bisa maju; juga menabrak masalah.
+n2_1410|先の、とがった物で、押す。|Menusuk atau menyodok dengan benda runcing.
+n2_1411|勢いよく、中へ、入り込む。|Menerobos masuk dengan kuat; juga menyelami hal secara mendalam.
+n2_1412|のんびりしていて、気楽な様子。|Santai dan tidak mudah khawatir.
+n2_1413|切れ味が、悪い。反応が、遅い。|Tidak tajam; juga lamban dalam bereaksi.
+n2_1415|会社などの、中の、電話。|Sambungan telepon internal di dalam kantor atau gedung.
+n2_1416|なぞを、出して、答えを、当てる、遊び。|Permainan tebak-tebakan.
+n2_1417|慣れる。人に、なつく。|Terbiasa dengan sesuatu; juga hewan menjadi jinak.
+n2_1418|地球の、いちばん、南の、端。|Titik paling selatan di bumi.
+n2_1419|南アメリカ。|Benua Amerika Selatan.
+n2_1420|南と、北。|Selatan dan utara.
+n2_1421|やわらかい。|Lembut, empuk, dan mudah berubah bentuk.
+n2_1422|よい、においが、する。|Mengeluarkan aroma atau tampak berkilau.
+n2_1423|雨上がりの空に、七色に、かかる、光の、弧。|Lengkung tujuh warna di langit setelah hujan.
+n2_1424|太陽が、地平線から、昇ること。|Saat matahari muncul di ufuk timur.
+n2_1425|太陽が、地平線に、沈むこと。|Saat matahari terbenam.
+n2_1426|日光が、当たらない、所。|Tempat yang tidak terkena sinar matahari.
+n2_1427|毎日、決まって、行う、こと。|Kegiatan yang rutin dilakukan setiap hari.
+n2_1428|出かけた、その日の、うちに、帰ること。|Perjalanan pergi dan pulang pada hari yang sama.
+n2_1429|日付と、時刻。|Tanggal dan waktu.
+n2_1430|何日間かの、予定。|Rencana kegiatan per hari.
+n2_1431|日が、当たること。|Paparan sinar matahari pada suatu tempat.
+n2_1432|毎日。日々。|Hari demi hari.
+n2_1433|毎日の、生活に、使う、品物。|Barang yang dipakai dalam kehidupan sehari-hari.
+n2_1434|物を、入れる、もの。|Wadah untuk menyimpan benda.
+n2_1435|会社に、入ること。|Mulai bekerja di sebuah perusahaan.
+n2_1436|水などで、ぬれるように、する。|Membuat sesuatu menjadi basah.
+n2_1437|熱を、加えて、暑くする。|Memanaskan sesuatu; juga menjadi bergairah.
+n2_1438|事務や、学校などで、区切られた、一年間。|Tahun anggaran atau tahun ajaran yang ditetapkan.
+n2_1439|ねじるように、回す。|Memutar atau memelintir sesuatu; juga memikirkan cara cerdik.
+n2_1440|火を、つけて、燃やす。|Membakar atau menyalakan sesuatu hingga terbakar.
+n2_1441|液体などの、濃さの、程度。|Kadar kepekatan suatu larutan.
+n2_1442|あるべき所に、おさめる。税などを、支払う。|Menyerahkan atau menyimpan di tempat semestinya; juga membayar pajak.
+n2_1443|仕事が、はかどる、割合。|Tingkat kecepatan atau hasil kerja per satuan waktu.
+n2_1444|農業で、作られた、品物。|Hasil produksi pertanian.
+n2_1445|農業を、行う、人々が、住む、村。|Desa tempat orang bertani.
+n2_1446|害虫を、駆除する、薬。|Zat kimia pembasmi hama tanaman.
+n2_1447|すき間から、そっと、見る。|Mengintip dari celah; juga melihat sekilas ke dalam.
+n2_1448|色や、行動が、目立つ様子。|Mencolok dalam warna atau tindakan.
+n2_1449|紙や布が、裂ける。|Kertas atau kain menjadi robek.
+n2_1450|こわれた、ものの、かけら。|Serpihan dari benda yang pecah.
+n2_1452|手を合わせて、礼をする。|Menangkupkan tangan untuk berdoa atau menghormat.
+n2_1453|「見る」の、謙譲語。|Bentuk merendah dari 'miru' (melihat).
+n2_1454|背中に、のせて、運ぶ。重い、責任を、負う。|Menggendong di punggung; juga menanggung tanggung jawab berat.
+n2_1455|人々に、一つずつ、渡す。|Membagikan sesuatu kepada orang satu per satu.
+n2_1456|品物が、売れて、なくなること。|Barang yang habis terjual.
+n2_1457|品物が、すべて、売れる。|Seluruh barang terjual hingga tak tersisa.
+n2_1458|品物が、売れる、様子。|Keadaan laku atau lancarnya penjualan.
+n2_1459|品物を、売って、得た、お金の、合計。|Jumlah uang hasil penjualan.
+n2_1460|駅や、学校などの、小さな、店。|Kios kecil di stasiun atau sekolah.
+n2_1461|売ることと、買うこと。|Kegiatan jual dan beli.
+n2_1462|腹や、手足を、地面に、つけて、進む。|Bergerak dengan perut atau merangkak di tanah; juga menjalar.
+n2_1463|重さを、はかる、道具。|Alat untuk mengukur berat.
+n2_1464|父母の、兄。|Kakak laki-laki dari ayah atau ibu.
+n2_1465|父母の、姉。|Kakak perempuan dari ayah atau ibu.
+n2_1466|果物などの、皮を、取り除く。|Mengupas kulit buah atau sayuran.
+n2_1467|貼ってあるものを、取る。|Melepas sesuatu yang menempel.
+n2_1468|人を、自分の家に、泊まらせる。|Menerima tamu menginap di rumah atau penginapan.
+n2_1469|白くなった、髪の毛。|Rambut yang telah memutih karena tua.
+n2_1470|濃さを、うすく、する。|Mengencerkan atau membuat larutan kurang pekat.
+n2_1471|光が、弱くて、少し、暗い。|Sedikit gelap dan remang-remang.
+n2_1472|近くまで、来る。無理に、求める。|Mendekat; juga mendesak seseorang untuk melakukan sesuatu.
+n2_1473|ひもなどで、くくる。自由を、奪う。|Mengikat dengan tali; juga membelenggu kebebasan.
+n2_1474|食べ物を、はさんで、食べる、二本の、棒。|Dua batang kecil yang dipakai untuk menjepit makanan.
+n2_1475|肌に、直接、着る、衣類。|Pakaian yang dikenakan langsung di kulit.
+n2_1476|植木を、植える、容器。大きな、碗。|Pot untuk menanam; juga mangkuk besar.
+n2_1477|出発する。旅に、出る。|Berangkat atau memulai perjalanan.
+n2_1478|持っている、力を、十分に、出すこと。|Menunjukkan kemampuan yang dimiliki secara penuh.
+n2_1479|弾や、ロケットなどを、打ち出すこと。|Menembakkan peluru atau meluncurkan roket.
+n2_1480|新しい、考えを、思いつくこと。|Munculnya gagasan atau cara berpikir baru.
+n2_1481|電気を、起こすこと。|Menghasilkan listrik.
+n2_1482|新しい、品物を、売り出すこと。|Mulai dijualnya produk baru.
+n2_1483|名前を、彫った、印。|Stempel pribadi yang diukir dengan nama.
+n2_1484|裁判を、行う、役人。|Pejabat yang memutuskan perkara di pengadilan.
+n2_1485|円の、中心から、円周までの、長さ。|Panjang dari pusat lingkaran sampai ke garis tepi.
+n2_1486|海に、突き出した、土地。|Daratan yang menjorok ke laut dan dikelilingi air di tiga sisi.
+n2_1487|曲がって、そり返る。|Melengkung ke belakang; juga menegakkan tubuh.
+n2_1488|他に、影響されて、映し出すこと。|Mencerminkan atau menggambarkan keadaan lain.
+n2_1489|自分の、行いを、振り返り、反省すること。|Merenungi tindakan sendiri untuk memperbaiki diri.
+n2_1490|住所の、番号。|Nomor lokasi pada alamat rumah.
+n2_1491|ずるくて、堂々と、していない、様子。|Pengecut dan licik; tidak bersikap jantan.
+n2_1492|他と、比べて、そうである、様子。|Dalam perbandingan; relatif.
+n2_1493|遠回しに、人を、いやな、気持ちに、させる、言葉。|Ucapan sindiran halus yang membuat orang tidak enak.
+n2_1494|体の、表面を、おおう、組織。|Lapisan yang menutupi permukaan tubuh.
+n2_1495|上から、おおうように、かける。|Menutupkan sesuatu dari atas; juga melimpahkan kesalahan.
+n2_1496|勢いよく、中へ、入る。|Terjun atau melompat masuk ke dalam sesuatu; juga muncul mendadak.
+n2_1497|顔や、髪を、美しく、整えること。|Perawatan dan penataan kecantikan wajah dan rambut.
+n2_1498|口や、あごの周りに、生える、毛。|Rambut yang tumbuh di sekitar mulut atau dagu.
+n2_1499|腕の、曲がる、部分。|Sendi tengah lengan yang bisa menekuk.
+n2_1500|生活に、どうしても、必要な、品物。|Barang yang mutlak diperlukan dalam hidup.
+n2_1501|文字を、書き記すこと。|Menuliskan atau mencatat dengan alat tulis.
+n2_1502|その文章を、書いた、人。|Orang yang menulis tulisan ini.
+n2_1503|目印として、立てた、しるし。|Tanda atau rambu yang dipasang sebagai petunjuk.
+n2_1504|物事を、判断する、基準。|Patokan umum dalam menilai sesuatu.
+n2_1505|見本として、集めた、動植物などの、実物。|Contoh benda atau makhluk untuk dipelajari atau dipamerkan.
+n2_1506|本の、外側の、おおい。|Sampul luar buku atau majalah.
+n2_1507|物事の、よし悪しを、評価して、述べること。|Ulasan atau kritik tentang suatu hal.
+n2_1508|びんに、詰めること。|Mengemas isi ke dalam botol.
+n2_1509|運が、悪いこと。|Nasib buruk.
+n2_1510|規則的でない、こと。|Tidak teratur atau tidak sesuai aturan.
+n2_1511|よごれていて、きたない様子。|Kotor dan tidak higienis.
+n2_1512|交通や通信が、途中で、切れること。|Terputusnya lalu lintas atau sambungan komunikasi.
+n2_1513|ある場所の、近く。|Daerah di sekitar suatu tempat.
+n2_1514|人と、交わる。人の、ために、行動を、共にする。|Bergaul dengan orang lain; juga menemani atau berpacaran.
+n2_1515|夫と、妻。|Sepasang suami istri.
+n2_1516|平らに、広げて、置く。|Menghamparkan atau menggelar sesuatu secara rata.
+n2_1517|建物などを、建てる、ための、土地。|Bidang tanah untuk mendirikan bangunan.
+n2_1518|広く、行き渡ること。|Menyebar luas hingga dikenal atau dipakai banyak orang.
+n2_1519|水などの、上に、のせる。思い出す。|Mengapungkan di air; juga menampilkan atau membayangkan.
+n2_1520|水などの、上に、のる。|Terapung di permukaan; juga merasa riang.
+n2_1521|水の上に、のる。ふと、思い出す。|Mengapung di air; juga terlintas di pikiran.
+n2_1522|父と、母。|Ayah dan ibu.
+n2_1523|意味を、表す、しるし。|Tanda atau lambang yang menyatakan makna, seperti plus dan minus.
+n2_1524|主な、ものに、付き従うこと。|Berafiliasi dengan lembaga induk; juga tambahan.
+n2_1525|手で、軽く、さする。|Mengelus dengan telapak tangan secara lembut.
+n2_1526|昔の、日本の、戦士。|Kesatria atau samurai Jepang masa lampau.
+n2_1527|漢字の、組み立ての、中心と、なる、部分。|Bagian pokok kanji yang dipakai untuk mengelompokkan di kamus.
+n2_1528|機械の、一部を、作る、部分。|Bagian atau komponen penyusun mesin.
+n2_1529|空気や、ガスを、入れて、ふくらませた、ゴムの、玉。|Bola karet tipis yang diisi udara atau gas.
+n2_1530|物を、包んだり、持ち運んだり、する、四角い、布。|Kain persegi untuk membungkus dan membawa barang.
+n2_1531|動詞や、形容詞などを、修飾する、言葉。|Kata keterangan yang menerangkan kata kerja atau kata sifat.
+n2_1532|書類などを、写し取ること。|Menggandakan dokumen dengan fotokopi atau salinan.
+n2_1533|二つ以上の、数。|Bentuk jamak yang berjumlah dua atau lebih.
+n2_1534|お金を、銀行などに、納める。|Menyetor uang ke rekening atau kantor pembayaran.
+n2_1535|払った、お金を、返す。|Mengembalikan uang yang telah dibayarkan.
+n2_1536|あるものが、そのことを、示している。話を、語る。|Menuturkan cerita; juga membuktikan atau menunjukkan sesuatu.
+n2_1537|長さを、はかる、道具。|Alat berskala untuk mengukur panjang.
+n2_1538|程度が、非常に、激しい。|Dahsyat dan luar biasa tingkatnya.
+n2_1539|危険が、ありそうで、安心できない様子。|Keadaan yang tidak aman dan rawan bahaya.
+n2_1540|物を、しまって、おく、小さな、建物や、部屋。|Bangunan atau ruangan kecil untuk menyimpan barang.
+n2_1541|一つのものが、いくつかに、分かれる。|Terbagi atau terpisah menjadi beberapa bagian.
+n2_1542|意味が、理解できる。|Dapat dimengerti; menjadi jelas.
+n2_1543|ばらばらに、すること。|Membongkar atau menguraikan menjadi bagian-bagian.
+n2_1544|一つの、数を、他の数で、割る、形に、表した、数。|Bilangan yang dinyatakan sebagai perbandingan dua bilangan; pecahan.
+n2_1545|広く、あちこちに、散らばること。|Penyebaran suatu hal di berbagai tempat.
+n2_1546|物の、多さや、少なさ。|Banyak atau sedikitnya suatu benda; takaran.
+n2_1547|種類ごとに、分けること。|Membagi sesuatu berdasarkan jenisnya.
+n2_1548|火山が、火や、煙を、吹き出すこと。|Gunung berapi menyemburkan lava, asap, dan abu.
+n2_1549|水を、吹き上げる、仕掛け。|Alat atau bangunan yang memancarkan air ke atas.
+n2_1550|火を、つけて、燃やす。|Menyalakan api; juga memasak dengan membakar.
+n2_1551|文章で、表現する、芸術。|Seni yang dinyatakan lewat tulisan; sastra.
+n2_1552|研究の、ために、参考に、する、書物や、記録。|Buku atau dokumen yang dijadikan rujukan penelitian.
+n2_1553|文章の、書き方の、特徴。|Ciri khas cara menulis; gaya bahasa.
+n2_1554|文字を、書く、ための、道具。|Perlengkapan menulis seperti pensil dan buku.
+n2_1555|文章の、前後の、つながり。|Hubungan antara bagian-bagian dalam teks; konteks.
+n2_1556|軍隊の、兵士。|Prajurit yang bertugas di militer.
+n2_1557|日本の、文字の一つで、丸みの、ある、仮名。|Salah satu aksara kana Jepang yang berbentuk melengkung.
+n2_1558|落ち着いて、気にしない様子。|Tidak gentar; tenang dan tidak ambil pusing.
+n2_1559|日曜や、祝日では、ない、日。|Hari biasa selain akhir pekan dan hari libur.
+n2_1560|特に、変わった、ことが、ない様子。|Biasa-biasa saja tanpa keistimewaan.
+n2_1561|広く、平らな、土地。|Dataran luas yang rata.
+n2_1562|二つ以上の、ものが、並んで、進むこと。|Berjalan sejajar; juga berlangsung bersamaan.
+n2_1563|道の、両側に、並んで、植えた、木。|Pohon yang berderet di sepanjang tepi jalan.
+n2_1564|会が、終わること。|Selesainya suatu sidang atau pertemuan.
+n2_1565|それぞれ。ばらばら。|Masing-masing secara terpisah.
+n2_1566|ふだんの、家とは、別に、持つ、家。|Rumah peristirahatan yang dimiliki di luar rumah utama.
+n2_1567|日本の、文字の一つで、角張った、仮名。|Salah satu aksara kana Jepang yang bersudut, dipakai untuk kata serapan.
+n2_1568|一方に、かたよる。|Condong ke satu sisi; tidak seimbang.
+n2_1569|行きか、帰りの、どちらか、一方。|Perjalanan sekali jalan.
+n2_1570|物が、整理される。問題が、解決する。|Barang menjadi rapi; juga masalah terselesaikan.
+n2_1571|糸などを、組んで、物を、作る。|Merajut atau menganyam benang menjadi sesuatu.
+n2_1572|資料を、集めて、本や、雑誌にまとめること。|Mengumpulkan dan menyusun bahan menjadi buku, majalah, atau film.
+n2_1573|毛糸などで、編んだ、物。|Hasil rajutan dari benang.
+n2_1574|大小便を、する、場所。|Tempat buang air; toilet.
+n2_1575|手紙を、書く、ための、紙。|Kertas yang dipakai untuk menulis surat.
+n2_1576|健康を、守ること。|Menjaga atau melindungi kesehatan.
+n2_1577|つかまえる。理解する。|Menangkap sesuatu; juga memahami inti.
+n2_1578|動物や、魚を、つかまえる。|Menangkap hewan atau ikan.
+n2_1579|足りない、ところを、満たす。|Menutupi atau melengkapi kekurangan.
+n2_1580|必要な、人や、物を、広く、集めること。|Mencari orang atau bahan secara terbuka untuk dikumpulkan.
+n2_1581|すぐれた、ものを、まねる。|Meniru contoh atau kebiasaan.
+n2_1582|物を、包むこと。|Membungkus barang dengan kemasan.
+n2_1584|まとまっている、ものを、くずす。|Merobohkan sesuatu yang tersusun; juga memecah uang besar.
+n2_1585|形が、整っていた、ものが、こわれる。|Sesuatu yang tersusun runtuh atau ambruk.
+n2_1586|食材を、切る、ための、刃物。|Pisau dapur untuk memotong bahan makanan.
+n2_1587|手で、遠くに、投げる。そのままに、しておく。|Melempar ke tempat jauh; juga membiarkan begitu saja.
+n2_1588|はなれる。自由に、なる。|Menjadi terlepas dari sesuatu.
+n2_1589|目指す、方向。|Arah mata angin atau arah yang dituju.
+n2_1590|ある地域の、特有の、言葉。|Ragam bahasa khas suatu daerah.
+n2_1591|物事を、進める、ための、方向や、考え。|Pedoman atau haluan dalam melaksanakan sesuatu.
+n2_1592|未知の、数を、求める、ための、式。|Persamaan yang dipakai untuk mencari nilai yang belum diketahui.
+n2_1593|ある、方向。ある、分野。|Arah tertentu; juga bidang atau kawasan.
+n2_1594|物事が、成り立つ、決まり。|Aturan atau kaidah yang berlaku pada suatu peristiwa.
+n2_1595|針と糸で、布をつなぐ。すき間を、通る。|Menjahit kain dengan jarum dan benang; juga menyelinap di celah.
+n2_1596|最後まで、やり通す様子。|Sampai tuntas; bagaimanapun keadaannya.
+n2_1597|人を、死なせて、失う。|Kehilangan seseorang karena meninggal.
+n2_1598|僧を、親しんで、呼ぶ、言葉。|Sebutan akrab untuk biksu.
+n2_1599|他人の、息子を、親しんで、呼ぶ、言葉。|Sebutan untuk anak laki-laki orang lain.
+n2_1600|小さな、男の子を、呼ぶ、言葉。|Panggilan untuk anak laki-laki kecil.
+n2_1601|物事を、うまく、行かせない。|Menghalangi atau mengganggu jalannya sesuatu.
+n2_1602|乱暴に、動き回る。|Bergerak liar dan mengamuk.
+n2_1603|遠くのものを、大きく見る、ための、道具。|Alat untuk memperbesar tampilan objek yang jauh.
+n2_1604|空気などを、入れて、ふくらませる。|Menggembungkan sesuatu dengan mengisinya udara.
+n2_1605|中から、広がって、大きくなる。|Mengembang atau membengkak menjadi lebih besar.
+n2_1606|量が、非常に、多い様子。|Sangat besar jumlah atau ukurannya.
+n2_1607|悪い、ことが、起こらないように、ふせぐこと。|Mencegah terjadinya hal buruk.
+n2_1608|犯罪を、ふせぐこと。|Mencegah terjadinya kejahatan.
+n2_1609|地球の、いちばん、北の、端。|Titik paling utara di bumi.
+n2_1610|文字や、絵を、書く、ための、黒い、液や、固形の、材料。|Tinta hitam atau batang tinta untuk menulis kaligrafi.
+n2_1611|牛や、馬などを、放し飼いに、する、広い土地。|Lahan luas tempat sapi atau kuda digembalakan.
+n2_1612|牛や、馬などを、飼う、産業。|Usaha beternak sapi, kuda, dan sejenisnya.
+n2_1613|地面を、掘って、水を、通した、溝。|Parit galian yang dialiri air.
+n2_1614|組織の、中心と、なる、所。|Pusat atau markas utama suatu organisasi.
+n2_1615|もともと。元来。|Pada dasarnya atau sejak awal.
+n2_1616|物を、のせて、運ぶ、平らな、容器。|Nampan datar untuk membawa barang; juga hari raya arwah.
+n2_1617|周りを、山に、囲まれた、平地。|Dataran rendah yang dikelilingi pegunungan.
+n2_1618|物と物が、こすれ合うこと。|Gesekan antara dua benda; juga perselisihan kecil.
+n2_1619|穴を、ふさいで、見えなくする。|Menguburkan atau menimbun sesuatu; juga mengisi kekosongan.
+n2_1620|紙などの、枚の、数。|Jumlah lembar kertas dan sejenisnya.
+n2_1621|そのたびに。いつも。|Setiap kali; juga ucapan terima kasih atas kunjungan berulang.
+n2_1622|寝るとき、頭を、のせる、もの。|Benda empuk untuk menyangga kepala saat tidur.
+n2_1623|どちらか、一方を、選ぶときの、言葉。|Kata penghubung untuk menyatakan pilihan; 'atau'.
+n2_1624|いちばん、あとに、生まれた、子供。|Anak yang lahir paling akhir dalam keluarga.
+n2_1625|祝いや、喜びの、気持ちを、表す、言葉。|Seruan untuk menyatakan sukacita dan perayaan.
+n2_1626|席などが、すべて、ふさがっていること。|Seluruh tempat duduk terisi penuh.
+n2_1627|決められた、いちばん高い、点数。|Nilai tertinggi yang mungkin diperoleh.
+n2_1628|味を、感じて、楽しむ。|Menikmati rasa atau menghayati sesuatu dengan saksama.
+n2_1629|ある数に、達しない、こと。|Kurang dari jumlah atau batas tertentu.
+n2_1630|海に、細長く、突き出した、土地。|Daratan sempit yang menjorok ke laut.
+n2_1631|国や、公共団体の、運営ではない、こと。|Berada di sektor swasta atau masyarakat.
+n2_1632|その土地の、人々の、間で、歌い継がれた、歌。|Lagu rakyat yang diwariskan di suatu daerah.
+n2_1633|役目を、受け持つ。|Menjalankan jabatan atau berperan sebagai sesuatu.
+n2_1634|限りが、ない、こと。|Tanpa batas; tak terhingga.
+n2_1635|長い間、便りを、しないこと。|Lama tidak memberi kabar kepada seseorang.
+n2_1636|数えきれないほど、多いこと。|Sangat banyak hingga tak terhitung.
+n2_1637|模様の、ない、無地の、布。|Kain tanpa corak; polos.
+n2_1638|つじつまが、合わない、こと。|Hal yang saling bertentangan dan tidak masuk akal.
+n2_1639|すぐれた、作品。|Karya yang termasyhur dan unggul.
+n2_1640|名前や、会社などを、書いた、小さな、紙。|Kartu kecil berisi nama dan data perusahaan seseorang.
+n2_1641|物や、事の、名前を、表す、言葉。|Kata yang menyatakan nama benda atau hal.
+n2_1642|家の、名前。姓。|Nama keluarga atau marga.
+n2_1643|景色などで、有名な、場所。|Tempat terkenal karena pemandangan atau sejarahnya.
+n2_1644|その土地の、有名な、産物。|Produk khas suatu daerah yang terkenal.
+n2_1645|命令する。役目に、つかせる。|Memerintahkan atau menugaskan seseorang pada suatu jabatan.
+n2_1646|あいている、こと。|Kekosongan atau celah yang tidak terisi.
+n2_1647|夜が、明ける、頃。|Menjelang fajar saat malam mulai berakhir.
+n2_1648|根拠のない、言い伝えを、信じること。|Kepercayaan akan hal gaib yang tidak berdasar.
+n2_1649|一人一人。|Masing-masing orang atau hal.
+n2_1650|音を、出させる。|Membunyikan atau membuat sesuatu bersuara.
+n2_1651|兄弟姉妹の、娘。|Anak perempuan dari saudara kandung.
+n2_1652|税金を、免除されること。|Pembebasan dari pajak.
+n2_1653|平らな、面の、広さ。|Besarnya bidang suatu permukaan; luas.
+n2_1654|直接、会って、人物などを、見る、試験。|Pertemuan langsung untuk menilai seseorang, seperti wawancara kerja.
+n2_1655|手間が、かかって、いやな、気持ちに、なる。|Terasa merepotkan dan membuat malas.
