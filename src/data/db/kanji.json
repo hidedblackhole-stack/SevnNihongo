@@ -5,11 +5,11 @@
     "meaningId": "Hubungan / Terkait",
     "meaningEn": "connection, barrier, gateway, involve, concerning",
     "onyomi": [
-      "カン (KAN)"
+      "かん"
     ],
     "kunyomi": [
-      "せき (seki)",
-      "かか.わる (kaka.waru)"
+      "せき",
+      "かか.わる"
     ],
     "jlpt": "N3",
     "strokeCount": 14,
@@ -42,11 +42,11 @@
     "meaningId": "Penanggung jawab / Terkait",
     "meaningEn": "person in charge, connection, duty, concern oneself",
     "onyomi": [
-      "ケイ (KEI)"
+      "けい"
     ],
     "kunyomi": [
-      "かか.る (kaka.ru)",
-      "かかり (kakari)"
+      "かか.る",
+      "かかり"
     ],
     "jlpt": "N3",
     "strokeCount": 9,
@@ -74,12 +74,12 @@
     "meaningId": "Mengikat / Menyimpulkan",
     "meaningEn": "tie, bind, contract, join, organize, do up hair, fasten",
     "onyomi": [
-      "ケツ (KETSU)",
-      "ケチ (KECHI)"
+      "けつ",
+      "けち"
     ],
     "kunyomi": [
-      "むす.ぶ (musu.bu)",
-      "ゆ.う (yu.u)"
+      "むす.ぶ",
+      "ゆ.う"
     ],
     "jlpt": "N3",
     "strokeCount": 12,
@@ -112,11 +112,11 @@
     "meaningId": "Buah / Hasil",
     "meaningEn": "fruit, reward, carry out, achieve, complete, end, finish",
     "onyomi": [
-      "カ (KA)"
+      "か"
     ],
     "kunyomi": [
-      "は.たす (ha.tasu)",
-      "は.てる (ha.teru)"
+      "は.たす",
+      "は.てる"
     ],
     "jlpt": "N3",
     "strokeCount": 8,
@@ -149,12 +149,12 @@
     "meaningId": "Ingat / Sadar",
     "meaningEn": "memorize, learn, remember, awake, sober up",
     "onyomi": [
-      "カク (KAKU)"
+      "かく"
     ],
     "kunyomi": [
-      "おぼ.える (obo.eru)",
-      "さ.める (sa.meru)",
-      "さ.ます (sa.masu)"
+      "おぼ.える",
+      "さ.める",
+      "さ.ます"
     ],
     "jlpt": "N3",
     "strokeCount": 12,
@@ -60381,7 +60381,7 @@
     ],
     "kunyomi": [],
     "jlpt": "N1",
-    "strokeCount": 10,
+    "strokeCount": 9,
     "radical": "Radikal",
     "radicalName": "Kanji Radical",
     "relatedWords": [
@@ -66371,6 +66371,4319 @@
       }
     ],
     "unicode": "U+62ED",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_6328": {
+    "id": "kj_n1_6328",
+    "character": "挨",
+    "meaningId": "Mendekat; menyapa",
+    "meaningEn": "approach, draw near, push open",
+    "onyomi": [
+      "あい"
+    ],
+    "kunyomi": [
+      "ひら.く"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 10,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "挨拶",
+        "reading": "あいさつ",
+        "meaningId": "Salam"
+      }
+    ],
+    "unicode": "U+6328",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_5b9b": {
+    "id": "kj_n1_5b9b",
+    "character": "宛",
+    "meaningId": "Alamat tujuan; ditujukan",
+    "meaningEn": "address, just like, fortunately",
+    "onyomi": [
+      "えん"
+    ],
+    "kunyomi": [
+      "あ.てる",
+      "-あて",
+      "-づつ",
+      "あたか.も"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 8,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "宛名",
+        "reading": "あてな",
+        "meaningId": "Alamat"
+      },
+      {
+        "word": "宛てる",
+        "reading": "あてる",
+        "meaningId": "Menujukan (surat) kepada"
+      }
+    ],
+    "unicode": "U+5B9B",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_6905": {
+    "id": "kj_n1_6905",
+    "character": "椅",
+    "meaningId": "Kursi",
+    "meaningEn": "chair",
+    "onyomi": [
+      "い"
+    ],
+    "kunyomi": [],
+    "jlpt": "N1",
+    "strokeCount": 12,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "椅子",
+        "reading": "いす",
+        "meaningId": "Kursi"
+      },
+      {
+        "word": "椅座位",
+        "reading": "いざい",
+        "meaningId": "Posisi duduk di kursi"
+      }
+    ],
+    "unicode": "U+6905",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_754f": {
+    "id": "kj_n1_754f",
+    "character": "畏",
+    "meaningId": "Takut; segan",
+    "meaningEn": "fear, majestic, graciously, be apprehensive",
+    "onyomi": [
+      "い"
+    ],
+    "kunyomi": [
+      "おそ.れる",
+      "かしこま.る",
+      "かしこ",
+      "かしこ.し"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 9,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "畏まりました",
+        "reading": "かしこまりました",
+        "meaningId": "Baik, saya mengerti (sangat sopan)"
+      }
+    ],
+    "unicode": "U+754F",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_840e": {
+    "id": "kj_n1_840e",
+    "character": "萎",
+    "meaningId": "Layu",
+    "meaningEn": "wither, droop, lame",
+    "onyomi": [
+      "い"
+    ],
+    "kunyomi": [
+      "な",
+      "しお.れる",
+      "しな.びる",
+      "しぼ.む",
+      "な.える"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 11,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "萎びる",
+        "reading": "しなびる",
+        "meaningId": "Layu"
+      },
+      {
+        "word": "萎む",
+        "reading": "しぼむ",
+        "meaningId": "Layu"
+      }
+    ],
+    "unicode": "U+840E",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n2_8328": {
+    "id": "kj_n2_8328",
+    "character": "茨",
+    "meaningId": "Semak berduri",
+    "meaningEn": "briar, thorn",
+    "onyomi": [
+      "し",
+      "じ"
+    ],
+    "kunyomi": [
+      "いばら",
+      "かや",
+      "くさぶき"
+    ],
+    "jlpt": "N2",
+    "strokeCount": 9,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "茨",
+        "reading": "いばら",
+        "meaningId": "Semak berduri"
+      }
+    ],
+    "unicode": "U+8328",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_54bd": {
+    "id": "kj_n1_54bd",
+    "character": "咽",
+    "meaningId": "Tenggorokan",
+    "meaningEn": "throat, choked, smothered, stuffy",
+    "onyomi": [
+      "いん",
+      "えん",
+      "えつ"
+    ],
+    "kunyomi": [
+      "むせ.ぶ",
+      "むせ.る",
+      "のど",
+      "の.む"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 9,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "咽",
+        "reading": "むせぶ",
+        "meaningId": "Tenggorokan"
+      }
+    ],
+    "unicode": "U+54BD",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_6deb": {
+    "id": "kj_n1_6deb",
+    "character": "淫",
+    "meaningId": "Cabul; berlebihan",
+    "meaningEn": "lewdness, licentiousness",
+    "onyomi": [
+      "いん"
+    ],
+    "kunyomi": [
+      "ひた.す",
+      "ほしいまま",
+      "みだ.ら",
+      "みだ.れる",
+      "みだり"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 11,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "淫",
+        "reading": "ひたす",
+        "meaningId": "Cabul"
+      }
+    ],
+    "unicode": "U+6DEB",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_81fc": {
+    "id": "kj_n1_81fc",
+    "character": "臼",
+    "meaningId": "Lumpang",
+    "meaningEn": "mortar",
+    "onyomi": [
+      "きゅう",
+      "ぐ"
+    ],
+    "kunyomi": [
+      "うす",
+      "うすづ.く"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 6,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "臼",
+        "reading": "うす",
+        "meaningId": "Lumpang"
+      }
+    ],
+    "unicode": "U+81FC",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_990c": {
+    "id": "kj_n1_990c",
+    "character": "餌",
+    "meaningId": "Umpan; pakan",
+    "meaningEn": "food, bait, prey, tempting profit",
+    "onyomi": [
+      "じ",
+      "に"
+    ],
+    "kunyomi": [
+      "え",
+      "えば",
+      "えさ",
+      "もち"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 14,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "餌",
+        "reading": "え",
+        "meaningId": "Umpan"
+      }
+    ],
+    "unicode": "U+990C",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_6028": {
+    "id": "kj_n1_6028",
+    "character": "怨",
+    "meaningId": "Dendam",
+    "meaningEn": "grudge, show resentment, be jealous",
+    "onyomi": [
+      "えん",
+      "おん",
+      "うん"
+    ],
+    "kunyomi": [
+      "うら.む",
+      "うらみ",
+      "うら.めしい"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 9,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "怨",
+        "reading": "うらむ",
+        "meaningId": "Dendam"
+      }
+    ],
+    "unicode": "U+6028",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n2_5ca1": {
+    "id": "kj_n2_5ca1",
+    "character": "岡",
+    "meaningId": "Bukit",
+    "meaningEn": "mount, hill, knoll",
+    "onyomi": [
+      "こう"
+    ],
+    "kunyomi": [
+      "おか"
+    ],
+    "jlpt": "N2",
+    "strokeCount": 8,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "岡",
+        "reading": "おか",
+        "meaningId": "Bukit"
+      }
+    ],
+    "unicode": "U+5CA1",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_81c6": {
+    "id": "kj_n1_81c6",
+    "character": "臆",
+    "meaningId": "Pengecut; gentar",
+    "meaningEn": "timidity, heart, mind, fear",
+    "onyomi": [
+      "おく",
+      "よく"
+    ],
+    "kunyomi": [
+      "むね",
+      "おくする"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 17,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "臆病",
+        "reading": "おくびょう",
+        "meaningId": "Pengecut"
+      }
+    ],
+    "unicode": "U+81C6",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_4ffa": {
+    "id": "kj_n1_4ffa",
+    "character": "俺",
+    "meaningId": "Aku (kasar/maskulin)",
+    "meaningEn": "I, myself",
+    "onyomi": [
+      "えん"
+    ],
+    "kunyomi": [
+      "おれ",
+      "われ"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 10,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "俺",
+        "reading": "おれ",
+        "meaningId": "Aku (kasar/maskulin)"
+      }
+    ],
+    "unicode": "U+4FFA",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n2_53ef": {
+    "id": "kj_n2_53ef",
+    "character": "可",
+    "meaningId": "Bisa; setuju",
+    "meaningEn": "can, passable, approval",
+    "onyomi": [
+      "か",
+      "こく"
+    ],
+    "kunyomi": [
+      "-べ.き",
+      "-べ.し"
+    ],
+    "jlpt": "N2",
+    "strokeCount": 5,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "可能",
+        "reading": "かのう",
+        "meaningId": "Mungkin"
+      },
+      {
+        "word": "不可",
+        "reading": "ふか",
+        "meaningId": "Tidak boleh"
+      },
+      {
+        "word": "許可",
+        "reading": "きょか",
+        "meaningId": "Izin"
+      }
+    ],
+    "unicode": "U+53EF",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_82db": {
+    "id": "kj_n1_82db",
+    "character": "苛",
+    "meaningId": "Menyiksa; kejam",
+    "meaningEn": "torment, scold, chastise",
+    "onyomi": [
+      "か"
+    ],
+    "kunyomi": [
+      "いじ.める",
+      "さいな.む",
+      "いらだ.つ",
+      "からい",
+      "こまかい"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 8,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "苛々",
+        "reading": "いらいら",
+        "meaningId": "Jengkel"
+      },
+      {
+        "word": "苛める",
+        "reading": "いじめる",
+        "meaningId": "Merundung"
+      }
+    ],
+    "unicode": "U+82DB",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_7259": {
+    "id": "kj_n1_7259",
+    "character": "牙",
+    "meaningId": "Taring",
+    "meaningEn": "tusk, fang, tusk radical (no. 92)",
+    "onyomi": [
+      "が",
+      "げ"
+    ],
+    "kunyomi": [
+      "きば",
+      "は"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 5,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "牙",
+        "reading": "きば",
+        "meaningId": "Taring"
+      }
+    ],
+    "unicode": "U+7259",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_5d16": {
+    "id": "kj_n1_5d16",
+    "character": "崖",
+    "meaningId": "Tebing",
+    "meaningEn": "cliff, bluff, precipice",
+    "onyomi": [
+      "がい",
+      "げ",
+      "ぎ"
+    ],
+    "kunyomi": [
+      "がけ",
+      "きし",
+      "はて"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 11,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "崖",
+        "reading": "がけ",
+        "meaningId": "Tebing"
+      }
+    ],
+    "unicode": "U+5D16",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_84cb": {
+    "id": "kj_n1_84cb",
+    "character": "蓋",
+    "meaningId": "Tutup; penutup",
+    "meaningEn": "cover, lid, flap",
+    "onyomi": [
+      "がい",
+      "かい",
+      "こう"
+    ],
+    "kunyomi": [
+      "ふた",
+      "けだ.し",
+      "おお.う",
+      "かさ",
+      "かこう"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 13,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "目蓋",
+        "reading": "まぶた",
+        "meaningId": "Kelopak mata"
+      }
+    ],
+    "unicode": "U+84CB",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_9ab8": {
+    "id": "kj_n1_9ab8",
+    "character": "骸",
+    "meaningId": "Kerangka; jasad",
+    "meaningEn": "bone, body, corpse",
+    "onyomi": [
+      "がい",
+      "かい"
+    ],
+    "kunyomi": [
+      "むくろ"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 16,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "骸",
+        "reading": "むくろ",
+        "meaningId": "Kerangka"
+      }
+    ],
+    "unicode": "U+9AB8",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_67ff": {
+    "id": "kj_n1_67ff",
+    "character": "柿",
+    "meaningId": "Kesemek",
+    "meaningEn": "persimmon",
+    "onyomi": [
+      "し"
+    ],
+    "kunyomi": [
+      "かき"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 9,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "柿",
+        "reading": "かき",
+        "meaningId": "Kesemek"
+      }
+    ],
+    "unicode": "U+67FF",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_984e": {
+    "id": "kj_n1_984e",
+    "character": "顎",
+    "meaningId": "Dagu; rahang",
+    "meaningEn": "jaw, chin, gill",
+    "onyomi": [
+      "がく"
+    ],
+    "kunyomi": [
+      "あご",
+      "あぎと"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 18,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "顎",
+        "reading": "あご",
+        "meaningId": "Dagu"
+      }
+    ],
+    "unicode": "U+984E",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_845b": {
+    "id": "kj_n1_845b",
+    "character": "葛",
+    "meaningId": "Kudzu (tanaman rambat)",
+    "meaningEn": "arrowroot, kudzu",
+    "onyomi": [
+      "かつ",
+      "かち"
+    ],
+    "kunyomi": [
+      "つづら",
+      "くず"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 11,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "葛",
+        "reading": "つづら",
+        "meaningId": "Kudzu (tanaman rambat)"
+      }
+    ],
+    "unicode": "U+845B",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_91dc": {
+    "id": "kj_n1_91dc",
+    "character": "釜",
+    "meaningId": "Periuk; kuali",
+    "meaningEn": "kettle, cauldron, iron pot",
+    "onyomi": [
+      "ふ"
+    ],
+    "kunyomi": [
+      "かま"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 10,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "釜",
+        "reading": "かま",
+        "meaningId": "Periuk"
+      }
+    ],
+    "unicode": "U+91DC",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_74e6": {
+    "id": "kj_n1_74e6",
+    "character": "瓦",
+    "meaningId": "Genteng",
+    "meaningEn": "tile, gram",
+    "onyomi": [
+      "が"
+    ],
+    "kunyomi": [
+      "かわら",
+      "ぐらむ"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 5,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "煉瓦",
+        "reading": "れんが",
+        "meaningId": "Batu bata"
+      }
+    ],
+    "unicode": "U+74E6",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_97d3": {
+    "id": "kj_n1_97d3",
+    "character": "韓",
+    "meaningId": "Korea",
+    "meaningEn": "Korea",
+    "onyomi": [
+      "かん"
+    ],
+    "kunyomi": [
+      "から",
+      "いげた"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 18,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "韓",
+        "reading": "から",
+        "meaningId": "Korea"
+      }
+    ],
+    "unicode": "U+97D3",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_73a9": {
+    "id": "kj_n1_73a9",
+    "character": "玩",
+    "meaningId": "Mempermainkan",
+    "meaningEn": "play, take pleasure in, trifle with, make sport of",
+    "onyomi": [
+      "がん"
+    ],
+    "kunyomi": [
+      "もちあそ.ぶ",
+      "もてあそ.ぶ"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 8,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "玩具",
+        "reading": "おもちゃ",
+        "meaningId": "Mainan"
+      }
+    ],
+    "unicode": "U+73A9",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_757f": {
+    "id": "kj_n1_757f",
+    "character": "畿",
+    "meaningId": "Wilayah ibu kota",
+    "meaningEn": "capital, suburbs of capital",
+    "onyomi": [
+      "き"
+    ],
+    "kunyomi": [
+      "みやこ"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 15,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "畿",
+        "reading": "みやこ",
+        "meaningId": "Wilayah ibu kota"
+      }
+    ],
+    "unicode": "U+757F",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_50c5": {
+    "id": "kj_n1_50c5",
+    "character": "僅",
+    "meaningId": "Sedikit; hanya",
+    "meaningEn": "a wee bit",
+    "onyomi": [
+      "きん",
+      "ごん"
+    ],
+    "kunyomi": [
+      "わず.か"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 12,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "僅か",
+        "reading": "わずか",
+        "meaningId": "Sedikit saja"
+      }
+    ],
+    "unicode": "U+50C5",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_5dfe": {
+    "id": "kj_n1_5dfe",
+    "character": "巾",
+    "meaningId": "Kain; lebar",
+    "meaningEn": "towel, hanging scroll, width, cloth radical (no. 50)",
+    "onyomi": [
+      "きん",
+      "ふく"
+    ],
+    "kunyomi": [
+      "おお.い",
+      "ちきり",
+      "きれ"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 3,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "雑巾",
+        "reading": "ぞうきん",
+        "meaningId": "Kain rumah"
+      },
+      {
+        "word": "布巾",
+        "reading": "ふきん",
+        "meaningId": "Lap dapur"
+      }
+    ],
+    "unicode": "U+5DFE",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_4e32": {
+    "id": "kj_n1_4e32",
+    "character": "串",
+    "meaningId": "Tusuk; sate",
+    "meaningEn": "spit, skewer",
+    "onyomi": [
+      "かん",
+      "けん",
+      "せん"
+    ],
+    "kunyomi": [
+      "くし",
+      "つらぬ.く"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 7,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "串",
+        "reading": "くし",
+        "meaningId": "Tusuk"
+      }
+    ],
+    "unicode": "U+4E32",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_7a9f": {
+    "id": "kj_n1_7a9f",
+    "character": "窟",
+    "meaningId": "Gua",
+    "meaningEn": "cavern",
+    "onyomi": [
+      "くつ",
+      "こつ"
+    ],
+    "kunyomi": [
+      "いわや",
+      "いはや",
+      "あな"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 13,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "窟",
+        "reading": "いわや",
+        "meaningId": "Gua"
+      }
+    ],
+    "unicode": "U+7A9F",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_7a3d": {
+    "id": "kj_n1_7a3d",
+    "character": "稽",
+    "meaningId": "Memikirkan; menimbang",
+    "meaningEn": "think, consider",
+    "onyomi": [
+      "けい"
+    ],
+    "kunyomi": [
+      "かんが.える",
+      "とど.める"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 15,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "稽古",
+        "reading": "けいこ",
+        "meaningId": "Praktik"
+      },
+      {
+        "word": "滑稽",
+        "reading": "こっけい",
+        "meaningId": "Lucu"
+      }
+    ],
+    "unicode": "U+7A3D",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_8a63": {
+    "id": "kj_n1_8a63",
+    "character": "詣",
+    "meaningId": "Berziarah",
+    "meaningEn": "visit a temple, arrive, attain",
+    "onyomi": [
+      "けい",
+      "げい"
+    ],
+    "kunyomi": [
+      "けい.する",
+      "まい.る",
+      "いた.る",
+      "もう.でる"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 13,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "詣",
+        "reading": "けいする",
+        "meaningId": "Berziarah"
+      }
+    ],
+    "unicode": "U+8A63",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_9699": {
+    "id": "kj_n1_9699",
+    "character": "隙",
+    "meaningId": "Celah; kesempatan",
+    "meaningEn": "crevice, fissure, discord, opportunity",
+    "onyomi": [
+      "げき",
+      "きゃく",
+      "けき"
+    ],
+    "kunyomi": [
+      "すき",
+      "す.く",
+      "す.かす",
+      "ひま"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 13,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "隙間",
+        "reading": "すきま",
+        "meaningId": "Celah"
+      }
+    ],
+    "unicode": "U+9699",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_6841": {
+    "id": "kj_n1_6841",
+    "character": "桁",
+    "meaningId": "Balok; digit",
+    "meaningEn": "beam, girder, spar, unit or column (accounting)",
+    "onyomi": [
+      "こう"
+    ],
+    "kunyomi": [
+      "けた"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 10,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "桁",
+        "reading": "けた",
+        "meaningId": "Balok"
+      }
+    ],
+    "unicode": "U+6841",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_9375": {
+    "id": "kj_n1_9375",
+    "character": "鍵",
+    "meaningId": "Kunci",
+    "meaningEn": "key",
+    "onyomi": [
+      "けん"
+    ],
+    "kunyomi": [
+      "かぎ"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 17,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "鍵",
+        "reading": "かぎ",
+        "meaningId": "Kunci"
+      }
+    ],
+    "unicode": "U+9375",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_8237": {
+    "id": "kj_n1_8237",
+    "character": "舷",
+    "meaningId": "Sisi kapal",
+    "meaningEn": "gunwale",
+    "onyomi": [
+      "げん"
+    ],
+    "kunyomi": [
+      "ふなばた",
+      "ふなべり"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 11,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "舷",
+        "reading": "ふなばた",
+        "meaningId": "Sisi kapal"
+      }
+    ],
+    "unicode": "U+8237",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_80a1": {
+    "id": "kj_n1_80a1",
+    "character": "股",
+    "meaningId": "Paha; selangkangan",
+    "meaningEn": "thigh, crotch",
+    "onyomi": [
+      "こ"
+    ],
+    "kunyomi": [
+      "また",
+      "もも"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 8,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "股",
+        "reading": "また",
+        "meaningId": "Paha"
+      }
+    ],
+    "unicode": "U+80A1",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_4e5e": {
+    "id": "kj_n1_4e5e",
+    "character": "乞",
+    "meaningId": "Meminta; mengemis",
+    "meaningEn": "beg, invite, ask",
+    "onyomi": [
+      "こつ",
+      "きつ",
+      "き",
+      "きけ",
+      "こち"
+    ],
+    "kunyomi": [
+      "こ.う"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 3,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "乞",
+        "reading": "こう",
+        "meaningId": "Meminta"
+      }
+    ],
+    "unicode": "U+4E5E",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_52fe": {
+    "id": "kj_n1_52fe",
+    "character": "勾",
+    "meaningId": "Melengkung; kait",
+    "meaningEn": "be bent, slope, capture",
+    "onyomi": [
+      "こう",
+      "く"
+    ],
+    "kunyomi": [
+      "かぎ",
+      "ま.がる"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 4,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "勾",
+        "reading": "かぎ",
+        "meaningId": "Melengkung"
+      }
+    ],
+    "unicode": "U+52FE",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_5589": {
+    "id": "kj_n1_5589",
+    "character": "喉",
+    "meaningId": "Tenggorokan",
+    "meaningEn": "throat, voice",
+    "onyomi": [
+      "こう"
+    ],
+    "kunyomi": [
+      "のど"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 12,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "喉",
+        "reading": "のど",
+        "meaningId": "Tenggorokan"
+      }
+    ],
+    "unicode": "U+5589",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_5b5d": {
+    "id": "kj_n1_5b5d",
+    "character": "孝",
+    "meaningId": "Bakti kepada orang tua",
+    "meaningEn": "filial piety, child's respect",
+    "onyomi": [
+      "こう",
+      "きょう"
+    ],
+    "kunyomi": [],
+    "jlpt": "N1",
+    "strokeCount": 7,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "孝行",
+        "reading": "こうこう",
+        "meaningId": "Berbakti"
+      }
+    ],
+    "unicode": "U+5B5D",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_614c": {
+    "id": "kj_n1_614c",
+    "character": "慌",
+    "meaningId": "Panik; tergesa",
+    "meaningEn": "disconcerted, be confused, lose one's head",
+    "onyomi": [
+      "こう"
+    ],
+    "kunyomi": [
+      "あわ.てる",
+      "あわ.ただしい"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 12,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "慌ただしい",
+        "reading": "あわただしい",
+        "meaningId": "Sibuk terburu-buru"
+      },
+      {
+        "word": "慌てる",
+        "reading": "あわてる",
+        "meaningId": "Panik"
+      }
+    ],
+    "unicode": "U+614C",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_6897": {
+    "id": "kj_n1_6897",
+    "character": "梗",
+    "meaningId": "Tangkai; garis besar",
+    "meaningEn": "for the most part, close up, flower stem",
+    "onyomi": [
+      "こう",
+      "きょう"
+    ],
+    "kunyomi": [
+      "ふさぐ",
+      "やまにれ",
+      "おおむね"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 11,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "梗",
+        "reading": "ふさぐ",
+        "meaningId": "Tangkai"
+      }
+    ],
+    "unicode": "U+6897",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_9803": {
+    "id": "kj_n1_9803",
+    "character": "頃",
+    "meaningId": "Sekitar (waktu)",
+    "meaningEn": "time, about, toward",
+    "onyomi": [
+      "けい",
+      "きょう"
+    ],
+    "kunyomi": [
+      "ころ",
+      "ごろ",
+      "しばら.く"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 11,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "近頃",
+        "reading": "ちかごろ",
+        "meaningId": "Belakangan ini"
+      },
+      {
+        "word": "この頃",
+        "reading": "このごろ",
+        "meaningId": "Baru-baru ini"
+      },
+      {
+        "word": "手頃",
+        "reading": "てごろ",
+        "meaningId": "Terjangkau"
+      }
+    ],
+    "unicode": "U+9803",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_75d5": {
+    "id": "kj_n1_75d5",
+    "character": "痕",
+    "meaningId": "Bekas; jejak",
+    "meaningEn": "mark, foot print",
+    "onyomi": [
+      "こん"
+    ],
+    "kunyomi": [
+      "あと"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 11,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "痕",
+        "reading": "あと",
+        "meaningId": "Bekas"
+      }
+    ],
+    "unicode": "U+75D5",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_632b": {
+    "id": "kj_n1_632b",
+    "character": "挫",
+    "meaningId": "Terkilir; patah",
+    "meaningEn": "crush, break, sprain, discourage",
+    "onyomi": [
+      "ざ",
+      "さ"
+    ],
+    "kunyomi": [
+      "くじ.く",
+      "くじ.ける"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 10,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "挫",
+        "reading": "くじく",
+        "meaningId": "Terkilir"
+      }
+    ],
+    "unicode": "U+632B",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_585e": {
+    "id": "kj_n1_585e",
+    "character": "塞",
+    "meaningId": "Menutup; menyumbat",
+    "meaningEn": "close, shut, cover, block",
+    "onyomi": [
+      "そく",
+      "さい"
+    ],
+    "kunyomi": [
+      "ふさ.ぐ",
+      "とりで",
+      "み.ちる"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 13,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "塞がる",
+        "reading": "ふさがる",
+        "meaningId": "Tertutup"
+      },
+      {
+        "word": "塞ぐ",
+        "reading": "ふさぐ",
+        "meaningId": "Menutup"
+      }
+    ],
+    "unicode": "U+585E",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n2_57fc": {
+    "id": "kj_n2_57fc",
+    "character": "埼",
+    "meaningId": "Tanjung",
+    "meaningEn": "cape, spit, promontory",
+    "onyomi": [
+      "き"
+    ],
+    "kunyomi": [
+      "さき",
+      "さい",
+      "みさき"
+    ],
+    "jlpt": "N2",
+    "strokeCount": 11,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "埼",
+        "reading": "さき",
+        "meaningId": "Tanjung"
+      }
+    ],
+    "unicode": "U+57FC",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_67f5": {
+    "id": "kj_n1_67f5",
+    "character": "柵",
+    "meaningId": "Pagar",
+    "meaningEn": "stockade, fence, weir, entwine around",
+    "onyomi": [
+      "さく",
+      "さん"
+    ],
+    "kunyomi": [
+      "しがら.む",
+      "しがらみ",
+      "とりで",
+      "やらい"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 9,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "柵",
+        "reading": "しがらむ",
+        "meaningId": "Pagar"
+      }
+    ],
+    "unicode": "U+67F5",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_62f6": {
+    "id": "kj_n1_62f6",
+    "character": "拶",
+    "meaningId": "Mendesak mendekat",
+    "meaningEn": "be imminent, draw close",
+    "onyomi": [
+      "さつ"
+    ],
+    "kunyomi": [
+      "せま.る"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 9,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "挨拶",
+        "reading": "あいさつ",
+        "meaningId": "Salam"
+      }
+    ],
+    "unicode": "U+62F6",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_65ac": {
+    "id": "kj_n1_65ac",
+    "character": "斬",
+    "meaningId": "Menebas",
+    "meaningEn": "beheading, kill, murder",
+    "onyomi": [
+      "ざん",
+      "さん",
+      "せん",
+      "ぜん"
+    ],
+    "kunyomi": [
+      "き.る"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 11,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "斬る",
+        "reading": "きる",
+        "meaningId": "Menebas"
+      }
+    ],
+    "unicode": "U+65AC",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_74bd": {
+    "id": "kj_n1_74bd",
+    "character": "璽",
+    "meaningId": "Stempel kaisar",
+    "meaningEn": "emperor's seal",
+    "onyomi": [
+      "じ"
+    ],
+    "kunyomi": [],
+    "jlpt": "N1",
+    "strokeCount": 19,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "璽",
+        "reading": "じ",
+        "meaningId": "Stempel kaisar"
+      }
+    ],
+    "unicode": "U+74BD",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_5ac9": {
+    "id": "kj_n1_5ac9",
+    "character": "嫉",
+    "meaningId": "Cemburu; iri",
+    "meaningEn": "jealous, envy",
+    "onyomi": [
+      "しつ"
+    ],
+    "kunyomi": [
+      "そね.む",
+      "ねた.む",
+      "にく.む"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 13,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "嫉妬",
+        "reading": "しっと",
+        "meaningId": "Cemburu"
+      }
+    ],
+    "unicode": "U+5AC9",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_816b": {
+    "id": "kj_n1_816b",
+    "character": "腫",
+    "meaningId": "Bengkak; tumor",
+    "meaningEn": "tumor, swelling",
+    "onyomi": [
+      "しゅ",
+      "しょう"
+    ],
+    "kunyomi": [
+      "は.れる",
+      "は.れ",
+      "は.らす",
+      "はれもの"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 13,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "腫れる",
+        "reading": "はれる",
+        "meaningId": "Membengkak (karena peradangan)"
+      },
+      {
+        "word": "腫脹",
+        "reading": "しゅちょう",
+        "meaningId": "Pembengkakan"
+      },
+      {
+        "word": "浮腫",
+        "reading": "ふしゅ",
+        "meaningId": "Edema / Bengkak air"
+      }
+    ],
+    "unicode": "U+816B",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_5bff": {
+    "id": "kj_n1_5bff",
+    "character": "寿",
+    "meaningId": "Umur panjang; selamat",
+    "meaningEn": "longevity, congratulations, one's natural life",
+    "onyomi": [
+      "じゅ",
+      "す",
+      "しゅう"
+    ],
+    "kunyomi": [
+      "ことぶき",
+      "ことぶ.く",
+      "ことほ.ぐ"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 7,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "寿命",
+        "reading": "じゅみょう",
+        "meaningId": "Usia pakai"
+      },
+      {
+        "word": "寿司",
+        "reading": "すし",
+        "meaningId": "Sushi"
+      }
+    ],
+    "unicode": "U+5BFF",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_8e74": {
+    "id": "kj_n1_8e74",
+    "character": "蹴",
+    "meaningId": "Menendang",
+    "meaningEn": "kick",
+    "onyomi": [
+      "しゅく",
+      "しゅう"
+    ],
+    "kunyomi": [
+      "け.る"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 19,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "蹴る",
+        "reading": "ける",
+        "meaningId": "Tendangan"
+      },
+      {
+        "word": "蹴飛ばす",
+        "reading": "けとばす",
+        "meaningId": "Menendang"
+      }
+    ],
+    "unicode": "U+8E74",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_4e08": {
+    "id": "kj_n1_4e08",
+    "character": "丈",
+    "meaningId": "Panjang; tinggi badan",
+    "meaningEn": "length, ten shaku, measure, Mr.",
+    "onyomi": [
+      "じょう"
+    ],
+    "kunyomi": [
+      "たけ",
+      "だけ"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 3,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "丈夫",
+        "reading": "じょうぶ",
+        "meaningId": "Kuat, tahan lama"
+      },
+      {
+        "word": "大丈夫",
+        "reading": "だいじょうぶ",
+        "meaningId": "Tidak apa-apa"
+      },
+      {
+        "word": "頑丈",
+        "reading": "がんじょう",
+        "meaningId": "Kokoh"
+      }
+    ],
+    "unicode": "U+4E08",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_5c3b": {
+    "id": "kj_n1_5c3b",
+    "character": "尻",
+    "meaningId": "Pantat",
+    "meaningEn": "buttocks, hips, butt, rear",
+    "onyomi": [
+      "こう"
+    ],
+    "kunyomi": [
+      "しり"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 5,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "尻尾",
+        "reading": "しっぽ",
+        "meaningId": "Ekor (hewan)"
+      }
+    ],
+    "unicode": "U+5C3B",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_82af": {
+    "id": "kj_n1_82af",
+    "character": "芯",
+    "meaningId": "Inti; sumbu",
+    "meaningEn": "wick",
+    "onyomi": [
+      "しん"
+    ],
+    "kunyomi": [],
+    "jlpt": "N1",
+    "strokeCount": 7,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "芯",
+        "reading": "しん",
+        "meaningId": "Inti"
+      }
+    ],
+    "unicode": "U+82AF",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_814e": {
+    "id": "kj_n1_814e",
+    "character": "腎",
+    "meaningId": "Ginjal",
+    "meaningEn": "kidney",
+    "onyomi": [
+      "じん"
+    ],
+    "kunyomi": [],
+    "jlpt": "N1",
+    "strokeCount": 13,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "腎",
+        "reading": "じん",
+        "meaningId": "Ginjal"
+      }
+    ],
+    "unicode": "U+814E",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_88fe": {
+    "id": "kj_n1_88fe",
+    "character": "裾",
+    "meaningId": "Ujung pakaian; kaki gunung",
+    "meaningEn": "cuff, hem, foot of mountain",
+    "onyomi": [
+      "きょ",
+      "こ"
+    ],
+    "kunyomi": [
+      "すそ"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 13,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "裾",
+        "reading": "すそ",
+        "meaningId": "Ujung pakaian"
+      }
+    ],
+    "unicode": "U+88FE",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_51c4": {
+    "id": "kj_n1_51c4",
+    "character": "凄",
+    "meaningId": "Dahsyat; mengerikan",
+    "meaningEn": "uncanny, weird, threatening, horrible",
+    "onyomi": [
+      "せい",
+      "さい"
+    ],
+    "kunyomi": [
+      "さむ.い",
+      "すご.い",
+      "すさ.まじい"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 10,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "凄い",
+        "reading": "すごい",
+        "meaningId": "Hebat"
+      },
+      {
+        "word": "物凄い",
+        "reading": "ものすごい",
+        "meaningId": "Dahsyat"
+      }
+    ],
+    "unicode": "U+51C4",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_9192": {
+    "id": "kj_n1_9192",
+    "character": "醒",
+    "meaningId": "Terbangun; sadar",
+    "meaningEn": "awake, be disillusioned, sober up",
+    "onyomi": [
+      "せい"
+    ],
+    "kunyomi": [
+      "さ.ます",
+      "さ.める"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 16,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "覚醒",
+        "reading": "かくせい",
+        "meaningId": "Terjaga / Bangun"
+      }
+    ],
+    "unicode": "U+9192",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_621a": {
+    "id": "kj_n1_621a",
+    "character": "戚",
+    "meaningId": "Kerabat",
+    "meaningEn": "grieve, relatives",
+    "onyomi": [
+      "そく",
+      "せき"
+    ],
+    "kunyomi": [
+      "いた.む",
+      "うれ.える",
+      "みうち"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 11,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "親戚",
+        "reading": "しんせき",
+        "meaningId": "Kerabat"
+      }
+    ],
+    "unicode": "U+621A",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_810a": {
+    "id": "kj_n1_810a",
+    "character": "脊",
+    "meaningId": "Tulang punggung",
+    "meaningEn": "stature, height, spine",
+    "onyomi": [
+      "せき"
+    ],
+    "kunyomi": [
+      "せ",
+      "せい"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 10,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "脊",
+        "reading": "せ",
+        "meaningId": "Tulang punggung"
+      }
+    ],
+    "unicode": "U+810A",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_714e": {
+    "id": "kj_n1_714e",
+    "character": "煎",
+    "meaningId": "Menggoreng; menyangrai",
+    "meaningEn": "broil, parch, roast, boil",
+    "onyomi": [
+      "せん"
+    ],
+    "kunyomi": [
+      "せん.じる",
+      "い.る",
+      "に.る"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 13,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "煎る",
+        "reading": "いる",
+        "meaningId": "Menyangrai"
+      }
+    ],
+    "unicode": "U+714E",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_7fa8": {
+    "id": "kj_n1_7fa8",
+    "character": "羨",
+    "meaningId": "Iri; mendambakan",
+    "meaningEn": "envious, be jealous, covet",
+    "onyomi": [
+      "せん",
+      "えん"
+    ],
+    "kunyomi": [
+      "うらや.む",
+      "あまり"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 13,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "羨ましい",
+        "reading": "うらやましい",
+        "meaningId": "Iri (ingin seperti)"
+      },
+      {
+        "word": "羨む",
+        "reading": "うらやむ",
+        "meaningId": "Iri"
+      }
+    ],
+    "unicode": "U+7FA8",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_817a": {
+    "id": "kj_n1_817a",
+    "character": "腺",
+    "meaningId": "Kelenjar",
+    "meaningEn": "gland, (kokuji)",
+    "onyomi": [
+      "せん"
+    ],
+    "kunyomi": [],
+    "jlpt": "N1",
+    "strokeCount": 13,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "腺",
+        "reading": "せん",
+        "meaningId": "Kelenjar"
+      }
+    ],
+    "unicode": "U+817A",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_8a6e": {
+    "id": "kj_n1_8a6e",
+    "character": "詮",
+    "meaningId": "Penjelasan; guna",
+    "meaningEn": "discussion, methods called for, selection, result",
+    "onyomi": [
+      "せん"
+    ],
+    "kunyomi": [
+      "せん.ずる",
+      "かい",
+      "あき.らか"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 13,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "詮",
+        "reading": "せんずる",
+        "meaningId": "Penjelasan"
+      }
+    ],
+    "unicode": "U+8A6E",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_81b3": {
+    "id": "kj_n1_81b3",
+    "character": "膳",
+    "meaningId": "Hidangan; baki makan",
+    "meaningEn": "small low table, tray",
+    "onyomi": [
+      "ぜん",
+      "せん"
+    ],
+    "kunyomi": [
+      "かしわ",
+      "すす.める",
+      "そな.える"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 16,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "膳",
+        "reading": "かしわ",
+        "meaningId": "Hidangan"
+      }
+    ],
+    "unicode": "U+81B3",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_72d9": {
+    "id": "kj_n1_72d9",
+    "character": "狙",
+    "meaningId": "Mengincar",
+    "meaningEn": "aim at, sight, shadow, stalk",
+    "onyomi": [
+      "そ",
+      "しょ"
+    ],
+    "kunyomi": [
+      "ねら.う",
+      "ねら.い"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 8,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "狙い",
+        "reading": "ねらい",
+        "meaningId": "Sasaran"
+      },
+      {
+        "word": "狙う",
+        "reading": "ねらう",
+        "meaningId": "Membidik"
+      }
+    ],
+    "unicode": "U+72D9",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_6349": {
+    "id": "kj_n1_6349",
+    "character": "捉",
+    "meaningId": "Menangkap",
+    "meaningEn": "catch, capture",
+    "onyomi": [
+      "そく",
+      "さく"
+    ],
+    "kunyomi": [
+      "とら.える"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 10,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "捉",
+        "reading": "とらえる",
+        "meaningId": "Menangkap"
+      }
+    ],
+    "unicode": "U+6349",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_8896": {
+    "id": "kj_n1_8896",
+    "character": "袖",
+    "meaningId": "Lengan baju",
+    "meaningEn": "sleeve, wing (building), extension, give cold shoulder",
+    "onyomi": [
+      "しゅう"
+    ],
+    "kunyomi": [
+      "そで"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 10,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "袖",
+        "reading": "そで",
+        "meaningId": "Lengan baju"
+      }
+    ],
+    "unicode": "U+8896",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_905c": {
+    "id": "kj_n1_905c",
+    "character": "遜",
+    "meaningId": "Rendah hati",
+    "meaningEn": "humble, modest",
+    "onyomi": [
+      "そん"
+    ],
+    "kunyomi": [
+      "したが.う",
+      "へりくだ.る",
+      "ゆず.る"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 13,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "謙遜",
+        "reading": "けんそん",
+        "meaningId": "Rendah hati"
+      }
+    ],
+    "unicode": "U+905C",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_553e": {
+    "id": "kj_n1_553e",
+    "character": "唾",
+    "meaningId": "Ludah",
+    "meaningEn": "saliva, sputum",
+    "onyomi": [
+      "だ",
+      "た"
+    ],
+    "kunyomi": [
+      "つば",
+      "つばき"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 11,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "唾",
+        "reading": "つば",
+        "meaningId": "Ludah"
+      }
+    ],
+    "unicode": "U+553E",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_5806": {
+    "id": "kj_n1_5806",
+    "character": "堆",
+    "meaningId": "Tumpukan",
+    "meaningEn": "piled high",
+    "onyomi": [
+      "たい",
+      "つい"
+    ],
+    "kunyomi": [
+      "うずたか.い"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 11,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "堆",
+        "reading": "うずたかい",
+        "meaningId": "Tumpukan"
+      }
+    ],
+    "unicode": "U+5806",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_6234": {
+    "id": "kj_n1_6234",
+    "character": "戴",
+    "meaningId": "Menerima; memakai di kepala",
+    "meaningEn": "be crowned with, live under (a ruler), receive",
+    "onyomi": [
+      "たい"
+    ],
+    "kunyomi": [
+      "いただ.く"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 17,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "戴きます",
+        "reading": "いただきます",
+        "meaningId": "Selamat makan (ucapan sebelum makan)"
+      }
+    ],
+    "unicode": "U+6234",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_7dbb": {
+    "id": "kj_n1_7dbb",
+    "character": "綻",
+    "meaningId": "Terurai; merekah",
+    "meaningEn": "be rent, ripped, unravel, run",
+    "onyomi": [
+      "たん"
+    ],
+    "kunyomi": [
+      "ほころ.びる"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 14,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "綻びる",
+        "reading": "ほころびる",
+        "meaningId": "Mulai terbuka"
+      }
+    ],
+    "unicode": "U+7DBB",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_914e": {
+    "id": "kj_n1_914e",
+    "character": "酎",
+    "meaningId": "Minuman keras sulingan",
+    "meaningEn": "sake",
+    "onyomi": [
+      "ちゅう",
+      "ちゅ"
+    ],
+    "kunyomi": [
+      "かも.す"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 10,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "酎",
+        "reading": "かもす",
+        "meaningId": "Minuman keras sulingan"
+      }
+    ],
+    "unicode": "U+914E",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_6f70": {
+    "id": "kj_n1_6f70",
+    "character": "潰",
+    "meaningId": "Menghancurkan; remuk",
+    "meaningEn": "crush, smash, break, dissipate",
+    "onyomi": [
+      "かい",
+      "え"
+    ],
+    "kunyomi": [
+      "つぶ.す",
+      "つぶ.れる",
+      "つい.える"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 15,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "潰す",
+        "reading": "つぶす",
+        "meaningId": "Menghancurkan"
+      },
+      {
+        "word": "潰れる",
+        "reading": "つぶれる",
+        "meaningId": "Hancur"
+      }
+    ],
+    "unicode": "U+6F70",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_722a": {
+    "id": "kj_n1_722a",
+    "character": "爪",
+    "meaningId": "Kuku; cakar",
+    "meaningEn": "claw, nail, talon",
+    "onyomi": [
+      "そう"
+    ],
+    "kunyomi": [
+      "つめ",
+      "つま-"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 4,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "爪",
+        "reading": "つめ",
+        "meaningId": "Kuku"
+      }
+    ],
+    "unicode": "U+722A",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n2_5ead": {
+    "id": "kj_n2_5ead",
+    "character": "庭",
+    "meaningId": "Halaman; taman",
+    "meaningEn": "courtyard, garden, yard",
+    "onyomi": [
+      "てい"
+    ],
+    "kunyomi": [
+      "にわ"
+    ],
+    "jlpt": "N2",
+    "strokeCount": 10,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "家庭",
+        "reading": "かてい",
+        "meaningId": "Rumah tangga"
+      },
+      {
+        "word": "校庭",
+        "reading": "こうてい",
+        "meaningId": "Halaman sekolah"
+      }
+    ],
+    "unicode": "U+5EAD",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_8ae6": {
+    "id": "kj_n1_8ae6",
+    "character": "諦",
+    "meaningId": "Menyerah; kebenaran",
+    "meaningEn": "truth, clarity, abandon, give up",
+    "onyomi": [
+      "てい",
+      "たい"
+    ],
+    "kunyomi": [
+      "あきら.める",
+      "つまびらか",
+      "まこと"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 16,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "諦める",
+        "reading": "あきらめる",
+        "meaningId": "Menyerah, meninggalkan"
+      },
+      {
+        "word": "諦め",
+        "reading": "あきらめ",
+        "meaningId": "Kepasrahan"
+      }
+    ],
+    "unicode": "U+8AE6",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_6eba": {
+    "id": "kj_n1_6eba",
+    "character": "溺",
+    "meaningId": "Tenggelam; tergila-gila",
+    "meaningEn": "drown, indulge",
+    "onyomi": [
+      "でき",
+      "じょう",
+      "にょう"
+    ],
+    "kunyomi": [
+      "いばり",
+      "おぼ.れる"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 13,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "溺れる",
+        "reading": "おぼれる",
+        "meaningId": "Tenggelam"
+      }
+    ],
+    "unicode": "U+6EBA",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_8cbc": {
+    "id": "kj_n1_8cbc",
+    "character": "貼",
+    "meaningId": "Menempel",
+    "meaningEn": "stick, paste, apply",
+    "onyomi": [
+      "てん",
+      "ちょう"
+    ],
+    "kunyomi": [
+      "は.る",
+      "つ.く"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 12,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "貼る",
+        "reading": "はる",
+        "meaningId": "Menempel"
+      }
+    ],
+    "unicode": "U+8CBC",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_8ced": {
+    "id": "kj_n1_8ced",
+    "character": "賭",
+    "meaningId": "Bertaruh; berjudi",
+    "meaningEn": "gamble, wager, bet",
+    "onyomi": [
+      "と"
+    ],
+    "kunyomi": [
+      "か.ける",
+      "かけ"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 15,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "賭け",
+        "reading": "かけ",
+        "meaningId": "Taruhan"
+      },
+      {
+        "word": "賭ける",
+        "reading": "かける",
+        "meaningId": "Taruhan"
+      }
+    ],
+    "unicode": "U+8CED",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_5510": {
+    "id": "kj_n1_5510",
+    "character": "唐",
+    "meaningId": "Tang; Tiongkok kuno",
+    "meaningEn": "T'ang, China, foreign",
+    "onyomi": [
+      "とう"
+    ],
+    "kunyomi": [
+      "から"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 10,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "唐揚げ",
+        "reading": "からあげ",
+        "meaningId": "Karaage (ayam goreng Jepang)"
+      }
+    ],
+    "unicode": "U+5510",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_9813": {
+    "id": "kj_n1_9813",
+    "character": "頓",
+    "meaningId": "Mendadak; berhenti",
+    "meaningEn": "suddenly, immediately, in a hurry, arrange",
+    "onyomi": [
+      "とん",
+      "とつ"
+    ],
+    "kunyomi": [
+      "にわか.に",
+      "とん.と",
+      "つまず.く",
+      "とみ.に",
+      "ぬかずく"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 13,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "頓",
+        "reading": "にわかに",
+        "meaningId": "Mendadak"
+      }
+    ],
+    "unicode": "U+9813",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_8b0e": {
+    "id": "kj_n1_8b0e",
+    "character": "謎",
+    "meaningId": "Teka-teki; misteri",
+    "meaningEn": "riddle, puzzle, enigma, hint",
+    "onyomi": [
+      "めい",
+      "べい"
+    ],
+    "kunyomi": [
+      "なぞ"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 16,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "謎謎",
+        "reading": "なぞなぞ",
+        "meaningId": "Teka-teki"
+      }
+    ],
+    "unicode": "U+8B0E",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_934b": {
+    "id": "kj_n1_934b",
+    "character": "鍋",
+    "meaningId": "Panci",
+    "meaningEn": "pot, pan, kettle",
+    "onyomi": [
+      "か"
+    ],
+    "kunyomi": [
+      "なべ"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 17,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "鍋",
+        "reading": "なべ",
+        "meaningId": "Panci"
+      }
+    ],
+    "unicode": "U+934B",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n2_5ff5": {
+    "id": "kj_n2_5ff5",
+    "character": "念",
+    "meaningId": "Pikiran; perhatian",
+    "meaningEn": "wish, sense, idea, thought",
+    "onyomi": [
+      "ねん"
+    ],
+    "kunyomi": [],
+    "jlpt": "N2",
+    "strokeCount": 8,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "残念",
+        "reading": "ざんねん",
+        "meaningId": "Sayang sekali"
+      },
+      {
+        "word": "記念",
+        "reading": "きねん",
+        "meaningId": "Peringatan, kenangan"
+      },
+      {
+        "word": "観念",
+        "reading": "かんねん",
+        "meaningId": "Konsep"
+      }
+    ],
+    "unicode": "U+5FF5",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_637b": {
+    "id": "kj_n1_637b",
+    "character": "捻",
+    "meaningId": "Memutar; memelintir",
+    "meaningEn": "twirl, twist, play with",
+    "onyomi": [
+      "ねん",
+      "じょう"
+    ],
+    "kunyomi": [
+      "ね.じる",
+      "ねじ.る",
+      "ひね.くる",
+      "ひね.る"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 11,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "捻る",
+        "reading": "ひねる",
+        "meaningId": "Memutar"
+      },
+      {
+        "word": "捻子",
+        "reading": "ねじ",
+        "meaningId": "Sekrup"
+      }
+    ],
+    "unicode": "U+637B",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_7f75": {
+    "id": "kj_n1_7f75",
+    "character": "罵",
+    "meaningId": "Memaki",
+    "meaningEn": "abuse, insult",
+    "onyomi": [
+      "ば"
+    ],
+    "kunyomi": [
+      "ののし.る"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 15,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "罵る",
+        "reading": "ののしる",
+        "meaningId": "Mencaci maki"
+      }
+    ],
+    "unicode": "U+7F75",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n2_676f": {
+    "id": "kj_n2_676f",
+    "character": "杯",
+    "meaningId": "Cangkir; gelas",
+    "meaningEn": "counter for cupfuls, wine glass, glass, toast",
+    "onyomi": [
+      "はい"
+    ],
+    "kunyomi": [
+      "さかずき"
+    ],
+    "jlpt": "N2",
+    "strokeCount": 8,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "乾杯",
+        "reading": "かんぱい",
+        "meaningId": "Bersulang"
+      }
+    ],
+    "unicode": "U+676F",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_7bb8": {
+    "id": "kj_n1_7bb8",
+    "character": "箸",
+    "meaningId": "Sumpit",
+    "meaningEn": "chopsticks",
+    "onyomi": [
+      "ちょ",
+      "ちゃく"
+    ],
+    "kunyomi": [
+      "はし"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 15,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "箸",
+        "reading": "はし",
+        "meaningId": "Sumpit"
+      }
+    ],
+    "unicode": "U+7BB8",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n2_7551": {
+    "id": "kj_n2_7551",
+    "character": "畑",
+    "meaningId": "Ladang",
+    "meaningEn": "farm, field, garden, one's specialty",
+    "onyomi": [],
+    "kunyomi": [
+      "はた",
+      "はたけ",
+      "-ばたけ"
+    ],
+    "jlpt": "N2",
+    "strokeCount": 9,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "畑",
+        "reading": "はた",
+        "meaningId": "Ladang"
+      }
+    ],
+    "unicode": "U+7551",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_6591": {
+    "id": "kj_n1_6591",
+    "character": "斑",
+    "meaningId": "Bintik; belang",
+    "meaningEn": "spot, blemish, speck, patches",
+    "onyomi": [
+      "はん"
+    ],
+    "kunyomi": [
+      "ふ",
+      "まだら"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 12,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "斑",
+        "reading": "ふ",
+        "meaningId": "Bintik"
+      }
+    ],
+    "unicode": "U+6591",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_6c3e": {
+    "id": "kj_n1_6c3e",
+    "character": "氾",
+    "meaningId": "Meluap",
+    "meaningEn": "spread out, wide",
+    "onyomi": [
+      "はん"
+    ],
+    "kunyomi": [
+      "ひろ.がる"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 5,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "氾濫",
+        "reading": "はんらん",
+        "meaningId": "Meluap"
+      }
+    ],
+    "unicode": "U+6C3E",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_819d": {
+    "id": "kj_n1_819d",
+    "character": "膝",
+    "meaningId": "Lutut",
+    "meaningEn": "knee, lap",
+    "onyomi": [
+      "しつ"
+    ],
+    "kunyomi": [
+      "ひざ"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 15,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "膝",
+        "reading": "ひざ",
+        "meaningId": "Lutut"
+      }
+    ],
+    "unicode": "U+819D",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_8098": {
+    "id": "kj_n1_8098",
+    "character": "肘",
+    "meaningId": "Siku",
+    "meaningEn": "elbow, arm",
+    "onyomi": [
+      "ちゅう"
+    ],
+    "kunyomi": [
+      "ひじ"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 7,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "肘",
+        "reading": "ひじ",
+        "meaningId": "Siku"
+      }
+    ],
+    "unicode": "U+8098",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n2_961c": {
+    "id": "kj_n2_961c",
+    "character": "阜",
+    "meaningId": "Bukit",
+    "meaningEn": "hill, mound, left village radical (no. 170)",
+    "onyomi": [
+      "ふ",
+      "ふう"
+    ],
+    "kunyomi": [],
+    "jlpt": "N2",
+    "strokeCount": 8,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "阜",
+        "reading": "ふ",
+        "meaningId": "Bukit"
+      }
+    ],
+    "unicode": "U+961C",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_853d": {
+    "id": "kj_n1_853d",
+    "character": "蔽",
+    "meaningId": "Menutupi",
+    "meaningEn": "cover, shade, mantle, capsize",
+    "onyomi": [
+      "へい",
+      "へつ",
+      "ふつ"
+    ],
+    "kunyomi": [
+      "おお.う",
+      "おお.い"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 15,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "蔽",
+        "reading": "おおう",
+        "meaningId": "Menutupi"
+      }
+    ],
+    "unicode": "U+853D",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_8511": {
+    "id": "kj_n1_8511",
+    "character": "蔑",
+    "meaningId": "Memandang rendah",
+    "meaningEn": "ignore, despise, neglect, ridicule",
+    "onyomi": [
+      "べつ"
+    ],
+    "kunyomi": [
+      "ないがしろ",
+      "なみ.する",
+      "くらい",
+      "さげす.む"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 14,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "軽蔑",
+        "reading": "けいべつ",
+        "meaningId": "Meremehkan"
+      }
+    ],
+    "unicode": "U+8511",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_8702": {
+    "id": "kj_n1_8702",
+    "character": "蜂",
+    "meaningId": "Lebah",
+    "meaningEn": "bee, wasp, hornet",
+    "onyomi": [
+      "ほう"
+    ],
+    "kunyomi": [
+      "はち"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 13,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "蜂蜜",
+        "reading": "はちみつ",
+        "meaningId": "Madu"
+      }
+    ],
+    "unicode": "U+8702",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n2_574a": {
+    "id": "kj_n2_574a",
+    "character": "坊",
+    "meaningId": "Biarawan; anak laki-laki",
+    "meaningEn": "boy, priest's residence, priest",
+    "onyomi": [
+      "ぼう",
+      "ぼっ"
+    ],
+    "kunyomi": [],
+    "jlpt": "N2",
+    "strokeCount": 7,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "赤ん坊",
+        "reading": "あかんぼう",
+        "meaningId": "Bayi"
+      },
+      {
+        "word": "寝坊",
+        "reading": "ねぼう",
+        "meaningId": "Bangun kesiangan"
+      },
+      {
+        "word": "坊さん",
+        "reading": "ぼうさん",
+        "meaningId": "Biksu"
+      }
+    ],
+    "unicode": "U+574A",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_8c8c": {
+    "id": "kj_n1_8c8c",
+    "character": "貌",
+    "meaningId": "Rupa; penampilan",
+    "meaningEn": "form, appearance, countenance",
+    "onyomi": [
+      "ぼう",
+      "ばく"
+    ],
+    "kunyomi": [
+      "かたち",
+      "かたどる"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 14,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "貌",
+        "reading": "かたち",
+        "meaningId": "Rupa"
+      }
+    ],
+    "unicode": "U+8C8C",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_52c3": {
+    "id": "kj_n1_52c3",
+    "character": "勃",
+    "meaningId": "Bangkit mendadak",
+    "meaningEn": "suddenness, rise",
+    "onyomi": [
+      "ぼつ",
+      "ほつ"
+    ],
+    "kunyomi": [
+      "おこ.る",
+      "にわかに"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 9,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "勃",
+        "reading": "おこる",
+        "meaningId": "Bangkit mendadak"
+      }
+    ],
+    "unicode": "U+52C3",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_6627": {
+    "id": "kj_n1_6627",
+    "character": "昧",
+    "meaningId": "Gelap; bodoh",
+    "meaningEn": "dark, foolish",
+    "onyomi": [
+      "まい",
+      "ばい"
+    ],
+    "kunyomi": [
+      "くら.い",
+      "むさぼ.る"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 9,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "曖昧",
+        "reading": "あいまい",
+        "meaningId": "Tidak jelas"
+      }
+    ],
+    "unicode": "U+6627",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_6795": {
+    "id": "kj_n1_6795",
+    "character": "枕",
+    "meaningId": "Bantal",
+    "meaningEn": "pillow",
+    "onyomi": [
+      "ちん",
+      "しん"
+    ],
+    "kunyomi": [
+      "まくら"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 8,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "枕",
+        "reading": "まくら",
+        "meaningId": "Bantal"
+      }
+    ],
+    "unicode": "U+6795",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_871c": {
+    "id": "kj_n1_871c",
+    "character": "蜜",
+    "meaningId": "Madu; nektar",
+    "meaningEn": "honey, nectar, molasses",
+    "onyomi": [
+      "みつ",
+      "びつ"
+    ],
+    "kunyomi": [],
+    "jlpt": "N1",
+    "strokeCount": 14,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "蜂蜜",
+        "reading": "はちみつ",
+        "meaningId": "Madu"
+      }
+    ],
+    "unicode": "U+871C",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n2_7121": {
+    "id": "kj_n2_7121",
+    "character": "無",
+    "meaningId": "Tiada; tanpa",
+    "meaningEn": "nothingness, none, ain't, nothing",
+    "onyomi": [
+      "む",
+      "ぶ"
+    ],
+    "kunyomi": [
+      "な.い"
+    ],
+    "jlpt": "N2",
+    "strokeCount": 12,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "無くす",
+        "reading": "なくす",
+        "meaningId": "Kehilangan sesuatu"
+      },
+      {
+        "word": "無理",
+        "reading": "むり",
+        "meaningId": "Mustahil"
+      },
+      {
+        "word": "無くなる",
+        "reading": "なくなる",
+        "meaningId": "Hilang"
+      }
+    ],
+    "unicode": "U+7121",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_51a5": {
+    "id": "kj_n1_51a5",
+    "character": "冥",
+    "meaningId": "Gelap; alam baka",
+    "meaningEn": "dark",
+    "onyomi": [
+      "めい",
+      "みょう"
+    ],
+    "kunyomi": [
+      "くら.い"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 10,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "冥",
+        "reading": "くらい",
+        "meaningId": "Gelap"
+      }
+    ],
+    "unicode": "U+51A5",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_9905": {
+    "id": "kj_n1_9905",
+    "character": "餅",
+    "meaningId": "Kue beras (mochi)",
+    "meaningEn": "mochi rice cake",
+    "onyomi": [
+      "へい",
+      "ひょう"
+    ],
+    "kunyomi": [
+      "もち",
+      "もちい"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 14,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "餅",
+        "reading": "もち",
+        "meaningId": "Kue beras (mochi)"
+      }
+    ],
+    "unicode": "U+9905",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_5996": {
+    "id": "kj_n1_5996",
+    "character": "妖",
+    "meaningId": "Gaib; memesona",
+    "meaningEn": "attractive, bewitching, calamity",
+    "onyomi": [
+      "よう"
+    ],
+    "kunyomi": [
+      "あや.しい",
+      "なま.めく",
+      "わざわ.い"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 7,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "妖",
+        "reading": "あやしい",
+        "meaningId": "Gaib"
+      }
+    ],
+    "unicode": "U+5996",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_6c83": {
+    "id": "kj_n1_6c83",
+    "character": "沃",
+    "meaningId": "Subur",
+    "meaningEn": "fertility",
+    "onyomi": [
+      "よう",
+      "よく",
+      "おく"
+    ],
+    "kunyomi": [
+      "そそ.ぐ"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 7,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "沃",
+        "reading": "そそぐ",
+        "meaningId": "Subur"
+      }
+    ],
+    "unicode": "U+6C83",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_91cc": {
+    "id": "kj_n1_91cc",
+    "character": "里",
+    "meaningId": "Desa; kampung halaman",
+    "meaningEn": "ri, village, parent's home, league",
+    "onyomi": [
+      "り"
+    ],
+    "kunyomi": [
+      "さと"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 7,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "郷里",
+        "reading": "きょうり",
+        "meaningId": "Kampung halaman"
+      }
+    ],
+    "unicode": "U+91CC",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_4fb6": {
+    "id": "kj_n1_4fb6",
+    "character": "侶",
+    "meaningId": "Teman; pendamping",
+    "meaningEn": "companion, follower",
+    "onyomi": [
+      "りょ",
+      "ろ"
+    ],
+    "kunyomi": [
+      "とも"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 9,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "侶",
+        "reading": "とも",
+        "meaningId": "Teman"
+      }
+    ],
+    "unicode": "U+4FB6",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_8cc2": {
+    "id": "kj_n1_8cc2",
+    "character": "賂",
+    "meaningId": "Suap",
+    "meaningEn": "bribe",
+    "onyomi": [
+      "ろ"
+    ],
+    "kunyomi": [
+      "まいな.い",
+      "まいな.う"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 13,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "賂",
+        "reading": "まいない",
+        "meaningId": "Suap"
+      }
+    ],
+    "unicode": "U+8CC2",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_5f04": {
+    "id": "kj_n1_5f04",
+    "character": "弄",
+    "meaningId": "Mempermainkan",
+    "meaningEn": "play with, tamper, trifle with",
+    "onyomi": [
+      "ろう",
+      "る"
+    ],
+    "kunyomi": [
+      "いじく.る",
+      "ろう.する",
+      "いじ.る",
+      "ひねく.る",
+      "たわむ.れる",
+      "もてあそ.ぶ"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 7,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "弄る",
+        "reading": "いじる",
+        "meaningId": "Mengutak-atik"
+      }
+    ],
+    "unicode": "U+5F04",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_9e93": {
+    "id": "kj_n1_9e93",
+    "character": "麓",
+    "meaningId": "Kaki gunung",
+    "meaningEn": "foot of a mountain",
+    "onyomi": [
+      "ろく"
+    ],
+    "kunyomi": [
+      "ふもと"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 19,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "麓",
+        "reading": "ふもと",
+        "meaningId": "Kaki gunung"
+      }
+    ],
+    "unicode": "U+9E93",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_50b2": {
+    "id": "kj_n1_50b2",
+    "character": "傲",
+    "meaningId": "Sombong",
+    "meaningEn": "be proud",
+    "onyomi": [
+      "ごう"
+    ],
+    "kunyomi": [
+      "おご.る",
+      "あなど.る"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 13,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "傲る",
+        "reading": "おごる",
+        "meaningId": "Sombong"
+      }
+    ],
+    "unicode": "U+50B2",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_5239": {
+    "id": "kj_n1_5239",
+    "character": "刹",
+    "meaningId": "Kuil; sekejap",
+    "meaningEn": "temple",
+    "onyomi": [
+      "せち",
+      "せつ",
+      "さつ"
+    ],
+    "kunyomi": [],
+    "jlpt": "N1",
+    "strokeCount": 8,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "刹",
+        "reading": "せち",
+        "meaningId": "Kuil"
+      }
+    ],
+    "unicode": "U+5239",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_54fa": {
+    "id": "kj_n1_54fa",
+    "character": "哺",
+    "meaningId": "Menyusui; menyuapi",
+    "meaningEn": "nurse, suckle",
+    "onyomi": [
+      "ほ"
+    ],
+    "kunyomi": [
+      "はぐく.む",
+      "ふく.む"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 10,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "哺",
+        "reading": "はぐくむ",
+        "meaningId": "Menyusui"
+      }
+    ],
+    "unicode": "U+54FA",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_55c5": {
+    "id": "kj_n1_55c5",
+    "character": "嗅",
+    "meaningId": "Mengendus",
+    "meaningEn": "smell, sniff, scent",
+    "onyomi": [
+      "きゅう"
+    ],
+    "kunyomi": [
+      "か.ぐ"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 13,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "嗅ぐ",
+        "reading": "かぐ",
+        "meaningId": "Mengendus"
+      }
+    ],
+    "unicode": "U+55C5",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_5632": {
+    "id": "kj_n1_5632",
+    "character": "嘲",
+    "meaningId": "Mengejek",
+    "meaningEn": "ridicule, insult",
+    "onyomi": [
+      "ちょう",
+      "とう"
+    ],
+    "kunyomi": [
+      "あざけ.る"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 15,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "嘲笑う",
+        "reading": "あざわらう",
+        "meaningId": "Mencibir"
+      }
+    ],
+    "unicode": "U+5632",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_6bc0": {
+    "id": "kj_n1_6bc0",
+    "character": "毀",
+    "meaningId": "Merusak; menghancurkan",
+    "meaningEn": "break, destroy, censure, be chipped",
+    "onyomi": [
+      "き"
+    ],
+    "kunyomi": [
+      "こぼ.つ",
+      "こわ.す",
+      "こぼ.れる",
+      "こわ.れる",
+      "そし.る",
+      "やぶ.る"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 13,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "毀",
+        "reading": "こぼつ",
+        "meaningId": "Merusak"
+      }
+    ],
+    "unicode": "U+6BC0",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_5f59": {
+    "id": "kj_n1_5f59",
+    "character": "彙",
+    "meaningId": "Kumpulan; golongan",
+    "meaningEn": "same kind, collect, classify, category",
+    "onyomi": [
+      "い"
+    ],
+    "kunyomi": [
+      "はりねずみ"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 13,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "語彙",
+        "reading": "ごい",
+        "meaningId": "Kosakata"
+      }
+    ],
+    "unicode": "U+5F59",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_6063": {
+    "id": "kj_n1_6063",
+    "character": "恣",
+    "meaningId": "Semaunya; sewenang-wenang",
+    "meaningEn": "selfish, arbitrary",
+    "onyomi": [
+      "し"
+    ],
+    "kunyomi": [
+      "ほしいまま"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 10,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "恣",
+        "reading": "ほしいまま",
+        "meaningId": "Semaunya"
+      }
+    ],
+    "unicode": "U+6063",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_60e7": {
+    "id": "kj_n1_60e7",
+    "character": "惧",
+    "meaningId": "Takut",
+    "meaningEn": "fear, be afraid of, dread",
+    "onyomi": [
+      "く",
+      "ぐ"
+    ],
+    "kunyomi": [
+      "おそ.れる"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 11,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "惧",
+        "reading": "おそれる",
+        "meaningId": "Takut"
+      }
+    ],
+    "unicode": "U+60E7",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_6144": {
+    "id": "kj_n1_6144",
+    "character": "慄",
+    "meaningId": "Gemetar ketakutan",
+    "meaningEn": "fear",
+    "onyomi": [
+      "りつ"
+    ],
+    "kunyomi": [
+      "ふる.える",
+      "おそ.れる",
+      "おのの.く"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 13,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "慄",
+        "reading": "ふるえる",
+        "meaningId": "Gemetar ketakutan"
+      }
+    ],
+    "unicode": "U+6144",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_61ac": {
+    "id": "kj_n1_61ac",
+    "character": "憬",
+    "meaningId": "Mendambakan",
+    "meaningEn": "yearn for, aspire to, admire",
+    "onyomi": [
+      "けい"
+    ],
+    "kunyomi": [
+      "あこが.れる"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 15,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "憬",
+        "reading": "あこがれる",
+        "meaningId": "Mendambakan"
+      }
+    ],
+    "unicode": "U+61AC",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_62c9": {
+    "id": "kj_n1_62c9",
+    "character": "拉",
+    "meaningId": "Menyeret; Latin",
+    "meaningEn": "Latin, kidnap, crush",
+    "onyomi": [
+      "らつ",
+      "ら",
+      "ろう"
+    ],
+    "kunyomi": [
+      "らっ.する",
+      "ひし.ぐ",
+      "くだ.く"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 8,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "拉",
+        "reading": "らっする",
+        "meaningId": "Menyeret"
+      }
+    ],
+    "unicode": "U+62C9",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_646f": {
+    "id": "kj_n1_646f",
+    "character": "摯",
+    "meaningId": "Sungguh-sungguh",
+    "meaningEn": "gift, seriousness",
+    "onyomi": [
+      "し"
+    ],
+    "kunyomi": [
+      "いた.る",
+      "つか.む",
+      "にえ"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 15,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "摯",
+        "reading": "いたる",
+        "meaningId": "Sungguh-sungguh"
+      }
+    ],
+    "unicode": "U+646F",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_66d6": {
+    "id": "kj_n1_66d6",
+    "character": "曖",
+    "meaningId": "Samar; tidak jelas",
+    "meaningEn": "dark, not clear",
+    "onyomi": [
+      "あい"
+    ],
+    "kunyomi": [
+      "くら.い"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 17,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "曖昧",
+        "reading": "あいまい",
+        "meaningId": "Tidak jelas"
+      }
+    ],
+    "unicode": "U+66D6",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_6977": {
+    "id": "kj_n1_6977",
+    "character": "楷",
+    "meaningId": "Gaya tulisan baku; kaishu",
+    "meaningEn": "square character style, correctness",
+    "onyomi": [
+      "かい"
+    ],
+    "kunyomi": [],
+    "jlpt": "N1",
+    "strokeCount": 13,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "楷",
+        "reading": "かい",
+        "meaningId": "Gaya tulisan baku"
+      }
+    ],
+    "unicode": "U+6977",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_9b31": {
+    "id": "kj_n1_9b31",
+    "character": "鬱",
+    "meaningId": "Murung; depresi",
+    "meaningEn": "gloom, depression, melancholy, luxuriant",
+    "onyomi": [
+      "うつ"
+    ],
+    "kunyomi": [
+      "うっ.する",
+      "ふさ.ぐ",
+      "しげ.る"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 29,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "憂鬱",
+        "reading": "ゆううつ",
+        "meaningId": "depression"
+      },
+      {
+        "word": "鬱陶しい",
+        "reading": "うっとうしい",
+        "meaningId": "Suram"
+      }
+    ],
+    "unicode": "U+9B31",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_74a7": {
+    "id": "kj_n1_74a7",
+    "character": "璧",
+    "meaningId": "Permata bulat",
+    "meaningEn": "sphere, ball",
+    "onyomi": [
+      "へき"
+    ],
+    "kunyomi": [
+      "たま"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 18,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "完璧",
+        "reading": "かんぺき",
+        "meaningId": "Sempurna"
+      }
+    ],
+    "unicode": "U+74A7",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_7b8b": {
+    "id": "kj_n1_7b8b",
+    "character": "箋",
+    "meaningId": "Kertas surat; catatan",
+    "meaningEn": "paper, label, letter, composition",
+    "onyomi": [
+      "せん"
+    ],
+    "kunyomi": [
+      "ふだ"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 14,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "便箋",
+        "reading": "びんせん",
+        "meaningId": "Kertas surat"
+      }
+    ],
+    "unicode": "U+7B8B",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_7c60": {
+    "id": "kj_n1_7c60",
+    "character": "籠",
+    "meaningId": "Keranjang; mengurung diri",
+    "meaningEn": "basket, devote oneself, seclude oneself, cage",
+    "onyomi": [
+      "ろう",
+      "る"
+    ],
+    "kunyomi": [
+      "かご",
+      "こ.める",
+      "こも.る",
+      "こ.む"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 22,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "籠",
+        "reading": "かご",
+        "meaningId": "Keranjang"
+      }
+    ],
+    "unicode": "U+7C60",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_7dfb": {
+    "id": "kj_n1_7dfb",
+    "character": "緻",
+    "meaningId": "Halus; cermat",
+    "meaningEn": "fine (i.e. not coarse)",
+    "onyomi": [
+      "ち"
+    ],
+    "kunyomi": [
+      "こまか.い"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 16,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "緻",
+        "reading": "こまかい",
+        "meaningId": "Halus"
+      }
+    ],
+    "unicode": "U+7DFB",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_7f9e": {
+    "id": "kj_n1_7f9e",
+    "character": "羞",
+    "meaningId": "Malu",
+    "meaningEn": "feel ashamed",
+    "onyomi": [
+      "しゅう"
+    ],
+    "kunyomi": [
+      "はじ.る",
+      "すすめ.る",
+      "は.ずかしい"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 11,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "羞",
+        "reading": "はじる",
+        "meaningId": "Malu"
+      }
+    ],
+    "unicode": "U+7F9E",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_8a03": {
+    "id": "kj_n1_8a03",
+    "character": "訃",
+    "meaningId": "Kabar kematian",
+    "meaningEn": "obituary",
+    "onyomi": [
+      "ふ"
+    ],
+    "kunyomi": [
+      "しらせ"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 9,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "訃",
+        "reading": "しらせ",
+        "meaningId": "Kabar kematian"
+      }
+    ],
+    "unicode": "U+8A03",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_8ae7": {
+    "id": "kj_n1_8ae7",
+    "character": "諧",
+    "meaningId": "Harmoni; lelucon",
+    "meaningEn": "harmony",
+    "onyomi": [
+      "かい"
+    ],
+    "kunyomi": [
+      "かな.う",
+      "やわ.らぐ"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 16,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "諧",
+        "reading": "かなう",
+        "meaningId": "Harmoni"
+      }
+    ],
+    "unicode": "U+8AE7",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_8caa": {
+    "id": "kj_n1_8caa",
+    "character": "貪",
+    "meaningId": "Rakus; mengincar",
+    "meaningEn": "covet, indulge in",
+    "onyomi": [
+      "たん",
+      "どん",
+      "とん"
+    ],
+    "kunyomi": [
+      "むさぼ.る"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 11,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "貪",
+        "reading": "むさぼる",
+        "meaningId": "Rakus"
+      }
+    ],
+    "unicode": "U+8CAA",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_8e2a": {
+    "id": "kj_n1_8e2a",
+    "character": "踪",
+    "meaningId": "Jejak",
+    "meaningEn": "remains, clue, footprint",
+    "onyomi": [
+      "そう",
+      "しょう"
+    ],
+    "kunyomi": [
+      "あと"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 15,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "踪",
+        "reading": "あと",
+        "meaningId": "Jejak"
+      }
+    ],
+    "unicode": "U+8E2A",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_8fa3": {
+    "id": "kj_n1_8fa3",
+    "character": "辣",
+    "meaningId": "Pedas; keras",
+    "meaningEn": "pungent, spicy, harsh, cruel",
+    "onyomi": [
+      "らつ"
+    ],
+    "kunyomi": [
+      "から.い"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 14,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "辣",
+        "reading": "からい",
+        "meaningId": "Pedas"
+      }
+    ],
+    "unicode": "U+8FA3",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_932e": {
+    "id": "kj_n1_932e",
+    "character": "錮",
+    "meaningId": "Mengurung",
+    "meaningEn": "confinement, to tie",
+    "onyomi": [
+      "こ"
+    ],
+    "kunyomi": [
+      "ふさ.ぐ"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 16,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "錮",
+        "reading": "ふさぐ",
+        "meaningId": "Mengurung"
+      }
+    ],
+    "unicode": "U+932E",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_9830": {
+    "id": "kj_n1_9830",
+    "character": "頰",
+    "meaningId": "Pipi",
+    "meaningEn": "cheeks, jaw",
+    "onyomi": [
+      "きょう"
+    ],
+    "kunyomi": [
+      "ほお",
+      "ほほ"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 16,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "頰",
+        "reading": "ほお",
+        "meaningId": "Pipi"
+      }
+    ],
+    "unicode": "U+9830",
+    "version": 1,
+    "status": "published"
+  },
+  "kj_n1_525d": {
+    "id": "kj_n1_525d",
+    "character": "剝",
+    "meaningId": "Mengupas; melepas",
+    "meaningEn": "come off, peel, fade, discolor",
+    "onyomi": [
+      "はく",
+      "ほく"
+    ],
+    "kunyomi": [
+      "へ.ぐ",
+      "へず.る",
+      "む.く",
+      "む.ける",
+      "は.がれる",
+      "は.ぐ",
+      "は.げる",
+      "は.がす"
+    ],
+    "jlpt": "N1",
+    "strokeCount": 10,
+    "radical": "Radikal",
+    "radicalName": "Kanji Radical",
+    "relatedWords": [
+      {
+        "word": "剝",
+        "reading": "へぐ",
+        "meaningId": "Mengupas"
+      }
+    ],
+    "unicode": "U+525D",
     "version": 1,
     "status": "published"
   }
