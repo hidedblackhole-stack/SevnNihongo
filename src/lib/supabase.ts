@@ -163,8 +163,8 @@ function initSupabase() {
         data: { user: null, session: null },
         error: { message: 'Database offline' },
       }),
-      signInWithOAuth: async () => ({
-        data: { provider: 'google', url: null },
+      signInWithIdToken: async () => ({
+        data: { user: null, session: null },
         error: { message: 'Database offline' },
       }),
       onAuthStateChange: () => ({
@@ -200,17 +200,13 @@ export async function getSession() {
 }
 
 /**
- * Masuk/daftar dengan Google. Halaman akan dialihkan ke Google lalu kembali ke origin ini;
- * sesi ditangkap otomatis oleh onAuthStateChange (useCloudSync). Mengembalikan pesan error bila gagal memulai.
+ * Masuk/daftar dengan Google memakai ID token dari Google Identity Services (popup bernama aplikasi,
+ * bukan domain supabase.co). Sesi ditangkap oleh onAuthStateChange (useCloudSync).
+ * `nonce` = nilai ASLI; Google menerima hash SHA-256-nya. Mengembalikan pesan error, atau null bila berhasil.
  */
-export async function signInWithGoogle(): Promise<string | null> {
-  const { error } = await supabase.auth.signInWithOAuth({
-    provider: 'google',
-    options: {
-      redirectTo: typeof window !== 'undefined' ? `${window.location.origin}/` : undefined,
-    },
-  });
-  return error ? error.message || 'Gagal memulai login Google.' : null;
+export async function signInWithGoogleIdToken(token: string, nonce: string): Promise<string | null> {
+  const { error } = await supabase.auth.signInWithIdToken({ provider: 'google', token, nonce });
+  return error ? error.message || 'Login Google gagal.' : null;
 }
 
 export async function signOut() {

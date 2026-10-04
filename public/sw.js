@@ -64,6 +64,10 @@ self.addEventListener('fetch', (event) => {
     return;
   }
   const url = new URL(request.url);
+  // Skrip/aset Google Identity Services: jangan di-cache (selalu versi terbaru dari Google).
+  if (/(^|\.)(google\.com|gstatic\.com)$/.test(url.hostname)) {
+    return;
+  }
   // /api/*: network-only. Respons API konten TIDAK boleh disimpan oleh Service Worker (offline-lite: tanpa mirror konten).
   if (url.pathname.startsWith('/api/')) {
     return;
