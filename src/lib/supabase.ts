@@ -163,6 +163,10 @@ function initSupabase() {
         data: { user: null, session: null },
         error: { message: 'Database offline' },
       }),
+      signInWithOAuth: async () => ({
+        data: { provider: 'google', url: null },
+        error: { message: 'Database offline' },
+      }),
       onAuthStateChange: () => ({
         data: { subscription: { unsubscribe: () => {} } },
       }),
@@ -193,6 +197,20 @@ export async function getSession() {
     console.warn('Supabase offline or unreachable:', err);
     return null;
   }
+}
+
+/**
+ * Masuk/daftar dengan Google. Halaman akan dialihkan ke Google lalu kembali ke origin ini;
+ * sesi ditangkap otomatis oleh onAuthStateChange (useCloudSync). Mengembalikan pesan error bila gagal memulai.
+ */
+export async function signInWithGoogle(): Promise<string | null> {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: typeof window !== 'undefined' ? `${window.location.origin}/` : undefined,
+    },
+  });
+  return error ? error.message || 'Gagal memulai login Google.' : null;
 }
 
 export async function signOut() {

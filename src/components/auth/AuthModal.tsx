@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { supabase } from '../../lib/supabase';
+import { supabase, signInWithGoogle } from '../../lib/supabase';
 import { Mail, Lock, Loader2, X, AlertCircle } from 'lucide-react';
 import { playSound } from '../../utils/audio';
 
@@ -11,6 +11,10 @@ interface AuthModalProps {
   isMandatory?: boolean;
 }
 
+/** Tombol Google hanya tampil bila provider sudah diaktifkan di Supabase (set VITE_GOOGLE_AUTH=true). */
+const GOOGLE_AUTH_ENABLED =
+  (import.meta as unknown as { env?: Record<string, string | undefined> }).env?.VITE_GOOGLE_AUTH === 'true';
+
 export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess, soundEnabled = true, isMandatory = false }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
@@ -20,6 +24,29 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   if (!isOpen) return null;
+
+  const handleGoogle = async () => {
+    setError(null);
+    setSuccessMessage(null);
+    setIsLoading(true);
+    playSound('click', soundEnabled);
+    try {
+      const msg = await signInWithGoogle();
+      if (msg) {
+        setError(
+          /provider is not enabled|Unsupported provider/i.test(msg)
+            ? 'Login Google belum diaktifkan di server. Gunakan email & password untuk sementara.'
+            : msg
+        );
+        playSound('wrong', soundEnabled);
+        setIsLoading(false);
+      }
+      // Tanpa error: browser sedang dialihkan ke Google, biarkan tombol tetap loading.
+    } catch {
+      setError('Gagal terhubung ke server. Periksa koneksi internet lalu coba lagi.');
+      setIsLoading(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -139,6 +166,29 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
               <p>{successMessage}</p>
             </div>
           )}
+
+          {GOOGLE_AUTH_ENABLED && (<>
+          <button
+            type="button"
+            onClick={handleGoogle}
+            disabled={isLoading}
+            className="btn-physical-secondary w-full py-3 text-xs sm:text-sm font-heading font-bold flex items-center justify-center gap-2.5 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+          >
+            <svg viewBox="0 0 48 48" className="w-5 h-5" aria-hidden="true">
+              <path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z" />
+              <path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z" />
+              <path fill="#FBBC05" d="M10.5 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.9-4.7l-7.9-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.9-6.1z" />
+              <path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.5-5.8c-2.1 1.4-4.9 2.3-8.4 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z" />
+            </svg>
+            {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Lanjutkan dengan Google'}
+          </button>
+
+          <div className="flex items-center gap-3 text-[10px] text-text-muted uppercase tracking-wider">
+            <span className="flex-1 h-px bg-border-subtle" />
+            atau dengan email
+            <span className="flex-1 h-px bg-border-subtle" />
+          </div>
+          </>)}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-1.5">
