@@ -1,0 +1,290 @@
+n1_1422|高く、険しい、山々。|Pegunungan yang tinggi dan terjal.
+n1_1522|子供を、表す、言葉。|Berarti anak kecil; dipakai sebagai akhiran untuk menyebut anak.
+n1_1523|言葉を、書き表す、記号。|Huruf atau aksara yang dipakai untuk menulis bahasa.
+n1_1565|部屋を、表す、言葉。|Berarti ruangan; dipakai sebagai akhiran nama ruangan.
+n1_1641|物事を、行う、ときの、手間。|Tenaga atau kerepotan yang diperlukan untuk mengerjakan sesuatu.
+n1_1650|植物の、芽を出す、もと。物事の、原因や、材料。|Biji tumbuhan; juga sebab, bahan, atau trik di baliknya.
+n1_1651|いろいろな、種類。|Berbagai macam jenis atau ragam.
+n1_1652|炎症などで、ふくれ上がる。|Membengkak karena peradangan atau benturan.
+n1_1653|おもしろみ。ありさま。|Cita rasa halus atau kesan yang tampak; juga maksud.
+n1_1654|ある事を、行う、ねらいや、考え。|Maksud atau inti tujuan suatu hal.
+n1_1655|首に、かける、飾り。|Perhiasan yang dikalungkan di leher.
+n1_1656|団体などの、中心に、なる人。|Para pemimpin utama suatu organisasi atau negara.
+n1_1657|動物の、首に、つける、輪。|Tali atau pita yang dipasang di leher hewan peliharaan.
+n1_1658|試験などに、合格する。|Lulus dalam ujian atau seleksi.
+n1_1659|前の人の、あとを、引き続いて、受ける。|Mewarisi atau melanjutkan sesuatu dari pendahulu.
+n1_1660|しっかり、受け取る。理解して、考える。|Menangkap atau menahan sesuatu; juga memahami dan menanggapi.
+n1_1661|受け取ること。受け取った、証拠。|Penerimaan; juga bukti tanda terima.
+n1_1662|人や、物を、受け入れること。|Penerimaan orang atau barang.
+n1_1663|求めなどを、聞き入れる。|Menerima seseorang atau permintaan; juga menyetujui.
+n1_1664|申し込みなどを、受ける。|Menerima pendaftaran atau permohonan; juga mau menanggapi.
+n1_1665|人から、何かを、される、立場。|Sikap pasif; juga bentuk kalimat pasif.
+n1_1666|上の人から、与える。教える。|Menganugerahkan sesuatu kepada orang; juga mengajarkan ilmu.
+n1_1667|生えている、木。|Pohon-pohon dan semak yang tumbuh.
+n1_1668|新しく、しっかりと、打ち立てること。|Membangun atau menetapkan sesuatu seperti rekor atau pemerintahan.
+n1_1669|ある場所に、入る。静まる。|Muat masuk ke tempatnya; juga reda atau terselesaikan.
+n1_1670|事業などによる、利益。|Keuntungan atau laba dari usaha.
+n1_1671|収入と、支出。|Pemasukan dan pengeluaran uang.
+n1_1672|いろいろなものを、集めること。|Mengumpulkan dan mengoleksi berbagai hal.
+n1_1673|人や、物を、ある、場所に、入れること。|Menampung orang atau barang di suatu tempat.
+n1_1674|ぐるりと、回る、こと。|Satuan untuk putaran atau keliling.
+n1_1675|同じことが、くり返される、時間の間隔。|Selang waktu pengulangan suatu kejadian.
+n1_1676|仕事に、就くこと。|Menjalani pekerjaan; juga mulai bekerja.
+n1_1677|学問を、学ぶこと。|Belajar atau menuntut ilmu.
+n1_1678|技や、精神を、身につけるために、努力すること。|Berlatih keras untuk menguasai keterampilan atau spiritual.
+n1_1679|大学院の、前期の、課程。|Jenjang program magister setelah sarjana.
+n1_1680|飾ること。他の言葉を、くわしく、説明する。|Menghias; juga menerangkan kata lain dalam tata bahasa.
+n1_1681|課程を、終えること。|Menamatkan suatu program atau kursus.
+n1_1682|続いて、いた、ことが、終わる。|Suatu kegiatan berakhir atau selesai.
+n1_1683|はじめから、終わりまで。|Dari awal sampai akhir tanpa berubah.
+n1_1684|一日中。|Sepanjang hari penuh.
+n1_1685|大勢の、人々。|Orang banyak; dipakai sebagai akhiran untuk kelompok.
+n1_1686|日本の、国会の、二つの、議院の、一つ。|Salah satu dari dua majelis parlemen Jepang, yaitu majelis rendah.
+n1_1687|突然、攻撃する。災難が、降りかかる。|Menyerang tiba-tiba; juga menimpa seperti bencana.
+n1_1688|突然、攻め込むこと。|Serangan mendadak terhadap suatu pihak.
+n1_1689|足で、強く、けり飛ばす。|Menendang keras hingga terpental; juga menolak mentah-mentah.
+n1_1690|人や、物が、一か所に、寄ってくる。|Orang atau benda berkumpul di satu tempat.
+n1_1691|数を、集めて、合計すること。|Menjumlahkan data yang terkumpul.
+n1_1692|住むこと。住まい。|Tempat tinggal; juga akhiran untuk penduduk.
+n1_1693|内容が、豊かで、満ち足りていること。|Isi yang kaya dan penuh; juga pengayaan.
+n1_1694|道路が、十の字に、交わる、所。|Persimpangan jalan berbentuk perempatan.
+n1_1695|満足できるほど、足りている様子。|Cukup memadai tanpa kekurangan.
+n1_1696|前のことの、結果として。|Oleh karena itu; juga mengikuti sesuatu.
+n1_1697|会社などで、働く人。|Orang yang bekerja di perusahaan; karyawan.
+n1_1698|ある、仕事に、携わること。|Terlibat atau bekerja dalam suatu bidang.
+n1_1699|今まで。昔から、今まで。|Hingga sekarang; atau cara lama yang berlaku.
+n1_1700|やわらかく、変化に、対応できる、様子。|Lentur dan dapat menyesuaikan diri.
+n1_1701|地味で、落ち着いた、趣が、ある。味が、渋い。|Rasa sepat; juga tampilan kalem, tenang, dan elegan.
+n1_1702|野生の、動物。|Hewan liar yang buas; juga sebutan untuk orang kasar.
+n1_1703|重なっている、ものを、数える、言葉。|Satuan lapisan atau lipatan.
+n1_1704|物が、上に、重なる。ことが、続いて、起こる。|Benda bertumpuk; juga peristiwa terjadi berturut-turut.
+n1_1705|大切に、する。|Menghargai dan menjunjung tinggi suatu hal.
+n1_1706|大事に、扱う。|Menjunjung atau menghargai sesuatu sebagai hal penting.
+n1_1707|同じものが、重なること。|Pengulangan atau tumpang tindih.
+n1_1708|便利で、役に立つこと。|Praktis, berguna, dan berharga.
+n1_1709|会社の、重要な、役職の人。|Pejabat penting seperti direktur perusahaan.
+n1_1710|弾を、撃つ、武器。|Senjata yang menembakkan peluru.
+n1_1711|前もって、決まっている、運命。|Nasib yang telah ditakdirkan sejak awal.
+n1_1712|めでたいことを、祝うこと。|Perayaan atau ucapan selamat atas peristiwa gembira.
+n1_1713|短くなる。間が、狭くなる。|Menjadi lebih pendek; juga jaraknya menyempit.
+n1_1714|学習を、助ける、私的な、教室。|Tempat les atau bimbingan belajar swasta.
+n1_1715|思いがけず、ばったり、出会う。|Bertemu secara kebetulan dengan seseorang atau sesuatu.
+n1_1716|劇や、映画などに、出ること。|Tampil dalam acara, drama, atau film.
+n1_1718|偶然、人や、ことに、出会う。|Bertemu atau menjumpai secara kebetulan.
+n1_1719|子供を、産むこと。製品などを、産み出すこと。|Melahirkan anak; juga menghasilkan produk.
+n1_1720|会社に、行く、こと。|Pergi dan tiba di kantor.
+n1_1721|社会的に、高い、地位に、つくこと。|Sukses menanjak dalam karier atau kedudukan sosial.
+n1_1722|人が、生まれること。|Kelahiran seseorang.
+n1_1723|すっかり、出てしまう。|Keluar seluruhnya hingga habis.
+n1_1724|試験などの、問題を、出すこと。|Memberikan atau menyusun soal ujian.
+n1_1725|いいかげんで、筋が、通らない様子。|Asal-asalan dan tidak masuk akal.
+n1_1726|もう一度、はじめから、やり直すこと。|Memulai kembali dari awal.
+n1_1727|仕事などの、ために、出かけること。|Dikerahkan keluar untuk bertugas.
+n1_1728|出入りする、ための、口。|Pintu tempat keluar dan masuk.
+n1_1729|出ていく、お金。|Biaya atau pengeluaran uang.
+n1_1730|展覧会などに、作品を、出すこと。|Mengikutsertakan karya dalam pameran.
+n1_1731|皮膚に、できる、はれもの。|Bisul atau benjolan yang tumbuh di kulit.
+n1_1732|まぶたを、閉じて、開けること。光が、ちらちら、すること。|Mengerjap mata; juga bintang atau cahaya yang berkelip.
+n1_1733|それに、従って、同じように、扱う。|Menerapkan sesuai ketentuan atau memperlakukan setara.
+n1_1734|それを、基準に、して、同じ、扱いを、する。|Berlaku sesuai atau mengikuti suatu ketentuan.
+n1_1735|急行に、次ぐ、速さの、列車。|Kereta semi cepat dengan kecepatan di bawah ekspres.
+n1_1736|水分を、含んで、しっとり、する。豊かに、なる。|Menjadi lembap; juga makmur atau menguntungkan.
+n1_1737|敵の、攻撃を、防ぐ、道具。|Alat pelindung dari serangan senjata; juga tameng.
+n1_1738|物事を、うまく、片づけること。|Penanganan atau tindakan untuk menyelesaikan suatu hal, seperti pertolongan pertama.
+n1_1739|罪を犯した人に、罰を、与えること。|Menjatuhkan hukuman kepada pelanggar.
+n1_1740|不要な物を、捨てる。罰を、与える。|Membuang atau menyelesaikan sesuatu; juga menjatuhkan hukuman.
+n1_1741|初めて。最初の。|Pertama kali; juga awal atau baru.
+n1_1742|初めて、聞くこと。|Hal yang baru pertama kali didengar.
+n1_1743|本の、最初の、版。|Edisi pertama dari sebuah buku.
+n1_1744|あちこち。|Di berbagai tempat atau bagian tertentu.
+n1_1745|ところが。|Kata penghubung yang menyatakan hal tak terduga; 'namun ternyata'.
+n1_1746|話題を、変えるときの言葉。|Kata untuk berganti pokok pembicaraan; 'ngomong-ngomong'.
+n1_1747|世間で、言われている。|Yang biasa disebut orang; 'apa yang disebut'.
+n1_1748|ある、物や、人が、いる、場所。|Tempat keberadaan seseorang atau sesuatu.
+n1_1749|物を、持っていること。|Memiliki atau membawa suatu barang.
+n1_1750|ある、団体などに、入っていること。|Menjadi bagian dari suatu organisasi atau divisi.
+n1_1751|決められている、こと。|Hal yang telah ditetapkan.
+n1_1752|働いて、得る、収入。|Penghasilan yang diperoleh dari bekerja atau usaha.
+n1_1753|ふつうの、人々。|Orang biasa atau rakyat jelata.
+n1_1754|会社などの、一般的な、事務。|Urusan administrasi umum di kantor.
+n1_1755|聞いた言葉を、文字に、書くこと。|Menuliskan apa yang diucapkan atau dibacakan.
+n1_1756|聞いて、書き写す。|Menuliskan hasil yang didengar atau dibacakan.
+n1_1757|本の、内容について、述べた、評論。|Ulasan atau kritik tentang isi suatu buku.
+n1_1758|たくさんの。いろいろな。|Berarti 'berbagai' atau 'banyak' sebagai awalan.
+n1_1759|大勢の、人に、呼びかける言葉。|Sapaan kepada orang banyak yang dihormati; 'hadirin sekalian'.
+n1_1760|助けること。|Berarti membantu; awalan untuk asisten atau tambahan.
+n1_1761|困っている人を、助けること。|Bantuan atau pertolongan.
+n1_1762|相手の、ために、教えること。|Nasihat atau saran yang diberikan untuk membantu orang lain.
+n1_1763|他の言葉に、付いて、意味を、添える、言葉。|Partikel yang melekat pada kata lain untuk menunjukkan hubungan kalimat.
+n1_1764|他の、動詞などに、付いて、意味を、添える、言葉。|Kata bantu yang menambah makna pada kata kerja.
+n1_1765|優れた、女性を、敬って、呼ぶ言葉。|Sebutan hormat untuk perempuan yang terpelajar.
+n1_1766|女の子。女性。|Anak perempuan atau perempuan secara umum.
+n1_1767|ゆっくり、少しずつ。|Perlahan-lahan sedikit demi sedikit.
+n1_1768|電車などが、ゆっくり、走ること。|Berjalan perlahan, misalnya kendaraan di tikungan.
+n1_1769|ある範囲から、取りのぞくこと。|Mengecualikan sesuatu dari suatu cakupan.
+n1_1770|体や、物が、傷つく。欠点。|Luka pada tubuh atau goresan pada benda; juga cacat.
+n1_1771|けがを、する。心が、傷つく。|Terluka tubuhnya; juga tersinggung perasaannya.
+n1_1772|他より、すぐれる。|Lebih unggul daripada yang lain.
+n1_1773|戦いや、試合に、勝つこと。|Meraih kemenangan dalam pertandingan atau pertempuran.
+n1_1774|「呼ぶ」「着る」「食べる」などの、尊敬語。|Bentuk hormat dari 'yobu', 'kiru', dan 'taberu'.
+n1_1775|商売。割り算の、答え。|Perdagangan; juga hasil bagi dalam matematika.
+n1_1776|品物を、売り買いする、人。|Orang yang pekerjaannya berdagang.
+n1_1777|声に出して、唱える。意見を、主張する。|Melafalkan doa atau mantra; juga mengemukakan pendapat.
+n1_1778|以前に。昔。|Dahulu pernah; pada masa lampau.
+n1_1779|舌で、ねぶる。ばかにする。|Menjilat dengan lidah; juga meremehkan.
+n1_1780|ある行いを、するよう、勧めること。|Mendorong dan memberi semangat untuk melakukan sesuatu.
+n1_1781|子供の、病気を、診る、医学の、分野。|Bidang kedokteran yang menangani anak-anak.
+n1_1782|銀行などに、預けた、お金を、払い出す、ための、証書。|Surat perintah pembayaran dari rekening bank.
+n1_1783|細かい、お金。|Uang receh atau koin pecahan kecil.
+n1_1784|商品を、消費者に、売ること。|Penjualan barang langsung ke konsumen.
+n1_1785|体つきが、小さい様子。|Bertubuh kecil; juga bermotif kecil.
+n1_1786|いくらか、減らしても。|Sedikitnya; paling tidak.
+n1_1787|年の、若い、女の子。|Anak perempuan remaja.
+n1_1788|数が、少ないこと。|Jumlah yang sedikit; minoritas.
+n1_1789|さらに。まだ。|Lagi pula; juga masih.
+n1_1790|それ以上に、いっそう。|Terlebih lagi; semakin lebih.
+n1_1791|部屋の、いちばん、下の面。|Permukaan lantai di dalam ruangan.
+n1_1792|相手の、頼みなどを、聞き入れること。|Memberi persetujuan atas permintaan.
+n1_1793|人を、呼ぶこと。|Undangan atau panggilan agar orang datang.
+n1_1794|手の、ひらの、部分。|Bagian dalam tangan yang rata.
+n1_1795|地位や、役職が、上がること。|Kenaikan jabatan atau pangkat.
+n1_1796|木の、いちばん、高い所の、枝。|Ujung dahan paling atas pada pohon.
+n1_1797|水が、たまった、泥の、多い土地。|Tanah berlumpur yang digenangi air.
+n1_1798|消して、なくすこと。|Menghapus atau menghilangkan sepenuhnya.
+n1_1799|様子を、知らせる、便り。|Kabar atau keterangan tentang keadaan seseorang.
+n1_1800|使って、減ること。体力が、なくなること。|Habis terpakai; juga kelelahan.
+n1_1801|こげた、ような、濃い茶色。|Warna cokelat tua seperti gosong.
+n1_1802|早く、しようと、して、落ち着きを、失う。|Bergegas dan menjadi tidak sabar.
+n1_1803|光などを、はね返す。|Memantulkan kembali cahaya atau panas.
+n1_1804|二つを、照らし合わせて、確かめること。|Mencocokkan dua hal untuk memastikan kebenarannya.
+n1_1805|光で、明るく、すること。|Pencahayaan untuk menerangi tempat.
+n1_1806|病気の、状態。|Akhiran untuk menyebut penyakit atau gejalanya.
+n1_1807|自分の、行いを、振り返る。|Merenungkan dan mengoreksi diri.
+n1_1808|名乗る。そのように、言う。|Menyebut diri dengan nama tertentu; juga mengaku-ngaku.
+n1_1809|強い、ショック。|Guncangan atau benturan hebat.
+n1_1810|事実であることを、示す、もの。|Tanda atau bukti yang menunjukkan kebenaran.
+n1_1811|事実を、示す、もの。|Barang bukti yang menunjukkan fakta.
+n1_1812|事実を、述べること。|Keterangan atau pernyataan saksi di hadapan hukum.
+n1_1813|事実を、証明する人。|Orang yang bersaksi atas suatu fakta.
+n1_1814|細かく、詳しい、こと。|Rincian atau keterangan yang terperinci.
+n1_1815|大きな、体と、長い鼻を、持つ、動物。形。|Gajah; juga rupa atau bentuk (dibaca 'shou').
+n1_1816|ある、意味を、形で、表す、もの。|Lambang yang mewakili suatu gagasan atau negara.
+n1_1817|さしつかえる。悪い、影響を、与える。|Menghalangi atau menyentuh; juga berdampak buruk pada kesehatan atau suasana hati.
+n1_1818|上がること。収穫。|Naik atau selesai; juga hasil panen atau penghasilan.
+n1_1819|低い所から、高い所に、移る。|Naik ke tempat tinggi; juga masuk ke dalam rumah.
+n1_1820|地位などが、上の方。|Peringkat atau kedudukan yang lebih tinggi.
+n1_1821|劇などを、演じて、見せること。|Mementaskan drama atau pertunjukan di hadapan penonton.
+n1_1822|上と下。上がり下がり。|Atas dan bawah; juga naik turun.
+n1_1823|ある基準を、超える。|Melebihi suatu batas atau perkiraan.
+n1_1824|空の、高い所。|Ruang udara di atas suatu tempat.
+n1_1825|地位が、上の人。|Atasan dalam pekerjaan.
+n1_1826|うまいこと。|Pandai dan mahir; juga bagian atas atau sisi kanan panggung.
+n1_1827|高い所へ、のぼること。|Naiknya suhu, harga, atau tingkat.
+n1_1828|船から、陸に、上がること。|Mendarat dari kapal ke daratan.
+n1_1829|物の、長さ。身長。|Panjang atau tinggi sesuatu; juga seluruhnya.
+n1_1830|体が、強く、壊れにくい様子。|Kuat dan tahan lama.
+n1_1831|武力などで、無理に、奪い取る。|Merebut atau membajak sesuatu dengan paksa.
+n1_1832|他の乗り物に、替えること。|Berganti kendaraan di tengah perjalanan.
+n1_1833|乗り物に、乗り込む。進んで、入り込む。|Naik ke dalam kendaraan; juga masuk dengan semangat ke suatu tempat.
+n1_1834|乗り物に、乗っている人。|Orang yang naik kendaraan; penumpang.
+n1_1835|城の、周りの、町。|Kota yang berkembang di sekitar kastel.
+n1_1836|若い、女性を、呼ぶ言葉。|Sebutan untuk gadis atau nona muda.
+n1_1837|思いやり。心の働き。|Perasaan atau kasih sayang; juga keadaan sebenarnya.
+n1_1838|人への、思いやり。|Rasa kasih dan belas kasihan.
+n1_1839|思いやりが、深い。|Penuh kasih sayang dan belas kasih.
+n1_1840|物事から、起こる、心の、動き。|Suasana hati atau nuansa perasaan yang khas.
+n1_1841|物事の、その時の、様子。|Situasi atau perkembangan keadaan saat ini.
+n1_1842|強く、燃え上がる、気持ち。|Semangat membara atau gairah yang kuat.
+n1_1843|国と国との、取り決め。|Perjanjian resmi antar negara.
+n1_1844|歩くときに、体を、支える、棒。|Tongkat penopang saat berjalan.
+n1_1845|様子。手紙。|Keadaan; juga surat atau akhiran untuk dokumen.
+n1_1846|畳を、数える、言葉。|Satuan hitung untuk tikar tatami.
+n1_1847|液体を、熱して、蒸気に、して、さらに、冷やして、液体に、戻すこと。|Proses penyulingan cairan dengan menguapkan lalu mengembunkan.
+n1_1848|自分の、主張を、曲げて、相手に、合わせること。|Mengalah atau memberi konsesi kepada pihak lain.
+n1_1849|植えられて、いる。|Tertanam atau ditanam di suatu tempat.
+n1_1850|他の国に、支配された、土地。|Wilayah yang dikuasai negara lain.
+n1_1851|糸を、組んで、作った、布。|Kain tenunan atau hasil tenun.
+n1_1852|糸を、縦横に、組んで、布を、作る。|Menenun benang menjadi kain.
+n1_1853|織って、作った、布。|Kain tenun atau tekstil.
+n1_1854|役所や、会社などに、勤めている、人。|Pegawai yang bekerja di instansi atau perusahaan.
+n1_1855|職業上の、務め。|Tugas atau kewajiban pekerjaan.
+n1_1856|種類が、多いこと。|Beraneka ragam atau berbagai.
+n1_1857|物の、色。色合い。|Warna dan nuansa warna sesuatu.
+n1_1858|二つのものが、くい違って、合わない。|Saling bertentangan atau tidak sejalan.
+n1_1859|動物の、体の、後ろに、のびる、部分。|Ekor hewan yang memanjang di belakang tubuhnya.
+n1_1860|ある、宗教を、信じる、人。|Orang yang menganut suatu agama.
+n1_1861|信じて、まかせること。|Kepercayaan; juga mandat yang diberikan.
+n1_1862|他人の、領域などを、無理に、入り込んで、損なう。|Melanggar batas atau hak orang lain; juga menggerogoti.
+n1_1863|他の国に、攻め入って、奪うこと。|Menyerbu negara lain untuk menguasai.
+n1_1864|寝させる。物を、熟成させる。|Menidurkan seseorang; juga mengendapkan bahan hingga matang.
+n1_1865|物事を、よく調べて、話し合うこと。|Pembahasan atau musyawarah untuk memutuskan suatu hal.
+n1_1866|物事の、よしあしを、調べて、決めること。|Pemeriksaan dan penilaian atas suatu hal.
+n1_1867|勝ち負けを、判定する、人。物事の、是非を、決めること。|Wasit yang memutuskan pertandingan; juga pengadilan atau penilaian.
+n1_1868|いつも、注意して、いる、こと。|Kesadaran atau sikap yang selalu dijaga.
+n1_1869|いつも、気をつけて、いる。|Selalu berusaha atau menjaga kebiasaan tertentu.
+n1_1870|頼りに、なる人が、いて、安心だ。|Menenangkan karena ada yang dapat diandalkan.
+n1_1871|頼るものが、なく、不安である。|Cemas dan tidak berdaya karena tak ada sandaran.
+n1_1872|心の中の、思い。|Perasaan atau suasana batin seseorang.
+n1_1873|何かを、して、感じる、気持ち。|Perasaan atau kesan yang dialami saat melakukan sesuatu.
+n1_1874|心の中。ふたりで、いっしょに、死ぬこと。|Isi hati; juga bunuh diri bersama.
+n1_1875|あらかじめ、知っておく、べき、事柄。|Pengetahuan atau pedoman yang perlu diketahui.
+n1_1876|いましめて、控えめにする。|Berhati-hati dan menahan diri; juga menghindari.
+n1_1877|姿や、動作。そのように、見せかける、こと。|Gerak gerik; juga pura-pura atau berpura-pura.
+n1_1878|物事の、始まり。|Titik awal suatu hal; juga menerbitkan surat berharga.
+n1_1879|物事を、盛んに、すること。|Pengembangan atau promosi suatu bidang.
+n1_1880|物が、ゆれ動くこと。|Gerakan bolak-balik atau getaran suatu benda.
+n1_1881|新しい。|Berarti baru; awalan untuk hal baru.
+n1_1882|新しく、勢いが、盛んに、なること。|Muncul dan berkembang pesat sebagai kekuatan baru.
+n1_1883|結婚して、間もないこと。|Baru menikah; pengantin baru.
+n1_1884|新しく、仲間に、入った人。|Orang baru dalam suatu bidang atau organisasi.
+n1_1885|新しく、建てること。|Bangunan yang baru dibangun.
+n1_1886|学校に、新しく、入った、生徒。|Murid atau mahasiswa baru di sekolah.
+n1_1887|液体の中に、入れて、ぬらす。|Merendam atau mencelupkan sesuatu ke cairan.
+n1_1888|深くする。さらに、強くする。|Memperdalam; juga mempertinggi atau memperkuat.
+n1_1889|何かを、頼んだり、登録したりすること。|Pengajuan atau pendaftaran; permintaan resmi.
+n1_1890|自分から、望みなどを、願い出る。|Mengajukan diri atau melapor dengan sukarela.
+n1_1891|相手に、希望などを、強く、伝える。|Menyampaikan usul atau permintaan secara resmi kepada pihak lain.
+n1_1892|非難すべき、点。不満。|Keberatan atau kekurangan; dengan negatif berarti sempurna.
+n1_1893|役所などに、事実を、報告すること。|Melaporkan fakta kepada instansi, misalnya pajak.
+n1_1894|申し出ること。|Tawaran atau permohonan yang diajukan.
+n1_1895|まん中から、二つに、分けること。|Terbelah tepat menjadi dua bagian sama.
+n1_1896|本当に。実に。|Sungguh atau benar-benar.
+n1_1897|完全に、丸い様子。|Bulat sempurna.
+n1_1898|ちょうど、前。|Tepat di depan.
+n1_1899|ちょうど、中央。|Tepat di tengah.
+n1_1900|ちょうど、下。|Tepat di bawah.
+n1_1901|本当の、こと。|Kebenaran atau kenyataan sesungguhnya.
+n1_1902|貝の中で、できる、白く光る、玉。|Butiran bulat putih berkilau yang terbentuk di dalam kerang.
+n1_1903|ちょうど、上。|Tepat di atas.
+n1_1904|偽りのない、誠実な、気持ち。|Hati yang tulus dan sungguh-sungguh.
+n1_1905|物事の、本当の、様子。|Keadaan sebenarnya di balik suatu peristiwa.
+n1_1906|いつでも、どこでも、正しいと、認められる、考え。|Kebenaran yang diakui secara universal.
+n1_1907|けがれが、なく、おごそかな様子。|Suci, khidmat, dan tidak ternoda.
+n1_1908|神を、まつる、建物。|Bangunan untuk memuja dewa; kuil.
+n1_1909|人の、考えでは、分からない、不思議な、こと。|Hal ajaib yang tak dapat dijelaskan oleh akal.
+n1_1910|礼儀正しい、男の人。|Pria berbudi dan sopan; tuan.
+n1_1911|仲よく、する。心を、寄せる。|Menjadi akrab dengan; juga menikmati atau mendekati sesuatu.
+n1_1912|仲よくすること。|Persahabatan atau hubungan baik antar pihak.
+n1_1913|医者が、患者を、診察し、治療すること。|Pemeriksaan dan pengobatan oleh dokter.
+n1_1914|服装などの、様子。|Penampilan dari pakaian yang dikenakan seseorang.
+n1_1915|自分に、近い所。身に、関わりがあること。|Dekat dengan diri sendiri; terasa akrab dan relevan.
+n1_1916|気持ちなどを、体の、動きで、表すこと。|Gerak tubuh atau isyarat untuk menyatakan maksud.
+n1_1917|人や、動物の、体。|Tubuh manusia atau hewan.
+n1_1918|やっと。ぎりぎりで。|Dengan susah payah; nyaris atau hanya sedikit lagi.
+n1_1919|つらいことを、がまんして、続けること。|Ketabahan menahan kesulitan dan terus bertahan.
+n1_1920|前に、進むこと。|Kemajuan atau gerak maju.
+n1_1921|生物などが、長い間に、変化し、発展すること。|Perubahan dan perkembangan makhluk hidup secara bertahap.
+n1_1922|物事が、前に、進むこと。|Berjalannya suatu kegiatan; kemajuan.
+n1_1923|新しい、分野に、出て、いくこと。|Melangkah ke bidang atau wilayah baru, seperti ekspansi perusahaan.
+n1_1924|物を、差し上げること。|Menyerahkan sesuatu sebagai hadiah kepada orang yang dihormati.
+n1_1925|物事が、進んで、発展すること。|Perkembangan atau kemajuan suatu hal.
+n1_1926|物事が、進む、度合い。|Tingkat kemajuan suatu pekerjaan atau pelajaran.
+n1_1927|進んで、行く、道。|Jalan yang ditempuh ke depan; juga arah masa depan seseorang.
+n1_1928|ふるえさせる。|Menggetarkan sesuatu; juga membuat seseorang terguncang.
+n1_1929|人。|Orang; juga akhiran untuk menyebut kebangsaan atau profesi.
+n1_1930|人の、性格や、品格。|Kepribadian atau martabat seseorang.
+n1_1931|役に立つ、能力の、ある人。|Orang berbakat yang berguna bagi organisasi.
+n1_1932|要求を、通す、ため、捕らえておく、人。|Orang yang ditawan agar tuntutan dipenuhi.
+n1_1933|人の、思いやり。|Perasaan manusiawi dan simpati terhadap sesama.
+n1_1934|人間の、体。|Tubuh manusia.
+n1_1935|その人の、性格や、品性。|Karakter dan kepribadian seseorang.
