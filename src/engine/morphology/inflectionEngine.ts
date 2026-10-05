@@ -12,65 +12,68 @@ import {
 } from '../types';
 
 /**
- * Well-known Godan verbs ending in -iru or -eru that mimic Ichidan verbs.
+ * Godan verbs ending in -iru / -eru that mimic Ichidan verbs.
+ * Dicocokkan lewat KATA, bukan bacaan: bacaannya sama dengan verba ichidan
+ * (切る/着る きる, 要る/居る いる, 練る/寝る ねる, 減る/経る へる).
  */
 const GODAN_EXCEPTIONS = new Set([
-  '帰る', 'かえる',
-  '入る', 'はいる',
-  '走る', 'はしる',
-  '切る', 'きる',
-  '知る', 'しる',
-  '要る', 'いる',
-  '減る', 'へる',
-  '喋る', 'しゃべる',
-  '滑る', 'すべる',
-  '蹴る', 'ける',
-  '照る', 'てる',
-  '握る', 'にぎる',
-  '限る', 'かぎる',
-  '散る', 'ちる',
-  '焦る', 'あせる',
-  '遮る', 'さえぎる',
-  '覆る', 'くつがえる',
-  '蘇る', 'よみがえる',
-  '参る', 'まいる',
+  '帰る', '入る', '走る', '切る', '斬る', '知る', '要る', '煎る', '炒る', '減る', '喋る', '滑る',
+  '蹴る', '照る', '握る', '限る', '散る', '焦る', '遮る', '覆る', '蘇る', '甦る', '参る', '返る',
+  '湿る', '捻る', '捩る', '茂る', '齧る', '噛る', '千切る', '契る', '詰る', '罵る', '練る', '弄る',
+  '毟る', '抓る', '嘲る', '貶る', '謗る', '混じる', '交じる', '雑じる',
 ]);
+
+/** Kata kana-only yang pasti godan (homofon ichidan seperti かえる/きる/ねる sengaja tidak masuk). */
+const GODAN_KANA_EXCEPTIONS = new Set([
+  'はいる', 'はしる', 'しる', 'しゃべる', 'すべる', 'にぎる', 'かぎる', 'ちる', 'あせる',
+  'さえぎる', 'くつがえる', 'よみがえる', 'まいる', 'ひねる', 'しげる', 'かじる', 'ちぎる',
+  'なじる', 'ののしる', 'いじる', 'むしる', 'ねじる', 'つねる', 'しくじる', 'ひっくりかえる', 'まじる',
+]);
+
+/** Akhiran kata majemuk yang selalu godan (引っ繰り返る, 区切る, 恐れ入る, 振り返る). */
+const GODAN_COMPOUND_SUFFIXES = ['切る', '入る', '返る', '帰る'];
+
+const SEPARATOR = /s*[/／、,]s*/;
+
+/** Ambil penulisan pertama bila ada beberapa ("作る/造る", "見る / 観る"). */
+function firstVariant(text: string): string {
+  return text.trim().split(SEPARATOR)[0].trim();
+}
+
+const hasKanji = (text: string) => /[一-龯々]/.test(text);
 
 /**
  * Detect the grammatical group of a Japanese verb.
+ * Klasifikasi bertumpu pada KATA; bacaan hanya untuk bunyi sebelum る dan kata kana-only.
+ * Jangan memakai endsWith pada bacaan: つくる ≠ 来る, おくる ≠ 来る, 刷る(する) ≠ する.
  */
 export function detectVerbGroup(word: string, reading?: string): VerbGroup {
-  const w = word.trim();
-  const r = (reading || '').trim();
+  const w = firstVariant(word);
+  const r = firstVariant(reading || '');
+  const kanaOnly = !hasKanji(w);
 
-  // 1. Suru verbs (e.g. する, 勉強する, 散歩する)
-  if (w === 'する' || r === 'する' || w.endsWith('する') || r.endsWith('する')) {
-    return 'suru';
-  }
+  // 1. Suru verbs (する, 勉強する, 為る)
+  if (w.endsWith('する') || (w.endsWith('為る') && r.endsWith('する'))) return 'suru';
 
-  // 2. Kuru verbs (e.g. 来る, くる, やって来る)
-  if (w === '来る' || r === 'くる' || w.endsWith('来る') || r.endsWith('くる')) {
-    return 'kuru';
+  // 2. Kuru verbs (来る, 持って来る, くる, もってくる). 出来る (できる) = ichidan.
+  if (w.endsWith('来る') || w.endsWith('來る')) {
+    return w.endsWith('出来る') ? 'ichidan' : 'kuru';
   }
+  if (kanaOnly && (w === 'くる' || /[てで]くる$/.test(w))) return 'kuru';
 
-  // 3. Known Godan exceptions ending in -eru / -iru
-  if (GODAN_EXCEPTIONS.has(w) || GODAN_EXCEPTIONS.has(r)) {
-    return 'godan';
-  }
+  // 3. Godan yang menyerupai ichidan (-iru / -eru). 出切る (できる) di data = 出来る → ichidan.
+  if (w === '出切る') return 'ichidan';
+  if (GODAN_EXCEPTIONS.has(w) || (kanaOnly && GODAN_KANA_EXCEPTIONS.has(w))) return 'godan';
+  if (GODAN_COMPOUND_SUFFIXES.some(suf => w.length > suf.length && w.endsWith(suf))) return 'godan';
 
   // 4. Verbs not ending in 'る' are always Godan (う, く, ぐ, す, つ, ぬ, ぶ, む)
-  if (!w.endsWith('る') && !r.endsWith('る')) {
-    return 'godan';
-  }
+  if (!w.endsWith('る') && !r.endsWith('る')) return 'godan';
 
   // 5. Verbs ending in 'る' preceded by 'i' or 'e' vowel sound are usually Ichidan
   const target = r || w;
   if (target.length >= 2) {
     const charBeforeRu = target[target.length - 2];
-    const isIchidanVowel = /[いきしちにひみりぎじぢびぴえけせてねへめれげぜでべぺ]/.test(charBeforeRu);
-    if (isIchidanVowel) {
-      return 'ichidan';
-    }
+    if (/[いきしちにひみりぎじぢびぴえけせてねへめれげぜでべぺ]/.test(charBeforeRu)) return 'ichidan';
   }
 
   return 'godan';
@@ -79,10 +82,15 @@ export function detectVerbGroup(word: string, reading?: string): VerbGroup {
 /**
  * High-precision Verb Conjugator
  */
-export function conjugateVerb(word: string, reading?: string): VerbConjugationResult {
-  const w = word.trim();
-  const r = (reading || w).trim();
-  const group = detectVerbGroup(w, r);
+export function conjugateVerb(
+  word: string,
+  reading?: string,
+  /** Paksa golongan tertentu — dipakai untuk membuat pengecoh "salah golongan" yang realistis. */
+  groupOverride?: VerbGroup
+): VerbConjugationResult {
+  const w = firstVariant(word);
+  const r = firstVariant(reading || w);
+  const group = groupOverride ?? detectVerbGroup(w, r);
 
   const forms: Record<ConjugationForm, { japanese: string; reading: string }> = {} as any;
 

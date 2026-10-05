@@ -1037,84 +1037,46 @@ export function generateConjugationQuestion(
   const inflectedFallback = inflectedFormObj?.japanese;
   const correctAnswer = verb.forms[correctFormKey] || inflectedFallback || verb.forms.dictionary;
 
-  // 3. Generate 3 smart distractors based on morphological patterns
-  const distractors: string[] = [];
+  // 3. Pengecoh hanya dari bentuk NYATA: (a) konjugasi dengan golongan yang salah lewat engine,
+  //    (b) bentuk lain yang valid dari verba yang sama. Tidak ada string hasil potong manual.
+  const engineKey = (correctFormKey === 'dictionary' ? 'jisho' : correctFormKey) as ConjugationForm;
+  const readingByText = new Map<string, string>();
+  const rememberReading = (text: string, reading?: string) => {
+    if (text && reading && !readingByText.has(text)) readingByText.set(text, reading);
+  };
+  (Object.keys(verb.forms) as (keyof VerbItem['forms'])[]).forEach(k => {
+    const text = verb.forms[k];
+    if (text) rememberReading(text, verb.formsReadings[k]);
+  });
 
-  // Distractor 1: Wrong group assumption
-  if (verb.group === 'godan') {
-    if (correctFormKey === 'te') distractors.push(verb.reading.slice(0, -1) + 'て');
-    else if (correctFormKey === 'nai') distractors.push(verb.reading.slice(0, -1) + 'ない');
-    else if (correctFormKey === 'potential') distractors.push(verb.reading.slice(0, -1) + 'られる');
-    else if (correctFormKey === 'passive') distractors.push(verb.reading.slice(0, -1) + 'られる');
-    else if (correctFormKey === 'causative') distractors.push(verb.reading.slice(0, -1) + 'させる');
-    else if (correctFormKey === 'ba') distractors.push(verb.reading.slice(0, -1) + 'れば');
-    else if (correctFormKey === 'volitional') distractors.push(verb.reading.slice(0, -1) + 'よう');
-    else if (correctFormKey === 'imperative') distractors.push(verb.reading.slice(0, -1) + 'ろ');
-    else if (correctFormKey === 'tara') distractors.push(verb.reading.slice(0, -1) + 'たら');
-    else if (correctFormKey === 'tai') distractors.push(verb.reading.slice(0, -1) + 'るたい');
-    else if (correctFormKey === 'causative_passive') distractors.push(verb.reading.slice(0, -1) + 'させられる');
-    else distractors.push(verb.reading.slice(0, -1) + 'た');
-  } else if (verb.group === 'ichidan') {
-    if (correctFormKey === 'te') distractors.push(verb.reading.slice(0, -1) + 'って');
-    else if (correctFormKey === 'nai') distractors.push(verb.reading.slice(0, -1) + 'らない');
-    else if (correctFormKey === 'potential') distractors.push(verb.reading.slice(0, -1) + 'れる');
-    else if (correctFormKey === 'passive') distractors.push(verb.reading.slice(0, -1) + 'れる');
-    else if (correctFormKey === 'causative') distractors.push(verb.reading.slice(0, -1) + 'せる');
-    else if (correctFormKey === 'ba') distractors.push(verb.reading.slice(0, -1) + 'えば');
-    else if (correctFormKey === 'volitional') distractors.push(verb.reading.slice(0, -1) + 'ろう');
-    else if (correctFormKey === 'imperative') distractors.push(verb.reading.slice(0, -1) + 'え');
-    else if (correctFormKey === 'tara') distractors.push(verb.reading.slice(0, -1) + 'ったら');
-    else if (correctFormKey === 'tai') distractors.push(verb.reading.slice(0, -1) + 'りたい');
-    else if (correctFormKey === 'causative_passive') distractors.push(verb.reading.slice(0, -1) + 'される');
-    else distractors.push(verb.reading.slice(0, -1) + 'った');
-  } else {
-    // Irregular errors
-    if (correctFormKey === 'te') distractors.push(verb.reading + 'て');
-    else if (correctFormKey === 'nai') distractors.push(verb.reading + 'ない');
-    else if (correctFormKey === 'tara') distractors.push(verb.reading + 'たら');
-    else if (correctFormKey === 'tai') distractors.push(verb.reading + 'たい');
-    else if (correctFormKey === 'imperative') distractors.push(verb.reading + 'ろ');
-    else distractors.push(verb.reading + 'た');
-  }
-
-  // Distractor 2: Pick an adjacent real form of the same verb
-  const otherKeys = (Object.keys(verb.forms) as (keyof VerbItem['forms'])[])
-    .filter(k => k !== correctFormKey && verb.forms[k]);
-  if (otherKeys.length > 0) {
-    const otherKey = otherKeys[Math.floor(Math.random() * otherKeys.length)];
-    const adjacent = verb.forms[otherKey];
-    if (adjacent && adjacent !== correctAnswer) {
-      distractors.push(adjacent);
+  const wrongGroups: ('godan' | 'ichidan')[] = verb.group === 'godan' ? ['ichidan'] : verb.group === 'ichidan' ? ['godan'] : ['godan', 'ichidan'];
+  const wrongGroupCandidates: string[] = [];
+  for (const wrongGroup of wrongGroups) {
+    try {
+      const wrong = conjugateVerb(verb.kanji, verb.reading, wrongGroup).forms[engineKey];
+      if (wrong?.japanese) {
+        rememberReading(wrong.japanese, wrong.reading);
+        wrongGroupCandidates.push(wrong.japanese);
+      }
+    } catch {
+      /* abaikan: tidak ada pengecoh dari golongan ini */
     }
   }
 
-  // Distractor 3: Common misapplied suffix
-  if (correctFormKey === 'potential') {
-    distractors.push(verb.kanji + 'できる');
-  } else if (correctFormKey === 'passive') {
-    distractors.push(verb.reading.slice(0, -1) + 'される');
-  } else if (correctFormKey === 'causative_passive') {
-    distractors.push(verb.reading.slice(0, -1) + 'さられる');
-  } else if (correctFormKey === 'tai') {
-    distractors.push(verb.kanji + 'ほしい');
-  } else if (correctFormKey === 'tara') {
-    distractors.push(verb.kanji + 'なら');
-  } else if (correctFormKey === 'imperative') {
-    distractors.push(verb.kanji + 'なさい');
-  } else if (correctFormKey === 'volitional') {
-    distractors.push(verb.kanji + 'ましょう');
-  } else if (correctFormKey === 'te') {
-    distractors.push(verb.reading.slice(0, -1) + 'いで');
-  } else {
-    distractors.push(verb.reading.slice(0, -1) + 'ます');
-  }
+  const otherFormCandidates = fisherYatesShuffle(
+    (Object.keys(verb.forms) as (keyof VerbItem['forms'])[])
+      .filter(k => k !== correctFormKey)
+      .map(k => verb.forms[k])
+      .filter((t): t is string => !!t)
+  );
 
-  // Clean distractors: unique and not equal to correctAnswer
-  const uniqueDistractors = Array.from(new Set(distractors.filter(d => d && d !== correctAnswer))).slice(0, 3);
-  
-  // Fallbacks if duplicates occurred
-  while (uniqueDistractors.length < 3) {
-    uniqueDistractors.push(`${verb.reading}（変化${uniqueDistractors.length + 1}）`);
+  const rejected = new Set<string>([correctAnswer, inflectedFallback].filter((t): t is string => !!t));
+  const uniqueDistractors: string[] = [];
+  for (const candidate of [...wrongGroupCandidates, ...otherFormCandidates]) {
+    if (uniqueDistractors.length >= 3) break;
+    if (!candidate || rejected.has(candidate)) continue;
+    rejected.add(candidate);
+    uniqueDistractors.push(candidate);
   }
 
   // Shuffle options using true Fisher-Yates
@@ -1122,14 +1084,7 @@ export function generateConjugationQuestion(
   const correctIndex = allOptions.indexOf(correctAnswer);
 
   // Exact hiragana readings for all options
-  const allOptionsRuby = allOptions.map(opt => {
-    for (const key of Object.keys(verb.forms) as (keyof VerbItem['forms'])[]) {
-      if (verb.forms[key] === opt && verb.formsReadings[key]) {
-        return verb.formsReadings[key]!;
-      }
-    }
-    return getConjugatedFormReading(verb, opt);
-  });
+  const allOptionsRuby = allOptions.map(opt => readingByText.get(opt) ?? getConjugatedFormReading(verb, opt));
 
   const groupLabel = verb.group === 'godan'
     ? 'Golongan 1 (Godan / 五段動詞)'
@@ -1165,6 +1120,21 @@ export function generateConjugationQuestion(
       japaneseName: formInfo.japaneseName,
     },
   };
+}
+
+/**
+ * Guard soal: tepat satu jawaban benar, opsi unik, tidak ada placeholder.
+ * Mengembalikan daftar masalah (kosong = soal valid).
+ */
+export function validateConjugationQuestion(q: Pick<ConjugationDrillQuestion, 'options' | 'correctIndex'>): string[] {
+  const problems: string[] = [];
+  if (q.options.length < 3) problems.push('opsi kurang dari 3');
+  if (new Set(q.options).size !== q.options.length) problems.push('opsi ganda');
+  if (!q.options[q.correctIndex]) problems.push('correctIndex di luar opsi');
+  const correct = q.options[q.correctIndex];
+  if (q.options.filter(o => o === correct).length !== 1) problems.push('jawaban benar tidak tunggal');
+  if (q.options.some(o => !o || /（変化d*）/.test(o))) problems.push('opsi kosong/placeholder');
+  return problems;
 }
 
 /**

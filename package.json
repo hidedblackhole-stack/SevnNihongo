@@ -11,7 +11,7 @@
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit",
     "deploy": "gh-pages -d dist",
-    "test": "tsx --test src/engine/search/universalSearch.test.ts src/engine/deck/deckBuilder.test.ts src/utils/weekId.test.ts src/data/bunpou.golden.test.ts"
+    "test": "tsx --test src/engine/search/universalSearch.test.ts src/engine/deck/deckBuilder.test.ts src/utils/weekId.test.ts src/data/bunpou.golden.test.ts src/engine/morphology/inflectionEngine.test.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.4",
