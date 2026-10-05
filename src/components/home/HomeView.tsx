@@ -1,13 +1,12 @@
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { motion } from 'motion/react';
-import { Play, Flame, ChevronRight, Compass, HelpCircle } from 'lucide-react';
+import { Play, Flame, ChevronRight, Compass, HelpCircle, Castle } from 'lucide-react';
+import { TOWER_ENABLED } from '../../data/featureFlags';
 import { ScrollIcon } from '../ui/EngravingIcons';
-import { PlayerStats, Mission, StageClearData } from '../../types/rpg';
+import { PlayerStats, Mission } from '../../types/rpg';
 import { getEffectiveTier } from '../../utils/ascension';
-import { MAP_REGIONS, getStagesForMap } from '../../data/maps';
 import { TierAvatar } from '../avatar/TierAvatar';
 import { playSound } from '../../utils/audio';
-import { generateAdaptiveRecommendation } from '../../utils/mastery';
 import { STORAGE_KEY_HOME_GUIDE } from '../../state/storageKeys';
 import { StartGuideModal, GuidePath } from './StartGuideModal';
 import { FeatureSearch, FeatureTarget } from './FeatureSearch';
@@ -15,36 +14,25 @@ import { FeatureSearch, FeatureTarget } from './FeatureSearch';
 export interface HomeViewProps {
   stats: PlayerStats;
   dailyMissions?: Mission[];
-  stageProgress?: Record<string, StageClearData>;
   onOpenStatusModal: () => void;
-  onNavigateToStage: (stageId: string) => void;
   onNavigateTab: (tab: 'maps' | 'daily' | 'weekly' | 'leaderboard' | 'settings' | 'library' | 'deck') => void;
   onStartRecall?: () => void;
+  onOpenTower?: () => void;
 }
 
 export const HomeView: React.FC<HomeViewProps> = ({
   stats,
   dailyMissions = [],
-  stageProgress = {},
   onOpenStatusModal,
-  onNavigateToStage,
   onNavigateTab,
   onStartRecall,
+  onOpenTower,
 }) => {
   const { effectiveTierIndex } = getEffectiveTier(stats);
 
-  // Check if player has completed any stage
-  const hasClearedAnyStage = stageProgress ? Object.values(stageProgress).some(s => s?.cleared) : false;
-  const isFirstTime = !hasClearedAnyStage;
-  const isNewcomer = isFirstTime && stats.totalExp === 0;
-
-  const currentMap = MAP_REGIONS.find(m => m.id === (isFirstTime ? 'map_kana_hiragana' : stats.currentMapId)) || MAP_REGIONS[0];
-  const stages = getStagesForMap(currentMap ? currentMap.id : stats.currentMapId);
-  const currentStage = stages.find(s => s.id === (isFirstTime ? 'stage_kana_hira_1' : stats.currentStageId)) || stages[0];
-  const effectiveStage = currentStage;
+  const isNewcomer = stats.totalExp === 0;
 
   const recallCount = stats.recallQueue ? stats.recallQueue.length : 0;
-  const recommendation = useMemo(() => generateAdaptiveRecommendation(stats), [stats.itemMastery, stats.recallQueue, stats.currentStageId]);
 
   const completedMissionsCount = dailyMissions.filter(m => m.completed).length;
   const totalMissionsCount = dailyMissions.length || 4;
@@ -71,7 +59,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
   const handlePickPath = (path: GuidePath) => {
     closeGuide();
-    if (path === 'foundation') onNavigateToStage('stage_kana_hira_1');
+    if (path === 'foundation') onNavigateTab('deck');
     else if (path === 'library') onNavigateTab('library');
     else onNavigateTab('maps');
   };
@@ -82,7 +70,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
     else if (target.type === 'status') onOpenStatusModal();
     else if (target.type === 'recall') {
       if (onStartRecall) onStartRecall();
-      else onNavigateTab('maps');
+      else onNavigateTab('deck');
     } else setIsGuideOpen(true);
   };
 
@@ -93,26 +81,21 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
   // Satu "langkah berikutnya" yang menyesuaikan kondisi pemain.
   const nextStep = (() => {
-    const goStage = (id?: string) => () => (id ? onNavigateToStage(id) : onNavigateTab('maps'));
+    const goBooks = () => onNavigateTab('deck');
 
     if (isNewcomer && !guideSeen) {
       return { eyebrow: 'MULAI DI SINI', title: 'Kenali SevnQuest', hint: 'Panduan singkat: apa, bagaimana, dan mulai dari mana', icon: Compass, run: openGuide };
     }
     if (isNewcomer) {
-      return { eyebrow: 'FOUNDATION', title: 'Mulai Belajar Hiragana', hint: effectiveStage?.title, icon: Play, run: goStage(effectiveStage?.id) };
+      return { eyebrow: 'FOUNDATION', title: 'Mulai Belajar Hiragana', hint: 'Buka Buku Saku: Kuil Aksara Kana Dojo', icon: Play, run: goBooks };
     }
     if (recallCount > 0 && onStartRecall) {
       return { eyebrow: 'LANGKAH BERIKUTNYA', title: `Ulang ${recallCount} item di Recall`, hint: 'Kunci ingatan sebelum materi baru', icon: Flame, run: onStartRecall };
     }
-    if (recommendation.prioritySeverity === 'critical') {
-      const run = recommendation.actionType === 'recall' && onStartRecall
-        ? onStartRecall
-        : recommendation.actionType === 'status_modal'
-          ? onOpenStatusModal
-          : goStage(recommendation.targetStageId || effectiveStage?.id);
-      return { eyebrow: 'TITIK LEMAH', title: recommendation.actionLabel, hint: recommendation.title, icon: Play, run };
+    if (TOWER_ENABLED && onOpenTower) {
+      return { eyebrow: 'MENARA NIHONGO', title: 'Lanjutkan Menara', hint: 'Naiki lantai berikutnya', icon: Castle, run: onOpenTower };
     }
-    return { eyebrow: 'LANGKAH BERIKUTNYA', title: 'Lanjut ke Stage Berikutnya', hint: effectiveStage?.title, icon: Play, run: goStage(effectiveStage?.id) };
+    return { eyebrow: 'LANGKAH BERIKUTNYA', title: 'Lanjut Belajar dari Buku', hint: 'Buka rak Buku Saku', icon: Play, run: goBooks };
   })();
   const NextIcon = nextStep.icon;
 
@@ -235,12 +218,14 @@ export const HomeView: React.FC<HomeViewProps> = ({
         {(!(stats.level === 1 && stats.totalExp === 0) || recallCount > 0) && (
           <div
             onClick={() => {
-              if (onStartRecall) {
+              if (onStartRecall && recallCount > 0) {
                 playSound('click', stats.soundEnabled);
                 onStartRecall();
               }
             }}
-            className="p-4 flex items-center justify-between gap-3 hover:bg-surface-elevated/40 cursor-pointer transition-all group"
+            className={`p-4 flex items-center justify-between gap-3 transition-all group ${
+              recallCount > 0 ? 'hover:bg-surface-elevated/40 cursor-pointer' : 'cursor-default'
+            }`}
           >
             <div className="flex items-center gap-3">
               <div className={`p-2.5 rounded-xl border shrink-0 ${
@@ -265,10 +250,12 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 </span>
               ) : (
                 <span className="text-xs font-bold text-state-success font-mono">
-                  ✓ Selesai
+                  ✓ Tidak ada yang due
                 </span>
               )}
-              <ChevronRight className="w-4 h-4 text-text-secondary group-hover:text-gold group-hover:translate-x-0.5 transition-all" />
+              {recallCount > 0 && (
+                <ChevronRight className="w-4 h-4 text-text-secondary group-hover:text-gold group-hover:translate-x-0.5 transition-all" />
+              )}
             </div>
           </div>
         )}

@@ -3,5 +3,8 @@
  * (kode & datanya tetap ada, hanya pintu masuknya yang dikunci).
  */
 
-/** Menara 1.000 Lantai (Nihongo Tower): ditutup sementara selama masih dikembangkan. */
-export const TOWER_ENABLED = false;
+/** Menara Nihongo: Menara 1 (Tutorial, 001–016) dan Menara 2 (Rangkai, 017–100) sudah dibuka. */
+export const TOWER_ENABLED = true;
+
+/** Choukai (聴解) di Library: disembunyikan sampai masalah audio selesai. Data soal tetap utuh. */
+export const CHOUKAI_ENABLED = false;

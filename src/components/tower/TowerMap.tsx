@@ -9,7 +9,6 @@ import {
   CheckCircle2,
   Trophy,
   Heart,
-  Sparkles,
   ChevronUp,
   Compass,
   ArrowRight,
@@ -287,7 +286,6 @@ export const TowerMap: React.FC<TowerMapProps> = ({
             className="btn-physical-secondary flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-wine-accent text-xs font-bold transition-all cursor-pointer"
             title="Keahlian Pasif Menara"
           >
-            <Sparkles className="w-3.5 h-3.5" />
             <span className="text-[11px] font-mono font-bold">{economy.skillPoints} SP</span>
           </button>
 
@@ -707,9 +705,6 @@ export const TowerMap: React.FC<TowerMapProps> = ({
               {/* Header */}
               <div className="flex items-center justify-between pb-3 border-b border-border-subtle mb-4 shrink-0">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-10 h-10 rounded-2xl bg-surface-elevated border border-border-subtle text-wine-accent flex items-center justify-center">
-                    <Sparkles className="w-5 h-5" />
-                  </div>
                   <div>
                     <h3 className="text-base font-black text-text-primary font-heading">
                       Keahlian Pasif Menara

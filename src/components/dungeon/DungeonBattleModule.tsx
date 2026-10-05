@@ -10,6 +10,7 @@ import {
 import { TryOutData } from '../../types/content';
 import { playSound, speakJapanese } from '../../utils/audio';
 import { ALL_TRYOUTS, DEFAULT_TRYOUT } from '../../data/tryouts';
+import { CHOUKAI_ENABLED } from '../../data/featureFlags';
 
 interface DungeonBattleModuleProps {
   tryOutData?: TryOutData;
@@ -149,7 +150,8 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
       setNextSectionKey('bunpouDokkai');
       setCurrentStep('transition');
     } else if (currentStep === 'bunpouDokkai') {
-      const choukaiQuestions = activeTryOut.sections.choukai?.questions || [];
+      // Sesi Choukai ditutup sementara (audio belum siap): ujian hanya teks. Lihat CHOUKAI_ENABLED.
+      const choukaiQuestions = CHOUKAI_ENABLED ? (activeTryOut.sections.choukai?.questions || []) : [];
       if (choukaiQuestions.length > 0) {
         setNextSectionKey('choukai');
         setCurrentStep('transition');
@@ -173,7 +175,9 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
   };
 
   const calculateJLPTScore = () => {
-    const sections: Array<'mojiGoi' | 'bunpouDokkai' | 'choukai'> = ['mojiGoi', 'bunpouDokkai', 'choukai'];
+    const sections: Array<'mojiGoi' | 'bunpouDokkai' | 'choukai'> = CHOUKAI_ENABLED
+      ? ['mojiGoi', 'bunpouDokkai', 'choukai']
+      : ['mojiGoi', 'bunpouDokkai'];
     let totalScore = 0;
     let maxTotalScore = 0;
     let totalQuestionsCount = 0;
@@ -405,7 +409,7 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
                     {launchModalPack.title}
                   </h2>
                   <p className="text-xs text-text-secondary leading-relaxed">
-                    Kamu akan mengerjakan simulasi komprehensif {launchModalPack.level || 'JLPT'}. Timer akan otomatis berjalan untuk tiap sesi. Nilai akhir dikonversi ke skala kelulusan resmi (180 poin).
+                    Kamu akan mengerjakan simulasi komprehensif {launchModalPack.level || 'JLPT'}. Timer akan otomatis berjalan untuk tiap sesi. Nilai akhir dikonversi ke skala kelulusan resmi ({CHOUKAI_ENABLED ? '180' : '120, tanpa Choukai'} poin).
                   </p>
                 </div>
 
@@ -417,7 +421,8 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
                   const mT = launchModalPack.sections.mojiGoi?.timeLimitMinutes || 30;
                   const bT = launchModalPack.sections.bunpouDokkai?.timeLimitMinutes || 60;
                   const lvl = launchModalPack.level || 'N3';
-                  const passingScore = lvl === 'N1' ? '≥ 100/180' : lvl === 'N3' ? '≥ 95/180' : lvl === 'N5' ? '≥ 80/180' : '≥ 90/180';
+                  const maxPoints = CHOUKAI_ENABLED ? 180 : 120;
+                  const passingScore = `≥ ${getPassingThreshold(lvl, maxPoints)}/${maxPoints}`;
 
                   return (
                     <div className="grid grid-cols-2 gap-2.5">
@@ -431,11 +436,13 @@ export const DungeonBattleModule: React.FC<DungeonBattleModuleProps> = ({
                         <p className="text-xs font-bold text-text-primary">Bunpou-Dokkai</p>
                         <p className="text-[11px] text-gold font-mono">{bQ} Soal • {bT}m</p>
                       </div>
+                      {CHOUKAI_ENABLED && (
                       <div className="p-3 rounded-xl bg-surface-inset border border-border-subtle">
                         <span className="text-[10px] uppercase font-bold text-text-muted block">Sesi 3</span>
                         <p className="text-xs font-bold text-text-primary">Choukai</p>
                         <p className="text-[11px] text-text-secondary font-mono">{cQ > 0 ? `${cQ} Soal` : 'Paper Edition'}</p>
                       </div>
+                      )}
                       <div className="p-3 rounded-xl bg-surface-inset border border-border-subtle">
                         <span className="text-[10px] uppercase font-bold text-text-muted block">Target Lulus</span>
                         <p className="text-xs font-bold text-text-primary">Passing Mark</p>

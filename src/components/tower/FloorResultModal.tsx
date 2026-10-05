@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Trophy, Skull, Award, Coins, Sparkles, ArrowRight, RotateCcw, X, Heart } from 'lucide-react';
+import { Trophy, Skull, Award, Coins, ArrowRight, RotateCcw, X, Heart } from 'lucide-react';
 import { FloorCompletionReport } from '../../types/tower';
 
 interface FloorResultModalProps {
@@ -77,7 +77,6 @@ export const FloorResultModal: React.FC<FloorResultModalProps> = ({
             {/* Flawless Victor Badge */}
             {report.isFlawless && (
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-elevated border border-border-subtle text-gold text-xs font-bold font-heading mt-2 shadow-sm">
-                <Sparkles className="w-3.5 h-3.5" />
                 <span>Kemenangan Sempurna (Flawless)</span>
               </div>
             )}
@@ -149,9 +148,6 @@ export const FloorResultModal: React.FC<FloorResultModalProps> = ({
             return (
               <div className="p-3.5 rounded-2xl bg-surface-inset border border-border-subtle mb-5 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-emerald-500/15 border border-border-subtle text-emerald-400 flex items-center justify-center shrink-0">
-                    <Sparkles className="w-4 h-4" />
-                  </div>
                   <div>
                     <span className="text-xs font-bold text-text-primary block font-heading">
                       Penguasaan Materi Meningkat

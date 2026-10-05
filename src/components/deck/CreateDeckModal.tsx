@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Check, Bookmark, Search, Sparkles } from 'lucide-react';
+import { X, Check, Bookmark, Search } from 'lucide-react';
 import { DeckType, UserDeck, DeckItemRef, DeckItemCategory } from '../../types/rpg';
 import { playSound } from '../../utils/audio';
 import { generatePresetDeckItems, DEFAULT_BOOKMARK_DECK_ID } from '../../utils/decks';
@@ -382,9 +382,6 @@ export const CreateDeckModal: React.FC<CreateDeckModalProps> = ({
                 {onOpenAiCustomizer && (
                   <div className="p-3 rounded-2xl bg-surface-inset border border-border-subtle flex items-center justify-between gap-3">
                     <div className="flex items-center gap-2.5">
-                      <div className="w-8 h-8 rounded-xl bg-surface-card border border-border-subtle flex items-center justify-center text-gold shadow-xs shrink-0">
-                        <Sparkles className="w-4 h-4 text-gold" />
-                      </div>
                       <div>
                         <p className="text-xs font-heading font-bold text-text-primary">
                           Buat deck otomatis dari topik?

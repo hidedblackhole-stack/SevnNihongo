@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import {
   ArrowLeft,
-  Compass,
   Play,
   PenTool,
   Copy,
@@ -31,7 +30,6 @@ export interface DeckDetailViewProps {
   deck: UserDeck;
   onBack: () => void;
   isTemplate?: boolean;
-  onPlayWorld: () => void;
   // Template deck actions
   onCloneTemplate?: () => void;
   isCloned?: boolean;
@@ -67,7 +65,6 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
   deck,
   onBack,
   isTemplate = false,
-  onPlayWorld,
   onCloneTemplate,
   isCloned = false,
   onEditDeck,
@@ -240,21 +237,6 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({
 
           {/* Action Buttons: Practice Launchers & Deck Controls */}
           <div className="flex items-center gap-2 flex-wrap w-full md:w-auto justify-start md:justify-end">
-            {/* Mainkan Petualangan World */}
-            <button
-              type="button"
-              disabled={totalItemCount === 0}
-              onClick={() => {
-                playSound('click', soundEnabled);
-                onPlayWorld();
-              }}
-              className="px-4 py-2.5 rounded-2xl font-sans font-bold text-xs flex items-center gap-2 transition-all btn-skeuo-indigo cursor-pointer"
-              title="Mainkan deck kurikulum ini dalam mode petualangan stage World"
-            >
-              <Compass className="w-3.5 h-3.5 text-gold shrink-0" />
-              <span className="whitespace-nowrap">Petualangan World</span>
-            </button>
-
             {/* Flashcard Button */}
             <button
               type="button"

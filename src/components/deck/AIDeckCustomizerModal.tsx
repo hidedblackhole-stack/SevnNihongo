@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion } from 'motion/react';
 import {
-  X, Sparkles, BookOpen, Languages, Scroll, Utensils, ShoppingBag, Briefcase, Gamepad2, HeartPulse,
+  X, Shuffle, BookOpen, Languages, Scroll, Utensils, ShoppingBag, Briefcase, Gamepad2, HeartPulse,
   CloudSun, Compass, Stethoscope, ChevronDown, ChevronUp, Trash2, Loader2, ArrowLeft, Copy, Check,
 } from 'lucide-react';
 import { DeckType, UserDeck } from '../../types/rpg';
@@ -31,7 +31,7 @@ const FOCUS_OPTIONS: { type: DeckType; label: string; icon: Icon; desc: string }
   { type: 'kotoba', label: 'Kosakata', icon: BookOpen, desc: 'Kata benda, kerja, sifat' },
   { type: 'kanji', label: 'Kanji', icon: Languages, desc: 'Aksara & cara baca' },
   { type: 'bunpou', label: 'Tata Bahasa', icon: Scroll, desc: 'Pola kalimat & rumus' },
-  { type: 'mixed', label: 'Campuran', icon: Sparkles, desc: 'Semua jenis materi' },
+  { type: 'mixed', label: 'Campuran', icon: Shuffle, desc: 'Semua jenis materi' },
 ];
 
 const CATEGORY_LABEL = { kotoba: 'Kotoba', kanji: 'Kanji', bunpou: 'Pola' } as const;
@@ -206,9 +206,6 @@ export const AIDeckCustomizerModal: React.FC<AIDeckCustomizerModalProps> = ({
         {/* Header */}
         <div className="flex items-center justify-between gap-3 p-4 sm:p-5 border-b border-border-subtle bg-surface-inset">
           <div className="flex items-center gap-3 min-w-0">
-            <div className="w-10 h-10 ui-icon-box rounded-xl text-gold shrink-0">
-              <Sparkles className="w-5 h-5" />
-            </div>
             <div className="min-w-0">
               <span className="breadcrumb-label text-gold-soft block">BUKU SAKU</span>
               <h3 className="text-base sm:text-lg font-bold font-heading text-text-primary truncate">Studio Deck Otomatis</h3>
@@ -238,7 +235,7 @@ export const AIDeckCustomizerModal: React.FC<AIDeckCustomizerModalProps> = ({
                 />
                 <div className="flex flex-wrap gap-2">
                   {DECK_THEMES.map(t => {
-                    const TIcon = THEME_ICONS[t.id] || Sparkles;
+                    const TIcon = THEME_ICONS[t.id] || BookOpen;
                     return (
                       <button
                         key={t.id}
@@ -418,7 +415,7 @@ export const AIDeckCustomizerModal: React.FC<AIDeckCustomizerModalProps> = ({
                 disabled={!canBuild}
                 className="btn-physical-primary px-5 py-2.5 text-xs font-bold font-heading flex items-center gap-2 disabled:opacity-50"
               >
-                {isBuilding ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
+                {isBuilding && <Loader2 className="w-4 h-4 animate-spin" />}
                 {isBuilding ? 'Menyusun deck...' : 'Buat Deck'}
               </button>
             </>

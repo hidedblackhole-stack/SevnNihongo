@@ -52,14 +52,14 @@ const TOUR_STEPS: TourStep[] = [
   {
     id: 'maps',
     title: 'The Learning World',
-    subtitle: 'Peta Penjelajahan',
-    description: 'Jelajahi peta dunia bertahap dari Hiragana & Katakana, berlanjut ke N5 hingga N1. Setiap stage menyajikan materi interaktif, latihan soal, dan duel Boss!',
+    subtitle: 'Arcade, Dungeon & Menara',
+    description: 'Masuk ke World untuk bermain Arena Arcade, Mode Dungeon, dan mendaki Menara Nihongo dengan latihan seru berbasis materi belajarmu.',
     targetSelector: '[data-tour="nav-maps"]',
     icon: Compass,
     accentColor: 'text-emerald-400',
     highlightPadding: 8,
     highlightRadius: 16,
-    tip: 'Bisa pilih level JLPT mana pun sesuai kesiapanmu!'
+    tip: 'Pilih mode permainan sesuai suasana belajarmu!'
   },
   {
     id: 'library',
@@ -101,13 +101,13 @@ const TOUR_STEPS: TourStep[] = [
     id: 'leaderboard',
     title: 'Papan Peringkat (Rank)',
     subtitle: 'Kompetisi Global Petualang',
-    description: 'Bandingkan pencapaian EXP dan stage dengan seluruh petualang Nihongo Quest di papan peringkat mingguan dan all-time!',
+    description: 'Bandingkan pencapaian EXP dengan seluruh petualang Nihongo Quest di papan peringkat mingguan dan all-time!',
     targetSelector: '[data-tour="nav-leaderboard"]',
     icon: Trophy,
     accentColor: 'text-amber-300',
     highlightPadding: 8,
     highlightRadius: 16,
-    tip: 'Naikkan rank dengan rajin menyelesaikan stage & dungeon boss.'
+    tip: 'Naikkan rank dengan rajin belajar dan menaklukkan dungeon.'
   },
   {
     id: 'cloud_cta',

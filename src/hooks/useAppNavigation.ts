@@ -1,16 +1,14 @@
-import { useState, useEffect, useCallback, type Dispatch, type SetStateAction } from 'react';
-import type { PlayerStats } from '../types/rpg';
-import type { Stage } from '../types/content';
+import { useState, useEffect, useCallback } from 'react';
 import type { TabType } from '../components/layout/BottomNavigation';
 import type { WorldNavView } from '../components/map/WorldView';
 import { useBackButton } from './useBackButton';
 import { STORAGE_KEY_ONBOARDING } from '../state/storageKeys';
 
 /**
- * Navigasi tab, overlay (stage/recall/boss), tombol back sistem, dan onboarding.
+ * Navigasi tab, overlay (recall), tombol back sistem, dan onboarding.
  * Dipisah dari App.tsx; perilaku tidak berubah.
  */
-export function useAppNavigation(setStats: Dispatch<SetStateAction<PlayerStats>>) {
+export function useAppNavigation() {
 // Navigation & UI State
   const [activeTab, setActiveTab] = useState<TabType>('home');
   const [visitedTabs, setVisitedTabs] = useState<Set<TabType>>(() => new Set<TabType>(['home']));
@@ -24,10 +22,8 @@ export function useAppNavigation(setStats: Dispatch<SetStateAction<PlayerStats>>
     });
   }, [activeTab]);
 
-  const [selectedStage, setSelectedStage] = useState<Stage | null>(null);
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
   const [isRecallActive, setIsRecallActive] = useState(false);
-  const [isBossBattleActive, setIsBossBattleActive] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [worldNavView, setWorldNavView] = useState<WorldNavView>('world_hub');
   const [worldResetCount, setWorldResetCount] = useState(0);
@@ -40,20 +36,15 @@ export function useAppNavigation(setStats: Dispatch<SetStateAction<PlayerStats>>
     setIsRecallActive(false);
   }, 'smart_recall_overlay');
 
-  useBackButton(isBossBattleActive, () => {
-    setIsBossBattleActive(false);
-  }, 'boss_battle_overlay');
-
   useBackButton(isAuthModalOpen, () => {
     setIsAuthModalOpen(false);
   }, 'auth_modal');
 
-  // When on maps tab, inside a specific world (not world_hub), back returns to world_hub
+  // Di tab World, dari dalam mode (dungeon/tower) tombol back kembali ke hub World
   useBackButton(
-    activeTab === 'maps' && !selectedStage && !isRecallActive && !isBossBattleActive && worldNavView !== 'world_hub',
+    activeTab === 'maps' && !isRecallActive && worldNavView !== 'world_hub',
     () => {
       setWorldNavView('world_hub');
-      setStats(prev => ({ ...prev, currentWorldId: '' }));
       setWorldResetCount(c => c + 1);
     },
     'maps_world_navigation'
@@ -61,7 +52,7 @@ export function useAppNavigation(setStats: Dispatch<SetStateAction<PlayerStats>>
 
   // Tab navigation history: when on any secondary tab, back returns to previous tab or home
   useBackButton(
-    activeTab !== 'home' && !selectedStage && !isRecallActive && !isBossBattleActive && !isStatusModalOpen && !isAuthModalOpen,
+    activeTab !== 'home' && !isRecallActive && !isStatusModalOpen && !isAuthModalOpen,
     () => {
       if (tabHistory.length > 0) {
         const prevTab = tabHistory[tabHistory.length - 1];
@@ -76,9 +67,8 @@ export function useAppNavigation(setStats: Dispatch<SetStateAction<PlayerStats>>
 
   const handleTabChange = useCallback((tab: TabType) => {
     // If re-tapping the current active tab (Pop to Root / Scroll to Top)
-    if (tab === activeTab && !selectedStage && !isRecallActive && !isBossBattleActive) {
+    if (tab === activeTab && !isRecallActive) {
       if (tab === 'maps') {
-        setStats(prev => ({ ...prev, currentWorldId: '' }));
         setWorldNavView('world_hub');
         setWorldResetCount(c => c + 1);
       } else if (tab === 'deck') {
@@ -93,15 +83,12 @@ export function useAppNavigation(setStats: Dispatch<SetStateAction<PlayerStats>>
       setTabHistory(prev => [...prev.filter(t => t !== tab), activeTab]);
     }
 
-    // Dismiss any fullscreen stage overlays or active modals
-    setSelectedStage(null);
+    // Dismiss any fullscreen overlays or active modals
     setIsRecallActive(false);
-    setIsBossBattleActive(false);
     setIsStatusModalOpen(false);
 
     // Reset tab to its initial "Halaman Awal" when entering
     if (tab === 'maps') {
-      setStats(prev => ({ ...prev, currentWorldId: '' }));
       setWorldNavView('world_hub');
       setWorldResetCount(c => c + 1);
     } else if (tab === 'deck') {
@@ -110,7 +97,17 @@ export function useAppNavigation(setStats: Dispatch<SetStateAction<PlayerStats>>
 
     setActiveTab(tab);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [activeTab, selectedStage, isRecallActive, isBossBattleActive]);
+  }, [activeTab, isRecallActive]);
+
+  // Pintasan langsung ke Menara (tidak lewat reset hub World di handleTabChange)
+  const handleOpenTower = useCallback(() => {
+    if (activeTab !== 'maps') setTabHistory(prev => [...prev.filter(t => t !== 'maps'), activeTab]);
+    setIsRecallActive(false);
+    setIsStatusModalOpen(false);
+    setWorldNavView('tower');
+    setActiveTab('maps');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [activeTab]);
 
   const handleNavigateToOfficialBooks = useCallback(() => {
     setDeckInitialSubTab('official_books');
@@ -139,23 +136,19 @@ export function useAppNavigation(setStats: Dispatch<SetStateAction<PlayerStats>>
   }, [handleCompleteOnboarding]);
 
   const handleReplayOnboarding = useCallback(() => {
-    setSelectedStage(null);
     setIsRecallActive(false);
-    setIsBossBattleActive(false);
     setActiveTab('home');
     setIsOnboardingActive(true);
   }, []);
 
   return {
     activeTab, setActiveTab, visitedTabs,
-    selectedStage, setSelectedStage,
     isStatusModalOpen, setIsStatusModalOpen,
     isRecallActive, setIsRecallActive,
-    isBossBattleActive, setIsBossBattleActive,
     isAuthModalOpen, setIsAuthModalOpen,
     worldNavView, setWorldNavView, worldResetCount,
     deckResetCount, deckInitialSubTab, setDeckInitialSubTab,
-    handleTabChange, handleNavigateToOfficialBooks,
+    handleTabChange, handleOpenTower, handleNavigateToOfficialBooks,
     isOnboardingActive, handleCompleteOnboarding, handleOpenAuthFromOnboarding, handleReplayOnboarding,
   };
 }

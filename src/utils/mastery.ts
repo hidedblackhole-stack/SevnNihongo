@@ -6,7 +6,6 @@ import {
   RecallPriorityTier,
   TrueMasteryBreakdown,
   AdaptiveRecommendation,
-  Stage,
   DokkaiItem,
   Question,
   ErrorType,
@@ -1188,102 +1187,6 @@ export function generateAdaptiveRecommendation(stats: PlayerStats): AdaptiveReco
     targetStageId: stats.currentStageId,
     prioritySeverity: 'routine',
     actionType: 'stage'
-  };
-}
-
-/**
- * Calculates granular stage completion and sub-item statuses
- */
-export function getGranularStageProgress(
-  stage: Stage,
-  itemMastery: Record<string, ItemMasteryRecord> = {}
-) {
-  const getCategoryStats = (itemIds: string[], cat: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai') => {
-    if (itemIds.length === 0) return { percentage: 100, completedCount: 0, totalCount: 0, items: [] };
-
-    let totalMastery = 0;
-    let completedCount = 0;
-
-    const items = itemIds.map(id => {
-      const rec = itemMastery[id];
-      let title = id;
-      let meaning = '';
-
-      if (cat === 'bunpou' && BUNPOU_DATABASE[id]) {
-        title = BUNPOU_DATABASE[id].title;
-        meaning = BUNPOU_DATABASE[id].meaningId;
-      } else if (cat === 'kotoba' && KOTOBA_DATABASE[id]) {
-        title = `${KOTOBA_DATABASE[id].word} (${KOTOBA_DATABASE[id].reading})`;
-        meaning = KOTOBA_DATABASE[id].meaningId;
-      } else if (cat === 'kanji' && KANJI_DATABASE[id]) {
-        title = KANJI_DATABASE[id].character;
-        meaning = KANJI_DATABASE[id].meaningId;
-      } else if (cat === 'dokkai' && DOKKAI_DATABASE[id]) {
-        title = DOKKAI_DATABASE[id].title;
-        meaning = DOKKAI_DATABASE[id].category;
-      }
-
-      const masteryPct = rec ? rec.masteryPercentage : 0;
-      const status: MasteryStatus = rec ? rec.status : 'AVAILABLE';
-      const attempts = rec ? rec.attemptsCount : 0;
-      const bestScore = rec ? `${rec.bestScore.score}/${rec.bestScore.total}` : '-';
-      const isNeedsReview = rec ? (rec.mistakeCount >= 2 || rec.masteryPercentage < 65) : false;
-
-      totalMastery += masteryPct;
-      if (status === 'COMPLETED' || status === 'MASTERED' || status === 'PERFECTED') {
-        completedCount++;
-      }
-
-      return {
-        id,
-        title,
-        meaning,
-        category: cat,
-        status,
-        masteryPercentage: masteryPct,
-        masteryLevel: rec ? rec.masteryLevel : 1,
-        attempts,
-        bestScore,
-        isNeedsReview
-      };
-    });
-
-    const percentage = Math.round(totalMastery / itemIds.length);
-    return {
-      percentage,
-      completedCount,
-      totalCount: itemIds.length,
-      items
-    };
-  };
-
-  const bunpouStats = getCategoryStats(stage.bunpouIds || [], 'bunpou');
-  const kotobaStats = getCategoryStats(stage.kotobaIds || [], 'kotoba');
-  const kanjiStats = getCategoryStats(stage.kanjiIds || [], 'kanji');
-  const dokkaiStats = getCategoryStats(stage.dokkaiIds || [], 'dokkai');
-  const choukaiStats = getCategoryStats(stage.choukaiIds || [], 'choukai');
-
-  // Weighted overall stage progress. Hanya kategori yang benar-benar punya butir yang dihitung
-  // (bobot dinormalisasi); kategori kosong tidak boleh menyumbang 100% gratis.
-  const weighted = [
-    { stats: bunpouStats, weight: 0.3 },
-    { stats: kotobaStats, weight: 0.2 },
-    { stats: kanjiStats, weight: 0.2 },
-    { stats: dokkaiStats, weight: 0.2 },
-    { stats: choukaiStats, weight: 0.1 },
-  ].filter(w => w.stats.totalCount > 0);
-  const totalWeight = weighted.reduce((sum, w) => sum + w.weight, 0);
-  const overallPercentage = totalWeight === 0
-    ? 0
-    : Math.round(weighted.reduce((sum, w) => sum + w.stats.percentage * w.weight, 0) / totalWeight);
-
-  return {
-    overallPercentage,
-    bunpou: bunpouStats,
-    kotoba: kotobaStats,
-    kanji: kanjiStats,
-    dokkai: dokkaiStats,
-    choukai: choukaiStats
   };
 }
 

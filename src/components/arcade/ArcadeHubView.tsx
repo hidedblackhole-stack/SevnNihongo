@@ -89,17 +89,17 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
                   {towerLocked ? 'Dalam Pengembangan' : 'Beta Test'}
                 </span>
                 <span className="text-xs text-text-muted font-bold font-mono">
-                  1.000 Lantai
+                  Menara 1 · 16 Lantai
                 </span>
               </div>
               <h3 className="text-base sm:text-lg font-black font-heading text-text-primary mt-0.5 flex items-center gap-2 flex-wrap">
-                <span>Menara 1.000 Lantai (Nihongo Tower)</span>
+                <span>Menara Nihongo</span>
                 <span className="text-xs sm:text-sm font-semibold text-gold font-mono tracking-tight">
-                  {towerLocked ? '(Segera Hadir)' : '(Beta Test)'}
+                  {towerLocked ? '(Segera Hadir)' : '(Menara 1 · Tutorial)'}
                 </span>
               </h3>
               <p className="text-xs text-text-secondary mt-0.5 max-w-xl">
-                Petualangan mendaki vertikal melintasi 10 wilayah kuno Jepang, pos peristirahatan, dan pertarungan ujian bos JLPT dari N5 hingga N1!
+                Mulai dari Menara Tutorial: belajar MELIHAT bahasa Jepang lewat aksara, bunyi, dan susunan kalimat sebelum menyusun kalimatmu sendiri.
               </p>
             </div>
           </div>
@@ -125,17 +125,11 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
           className="panel panel-stitched p-5 rounded-3xl bg-surface-card border border-border-subtle hover:border-border-primary shadow-md flex flex-col justify-between space-y-4 group transition-all relative overflow-hidden"
         >
           <div className="space-y-3 relative z-10">
-            <div className="flex items-start justify-between gap-2">
-              <span className="px-2.5 py-1 rounded-full bg-surface-inset border border-border-subtle text-text-secondary text-[10px] font-mono font-bold">
-                Tantangan Kecepatan
-              </span>
-              <span className="text-xs font-mono font-bold text-text-muted whitespace-nowrap shrink-0 pt-1">
-                60 Detik
-              </span>
-            </div>
-
-            <div className="w-12 h-12 rounded-2xl bg-surface-inset border border-border-subtle text-gold flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform">
-              <Zap className="w-6 h-6 fill-current" />
+            <div className="flex items-center justify-between gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-surface-inset border border-border-subtle text-gold flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform">
+                <Zap className="w-6 h-6 fill-current" />
+              </div>
+              <span className="text-xs font-mono font-bold text-text-muted whitespace-nowrap shrink-0">60 Detik</span>
             </div>
 
             <div>
@@ -143,20 +137,8 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
                 Kanji Speed Rush
               </h3>
               <p className="text-xs text-text-secondary mt-1 leading-relaxed">
-                Berapa kanji bisa kamu tulis dalam 60 detik? <strong>Pewaktu otomatis berhenti saat loading kanji</strong>, menghitung murni kecepatan tanganmu!
+                Tulis sebanyak mungkin kanji dalam 60 detik.
               </p>
-            </div>
-
-            <div className="pt-2 flex flex-wrap gap-1.5 text-[10px] font-mono">
-              <span className="px-2 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-text-muted">
-                Kuas HanziWriter
-              </span>
-              <span className="px-2 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-text-muted">
-                Pause Loading
-              </span>
-              <span className="px-2 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-text-muted">
-                Rank SSS
-              </span>
             </div>
           </div>
 
@@ -169,7 +151,7 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
             className="w-full btn-physical-primary py-2.5 rounded-xl text-xs font-bold font-heading flex items-center justify-center gap-2 cursor-pointer relative z-10"
           >
             <Play className="w-3.5 h-3.5 fill-current" />
-            <span className="whitespace-nowrap">Mulai Nulis (60s)</span>
+            <span className="whitespace-nowrap">Mulai</span>
             <ChevronRight className="w-3.5 h-3.5" />
           </button>
         </motion.div>
@@ -180,17 +162,11 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
           className="panel panel-stitched p-5 rounded-3xl bg-surface-card border border-border-subtle hover:border-border-primary shadow-md flex flex-col justify-between space-y-4 group transition-all relative overflow-hidden"
         >
           <div className="space-y-3 relative z-10">
-            <div className="flex items-start justify-between gap-2">
-              <span className="px-2.5 py-1 rounded-full bg-surface-inset border border-border-subtle text-text-secondary text-[10px] font-mono font-bold">
-                Survival Mode
-              </span>
-              <span className="text-xs font-mono font-bold text-text-muted whitespace-nowrap shrink-0 pt-1">
-                3 Nyawa
-              </span>
-            </div>
-
-            <div className="w-12 h-12 rounded-2xl bg-surface-inset border border-border-subtle text-crimson flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform">
-              <ShieldAlert className="w-6 h-6" />
+            <div className="flex items-center justify-between gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-surface-inset border border-border-subtle text-crimson flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform">
+                <ShieldAlert className="w-6 h-6" />
+              </div>
+              <span className="text-xs font-mono font-bold text-text-muted whitespace-nowrap shrink-0">3 Nyawa</span>
             </div>
 
             <div>
@@ -198,20 +174,8 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
                 Sudden Death 3 Nyawa
               </h3>
               <p className="text-xs text-text-secondary mt-1 leading-relaxed">
-                Tantang batas hafalanmu tanpa salah! Satu jawaban salah menghabiskan 1 nyawa. Seberapa panjang rekor combo streak yang bisa kamu capai?
+                Jawab tanpa salah. Tiga kesalahan, permainan selesai.
               </p>
-            </div>
-
-            <div className="pt-2 flex flex-wrap gap-1.5 text-[10px] font-mono">
-              <span className="px-2 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-text-muted">
-                1 Salah = -1 Hati
-              </span>
-              <span className="px-2 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-text-muted">
-                Rekor Streak
-              </span>
-              <span className="px-2 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-text-muted">
-                Kotoba & Bacaan
-              </span>
             </div>
           </div>
 
@@ -224,7 +188,7 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
             className="w-full btn-physical-primary py-2.5 rounded-xl text-xs font-bold font-heading flex items-center justify-center gap-2 cursor-pointer relative z-10"
           >
             <Play className="w-3.5 h-3.5 fill-current" />
-            <span className="whitespace-nowrap">Uji Nyawa Sekarang</span>
+            <span className="whitespace-nowrap">Mulai</span>
             <ChevronRight className="w-3.5 h-3.5" />
           </button>
         </motion.div>
@@ -235,17 +199,11 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
           className="panel panel-stitched p-5 rounded-3xl bg-surface-card border border-border-subtle hover:border-border-primary shadow-md flex flex-col justify-between space-y-4 group transition-all relative overflow-hidden"
         >
           <div className="space-y-3 relative z-10">
-            <div className="flex items-start justify-between gap-2">
-              <span className="px-2.5 py-1 rounded-full bg-surface-inset border border-border-subtle text-text-secondary text-[10px] font-mono font-bold">
-                Sprint Relay
-              </span>
-              <span className="text-xs font-mono font-bold text-text-muted whitespace-nowrap shrink-0 pt-1">
-                45 Detik
-              </span>
-            </div>
-
-            <div className="w-12 h-12 rounded-2xl bg-surface-inset border border-border-subtle text-indigo flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform">
-              <Clock className="w-6 h-6" />
+            <div className="flex items-center justify-between gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-surface-inset border border-border-subtle text-indigo flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform">
+                <Clock className="w-6 h-6" />
+              </div>
+              <span className="text-xs font-mono font-bold text-text-muted whitespace-nowrap shrink-0">45 Detik</span>
             </div>
 
             <div>
@@ -253,20 +211,8 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
                 Kotoba Guess Relay
               </h3>
               <p className="text-xs text-text-secondary mt-1 leading-relaxed">
-                Tebak arti kosakata secepat kilat dengan audio pengucapan asli Jepang. Pertahankan kombo tanpa terputus untuk multiplier poin raksasa!
+                Tebak arti kata dari suaranya, secepat mungkin.
               </p>
-            </div>
-
-            <div className="pt-2 flex flex-wrap gap-1.5 text-[10px] font-mono">
-              <span className="px-2 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-text-muted">
-                Audio Native
-              </span>
-              <span className="px-2 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-text-muted">
-                2.0x Combo Poin
-              </span>
-              <span className="px-2 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-text-muted">
-                45 Detik Sprint
-              </span>
             </div>
           </div>
 
@@ -279,7 +225,7 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
             className="w-full btn-physical-primary py-2.5 rounded-xl text-xs font-bold font-heading flex items-center justify-center gap-2 cursor-pointer relative z-10"
           >
             <Play className="w-3.5 h-3.5 fill-current" />
-            <span className="whitespace-nowrap">Mulai Sprint (45s)</span>
+            <span className="whitespace-nowrap">Mulai</span>
             <ChevronRight className="w-3.5 h-3.5" />
           </button>
         </motion.div>
@@ -290,17 +236,11 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
           className="panel panel-stitched p-5 rounded-3xl bg-surface-card border border-border-subtle hover:border-border-primary shadow-md flex flex-col justify-between space-y-4 group transition-all relative overflow-hidden"
         >
           <div className="space-y-3 relative z-10">
-            <div className="flex items-start justify-between gap-2">
-              <span className="px-2.5 py-1 rounded-full bg-surface-inset border border-border-subtle text-amber-400 text-[10px] font-mono font-bold">
-                Refleks Tata Bahasa
-              </span>
-              <span className="text-xs font-mono font-bold text-text-muted whitespace-nowrap shrink-0 pt-1">
-                60 Detik
-              </span>
-            </div>
-
-            <div className="w-12 h-12 rounded-2xl bg-surface-inset border border-border-subtle text-amber-400 flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform">
-              <Zap className="w-6 h-6 fill-current" />
+            <div className="flex items-center justify-between gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-surface-inset border border-border-subtle text-amber-400 flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform">
+                <Zap className="w-6 h-6 fill-current" />
+              </div>
+              <span className="text-xs font-mono font-bold text-text-muted whitespace-nowrap shrink-0">60 Detik</span>
             </div>
 
             <div>
@@ -308,20 +248,8 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
                 Altar Konjugasi Kilat
               </h3>
               <p className="text-xs text-text-secondary mt-1 leading-relaxed">
-                Ubah kata kerja ke bentuk target (Te, Ta, Nai, Potensial, dsb) secepat kilat! Kumpulkan combo multiplier tertinggi dalam 60 detik!
+                Ubah kata kerja ke bentuk yang diminta dalam 60 detik.
               </p>
-            </div>
-
-            <div className="pt-2 flex flex-wrap gap-1.5 text-[10px] font-mono">
-              <span className="px-2 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-text-muted">
-                Semua Golongan
-              </span>
-              <span className="px-2 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-text-muted">
-                Audio Native
-              </span>
-              <span className="px-2 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-text-muted">
-                60 Detik Sprint
-              </span>
             </div>
           </div>
 
@@ -334,7 +262,7 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
             className="w-full btn-physical-primary py-2.5 rounded-xl text-xs font-bold font-heading flex items-center justify-center gap-2 cursor-pointer relative z-10"
           >
             <Play className="w-3.5 h-3.5 fill-current" />
-            <span className="whitespace-nowrap">Mulai Konjugasi (60s)</span>
+            <span className="whitespace-nowrap">Mulai</span>
             <ChevronRight className="w-3.5 h-3.5" />
           </button>
         </motion.div>
@@ -345,18 +273,11 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
           className="panel panel-stitched p-5 rounded-3xl bg-surface-card border border-border-subtle hover:border-border-primary shadow-md flex flex-col justify-between space-y-4 group transition-all relative overflow-hidden"
         >
           <div className="space-y-3 relative z-10">
-            <div className="flex items-start justify-between gap-2">
-              <span className="px-2.5 py-1 rounded-full bg-surface-inset border border-border-subtle text-amber-400 text-[10px] font-mono font-bold flex items-center gap-1">
-                <Star className="w-3 h-3 fill-amber-400" />
-                文の組み立て
-              </span>
-              <span className="text-xs font-mono font-bold text-text-muted whitespace-nowrap shrink-0 pt-1">
-                60 Detik
-              </span>
-            </div>
-
-            <div className="w-12 h-12 rounded-2xl bg-surface-inset border border-border-subtle text-amber-400 flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform">
-              <Star className="w-6 h-6 fill-current" />
+            <div className="flex items-center justify-between gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-surface-inset border border-border-subtle text-amber-400 flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform">
+                <Star className="w-6 h-6 fill-current" />
+              </div>
+              <span className="text-xs font-mono font-bold text-text-muted whitespace-nowrap shrink-0">60 Detik</span>
             </div>
 
             <div>
@@ -364,20 +285,8 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
                 Susun Bintang Kilat
               </h3>
               <p className="text-xs text-text-secondary mt-1 leading-relaxed">
-                Susun 4 bagian kalimat dan temukan kata di posisi ★ secepat kilat! Diambil dari soal asli ujian resmi JLPT N5 sampai N1.
+                Susun kalimat dan temukan kata di posisi ★ dalam 60 detik.
               </p>
-            </div>
-
-            <div className="pt-2 flex flex-wrap gap-1.5 text-[10px] font-mono">
-              <span className="px-2 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-text-muted">
-                Soal Asli JLPT
-              </span>
-              <span className="px-2 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-text-muted">
-                Sintaksis & Pola
-              </span>
-              <span className="px-2 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-text-muted">
-                60s Sprint
-              </span>
             </div>
           </div>
 
@@ -390,7 +299,7 @@ export const ArcadeHubView: React.FC<ArcadeHubViewProps> = ({
             className="w-full btn-physical-primary py-2.5 rounded-xl text-xs font-bold font-heading flex items-center justify-center gap-2 cursor-pointer relative z-10"
           >
             <Play className="w-3.5 h-3.5 fill-current" />
-            <span className="whitespace-nowrap">Mulai Susun (60s)</span>
+            <span className="whitespace-nowrap">Mulai</span>
             <ChevronRight className="w-3.5 h-3.5" />
           </button>
         </motion.div>

@@ -45,9 +45,7 @@ interface DungeonSetupModalProps {
 const DUNGEON_META: Record<
   DungeonType,
   {
-    title: string;
-    jpTitle: string;
-    subtitle: string;
+    title: string;    subtitle: string;
     iconEmoji: string;
     requirementHint: string;
     themeColor: string;
@@ -55,72 +53,56 @@ const DUNGEON_META: Record<
   }
 > = {
   writing: {
-    title: 'Dungeon Menulis Aksara',
-    jpTitle: '書道の試練 (Kanji & Kotoba Writing)',
-    subtitle: 'Latihan menulis aksara goresan demi goresan',
+    title: 'Dungeon Menulis Aksara',    subtitle: 'Latihan menulis aksara goresan demi goresan',
     iconEmoji: '✍️',
     requirementHint: 'Memerlukan materi aksara (Kanji atau Kosakata)',
     themeColor: 'border-border-subtle text-wine-accent',
     glowColor: 'rgba(226, 85, 91, 0.25)',
   },
   flashcard: {
-    title: 'Dungeon Gerbang Ingatan',
-    jpTitle: '記憶の回廊 (Speed Flashcard Drill)',
-    subtitle: 'Hafalan kilat bolak-balik arti, bacaan & audio',
+    title: 'Dungeon Gerbang Ingatan',    subtitle: 'Hafalan kilat bolak-balik arti, bacaan & audio',
     iconEmoji: '🎴',
     requirementHint: 'Mendukung semua tipe materi (Kanji, Kosakata, Tata Bahasa)',
     themeColor: 'border-border-subtle text-teal',
     glowColor: 'rgba(38, 166, 154, 0.25)',
   },
   sakubun: {
-    title: 'Dungeon Kuil Tata Bahasa',
-    jpTitle: '作文の神殿 (Sakubun Sentence Builder)',
-    subtitle: 'Menyusun potongan kata dan pola menjadi kalimat utuh',
+    title: 'Dungeon Kuil Tata Bahasa',    subtitle: 'Menyusun potongan kata dan pola menjadi kalimat utuh',
     iconEmoji: '🧩',
     requirementHint: 'Memerlukan materi pola tata bahasa (Bunpou)',
     themeColor: 'border-border-subtle text-gold',
     glowColor: 'rgba(240, 190, 82, 0.25)',
   },
   conjugation: {
-    title: 'Dungeon Altar Konjugasi',
-    jpTitle: '活用の祭壇 (Conjugation Drill)',
-    subtitle: 'Latihan cepat mengubah bentuk kata kerja & kata sifat',
+    title: 'Dungeon Altar Konjugasi',    subtitle: 'Latihan cepat mengubah bentuk kata kerja & kata sifat',
     iconEmoji: '⚡',
     requirementHint: 'Memerlukan materi kosakata kata kerja/sifat (Kotoba)',
     themeColor: 'border-border-subtle text-indigo',
     glowColor: 'rgba(111, 147, 207, 0.25)',
   },
   quiz: {
-    title: 'Dungeon Arena Kuis Cepat',
-    jpTitle: '闘技場の戦い (Rapid Battle Quiz)',
-    subtitle: 'Latihan kuis pilihan ganda acak standar JLPT',
+    title: 'Dungeon Arena Kuis Cepat',    subtitle: 'Latihan kuis pilihan ganda acak standar JLPT',
     iconEmoji: '🎯',
     requirementHint: 'Mendukung materi Kanji, Kosakata, atau Tata Bahasa',
     themeColor: 'border-border-subtle text-emerald-400',
     glowColor: 'rgba(79, 174, 134, 0.25)',
   },
   extreme: {
-    title: 'Dungeon Gerbang Kanji Extreme',
-    jpTitle: '極・漢字の百連試練 (100 Extreme Stages)',
-    subtitle: 'Tantangan 3.000 soal tebak Onyomi & Kunyomi dari 100 stage bertingkat',
+    title: 'Dungeon Gerbang Kanji Extreme',    subtitle: 'Tantangan 3.000 soal tebak Onyomi & Kunyomi dari 100 stage bertingkat',
     iconEmoji: '🔥',
     requirementHint: 'Tersedia 100 stage penuh terstruktur (30 soal per stage)',
     themeColor: 'border-border-subtle text-rose-400',
     glowColor: 'rgba(244, 63, 94, 0.25)',
   },
   sentence_creation: {
-    title: 'Dungeon Kreasi Kalimat Pola',
-    jpTitle: '文法創作の道場 (Sentence Construction Drill)',
-    subtitle: 'Rangkai kalimat bebas bahasa Jepang menggunakan pola tata bahasa yang ditentukan',
+    title: 'Dungeon Kreasi Kalimat Pola',    subtitle: 'Rangkai kalimat bebas bahasa Jepang menggunakan pola tata bahasa yang ditentukan',
     iconEmoji: '📜',
     requirementHint: 'Memerlukan materi pola tata bahasa (Bunpou)',
     themeColor: 'border-border-subtle text-violet-400',
     glowColor: 'rgba(139, 92, 246, 0.25)',
   },
   blackboard: {
-    title: 'Dungeon Papan Tulis Pola',
-    jpTitle: '黒板の実験室 (Pattern Blackboard Playground)',
-    subtitle: 'Laboratorium visual bebas mengamati hasil transformasi kata dengan aneka pola kalimat',
+    title: 'Dungeon Papan Tulis Pola',    subtitle: 'Laboratorium visual bebas mengamati hasil transformasi kata dengan aneka pola kalimat',
     iconEmoji: '🏫',
     requirementHint: 'Mendukung kata kerja (Kotoba) dan pola kalimat (Bunpou)',
     themeColor: 'border-border-subtle text-teal',
@@ -328,11 +310,6 @@ export const DungeonSetupModal: React.FC<DungeonSetupModalProps> = ({
             </div>
 
             <div>
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono font-bold tracking-wider text-text-muted">
-                  {meta.jpTitle}
-                </span>
-              </div>
               <h2 className="text-lg sm:text-xl font-black text-text-primary font-heading tracking-wide drop-shadow-xs">
                 {meta.title}
               </h2>

@@ -9,6 +9,7 @@ import { ALL_TRYOUTS } from '../../data/tryouts';
 import { TryOutData } from '../../types/content';
 import { KANJI_QUESTION_BANK as kanjiQuestionsDb, BUNPOU_QUESTION_BANK as bunpouQuestionsDb } from '../../data/questionBank';
 import { CHOUKAI_DATABASE } from '../../data/choukai';
+import { CHOUKAI_ENABLED } from '../../data/featureFlags';
 import { DOKKAI_DATABASE } from '../../data/dokkai';
 import { playSound, speakJapanese } from '../../utils/audio';
 import { RubyText } from '../learning/RubyText';
@@ -250,7 +251,7 @@ export function getQuestionTargetWord(q: {
   return undefined;
 }
 
-const SECTION_TABS: { value: JlptSection; label: string; jp: string; icon: React.FC<{ className?: string }> }[] = [
+const ALL_SECTION_TABS: { value: JlptSection; label: string; jp: string; icon: React.FC<{ className?: string }> }[] = [
   { value: 'all', label: 'Semua Bagian', jp: '全て', icon: BookOpen },
   { value: 'mojiGoi', label: 'Moji & Goi', jp: '文字・語彙', icon: Feather },
   { value: 'bunpou', label: 'Bunpou', jp: '文法', icon: FileText },
@@ -258,6 +259,8 @@ const SECTION_TABS: { value: JlptSection; label: string; jp: string; icon: React
   { value: 'choukai', label: 'Choukai', jp: '聴解', icon: Headphones },
   { value: 'tryout', label: 'Simulasi Ujian', jp: '模擬試験・試練', icon: Swords },
 ];
+
+const SECTION_TABS = ALL_SECTION_TABS.filter(t => CHOUKAI_ENABLED || t.value !== 'choukai');
 
 const LEVEL_OPTIONS = [
   { value: 'all', label: 'Semua Level' },
@@ -509,7 +512,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
       });
     }
 
-    return list;
+    return CHOUKAI_ENABLED ? list : list.filter(q => q.section !== 'choukai');
   }, []);
 
   // Section & Level Filter Counts
@@ -575,7 +578,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
       'grammar_form',
       'sentence_star',
       'dokkai_reading',
-      'choukai_audio',
+      ...(CHOUKAI_ENABLED ? ['choukai_audio' as const] : []),
     ] as QuestionSubCategory[];
   }, [activeSection]);
 
@@ -1243,7 +1246,7 @@ export const QuestionLibraryView: React.FC<QuestionLibraryViewProps> = ({
               Simulasi Ujian Berskala Penuh
             </h3>
             <p className="text-xs text-text-secondary leading-relaxed">
-              Kondisi ujian JLPT sesungguhnya dengan batas waktu standar, multi-sesi (Moji-Goi, Bunpou-Dokkai, Choukai), lembar jawaban grid, dan sertifikat kelulusan.
+              Kondisi ujian JLPT sesungguhnya dengan batas waktu standar, multi-sesi (Moji-Goi, Bunpou-Dokkai{CHOUKAI_ENABLED ? ', Choukai' : ''}), lembar jawaban grid, dan sertifikat kelulusan.
             </p>
           </div>
 

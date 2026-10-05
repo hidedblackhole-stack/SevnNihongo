@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { MessageSquare, ArrowRight, Sparkles, X, Target } from 'lucide-react';
+import { MessageSquare, ArrowRight, X, Target } from 'lucide-react';
 import { FloorNarrative } from '../../engine/tower/world/floorNarrative';
 
 interface FloorNarrativeModalProps {

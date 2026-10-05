@@ -11,26 +11,26 @@ import {
   Trophy,
   Compass,
   ScrollText,
-  Presentation
+  Presentation,
+  Library
 } from 'lucide-react';
 import { DungeonType } from '../../utils/dungeonGenerator';
 import { playSound } from '../../utils/audio';
 
+/** 'text_study' bukan DungeonType generator: ia membuka modal sendiri (tanpa payload soal). */
+export type DungeonGateType = DungeonType | 'text_study';
+
 interface DungeonPortalHubProps {
-  onSelectDungeon: (type: DungeonType) => void;
+  onSelectDungeon: (type: DungeonGateType) => void;
   soundEnabled?: boolean;
 }
 
 interface DungeonGateInfo {
-  type: DungeonType;
+  type: DungeonGateType;
   title: string;
-  jpTitle: string;
-  badge: string;
-  badgeColor: string;
   accentColor: string;
   icon: React.ComponentType<{ className?: string }>;
   description: string;
-  tags: string[];
   expPerQuestion: number;
   goldPerQuestion: number;
 }
@@ -39,106 +39,83 @@ const DUNGEON_GATES: DungeonGateInfo[] = [
   {
     type: 'writing',
     title: 'Dungeon Menulis Aksara',
-    jpTitle: '書道の試練 (Kanji & Kotoba Writing)',
-    badge: 'Menulis',
-    badgeColor: 'bg-wine-accent/15 text-wine-accent border-border-subtle',
     accentColor: 'hover:border-border-primary',
     icon: PenTool,
-    description: 'Latih ketelitian goresan kanji dan kosakata urutan demi urutan langsung di layar. Latih memori motorik tanganmu.',
-    tags: ['Kanji', 'Kosakata', 'Urutan Goresan', 'Onyomi & Kunyomi'],
+    description: 'Tulis kanji dan kosakata goresan demi goresan.',
     expPerQuestion: 25,
     goldPerQuestion: 12,
   },
   {
     type: 'flashcard',
     title: 'Dungeon Gerbang Ingatan',
-    jpTitle: '記憶の回廊 (Speed Flashcard Drill)',
-    badge: 'Flashcard Kilat',
-    badgeColor: 'bg-teal/15 text-teal border-border-subtle',
     accentColor: 'hover:border-border-primary',
     icon: Layers,
-    description: 'Hafalan kilat bolak-balik arti, bacaan furigana, dan suara pengucapan native speaker. Cocok untuk mengulang banyak materi.',
-    tags: ['Kosakata', 'Kanji', 'Audio Pengucapan', 'Bolak-Balik'],
+    description: 'Hafalkan arti dan bacaan dengan kartu bolak-balik.',
     expPerQuestion: 20,
     goldPerQuestion: 10,
   },
   {
     type: 'sakubun',
     title: 'Dungeon Kuil Tata Bahasa',
-    jpTitle: '作文の神殿 (Sakubun Sentence Builder)',
-    badge: 'Susun Pola Kalimat',
-    badgeColor: 'bg-gold/15 text-gold border-border-subtle',
     accentColor: 'hover:border-border-primary',
     icon: BookOpen,
-    description: 'Susun potongan kata dan partikel menjadi kalimat utuh dengan tata bahasa Jepang yang tepat.',
-    tags: ['Pola Kalimat', 'Partikel', 'Sintaksis', 'Tata Bahasa'],
+    description: 'Susun potongan kata menjadi kalimat yang benar.',
     expPerQuestion: 30,
     goldPerQuestion: 15,
   },
   {
     type: 'conjugation',
     title: 'Dungeon Altar Konjugasi',
-    jpTitle: '活用の祭壇 (Conjugation Drill)',
-    badge: 'Ubah Bentuk Kata',
-    badgeColor: 'bg-indigo/15 text-indigo border-border-subtle',
     accentColor: 'hover:border-border-primary',
     icon: Zap,
-    description: 'Uji kecepatan refleks mengubah kata kerja & kata sifat ke bentuk Te, Nai, Ta, Masu, Potensial, hingga Pasif/Kausatif.',
-    tags: ['Godan/Ichidan', 'Bentuk Te/Nai', 'Bentuk Potensial', 'Kata Sifat'],
+    description: 'Ubah bentuk kata kerja dan kata sifat.',
     expPerQuestion: 25,
     goldPerQuestion: 12,
   },
   {
     type: 'quiz',
     title: 'Dungeon Arena Kuis Cepat',
-    jpTitle: '闘技場の戦い (Rapid Battle Quiz)',
-    badge: 'Kuis Pilihan Ganda',
-    badgeColor: 'bg-emerald-500/15 text-emerald-400 border-border-subtle',
     accentColor: 'hover:border-border-primary',
     icon: Swords,
-    description: 'Kuis pilihan ganda acak dari bank soal berstandar resmi JLPT untuk menguji pemahaman komprehensif secara cepat.',
-    tags: ['Huruf & Kosakata', 'Tata Bahasa', 'Penjelasan Lengkap', 'Pilihan Ganda'],
+    description: 'Kuis pilihan ganda acak ala JLPT.',
     expPerQuestion: 20,
     goldPerQuestion: 10,
   },
   {
     type: 'extreme',
     title: 'Dungeon Gerbang Kanji Extreme',
-    jpTitle: '極・漢字の百連試練 (100 Extreme Stages)',
-    badge: '100 Stage (3.000 Soal)',
-    badgeColor: 'bg-rose-500/15 text-rose-400 border-border-subtle',
     accentColor: 'hover:border-border-primary',
     icon: Flame,
-    description: 'Uji ketahanan mental dan kecepatan membaca 3.000 soal tebak Onyomi & Kunyomi bergradasi 100 stage.',
-    tags: ['3.000 Soal', '100 Stage', 'Onyomi & Kunyomi', 'Refleks Cepat'],
+    description: 'Tebak bacaan kanji stage demi stage, makin lama makin sulit.',
     expPerQuestion: 25,
     goldPerQuestion: 15,
   },
   {
     type: 'sentence_creation',
     title: 'Dungeon Kreasi Kalimat Pola',
-    jpTitle: '文法創作の道場 (Grammar Sentence Construction)',
-    badge: 'Kreasi Bebas',
-    badgeColor: 'bg-violet-500/15 text-violet-400 border-border-subtle',
     accentColor: 'hover:border-border-primary',
     icon: ScrollText,
-    description: 'Latih kemampuan merangkai kalimat bebas bahasa Jepang. Amati pola tata bahasa, arti, dan rumus di atas, lalu tulis kalimat lengkapmu.',
-    tags: ['Pola Kalimat', 'Kreasi Bebas', 'Ketik Kalimat', 'Tata Bahasa'],
+    description: 'Tulis kalimatmu sendiri memakai pola tata bahasa.',
     expPerQuestion: 35,
     goldPerQuestion: 18,
   },
   {
     type: 'blackboard',
     title: 'Dungeon Papan Tulis Pola',
-    jpTitle: '黒板の実験室 (Pattern Blackboard Playground)',
-    badge: 'Playground Bebas',
-    badgeColor: 'bg-teal/15 text-teal border-border-subtle',
     accentColor: 'hover:border-border-primary',
     icon: Presentation,
-    description: 'Laboratorium visual bebas! Amati langsung bagaimana kosakata bertransformasi saat disandingkan dengan aneka pola kalimat di papan tulis interaktif.',
-    tags: ['Papan Tulis', 'Hasil Pola', 'Dekonstruksi Rumus', 'Bebas Eksplorasi'],
+    description: 'Lihat bagaimana kata berubah di berbagai pola kalimat.',
     expPerQuestion: 15,
     goldPerQuestion: 8,
+  },
+  {
+    type: 'text_study',
+    title: 'Dungeon Perpustakaan Teks',
+    accentColor: 'hover:border-border-primary',
+    icon: Library,
+    description: 'Tempel kalimat, paragraf, atau dokkai sendiri — dibedah jadi kotoba, pola, dan kanji lalu dilatih.',
+    expPerQuestion: 18,
+    goldPerQuestion: 9,
   },
 ];
 
@@ -215,36 +192,17 @@ export const DungeonPortalHub: React.FC<DungeonPortalHubProps> = ({
                     <Icon className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-[10px] font-mono text-text-muted block">
-                      {gate.jpTitle}
-                    </span>
                     <h3 className="text-base sm:text-lg font-bold text-text-primary font-heading group-hover:text-gold transition-colors">
                       {gate.title}
                     </h3>
                   </div>
                 </div>
-
-                <span className={`px-2.5 py-1 rounded-xl text-[11px] font-heading font-bold border shrink-0 ${gate.badgeColor}`}>
-                  {gate.badge}
-                </span>
               </div>
 
               {/* Middle: Description */}
               <p className="text-xs sm:text-sm text-text-secondary leading-relaxed font-body">
                 {gate.description}
               </p>
-
-              {/* Tags */}
-              <div className="flex flex-wrap gap-1.5">
-                {gate.tags.map((tag, tIdx) => (
-                  <span
-                    key={tIdx}
-                    className="px-2 py-0.5 rounded-lg bg-surface-inset border border-border-subtle text-[10px] font-mono font-medium text-text-muted"
-                  >
-                    #{tag}
-                  </span>
-                ))}
-              </div>
 
               {/* Bottom: Reward Preview & CTA */}
               <div className="pt-3 border-t border-border-subtle flex items-center justify-between">

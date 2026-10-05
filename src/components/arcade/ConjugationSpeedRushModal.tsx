@@ -15,7 +15,6 @@ import {
   Layers, 
   Award,
   Volume2,
-  Sparkles,
   Swords
 } from 'lucide-react';
 import { RubyText } from '../learning/RubyText';
@@ -480,28 +479,30 @@ export const ConjugationSpeedRushModal: React.FC<ConjugationSpeedRushModalProps>
 
             {/* Interactive Question Card */}
             <div className="flex-1 p-4 sm:p-6 flex flex-col justify-center space-y-4 sm:space-y-6 overflow-y-auto custom-scrollbar">
-              {/* Score Feedback popup */}
-              <AnimatePresence>
-                {scoreFeedback && (
-                  <motion.div
-                    key={scoreFeedback.id}
-                    initial={{ opacity: 0, y: 10, scale: 0.8 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: -20, scale: 1.1 }}
-                    transition={{ duration: 0.35 }}
-                    className="flex justify-center -my-2"
-                  >
-                    <span className={`px-3 py-1 rounded-full text-xs font-mono font-black border shadow-lg ${
-                      scoreFeedback.type === 'plus'
-                        ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40'
-                        : 'bg-rose-500/20 text-rose-400 border-rose-500/40'
-                    }`}>
+              {/* Score Feedback popup — slot tetap supaya kartu soal tidak bergeser saat poin muncul */}
+              <div className="relative h-7 -mb-2 sm:-mb-3 flex items-center justify-center shrink-0 pointer-events-none">
+                <AnimatePresence>
+                  {scoreFeedback && (
+                    <motion.span
+                      key={scoreFeedback.id}
+                      initial={{ opacity: 0, y: 6, scale: 0.9 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -6, scale: 0.95 }}
+                      transition={{ duration: 0.25 }}
+                      className={`absolute inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-black border shadow-sm whitespace-nowrap bg-surface-card ${
+                        scoreFeedback.type === 'plus'
+                          ? 'text-emerald-600 border-emerald-500/50'
+                          : 'text-rose-600 border-rose-500/50'
+                      }`}
+                    >
                       {scoreFeedback.type === 'plus' ? `+${scoreFeedback.amount} PTS` : `-${scoreFeedback.amount} PTS`}
-                      {scoreFeedback.multiplier > 1 && ` (${scoreFeedback.multiplier.toFixed(1)}x)`}
-                    </span>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                      {scoreFeedback.multiplier > 1 && (
+                        <span className="opacity-70 font-bold">{scoreFeedback.multiplier.toFixed(1)}x</span>
+                      )}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </div>
 
               {/* Big Display: Kotoba Dasar + Tujuan Konjugasi (Persis Altar Konjugasi) */}
               <div className="p-5 sm:p-7 rounded-3xl bg-surface-inset border border-border-subtle text-center space-y-3 shadow-inner">

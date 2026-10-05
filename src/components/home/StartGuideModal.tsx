@@ -54,10 +54,10 @@ const SLIDES: Slide[] = [
     body: 'EXP bukan sekadar hadiah klik. Ia mengikuti seberapa dalam kamu menguasai sesuatu.',
     icon: Repeat,
     points: [
-      { icon: BookOpen, title: '1. Belajar', text: 'Baca materi di stage atau Library.' },
+      { icon: BookOpen, title: '1. Belajar', text: 'Baca materi di Buku Saku atau Library.' },
       { icon: Flame, title: '2. Latihan', text: 'Jawab soal. Salah pun dicatat, jadi tahu titik lemahmu.' },
       { icon: Repeat, title: '3. Mastery', text: 'Item yang sering benar naik penguasaannya; yang lemah diulang di Recall.' },
-      { icon: Compass, title: '4. EXP & Progression', text: 'EXP menaikkan level dan membuka stage serta world berikutnya.' },
+      { icon: Compass, title: '4. EXP & Progression', text: 'EXP menaikkan level dan tier belajarmu.' },
     ],
   },
   {
@@ -67,7 +67,7 @@ const SLIDES: Slide[] = [
     body: 'Belum bisa membaca kana? Mulai dari Foundation: Hiragana, lalu Katakana, baru masuk N5. Kalau sudah, kamu bebas memilih jalurnya.',
     icon: Sprout,
     points: [
-      { icon: Sprout, title: 'Belum tahu apa-apa', text: 'Foundation → Hiragana → Katakana → N5.' },
+      { icon: Sprout, title: 'Belum tahu apa-apa', text: 'Buku Kana Dojo → Hiragana → Katakana → N5.' },
       { icon: Library, title: 'Sudah bisa kana', text: 'Library untuk Kotoba, Kanji, dan Pola Kalimat sesuai levelmu.' },
     ],
   },
@@ -75,8 +75,8 @@ const SLIDES: Slide[] = [
     id: 'next',
     label: 'SETELAH ITU',
     title: 'Selesai satu materi, lalu?',
-    body: 'Kamu tidak perlu menebak. Beranda akan selalu menunjukkan satu langkah berikutnya: Recall bila ada yang perlu diulang, titik lemah bila terdeteksi, atau lanjut ke stage berikutnya. Misi Harian membantu menjaga ritme.',
-    icon: MapIcon,
+    body: 'Kamu tidak perlu menebak. Beranda akan selalu menunjukkan satu langkah berikutnya: Recall bila ada yang perlu diulang, titik lemah bila terdeteksi, atau lanjut belajar dari Buku Saku. Misi Harian membantu menjaga ritme.',
+    icon: BookOpen,
   },
 ];
 
@@ -188,7 +188,7 @@ export const StartGuideModal: React.FC<StartGuideModalProps> = ({
                   Pilih jalurmu
                 </p>
                 <button type="button" onClick={() => pick('foundation')} className="btn-physical-primary w-full py-3 px-4 text-sm font-bold font-heading flex items-center justify-between">
-                  <span className="flex items-center gap-2"><Sprout className="w-4 h-4" /> Mulai Foundation (Hiragana)</span>
+                  <span className="flex items-center gap-2"><Sprout className="w-4 h-4" /> Mulai dari Buku Hiragana</span>
                   <ChevronRight className="w-4 h-4" />
                 </button>
                 <button type="button" onClick={() => pick('library')} className="btn-physical-secondary w-full py-3 px-4 text-sm font-bold font-heading flex items-center justify-between">

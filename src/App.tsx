@@ -47,18 +47,16 @@ export default function App() {
 
   const { toastMessage: cloudSyncMessage, showToast } = useToast();
 
-  const nav = useAppNavigation(setStats);
+  const nav = useAppNavigation();
   const {
-    activeTab, setActiveTab, visitedTabs, selectedStage, setSelectedStage,
-    isStatusModalOpen, setIsStatusModalOpen, isRecallActive, setIsRecallActive,
-    isBossBattleActive, setIsBossBattleActive, isAuthModalOpen, setIsAuthModalOpen,
-    worldNavView, setWorldNavView, worldResetCount, deckResetCount, deckInitialSubTab, setDeckInitialSubTab,
-    handleTabChange, handleNavigateToOfficialBooks,
+    activeTab, setActiveTab,
+    isStatusModalOpen, setIsStatusModalOpen, setIsRecallActive,
+    handleTabChange,
     isOnboardingActive, handleCompleteOnboarding, handleOpenAuthFromOnboarding, handleReplayOnboarding,
   } = nav;
 
-  // Active Study Tracking (Stage Hub / Learning Modules, Recall SRS, Boss Battles, and Library)
-  const isStudying = Boolean(selectedStage || isRecallActive || isBossBattleActive || activeTab === 'library');
+  // Active Study Tracking (Recall SRS, Library, and Buku Saku)
+  const isStudying = Boolean(nav.isRecallActive || activeTab === 'library' || activeTab === 'deck');
 
   // Pelacak waktu hidup di <StudyTimerBadge> (re-render per detik terisolasi dari App).
   const handleStudyTimeSave = useCallback((todaySec: number, totalSec: number, studyDate: string) => {
@@ -79,12 +77,12 @@ export default function App() {
   });
 
   const actions = usePlayerActions({
-    stats, setStats, dailyMissions, setDailyMissions, setWeeklyMissions, stageProgress, setStageProgress,
-    selectedStage, setSelectedStage, setIsRecallActive, setIsBossBattleActive, setActiveTab, setWorldNavView,
+    stats, setStats, dailyMissions, setDailyMissions, setWeeklyMissions, setStageProgress,
+    setIsRecallActive, setActiveTab,
     showToast,
   });
   const {
-    handleAllocateStat, handleAscendTier, handleUpdateName, handleUpdateSignature, handleLaunchStageById,
+    handleAllocateStat, handleAscendTier, handleUpdateName, handleUpdateSignature,
   } = actions;
 
 
@@ -120,7 +118,6 @@ export default function App() {
         <div className="max-w-4xl lg:max-w-6xl mx-auto w-full flex items-center justify-between relative z-10">
           <div
             onClick={() => {
-              setSelectedStage(null);
               setIsRecallActive(false);
               setActiveTab('home');
               playSound('click', stats.soundEnabled);

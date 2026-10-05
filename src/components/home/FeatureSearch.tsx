@@ -22,7 +22,7 @@ const FEATURES: FeatureEntry[] = [
   { id: 'kotoba', title: 'Kamus Kotoba', hint: 'Library → Kotoba: cari kata, arti, dan contoh kalimat', keywords: 'kotoba kosakata kata vocab kamus arti', target: { type: 'tab', tab: 'library' } },
   { id: 'kanji', title: 'Kamus Kanji', hint: 'Library → Kanji: bacaan, arti, urutan goresan', keywords: 'kanji onyomi kunyomi goresan huruf', target: { type: 'tab', tab: 'library' } },
   { id: 'bunpou', title: 'Pola Kalimat (Bunpou)', hint: 'Library → Pola Kalimat: rumus, arti, contoh', keywords: 'bunpou pola kalimat tata bahasa grammar rumus konjugasi', target: { type: 'tab', tab: 'library' } },
-  { id: 'world', title: 'World & Stage', hint: 'Jalur belajar bertahap dari Hiragana sampai N1', keywords: 'world peta stage belajar level jalur n5 n4 n3 n2 n1 hiragana katakana foundation', target: { type: 'tab', tab: 'maps' } },
+  { id: 'world', title: 'World', hint: 'Arena Arcade, Mode Dungeon, dan Menara Nihongo', keywords: 'world arcade dungeon tower menara game latihan speed rush', target: { type: 'tab', tab: 'maps' } },
   { id: 'recall', title: 'Recall Memori', hint: 'Ulang item yang mulai terlupa (SRS)', keywords: 'recall ulang ulangan srs review memori lupa', target: { type: 'recall' } },
   { id: 'misi-harian', title: 'Misi Harian', hint: 'Selesaikan misi, klaim EXP & Koin', keywords: 'misi harian daily hadiah klaim koin exp streak', target: { type: 'tab', tab: 'daily' } },
   { id: 'misi-mingguan', title: 'Misi Mingguan', hint: 'Target mingguan dengan hadiah lebih besar', keywords: 'misi mingguan weekly hadiah target', target: { type: 'tab', tab: 'weekly' } },

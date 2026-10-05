@@ -2,10 +2,8 @@
 import { useCallback, type Dispatch, type SetStateAction } from 'react';
 import confetti from 'canvas-confetti';
 import type { PlayerStats, StageClearData, Mission, DeckItemCategory, UserDeck } from '../types/rpg';
-import type { Stage } from '../types/content';
 import { calculateMaxHp, calculateMaxMp } from '../data/tiers';
 import { getEffectiveTier, getJlptLevelForTierIndex } from '../utils/ascension';
-import { MAP_REGIONS, getStagesForMap } from '../data/maps';
 import { INITIAL_DAILY_MISSIONS, INITIAL_WEEKLY_MISSIONS } from '../data/missions';
 import { createDefaultBookmarkDeck, toggleBookmarkItem, toggleItemInDeck, DEFAULT_BOOKMARK_DECK_ID } from '../utils/decks';
 import { playSound } from '../utils/audio';
@@ -23,7 +21,6 @@ import { KOTOBA_DATABASE } from '../data/kotoba';
 import { KANJI_DATABASE } from '../data/kanji';
 import { BUNPOU_DATABASE } from '../data/bunpou';
 import type { TabType } from '../components/layout/BottomNavigation';
-import type { WorldNavView } from '../components/map/WorldView';
 
 interface Params {
   stats: PlayerStats;
@@ -31,21 +28,16 @@ interface Params {
   dailyMissions: Mission[];
   setDailyMissions: Dispatch<SetStateAction<Mission[]>>;
   setWeeklyMissions: Dispatch<SetStateAction<Mission[]>>;
-  stageProgress: Record<string, StageClearData>;
   setStageProgress: Dispatch<SetStateAction<Record<string, StageClearData>>>;
-  selectedStage: Stage | null;
-  setSelectedStage: Dispatch<SetStateAction<Stage | null>>;
   setIsRecallActive: Dispatch<SetStateAction<boolean>>;
-  setIsBossBattleActive: Dispatch<SetStateAction<boolean>>;
   setActiveTab: Dispatch<SetStateAction<TabType>>;
-  setWorldNavView: Dispatch<SetStateAction<WorldNavView>>;
   showToast: (message: string, ms?: number) => void;
 }
 
 /** Handler aksi pemain (reward, misi, mastery, stage, atribut, reset, bookmark). Dipindah dari App.tsx. */
 export function usePlayerActions({
-  stats, setStats, dailyMissions, setDailyMissions, setWeeklyMissions, stageProgress, setStageProgress,
-  selectedStage, setSelectedStage, setIsRecallActive, setIsBossBattleActive, setActiveTab, setWorldNavView,
+  stats, setStats, dailyMissions, setDailyMissions, setWeeklyMissions, setStageProgress,
+  setIsRecallActive, setActiveTab,
   showToast,
 }: Params) {
 // Give EXP & Gold reward directly (pure base EXP, respects JLPT Ascension gates)
@@ -294,92 +286,8 @@ export function usePlayerActions({
     });
   }, []);
 
-  // Stage Module Completion Handler (Integrates Progress & Mastery System)
-  const handleStageModuleComplete = (
-    moduleId: 'bunpou' | 'kotoba' | 'kanji' | 'dokkai' | 'choukai' | 'boss',
-    expGained: number,
-    goldGained: number,
-    itemId?: string,
-    score?: number,
-    total?: number
-  ) => {
-    if (!selectedStage) return;
-
-    handleStudyComplete(moduleId, expGained, goldGained, itemId, score, total);
-
-    // Hadiah stage (stage.rewardExp/rewardGold/rewardItem) diberikan SEKALI, saat stage pertama kali clear.
-    // Kriteria clear sama dengan pembaruan stageProgress di bawah.
-    const prevEntry = stageProgress[selectedStage.id];
-    const expectedModules = [
-      selectedStage.bunpouIds?.length ? 'bunpou' : null,
-      selectedStage.kotobaIds?.length ? 'kotoba' : null,
-      selectedStage.kanjiIds?.length ? 'kanji' : null,
-      selectedStage.dokkaiIds?.length ? 'dokkai' : null,
-      selectedStage.choukaiIds?.length ? 'choukai' : null,
-    ].filter(Boolean).length || 1;
-    const doneModules = new Set([...(prevEntry?.clearedModules || []), moduleId]);
-    const clearsNow = (doneModules.size >= expectedModules || moduleId === 'boss') && !prevEntry?.cleared;
-    if (clearsNow) {
-      const stageExp = selectedStage.rewardExp || 0;
-      const stageGold = selectedStage.rewardGold || 0;
-      if (stageExp > 0 || stageGold > 0) handleRewardPlayer(stageExp, stageGold);
-      if (selectedStage.rewardItem) {
-        setStats(prev => ({ ...prev, inventory: [...(prev.inventory || []), HP_POTION_ID] }));
-      }
-      showToast(
-        `Stage selesai! +${stageExp} EXP, +${stageGold} Gold${selectedStage.rewardItem ? ' + Ramuan HP' : ''}`,
-        4000
-      );
-    }
-
-    setStageProgress(prev => {
-      const current = prev[selectedStage.id] || {
-        stageId: selectedStage.id,
-        cleared: false,
-        stars: 0,
-        clearedModules: [],
-        lastPlayedAt: new Date().toISOString()
-      };
-
-      const validCompletionModules = ['bunpou', 'kotoba', 'kanji', 'dokkai', 'choukai', 'boss'];
-      const isValidCompletion = validCompletionModules.includes(moduleId);
-
-      let updatedModules = current.clearedModules;
-      if (isValidCompletion && !current.clearedModules.includes(moduleId)) {
-        updatedModules = [...current.clearedModules, moduleId];
-      }
-
-      const expectedModulesCount = [
-        selectedStage.bunpouIds?.length ? 'bunpou' : null,
-        selectedStage.kotobaIds?.length ? 'kotoba' : null,
-        selectedStage.kanjiIds?.length ? 'kanji' : null,
-        selectedStage.dokkaiIds?.length ? 'dokkai' : null,
-        selectedStage.choukaiIds?.length ? 'choukai' : null,
-      ].filter(Boolean).length || 1;
-
-      const isAllCleared = updatedModules.length >= expectedModulesCount || moduleId === 'boss';
-      const calculatedStars = Math.min(3, Math.max(1, Math.ceil((updatedModules.length / expectedModulesCount) * 3)));
-
-      if (isAllCleared && !current.cleared) {
-        advanceMissions('stage_clear', 1);
-      }
-
-      return {
-        ...prev,
-        [selectedStage.id]: {
-          ...current,
-          cleared: isAllCleared || current.cleared,
-          stars: Math.max(current.stars, calculatedStars),
-          clearedModules: updatedModules,
-          lastPlayedAt: new Date().toISOString()
-        }
-      };
-    });
-  };
-
   // Launch targeted remediation recall directly from diagnostic
   const handleStartRemediationRecall = (_itemIds: string[]) => {
-    setSelectedStage(null);
     setIsRecallActive(true);
   };
 
@@ -501,7 +409,6 @@ export function usePlayerActions({
   // Reset Progress
   const handleGameOver = () => {
     playSound('wrong', stats.soundEnabled);
-    setSelectedStage(null); // Force exit stage
     // Kekalahan punya konsekuensi: HP tersisa minimal. Pulihkan lewat Potion atau Istirahat di Dojo
     // (Profil Karakter). Auto-heal hanya aktif saat pengembangan.
     setStats(prev => ({ ...prev, hp: import.meta.env.DEV ? prev.maxHp : getGameOverHp(prev.maxHp) }));
@@ -524,50 +431,9 @@ export function usePlayerActions({
     setStageProgress({});
     setDailyMissions(INITIAL_DAILY_MISSIONS);
     setWeeklyMissions(INITIAL_WEEKLY_MISSIONS);
-    setSelectedStage(null);
     setIsRecallActive(false);
-    setIsBossBattleActive(false);
     setActiveTab('home');
     playSound('click', true);
-  };
-
-  // Launch Stage from Stage ID
-  const handleLaunchStageById = (stageId: string) => {
-    let targetStage: Stage | undefined;
-    let targetMapId: string | undefined;
-    let targetWorldId: string | undefined;
-
-    for (const map of MAP_REGIONS) {
-      const mapStages = getStagesForMap(map.id);
-      const found = mapStages.find(s => s.id === stageId);
-      if (found) {
-        targetStage = found;
-        targetMapId = map.id;
-        targetWorldId = map.worldId || 'world_n5';
-        break;
-      }
-    }
-
-    if (!targetStage) {
-      const defaultMap = MAP_REGIONS.find(m => m.id === stats.currentMapId) || MAP_REGIONS[0];
-      const defaultStages = getStagesForMap(defaultMap.id);
-      targetStage = defaultStages[0];
-      targetMapId = defaultMap.id;
-      targetWorldId = defaultMap.worldId || 'world_n5';
-    }
-
-    if (targetStage) {
-      setStats(prev => ({
-        ...prev,
-        currentMapId: targetMapId || prev.currentMapId,
-        currentStageId: targetStage!.id,
-        currentWorldId: targetWorldId || prev.currentWorldId,
-      }));
-      // Hub stage hidup di tab World: pindahkan tab aktif agar "Kembali ke Daftar Stage" dan highlight nav konsisten
-      setActiveTab('maps');
-      setWorldNavView('maps');
-      setSelectedStage(targetStage);
-    }
   };
 
   // Handle Name Update
@@ -606,9 +472,9 @@ export function usePlayerActions({
 
   return {
     handleRewardPlayer, advanceMissions, handleStudyComplete, handleRecordItemInteraction, handleTowerMastery,
-    handleStageModuleComplete, handleStartRemediationRecall, handleItemReviewed, handleCompleteRecallSession,
+    handleStartRemediationRecall, handleItemReviewed, handleCompleteRecallSession,
     handleUseMp, handleAllocateStat, handleAscendTier, handleClaimMission, handleGameOver, handleHpDamage,
-    handleResetData, handleLaunchStageById, handleUpdateName, handleUpdateSignature, handleToggleBookmark,
+    handleResetData, handleUpdateName, handleUpdateSignature, handleToggleBookmark,
     handleUpdateDecks,
   };
 }

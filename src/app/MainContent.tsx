@@ -16,13 +16,11 @@ import type { Dispatch, SetStateAction } from 'react';
 // Modul berat di-lazy-load: tidak ikut chunk awal (kode + dataset tryout, hanzi-writer, dst.).
 // Semuanya berada di dalam <ModuleBoundary> yang menyediakan Suspense + ErrorBoundary per modul.
 const WorldView = lazy(() => import('../components/map/WorldView').then(m => ({ default: m.WorldView })));
-const StageHubView = lazy(() => import('../components/stage/StageHubView').then(m => ({ default: m.StageHubView })));
 const SettingsView = lazy(() => import('../components/settings/SettingsView').then(m => ({ default: m.SettingsView })));
 const RecallModule = lazy(() => import('../components/learning/RecallModule').then(m => ({ default: m.RecallModule })));
 const LibraryView = lazy(() => import('../components/library/LibraryView').then(m => ({ default: m.LibraryView })));
 const BukuSakuView = lazy(() => import('../components/deck/BukuSakuView').then(m => ({ default: m.BukuSakuView })));
 const LeaderboardView = lazy(() => import('../components/leaderboard/LeaderboardView').then(m => ({ default: m.LeaderboardView })));
-const DungeonBattleModule = lazy(() => import('../components/dungeon/DungeonBattleModule').then(m => ({ default: m.DungeonBattleModule })));
 
 type Nav = ReturnType<typeof useAppNavigation>;
 type Actions = ReturnType<typeof usePlayerActions>;
@@ -40,18 +38,18 @@ export interface MainContentProps extends Nav, Actions {
   saveToCloud: (payload: import('../lib/supabase').CloudSavePayload) => Promise<boolean>;
 }
 
-/** Konten utama: overlay (recall/boss/stage) + tab keep-alive. Dipindah apa adanya dari App.tsx. */
+/** Konten utama: overlay (recall) + tab keep-alive. Dipindah apa adanya dari App.tsx. */
 export function MainContent(props: MainContentProps) {
   const {
     stats, setStats, stageProgress, dailyMissions, weeklyMissions,
-    activeTab, setActiveTab, visitedTabs, selectedStage, setSelectedStage,
-    isStatusModalOpen, setIsStatusModalOpen, isRecallActive, setIsRecallActive,
-    isBossBattleActive, setIsBossBattleActive, isAuthModalOpen, setIsAuthModalOpen,
+    activeTab, visitedTabs,
+    setIsStatusModalOpen, isRecallActive, setIsRecallActive,
+    isAuthModalOpen, setIsAuthModalOpen,
     worldNavView, setWorldNavView, worldResetCount, deckResetCount, deckInitialSubTab, setDeckInitialSubTab,
-    handleTabChange, handleNavigateToOfficialBooks,
-    handleRewardPlayer, handleStudyComplete, handleRecordItemInteraction, handleStageModuleComplete, handleTowerMastery,
+    handleTabChange, handleOpenTower,
+    handleRewardPlayer, handleStudyComplete, handleRecordItemInteraction, handleTowerMastery,
     handleStartRemediationRecall, handleItemReviewed, handleCompleteRecallSession, handleUseMp,
-    handleClaimMission, handleGameOver, handleHpDamage, handleResetData, handleLaunchStageById,
+    handleClaimMission, handleGameOver, handleHpDamage, handleResetData,
     handleUpdateName, handleUpdateSignature, handleToggleBookmark, handleUpdateDecks, handleReplayOnboarding,
     isAuthenticated, setIsAuthenticated, cloudSyncStatus, lastSyncedAt, saveToCloud,
   } = props;
@@ -76,51 +74,8 @@ export function MainContent(props: MainContentProps) {
             </ModuleBoundary>
           )}
 
-          {isBossBattleActive && !isRecallActive && (
-            <ModuleBoundary label="Boss Battle" onReset={() => setIsBossBattleActive(false)}>
-              <DungeonBattleModule
-                onComplete={(_score, _total, exp, gold, tryoutId) => {
-                  handleRewardPlayer(exp, gold);
-                  setStats(prev => recordStudyActivity(prev, 'bossBattles', tryoutId || 'tryout_n3_002'));
-                  setIsBossBattleActive(false);
-                }}
-                onBack={() => setIsBossBattleActive(false)}
-                soundEnabled={stats.soundEnabled}
-              />
-            </ModuleBoundary>
-          )}
-
-          {selectedStage && !isRecallActive && !isBossBattleActive && (
-            <ModuleBoundary label="Stage" onReset={() => setSelectedStage(null)}>
-              <StageHubView
-                stage={selectedStage}
-                stageProgress={stageProgress[selectedStage.id]}
-                itemMastery={stats.itemMastery || {}}
-                onBackToMap={() => setSelectedStage(null)}
-                onBackToWorldList={() => {
-                  setSelectedStage(null);
-                  setStats(prev => ({ ...prev, currentWorldId: '' }));
-                }}
-                onSelectStage={(newStage) => setSelectedStage(newStage)}
-                onModuleComplete={handleStageModuleComplete}
-                playerMp={stats.mp}
-                playerMaxMp={stats.maxMp}
-                playerInt={stats.int}
-                playerStr={stats.str}
-                playerHp={stats.hp}
-                playerMaxHp={stats.maxHp}
-                onUseMp={handleUseMp}
-                onHpDamage={handleHpDamage}
-                onGameOver={handleGameOver}
-                onStartRemediationRecall={handleStartRemediationRecall}
-                soundEnabled={stats.soundEnabled}
-                furiganaEnabled={stats.furiganaEnabled ?? true}
-              />
-            </ModuleBoundary>
-          )}
-
           {/* Standard Tab Views (Keep-Alive Container for 0ms Instant Tab Switching) */}
-          <div className={Boolean(selectedStage || isRecallActive || isBossBattleActive) ? 'hidden' : 'block'}>
+          <div className={isRecallActive ? 'hidden' : 'block'}>
             <div className="tab-views-container relative w-full">
               {/* Home Tab */}
               <div
@@ -133,63 +88,38 @@ export function MainContent(props: MainContentProps) {
                   <HomeView
                     stats={stats}
                     dailyMissions={dailyMissions}
-                    stageProgress={stageProgress}
                     onOpenStatusModal={() => setIsStatusModalOpen(true)}
-                    onNavigateToStage={handleLaunchStageById}
                     onNavigateTab={(tab) => handleTabChange(tab as TabType)}
                     onStartRecall={() => setIsRecallActive(true)}
+                    onOpenTower={handleOpenTower}
                   />
                   </ModuleBoundary>
                 )}
                 </FreezeWhenHidden>
               </div>
 
-              {/* World / Maps Tab */}
+              {/* World Tab (Arcade, Dungeon, Tower) */}
               <div
                 className={activeTab === 'maps' ? 'block animate-tab-enter' : 'hidden'}
                 aria-hidden={activeTab !== 'maps'}
               >
                 <FreezeWhenHidden active={activeTab === 'maps'}>
                 {visitedTabs.has('maps') && (
-                  <ModuleBoundary label="Peta Dunia">
+                  <ModuleBoundary label="World">
                     <WorldView
-                      currentMapId={stats.currentMapId}
-                      currentWorldId={stats.currentWorldId || ''}
                       resetSignal={worldResetCount}
                       navView={worldNavView}
-                      onNavViewChange={(view, worldId) => {
-                        setWorldNavView(view);
-                        if (worldId) {
-                          setStats(prev => ({ ...prev, currentWorldId: worldId }));
-                        }
-                      }}
-                      stageProgress={stageProgress}
+                      onNavViewChange={setWorldNavView}
                       playerLevel={stats.level}
                       playerTierIndex={stats.tierIndex}
-                      onSelectStage={(stage) => setSelectedStage(stage)}
-                      onSelectMap={(mapId) => setStats(prev => ({ ...prev, currentMapId: mapId }))}
-                      onSelectWorld={(worldId) => setStats(prev => ({ ...prev, currentWorldId: worldId }))}
-                      onStartBoss={() => setIsBossBattleActive(true)}
                       soundEnabled={stats.soundEnabled}
                       userDecks={stats.userDecks}
                       onUpdateDecks={handleUpdateDecks}
                       onNavigateTab={(tab) => handleTabChange(tab as TabType)}
-                      onNavigateToOfficialBooks={handleNavigateToOfficialBooks}
                       onRewardPlayer={handleRewardPlayer}
                       onCompleteStudyItem={handleStudyComplete}
                       onTowerMastery={handleTowerMastery}
-                      playerMp={stats.mp}
-                      playerMaxMp={stats.maxMp}
-                      playerInt={stats.int}
-                      playerStr={stats.str}
-                      playerHp={stats.hp}
-                      playerMaxHp={stats.maxHp}
-                      onUseMp={handleUseMp}
-                      onHpDamage={handleHpDamage}
-                      onGameOver={handleGameOver}
-                      onStartRemediationRecall={handleStartRemediationRecall}
                       itemMastery={stats.itemMastery || {}}
-                      furiganaEnabled={stats.furiganaEnabled ?? true}
                     />
                   </ModuleBoundary>
                 )}

@@ -15,7 +15,6 @@ import {
   Star,
   Award,
   Volume2,
-  Sparkles,
   SkipForward,
   HelpCircle,
   BookOpen
@@ -372,8 +371,7 @@ export const StarSentenceRushModal: React.FC<StarSentenceRushModalProps> = ({
             <div className="space-y-5 animate-fade-in">
               {/* Hero Banner */}
               <div className="p-5 rounded-2xl bg-surface-elevated panel-stitched border border-border-subtle text-center relative overflow-hidden shadow-inner">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-border-subtle text-amber-300 text-xs font-bold font-mono mb-2">
-                  <Sparkles className="w-3.5 h-3.5" />
+                <div className="inline-flex items-center px-3 py-1 rounded-full bg-amber-500/20 border border-border-subtle text-amber-300 text-xs font-bold font-mono mb-2">
                   <span>SPEED RUSH 60 DETIK</span>
                 </div>
                 <h4 className="text-xl sm:text-2xl font-bold font-heading text-text-primary tracking-wide">

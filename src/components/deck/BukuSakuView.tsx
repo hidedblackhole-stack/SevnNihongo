@@ -10,10 +10,8 @@ import {
   Search,
   BookOpen,
   Bookmark,
-  Compass,
   Layers,
   X,
-  Sparkles,
 } from 'lucide-react';
 import { UserDeck, DeckItemCategory, DeckType, DeckItemRef } from '../../types/rpg';
 import { OfficialBook, OfficialChapter } from '../../types/books';
@@ -25,18 +23,6 @@ import {
 } from '../../data/officialBooks';
 import { BookshelfView } from './BookshelfView';
 import { BookDetailView } from './BookDetailView';
-import { CurriculumConfigModal } from '../curriculum/CurriculumConfigModal';
-import { CustomWorldView } from '../curriculum/CustomWorldView';
-import { CustomCurriculum, CustomCurriculumProgress } from '../../types/curriculum';
-import {
-  generateCurriculum,
-  getOrCreateCurriculumForDeck,
-  initializeCurriculumProgress,
-  loadAllCustomCurriculums,
-  saveCustomCurriculum,
-  loadAllCurriculumProgress,
-  saveCurriculumProgress,
-} from '../../utils/curriculumEngine';
 import { KotobaItem, KanjiItem, BunpouItem, ItemMasteryRecord } from '../../types/content';
 import {
   ensureUserDecks,
@@ -151,8 +137,6 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
       setSelectedKotoba(null);
       setSelectedKanji(null);
       setSelectedBunpou(null);
-      setActiveWorldDeckId(null);
-      setIsCurriculumConfigOpen(false);
       setIsAiCustomizerOpen(false);
     }
   }, [resetSignal]);
@@ -175,11 +159,6 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
   const [selectedKanji, setSelectedKanji] = useState<KanjiItem | null>(null);
   const [selectedBunpou, setSelectedBunpou] = useState<BunpouItem | null>(null);
 
-  // Custom Curriculum & World state
-  const [activeWorldDeckId, setActiveWorldDeckId] = useState<string | null>(null);
-  const [isCurriculumConfigOpen, setIsCurriculumConfigOpen] = useState(false);
-  const [curriculums, setCurriculums] = useState<Record<string, CustomCurriculum>>(() => loadAllCustomCurriculums());
-  const [curriculumProgressMap, setCurriculumProgressMap] = useState<Record<string, CustomCurriculumProgress>>(() => loadAllCurriculumProgress());
 
   // Handlers for Official Books & Chapters
   const handleCloneChapter = (chapter: OfficialChapter) => {
@@ -385,33 +364,7 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
       )}
 
       {/* Main Container */}
-      {activeWorldDeckId && curriculums[activeWorldDeckId] ? (
-        <CustomWorldView
-          curriculum={curriculums[activeWorldDeckId]}
-          progress={curriculumProgressMap[activeWorldDeckId] || initializeCurriculumProgress(curriculums[activeWorldDeckId])}
-          onUpdateProgress={(updated) => {
-            setCurriculumProgressMap(prev => ({ ...prev, [activeWorldDeckId]: updated }));
-            saveCurriculumProgress(updated);
-          }}
-          onRewardPlayer={onRewardPlayer}
-          onCompleteStudyItem={onCompleteStudyItem}
-          playerMp={playerMp}
-          playerMaxMp={playerMaxMp}
-          playerInt={playerInt}
-          playerStr={playerStr}
-          playerHp={playerHp}
-          playerMaxHp={playerMaxHp}
-          onUseMp={onUseMp}
-          onHpDamage={onHpDamage}
-          onGameOver={onGameOver}
-          onStartRemediationRecall={onStartRemediationRecall}
-          itemMastery={itemMastery}
-          furiganaEnabled={furiganaEnabled}
-          onReconfigure={() => setIsCurriculumConfigOpen(true)}
-          onBack={() => setActiveWorldDeckId(null)}
-          soundEnabled={soundEnabled}
-        />
-      ) : !activeDeck ? (
+      {!activeDeck ? (
         <div className="space-y-6">
           {/* Sub-Tab Navigation Bar: Buku Saku Saya vs Buku Kurikulum Resmi */}
           <div className="panel p-1.5 rounded-2xl bg-surface-inset border border-border-subtle flex items-center gap-2 shadow-inner">
@@ -459,15 +412,6 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
                 onBack={() => {
                   setActiveOfficialDeck(null);
                   playSound('click', soundEnabled);
-                }}
-                onPlayWorld={() => {
-                  playSound('click', soundEnabled);
-                  const targetDeck = activeOfficialDeck;
-                  const cur = curriculums[targetDeck.id] || getOrCreateCurriculumForDeck(targetDeck);
-                  saveCustomCurriculum(cur);
-                  const updatedAll = loadAllCustomCurriculums();
-                  setCurriculums(updatedAll);
-                  setActiveWorldDeckId(targetDeck.id);
                 }}
                 onCloneTemplate={() => {
                   const ch = selectedOfficialBook?.chapters.find(c => c.id === activeOfficialDeck.id);
@@ -537,7 +481,6 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
                   }}
                   className="btn-physical-primary py-2.5 px-4 rounded-2xl text-xs font-heading font-bold flex items-center gap-2 cursor-pointer"
                 >
-                  <Sparkles className="w-4 h-4 text-gold" />
                   <span>Buat Deck AI</span>
                 </button>
 
@@ -623,12 +566,6 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
                               {deck.type || 'mixed'}
                             </span>
                           )}
-                          {curriculums[deck.id] && (
-                            <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider font-mono text-indigo bg-indigo/10 px-2 py-0.5 rounded-md border border-border-subtle">
-                              <Compass className="w-3 h-3 text-indigo" />
-                              <span>World</span>
-                            </span>
-                          )}
                         </div>
                       </div>
 
@@ -696,15 +633,6 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
             setSelectedDeckId(null);
             setDeckSearch('');
             playSound('click', soundEnabled);
-          }}
-          onPlayWorld={() => {
-            playSound('click', soundEnabled);
-            const targetDeck = activeDeck;
-            const cur = curriculums[targetDeck.id] || getOrCreateCurriculumForDeck(targetDeck);
-            saveCustomCurriculum(cur);
-            const updatedAll = loadAllCustomCurriculums();
-            setCurriculums(updatedAll);
-            setActiveWorldDeckId(targetDeck.id);
           }}
           onEditDeck={(d) => {
             setEditingDeck(d);
@@ -910,42 +838,6 @@ export const BukuSakuView: React.FC<BukuSakuViewProps> = ({
         )}
       </AnimatePresence>
 
-      {/* Curriculum Config Modal */}
-      <CurriculumConfigModal
-        isOpen={isCurriculumConfigOpen}
-        deck={
-          activeOfficialDeck ||
-          activeDeck ||
-          (activeWorldDeckId
-            ? decks.find(d => d.id === activeWorldDeckId) ||
-              OFFICIAL_BOOKS.flatMap(b => b.chapters).map(c => chapterToUserDeck(c, OFFICIAL_BOOKS.find(bk => bk.id === c.bookId)!)).find(d => d.id === activeWorldDeckId) ||
-              null
-            : null)
-        }
-        onClose={() => setIsCurriculumConfigOpen(false)}
-        onGenerate={(config) => {
-          const targetDeck =
-            activeOfficialDeck ||
-            activeDeck ||
-            (activeWorldDeckId
-              ? decks.find(d => d.id === activeWorldDeckId) ||
-                OFFICIAL_BOOKS.flatMap(b => b.chapters).map(c => chapterToUserDeck(c, OFFICIAL_BOOKS.find(bk => bk.id === c.bookId)!)).find(d => d.id === activeWorldDeckId) ||
-                null
-              : null);
-          if (!targetDeck) return;
-          const generated = generateCurriculum(targetDeck, config);
-          saveCustomCurriculum(generated);
-          setCurriculums(prev => ({ ...prev, [targetDeck.id]: generated }));
-
-          const initialProg = initializeCurriculumProgress(generated);
-          saveCurriculumProgress(initialProg);
-          setCurriculumProgressMap(prev => ({ ...prev, [targetDeck.id]: initialProg }));
-
-          setIsCurriculumConfigOpen(false);
-          setActiveWorldDeckId(targetDeck.id);
-        }}
-        soundEnabled={soundEnabled}
-      />
     </div>
   );
 };

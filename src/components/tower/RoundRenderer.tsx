@@ -23,7 +23,7 @@ import { QuizAdapter, QuizQuestionAnswer } from '../../engine/tower/adapters/qui
 import { ConjugationAdapter, ConjugationAnswer } from '../../engine/tower/adapters/conjugationAdapter';
 import { playSound } from '../../utils/audio';
 import { RubyText } from '../learning/RubyText';
-import { CheckCircle2, XCircle, ArrowRight, RotateCcw, Sparkles } from 'lucide-react';
+import { CheckCircle2, XCircle, ArrowRight, RotateCcw } from 'lucide-react';
 
 interface RoundRendererProps {
   phase: RoundPhase | null;
@@ -228,7 +228,6 @@ export const RoundRenderer: React.FC<RoundRendererProps> = ({
   const genericInput = input as GenericRoundInput;
   return (
     <div className={`w-full max-w-md mx-auto text-center p-8 bg-surface-card rounded-2xl border border-border-subtle ${className}`}>
-      <Sparkles className="w-8 h-8 text-wine-accent mx-auto mb-2" />
       <h3 className="text-lg font-black text-text-primary font-heading">
         {genericInput.title || `Tantangan Ronde`}
       </h3>

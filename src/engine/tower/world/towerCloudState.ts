@@ -7,6 +7,8 @@
 import { loadTowerProgress, saveTowerProgress, TowerSavedProgress } from './towerProgress';
 import { TowerAchievementManager } from './towerAchievements';
 import { SkillTreeManager, PlayerTowerEconomy, TOWER_PASSIVE_SKILLS } from '../combat/skillTree';
+import { loadTower1Progress, mergeTower1Progress, saveTower1Progress } from '../../tower1/progress';
+import { Tower1Progress } from '../../tower1/types';
 
 type AchievementProgress = Record<string, { currentValue: number; isUnlocked: boolean }>;
 
@@ -14,6 +16,8 @@ export interface TowerCloudState {
   progress: TowerSavedProgress;
   economy: PlayerTowerEconomy;
   achievements: AchievementProgress;
+  /** Progres Menara 1 (Tutorial): lantai selesai + bintang. */
+  tower1?: Tower1Progress;
   updatedAt: string;
 }
 
@@ -72,7 +76,9 @@ export function mergeTowerState(a: TowerCloudState | undefined | null, b: TowerC
       : v;
   }
 
-  return { progress, economy, achievements, updatedAt: a.updatedAt > b.updatedAt ? a.updatedAt : b.updatedAt };
+  const tower1 = a.tower1 || b.tower1 ? mergeTower1Progress(a.tower1, b.tower1) : undefined;
+
+  return { progress, economy, achievements, tower1, updatedAt: a.updatedAt > b.updatedAt ? a.updatedAt : b.updatedAt };
 }
 
 /** Baca kondisi Tower lokal. */
@@ -85,6 +91,7 @@ export function collectTowerState(): TowerCloudState {
     progress: loadTowerProgress(),
     economy: SkillTreeManager.load(),
     achievements,
+    tower1: loadTower1Progress(),
     updatedAt: new Date().toISOString(),
   };
 }
@@ -93,6 +100,7 @@ export function collectTowerState(): TowerCloudState {
 export function applyTowerState(state: TowerCloudState | null | undefined): void {
   if (!state) return;
   saveTowerProgress(state.progress);
+  if (state.tower1) saveTower1Progress(state.tower1);
   SkillTreeManager.save(state.economy);
   const list = TowerAchievementManager.load().map(a => ({
     ...a,

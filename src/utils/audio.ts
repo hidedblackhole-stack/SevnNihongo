@@ -342,6 +342,9 @@ function getBestJapaneseVoice(): SpeechSynthesisVoice | null {
   return jaVoices[0];
 }
 
+// Chrome bisa membuang utterance yang sudah di-GC sebelum selesai bicara; simpan rujukannya.
+let activeUtterance: SpeechSynthesisUtterance | null = null;
+
 // Japanese Text-to-Speech using browser SpeechSynthesis
 export function speakJapanese(text: string, rate: number = 0.95): Promise<void> {
   return new Promise((resolve) => {
@@ -363,10 +366,20 @@ export function speakJapanese(text: string, rate: number = 0.95): Promise<void> 
         utterance.voice = jaVoice;
       }
 
+      activeUtterance = utterance;
+
       utterance.onend = () => resolve();
       utterance.onerror = () => resolve();
 
-      window.speechSynthesis.speak(utterance);
+      // Chrome sering membuang speak() yang dipanggil tepat setelah cancel(); beri jeda singkat.
+      window.setTimeout(() => {
+        try {
+          window.speechSynthesis.resume();
+          window.speechSynthesis.speak(utterance);
+        } catch {
+          resolve();
+        }
+      }, 80);
     } catch {
       resolve();
     }

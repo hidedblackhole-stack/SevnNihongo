@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
 import { PlayerStats, StageClearData, Mission, DEFAULT_NAMES } from '../types/rpg';
-import { MAP_REGIONS, getStagesForMap } from '../data/maps';
 import { INITIAL_DAILY_MISSIONS, INITIAL_WEEKLY_MISSIONS } from '../data/missions';
 import { ensureUserDecks, createDefaultBookmarkDeck } from '../utils/decks';
 import { buildSmartRecallQueue } from '../utils/mastery';
@@ -28,19 +27,6 @@ function loadInitialStatsRaw(): PlayerStats {
     if (saved) {
       const parsed = JSON.parse(saved);
 
-      // Check if player has cleared stages
-      let savedStages: Record<string, any> = {};
-      try {
-        const rawStages = localStorage.getItem(STORAGE_KEY_STAGES);
-        if (rawStages) savedStages = JSON.parse(rawStages);
-      } catch {}
-
-      const hasAnyCleared = Object.values(savedStages).some((s: any) => s?.cleared);
-      const isLegacyN3Initial = !hasAnyCleared && (parsed.currentMapId === 'map_bunpou_w1' || parsed.currentStageId === 'stage_1' || parsed.currentMapId === 'map_n5_training');
-
-      const validMap = isLegacyN3Initial ? MAP_REGIONS.find(m => m.id === 'map_kana_hiragana') : (MAP_REGIONS.find(m => m.id === parsed.currentMapId) || MAP_REGIONS.find(m => m.id === 'map_kana_hiragana') || MAP_REGIONS[0]);
-      const validStages = getStagesForMap(validMap?.id || 'map_kana_hiragana');
-      const validStage = isLegacyN3Initial ? validStages.find(s => s.id === 'stage_kana_hira_1') : (validStages.find(s => s.id === parsed.currentStageId) || validStages[0]);
       const loadedMastery = parsed.itemMastery || INITIAL_ITEM_MASTERY;
       
       // Migrate old default name to random name
@@ -70,9 +56,6 @@ function loadInitialStatsRaw(): PlayerStats {
             return [];
           }
         })(),
-        currentWorldId: isLegacyN3Initial ? 'world_training' : (parsed.currentWorldId || 'world_training'),
-        currentMapId: validMap ? validMap.id : 'map_kana_hiragana',
-        currentStageId: validStage ? validStage.id : 'stage_kana_hira_1',
         userId: parsed.userId || uuidv4(),
         todayStudySeconds: loadedTodaySeconds,
         totalStudySeconds: parsed.totalStudySeconds || 0,

@@ -9,7 +9,6 @@ import {
   Share2,
   Copy,
   Check,
-  Sparkles,
   BookOpen,
   Award,
   Flame,
@@ -82,7 +81,6 @@ export const PlayerShowcaseCard: React.FC<PlayerShowcaseCardProps> = ({
         {/* Top Header Badge */}
         <div className="flex items-center justify-between mb-4 pb-3 border-b border-border-subtle/80">
           <div className="flex items-center gap-1.5 text-wine-accent">
-            <Sparkles className="w-4 h-4" />
             <span className="text-[10px] font-black tracking-widest uppercase font-heading">
               SevnQuest Journey Card
             </span>
