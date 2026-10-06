@@ -16,6 +16,7 @@ import {
   getWeeklyLeaderboard,
   getCurrentWeekId,
   getUserLeaderboardRank,
+  getLeaderboardTotalCount,
   LeaderboardEntry,
   WeeklyLeaderboardEntry,
   UserRankInfo
@@ -131,6 +132,15 @@ export const LeaderboardView: React.FC<LeaderboardViewProps> = ({
           } catch {}
         } else if (allTimeEntries.length === 0) {
           setHasError(true);
+        }
+
+        // Total pemain tidak boleh bergantung pada login (tamu juga perlu angkanya)
+        const total = await getLeaderboardTotalCount();
+        if (total) {
+          setTotalDbCount(total);
+          try {
+            localStorage.setItem(STORAGE_KEY_TOTAL_COUNT, String(total));
+          } catch {}
         }
 
         // Fast rank lookup using preloaded data

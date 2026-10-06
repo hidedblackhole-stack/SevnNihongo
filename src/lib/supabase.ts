@@ -412,6 +412,22 @@ export async function getLeaderboard(limit = 100): Promise<LeaderboardEntry[]> {
   }
 }
 
+/**
+ * Total pemain di leaderboard all-time. Tidak bergantung pada login, jadi tamu
+ * juga mendapat angka yang benar. Mengembalikan null bila query gagal.
+ */
+export async function getLeaderboardTotalCount(): Promise<number | null> {
+  try {
+    const { count, error } = await supabase
+      .from('leaderboard')
+      .select('*', { count: 'exact', head: true });
+    if (error) return null;
+    return count ?? null;
+  } catch {
+    return null;
+  }
+}
+
 export interface UserRankInfo {
   entry: LeaderboardEntry;
   rank: number;
