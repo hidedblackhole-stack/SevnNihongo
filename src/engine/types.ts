@@ -78,6 +78,8 @@ export interface GrammarPatternSchema {
   meaningTemplateId: string;   // e.g. "{subject} tidak boleh {predicate} {object} di {location}"
   meaningTemplateEn: string;
   nuanceExplanation: string;
+  /** Contoh kalimat bawaan (untuk pola dari library yang tidak punya sintesis kalimat). */
+  example?: { japanese: string; reading: string; meaningId: string };
 }
 
 // ------------------------------------------------------------------------------
