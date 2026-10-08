@@ -4,7 +4,7 @@ import type { PlayerStats, StageClearData, Mission } from '../types/rpg';
 import { calculateMaxHp, calculateMaxMp, calculateLevelFromExp } from '../data/tiers';
 import { getEffectiveTier } from '../utils/ascension';
 import { getLocalIsoWeekId } from '../utils/time';
-import { safeSetItem, safeGetItem } from '../utils/storage';
+import { safeSetItem } from '../utils/storage';
 import { mergeStatsCollections, mergeStageProgress } from '../utils/cloudMerge';
 import { supabase, getSession, saveGameToCloud, loadGameFromCloud, upsertLeaderboard, type CloudSavePayload } from '../lib/supabase';
 import { collectTowerState, applyTowerState, mergeTowerState } from '../engine/tower/world/towerCloudState';
@@ -50,7 +50,9 @@ export function useCloudSync({
 }: Params) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 const [cloudSyncStatus, setCloudSyncStatus] = useState<CloudSyncStatus>('idle');
-  const [lastSyncedAt, setLastSyncedAt] = useState<string | null>(() => safeGetItem(STORAGE_KEY_LAST_SYNC));
+  // Hanya terisi setelah sinkron BERHASIL di sesi ini. Dulu dibaca dari localStorage sehingga jam
+  // sesi lama tampil di Pengaturan walau sinkron sekarang gagal.
+  const [lastSyncedAt, setLastSyncedAt] = useState<string | null>(null);
   // Auto-save ke cloud TIDAK boleh jalan sebelum rekonsiliasi awal selesai; kalau tidak, state lokal
   // yang masih kosong (perangkat baru / koneksi lambat) bisa menimpa save di cloud.
   const [cloudHydrated, setCloudHydrated] = useState(false);
@@ -69,7 +71,7 @@ const [cloudSyncStatus, setCloudSyncStatus] = useState<CloudSyncStatus>('idle');
   }, []);
 
   // Cloud Sync Handler
-  const handleCloudSync = useCallback(async (userIdParam?: string): Promise<boolean> => {
+  const handleCloudSync = useCallback(async (userIdParam?: string, isRetry = false): Promise<boolean> => {
     try {
       setCloudSyncStatus('syncing');
       // Melempar error bila jaringan/server gagal => masuk catch, tidak ada yang ditimpa.
@@ -83,13 +85,15 @@ const [cloudSyncStatus, setCloudSyncStatus] = useState<CloudSyncStatus>('idle');
       if (!cloudData) {
         // No cloud save exists yet, push local progress if we have any
         if (targetUserId) {
-          await saveToCloud({
+          const pushed = await saveToCloud({
             stats: { ...currentStats, userId: targetUserId },
             stageProgress: currentStages,
             dailyMissions: currentDaily,
             weeklyMissions: currentWeekly,
             updatedAt: new Date().toISOString()
           });
+          // saveGameToCloud tidak melempar error; false = simpan benar-benar gagal.
+          if (!pushed) throw new Error('Gagal menyimpan progres awal ke cloud');
         }
         markSynced();
         setCloudSyncStatus('synced');
@@ -174,18 +178,26 @@ const [cloudSyncStatus, setCloudSyncStatus] = useState<CloudSyncStatus>('idle');
       }
 
       // Lokal lebih maju / sama: dorong snapshot gabungan ke cloud
-      await saveToCloud({
+      const pushed = await saveToCloud({
         stats: mergedStats,
         stageProgress: mergedStages,
         dailyMissions: currentDaily,
         weeklyMissions: currentWeekly,
         updatedAt: new Date().toISOString()
       });
+      if (!pushed) throw new Error('Gagal menyimpan snapshot gabungan ke cloud');
       markSynced();
       setCloudSyncStatus('synced');
       if (localWins) showToast(`Progres lokal (Level ${localLevel}) tersimpan ke Cloud!`);
       return true;
     } catch (err) {
+      // Tepat setelah login, token sesi / jaringan sering belum siap sehingga percobaan pertama gagal
+      // padahal yang kedua berhasil. Coba ulang sekali sebelum memberi tahu pemain.
+      if (!isRetry) {
+        console.warn('[CloudSync] Sinkron pertama gagal, mencoba lagi...', err);
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        return handleCloudSync(userIdParam, true);
+      }
       console.error('[CloudSync] Error during sync:', err);
       setCloudSyncStatus('error');
       showToast('Gagal sinkronisasi dengan cloud. Progres lokal tetap aman.');
@@ -231,6 +243,7 @@ const [cloudSyncStatus, setCloudSyncStatus] = useState<CloudSyncStatus>('idle');
           reconcile(session.user.id);
         }
       } else {
+        setLastSyncedAt(null);
         setCloudHydrated(true);
       }
     });
@@ -255,14 +268,20 @@ const [cloudSyncStatus, setCloudSyncStatus] = useState<CloudSyncStatus>('idle');
     const timerId = setTimeout(async () => {
       try {
         lastCloudSaveAtRef.current = Date.now();
-        await saveToCloud({
+        const saved = await saveToCloud({
           stats,
           stageProgress,
           dailyMissions,
           weeklyMissions,
           updatedAt: new Date().toISOString()
         });
-        markSynced();
+        // Dulu markSynced() dipanggil tanpa memeriksa hasil, sehingga "Sinkron: <jam>" muncul walau gagal.
+        if (saved) {
+          markSynced();
+          setCloudSyncStatus('synced');
+        } else {
+          setCloudSyncStatus('error');
+        }
       } catch (err) {
         console.warn('Cloud auto-save error:', err);
       }

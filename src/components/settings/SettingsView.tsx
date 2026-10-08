@@ -191,8 +191,9 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             <>
               <div>
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="px-2.5 py-1 rounded-full bg-surface-inset border border-border-subtle text-indigo font-bold text-[10px] flex items-center gap-1.5">
-                    <Cloud className="w-3 h-3" /> Terhubung ke Cloud
+                  <span className={`px-2.5 py-1 rounded-full bg-surface-inset border border-border-subtle font-bold text-[10px] flex items-center gap-1.5 ${syncStatus === 'error' ? 'text-wine-accent' : 'text-indigo'}`}>
+                    <Cloud className="w-3 h-3" />
+                    {syncStatus === 'error' ? 'Sinkron gagal (progres lokal aman)' : 'Terhubung ke Cloud'}
                     {syncStatus === 'syncing' && (
                       <RefreshCw className="w-3 h-3 animate-spin text-indigo ml-1" />
                     )}
