@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Headphones } from 'lucide-react';
 import { ChoiceRoom, RoomOutcome } from '../../../engine/tower1/types';
-import { stripRuby, readingOf } from '../../../engine/tower1/jp';
+import { readingOf } from '../../../engine/tower1/jp';
 import { playSound } from '../../../utils/audio';
 import { usePracticeQueue } from '../usePracticeQueue';
 import { BeatStrip, Feedback, Jp, RetryPanel, RoomComplete, RoomFrame, SpeakButton, useJapaneseVoice } from '../parts';
@@ -35,7 +35,9 @@ export const ChoiceRoomView: React.FC<Props> = ({ room, soundEnabled, onDone }) 
   const answered = picked !== null;
   const isCorrect = picked === question.answer;
   const listenBlocked = question.listenOnly && !hasVoice;
-  const spoken = question.say ? stripRuby(question.say) : undefined;
+  // Ucapkan BACAAN (furigana menggantikan kanji), bukan kanji mentah: TTS sering salah membaca kanji,
+  // sehingga suara yang keluar tidak cocok dengan pilihan jawaban yang tertulis dalam kana.
+  const spoken = question.say ? readingOf(question.say) : undefined;
 
   const choose = (idx: number) => {
     if (answered) return;

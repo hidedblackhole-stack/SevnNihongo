@@ -373,6 +373,12 @@ export function speakJapanese(text: string, rate: number = 0.95): Promise<void> 
 
       // Chrome sering membuang speak() yang dipanggil tepat setelah cancel(); beri jeda singkat.
       window.setTimeout(() => {
+        // Sudah digantikan panggilan lain (soal berpindah / tombol ditekan lagi) atau dihentikan:
+        // jangan putar teks lama, kalau tidak suara soal sebelumnya muncul di soal yang baru.
+        if (activeUtterance !== utterance) {
+          resolve();
+          return;
+        }
         try {
           window.speechSynthesis.resume();
           window.speechSynthesis.speak(utterance);
@@ -387,6 +393,7 @@ export function speakJapanese(text: string, rate: number = 0.95): Promise<void> 
 }
 
 export function stopSpeaking() {
+  activeUtterance = null; // batalkan utterance yang masih menunggu jeda sebelum speak()
   if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
     window.speechSynthesis.cancel();
   }
