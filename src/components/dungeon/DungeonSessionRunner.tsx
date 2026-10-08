@@ -196,7 +196,6 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
   const [sakubunMode, setSakubunMode] = useState<'tiles' | 'typing'>('tiles');
   const [sakubunTypedText, setSakubunTypedText] = useState<string>('');
   const [sakubunPlacedTiles, setSakubunPlacedTiles] = useState<SentenceTile[]>([]);
-  const [sakubunAvailableTiles, setSakubunAvailableTiles] = useState<SentenceTile[]>([]);
   const [sakubunFeedback, setSakubunFeedback] = useState<ValidationFeedback | null>(null);
 
   // Sub-exercise state for Sentence Creation (Kreasi Kalimat)
@@ -252,7 +251,6 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
     if (config.type === 'sakubun' && payload.sakubunExercises && payload.sakubunExercises[currentFloorIndex]) {
       const ex = payload.sakubunExercises[currentFloorIndex];
       setSakubunPlacedTiles([]);
-      setSakubunAvailableTiles([...(ex.availableTiles || [])]);
       setSakubunFeedback(null);
       setSakubunTypedText('');
     }
@@ -719,9 +717,11 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                   const ex = payload.sakubunExercises[currentFloorIndex];
                   if (!ex) return renderFallbackMissingItem();
 
+                  // Bank balok selalu mengikuti urutan acak awal soal; balok yang terpakai hanya
+                  // ditandai, sehingga saat dilepas ia kembali ke slot semula (tidak pindah ke belakang).
                   const handleSelectTile = (tile: SentenceTile) => {
+                    if (sakubunPlacedTiles.some(t => t.id === tile.id)) return;
                     playSound('click', soundEnabled);
-                    setSakubunAvailableTiles(prev => prev.filter(t => t.id !== tile.id));
                     setSakubunPlacedTiles(prev => [...prev, tile]);
                     setSakubunFeedback(null);
                   };
@@ -729,7 +729,6 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
                   const handleRemoveTile = (tile: SentenceTile) => {
                     playSound('click', soundEnabled);
                     setSakubunPlacedTiles(prev => prev.filter(t => t.id !== tile.id));
-                    setSakubunAvailableTiles(prev => [...prev, tile]);
                     setSakubunFeedback(null);
                   };
 
@@ -828,16 +827,24 @@ export const DungeonSessionRunner: React.FC<DungeonSessionRunnerProps> = ({
 
                           {/* Available Tiles Bank */}
                           <div className="flex flex-wrap gap-2 justify-center">
-                            {sakubunAvailableTiles.map((t) => (
-                              <button
-                                key={t.id}
-                                type="button"
-                                onClick={() => handleSelectTile(t)}
-                                className="btn-physical-secondary px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold font-jp transition-transform cursor-pointer"
-                              >
-                                {t.text}
-                              </button>
-                            ))}
+                            {ex.availableTiles.map((t) => {
+                              const used = sakubunPlacedTiles.some(p => p.id === t.id);
+                              return (
+                                <button
+                                  key={t.id}
+                                  type="button"
+                                  disabled={used}
+                                  onClick={() => handleSelectTile(t)}
+                                  className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold font-jp transition-transform ${
+                                    used
+                                      ? 'border border-dashed border-border-subtle text-transparent'
+                                      : 'btn-physical-secondary cursor-pointer'
+                                  }`}
+                                >
+                                  {t.text}
+                                </button>
+                              );
+                            })}
                           </div>
                         </div>
                       )}
