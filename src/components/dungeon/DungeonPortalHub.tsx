@@ -12,13 +12,14 @@ import {
   Compass,
   ScrollText,
   Presentation,
-  Library
+  Library,
+  Headphones
 } from 'lucide-react';
 import { DungeonType } from '../../utils/dungeonGenerator';
 import { playSound } from '../../utils/audio';
 
-/** 'text_study' bukan DungeonType generator: ia membuka modal sendiri (tanpa payload soal). */
-export type DungeonGateType = DungeonType | 'text_study';
+/** 'text_study' dan 'immersion' bukan DungeonType generator: masing-masing membuka modal sendiri (tanpa payload soal). */
+export type DungeonGateType = DungeonType | 'text_study' | 'immersion';
 
 interface DungeonPortalHubProps {
   onSelectDungeon: (type: DungeonGateType) => void;
@@ -31,8 +32,11 @@ interface DungeonGateInfo {
   accentColor: string;
   icon: React.ComponentType<{ className?: string }>;
   description: string;
-  expPerQuestion: number;
-  goldPerQuestion: number;
+  /** Lencana kuning kecil di samping judul, mis. fitur yang masih dikembangkan. */
+  badge?: string;
+  /** Kosong untuk gate yang belum punya hadiah (mis. Dungeon Imersi). */
+  expPerQuestion?: number;
+  goldPerQuestion?: number;
 }
 
 const DUNGEON_GATES: DungeonGateInfo[] = [
@@ -117,6 +121,14 @@ const DUNGEON_GATES: DungeonGateInfo[] = [
     expPerQuestion: 18,
     goldPerQuestion: 9,
   },
+  {
+    type: 'immersion',
+    title: 'Dungeon Imersi',
+    accentColor: 'hover:border-border-primary',
+    icon: Headphones,
+    description: 'Belajar dari lagu dan video YouTube Jepang pilihanmu. Dua ruang: Musik dan Video.',
+    badge: 'Dalam pengembangan',
+  },
 ];
 
 export const DungeonPortalHub: React.FC<DungeonPortalHubProps> = ({
@@ -195,6 +207,11 @@ export const DungeonPortalHub: React.FC<DungeonPortalHubProps> = ({
                     <h3 className="text-base sm:text-lg font-bold text-text-primary font-heading group-hover:text-gold transition-colors">
                       {gate.title}
                     </h3>
+                    {gate.badge && (
+                      <span className="inline-block mt-1 px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-gold/20 text-gold border border-border-subtle uppercase tracking-wider">
+                        {gate.badge}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -206,11 +223,15 @@ export const DungeonPortalHub: React.FC<DungeonPortalHubProps> = ({
 
               {/* Bottom: Reward Preview & CTA */}
               <div className="pt-3 border-t border-border-subtle flex items-center justify-between">
-                <span className="text-[11px] font-mono font-bold text-gold flex items-center gap-1">
-                  <span>+{gate.expPerQuestion} EXP</span>
-                  <span className="text-text-muted">·</span>
-                  <span>+{gate.goldPerQuestion} Gold / soal</span>
-                </span>
+                {gate.expPerQuestion !== undefined ? (
+                  <span className="text-[11px] font-mono font-bold text-gold flex items-center gap-1">
+                    <span>+{gate.expPerQuestion} EXP</span>
+                    <span className="text-text-muted">·</span>
+                    <span>+{gate.goldPerQuestion} Gold / soal</span>
+                  </span>
+                ) : (
+                  <span className="text-[11px] font-mono font-bold text-text-muted">Musik · Video</span>
+                )}
 
                 <button
                   type="button"
