@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import * as wanakana from 'wanakana';
 import {
   Volume2,
   Shuffle,
@@ -280,10 +281,13 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
     }
     if (verbSearchQuery.trim()) {
       const q = verbSearchQuery.toLowerCase().trim();
+      const qHira = wanakana.toHiragana(q, { IMEMode: false });
       list = list.filter(
         v =>
           v.kanji.includes(q) ||
           v.reading.includes(q) ||
+          v.reading.includes(qHira) ||
+          wanakana.toRomaji(v.reading).includes(q) ||
           getVerbMeaning(v).toLowerCase().includes(q) ||
           (v.romaji || '').toLowerCase().includes(q)
       );
