@@ -70,6 +70,8 @@ export function MainContent(props: MainContentProps) {
               onExit={() => setIsRecallActive(false)}
               soundEnabled={stats.soundEnabled}
               furiganaEnabled={stats.furiganaEnabled ?? true}
+              syncStatus={cloudSyncStatus}
+              hasProgress={Object.keys(stats.itemMastery || {}).length > 0}
             />
             </ModuleBoundary>
           )}

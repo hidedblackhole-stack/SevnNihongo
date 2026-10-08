@@ -17,10 +17,14 @@ interface RecallModuleProps {
   onExit: () => void;
   soundEnabled?: boolean;
   furiganaEnabled?: boolean;
+  /** Status sinkron cloud; dipakai untuk membedakan "antrean kosong" dari "progres belum termuat". */
+  syncStatus?: 'idle' | 'syncing' | 'synced' | 'error';
+  /** true bila pemain sudah punya catatan mastery (pernah belajar sesuatu). */
+  hasProgress?: boolean;
 }
 
 export const RecallModule: React.FC<RecallModuleProps> = ({
-  recallQueue,
+  recallQueue: liveRecallQueue,
   playerMp: _playerMp,
   playerInt,
   onUseMp,
@@ -29,7 +33,21 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
   onExit,
   soundEnabled = true,
   furiganaEnabled = true,
+  syncStatus = 'idle',
+  hasProgress = true,
 }) => {
+  // Antrean DIBEKUKAN selama sesi. handleItemReviewed membangun ulang `recallQueue` di stats tepat saat
+  // pemain mengklik jawaban; kalau layar membaca antrean hidup itu, item yang baru dijawab turun/bergeser,
+  // soal dikocok ulang, dan yang tampil jadi soal lain padahal skornya sudah dihitung dari soal sebelumnya.
+  // Pengecualian: bila saat dibuka antrean masih kosong (progres sedang dimuat), ikuti antrean hidup
+  // sampai terisi sekali.
+  const [recallQueue, setSessionQueue] = useState<RecallQueueItem[]>(liveRecallQueue || []);
+  useEffect(() => {
+    if (recallQueue.length === 0 && liveRecallQueue && liveRecallQueue.length > 0) {
+      setSessionQueue(liveRecallQueue);
+    }
+  }, [liveRecallQueue, recallQueue.length]);
+
   const [activeFilter, setActiveFilter] = useState<'ALL' | RecallPriorityTier>('ALL');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
@@ -42,7 +60,10 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
 
   // Level 5 Sentence Construction State
   const [selectedWords, setSelectedWords] = useState<string[]>([]);
+  // Bank kata berurutan tetap (diacak sekali per soal); kata yang terpakai hanya ditandai lewat id-nya,
+  // sehingga saat dilepas ia kembali ke slot semula, bukan pindah ke belakang.
   const [availableWords, setAvailableWords] = useState<{ id: string; word: string }[]>([]);
+  const [selectedWordIds, setSelectedWordIds] = useState<string[]>([]);
 
   // Filtered queue
   const filteredQueue = activeFilter === 'ALL'
@@ -61,24 +82,39 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
         }))
       );
       setSelectedWords([]);
+      setSelectedWordIds([]);
     } else {
       setSelectedWords([]);
+      setSelectedWordIds([]);
       setAvailableWords([]);
     }
-  }, [currentIndex, currentItem]);
+    // Kunci pada identitas soal, bukan objek `currentItem`: antrean Recall dihitung ulang saat stats
+    // berubah dan menghasilkan soal Level 5 dengan acakan baru, yang akan mereset susunan di tengah jalan.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentIndex, currentItem?.itemId, currentItem?.sampleQuestion?.id]);
 
   if (!recallQueue || recallQueue.length === 0) {
+    // Antrean kosong punya tiga penyebab berbeda; pesannya harus dibedakan supaya pemain tidak mengira
+    // progresnya hilang padahal hanya belum termuat dari cloud.
+    const emptyState =
+      syncStatus === 'syncing'
+        ? { icon: <ShieldAlert className="w-10 h-10" />, title: 'MEMUAT PROGRESMU…', body: 'Sedang mengambil progres dari cloud. Materi Recall akan muncul setelah selesai.' }
+        : syncStatus === 'error'
+          ? { icon: <ShieldAlert className="w-10 h-10" />, title: 'PROGRES BELUM TERMUAT', body: 'Sinkronisasi dengan cloud gagal, jadi materi Recall belum bisa dihitung. Progresmu tidak hilang. Periksa koneksi lalu buka Recall lagi.' }
+          : !hasProgress
+            ? { icon: <BookOpen className="w-10 h-10" />, title: 'BELUM ADA MATERI DIULANG', body: 'Recall mengulang materi yang sudah kamu pelajari. Selesaikan beberapa lantai di Menara atau latihan dulu, lalu kembali ke sini.' }
+            : { icon: <CheckCircle2 className="w-10 h-10" />, title: 'SEMUA MATERI TELAH SEGAR!', body: 'Tidak ada materi dalam antrean Recall yang perlu direview saat ini. Ingatanmu masih dalam kondisi prima.' };
     return (
       <div className="w-full max-w-lg mx-auto p-6 sm:p-8 rounded-3xl panel panel-stitched border border-border-subtle text-center space-y-5 shadow-xl">
         <div className="p-4 inline-flex rounded-full bg-gold/15 border border-border-subtle text-gold shadow-md">
-          <CheckCircle2 className="w-10 h-10" />
+          {emptyState.icon}
         </div>
         <div>
           <h2 className="text-xl sm:text-2xl font-bold text-gold font-heading">
-            SEMUA MATERI TELAH SEGAR!
+            {emptyState.title}
           </h2>
           <p className="text-xs sm:text-sm text-text-secondary mt-1">
-            Tidak ada materi dalam antrean Recall yang perlu direview saat ini. Ingatanmu masih dalam kondisi prima.
+            {emptyState.body}
           </p>
         </div>
         <button
@@ -137,15 +173,15 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
 
   // Handle word selection for Level 5 sentence production
   const handleWordClick = (wordObj: { id: string; word: string }) => {
-    if (isAnswered) return;
+    if (isAnswered || selectedWordIds.includes(wordObj.id)) return;
     setSelectedWords(prev => [...prev, wordObj.word]);
-    setAvailableWords(prev => prev.filter(w => w.id !== wordObj.id));
+    setSelectedWordIds(prev => [...prev, wordObj.id]);
   };
 
-  const handleRemoveWord = (word: string, indexToRemove: number) => {
+  const handleRemoveWord = (_word: string, indexToRemove: number) => {
     if (isAnswered) return;
     setSelectedWords(prev => prev.filter((_, i) => i !== indexToRemove));
-    setAvailableWords(prev => [...prev, { id: `${word}_${Date.now()}`, word }]);
+    setSelectedWordIds(prev => prev.filter((_, i) => i !== indexToRemove));
   };
 
   const handleSubmitSentenceProduction = () => {
@@ -451,18 +487,25 @@ export const RecallModule: React.FC<RecallModuleProps> = ({
 
             {/* Word Bank Chips */}
             <div className="flex flex-wrap gap-2 pt-1">
-              {availableWords.map((item) => (
-                <motion.button
-                  key={item.id}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => handleWordClick(item)}
-                  disabled={isAnswered}
-                  className="btn-physical-secondary px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all"
-                >
-                  {item.word}
-                </motion.button>
-              ))}
+              {availableWords.map((item) => {
+                const used = selectedWordIds.includes(item.id);
+                return (
+                  <motion.button
+                    key={item.id}
+                    whileHover={used ? {} : { scale: 1.05 }}
+                    whileTap={used ? {} : { scale: 0.95 }}
+                    onClick={() => handleWordClick(item)}
+                    disabled={isAnswered || used}
+                    className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all ${
+                      used
+                        ? 'border border-dashed border-border-subtle text-transparent'
+                        : 'btn-physical-secondary'
+                    }`}
+                  >
+                    {item.word}
+                  </motion.button>
+                );
+              })}
             </div>
 
             {/* Submit Sentence Button */}
