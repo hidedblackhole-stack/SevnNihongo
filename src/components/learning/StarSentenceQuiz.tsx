@@ -27,18 +27,24 @@ export const StarSentenceQuiz: React.FC<StarSentenceQuizProps> = ({
   const [availableItems, setAvailableItems] = useState<{ text: string; originalIndex: number }[]>([]);
   const [slots, setSlots] = useState<( { text: string; originalIndex: number } | null)[]>([null, null, null, null]);
   const [submitted, setSubmitted] = useState(false);
+  // Hasil penilaian disimpan SEKALI saat verifikasi; seluruh tampilan feedback memakai nilai yang sama
+  // dengan skor, bukan menghitung ulang dari indeks (yang bisa berbeda).
+  const [result, setResult] = useState<boolean | null>(null);
+
+  // Satu sumber teks untuk kartu di pool DAN isi slot. Dulu pool memakai `options` sedangkan slot memakai
+  // `scrambleWords`, sehingga kartu yang diketuk dan teks yang masuk slot bisa berbeda.
+  const sourceTexts: string[] =
+    question.scrambleWords && question.scrambleWords.length === 4 ? question.scrambleWords : question.options;
+  const orderedTarget = question.orderedTarget && question.orderedTarget.length === 4 ? question.orderedTarget : null;
 
   // Initialize available items from question options or scrambleWords
   const questionKey = question.id || question.prompt;
   useEffect(() => {
-    const items = (question.scrambleWords && question.scrambleWords.length === 4
-      ? question.scrambleWords
-      : question.options
-    ).map((text, idx) => ({ text, originalIndex: idx }));
-    
-    setAvailableItems(items);
+    setAvailableItems(sourceTexts.map((text, idx) => ({ text, originalIndex: idx })));
     setSlots([null, null, null, null]);
     setSubmitted(false);
+    setResult(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [questionKey]);
 
   // Clean prompt text for display
@@ -92,11 +98,7 @@ export const StarSentenceQuiz: React.FC<StarSentenceQuizProps> = ({
   const handleResetSlots = () => {
     if (submitted || isAnswered) return;
     playSound('click', soundEnabled);
-    const items = (question.scrambleWords && question.scrambleWords.length === 4
-      ? question.scrambleWords
-      : question.options
-    ).map((text, idx) => ({ text, originalIndex: idx }));
-    setAvailableItems(items);
+    setAvailableItems(sourceTexts.map((text, idx) => ({ text, originalIndex: idx })));
     setSlots([null, null, null, null]);
   };
 
@@ -112,17 +114,12 @@ export const StarSentenceQuiz: React.FC<StarSentenceQuizProps> = ({
     const starItem = slots[starPosition];
     const starOptionIndex = starItem ? starItem.originalIndex : -1;
 
-    // Check correctness:
-    // Option 1: Does star item match correctIndex?
-    // Option 2: Does orderedTarget match slots?
-    let isCorrect = starOptionIndex === question.correctIndex;
-    if (question.orderedTarget && question.orderedTarget.length === 4) {
-      const currentSentence = slots.map(s => s?.text).join('');
-      const targetSentence = question.orderedTarget.join('');
-      if (currentSentence === targetSentence) {
-        isCorrect = true;
-      }
-    }
+    // Bila ada urutan target, itulah kebenarannya (correctIndex pada soal ini merujuk ke `options`,
+    // bukan ke `scrambleWords`, jadi membandingkan indeks tidak bermakna). Selain itu: kata di posisi ★.
+    const isCorrect = orderedTarget
+      ? slots.map(s => s?.text).join('') === orderedTarget.join('')
+      : starOptionIndex === question.correctIndex;
+    setResult(isCorrect);
 
     if (isCorrect) {
       playSound('correct', soundEnabled);
@@ -196,7 +193,7 @@ export const StarSentenceQuiz: React.FC<StarSentenceQuizProps> = ({
                       isFilled
                         ? isStarSlot
                           ? submitted
-                            ? isFilled && slot.originalIndex === question.correctIndex
+                            ? result === true
                               ? 'bg-state-success/20 text-state-success border-state-success'
                               : 'bg-wine-accent/20 text-wine-accent border-border-subtle'
                             : 'bg-surface-elevated text-gold border-border-subtle shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_6px_rgba(0,0,0,0.25)]'
@@ -266,7 +263,7 @@ export const StarSentenceQuiz: React.FC<StarSentenceQuizProps> = ({
           </div>
 
           <div className="grid grid-cols-2 gap-2 sm:gap-2.5">
-            {question.options.map((optionText, optIdx) => {
+            {sourceTexts.map((optionText, optIdx) => {
               const isAvailable = availableItems.some(i => i.originalIndex === optIdx);
               const targetItem = availableItems.find(i => i.originalIndex === optIdx);
 
@@ -322,7 +319,7 @@ export const StarSentenceQuiz: React.FC<StarSentenceQuizProps> = ({
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             className={`p-4 sm:p-5 rounded-2xl border shadow-lg space-y-3 ${
-              slots[starPosition]?.originalIndex === question.correctIndex
+              result === true
                 ? 'bg-state-success/15 border-state-success/40 text-text-primary'
                 : 'bg-wine-accent/15 border-border-subtle text-text-primary'
             }`}
@@ -330,7 +327,7 @@ export const StarSentenceQuiz: React.FC<StarSentenceQuizProps> = ({
             {/* Status Header */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                {slots[starPosition]?.originalIndex === question.correctIndex ? (
+                {result === true ? (
                   <>
                     <CheckCircle2 className="w-5 h-5 text-state-success" />
                     <span className="text-sm font-bold text-state-success font-heading">
