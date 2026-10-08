@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { analyzeCaptionLines } from './captionAnalysis';
+import { analyzeCaptionLines, glossForWord, type LineWord } from './captionAnalysis';
 
 const lines = [
   { startMs: 1000, endMs: 4000, text: '昨日、友達と映画を見に行きました。' },
@@ -37,4 +37,33 @@ test('analyzeCaptionLines: baris kosong aman', () => {
   const a = analyzeCaptionLines([{ startMs: 0, endMs: 1, text: '' }]);
   assert.deepEqual(a.perLine[0].words, []);
   assert.deepEqual(a.vocab, []);
+});
+
+test('glossForWord: cocok persis, memuat, sebagian, dan tidak ada', () => {
+  const a = analyzeCaptionLines([{ startMs: 0, endMs: 3000, text: '昨日、友達と映画を見に行きました。' }]);
+  const words = a.perLine[0].words;
+  assert.ok(words.length > 0);
+
+  const tomodachi = words.find(w => w.item.word === '友達')!;
+  const first = tomodachi.item.meaningId.split(/[;；,，／/]/)[0].trim();
+  const expected = first.length > 28 ? `${first.slice(0, 27)}…` : first;
+  assert.equal(glossForWord('友達', words), expected);
+  assert.ok(glossForWord('友達と', words)); // kata berwaktu memuat bentuk tulis kamus
+  assert.equal(glossForWord('を', words), null); // partikel: tidak ada arti kamus
+  assert.equal(glossForWord('ぬ', []), null);
+});
+
+test('glossForWord: potongan bagian dari bentuk tulis yang lebih panjang', () => {
+  const a = analyzeCaptionLines([{ startMs: 0, endMs: 2000, text: '毎日ご飯を食べている' }]);
+  const words = a.perLine[0].words;
+  const eat = words.find(w => w.item.word === '食べる');
+  assert.ok(eat, '食べる harus dikenali');
+  // ASR bisa memecah 食べ + ている: potongan "食べ" tetap dapat arti 食べる
+  assert.ok(glossForWord(eat.surface.slice(0, 2), words));
+});
+
+test('glossForWord: potongan kana pendek tidak ikut mendapat arti dari kata kana yang lebih panjang', () => {
+  const fake = [{ item: { meaningId: 'Dalam batas; kurang dari' }, surface: 'いない', inflected: false }] as unknown as LineWord[];
+  assert.equal(glossForWord('ない', fake), null); // ない bukan いない
+  assert.equal(glossForWord('いない', fake), 'Dalam batas'); // persis tetap cocok
 });

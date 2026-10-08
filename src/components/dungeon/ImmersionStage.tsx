@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Play, Pause, SkipBack, SkipForward, RotateCcw, Plus, Check } from 'lucide-react';
-import { analyzeCaptionLines } from '../../engine/textStudy/captionAnalysis';
+import { analyzeCaptionLines, glossForWord } from '../../engine/textStudy/captionAnalysis';
 import { useSavedWords, type SavedWord } from '../../hooks/useSavedWords';
 import { activeLineIndex, formatMs, nextPause } from '../../utils/youtube';
 import { wordsForLine } from '../../engine/textStudy/wordTiming';
-import { KaraokeLine, createTimeStore } from './KaraokeLine';
+import { KaraokeLine, createTimeStore, type LyricView } from './KaraokeLine';
 import { YouTubePlayer, type PlayerControl } from './YouTubePlayer';
 import { ImmersionSidebar } from './ImmersionSidebar';
 import type { CaptionState, LyricLine } from './immersionTypes';
@@ -16,6 +16,15 @@ interface Props {
 
 const NO_LINES: LyricLine[] = [];
 const RATES = [1, 0.75, 0.5];
+const VIEW_KEY = 'sevnquest.immersion.view.v1';
+
+function loadView(): LyricView {
+  try {
+    return localStorage.getItem(VIEW_KEY) === 'sentence' ? 'sentence' : 'word';
+  } catch {
+    return 'word';
+  }
+}
 
 export const ImmersionStage: React.FC<Props> = ({ videoId, captions }) => {
   const lines = captions.status === 'ready' ? captions.lines : NO_LINES;
@@ -34,6 +43,14 @@ export const ImmersionStage: React.FC<Props> = ({ videoId, captions }) => {
   const [showFurigana, setShowFurigana] = useState(true);
   const [showWords, setShowWords] = useState(true);
   const [showTranslation, setShowTranslation] = useState(true);
+  const [view, setView] = useState<LyricView>(loadView);
+
+  const changeView = (next: LyricView) => {
+    setView(next);
+    try {
+      localStorage.setItem(VIEW_KEY, next);
+    } catch { /* penyimpanan diblokir: pilihan berlaku selama sesi */ }
+  };
   const [pauseEachLine, setPauseEachLine] = useState(false);
 
   useEffect(() => {
@@ -77,6 +94,10 @@ export const ImmersionStage: React.FC<Props> = ({ videoId, captions }) => {
 
   const focused = activeIdx >= 0 ? analysis.perLine[activeIdx] : null;
   const focusedWords = useMemo(() => (focused ? wordsForLine(lines[focused.index]) : null), [focused, lines]);
+  const glosses = useMemo(
+    () => (focused && focusedWords ? focusedWords.words.map(w => glossForWord(w.text, focused.words)) : []),
+    [focused, focusedWords]
+  );
   const savedIds = useMemo(() => new Set(saved.map(w => w.id)), [saved]);
   const canStep = lines.length > 0;
   const hasTranslation = useMemo(() => lines.some(l => l.translation), [lines]);
@@ -115,11 +136,23 @@ export const ImmersionStage: React.FC<Props> = ({ videoId, captions }) => {
               <>
                 <div className="flex items-center justify-between text-[11px] font-mono text-text-muted">
                   <span>Baris {focused.index + 1}/{lines.length}</span>
-                  <span>{formatMs(focused.startMs)}</span>
+                  <div className="flex items-center gap-1.5">
+                    <button type="button" onClick={() => changeView('sentence')} className={`ui-chip px-2.5 py-1 text-[10px] font-heading font-bold cursor-pointer ${view === 'sentence' ? 'is-active' : ''}`}>Per kalimat</button>
+                    <button type="button" onClick={() => changeView('word')} className={`ui-chip px-2.5 py-1 text-[10px] font-heading font-bold cursor-pointer ${view === 'word' ? 'is-active' : ''}`}>Per kotoba</button>
+                    <span className="ml-1">{formatMs(focused.startMs)}</span>
+                  </div>
                 </div>
                 <div className="text-center">
                   {focusedWords && (
-                    <KaraokeLine words={focusedWords.words} store={timeStore} showFurigana={showFurigana} className="text-2xl sm:text-3xl" />
+                    <KaraokeLine
+                      words={focusedWords.words}
+                      store={timeStore}
+                      showFurigana={showFurigana}
+                      view={view}
+                      glosses={glosses}
+                      onSeek={ms => controlRef.current?.seekToMs(ms)}
+                      className={view === 'word' ? 'text-xl sm:text-2xl' : 'text-2xl sm:text-3xl'}
+                    />
                   )}
                 </div>
                 {showTranslation && lines[focused.index].translation && (
