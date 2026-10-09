@@ -1,0 +1,7 @@
+{
+  "_note": "Pemain fiktif untuk capture. Bukan data pengguna asli.",
+  "localStorage": {
+    "nihongo_quest_onboarding_completed": "true",
+    "nihongo_quest_player_stats_v2": "{\"playerName\":\"Musashi\",\"characterGender\":\"male\",\"level\":16,\"totalExp\":24500,\"tierIndex\":2,\"hp\":160,\"maxHp\":160,\"mp\":95,\"maxMp\":95,\"str\":10,\"agi\":8,\"int\":14,\"vit\":9,\"unallocatedPoints\":0,\"gold\":5800,\"gems\":85,\"streakDays\":18,\"todayStudySeconds\":3120,\"totalStudySeconds\":52400,\"signature\":\"\",\"soundEnabled\":false,\"currentWorldId\":\"world_training\",\"currentMapId\":\"map_kana_hiragana\",\"currentStageId\":\"stage_kana_hira_1\"}"
+  }
+}

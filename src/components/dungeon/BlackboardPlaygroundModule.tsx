@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import * as wanakana from 'wanakana';
 import {
   Volume2,
   Shuffle,
@@ -78,6 +79,7 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
   const [verbSearchQuery, setVerbSearchQuery] = useState('');
   const [verbLevelFilter, setVerbLevelFilter] = useState<string>('all');
   const [patternLevelFilter, setPatternLevelFilter] = useState<string>('all');
+  const [patternSearchQuery, setPatternSearchQuery] = useState('');
   const [bookmarkSuccess, setBookmarkSuccess] = useState(false);
 
   // Active verb & active pattern
@@ -156,18 +158,23 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
     // Contextual sentence synthesis
     let contextSentence: { japanese: string; reading: string; meaningId: string } | null = null;
     try {
-      const synth = synthesizeSentence({
-        patternId: activePattern.id,
-        verbWord: activeVerb.kanji,
-        verbReading: activeVerb.reading,
-        verbMeaningId: rawMeaning,
-      });
-      if (synth) {
-        contextSentence = {
-          japanese: synth.japanese,
-          reading: synth.reading,
-          meaningId: synth.meaningId,
-        };
+      if (activePattern.example) {
+        // Pola dari library: pakai contoh kalimat aslinya (sintesis hanya untuk pola bawaan engine).
+        contextSentence = activePattern.example;
+      } else {
+        const synth = synthesizeSentence({
+          patternId: activePattern.id,
+          verbWord: activeVerb.kanji,
+          verbReading: activeVerb.reading,
+          verbMeaningId: rawMeaning,
+        });
+        if (synth) {
+          contextSentence = {
+            japanese: synth.japanese,
+            reading: synth.reading,
+            meaningId: synth.meaningId,
+          };
+        }
       }
     } catch {
       // Fallback example
@@ -274,10 +281,13 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
     }
     if (verbSearchQuery.trim()) {
       const q = verbSearchQuery.toLowerCase().trim();
+      const qHira = wanakana.toHiragana(q, { IMEMode: false });
       list = list.filter(
         v =>
           v.kanji.includes(q) ||
           v.reading.includes(q) ||
+          v.reading.includes(qHira) ||
+          wanakana.toRomaji(v.reading).includes(q) ||
           getVerbMeaning(v).toLowerCase().includes(q) ||
           (v.romaji || '').toLowerCase().includes(q)
       );
@@ -290,8 +300,18 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
     if (patternLevelFilter !== 'all') {
       list = list.filter(p => (p.jlpt || '').toUpperCase() === patternLevelFilter.toUpperCase());
     }
+    const q = patternSearchQuery.toLowerCase().trim();
+    if (q) {
+      list = list.filter(
+        p =>
+          p.pattern.includes(q) ||
+          p.title.toLowerCase().includes(q) ||
+          (p.nuanceExplanation || '').toLowerCase().includes(q) ||
+          p.meaningTemplateId.toLowerCase().includes(q)
+      );
+    }
     return list;
-  }, [allPatterns, patternLevelFilter]);
+  }, [allPatterns, patternLevelFilter, patternSearchQuery]);
 
   const handleBookmark = () => {
     if (onSaveToDeck && activeVerb) {
@@ -860,9 +880,21 @@ export const BlackboardPlaygroundModule: React.FC<BlackboardPlaygroundModuleProp
                 </button>
               </div>
 
+              {/* Search */}
+              <div className="relative">
+                <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted" />
+                <input
+                  type="text"
+                  value={patternSearchQuery}
+                  onChange={e => setPatternSearchQuery(e.target.value)}
+                  placeholder="Cari pola, judul, arti..."
+                  className="w-full pl-10 pr-4 py-2 rounded-xl bg-surface-inset border border-border-subtle text-xs text-text-primary placeholder:text-text-muted focus:outline-none focus:border-border-primary"
+                />
+              </div>
+
               {/* Level Filter */}
               <div className="flex flex-wrap items-center gap-1.5 pb-1">
-                {['all', 'N5', 'N4', 'N3'].map(lvl => (
+                {['all', 'N5', 'N4', 'N3', 'N2'].map(lvl => (
                   <button
                     key={lvl}
                     type="button"

@@ -1,6 +1,7 @@
 import { KOTOBA_DATABASE } from '../data/kotoba';
 import { KANJI_DATABASE } from '../data/kanji';
 import { BUNPOU_DATABASE } from '../data/bunpou';
+import { LIBRARY_PATTERN_SCHEMAS } from '../data/libraryPatterns';
 import { ResolvedDeckItem, resolveDeckItem } from './decks';
 import { DeckItemRef, UserDeck } from '../types/rpg';
 import { generateSentenceExercise, SentencePracticeExercise, PATTERN_SCHEMAS } from '../engine';
@@ -894,7 +895,7 @@ export function generateDungeonSession(config: DungeonConfig, userDecks?: UserDe
     const sampledSet = new Set(sampledVerbs.map(v => v.kanji));
     const remainingVerbs = eligibleVerbs.filter(v => !sampledSet.has(v.kanji));
     payload.blackboardVerbs = [...sampledVerbs, ...remainingVerbs];
-    payload.blackboardPatterns = Object.values(PATTERN_SCHEMAS);
+    payload.blackboardPatterns = [...Object.values(PATTERN_SCHEMAS), ...LIBRARY_PATTERN_SCHEMAS];
   }
 
   return payload;

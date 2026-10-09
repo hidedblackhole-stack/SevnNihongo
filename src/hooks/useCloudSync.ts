@@ -57,6 +57,8 @@ const [cloudSyncStatus, setCloudSyncStatus] = useState<CloudSyncStatus>('idle');
   // yang masih kosong (perangkat baru / koneksi lambat) bisa menimpa save di cloud.
   const [cloudHydrated, setCloudHydrated] = useState(false);
 
+  const failureToastShownRef = useRef(false);
+
   // Selalu sertakan progres Tower saat menyimpan ke cloud.
   const saveToCloud = useCallback(
     (payload: CloudSavePayload) =>
@@ -200,7 +202,11 @@ const [cloudSyncStatus, setCloudSyncStatus] = useState<CloudSyncStatus>('idle');
       }
       console.error('[CloudSync] Error during sync:', err);
       setCloudSyncStatus('error');
-      showToast('Gagal sinkronisasi dengan cloud. Progres lokal tetap aman.');
+      // Cukup sekali per sesi; status 'error' tetap terlihat di Pengaturan.
+      if (!failureToastShownRef.current) {
+        failureToastShownRef.current = true;
+        showToast('Gagal sinkronisasi dengan cloud. Progres lokal tetap aman.');
+      }
       return false;
     }
   }, [markSynced, showToast, saveToCloud]);
@@ -212,8 +218,14 @@ const [cloudSyncStatus, setCloudSyncStatus] = useState<CloudSyncStatus>('idle');
     // tidak boleh menjalankan dua sync paralel.
     let syncInFlight: Promise<boolean> | null = null;
 
+    // supabase-js memancarkan ulang SIGNED_IN tiap tab kembali fokus; tanpa ini sinkron (dan toast gagal)
+    // terulang terus. Rekonsiliasi cukup sekali per pengguna.
+    let reconciledUserId: string | null = null;
+
     const reconcile = (userId: string) => {
       if (syncInFlight) return syncInFlight;
+      if (reconciledUserId === userId) return Promise.resolve(true);
+      reconciledUserId = userId;
       setCloudHydrated(false);
       syncInFlight = handleCloudSync(userId).finally(() => {
         syncInFlight = null;
@@ -243,6 +255,7 @@ const [cloudSyncStatus, setCloudSyncStatus] = useState<CloudSyncStatus>('idle');
           reconcile(session.user.id);
         }
       } else {
+        reconciledUserId = null;
         setLastSyncedAt(null);
         setCloudHydrated(true);
       }
