@@ -1,0 +1,30 @@
+{
+  "name": "sevnquest-content-production",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "studio": "remotion studio compositions/index.ts",
+    "resolve": "tsx scripts/resolve-content.ts",
+    "validate": "tsx scripts/validate-mappings.ts",
+    "capture": "tsx website/capture/capture.ts",
+    "generate": "tsx scripts/generate-video-data.ts",
+    "render": "tsx scripts/render.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.532",
+    "@remotion/cli": "4.0.532",
+    "@remotion/renderer": "4.0.532",
+    "playwright-core": "^1.49.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "remotion": "4.0.532"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "@types/react": "19.2.7",
+    "tsx": "^4.21.0",
+    "typescript": "5.9.3"
+  }
+}
